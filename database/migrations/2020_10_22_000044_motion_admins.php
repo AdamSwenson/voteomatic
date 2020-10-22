@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMotionsTable extends Migration
+class MotionAdmins extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,16 @@ class CreateMotionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('motions', function (Blueprint $table) {
+        Schema::create('motion_admins', function (Blueprint $table) {
             /** The thing being voted upon */
-            $table->text('content');
+            $table->integer('motion_id');
 
-            /** Helper text to display */
-            $table->text('description')->nullable();
+            $table->integer('user_id');
 
-            /** Majority (0.5), 2/3 (0.75), etc */
-            $table->float('requires');
-
-
-            $table->id();
             $table->timestamps();
         });
+
+        //
     }
 
     /**
@@ -36,6 +32,7 @@ class CreateMotionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('motions');
+        Schema::dropIfExists('motion_admins');
+
     }
 }

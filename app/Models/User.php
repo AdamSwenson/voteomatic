@@ -40,4 +40,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Any motions which the user is an administrator for
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function administrates(){
+        return $this->belongsToMany(Motion::class, 'motion_admins')->withTimestamps();
+
+    }
+
 }
