@@ -24,7 +24,7 @@ class EntryController extends Controller
 
     public function lticonfig(Request $request)
     {
-        Log::debug($request);
+        Log::debug($request->all());
 
         return response(file_get_contents(resource_path('lticonfig.xml')), 200, [
             'Content-Type' => 'application/xml'
