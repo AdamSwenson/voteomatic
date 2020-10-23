@@ -1,11 +1,10 @@
-<?php
 @extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md">
-                <h1>[Assignment name] {{ $name }}</h1>
+                {{--                <h1>[Assignment name] {{ $name }}</h1>--}}
             </div>
         </div>
 
@@ -13,8 +12,7 @@
 
             <div class="col-md">
 
-                <waggleback></waggleback>
-
+                <voteomatic></voteomatic>
             </div>
 
         </div>
@@ -35,7 +33,7 @@
 
     <script type="text/javascript">
 
-        window.routeRoot = document.getElementById( 'routeRoot' ).getAttribute( 'data' );
+        window.routeRoot = document.getElementById('routeRoot').getAttribute('data');
         //Embed the minimal data we need to get started
         window.startData = @json($data);
     </script>

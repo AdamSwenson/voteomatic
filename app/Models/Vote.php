@@ -9,6 +9,8 @@ class Vote extends Model
 {
     use HasFactory;
 
+    const ALLOWED_VOTE_TYPES = ['yay', 'nay'];
+
 
 
     public function is_abstention(){
@@ -16,6 +18,15 @@ class Vote extends Model
     }
 
 
+public function makeReceiptHash(){
+        //todo This isn't the best way to handle
+    $time = microtime(true);
+    $receipt = bcrypt($time);
+
+    $this->attributes['receipt'] = $receipt;
+//    $this->save();
+
+}
 
     public function motion(){
         return $this->belongsTo(Motion::class);

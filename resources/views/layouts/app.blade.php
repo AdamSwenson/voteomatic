@@ -76,5 +76,10 @@
             @yield('content')
         </main>
     </div>
+
+
+    <div id="jsArea">
+        @yield('scriptArea')
+    </div>
 </body>
 </html>

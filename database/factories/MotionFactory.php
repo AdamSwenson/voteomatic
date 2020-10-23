@@ -55,7 +55,7 @@ class MotionFactory extends Factory
     public function twoThirds(){
         return $this->state(function (array $attributes) {
             return [
-                'requires' => 0.75,
+                'requires' => 0.66,
             ];
         });
     }

@@ -22,5 +22,9 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "vue-async-computed": "^3.9.0",
+        "vue-axios": "^3.1.1"
     }
 }

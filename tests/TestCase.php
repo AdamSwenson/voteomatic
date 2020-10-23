@@ -5,7 +5,11 @@ namespace Tests;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
+//use PHPUnit\Framework\TestCase;
+
 abstract class TestCase extends BaseTestCase
+
+//abstract class TestCase extends TestCase
 {
     use CreatesApplication;
 

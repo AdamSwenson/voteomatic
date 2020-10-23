@@ -12,7 +12,7 @@ class Motion extends Model
     protected $fillable = ['content', 'description', 'requires'];
 
 
-    const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.75];
+    const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
 
 
     // ------------------ properties
@@ -26,25 +26,16 @@ class Motion extends Model
      * Returns array of vote objects which were cast in the affirmative
      * @return mixed
      */
-    public function affirmativeVotes()
+    public function getAffirmativeVotesAttribute()
     {
         return $this->votes()->where('is_yay', true)->get();
     }
 
-    public function negativeVotes()
+    public function getNegativeVotesAttribute()
     {
         return $this->votes()->where('is_yay', false)->get();
     }
 
-    /**
-     * The number of votes which the affirmatives must exceed
-     * for the motion to pass
-     * DO NOT USE >=
-     */
-    public function getVoteCountThresholdAttribute()
-    {
-        return $this->totalVotesCast * $this->requires;
-    }
 
     /**
      * Whether the motion has succeeded
@@ -68,7 +59,7 @@ class Motion extends Model
      */
     public function getRequiresTwoThirdsAttribute()
     {
-        $this->requires == 0.75;
+        return $this->requires == 0.66;
     }
 
     /**
@@ -80,6 +71,20 @@ class Motion extends Model
     {
         return count($this->votes);
     }
+
+    /**
+     * The number of votes which the affirmatives must exceed
+     * for the motion to pass
+     * todo Should this round up? Is there any case where that matters?
+     * DO NOT USE >=
+     */
+    public function getVoteCountThresholdAttribute()
+    {
+        return $this->totalVotesCast * $this->requires;
+
+//        return $this->attributes['totalVotesCast'] * $this->requires;
+    }
+
 
     // ------------------ relationships
 
@@ -93,12 +98,16 @@ class Motion extends Model
     }
 
 
+    public function recordedVoteRecord(){
+        return $this->hasMany(RecordedVoteRecord::class);
+    }
+
     /**
      * All votes which have been cast on the motion
      */
     public function votes()
     {
-        $this->hasMany(Vote::class);
+       return $this->hasMany(Vote::class);
     }
 
 

@@ -19,6 +19,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//main page where votes get cast
+Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage');
+
+
+
+//controller which handles validating and recording votes
+Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@recordVote' );
+
+
+Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
+
 Route::resource('votes', VoteController::class);
 
 Route::resource('motions', MotionController::class);

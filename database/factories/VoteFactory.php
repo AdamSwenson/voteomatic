@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Motion;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,9 +24,12 @@ class VoteFactory extends Factory
      */
     public function definition()
     {
-        $user = factory(User::class)->create();
-        $motion = factory(Motion::class)->create();
+        $user = User::factory()->create();
+        $motion = Motion::factory()->create();
         $is_yay = ($this->faker->randomNumber() % 2) == 0;
+
+
+        $receipt = $this->faker->sha256();
         return [
                         'user_id' => $user->id,
                         'motion_id' => $motion->id,

@@ -14,11 +14,13 @@ class CreateVotesTable extends Migration
     public function up()
     {
         Schema::create('votes', function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->id();
+
             $table->integer('motion_id');
             $table->boolean('is_yay')->nullable();
 
-            $table->id();
+            $table->text('receipt')->nullable();
+
             $table->timestamps();
         });
     }

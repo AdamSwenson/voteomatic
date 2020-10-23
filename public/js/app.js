@@ -1899,10 +1899,165 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "nay-button",
+  data: function data() {
+    return {
+      label: 'Nay'
+    };
+  },
+  methods: {
+    handleClick: function handleClick() {
+      this.$emit('nay-clicked');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "yay-button",
+  methods: {
+    handleClick: function handleClick() {
+      this.$emit('yay-clicked');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "motion-content",
+  props: ["motion"],
+  computed: {
+    content: function content() {
+      return this.motion.content;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//Handles any additional instructions particular to this motion
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "motion-description",
+  props: ["motion"],
+  computed: {
+    description: function description() {
+      return this.motion.description;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "required-vote",
+  props: ["motion"],
+  computed: {
+    requiredText: function requiredText() {
+      switch (this.motion.requires) {
+        case 0.5:
+          return "a majority";
+          break;
+
+        case 0.66:
+          return "two-thirds";
+          break;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1924,9 +2079,315 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  name: "vote-receipt",
+  props: ['receipt']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-buttons.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/vote-buttons.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _controls_yay_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/yay-button */ "./resources/js/components/controls/yay-button.vue");
+/* harmony import */ var _controls_nay_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls/nay-button */ "./resources/js/components/controls/nay-button.vue");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "vote-buttons",
+  components: {
+    NayButton: _controls_nay_button__WEBPACK_IMPORTED_MODULE_1__["default"],
+    YayButton: _controls_yay_button__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['motion'],
+  data: function data() {
+    return {
+      voteRecorded: false,
+      vote: null
+    };
+  },
+  methods: {
+    /**
+     * Fires when receives notification that the
+     * nay button has been pressed. Sends result
+     * to server.
+     */
+    handleNay: function handleNay() {
+      this.$emit('nay-clicked'); // let voteType = 'nay';
+      // this.recordVote(voteType);
+    },
+
+    /**
+     * Fires when receives notification that the
+     * yay button has been pressed. Sends result
+     * to server.
+     */
+    handleYay: function handleYay() {
+      this.$emit('yay-clicked'); // let voteType = 'yay';
+      // this.recordVote(voteType);
+    } //
+    // /**
+    //  * Sends vote to server
+    //  *
+    //  * @param voteType
+    //  */
+    // recordVote: function (voteType) {
+    //     let url = routes.votes.recordVote(this.motion.id);
+    //     let data = {
+    //         motionId: this.motion.id,
+    //         vote: voteType
+    //     };
+    //
+    //     return new Promise((resolve, reject) => {
+    //
+    //         Vue.axios.post(url, data).then((response) => {
+    //
+    //             if(response.error){
+    //                 //todo error handling
+    //                 this.voteRecorded = true;
+    //
+    //             }else {
+    //
+    //                 this.vote = new Vote(response.data.isYay, response.data.receipt);
+    //                 this.voteRecorded = true;
+    //                 //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+    //                 resolve();
+    //             }
+    //         });
+    //
+    //
+    //     });
+    //
+    // }
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-page.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/vote-page.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _models_Vote__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Vote */ "./resources/js/models/Vote.js");
+/* harmony import */ var _vote_buttons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-buttons */ "./resources/js/components/vote-buttons.vue");
+/* harmony import */ var _text_display_required_vote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./text-display/required-vote */ "./resources/js/components/text-display/required-vote.vue");
+/* harmony import */ var _text_display_motion_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-display/motion-content */ "./resources/js/components/text-display/motion-content.vue");
+/* harmony import */ var _text_display_motion_description__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./text-display/motion-description */ "./resources/js/components/text-display/motion-description.vue");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./text-display/vote-receipt */ "./resources/js/components/text-display/vote-receipt.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "vote-page",
+  components: {
+    VoteReceipt: _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_6__["default"],
+    MotionDescription: _text_display_motion_description__WEBPACK_IMPORTED_MODULE_4__["default"],
+    MotionContent: _text_display_motion_content__WEBPACK_IMPORTED_MODULE_3__["default"],
+    RequiredVote: _text_display_required_vote__WEBPACK_IMPORTED_MODULE_2__["default"],
+    VoteButtons: _vote_buttons__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ['motion'],
+  data: function data() {
+    return {
+      voteRecorded: false,
+      vote: null
+    };
+  },
+  methods: {
+    /**
+     * Fires when receives notification that the
+     * nay button has been pressed. Sends result
+     * to server.
+     */
+    handleNay: function handleNay() {
+      var voteType = 'nay';
+      this.recordVote(voteType);
+    },
+
+    /**
+     * Fires when receives notification that the
+     * yay button has been pressed. Sends result
+     * to server.
+     */
+    handleYay: function handleYay() {
+      var voteType = 'yay';
+      this.recordVote(voteType);
+    },
+
+    /**
+     * Sends vote to server
+     *
+     * @param voteType
+     */
+    recordVote: function recordVote(voteType) {
+      var _this = this;
+
+      var url = _routes__WEBPACK_IMPORTED_MODULE_5__["votes"].recordVote(this.motion.id);
+      var data = {
+        motionId: this.motion.id,
+        vote: voteType
+      };
+      return new Promise(function (resolve, reject) {
+        Vue.axios.post(url, data).then(function (response) {
+          if (response.error) {
+            //todo error handling
+            _this.voteRecorded = true;
+          } else {
+            console.log(response.data);
+            _this.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.isYay, response.data.receipt);
+            _this.voteRecorded = true; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+
+            resolve();
+          }
+        });
+      });
+    }
+  },
+  computed: {
+    receipt: function receipt() {
+      if (this.vote) {
+        return this.vote.receipt;
+      }
+    },
+    // content: function () {
+    //     return this.motion.content;
+    // },
+    //
+    // description: function () {
+    //     return this.motion.description;
+    // },
+    instructions: function instructions() {
+      return "Some generic instructions....";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/voteomatic.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/voteomatic.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vote_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vote-page */ "./resources/js/components/vote-page.vue");
+/* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Motion */ "./resources/js/models/Motion.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//The main page for anything
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "voteomatic",
+  components: {
+    VotePage: _vote_page__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      isSetup: false
+    };
+  },
+  computed: {
+    //the motion being voted upon
+    motion: function motion() {
+      var d = window.startData.motion;
+      var m = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__["default"](d.id, d.content, d.description, d.requires);
+      return m;
+    }
   }
 });
 
@@ -37507,10 +37968,2136 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-axios/dist/vue-axios.es5.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-axios/dist/vue-axios.es5.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
+
+// Note: this is the semver.org version of the spec that it implements
+// Not necessarily the package version of this code.
+var SEMVER_SPEC_VERSION = '2.0.0';
+var MAX_LENGTH = 256;
+var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+/* istanbul ignore next */
+9007199254740991; // Max safe segment length for coercion.
+
+var MAX_SAFE_COMPONENT_LENGTH = 16;
+var constants = {
+  SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
+  MAX_LENGTH: MAX_LENGTH,
+  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER,
+  MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH
+};
+
+var debug = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
+  var _console;
+
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
+} : function () {};
+var debug_1 = debug;
+
+var re_1 = createCommonjsModule(function (module, exports) {
+  var MAX_SAFE_COMPONENT_LENGTH = constants.MAX_SAFE_COMPONENT_LENGTH;
+  exports = module.exports = {}; // The actual regexps go on exports.re
+
+  var re = exports.re = [];
+  var src = exports.src = [];
+  var t = exports.t = {};
+  var R = 0;
+
+  var createToken = function createToken(name, value, isGlobal) {
+    var index = R++;
+    debug_1(index, value);
+    t[name] = index;
+    src[index] = value;
+    re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
+  }; // The following Regular Expressions can be used for tokenizing,
+  // validating, and parsing SemVer version strings.
+  // ## Numeric Identifier
+  // A single `0`, or a non-zero digit followed by zero or more digits.
+
+
+  createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+  createToken('NUMERICIDENTIFIERLOOSE', '[0-9]+'); // ## Non-numeric Identifier
+  // Zero or more digits, followed by a letter or hyphen, and then zero or
+  // more letters, digits, or hyphens.
+
+  createToken('NONNUMERICIDENTIFIER', '\\d*[a-zA-Z-][a-zA-Z0-9-]*'); // ## Main Version
+  // Three dot-separated numeric identifiers.
+
+  createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
+  createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")")); // ## Pre-release Version Identifier
+  // A numeric identifier, or a non-numeric identifier.
+
+  createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NUMERICIDENTIFIER], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
+  createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NUMERICIDENTIFIERLOOSE], "|").concat(src[t.NONNUMERICIDENTIFIER], ")")); // ## Pre-release Version
+  // Hyphen, followed by one or more dot-separated pre-release version
+  // identifiers.
+
+  createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
+  createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))")); // ## Build Metadata Identifier
+  // Any combination of digits, letters, or hyphens.
+
+  createToken('BUILDIDENTIFIER', '[0-9A-Za-z-]+'); // ## Build Metadata
+  // Plus sign, followed by one or more period-separated build metadata
+  // identifiers.
+
+  createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))")); // ## Full Version String
+  // A main version, followed optionally by a pre-release version and
+  // build metadata.
+  // Note that the only major, minor, patch, and pre-release sections of
+  // the version string are capturing groups.  The build metadata is not a
+  // capturing group, because it should not ever be used in version
+  // comparison.
+
+  createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
+  createToken('FULL', "^".concat(src[t.FULLPLAIN], "$")); // like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
+  // also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
+  // common in the npm registry.
+
+  createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
+  createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
+  createToken('GTLT', '((?:<|>)?=?)'); // Something like "2.*" or "1.2.x".
+  // Note that "x.x" is a valid xRange identifer, meaning "any version"
+  // Only the first item is strictly required.
+
+  createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
+  createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
+  createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+  createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+  createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
+  createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$")); // Coercion.
+  // Extract anything that could conceivably be a part of a valid semver
+
+  createToken('COERCE', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:$|[^\\d])");
+  createToken('COERCERTL', src[t.COERCE], true); // Tilde ranges.
+  // Meaning is "reasonably at or greater than"
+
+  createToken('LONETILDE', '(?:~>?)');
+  createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
+  exports.tildeTrimReplace = '$1~';
+  createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
+  createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$")); // Caret ranges.
+  // Meaning is "at least and backwards compatible with"
+
+  createToken('LONECARET', '(?:\\^)');
+  createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
+  exports.caretTrimReplace = '$1^';
+  createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
+  createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$")); // A simple gt/lt/eq thing, or just "" to indicate "any version"
+
+  createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
+  createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$")); // An expression to strip any whitespace between the gtlt and the thing
+  // it modifies, so that `> 1.2.3` ==> `>1.2.3`
+
+  createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
+  exports.comparatorTrimReplace = '$1$2$3'; // Something like `1.2.3 - 1.2.4`
+  // Note that these all use the loose form, because they'll be
+  // checked against either the strict or loose comparator form
+  // later.
+
+  createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
+  createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$"); // Star ranges basically just allow anything at all.
+
+  createToken('STAR', '(<|>)?=?\\s*\\*'); // >=0.0.0 is like a star
+
+  createToken('GTE0', '^\\s*>=\\s*0\.0\.0\\s*$');
+  createToken('GTE0PRE', '^\\s*>=\\s*0\.0\.0-0\\s*$');
+});
+
+var numeric = /^[0-9]+$/;
+
+var compareIdentifiers = function compareIdentifiers(a, b) {
+  var anum = numeric.test(a);
+  var bnum = numeric.test(b);
+
+  if (anum && bnum) {
+    a = +a;
+    b = +b;
+  }
+
+  return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
+};
+
+var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
+  return compareIdentifiers(b, a);
+};
+
+var identifiers = {
+  compareIdentifiers: compareIdentifiers,
+  rcompareIdentifiers: rcompareIdentifiers
+};
+
+var MAX_LENGTH$1 = constants.MAX_LENGTH,
+    MAX_SAFE_INTEGER$1 = constants.MAX_SAFE_INTEGER;
+var re = re_1.re,
+    t = re_1.t;
+var compareIdentifiers$1 = identifiers.compareIdentifiers;
+
+var SemVer = /*#__PURE__*/function () {
+  function SemVer(version, options) {
+    _classCallCheck(this, SemVer);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (version instanceof SemVer) {
+      if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+        return version;
+      } else {
+        version = version.version;
+      }
+    } else if (typeof version !== 'string') {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    if (version.length > MAX_LENGTH$1) {
+      throw new TypeError("version is longer than ".concat(MAX_LENGTH$1, " characters"));
+    }
+
+    debug_1('SemVer', version, options);
+    this.options = options;
+    this.loose = !!options.loose; // this isn't actually relevant for versions, but keep it so that we
+    // don't run into trouble passing this.options around.
+
+    this.includePrerelease = !!options.includePrerelease;
+    var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+
+    if (!m) {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    this.raw = version; // these are actually numbers
+
+    this.major = +m[1];
+    this.minor = +m[2];
+    this.patch = +m[3];
+
+    if (this.major > MAX_SAFE_INTEGER$1 || this.major < 0) {
+      throw new TypeError('Invalid major version');
+    }
+
+    if (this.minor > MAX_SAFE_INTEGER$1 || this.minor < 0) {
+      throw new TypeError('Invalid minor version');
+    }
+
+    if (this.patch > MAX_SAFE_INTEGER$1 || this.patch < 0) {
+      throw new TypeError('Invalid patch version');
+    } // numberify any prerelease numeric ids
+
+
+    if (!m[4]) {
+      this.prerelease = [];
+    } else {
+      this.prerelease = m[4].split('.').map(function (id) {
+        if (/^[0-9]+$/.test(id)) {
+          var num = +id;
+
+          if (num >= 0 && num < MAX_SAFE_INTEGER$1) {
+            return num;
+          }
+        }
+
+        return id;
+      });
+    }
+
+    this.build = m[5] ? m[5].split('.') : [];
+    this.format();
+  }
+
+  _createClass(SemVer, [{
+    key: "format",
+    value: function format() {
+      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
+
+      if (this.prerelease.length) {
+        this.version += "-".concat(this.prerelease.join('.'));
+      }
+
+      return this.version;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.version;
+    }
+  }, {
+    key: "compare",
+    value: function compare(other) {
+      debug_1('SemVer.compare', this.version, this.options, other);
+
+      if (!(other instanceof SemVer)) {
+        if (typeof other === 'string' && other === this.version) {
+          return 0;
+        }
+
+        other = new SemVer(other, this.options);
+      }
+
+      if (other.version === this.version) {
+        return 0;
+      }
+
+      return this.compareMain(other) || this.comparePre(other);
+    }
+  }, {
+    key: "compareMain",
+    value: function compareMain(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      return compareIdentifiers$1(this.major, other.major) || compareIdentifiers$1(this.minor, other.minor) || compareIdentifiers$1(this.patch, other.patch);
+    }
+  }, {
+    key: "comparePre",
+    value: function comparePre(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      } // NOT having a prerelease is > having one
+
+
+      if (this.prerelease.length && !other.prerelease.length) {
+        return -1;
+      } else if (!this.prerelease.length && other.prerelease.length) {
+        return 1;
+      } else if (!this.prerelease.length && !other.prerelease.length) {
+        return 0;
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.prerelease[i];
+        var b = other.prerelease[i];
+        debug_1('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers$1(a, b);
+        }
+      } while (++i);
+    }
+  }, {
+    key: "compareBuild",
+    value: function compareBuild(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.build[i];
+        var b = other.build[i];
+        debug_1('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers$1(a, b);
+        }
+      } while (++i);
+    } // preminor will bump the version up to the next minor release, and immediately
+    // down to pre-release. premajor and prepatch work the same way.
+
+  }, {
+    key: "inc",
+    value: function inc(release, identifier) {
+      switch (release) {
+        case 'premajor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor = 0;
+          this.major++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'preminor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'prepatch':
+          // If this is already a prerelease, it will bump to the next version
+          // drop any prereleases that might already exist, since they are not
+          // relevant at this point.
+          this.prerelease.length = 0;
+          this.inc('patch', identifier);
+          this.inc('pre', identifier);
+          break;
+        // If the input is a non-prerelease version, this acts the same as
+        // prepatch.
+
+        case 'prerelease':
+          if (this.prerelease.length === 0) {
+            this.inc('patch', identifier);
+          }
+
+          this.inc('pre', identifier);
+          break;
+
+        case 'major':
+          // If this is a pre-major version, bump up to the same major version.
+          // Otherwise increment major.
+          // 1.0.0-5 bumps to 1.0.0
+          // 1.1.0 bumps to 2.0.0
+          if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+            this.major++;
+          }
+
+          this.minor = 0;
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'minor':
+          // If this is a pre-minor version, bump up to the same minor version.
+          // Otherwise increment minor.
+          // 1.2.0-5 bumps to 1.2.0
+          // 1.2.1 bumps to 1.3.0
+          if (this.patch !== 0 || this.prerelease.length === 0) {
+            this.minor++;
+          }
+
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'patch':
+          // If this is not a pre-release version, it will increment the patch.
+          // If it is a pre-release it will bump up to the same patch version.
+          // 1.2.0-5 patches to 1.2.0
+          // 1.2.0 patches to 1.2.1
+          if (this.prerelease.length === 0) {
+            this.patch++;
+          }
+
+          this.prerelease = [];
+          break;
+        // This probably shouldn't be used publicly.
+        // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+
+        case 'pre':
+          if (this.prerelease.length === 0) {
+            this.prerelease = [0];
+          } else {
+            var i = this.prerelease.length;
+
+            while (--i >= 0) {
+              if (typeof this.prerelease[i] === 'number') {
+                this.prerelease[i]++;
+                i = -2;
+              }
+            }
+
+            if (i === -1) {
+              // didn't increment anything
+              this.prerelease.push(0);
+            }
+          }
+
+          if (identifier) {
+            // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+            // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+            if (this.prerelease[0] === identifier) {
+              if (isNaN(this.prerelease[1])) {
+                this.prerelease = [identifier, 0];
+              }
+            } else {
+              this.prerelease = [identifier, 0];
+            }
+          }
+
+          break;
+
+        default:
+          throw new Error("invalid increment argument: ".concat(release));
+      }
+
+      this.format();
+      this.raw = this.version;
+      return this;
+    }
+  }]);
+
+  return SemVer;
+}();
+
+var semver = SemVer;
+
+var MAX_LENGTH$2 = constants.MAX_LENGTH;
+var re$1 = re_1.re,
+    t$1 = re_1.t;
+
+var parse = function parse(version, options) {
+  if (!options || _typeof(options) !== 'object') {
+    options = {
+      loose: !!options,
+      includePrerelease: false
+    };
+  }
+
+  if (version instanceof semver) {
+    return version;
+  }
+
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  if (version.length > MAX_LENGTH$2) {
+    return null;
+  }
+
+  var r = options.loose ? re$1[t$1.LOOSE] : re$1[t$1.FULL];
+
+  if (!r.test(version)) {
+    return null;
+  }
+
+  try {
+    return new semver(version, options);
+  } catch (er) {
+    return null;
+  }
+};
+
+var parse_1 = parse;
+
+var valid = function valid(version, options) {
+  var v = parse_1(version, options);
+  return v ? v.version : null;
+};
+
+var valid_1 = valid;
+
+var clean = function clean(version, options) {
+  var s = parse_1(version.trim().replace(/^[=v]+/, ''), options);
+  return s ? s.version : null;
+};
+
+var clean_1 = clean;
+
+var inc = function inc(version, release, options, identifier) {
+  if (typeof options === 'string') {
+    identifier = options;
+    options = undefined;
+  }
+
+  try {
+    return new semver(version, options).inc(release, identifier).version;
+  } catch (er) {
+    return null;
+  }
+};
+
+var inc_1 = inc;
+
+var compare = function compare(a, b, loose) {
+  return new semver(a, loose).compare(new semver(b, loose));
+};
+
+var compare_1 = compare;
+
+var eq = function eq(a, b, loose) {
+  return compare_1(a, b, loose) === 0;
+};
+
+var eq_1 = eq;
+
+var diff = function diff(version1, version2) {
+  if (eq_1(version1, version2)) {
+    return null;
+  } else {
+    var v1 = parse_1(version1);
+    var v2 = parse_1(version2);
+    var hasPre = v1.prerelease.length || v2.prerelease.length;
+    var prefix = hasPre ? 'pre' : '';
+    var defaultResult = hasPre ? 'prerelease' : '';
+
+    for (var key in v1) {
+      if (key === 'major' || key === 'minor' || key === 'patch') {
+        if (v1[key] !== v2[key]) {
+          return prefix + key;
+        }
+      }
+    }
+
+    return defaultResult; // may be undefined
+  }
+};
+
+var diff_1 = diff;
+
+var major = function major(a, loose) {
+  return new semver(a, loose).major;
+};
+
+var major_1 = major;
+
+var minor = function minor(a, loose) {
+  return new semver(a, loose).minor;
+};
+
+var minor_1 = minor;
+
+var patch = function patch(a, loose) {
+  return new semver(a, loose).patch;
+};
+
+var patch_1 = patch;
+
+var prerelease = function prerelease(version, options) {
+  var parsed = parse_1(version, options);
+  return parsed && parsed.prerelease.length ? parsed.prerelease : null;
+};
+
+var prerelease_1 = prerelease;
+
+var rcompare = function rcompare(a, b, loose) {
+  return compare_1(b, a, loose);
+};
+
+var rcompare_1 = rcompare;
+
+var compareLoose = function compareLoose(a, b) {
+  return compare_1(a, b, true);
+};
+
+var compareLoose_1 = compareLoose;
+
+var compareBuild = function compareBuild(a, b, loose) {
+  var versionA = new semver(a, loose);
+  var versionB = new semver(b, loose);
+  return versionA.compare(versionB) || versionA.compareBuild(versionB);
+};
+
+var compareBuild_1 = compareBuild;
+
+var sort = function sort(list, loose) {
+  return list.sort(function (a, b) {
+    return compareBuild_1(a, b, loose);
+  });
+};
+
+var sort_1 = sort;
+
+var rsort = function rsort(list, loose) {
+  return list.sort(function (a, b) {
+    return compareBuild_1(b, a, loose);
+  });
+};
+
+var rsort_1 = rsort;
+
+var gt = function gt(a, b, loose) {
+  return compare_1(a, b, loose) > 0;
+};
+
+var gt_1 = gt;
+
+var lt = function lt(a, b, loose) {
+  return compare_1(a, b, loose) < 0;
+};
+
+var lt_1 = lt;
+
+var neq = function neq(a, b, loose) {
+  return compare_1(a, b, loose) !== 0;
+};
+
+var neq_1 = neq;
+
+var gte = function gte(a, b, loose) {
+  return compare_1(a, b, loose) >= 0;
+};
+
+var gte_1 = gte;
+
+var lte = function lte(a, b, loose) {
+  return compare_1(a, b, loose) <= 0;
+};
+
+var lte_1 = lte;
+
+var cmp = function cmp(a, op, b, loose) {
+  switch (op) {
+    case '===':
+      if (_typeof(a) === 'object') a = a.version;
+      if (_typeof(b) === 'object') b = b.version;
+      return a === b;
+
+    case '!==':
+      if (_typeof(a) === 'object') a = a.version;
+      if (_typeof(b) === 'object') b = b.version;
+      return a !== b;
+
+    case '':
+    case '=':
+    case '==':
+      return eq_1(a, b, loose);
+
+    case '!=':
+      return neq_1(a, b, loose);
+
+    case '>':
+      return gt_1(a, b, loose);
+
+    case '>=':
+      return gte_1(a, b, loose);
+
+    case '<':
+      return lt_1(a, b, loose);
+
+    case '<=':
+      return lte_1(a, b, loose);
+
+    default:
+      throw new TypeError("Invalid operator: ".concat(op));
+  }
+};
+
+var cmp_1 = cmp;
+
+var re$2 = re_1.re,
+    t$2 = re_1.t;
+
+var coerce = function coerce(version, options) {
+  if (version instanceof semver) {
+    return version;
+  }
+
+  if (typeof version === 'number') {
+    version = String(version);
+  }
+
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  options = options || {};
+  var match = null;
+
+  if (!options.rtl) {
+    match = version.match(re$2[t$2.COERCE]);
+  } else {
+    // Find the right-most coercible string that does not share
+    // a terminus with a more left-ward coercible string.
+    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
+    //
+    // Walk through the string checking with a /g regexp
+    // Manually set the index so as to pick up overlapping matches.
+    // Stop when we get a match that ends at the string end, since no
+    // coercible string can be more right-ward without the same terminus.
+    var next;
+
+    while ((next = re$2[t$2.COERCERTL].exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+      if (!match || next.index + next[0].length !== match.index + match[0].length) {
+        match = next;
+      }
+
+      re$2[t$2.COERCERTL].lastIndex = next.index + next[1].length + next[2].length;
+    } // leave it in a clean state
+
+
+    re$2[t$2.COERCERTL].lastIndex = -1;
+  }
+
+  if (match === null) return null;
+  return parse_1("".concat(match[2], ".").concat(match[3] || '0', ".").concat(match[4] || '0'), options);
+};
+
+var coerce_1 = coerce;
+
+var Range = /*#__PURE__*/function () {
+  function Range(range, options) {
+    var _this = this;
+
+    _classCallCheck(this, Range);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (range instanceof Range) {
+      if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) {
+        return range;
+      } else {
+        return new Range(range.raw, options);
+      }
+    }
+
+    if (range instanceof comparator) {
+      // just put it in the set and return
+      this.raw = range.value;
+      this.set = [[range]];
+      this.format();
+      return this;
+    }
+
+    this.options = options;
+    this.loose = !!options.loose;
+    this.includePrerelease = !!options.includePrerelease; // First, split based on boolean or ||
+
+    this.raw = range;
+    this.set = range.split(/\s*\|\|\s*/) // map the range to a 2d array of comparators
+    .map(function (range) {
+      return _this.parseRange(range.trim());
+    }) // throw out any comparator lists that are empty
+    // this generally means that it was not a valid range, which is allowed
+    // in loose mode, but will still throw if the WHOLE range is invalid.
+    .filter(function (c) {
+      return c.length;
+    });
+
+    if (!this.set.length) {
+      throw new TypeError("Invalid SemVer Range: ".concat(range));
+    }
+
+    this.format();
+  }
+
+  _createClass(Range, [{
+    key: "format",
+    value: function format() {
+      this.range = this.set.map(function (comps) {
+        return comps.join(' ').trim();
+      }).join('||').trim();
+      return this.range;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.range;
+    }
+  }, {
+    key: "parseRange",
+    value: function parseRange(range) {
+      var _this2 = this;
+
+      var loose = this.options.loose;
+      range = range.trim(); // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+
+      var hr = loose ? re$3[t$3.HYPHENRANGELOOSE] : re$3[t$3.HYPHENRANGE];
+      range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
+      debug_1('hyphen replace', range); // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+
+      range = range.replace(re$3[t$3.COMPARATORTRIM], comparatorTrimReplace);
+      debug_1('comparator trim', range, re$3[t$3.COMPARATORTRIM]); // `~ 1.2.3` => `~1.2.3`
+
+      range = range.replace(re$3[t$3.TILDETRIM], tildeTrimReplace); // `^ 1.2.3` => `^1.2.3`
+
+      range = range.replace(re$3[t$3.CARETTRIM], caretTrimReplace); // normalize spaces
+
+      range = range.split(/\s+/).join(' '); // At this point, the range is completely trimmed and
+      // ready to be split into comparators.
+
+      var compRe = loose ? re$3[t$3.COMPARATORLOOSE] : re$3[t$3.COMPARATOR];
+      return range.split(' ').map(function (comp) {
+        return parseComparator(comp, _this2.options);
+      }).join(' ').split(/\s+/).map(function (comp) {
+        return replaceGTE0(comp, _this2.options);
+      }) // in loose mode, throw out any that are not valid comparators
+      .filter(this.options.loose ? function (comp) {
+        return !!comp.match(compRe);
+      } : function () {
+        return true;
+      }).map(function (comp) {
+        return new comparator(comp, _this2.options);
+      });
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(range, options) {
+      if (!(range instanceof Range)) {
+        throw new TypeError('a Range is required');
+      }
+
+      return this.set.some(function (thisComparators) {
+        return isSatisfiable(thisComparators, options) && range.set.some(function (rangeComparators) {
+          return isSatisfiable(rangeComparators, options) && thisComparators.every(function (thisComparator) {
+            return rangeComparators.every(function (rangeComparator) {
+              return thisComparator.intersects(rangeComparator, options);
+            });
+          });
+        });
+      });
+    } // if ANY of the sets match ALL of its comparators, then pass
+
+  }, {
+    key: "test",
+    value: function test(version) {
+      if (!version) {
+        return false;
+      }
+
+      if (typeof version === 'string') {
+        try {
+          version = new semver(version, this.options);
+        } catch (er) {
+          return false;
+        }
+      }
+
+      for (var i = 0; i < this.set.length; i++) {
+        if (testSet(this.set[i], version, this.options)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }]);
+
+  return Range;
+}();
+
+var range = Range;
+var re$3 = re_1.re,
+    t$3 = re_1.t,
+    comparatorTrimReplace = re_1.comparatorTrimReplace,
+    tildeTrimReplace = re_1.tildeTrimReplace,
+    caretTrimReplace = re_1.caretTrimReplace; // take a set of comparators and determine whether there
+// exists a version which can satisfy it
+
+var isSatisfiable = function isSatisfiable(comparators, options) {
+  var result = true;
+  var remainingComparators = comparators.slice();
+  var testComparator = remainingComparators.pop();
+
+  while (result && remainingComparators.length) {
+    result = remainingComparators.every(function (otherComparator) {
+      return testComparator.intersects(otherComparator, options);
+    });
+    testComparator = remainingComparators.pop();
+  }
+
+  return result;
+}; // comprised of xranges, tildes, stars, and gtlt's at this point.
+// already replaced the hyphen ranges
+// turn into a set of JUST comparators.
+
+
+var parseComparator = function parseComparator(comp, options) {
+  debug_1('comp', comp, options);
+  comp = replaceCarets(comp, options);
+  debug_1('caret', comp);
+  comp = replaceTildes(comp, options);
+  debug_1('tildes', comp);
+  comp = replaceXRanges(comp, options);
+  debug_1('xrange', comp);
+  comp = replaceStars(comp, options);
+  debug_1('stars', comp);
+  return comp;
+};
+
+var isX = function isX(id) {
+  return !id || id.toLowerCase() === 'x' || id === '*';
+}; // ~, ~> --> * (any, kinda silly)
+// ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
+// ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
+// ~1.2, ~1.2.x, ~>1.2, ~>1.2.x --> >=1.2.0 <1.3.0-0
+// ~1.2.3, ~>1.2.3 --> >=1.2.3 <1.3.0-0
+// ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
+
+
+var replaceTildes = function replaceTildes(comp, options) {
+  return comp.trim().split(/\s+/).map(function (comp) {
+    return replaceTilde(comp, options);
+  }).join(' ');
+};
+
+var replaceTilde = function replaceTilde(comp, options) {
+  var r = options.loose ? re$3[t$3.TILDELOOSE] : re$3[t$3.TILDE];
+  return comp.replace(r, function (_, M, m, p, pr) {
+    debug_1('tilde', comp, _, M, m, p, pr);
+    var ret;
+
+    if (isX(M)) {
+      ret = '';
+    } else if (isX(m)) {
+      ret = ">=".concat(M, ".0.0 <").concat(+M + 1, ".0.0-0");
+    } else if (isX(p)) {
+      // ~1.2 == >=1.2.0 <1.3.0-0
+      ret = ">=".concat(M, ".").concat(m, ".0 <").concat(M, ".").concat(+m + 1, ".0-0");
+    } else if (pr) {
+      debug_1('replaceTilde pr', pr);
+      ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    } else {
+      // ~1.2.3 == >=1.2.3 <1.3.0-0
+      ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    }
+
+    debug_1('tilde return', ret);
+    return ret;
+  });
+}; // ^ --> * (any, kinda silly)
+// ^2, ^2.x, ^2.x.x --> >=2.0.0 <3.0.0-0
+// ^2.0, ^2.0.x --> >=2.0.0 <3.0.0-0
+// ^1.2, ^1.2.x --> >=1.2.0 <2.0.0-0
+// ^1.2.3 --> >=1.2.3 <2.0.0-0
+// ^1.2.0 --> >=1.2.0 <2.0.0-0
+
+
+var replaceCarets = function replaceCarets(comp, options) {
+  return comp.trim().split(/\s+/).map(function (comp) {
+    return replaceCaret(comp, options);
+  }).join(' ');
+};
+
+var replaceCaret = function replaceCaret(comp, options) {
+  debug_1('caret', comp, options);
+  var r = options.loose ? re$3[t$3.CARETLOOSE] : re$3[t$3.CARET];
+  var z = options.includePrerelease ? '-0' : '';
+  return comp.replace(r, function (_, M, m, p, pr) {
+    debug_1('caret', comp, _, M, m, p, pr);
+    var ret;
+
+    if (isX(M)) {
+      ret = '';
+    } else if (isX(m)) {
+      ret = ">=".concat(M, ".0.0").concat(z, " <").concat(+M + 1, ".0.0-0");
+    } else if (isX(p)) {
+      if (M === '0') {
+        ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(+M + 1, ".0.0-0");
+      }
+    } else if (pr) {
+      debug_1('replaceCaret pr', pr);
+
+      if (M === '0') {
+        if (m === '0') {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
+        } else {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+        }
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(+M + 1, ".0.0-0");
+      }
+    } else {
+      debug_1('no pr');
+
+      if (M === '0') {
+        if (m === '0') {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
+        } else {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
+        }
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(+M + 1, ".0.0-0");
+      }
+    }
+
+    debug_1('caret return', ret);
+    return ret;
+  });
+};
+
+var replaceXRanges = function replaceXRanges(comp, options) {
+  debug_1('replaceXRanges', comp, options);
+  return comp.split(/\s+/).map(function (comp) {
+    return replaceXRange(comp, options);
+  }).join(' ');
+};
+
+var replaceXRange = function replaceXRange(comp, options) {
+  comp = comp.trim();
+  var r = options.loose ? re$3[t$3.XRANGELOOSE] : re$3[t$3.XRANGE];
+  return comp.replace(r, function (ret, gtlt, M, m, p, pr) {
+    debug_1('xRange', comp, ret, gtlt, M, m, p, pr);
+    var xM = isX(M);
+    var xm = xM || isX(m);
+    var xp = xm || isX(p);
+    var anyX = xp;
+
+    if (gtlt === '=' && anyX) {
+      gtlt = '';
+    } // if we're including prereleases in the match, then we need
+    // to fix this to -0, the lowest possible prerelease value
+
+
+    pr = options.includePrerelease ? '-0' : '';
+
+    if (xM) {
+      if (gtlt === '>' || gtlt === '<') {
+        // nothing is allowed
+        ret = '<0.0.0-0';
+      } else {
+        // nothing is forbidden
+        ret = '*';
+      }
+    } else if (gtlt && anyX) {
+      // we know patch is an x, because we have any x at all.
+      // replace X with 0
+      if (xm) {
+        m = 0;
+      }
+
+      p = 0;
+
+      if (gtlt === '>') {
+        // >1 => >=2.0.0
+        // >1.2 => >=1.3.0
+        gtlt = '>=';
+
+        if (xm) {
+          M = +M + 1;
+          m = 0;
+          p = 0;
+        } else {
+          m = +m + 1;
+          p = 0;
+        }
+      } else if (gtlt === '<=') {
+        // <=0.7.x is actually <0.8.0, since any 0.7.x should
+        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
+        gtlt = '<';
+
+        if (xm) {
+          M = +M + 1;
+        } else {
+          m = +m + 1;
+        }
+      }
+
+      if (gtlt === '<') pr = '-0';
+      ret = "".concat(gtlt + M, ".").concat(m, ".").concat(p).concat(pr);
+    } else if (xm) {
+      ret = ">=".concat(M, ".0.0").concat(pr, " <").concat(+M + 1, ".0.0-0");
+    } else if (xp) {
+      ret = ">=".concat(M, ".").concat(m, ".0").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    }
+
+    debug_1('xRange return', ret);
+    return ret;
+  });
+}; // Because * is AND-ed with everything else in the comparator,
+// and '' means "any version", just remove the *s entirely.
+
+
+var replaceStars = function replaceStars(comp, options) {
+  debug_1('replaceStars', comp, options); // Looseness is ignored here.  star is always as loose as it gets!
+
+  return comp.trim().replace(re$3[t$3.STAR], '');
+};
+
+var replaceGTE0 = function replaceGTE0(comp, options) {
+  debug_1('replaceGTE0', comp, options);
+  return comp.trim().replace(re$3[options.includePrerelease ? t$3.GTE0PRE : t$3.GTE0], '');
+}; // This function is passed to string.replace(re[t.HYPHENRANGE])
+// M, m, patch, prerelease, build
+// 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
+// 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
+// 1.2 - 3.4 => >=1.2.0 <3.5.0-0
+
+
+var hyphenReplace = function hyphenReplace(incPr) {
+  return function ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) {
+    if (isX(fM)) {
+      from = '';
+    } else if (isX(fm)) {
+      from = ">=".concat(fM, ".0.0").concat(incPr ? '-0' : '');
+    } else if (isX(fp)) {
+      from = ">=".concat(fM, ".").concat(fm, ".0").concat(incPr ? '-0' : '');
+    } else if (fpr) {
+      from = ">=".concat(from);
+    } else {
+      from = ">=".concat(from).concat(incPr ? '-0' : '');
+    }
+
+    if (isX(tM)) {
+      to = '';
+    } else if (isX(tm)) {
+      to = "<".concat(+tM + 1, ".0.0-0");
+    } else if (isX(tp)) {
+      to = "<".concat(tM, ".").concat(+tm + 1, ".0-0");
+    } else if (tpr) {
+      to = "<=".concat(tM, ".").concat(tm, ".").concat(tp, "-").concat(tpr);
+    } else if (incPr) {
+      to = "<".concat(tM, ".").concat(tm, ".").concat(+tp + 1, "-0");
+    } else {
+      to = "<=".concat(to);
+    }
+
+    return "".concat(from, " ").concat(to).trim();
+  };
+};
+
+var testSet = function testSet(set, version, options) {
+  for (var i = 0; i < set.length; i++) {
+    if (!set[i].test(version)) {
+      return false;
+    }
+  }
+
+  if (version.prerelease.length && !options.includePrerelease) {
+    // Find the set of versions that are allowed to have prereleases
+    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
+    // That should allow `1.2.3-pr.2` to pass.
+    // However, `1.2.4-alpha.notready` should NOT be allowed,
+    // even though it's within the range set by the comparators.
+    for (var _i = 0; _i < set.length; _i++) {
+      debug_1(set[_i].semver);
+
+      if (set[_i].semver === comparator.ANY) {
+        continue;
+      }
+
+      if (set[_i].semver.prerelease.length > 0) {
+        var allowed = set[_i].semver;
+
+        if (allowed.major === version.major && allowed.minor === version.minor && allowed.patch === version.patch) {
+          return true;
+        }
+      }
+    } // Version has a -pre, but it's not one of the ones we like.
+
+
+    return false;
+  }
+
+  return true;
+};
+
+var ANY = Symbol('SemVer ANY'); // hoisted class for cyclic dependency
+
+var Comparator = /*#__PURE__*/function () {
+  _createClass(Comparator, null, [{
+    key: "ANY",
+    get: function get() {
+      return ANY;
+    }
+  }]);
+
+  function Comparator(comp, options) {
+    _classCallCheck(this, Comparator);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (comp instanceof Comparator) {
+      if (comp.loose === !!options.loose) {
+        return comp;
+      } else {
+        comp = comp.value;
+      }
+    }
+
+    debug_1('comparator', comp, options);
+    this.options = options;
+    this.loose = !!options.loose;
+    this.parse(comp);
+
+    if (this.semver === ANY) {
+      this.value = '';
+    } else {
+      this.value = this.operator + this.semver.version;
+    }
+
+    debug_1('comp', this);
+  }
+
+  _createClass(Comparator, [{
+    key: "parse",
+    value: function parse(comp) {
+      var r = this.options.loose ? re$4[t$4.COMPARATORLOOSE] : re$4[t$4.COMPARATOR];
+      var m = comp.match(r);
+
+      if (!m) {
+        throw new TypeError("Invalid comparator: ".concat(comp));
+      }
+
+      this.operator = m[1] !== undefined ? m[1] : '';
+
+      if (this.operator === '=') {
+        this.operator = '';
+      } // if it literally is just '>' or '' then allow anything.
+
+
+      if (!m[2]) {
+        this.semver = ANY;
+      } else {
+        this.semver = new semver(m[2], this.options.loose);
+      }
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value;
+    }
+  }, {
+    key: "test",
+    value: function test(version) {
+      debug_1('Comparator.test', version, this.options.loose);
+
+      if (this.semver === ANY || version === ANY) {
+        return true;
+      }
+
+      if (typeof version === 'string') {
+        try {
+          version = new semver(version, this.options);
+        } catch (er) {
+          return false;
+        }
+      }
+
+      return cmp_1(version, this.operator, this.semver, this.options);
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(comp, options) {
+      if (!(comp instanceof Comparator)) {
+        throw new TypeError('a Comparator is required');
+      }
+
+      if (!options || _typeof(options) !== 'object') {
+        options = {
+          loose: !!options,
+          includePrerelease: false
+        };
+      }
+
+      if (this.operator === '') {
+        if (this.value === '') {
+          return true;
+        }
+
+        return new range(comp.value, options).test(this.value);
+      } else if (comp.operator === '') {
+        if (comp.value === '') {
+          return true;
+        }
+
+        return new range(this.value, options).test(comp.semver);
+      }
+
+      var sameDirectionIncreasing = (this.operator === '>=' || this.operator === '>') && (comp.operator === '>=' || comp.operator === '>');
+      var sameDirectionDecreasing = (this.operator === '<=' || this.operator === '<') && (comp.operator === '<=' || comp.operator === '<');
+      var sameSemVer = this.semver.version === comp.semver.version;
+      var differentDirectionsInclusive = (this.operator === '>=' || this.operator === '<=') && (comp.operator === '>=' || comp.operator === '<=');
+      var oppositeDirectionsLessThan = cmp_1(this.semver, '<', comp.semver, options) && (this.operator === '>=' || this.operator === '>') && (comp.operator === '<=' || comp.operator === '<');
+      var oppositeDirectionsGreaterThan = cmp_1(this.semver, '>', comp.semver, options) && (this.operator === '<=' || this.operator === '<') && (comp.operator === '>=' || comp.operator === '>');
+      return sameDirectionIncreasing || sameDirectionDecreasing || sameSemVer && differentDirectionsInclusive || oppositeDirectionsLessThan || oppositeDirectionsGreaterThan;
+    }
+  }]);
+
+  return Comparator;
+}();
+
+var comparator = Comparator;
+var re$4 = re_1.re,
+    t$4 = re_1.t;
+
+var satisfies = function satisfies(version, range$1, options) {
+  try {
+    range$1 = new range(range$1, options);
+  } catch (er) {
+    return false;
+  }
+
+  return range$1.test(version);
+};
+
+var satisfies_1 = satisfies;
+
+var toComparators = function toComparators(range$1, options) {
+  return new range(range$1, options).set.map(function (comp) {
+    return comp.map(function (c) {
+      return c.value;
+    }).join(' ').trim().split(' ');
+  });
+};
+
+var toComparators_1 = toComparators;
+
+var maxSatisfying = function maxSatisfying(versions, range$1, options) {
+  var max = null;
+  var maxSV = null;
+  var rangeObj = null;
+
+  try {
+    rangeObj = new range(range$1, options);
+  } catch (er) {
+    return null;
+  }
+
+  versions.forEach(function (v) {
+    if (rangeObj.test(v)) {
+      // satisfies(v, range, options)
+      if (!max || maxSV.compare(v) === -1) {
+        // compare(max, v, true)
+        max = v;
+        maxSV = new semver(max, options);
+      }
+    }
+  });
+  return max;
+};
+
+var maxSatisfying_1 = maxSatisfying;
+
+var minSatisfying = function minSatisfying(versions, range$1, options) {
+  var min = null;
+  var minSV = null;
+  var rangeObj = null;
+
+  try {
+    rangeObj = new range(range$1, options);
+  } catch (er) {
+    return null;
+  }
+
+  versions.forEach(function (v) {
+    if (rangeObj.test(v)) {
+      // satisfies(v, range, options)
+      if (!min || minSV.compare(v) === 1) {
+        // compare(min, v, true)
+        min = v;
+        minSV = new semver(min, options);
+      }
+    }
+  });
+  return min;
+};
+
+var minSatisfying_1 = minSatisfying;
+
+var minVersion = function minVersion(range$1, loose) {
+  range$1 = new range(range$1, loose);
+  var minver = new semver('0.0.0');
+
+  if (range$1.test(minver)) {
+    return minver;
+  }
+
+  minver = new semver('0.0.0-0');
+
+  if (range$1.test(minver)) {
+    return minver;
+  }
+
+  minver = null;
+
+  for (var i = 0; i < range$1.set.length; ++i) {
+    var comparators = range$1.set[i];
+    comparators.forEach(function (comparator) {
+      // Clone to avoid manipulating the comparator's semver object.
+      var compver = new semver(comparator.semver.version);
+
+      switch (comparator.operator) {
+        case '>':
+          if (compver.prerelease.length === 0) {
+            compver.patch++;
+          } else {
+            compver.prerelease.push(0);
+          }
+
+          compver.raw = compver.format();
+
+        /* fallthrough */
+
+        case '':
+        case '>=':
+          if (!minver || gt_1(minver, compver)) {
+            minver = compver;
+          }
+
+          break;
+
+        case '<':
+        case '<=':
+          /* Ignore maximum versions */
+          break;
+
+        /* istanbul ignore next */
+
+        default:
+          throw new Error("Unexpected operation: ".concat(comparator.operator));
+      }
+    });
+  }
+
+  if (minver && range$1.test(minver)) {
+    return minver;
+  }
+
+  return null;
+};
+
+var minVersion_1 = minVersion;
+
+var validRange = function validRange(range$1, options) {
+  try {
+    // Return '*' instead of '' so that truthiness works.
+    // This will throw if it's invalid anyway
+    return new range(range$1, options).range || '*';
+  } catch (er) {
+    return null;
+  }
+};
+
+var valid$1 = validRange;
+
+var ANY$1 = comparator.ANY;
+
+var outside = function outside(version, range$1, hilo, options) {
+  version = new semver(version, options);
+  range$1 = new range(range$1, options);
+  var gtfn, ltefn, ltfn, comp, ecomp;
+
+  switch (hilo) {
+    case '>':
+      gtfn = gt_1;
+      ltefn = lte_1;
+      ltfn = lt_1;
+      comp = '>';
+      ecomp = '>=';
+      break;
+
+    case '<':
+      gtfn = lt_1;
+      ltefn = gte_1;
+      ltfn = gt_1;
+      comp = '<';
+      ecomp = '<=';
+      break;
+
+    default:
+      throw new TypeError('Must provide a hilo val of "<" or ">"');
+  } // If it satisifes the range it is not outside
+
+
+  if (satisfies_1(version, range$1, options)) {
+    return false;
+  } // From now on, variable terms are as if we're in "gtr" mode.
+  // but note that everything is flipped for the "ltr" function.
+
+
+  var _loop = function _loop(i) {
+    var comparators = range$1.set[i];
+    var high = null;
+    var low = null;
+    comparators.forEach(function (comparator$1) {
+      if (comparator$1.semver === ANY$1) {
+        comparator$1 = new comparator('>=0.0.0');
+      }
+
+      high = high || comparator$1;
+      low = low || comparator$1;
+
+      if (gtfn(comparator$1.semver, high.semver, options)) {
+        high = comparator$1;
+      } else if (ltfn(comparator$1.semver, low.semver, options)) {
+        low = comparator$1;
+      }
+    }); // If the edge version comparator has a operator then our version
+    // isn't outside it
+
+    if (high.operator === comp || high.operator === ecomp) {
+      return {
+        v: false
+      };
+    } // If the lowest version comparator has an operator and our version
+    // is less than it then it isn't higher than the range
+
+
+    if ((!low.operator || low.operator === comp) && ltefn(version, low.semver)) {
+      return {
+        v: false
+      };
+    } else if (low.operator === ecomp && ltfn(version, low.semver)) {
+      return {
+        v: false
+      };
+    }
+  };
+
+  for (var i = 0; i < range$1.set.length; ++i) {
+    var _ret = _loop(i);
+
+    if (_typeof(_ret) === "object") return _ret.v;
+  }
+
+  return true;
+};
+
+var outside_1 = outside;
+
+var gtr = function gtr(version, range, options) {
+  return outside_1(version, range, '>', options);
+};
+
+var gtr_1 = gtr;
+
+var ltr = function ltr(version, range, options) {
+  return outside_1(version, range, '<', options);
+};
+
+var ltr_1 = ltr;
+
+var intersects = function intersects(r1, r2, options) {
+  r1 = new range(r1, options);
+  r2 = new range(r2, options);
+  return r1.intersects(r2);
+};
+
+var intersects_1 = intersects;
+
+// that includes the same versions that the original range does
+// If the original range is shorter than the simplified one, return that.
+
+var simplify = function simplify(versions, range, options) {
+  var set = [];
+  var min = null;
+  var prev = null;
+  var v = versions.sort(function (a, b) {
+    return compare_1(a, b, options);
+  });
+
+  var _iterator = _createForOfIteratorHelper(v),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var version = _step.value;
+      var included = satisfies_1(version, range, options);
+
+      if (included) {
+        prev = version;
+        if (!min) min = version;
+      } else {
+        if (prev) {
+          set.push([min, prev]);
+        }
+
+        prev = null;
+        min = null;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (min) set.push([min, null]);
+  var ranges = [];
+
+  for (var _i = 0, _set = set; _i < _set.length; _i++) {
+    var _set$_i = _slicedToArray(_set[_i], 2),
+        _min = _set$_i[0],
+        max = _set$_i[1];
+
+    if (_min === max) ranges.push(_min);else if (!max && _min === v[0]) ranges.push('*');else if (!max) ranges.push(">=".concat(_min));else if (_min === v[0]) ranges.push("<=".concat(max));else ranges.push("".concat(_min, " - ").concat(max));
+  }
+
+  var simplified = ranges.join(' || ');
+  var original = typeof range.raw === 'string' ? range.raw : String(range);
+  return simplified.length < original.length ? simplified : range;
+};
+
+var ANY$2 = comparator.ANY; // Complex range `r1 || r2 || ...` is a subset of `R1 || R2 || ...` iff:
+// - Every simple range `r1, r2, ...` is a subset of some `R1, R2, ...`
+//
+// Simple range `c1 c2 ...` is a subset of simple range `C1 C2 ...` iff:
+// - If c is only the ANY comparator
+//   - If C is only the ANY comparator, return true
+//   - Else return false
+// - Let EQ be the set of = comparators in c
+// - If EQ is more than one, return true (null set)
+// - Let GT be the highest > or >= comparator in c
+// - Let LT be the lowest < or <= comparator in c
+// - If GT and LT, and GT.semver > LT.semver, return true (null set)
+// - If EQ
+//   - If GT, and EQ does not satisfy GT, return true (null set)
+//   - If LT, and EQ does not satisfy LT, return true (null set)
+//   - If EQ satisfies every C, return true
+//   - Else return false
+// - If GT
+//   - If GT is lower than any > or >= comp in C, return false
+//   - If GT is >=, and GT.semver does not satisfy every C, return false
+// - If LT
+//   - If LT.semver is greater than that of any > comp in C, return false
+//   - If LT is <=, and LT.semver does not satisfy every C, return false
+// - If any C is a = range, and GT or LT are set, return false
+// - Else return true
+
+var subset = function subset(sub, dom, options) {
+  sub = new range(sub, options);
+  dom = new range(dom, options);
+  var sawNonNull = false;
+
+  var _iterator = _createForOfIteratorHelper(sub.set),
+      _step;
+
+  try {
+    OUTER: for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var simpleSub = _step.value;
+
+      var _iterator2 = _createForOfIteratorHelper(dom.set),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var simpleDom = _step2.value;
+          var isSub = simpleSubset(simpleSub, simpleDom, options);
+          sawNonNull = sawNonNull || isSub !== null;
+          if (isSub) continue OUTER;
+        } // the null set is a subset of everything, but null simple ranges in
+        // a complex range should be ignored.  so if we saw a non-null range,
+        // then we know this isn't a subset, but if EVERY simple range was null,
+        // then it is a subset.
+
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      if (sawNonNull) return false;
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+};
+
+var simpleSubset = function simpleSubset(sub, dom, options) {
+  if (sub.length === 1 && sub[0].semver === ANY$2) return dom.length === 1 && dom[0].semver === ANY$2;
+  var eqSet = new Set();
+  var gt, lt;
+
+  var _iterator3 = _createForOfIteratorHelper(sub),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var c = _step3.value;
+      if (c.operator === '>' || c.operator === '>=') gt = higherGT(gt, c, options);else if (c.operator === '<' || c.operator === '<=') lt = lowerLT(lt, c, options);else eqSet.add(c.semver);
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+
+  if (eqSet.size > 1) return null;
+  var gtltComp;
+
+  if (gt && lt) {
+    gtltComp = compare_1(gt.semver, lt.semver, options);
+    if (gtltComp > 0) return null;else if (gtltComp === 0 && (gt.operator !== '>=' || lt.operator !== '<=')) return null;
+  } // will iterate one or zero times
+
+
+  var _iterator4 = _createForOfIteratorHelper(eqSet),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var eq = _step4.value;
+      if (gt && !satisfies_1(eq, String(gt), options)) return null;
+      if (lt && !satisfies_1(eq, String(lt), options)) return null;
+
+      var _iterator6 = _createForOfIteratorHelper(dom),
+          _step6;
+
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var _c = _step6.value;
+          if (!satisfies_1(eq, String(_c), options)) return false;
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+
+      return true;
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+
+  var higher, lower;
+  var hasDomLT, hasDomGT;
+
+  var _iterator5 = _createForOfIteratorHelper(dom),
+      _step5;
+
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var _c2 = _step5.value;
+      hasDomGT = hasDomGT || _c2.operator === '>' || _c2.operator === '>=';
+      hasDomLT = hasDomLT || _c2.operator === '<' || _c2.operator === '<=';
+
+      if (gt) {
+        if (_c2.operator === '>' || _c2.operator === '>=') {
+          higher = higherGT(gt, _c2, options);
+          if (higher === _c2) return false;
+        } else if (gt.operator === '>=' && !satisfies_1(gt.semver, String(_c2), options)) return false;
+      }
+
+      if (lt) {
+        if (_c2.operator === '<' || _c2.operator === '<=') {
+          lower = lowerLT(lt, _c2, options);
+          if (lower === _c2) return false;
+        } else if (lt.operator === '<=' && !satisfies_1(lt.semver, String(_c2), options)) return false;
+      }
+
+      if (!_c2.operator && (lt || gt) && gtltComp !== 0) return false;
+    } // if there was a < or >, and nothing in the dom, then must be false
+    // UNLESS it was limited by another range in the other direction.
+    // Eg, >1.0.0 <1.0.1 is still a subset of <2.0.0
+
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
+
+  if (gt && hasDomLT && !lt && gtltComp !== 0) return false;
+  if (lt && hasDomGT && !gt && gtltComp !== 0) return false;
+  return true;
+}; // >=1.2.3 is lower than >1.2.3
+
+
+var higherGT = function higherGT(a, b, options) {
+  if (!a) return b;
+  var comp = compare_1(a.semver, b.semver, options);
+  return comp > 0 ? a : comp < 0 ? b : b.operator === '>' && a.operator === '>=' ? b : a;
+}; // <=1.2.3 is higher than <1.2.3
+
+
+var lowerLT = function lowerLT(a, b, options) {
+  if (!a) return b;
+  var comp = compare_1(a.semver, b.semver, options);
+  return comp < 0 ? a : comp > 0 ? b : b.operator === '<' && a.operator === '<=' ? b : a;
+};
+
+var subset_1 = subset;
+
+var semver$1 = {
+  re: re_1.re,
+  src: re_1.src,
+  tokens: re_1.t,
+  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
+  SemVer: semver,
+  compareIdentifiers: identifiers.compareIdentifiers,
+  rcompareIdentifiers: identifiers.rcompareIdentifiers,
+  parse: parse_1,
+  valid: valid_1,
+  clean: clean_1,
+  inc: inc_1,
+  diff: diff_1,
+  major: major_1,
+  minor: minor_1,
+  patch: patch_1,
+  prerelease: prerelease_1,
+  compare: compare_1,
+  rcompare: rcompare_1,
+  compareLoose: compareLoose_1,
+  compareBuild: compareBuild_1,
+  sort: sort_1,
+  rsort: rsort_1,
+  gt: gt_1,
+  lt: lt_1,
+  eq: eq_1,
+  neq: neq_1,
+  gte: gte_1,
+  lte: lte_1,
+  cmp: cmp_1,
+  coerce: coerce_1,
+  Comparator: comparator,
+  Range: range,
+  satisfies: satisfies_1,
+  toComparators: toComparators_1,
+  maxSatisfying: maxSatisfying_1,
+  minSatisfying: minSatisfying_1,
+  minVersion: minVersion_1,
+  validRange: valid$1,
+  outside: outside_1,
+  gtr: gtr_1,
+  ltr: ltr_1,
+  intersects: intersects_1,
+  simplifyRange: simplify,
+  subset: subset_1
+};
+
+(function () {
+  /**
+   * Install plugin
+   * @param app
+   * @param axios
+   */
+  function plugin(app, axios) {
+    if (plugin.installed) {
+      return;
+    }
+
+    if (!axios) {
+      console.error('You have to install axios');
+      return;
+    }
+
+    if (semver$1.valid(app.version) == null) {
+      console.error('Unkown vue version');
+      return;
+    }
+
+    plugin.installed = true;
+
+    if (semver$1.lt(app.version, '3.0.0')) {
+      Object.defineProperties(app.prototype, {
+        axios: {
+          get: function get() {
+            return axios;
+          }
+        },
+        $http: {
+          get: function get() {
+            return axios;
+          }
+        }
+      });
+    } else {
+      app.config.globalProperties.axios = axios;
+      app.config.globalProperties.$http = axios;
+    }
+
+    app.axios = axios;
+    app.$http = axios;
+  }
+
+  if (( false ? undefined : _typeof(exports)) == "object") {
+    module.exports = plugin;
+  } else if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return plugin;
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+})();
+
+//# sourceMappingURL=vue-axios.es5.js.map
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37522,32 +40109,323 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-danger",
+      attrs: { type: "button" },
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v("Nay\n")]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-success",
+      attrs: { type: "button" },
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v("Yay\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "motion-content" }, [
+    _c("h3", [_vm._v(_vm._s(_vm.content))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "description" }, [
+    _c("h5", [_vm._v(_vm._s(_vm.description))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "required-vote" }, [
+    _c("p", [
+      _vm._v("This motion requires "),
+      _c("strong", [_vm._v(_vm._s(_vm.requiredText))]),
+      _vm._v(" to pass")
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "vote-receipt" }, [
+    _c("p", [_vm._v("Your vote has been recorded.")]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "The fact that your vote was counted can be verified with this receipt:"
+      )
+    ]),
+    _vm._v(" "),
+    _c("p", [_c("strong", [_vm._v(_vm._s(_vm.receipt))])]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "Please record this receipt. Once you leave this page, it will not be possible to\n        retrieve it. "
+      )
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "The receipt is not linked to you in the database.\n        You are the only one who knows it belongs to you. If you lose it, it will be\n    impossible to retrieve."
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "button-area" },
+    [
+      _c("yay-button", { on: { "yay-clicked": _vm.handleYay } }),
+      _vm._v(" "),
+      _c("nay-button", { on: { "nay-clicked": _vm.handleNay } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "vote-page" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col" },
+        [_c("motion-content", { attrs: { motion: _vm.motion } })],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col" },
+        [_c("motion-description", { attrs: { motion: _vm.motion } })],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "controls row" }, [
+      _c("div", { staticClass: "col" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col" },
+        [
+          _vm.vote
+            ? _c("vote-receipt", { attrs: { receipt: _vm.receipt } })
+            : _c("vote-buttons", {
+                attrs: { motion: _vm.motion },
+                on: {
+                  "yay-clicked": _vm.handleYay,
+                  "nay-clicked": _vm.handleNay
+                }
+              })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "instructions row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("p", [_vm._v(_vm._s(_vm.instructions))])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col" },
+        [_c("required-vote", { attrs: { motion: _vm.motion } })],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "voteomatic" },
+    [
+      !_vm.isSetup
+        ? _c("vote-page", { attrs: { motion: _vm.motion } })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49720,9 +52598,15 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49731,6 +52615,44 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ API ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; //
+// window.axios.defaults.baseURL = routeRoot;
+//
+// // This wrapper bind axios to Vue or this if you're using single file component.
+
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_0___default.a);
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+// import VueRouter from 'vue-router'
+// Vue.use( VueRouter );
+//
+// // Define some routes
+// // Each route should map to a component. The "component" can
+// // either be an actual component constructor created via
+// // Vue.extend(), or just a component options object.
+// import { routes } from './routes';
+//
+// // Create the router instance and pass the `routes` option
+// const router = new VueRouter( {
+//     routes, // short for routes: routes
+//     base: window.routeRoot
+// } );
+//
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STORE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
+// import store from './store';
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+// import AsyncComputed from 'vue-async-computed'
+// Vue.use(AsyncComputed)
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -49740,8 +52662,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Top level components
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('voteomatic', __webpack_require__(/*! ./components/voteomatic */ "./resources/js/components/voteomatic.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49749,7 +52672,8 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app' // store: store
+
 });
 
 /***/ }),
@@ -49799,17 +52723,501 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
-  \******************************************************/
+/***/ "./resources/js/components/controls/nay-button.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/controls/nay-button.vue ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./nay-button.vue?vue&type=template&id=022ca892&scoped=true& */ "./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true&");
+/* harmony import */ var _nay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nay-button.vue?vue&type=script&lang=js& */ "./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _nay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "022ca892",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/controls/nay-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./nay-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/nay-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./nay-button.vue?vue&type=template&id=022ca892&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/nay-button.vue?vue&type=template&id=022ca892&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nay_button_vue_vue_type_template_id_022ca892_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/yay-button.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/controls/yay-button.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./yay-button.vue?vue&type=template&id=991d54e8&scoped=true& */ "./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true&");
+/* harmony import */ var _yay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./yay-button.vue?vue&type=script&lang=js& */ "./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _yay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "991d54e8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/controls/yay-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./yay-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./yay-button.vue?vue&type=template&id=991d54e8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_template_id_991d54e8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-content.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-content.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-content.vue?vue&type=template&id=5e479f18&scoped=true& */ "./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true&");
+/* harmony import */ var _motion_content_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-content.vue?vue&type=script&lang=js& */ "./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _motion_content_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5e479f18",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/text-display/motion-content.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_content_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-content.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_content_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-content.vue?vue&type=template&id=5e479f18&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_content_vue_vue_type_template_id_5e479f18_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-description.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-description.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-description.vue?vue&type=template&id=fc1d4612&scoped=true& */ "./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true&");
+/* harmony import */ var _motion_description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-description.vue?vue&type=script&lang=js& */ "./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _motion_description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "fc1d4612",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/text-display/motion-description.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-description.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-description.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-description.vue?vue&type=template&id=fc1d4612&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-description.vue?vue&type=template&id=fc1d4612&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_description_vue_vue_type_template_id_fc1d4612_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/required-vote.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/text-display/required-vote.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./required-vote.vue?vue&type=template&id=1c3da636&scoped=true& */ "./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true&");
+/* harmony import */ var _required_vote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./required-vote.vue?vue&type=script&lang=js& */ "./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _required_vote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1c3da636",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/text-display/required-vote.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./required-vote.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/required-vote.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./required-vote.vue?vue&type=template&id=1c3da636&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/required-vote.vue?vue&type=template&id=1c3da636&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_vue_vue_type_template_id_1c3da636_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/vote-receipt.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/text-display/vote-receipt.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true& */ "./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true&");
+/* harmony import */ var _vote_receipt_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-receipt.vue?vue&type=script&lang=js& */ "./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _vote_receipt_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "79f21b32",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/text-display/vote-receipt.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_receipt_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./vote-receipt.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/vote-receipt.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_receipt_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/vote-receipt.vue?vue&type=template&id=79f21b32&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_receipt_vue_vue_type_template_id_79f21b32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-buttons.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/vote-buttons.vue ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true& */ "./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true&");
+/* harmony import */ var _vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-buttons.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-buttons.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1e02c72e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/vote-buttons.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-buttons.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/vote-buttons.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./vote-buttons.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-buttons.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_buttons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-buttons.vue?vue&type=template&id=1e02c72e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_buttons_vue_vue_type_template_id_1e02c72e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-page.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/vote-page.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vote-page.vue?vue&type=template&id=6063d4d7&scoped=true& */ "./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true&");
+/* harmony import */ var _vote_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-page.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-page.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -49819,52 +53227,308 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _vote_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "6063d4d7",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
+component.options.__file = "resources/js/components/vote-page.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/components/vote-page.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/vote-page.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./vote-page.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-page.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true& ***!
+  \******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./vote-page.vue?vue&type=template&id=6063d4d7&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/vote-page.vue?vue&type=template&id=6063d4d7&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_page_vue_vue_type_template_id_6063d4d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/voteomatic.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/voteomatic.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true& */ "./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true&");
+/* harmony import */ var _voteomatic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./voteomatic.vue?vue&type=script&lang=js& */ "./resources/js/components/voteomatic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _voteomatic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "b8f19e40",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/voteomatic.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/voteomatic.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/voteomatic.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./voteomatic.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/voteomatic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/models/IModel.js":
+/*!***************************************!*\
+  !*** ./resources/js/models/IModel.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IModel; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * The base class for all models
+ */
+var IModel =
+/**
+ * Create a new exam object
+ * @param params
+ */
+function IModel() {
+  _classCallCheck(this, IModel);
+};
+
+
+;
+
+/***/ }),
+
+/***/ "./resources/js/models/Motion.js":
+/*!***************************************!*\
+  !*** ./resources/js/models/Motion.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Motion; });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Motion = /*#__PURE__*/function (_IModel) {
+  _inherits(Motion, _IModel);
+
+  var _super = _createSuper(Motion);
+
+  /**
+   * Create a new motion
+   * @param params
+   */
+  function Motion(id, content, description, requires) {
+    var _this;
+
+    _classCallCheck(this, Motion);
+
+    _this = _super.call(this);
+    _this.id = id;
+    _this.content = content;
+    _this.description = description;
+    _this.requires = requires;
+    return _this;
+  }
+
+  return Motion;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+;
+
+/***/ }),
+
+/***/ "./resources/js/models/Vote.js":
+/*!*************************************!*\
+  !*** ./resources/js/models/Vote.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Vote; });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Vote = /*#__PURE__*/function (_IModel) {
+  _inherits(Vote, _IModel);
+
+  var _super = _createSuper(Vote);
+
+  /**
+   * Create a new motion
+   * @param params
+   */
+  function Vote(isYay, receipt) {
+    var _this;
+
+    _classCallCheck(this, Vote);
+
+    _this = _super.call(this);
+    _this.isYay = isYay;
+    _this.receipt = receipt;
+    return _this;
+  }
+
+  return Vote;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/routes.js":
+/*!********************************!*\
+  !*** ./resources/js/routes.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Ensure that the base url ends with a '/'
+ * as expected by all the route methods
+ * @param url
+ */
+var normalizedRouteRoot = function normalizedRouteRoot() {
+  var url = window.routeRoot;
+  if (url[url.length] === '/') return url;
+  return url + '/';
+};
+/**
+ * This holds all information about which
+ * routing urls are used for what purposes.
+ *
+ */
+
+
+module.exports = {
+  results: {
+    getResults: function getResults(motionId) {
+      return normalizedRouteRoot() + '';
+    }
+  },
+  votes: {
+    recordVote: function recordVote(motionId) {
+      return normalizedRouteRoot() + 'record-vote/' + motionId;
+    }
+  }
+};
 
 /***/ }),
 

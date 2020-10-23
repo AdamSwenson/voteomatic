@@ -52,4 +52,12 @@ class User extends Authenticatable
 
     }
 
+    public function recordedVoteRecord(){
+        return $this->hasMany(RecordedVoteRecord::class);
+    }
+
+    public function votes(){
+        //todo remove this
+        return $this->hasMany(Vote::class);
+    }
 }
