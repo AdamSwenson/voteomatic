@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Meeting;
+use App\Models\Motion;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(10)->create();
+        Meeting::factory(2)->create();
+        Motion::factory(3)->create();
     }
 }
