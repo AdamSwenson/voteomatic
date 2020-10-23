@@ -17,6 +17,6 @@ class EntryController extends Controller
 
     public function loginTest(Request $request)
     {
-        return view('entry', ['date' => $request]);
+        return view('entry', ['data' => $request]);
     }
 }
