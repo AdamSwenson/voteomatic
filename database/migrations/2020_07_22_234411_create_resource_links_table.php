@@ -24,7 +24,7 @@ class CreateResourceLinksTable extends Migration
              * For example, if the provider were a chat room app,
              * then each resource_link_id would be a separate room.
              */
-            $table->bigInteger('resource_link_id')->nullable();
+            $table->text('resource_link_id')->nullable();
 
             $table->id();
 
