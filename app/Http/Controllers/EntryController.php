@@ -18,13 +18,13 @@ class EntryController extends Controller
 
     public function loginTest(Request $request)
     {
-        Log::info($request);
+        Log::debug($request);
         return view('entry', ['data' => $request]);
     }
 
     public function lticonfig(Request $request)
     {
-        Log::info($request);
+        Log::debug($request);
 
         return response(file_get_contents(resource_path('lticonfig.xml')), 200, [
             'Content-Type' => 'application/xml'
