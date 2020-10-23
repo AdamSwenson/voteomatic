@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         Meeting::factory(2)->create();
         Motion::factory(3)->create();
 
-        ResourceLink::factory()->create();
+        ResourceLink::factory(['resource_link_id' => "4f7d7beaced17c12e252c18b003c5200176a81b0"])->create();
     }
 }

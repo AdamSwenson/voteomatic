@@ -16,9 +16,16 @@ class CreateResourceLinksTable extends Migration
         Schema::create('resource_links', function (Blueprint $table) {
 
             /**
-             * This will be used unique id referencing the link, or "placement", of the app in the consumer. If an app was added twice to the same class, each placement would send a different id, and should be considered a unique "launch". For example, if the provider were a chat room app, then each resource_link_id would be a separate room.
+             * This will be used unique id referencing the link,
+             * or "placement", of the app in the consumer.
+             * If an app was added twice to the same class,
+             * each placement would send a different id, and should be
+             * considered a unique "launch".
+             * For example, if the provider were a chat room app,
+             * then each resource_link_id would be a separate room.
              */
-//            $table->bigInteger('resource_link_id')->nullable();
+            $table->bigInteger('resource_link_id')->nullable();
+
             $table->id();
 
             $table->timestamps();

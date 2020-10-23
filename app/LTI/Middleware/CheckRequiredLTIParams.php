@@ -5,6 +5,7 @@ namespace App\LTI\Middleware;
 
 
 use Closure;
+use Illuminate\Http\Request;
 
 /**
  * Class CheckRequiredLTIParams
@@ -20,12 +21,13 @@ class CheckRequiredLTIParams
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
+
         return $next($request);
     }
 

@@ -5,6 +5,7 @@ namespace App\LTI\Exceptions;
 
 use Exception;
 
+
 /**
  * Class LTIAuthenticationException
  * Parent for all failures to authenticate via LTI

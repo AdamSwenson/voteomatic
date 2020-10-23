@@ -64,7 +64,7 @@ class LTILaunchController extends Controller
 
             //We verify that the oath signature on the incoming post
             //request is valid
-            $resourceLink = ResourceLink::where(['id' => $request->resource_link_id])
+            $resourceLink = ResourceLink::where(['resource_link_id' => $request->resource_link_id])
                 ->firstOrFail();
             //todo error handling if not found
 

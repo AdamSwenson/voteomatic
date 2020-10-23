@@ -1,6 +1,7 @@
 <?php
 namespace App\LTI\Exceptions;
 
+
 /**
  * Class to represent an %OAuth Exception
  *
@@ -9,5 +10,8 @@ namespace App\LTI\Exceptions;
  * @license https://opensource.org/licenses/MIT The MIT License
  */
 class OAuthException extends LTIAuthenticationException {
-  // pass
+
+    use Throwable;
+
+    // pass
 }
