@@ -19,9 +19,13 @@ const normalizedRouteRoot = () => {
 module.exports = {
 
     results : {
-      getResults : (motionId) => {
-          return normalizedRouteRoot() + ''
-      }
+        getCounts : (motionId) => {
+            return normalizedRouteRoot() + 'results/' + motionId + '/counts'
+        },
+
+        getResults : (motionId) => {
+          return normalizedRouteRoot() + 'results/' + motionId;
+        }
     },
 
     votes : {

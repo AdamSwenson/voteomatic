@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MotionController;
+use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
    ============================= */
-Route::get('/testlog', '\App\Http\Controllers\EntryController@logreturn');
-
+Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn');
+Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
 
 
 /* =============================
@@ -68,6 +69,7 @@ Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVo
 Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@recordVote' );
 
 
+Route::get('results/{motion}/counts', '\App\Http\Controllers\ResultsController@getCounts');
 Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
 
 

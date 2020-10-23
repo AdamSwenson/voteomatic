@@ -17,6 +17,7 @@ class CreateVotesTable extends Migration
             $table->id();
 
             $table->integer('motion_id');
+
             $table->boolean('is_yay')->nullable();
 
             $table->text('receipt')->nullable();

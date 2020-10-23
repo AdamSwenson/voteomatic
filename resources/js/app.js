@@ -45,8 +45,8 @@ Vue.use(VueAxios, axios)
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-// import AsyncComputed from 'vue-async-computed'
-// Vue.use(AsyncComputed)
+import AsyncComputed from 'vue-async-computed'
+Vue.use(AsyncComputed)
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
@@ -64,6 +64,9 @@ Vue.use(VueAxios, axios)
 
 // Top level components
 Vue.component('voteomatic', require('./components/voteomatic').default);
+
+//todo DEV TOP LEVEL
+Vue.component('results', require('./components/results-page').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

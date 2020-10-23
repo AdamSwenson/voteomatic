@@ -24,21 +24,23 @@ class VoteFactory extends Factory
      */
     public function definition()
     {
-        $user = User::factory()->create();
+//        $user = User::factory()->create();
         $motion = Motion::factory()->create();
         $is_yay = ($this->faker->randomNumber() % 2) == 0;
 
 
         $receipt = $this->faker->sha256();
         return [
-                        'user_id' => $user->id,
-                        'motion_id' => $motion->id,
-                        'is_yay' => $is_yay
+//                        'user_id' => $user->id,
+            'motion_id' => $motion->id,
+            'is_yay' => $is_yay,
+            'receipt' => $receipt
             //
         ];
     }
 
-    public function abstention(){
+    public function abstention()
+    {
         return $this->state(function (array $attributes) {
             return [
                 'is_yay' => null,
@@ -50,7 +52,8 @@ class VoteFactory extends Factory
     /**
      * Returns a yay vote
      */
-    public function affirmative(){
+    public function affirmative()
+    {
         return $this->state(function (array $attributes) {
             return [
                 'is_yay' => true,
@@ -61,7 +64,8 @@ class VoteFactory extends Factory
     /**
      * Returns a nay vote
      */
-    public function negative(){
+    public function negative()
+    {
         return $this->state(function (array $attributes) {
             return [
                 'is_yay' => false,

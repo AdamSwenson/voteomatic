@@ -14,5 +14,16 @@ export default class Motion extends IModel {
         this.description = description;
         this.requires = requires;
 
+        switch(this.requires){
+            case 0.5:
+                this.englishRequires = 'Majority';
+                break;
+            case 0.66:
+                this.englishRequires = 'Two-thirds';
+                break
+            default:
+                this.englishRequires = '';
+        }
+
     }
 };

@@ -24,8 +24,8 @@ class MotionTestCase extends TestCase
 
         $this->object = Motion::factory()->create();
 
-
-        $this->totalYay = $this->faker->randomNumber(1);
+        //ensuring at least one is non zero, given the high chance of 0s
+        $this->totalYay = $this->faker->randomNumber(1) + 1;
         $this->totalNay = $this->faker->randomNumber(1);
 
         $this->createVotes();
@@ -41,17 +41,17 @@ class MotionTestCase extends TestCase
      */
     public function createVotes()
     {
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
+        $this->yayVotes = Vote::factory(['motion_id' => $this->object->id])->count($this->totalYay)->affirmative()->create();
+        $this->nayVotes = Vote::factory(['motion_id' => $this->object->id])->count($this->totalNay)->negative()->create();
 
         $this->votes = collect();
         $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
 
-        foreach ($this->votes as $vote) {
-            $this->object->votes()->associate($vote);
-        }
+//        foreach ($this->votes as $vote) {
+//            $this->object->votes()->save($vote);
+//        }
 
-        $this->object->save();
+//        $this->object->save();
 //
 //
 //        foreach ($this->votes as $vote) {
@@ -69,8 +69,10 @@ class MotionTestCase extends TestCase
     /** @test */
     public function affirmativeVotes()
     {
-        $this->assertEquals($this->totalYay, count($this->object->affirmativeVotes), "affirmativeVotes is correct count");
-        foreach ($this->object->affirmativeVotes as $v) {
+        $yays = $this->object->affirmativeVotes;
+
+        $this->assertEquals($this->totalYay, count($yays), "affirmativeVotes is correct count");
+        foreach ($yays as $v) {
             $this->assertInstanceOf(Vote::class, $v, "Returned vote object");
         }
 
@@ -79,7 +81,9 @@ class MotionTestCase extends TestCase
     /** @test */
     public function negativeVotes()
     {
-        $this->assertEquals($this->totalNay, count($this->object->negativeVotes), "negativeVotes is correct count");
+        $nays = $this->object->negativeVotes;
+        $this->assertEquals($this->totalNay, count($nays), "negativeVotes is correct count");
+
         foreach ($this->object->negativeVotes as $v) {
             $this->assertInstanceOf(Vote::class, $v, "Returned vote object");
         }
@@ -91,19 +95,13 @@ class MotionTestCase extends TestCase
         // prep
         $this->totalNay = 4;
         $this->totalYay = 6;
-
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
-
-        $this->votes = collect();
-        $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
-
         $this->object = Motion::factory()->majority()->create();
+        $this->createVotes();
 
-        foreach ($this->votes as $vote) {
-            $vote->motion()->associate($this->object);
-            $vote->save();
-        }
+//        foreach ($this->votes as $vote) {
+//            $vote->motion()->associate($this->object);
+//            $vote->save();
+//        }
 
         //call
         $result = $this->object->passed;
@@ -118,19 +116,8 @@ class MotionTestCase extends TestCase
         // prep
         $this->totalNay = 6;
         $this->totalYay = 4;
-
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
-
-        $this->votes = collect();
-        $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
-
         $this->object = Motion::factory()->majority()->create();
-
-        foreach ($this->votes as $vote) {
-            $vote->motion()->associate($this->object);
-            $vote->save();
-        }
+        $this->createVotes();
 
         //call
         $result = $this->object->passed;
@@ -145,19 +132,8 @@ class MotionTestCase extends TestCase
         // prep
         $this->totalNay = 5;
         $this->totalYay = 5;
-
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
-
-        $this->votes = collect();
-        $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
-
         $this->object = Motion::factory()->majority()->create();
-
-        foreach ($this->votes as $vote) {
-            $vote->motion()->associate($this->object);
-            $vote->save();
-        }
+        $this->createVotes();
 
         //call
         $result = $this->object->passed;
@@ -172,19 +148,8 @@ class MotionTestCase extends TestCase
         // prep
         $this->totalNay = 3;
         $this->totalYay = 7;
-
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
-
-        $this->votes = collect();
-        $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
-
-        $this->object = Motion::factory()->majority()->create();
-
-        foreach ($this->votes as $vote) {
-            $vote->motion()->associate($this->object);
-            $vote->save();
-        }
+        $this->object = Motion::factory()->twoThirds()->create();
+        $this->createVotes();
 
         //call
         $result = $this->object->passed;
@@ -199,19 +164,8 @@ class MotionTestCase extends TestCase
         // prep
         $this->totalNay = 6;
         $this->totalYay = 4;
-
-        $this->yayVotes = Vote::factory()->count($this->totalYay)->affirmative()->make();
-        $this->nayVotes = Vote::factory()->count($this->totalYay)->negative()->make();
-
-        $this->votes = collect();
-        $this->votes->merge($this->yayVotes)->merge($this->nayVotes);
-
         $this->object = Motion::factory()->twoThirds()->create();
-
-        foreach ($this->votes as $vote) {
-            $vote->motion()->associate($this->object);
-            $vote->save();
-        }
+        $this->createVotes();
 
         //call
         $result = $this->object->passed;
@@ -249,15 +203,8 @@ class MotionTestCase extends TestCase
     /** @test */
     public function totalVotesCast()
     {
+        $total = $this->totalNay + $this->totalYay;
 
-        $total = 10;
-        $votes = Vote::factory()->count($total)->create();
-        foreach ($votes as $vote) {
-            $this->object->votes()->associate($vote);
-
-        }
-
-        $this->object->save();
         $this->assertEquals($total, $this->object->totalVotesCast, "Correct number returned by totalVotesCast");
     }
 
@@ -283,17 +230,17 @@ class MotionTestCase extends TestCase
 
 
 // ---------------------- relationships
-
-    public function testAdministrators()
-    {
-
-    }
-
-
-    public function testVotes()
-    {
-
-    }
+//
+//    public function testAdministrators()
+//    {
+//
+//    }
+//
+//
+//    public function testVotes()
+//    {
+//
+//    }
 
 
 }
