@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Motion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EntryController extends Controller
 {
@@ -30,5 +31,12 @@ class EntryController extends Controller
         ]);
 
 //        return view('lticonfig');
+    }
+
+    //todo SUPER DEV. REMOVE!!!!!!!!!!!!!!!!!!!
+    public function testlog(){
+         return response(file_get_contents(resource_path('/storage/logs/laravel.log')), 200, [
+            'Content-Type' => 'text/text'
+        ]);
     }
 }

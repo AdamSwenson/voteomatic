@@ -22,6 +22,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('/testlog', '\App\Http\Controllers\EntryController@logreturn');
+
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
 Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
