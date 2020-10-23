@@ -34,8 +34,9 @@ class EntryController extends Controller
     }
 
     //todo SUPER DEV. REMOVE!!!!!!!!!!!!!!!!!!!
-    public function testlog(){
-         return response(file_get_contents(resource_path('/storage/logs/laravel.log')), 200, [
+    public function logreturn(){
+
+         return response(file_get_contents(storage_path('logs/laravel.log')), 200, [
             'Content-Type' => 'text/text'
         ]);
     }
