@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
+
 
 //main page where votes get cast
 Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage');
