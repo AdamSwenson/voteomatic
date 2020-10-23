@@ -19,4 +19,16 @@ class EntryController extends Controller
     {
         return view('entry', ['data' => $request]);
     }
+
+    public function lticonfig(Request $request)
+    {
+        return '<?xml version="1.0" encoding="UTF-8"?>
+<cartridge_basiclti_link xmlns="http://198.199.110.194/entry-test"
+    xmlns:blti = "http://198.199.110.194/entry-test"
+    <blti:launch_url>http://198.199.110.194/entry-test</blti:launch_url>
+    <blti:extensions platform="canvas.instructure.com">
+      <lticm:property name="privacy_level">public</lticm:property>
+    </blti:extensions>
+</cartridge_basiclti_link>';
+    }
 }
