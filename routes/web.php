@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
+Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 
 
 //main page where votes get cast
