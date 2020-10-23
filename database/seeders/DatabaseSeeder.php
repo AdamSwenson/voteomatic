@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\ResourceLink;
 use App\Models\User;
+use Database\Factories\ResourceLinkFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +21,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Meeting::factory(2)->create();
         Motion::factory(3)->create();
+
+        ResourceLink::factory()->create();
     }
 }

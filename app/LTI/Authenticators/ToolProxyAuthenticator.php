@@ -5,7 +5,7 @@ namespace App\LTI\Authenticators;
 
 
 use App\Http\Requests\LTIRequest;
-use App\ResourceLink;
+use App\Models\ResourceLink;
 
 class ToolProxyAuthenticator  implements IAuthenticator
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\LTI;
+namespace App\LTI\Authenticators;
 
 
 use App\Http\Requests\LTIRequest;
@@ -18,9 +18,6 @@ class AuthenticatorFactory
         //check from the type of request
 
         if($request instanceof LTIRequest){
-
-
-
 
             switch($request->lti_message_type){
                 case 'basic-lti-launch-request':

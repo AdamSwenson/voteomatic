@@ -3,7 +3,7 @@
 namespace App\LTI\Authenticators\OAuth;
 
 use App\Http\Requests\LTIRequest;
-use App\ResourceLink;
+use App\Models\ResourceLink;
 
 /**
  * Class to represent an %OAuth HMAC_SHA1 signature method

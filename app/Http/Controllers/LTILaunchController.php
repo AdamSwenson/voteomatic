@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LTIRequest;
-use App\LTI\AuthenticatorFactory;
+use App\LTI\Authenticators\AuthenticatorFactory;
 use App\LTI\Exceptions\LTIAuthenticationException;
 use App\LTI\LTI;
 use App\Models\Meeting;
-use App\ResourceLink;
-use App\User;
+use App\Models\ResourceLink;
+use App\Models\User;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 //use App\Providers\LTIServiceProvider;
 
@@ -50,8 +51,10 @@ class LTILaunchController extends Controller
      * @param LTIRequest $request
      * @return void
      */
-    public function handleLaunchRequestDEV(LTIRequest $request)
+    public function handleLaunchRequest(LTIRequest $request)
     {
+        Log::debug($request->all());
+
         //Check if the activity is enabled and reject access if not
         //todo Do this (later) or maybe add as middleware
 

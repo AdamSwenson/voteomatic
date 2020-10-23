@@ -7,10 +7,10 @@ namespace App\LTI\Authenticators;
 use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\OAuth\OAuthSignatureMethod_HMAC_SHA1;
 use App\LTI\Authenticators\OAuth\OAuthSignatureMethod_HMAC_SHA256;
-use App\LTI\Authenticators\OAuthException;
 use App\LTI\Authenticators\OAuthUtil;
-use App\ResourceLink;
-use App\UsedNonce;
+use App\LTI\Exceptions\OAuthException;
+use App\Models\ResourceLink;
+use App\Models\UsedNonce;
 
 /**
  * Class OAuthAuthenticator

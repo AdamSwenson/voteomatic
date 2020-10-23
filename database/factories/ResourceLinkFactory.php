@@ -1,24 +1,38 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Activity;
-use App\LTIConsumer;
-use App\Model;
-use App\ResourceLink;
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(ResourceLink::class, function (Faker $faker) {
+use App\Models\LTIConsumer;
+use App\Models\Meeting;
+use App\Models\ResourceLink;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    //create a new activity and link it via the id
-    $assignment = factory(Activity::class)->create();
-    $consumer = factory(LTIConsumer::class)->create();
-    return [
-        'assignment_id' => $assignment->id,
-        'description' => $faker->sentence,
+class ResourceLinkFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ResourceLink::class;
 
-        'lti_consumer_id' => $consumer->id
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        //create a new activity and link it via the id
+        $meeting = Meeting::factory()->create();
+        $consumer = LTIConsumer::factory()->create();
+        return [
+            'meeting_id' => $meeting->id,
+            'description' => $this->faker->sentence,
 
+            'lti_consumer_id' => $consumer->id
+        ];
 
-    ];
-});
+    }
+}
