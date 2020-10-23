@@ -30,7 +30,7 @@ Route::get('/testlog', '\App\Http\Controllers\EntryController@logreturn');
 Auth::routes();
 
 // LTI access endpoint
-Route::post('/entry-test', 'LTILaunchController@handleLaunchRequestDEV');
+Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaunchRequestDEV');
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 
 
