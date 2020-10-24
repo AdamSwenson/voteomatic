@@ -6,6 +6,7 @@ namespace App\LTI\Authenticators;
 
 use App\Http\Requests\LTIRequest;
 use App\LTI\Exceptions\InvalidLTILogin;
+use App\LTI\ToolProvider\ToolConsumer;
 use IMSGlobal\LTI\HTTPMessage;
 use IMSGlobal\LTI\OAuth\OAuthRequest;
 use IMSGlobal\LTI\OAuth\OAuthServer;
@@ -15,7 +16,7 @@ use IMSGlobal\LTI\ToolProvider\Context;
 use IMSGlobal\LTI\ToolProvider\OAuthDataStore;
 use IMSGlobal\LTI\ToolProvider\ResourceLink;
 use IMSGlobal\LTI\ToolProvider\ResourceLinkShareKey;
-use IMSGlobal\LTI\ToolProvider\ToolConsumer;
+//use IMSGlobal\LTI\ToolProvider\ToolConsumer;
 use IMSGlobal\LTI\ToolProvider\User;
 
 class LaunchAuthenticator  implements IAuthenticator

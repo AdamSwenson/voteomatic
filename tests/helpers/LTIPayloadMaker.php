@@ -71,7 +71,7 @@ class LTIPayloadMaker
             'oauth_callback' => self::OAUTH_CALLBACK,
             'oauth_consumer_key' => $resourceLink->ltiConsumer->consumer_key,
 
-            'resource_link_id' => $resourceLink->id,
+            'resource_link_id' => $resourceLink->resource_link_id,
 
             'user_id' => $student->lms_id
             //these will be added by the tool consumer below

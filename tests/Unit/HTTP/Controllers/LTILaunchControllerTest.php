@@ -116,6 +116,7 @@ class LTILaunchControllerTest extends TestCase
     public function testHandleLaunchRequestDirect()
     {
         //prep
+//        $request = LTIRequest::create($this->payload);
 
         $request = new LTIRequest();
 

@@ -30,6 +30,7 @@ class ResourceLinkFactory extends Factory
         return [
             'meeting_id' => $meeting->id,
             'description' => $this->faker->sentence,
+            'resource_link_id' => $this->faker->sha256,
 
             'lti_consumer_id' => $consumer->id
         ];

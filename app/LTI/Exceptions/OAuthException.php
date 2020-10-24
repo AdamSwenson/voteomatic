@@ -11,7 +11,6 @@ namespace App\LTI\Exceptions;
  */
 class OAuthException extends LTIAuthenticationException {
 
-    use Throwable;
 
     // pass
 }
