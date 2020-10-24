@@ -83,7 +83,7 @@ class LTILaunchController extends Controller
             Auth::login($user, true);
 
             //We redirect to the activity page
-            return redirect()->route('meeting');
+            return redirect()->route('meetingHome', $resourceLink->meeting);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);
