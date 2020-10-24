@@ -37,7 +37,7 @@ class OAuthAuthenticator implements IAuthenticator
      */
     protected $assignment;
 
-    public function __construct( )
+    public function __construct()
     {
         //instantiate the available signature classes
         //todo consider rewriting this to use a factory pattern to get the signature methods
@@ -101,8 +101,7 @@ class OAuthAuthenticator implements IAuthenticator
         //Check if the method is supported
         if (!in_array($method_name,
             array_keys($this->supportedSignatureMethods))) {
-            throw new OAuthException(
-                "Signature method '$method_name' not supported ");
+            throw new OAuthException("Signature method '$method_name' not supported ");
         }
 
         //set signature method that we'll use

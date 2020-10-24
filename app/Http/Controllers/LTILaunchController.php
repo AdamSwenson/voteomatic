@@ -54,7 +54,7 @@ class LTILaunchController extends Controller
     public function handleLaunchRequest(LTIRequest $request)
     {
         $j = $request->all();
-        Log::debug($j);
+        Log::debug($request);
 
         //Check if the activity is enabled and reject access if not
         //todo Do this (later) or maybe add as middleware
