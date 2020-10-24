@@ -13,4 +13,8 @@ class Meeting extends Model
     public function resourceLink(){
         return $this->hasOne(ResourceLink::class);
     }
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 }

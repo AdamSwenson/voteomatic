@@ -42,6 +42,7 @@ class User extends Authenticatable
     ];
 
 
+    // ------------------ relationships
     /**
      * Any motions which the user is an administrator for
      *
@@ -50,6 +51,11 @@ class User extends Authenticatable
     public function administrates(){
         return $this->belongsToMany(Motion::class, 'motion_admins')->withTimestamps();
 
+    }
+
+
+    public function meetings(){
+        return $this->belongsToMany(Meeting::class);
     }
 
     public function recordedVoteRecord(){

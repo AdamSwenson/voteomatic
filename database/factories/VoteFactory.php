@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use App\Models\Vote;
@@ -25,9 +26,9 @@ class VoteFactory extends Factory
     public function definition()
     {
 //        $user = User::factory()->create();
-        $motion = Motion::factory()->create();
+        $meeting = Meeting::factory()->create();
+        $motion = Motion::factory()->create(['meeting_id' => $meeting->id]);
         $is_yay = ($this->faker->randomNumber() % 2) == 0;
-
 
         $receipt = $this->faker->sha256();
         return [

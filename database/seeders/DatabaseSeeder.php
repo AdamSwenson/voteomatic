@@ -20,23 +20,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
-        Meeting::factory(2)->create();
-        $motions = Motion::factory(3)->create();
+        $num_users = 10;
 
-        Vote::factory(['motion_id' => $motions[0]->id])->count(10)->create();
 
-        $this->addDevCreds();
+        $meetings = Meeting::factory(2)->create();
+        foreach ($meetings as $meeting) {
+            for ($i = 0; $i < $num_users; $i++) {
+                $user = User::factory()->create();
+                $meeting->users()->attach($user);
+            }
+
+            $meeting->save();
+
+            $motions = Motion::factory(['meeting_id' => $meeting->id])
+                ->count(3)
+                ->create();
+
+            foreach ($motions as $motion){
+                for ($i = 0; $i < $num_users; $i++) {
+                    Vote::factory(['motion_id' => $motion->id])
+                        ->count(10)
+                        ->create();
+                }
+            }
+
+        }
+
+        $this->addDevCreds($meetings[0]);
 
     }
 
 
-    public function addDevCreds(){
-        $meeting = Meeting::factory()->create();
+    public function addDevCreds($meeting)
+    {
+//        $meeting = Meeting::factory()->create();
         $consumer = LTIConsumer::factory([
             'consumer_key' => env('DEV_CONSUMER_KEY'),
             'secret_key' => env('DEV_SHARED_KEY')
-            ])->create();
+        ])->create();
 
         ResourceLink::factory([
             'meeting_id' => $meeting->id,

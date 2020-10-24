@@ -23,6 +23,8 @@ class CreateMotionsTable extends Migration
             /** Majority (0.5), 2/3 (0.75), etc */
             $table->float('requires');
 
+            $table->integer('meeting_id');
+
 
             $table->id();
             $table->timestamps();
