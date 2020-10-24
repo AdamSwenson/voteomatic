@@ -32,12 +32,12 @@ Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
 Auth::routes();
 
 // LTI access endpoint
-Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaunchRequest');
+Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaunchRequest')->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 
 
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
-Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest')->withoutMiddleware([ VerifyCsrfToken::class]);
+Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 //Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 
 Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
