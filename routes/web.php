@@ -21,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
    ============================= */
-Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn')
-    ->withoutMiddleware([ VerifyCsrfToken::class])
-;
+Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn');
 Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
 
 
@@ -39,7 +37,7 @@ Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaun
 
 
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
-Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
+Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest')->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 
 Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
