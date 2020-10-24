@@ -3,6 +3,7 @@
 use App\Http\Controllers\MotionController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\VoteController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
    ============================= */
-Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn');
+Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn')
+    ->withoutMiddleware([ VerifyCsrfToken::class])
+;
 Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
 
 
