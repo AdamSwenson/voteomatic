@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "vue-async-computed": "^3.9.0",
-        "vue-axios": "^3.1.1"
+        "vue-axios": "^3.1.1",
+        "vuex": "^3.5.1"
     }
 }

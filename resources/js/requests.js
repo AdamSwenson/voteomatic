@@ -8,3 +8,4 @@ export const RESULTS_REQUEST = {
     //and the total nay votes
     counts : false
 }
+

@@ -10,6 +10,8 @@ class Meeting extends Model
 {
     use HasFactory;
 
+    protected $fillable= ['date','name'];
+
     public function resourceLink(){
         return $this->hasOne(ResourceLink::class);
     }

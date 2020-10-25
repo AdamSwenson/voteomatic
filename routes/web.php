@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MotionController;
 use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\SetupController;
 use App\Http\Controllers\VoteController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,8 @@ use Illuminate\Support\Facades\Route;
    ============================= */
 Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn');
 Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
+//can't test with dev/ since that messes up route root for resource urls
+Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 
 
 /* =============================
@@ -74,7 +78,11 @@ Route::get('results/{motion}/counts', '\App\Http\Controllers\ResultsController@g
 Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
 
 
-Route::resource('meetings', \App\Http\Controllers\MeetingController::class);
+//Route::get('meetings/{meeting}', [MeetingController::class, 'show']);
+//Route::post('meetings/{meeting}', [MeetingController::class, 'update']);
+//Route::get('meetings', [MeetingController::class, 'store']);
+
+Route::resource('meetings', MeetingController::class);
 Route::resource('motions', MotionController::class);
 Route::resource('votes', VoteController::class);
 

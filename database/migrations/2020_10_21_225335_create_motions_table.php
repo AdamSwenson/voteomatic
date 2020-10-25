@@ -15,15 +15,18 @@ class CreateMotionsTable extends Migration
     {
         Schema::create('motions', function (Blueprint $table) {
             /** The thing being voted upon */
-            $table->text('content');
+            $table->text('content')->nullable();
 
             /** Helper text to display */
             $table->text('description')->nullable();
 
             /** Majority (0.5), 2/3 (0.75), etc */
-            $table->float('requires');
+            $table->float('requires')->nullable();
 
-            $table->integer('meeting_id');
+            /** Main, procedural, amendment, etc */
+            $table->text('type')->nullable();
+
+            $table->integer('meeting_id')->nullable();
 
 
             $table->id();

@@ -2088,6 +2088,432 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup-page.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _setup_meeting_setup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setup/meeting-setup */ "./resources/js/components/setup/meeting-setup.vue");
+/* harmony import */ var _setup_motion_setup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setup/motion-setup */ "./resources/js/components/setup/motion-setup.vue");
+/* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/Meeting */ "./resources/js/models/Meeting.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "setup-page",
+  components: {
+    MotionSetup: _setup_motion_setup__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MeetingSetup: _setup_meeting_setup__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  // props : ['meeting'],
+  data: function data() {
+    return {
+      _motion: null,
+      //todo dev
+      meeting: new _models_Meeting__WEBPACK_IMPORTED_MODULE_2__["default"]()
+    };
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Meeting */ "./resources/js/models/Meeting.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "meeting-setup",
+  props: ['existingMeeting'],
+  data: function data() {
+    return {
+      showFields: false,
+      meeting: null
+    };
+  },
+  computed: {
+    meetingDate: {
+      get: function get() {
+        try {
+          return this.meeting.date;
+        } catch (e) {
+          return '';
+        }
+      },
+      set: function set(v) {
+        this.meeting.date = v; //
+
+        this.updateMeeting(); //     let p = new Promise(((resolve, reject) => {
+        //         // console.log(routes.meetings);
+        //         //send to server
+        //         // let url = routes.meetings.resource(this._meeting.id);
+        //         Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
+        //
+        //             // Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
+        //             let d = response.data;
+        //             resolve()
+        //         });
+        //     }));
+      }
+    },
+    meetingName: {
+      get: function get() {
+        try {
+          return this.meeting.name;
+        } catch (e) {
+          return '';
+        }
+      },
+      set: function set(v) {
+        this.meeting.name = v;
+        this.updateMeeting(); // //
+        // let p = new Promise(((resolve, reject) => {
+        //     //send to server
+        //     let url = routes.meetings.resource(this.meeting.id);
+        //     // Vue.axios.put(url,  this.meeting).then((response) => {
+        //     // Vue.axios.post(url, this.meeting).then((response) => {
+        //         Vue.axios.post(url, {data: this.meeting, _method: 'put'}).then((response) => {
+        //         let d = response.data;
+        //         resolve()
+        //     });
+        // }));
+      }
+    },
+    url: function url() {
+      if (_.isUndefined(this._meeting) || _.isNull(this._meeting)) {
+        return _routes__WEBPACK_IMPORTED_MODULE_0__["meetings"].resource();
+      }
+
+      return _routes__WEBPACK_IMPORTED_MODULE_0__["meetings"].resource(this.meeting.id);
+    }
+  },
+  // asyncComputed : {
+  //   meeting : function(){
+  //
+  //   }
+  // },
+  methods: {
+    initializeMeeting: function initializeMeeting() {
+      if (!_.isNull(this.existingMeeting) || _.isUndefined(this.existingMeeting)) {
+        this_meeting = this.existingMeeting;
+      } else {// this.handleClick()
+      }
+    },
+    updateMeeting: function updateMeeting() {
+      var _this = this;
+
+      var p = new Promise(function (resolve, reject) {
+        //send to server
+        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["meetings"].resource(_this.meeting.id); // Vue.axios.put(url,  this.meeting).then((response) => {
+        // Vue.axios.post(url, this.meeting).then((response) => {
+
+        Vue.axios.post(url, {
+          data: _this.meeting,
+          _method: 'put'
+        }).then(function (response) {
+          var d = response.data;
+          resolve();
+        });
+      });
+    },
+    handleClick: function handleClick() {
+      var _this2 = this;
+
+      this.showFields = true;
+      return new Promise(function (resolve, reject) {
+        //send to server
+        // let url = routes.motion.resource();
+        Vue.axios.post(_this2.url).then(function (response) {
+          var d = response.data;
+          _this2.meeting = new _models_Meeting__WEBPACK_IMPORTED_MODULE_1__["default"](d.id, d.name, d.date);
+          resolve();
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Meeting */ "./resources/js/models/Meeting.js");
+/* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+ // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+var meetingId = 1;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "motion-setup",
+  props: ['existingMotion', 'meeting'],
+  data: function data() {
+    return {
+      motion: null,
+      showFields: false,
+      placeholders: {
+        content: "Moved that tacos be eaten everyday.",
+        description: "OPTIONAL"
+      }
+    };
+  },
+  computed: {
+    // motion: function () {
+    //     if (!_.isUndefined(this.existingMotion)) return this.existingMotion;
+    //
+    //     return new Promise(((resolve, reject) => {
+    //         //send to server
+    //         let url = routes.motions.resource();
+    //         let params = {meetingId: this.meeting.id};
+    //         return Vue.axios.post(url, params).then((response) => {
+    //             let d = response.data;
+    //             let motion = new Motion(d.id, d.content, d.description, d.requires);
+    //             return resolve(motion);
+    //         });
+    //     }));
+    // },
+    motionType: {
+      get: function get() {
+        try {
+          return this.motion.type;
+        } catch (e) {
+          return '';
+        }
+      },
+      set: function set(v) {}
+    },
+    content: {
+      get: function get() {
+        if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
+          return '';
+        }
+
+        return this.motion.content;
+      },
+      set: function set(v) {
+        this.motion.content = v;
+        this.updateMotion();
+      }
+    },
+    description: {
+      get: function get() {
+        try {
+          return this.motion.description;
+        } catch (e) {
+          return '';
+        }
+      },
+      set: function set(v) {
+        this.motion.description = v;
+        this.updateMotion();
+      }
+    },
+    requires: {
+      get: function get() {
+        try {
+          return this.motion.requires;
+        } catch (e) {
+          return '';
+        }
+      },
+      set: function set(v) {
+        this.motion.requires = v;
+        this.updateMotion();
+      }
+    }
+  },
+  methods: {
+    initializeMotion: function initializeMotion() {
+      var _this = this;
+
+      var p = new Promise(function (resolve, reject) {
+        //send to server
+        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["motions"].resource(); // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        var params = {
+          meeting_id: meetingId
+        }; // let params = {meetingId: this.meeting.id};
+
+        return Vue.axios.post(url, params).then(function (response) {
+          var d = response.data;
+          _this.motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_2__["default"](d.id, d.content, d.description, d.requires);
+          return resolve(_this.motion);
+        });
+      });
+    },
+    updateMotion: function updateMotion() {
+      var _this2 = this;
+
+      var p = new Promise(function (resolve, reject) {
+        //send to server
+        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["motions"].resource(_this2.motion.id); // Vue.axios.put(url,  this.meeting).then((response) => {
+        // Vue.axios.post(url, this.meeting).then((response) => {
+
+        Vue.axios.post(url, {
+          data: _this2.motion,
+          _method: 'put'
+        }).then(function (response) {
+          var d = response.data;
+          resolve();
+        });
+      });
+    },
+    handleClick: function handleClick() {
+      this.initializeMotion();
+      this.showFields = true; // return new Promise(((resolve, reject) => {
+      //     //send to server
+      //     // let url = routes.motion.resource();
+      //     Vue.axios.post(this.url).then((response) => {
+      //         let d = response.data;
+      //         this.motion = new Motion(d.id);
+      //         resolve()
+      //
+      //     });
+      // }));
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-content.vue?vue&type=script&lang=js& ***!
@@ -40674,6 +41100,359 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "setup-page" },
+    [
+      _c("meeting-setup"),
+      _vm._v(" "),
+      _c("motion-setup", { attrs: { meeting: _vm.meeting } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "meeting-setup card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "card-text" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", on: { click: _vm.handleClick } },
+          [_vm._v("Create new meeting\n            ")]
+        ),
+        _vm._v(" "),
+        _vm.showFields
+          ? _c("div", { staticClass: "setup-fields" }, [
+              _c("label", { attrs: { for: "meeting-name" } }, [
+                _vm._v("Meeting name")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.meetingName,
+                      expression: "meetingName"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "meeting-name" },
+                  domProps: { value: _vm.meetingName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.meetingName = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "meeting-date" } }, [
+                _vm._v("Meeting date")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.meetingDate,
+                      expression: "meetingDate"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "meeting-date" },
+                  domProps: { value: _vm.meetingDate },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.meetingDate = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          : _vm._e()
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h1", [_vm._v("Set up meeting")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "roster-area" }, [
+      _c("h4", [_vm._v("Meeting roster")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "motion-setup card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", on: { click: _vm.handleClick } },
+        [_vm._v("Create new motion\n        ")]
+      ),
+      _vm._v(" "),
+      _vm.showFields
+        ? _c("div", { staticClass: "setup-fields" }, [
+            _c("p", { staticClass: "card-text" }, [
+              _c("label", { attrs: { for: "motion-content" } }, [
+                _vm._v("It is moved that ")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content,
+                    expression: "content"
+                  }
+                ],
+                attrs: {
+                  id: "motion-content",
+                  placeholder: "placeholders.content"
+                },
+                domProps: { value: _vm.content },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text" }, [
+              _c("label", { attrs: { for: "description" } }, [
+                _vm._v("Optional description or instructions")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                attrs: {
+                  id: "description",
+                  placeholder: "placeholders.description"
+                },
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v("\n                todo\n                "),
+              _c("label", { attrs: { for: "typeSelect" } }, [
+                _vm._v("Motion type")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.motionType,
+                      expression: "motionType"
+                    }
+                  ],
+                  attrs: { id: "typeSelect" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.motionType = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { disabled: "", value: "" } }, [
+                    _vm._v("Please select motion type")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Main motion")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Amendment")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Procedural motion")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("span", [_vm._v("Selected: " + _vm._s(_vm.motionType))])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v("\n                todo\n                "),
+              _c("label", { attrs: { for: "requiresSelect" } }, [
+                _vm._v("Vote required to pass")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.requires,
+                      expression: "requires"
+                    }
+                  ],
+                  attrs: { id: "requiresSelect" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.requires = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { disabled: "", value: "" } }, [
+                    _vm._v("Please select required vote")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Majority")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Two-thirds")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("span", [_vm._v("Selected: " + _vm._s(_vm.requires))])
+            ])
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h1", [_vm._v("Set up motion")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-content.vue?vue&type=template&id=5e479f18&scoped=true& ***!
@@ -53184,6 +53963,7 @@ Vue.use(vue_async_computed__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.component('voteomatic', __webpack_require__(/*! ./components/voteomatic */ "./resources/js/components/voteomatic.vue")["default"]); //todo DEV TOP LEVEL
 
 Vue.component('results', __webpack_require__(/*! ./components/results-page */ "./resources/js/components/results-page.vue")["default"]);
+Vue.component('setup-page', __webpack_require__(/*! ./components/setup-page */ "./resources/js/components/setup-page.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53445,6 +54225,214 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_template_id_9a39e25e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_template_id_9a39e25e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/setup-page.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/setup-page.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setup-page.vue?vue&type=template&id=041628ea&scoped=true& */ "./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true&");
+/* harmony import */ var _setup_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setup-page.vue?vue&type=script&lang=js& */ "./resources/js/components/setup-page.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _setup_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "041628ea",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/setup-page.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/setup-page.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/setup-page.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setup_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./setup-page.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup-page.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_setup_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./setup-page.vue?vue&type=template&id=041628ea&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_setup_page_vue_vue_type_template_id_041628ea_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/meeting-setup.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/setup/meeting-setup.vue ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./meeting-setup.vue?vue&type=template&id=221011de&scoped=true& */ "./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true&");
+/* harmony import */ var _meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./meeting-setup.vue?vue&type=script&lang=js& */ "./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "221011de",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/setup/meeting-setup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-setup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/meeting-setup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true& ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-setup.vue?vue&type=template&id=221011de&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/meeting-setup.vue?vue&type=template&id=221011de&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_vue_vue_type_template_id_221011de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/motion-setup.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/setup/motion-setup.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-setup.vue?vue&type=template&id=55061983&scoped=true& */ "./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true&");
+/* harmony import */ var _motion_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-setup.vue?vue&type=script&lang=js& */ "./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _motion_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "55061983",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/setup/motion-setup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-setup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/motion-setup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-setup.vue?vue&type=template&id=55061983&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/setup/motion-setup.vue?vue&type=template&id=55061983&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_template_id_55061983_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -53963,6 +54951,68 @@ function IModel() {
 
 /***/ }),
 
+/***/ "./resources/js/models/Meeting.js":
+/*!****************************************!*\
+  !*** ./resources/js/models/Meeting.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Meeting; });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Meeting = /*#__PURE__*/function (_IModel) {
+  _inherits(Meeting, _IModel);
+
+  var _super = _createSuper(Meeting);
+
+  /**
+   * Create a new motion
+   * @param id
+   * @param name
+   * @param date
+   */
+  function Meeting(id, name, date) {
+    var _this;
+
+    _classCallCheck(this, Meeting);
+
+    _this = _super.call(this);
+    _this.name = name;
+    _this.id = id;
+    _this.date = date;
+    return _this;
+  }
+
+  return Meeting;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+;
+
+/***/ }),
+
 /***/ "./resources/js/models/Motion.js":
 /*!***************************************!*\
   !*** ./resources/js/models/Motion.js ***!
@@ -54003,7 +55053,7 @@ var Motion = /*#__PURE__*/function (_IModel) {
    * Create a new motion
    * @param params
    */
-  function Motion(id, content, description, requires) {
+  function Motion(id, content, description, requires, type) {
     var _this;
 
     _classCallCheck(this, Motion);
@@ -54013,6 +55063,15 @@ var Motion = /*#__PURE__*/function (_IModel) {
     _this.content = content;
     _this.description = description;
     _this.requires = requires;
+    _this.type = type;
+    _this.types = ['main', 'amendment']; //todo
+
+    _this.type = 'main'; //used for selectors in creating motion
+
+    _this.requiredVotes = {
+      0.5: 'Majority',
+      0.66: 'Two-thirds'
+    };
 
     switch (_this.requires) {
       case 0.5:
@@ -54132,6 +55191,42 @@ module.exports = {
   votes: {
     recordVote: function recordVote(motionId) {
       return normalizedRouteRoot() + 'record-vote/' + motionId;
+    }
+  },
+  meetings: {
+    /**
+     * Path for the resource controller for meetings.
+     * For create requests, leave the id empty
+     * @param meetingId
+     * @returns {string}
+     */
+    resource: function resource() {
+      var meetingId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var base = 'meetings/';
+
+      if (_.isNull(meetingId)) {
+        return base;
+      }
+
+      return base + meetingId;
+    }
+  },
+  motions: {
+    /**
+     * Path for the resource controller for motions.
+     * For create requests, leave the id empty
+     * @param motionId
+     * @returns {string}
+     */
+    resource: function resource() {
+      var motionId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var base = 'motions/';
+
+      if (_.isNull(motionId)) {
+        return base;
+      }
+
+      return base + motionId;
     }
   }
 };

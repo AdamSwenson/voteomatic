@@ -34,4 +34,37 @@ module.exports = {
         }
     },
 
+    meetings: {
+        /**
+         * Path for the resource controller for meetings.
+         * For create requests, leave the id empty
+         * @param meetingId
+         * @returns {string}
+         */
+        resource : (meetingId=null) =>{
+            let base = 'meetings/';
+            if(_.isNull(meetingId)) {
+                return base;
+            }
+            return base + meetingId;
+
+        }
+    },
+
+    motions: {
+        /**
+         * Path for the resource controller for motions.
+         * For create requests, leave the id empty
+         * @param motionId
+         * @returns {string}
+         */
+        resource : (motionId=null) =>{
+            let base = 'motions/';
+            if(_.isNull(motionId)) {
+                return base;
+            }
+            return base + motionId;
+        }
+    }
+
 }

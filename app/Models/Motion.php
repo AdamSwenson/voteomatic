@@ -9,7 +9,7 @@ class Motion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'description', 'requires'];
+    protected $fillable = ['content', 'description', 'requires', 'meeting_id', 'type'];
 
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
