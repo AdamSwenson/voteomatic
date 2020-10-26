@@ -38,6 +38,10 @@ export default {
     methods: {
         verifyReceipt: function () {
 
+        },
+
+        handleClick: function(){
+            alert('something will happen');
         }
     }
 

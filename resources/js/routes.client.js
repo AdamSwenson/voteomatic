@@ -1,0 +1,86 @@
+import Vue from 'vue'
+//Panes (main container for edit tools)
+import votePage from './components/vote-page'
+import resultsPage from './components/results-page'
+import motionSetup from './components/setup/motion-setup'
+import meetingSetup from './components/setup/meeting-setup'
+import voteVerify from './components/vote-verification-page'
+
+Vue.component( 'vote-page', votePage );
+Vue.component('results-page', resultsPage);
+Vue.component('motion-setup-page', motionSetup);
+Vue.component('meeting-setup-page', meetingSetup);
+Vue.component('vote-verify', resultsPage);
+
+export const routes =  [
+
+
+    {
+        name: 'vote',
+        path:   '/vote',
+        icon: "fa fa-pencil",
+        label: "Vote",
+        components: { main: votePage },
+        props:  true  //{default: true}
+
+    },
+    {
+        name: 'results',
+        path: '/results'  ,
+        icon: "fa fa-comments-o",
+        label: "Results",
+        components: { main: resultsPage },
+        props:  true  //{default: true}
+
+    },
+
+    {
+        name: 'motion',
+        path: '/motion',
+        icon: "fa fa-bar-chart",
+        label: "Create motion",
+        components: { main: motionSetup },
+        props:  true  //{default: true}
+
+    },
+
+    {
+        name: 'meeting',
+        path: '/meeting',
+        icon: "fa fa-book",
+        label: "Create meeting",
+        components: { main:  meetingSetup},
+        props:  true  //{default: true}
+
+    },
+
+    {
+        name: 'verify',
+        path: '/verify',
+        icon: "fa fa-check",
+        label: "Verify your vote",
+        components: { main:  voteVerify},
+        props:  true  //{default: true}
+
+    },
+
+
+    // {
+    //     name: 'notes',
+    //     path: this.routeToNotes,
+    //     icon: "fa fa-sticky-note-o",
+    //     label: "Notes"
+    // },
+
+
+//grading
+//     {
+//         path: '/',
+//         components: { questionPanelArea: questionPanel },
+//         props:  true  //{default: true}
+//     }, //props: (route) => {return route.index;}},
+];
+
+// export default {
+//     routes
+// }

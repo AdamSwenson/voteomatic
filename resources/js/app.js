@@ -21,21 +21,22 @@ Vue.use(VueAxios, axios)
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-// import VueRouter from 'vue-router'
-// Vue.use( VueRouter );
+import VueRouter from 'vue-router'
+Vue.use( VueRouter );
 //
 // // Define some routes
 // // Each route should map to a component. The "component" can
 // // either be an actual component constructor created via
 // // Vue.extend(), or just a component options object.
+import  {routes} from './routes.client';
 // import { routes } from './routes';
-//
+
 // // Create the router instance and pass the `routes` option
-// const router = new VueRouter( {
-//     routes, // short for routes: routes
-//     base: window.routeRoot
-// } );
-//
+const router = new VueRouter( {
+    routes, // short for routes: routes
+    base: window.routeRoot
+} );
+
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STORE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -78,5 +79,6 @@ Vue.component('setup-page', require('./components/setup-page').default);
 
 const app = new Vue({
     el: '#app',
-    store: store
+    store: store,
+    router : router
 });

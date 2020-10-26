@@ -1,9 +1,22 @@
 <template>
 
     <div class="voteomatic">
-        <vote-page v-if="!isSetup"
-                   :motion="motion"
-        ></vote-page>
+        <router-tabs></router-tabs>
+
+
+        <div class="card">
+            <div class="card-content">
+                <div class="content">
+
+                    <router-view name="main"></router-view>
+
+                </div>
+            </div>
+        </div>
+
+        <!--            <vote-page v-if="!isSetup"-->
+        <!--                   :motion="motion"-->
+        <!--        ></vote-page>-->
     </div>
 
 </template>
@@ -14,16 +27,17 @@
 import VotePage from "./vote-page";
 import Motion from '../models/Motion';
 import MeetingMixin from './storeMixins/meetingMixin';
+import RouterTabs from "./navigation/router-tabs";
 
 export default {
     name: "voteomatic",
-    components: {VotePage},
+    components: {RouterTabs, VotePage},
 
-    mixins : [MeetingMixin],
+    mixins: [MeetingMixin],
 
     data: function () {
         return {
-            isReady : false,
+            isReady: false,
             isSetup: false,
         }
     },

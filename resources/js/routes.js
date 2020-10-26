@@ -42,7 +42,7 @@ module.exports = {
          * @returns {string}
          */
         resource : (meetingId=null) =>{
-            let base = 'meetings/';
+            let base = normalizedRouteRoot() + 'meetings/';
             if(_.isNull(meetingId)) {
                 return base;
             }
@@ -59,7 +59,7 @@ module.exports = {
          * @returns {string}
          */
         resource : (motionId=null) =>{
-            let base = 'motions/';
+            let base = normalizedRouteRoot() + 'motions/';
             if(_.isNull(motionId)) {
                 return base;
             }
