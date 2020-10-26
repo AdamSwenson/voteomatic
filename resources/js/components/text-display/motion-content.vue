@@ -1,6 +1,6 @@
 <template>
     <div class="motion-content">
-        <h3>{{ content }}</h3>
+        {{ content }}
 
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
 
-    <button type="button" class="btn btn-success"
+    <button type="button" class="btn btn-success btn-lg"
             v-on:click="handleClick"
     >Yay
     </button>

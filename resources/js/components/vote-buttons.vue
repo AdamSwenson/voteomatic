@@ -1,7 +1,18 @@
 <template>
     <div class="button-area">
-        <yay-button v-on:yay-clicked="handleYay"></yay-button>
-        <nay-button v-on:nay-clicked="handleNay"></nay-button>
+        <div class="row">
+            <div class="col text-right">
+
+                <yay-button v-on:yay-clicked="handleYay"></yay-button>
+
+            </div>
+
+            <div class="col text-left">
+
+                <nay-button v-on:nay-clicked="handleNay"></nay-button>
+
+            </div>
+        </div>
     </div>
 </template>
 

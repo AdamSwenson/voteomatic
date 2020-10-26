@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-danger"
+    <button type="button" class="btn btn-danger btn-lg"
             v-on:click="handleClick"
     >Nay
     </button>

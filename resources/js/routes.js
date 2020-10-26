@@ -34,6 +34,12 @@ module.exports = {
         }
     },
 
+    receipts : {
+        validateReceipt : () => {
+            return normalizedRouteRoot() + 'validation';
+        }
+    },
+
     meetings: {
         /**
          * Path for the resource controller for meetings.

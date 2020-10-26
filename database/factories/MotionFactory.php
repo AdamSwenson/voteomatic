@@ -14,6 +14,19 @@ class MotionFactory extends Factory
      */
     protected $model = Motion::class;
 
+    public $motionTexts = ["RESOLVED that tacos be served at every meeting",
+        "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
+        "That the pending matter be tabled",
+        "That the CSUN cats be invited to each Senate meeting",
+        "That the call for the 3 pending questions be approved",
+        "That the call for the previous question be approved"
+    ];
+
+    public $descriptions = ["",
+        "If this motion is approved, we will immediately vote on the next motion",
+        "Please vote once or forever hold your peace",
+        "This proposes a revision to the Bylaws which will be voted upon by the whole Faculty"];
+
     /**
      * Define the model's default state.
      *
@@ -24,12 +37,16 @@ class MotionFactory extends Factory
 
         $requires = $this->faker->randomElement(Motion::ALLOWED_VOTE_REQUIREMENTS);
 
+        $content = $this->faker->randomElement($this->motionTexts);
+
+        $description = $this->faker->randomElement($this->descriptions);
+
         return [
 
             /** The thing being voted upon */
-            'content' => $this->faker->text(),
+            'content' => $content,
 
-            'description' => $this->faker->text(),
+            'description' => $description,
 
             'requires' => $requires
 
@@ -40,7 +57,8 @@ class MotionFactory extends Factory
     /**
      * Returns a motion which requires a majority
      */
-    public function majority(){
+    public function majority()
+    {
         return $this->state(function (array $attributes) {
             return [
                 'requires' => 0.5,
@@ -52,14 +70,14 @@ class MotionFactory extends Factory
     /**
      * Returns a motion which requires 2/3
      */
-    public function twoThirds(){
+    public function twoThirds()
+    {
         return $this->state(function (array $attributes) {
             return [
                 'requires' => 0.66,
             ];
         });
     }
-
 
 
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MotionController;
+use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\VoteController;
@@ -76,6 +77,8 @@ Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@
 
 Route::get('results/{motion}/counts', '\App\Http\Controllers\ResultsController@getCounts');
 Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
+
+Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@validateReceipt');
 
 
 //Route::get('meetings/{meeting}', [MeetingController::class, 'show']);

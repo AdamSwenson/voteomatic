@@ -14,9 +14,6 @@
             </div>
         </div>
 
-        <!--            <vote-page v-if="!isSetup"-->
-        <!--                   :motion="motion"-->
-        <!--        ></vote-page>-->
     </div>
 
 </template>
@@ -58,7 +55,7 @@ export default {
         //parse data from page and store stuff
         this.$store.dispatch('initialize').then(function () {
 
-            window.console.log('waggleback', 'isReady', 159, me.isReady);
+            window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });
 
     }

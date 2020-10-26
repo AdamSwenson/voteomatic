@@ -12,4 +12,13 @@ export default class Vote extends IModel {
         this.receipt = receipt;
 
     }
+
+    voteEnglish(){
+        if(this.isYay) return 'Yay';
+
+        if(! this.isYay) return 'Nay';
+
+        //no abstentions!
+    }
+
 }
