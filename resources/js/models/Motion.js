@@ -6,7 +6,7 @@ export default class Motion extends IModel {
      * Create a new motion
      * @param params
      */
-    constructor(id, content, description, requires, type) {
+    constructor({id, content, description, requires, type}) {
         super();
         this.id = id;
         this.content = content;

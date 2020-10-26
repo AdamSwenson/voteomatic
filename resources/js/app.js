@@ -39,9 +39,9 @@ Vue.use(VueAxios, axios)
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STORE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-// import Vuex from 'vuex'
-// Vue.use(Vuex)
-// import store from './store';
+import Vuex from 'vuex'
+Vue.use(Vuex)
+import store from './store';
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -78,5 +78,5 @@ Vue.component('setup-page', require('./components/setup-page').default);
 
 const app = new Vue({
     el: '#app',
-    // store: store
+    store: store
 });

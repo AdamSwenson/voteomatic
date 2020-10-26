@@ -12,27 +12,27 @@
             </div>
 
             <div class="card-body">
-                                <div class="card-text">
-                                    <dl class="row">
-                                        <dt class="col-sm-3">Yays</dt>
-                                        <dd class="col-sm-9">{{yayCount}}</dd>
-                                    </dl>
+                <div class="card-text">
+                    <dl class="row">
+                        <dt class="col-sm-3">Yays</dt>
+                        <dd class="col-sm-9">{{ yayCount }}</dd>
+                    </dl>
 
-                                    <dl class="row">
-                                        <dt class="col-sm-3">Nays</dt>
-                                        <dd class="col-sm-9">{{nayCount}}</dd>
-                                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-3">Nays</dt>
+                        <dd class="col-sm-9">{{ nayCount }}</dd>
+                    </dl>
 
-                                    <dl class="row">
-                                        <dt class="col-sm-3">Abstentions</dt>
-                                        <dd class="col-sm-9">No such thing</dd>
-                                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-3">Abstentions</dt>
+                        <dd class="col-sm-9">No such thing</dd>
+                    </dl>
 
-                                    <dl class="row">
-                                        <dt class="col-sm-3">Total votes cast</dt>
-                                        <dd class="col-sm-9">{{totalVotes}}</dd>
-                                    </dl>
-                                </div>
+                    <dl class="row">
+                        <dt class="col-sm-3">Total votes cast</dt>
+                        <dd class="col-sm-9">{{ totalVotes }}</dd>
+                    </dl>
+                </div>
 
             </div>
 
@@ -57,9 +57,12 @@
 <script>
 import * as routes from "../routes";
 import Motion from '../models/Motion';
+import motionMixin from './storeMixins/motionMixin';
 
 export default {
     name: "results-page",
+
+    mixins: [motionMixin],
 
     data: function () {
         return {
@@ -68,65 +71,79 @@ export default {
     },
 
     computed: {
-        motion: function () {
-            let d = window.startData.motion;
-            let m = new Motion(d.id, d.content, d.description, d.requires);
-            return m;
-        },
+        // motion: function () {
+        //     let d = window.startData.motion;
+        //     let m = new Motion(d);
+        //
+        //     // let m = new Motion(d.id, d.content, d.description, d.requires);
+        //     return m;
+        // },
 
     },
 
     asyncComputed: {
 
-        counts: function () {
-            //try to get but don't complain if not allowed.
-
-            let url = routes.results.getCounts(this.motion.id);
-
-            return new Promise((resolve, reject) => {
-                Vue.axios.get(url).then((response) => {
-                    return resolve(response.data);
-                });
-
-            });
-        },
+        // counts: function () {
+        //
+        //
+        //     if (_.isUndefined(this.motion) || _.isNull(this.motion)) return 100000000000;
+        //
+        //     //try to get but don't complain if not allowed.
+        //
+        //     let url = routes.results.getCounts(this.motion.id);
+        //
+        //     return new Promise((resolve, reject) => {
+        //         Vue.axios.get(url).then((response) => {
+        //             return resolve(response.data);
+        //         });
+        //
+        //     });
+        // },
 
         passed: function () {
-            if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
+            return this.$store.getters.getPassed;
 
-            return this.results.passed ? 'PASSED' : 'FAILED';
+            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
+
+            // return this.results.passed ? 'PASSED' : 'FAILED';
 
         },
 
-        results: function () {
+        // results: function () {
+        //     if (_.isUndefined(this.motion)) return 100000000000;
+        //
+        //     let url = routes.results.getResults(this.motion.id);
+        //
+        //     return new Promise((resolve, reject) => {
+        //         Vue.axios.get(url).then((response) => {
+        //             return resolve(response.data);
+        //         });
+        //
+        //     });
+        // },
 
-            let url = routes.results.getResults(this.motion.id);
+        yayCount: function () {
+            return this.$store.getters.getYayCount
 
-            return new Promise((resolve, reject) => {
-                Vue.axios.get(url).then((response) => {
-                    return resolve(response.data);
-                });
-
-            });
-        },
-
-        yayCount : function(){
-            if (_.isUndefined(this.counts) || _.isNull(this.counts)) return ' -- '
+            // if (_.isUndefined(this.counts) || _.isNull(this.counts)) return ' -- '
             // return 'dog';
-            return this.counts.yayCount;
+            // return this.counts.yayCount;
 
         },
 
-        nayCount : function(){
-            if (_.isUndefined(this.counts) || _.isNull(this.counts)) return ' -- '
-            return this.counts.nayCount;
+        nayCount: function () {
+            return this.$store.getters.getNayCount
+            // if (_.isUndefined(this.counts) || _.isNull(this.counts)) return ' -- '
+            // return this.counts.nayCount;
             // return 'dog';
         },
 
-        totalVotes: function(){
-            if (_.isUndefined(this.results) || _.isNull(this.results)) return ' -- '
+        totalVotes: function () {
+            return this.$store.getters.getTotalVoteCount;
+
+            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' -- '
 // return 'dog';
-            return this.results.totalVotes;
+//             return this.results.totalVotes;
         }
     },
 
@@ -136,7 +153,25 @@ export default {
         releaseResults: function () {
         }
 
+    },
+    mounted: function () {
+        let me = this;
+        //parse data from page and store stuff
+        this.$store.dispatch('initialize')
+            .then(function () {
+                console.log(me.motion, 'motion')
+                //motion should be loaded now
+                me.$store.dispatch('loadResults', me.motion).then(function () {
+
+                        //todo if want to block from getting vote totals put the break here
+
+                        me.$store.dispatch('loadCounts', me.motion).then(function () {
+                                window.console.log('waggleback', 'isReady', 159, me.isReady);
+                            });
+                    });
+            });
     }
+
 
 }
 </script>
