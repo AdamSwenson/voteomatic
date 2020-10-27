@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MotionRequest;
+use App\Models\Meeting;
 use App\Models\Motion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -28,6 +29,11 @@ class MotionController extends Controller
 //    {
 //        //
 //    }
+
+    public function getAllForMeeting(Meeting $meeting)
+    {
+        return response()->json($meeting->motions()->get());
+    }
 
     /**
      * Store a newly created resource in storage.

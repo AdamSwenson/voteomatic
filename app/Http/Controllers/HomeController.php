@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,6 +17,11 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+                    $user = User::factory()->create();
+            Auth::login($user, true);
+
+        $this->user = Auth::user();
     }
 
     /**
@@ -24,11 +31,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        return view('home', ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
     }
 
 
     public function meetingIndex(Meeting $meeting){
-        return view('home');
+
+        $data = [
+
+            'data' => [
+                'meeting_id' => $meeting->id
+            ]
+        ];
+
+        return view('main', $data);
+
+
+        return view('home', ['user' => $this->user, 'name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
+
+//        return view('home');
     }
 }

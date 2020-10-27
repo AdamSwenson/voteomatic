@@ -1,4 +1,4 @@
-import motion from "../../models/Motion";
+import Motion from "../../models/Motion";
 import * as routes from "../../routes";
 
 
@@ -14,10 +14,20 @@ const state = {
      * currently edited, or whose
      * results are being reported
      */
-    motion: null
+    motion: null,
+
+    /**
+     * Store of loaded motions
+     */
+    motions: []
 };
 
 const mutations = {
+    addMotionToStore : (state, payload) => {
+        state.motions.push(payload);
+        // Vue.set(state, 'motion', payload);
+
+    },
 
     setMotion: (state, payload) => {
         Vue.set(state, 'motion', payload);
@@ -45,6 +55,7 @@ const actions = {
 
                     let motion = new Motion(d);
                     // let motion = new Motion(d.id, d.name, d.date);
+                    commit('addMotionToStore', motion);
                     commit('setMotion', motion);
                     resolve()
                 });
@@ -71,6 +82,23 @@ const actions = {
                     // let motion = new Motion(d.id, d.name, d.date);
                     commit('setMotion', motion);
                     resolve()
+                });
+        }));
+    },
+
+    loadMotionsForMeeting({dispatch, commit, getters}, meetingId) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.getAllMotionsForMeeting(meetingId);
+            return Vue.axios.get(url)
+                .then((response) => {
+                    _.forEach(response.data, (d) => {
+                        let motion = new Motion(d);
+                        // let motion = new Motion(d.id, d.name, d.date);
+                        commit('addMotionToStore', motion);
+                    });
+                    resolve()
+
                 });
         }));
     },
@@ -104,6 +132,10 @@ const getters = {
 
     getMotion: (state) => {
         return state.motion;
+    },
+
+    getStoredMotions: (state) => {
+    return state.motions;
     }
 };
 

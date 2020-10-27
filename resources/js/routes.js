@@ -70,7 +70,13 @@ module.exports = {
                 return base;
             }
             return base + motionId;
+        },
+
+        getAllMotionsForMeeting: (meetingId) => {
+
+            return normalizedRouteRoot()  + 'motions/meeting/' + meetingId;
         }
+
     }
 
 }

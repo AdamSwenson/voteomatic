@@ -76,11 +76,13 @@ class LTILaunchController extends Controller
             //todo consider whether want to just add anyone who passes the oath hurdle or if want whitelisted students (if latter, this would be firstOrFail)
 //            $user = User::where(['lms_id' => $request->user_id])
 //                ->firstOrFail();
-            $user = User::factory()->create();
+//            $user = User::factory()->create();
+
+            $this->handleUser();
 
             //we log them in via the usual laravel means
             //todo refactor this whole process to fit the laravel authentication patterns and utilities
-            Auth::login($user, true);
+//            Auth::login($user, true);
 
             //We redirect to the activity page
             return redirect()->route('meetingHome', $resourceLink->meeting);
@@ -92,6 +94,36 @@ class LTILaunchController extends Controller
             //todo logging and error handling here
 
         }
+
+    }
+
+    /**
+     * Creates or looks up the user and logs them
+     * in.
+     * @param LTIRequest $request
+     */
+    protected function handleUser(LTIRequest $request){
+        $lastName = $request->lis_person_name_family;
+
+        $firstName = $request->lis_person_name_given;
+
+        $userIdHash = $request->user_id;
+
+        $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
+
+        $this->user = User::factory()->create();
+
+        $this->user->first_name = $firstName;
+        $this->user->last_name = $lastName;
+        $this->user->user_id_hash = $userIdHash;
+
+        $this->user->save();
+
+        //associate them with the meeting
+
+
+        Auth::login($this->user, true);
+
 
     }
 

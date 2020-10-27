@@ -13,10 +13,10 @@ module.exports = {
          */
         meeting: {
             get : function(){
-                return this.$state.getters.getMeeting;
+                return this.$store.getters.getMeeting;
             },
             set : function(v){
-                this.$state.commit('setMeeting', v);
+                this.$store.commit('setMeeting', v);
 
             }
         }

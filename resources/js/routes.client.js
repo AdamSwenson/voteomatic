@@ -5,14 +5,26 @@ import resultsPage from './components/results-page'
 import motionSetup from './components/setup/motion-setup'
 import meetingSetup from './components/setup/meeting-setup'
 import voteVerify from './components/vote-verification-page'
+import meetingHome from './components/meeting-home'
 
 Vue.component( 'vote-page', votePage );
 Vue.component('results-page', resultsPage);
 Vue.component('motion-setup-page', motionSetup);
 Vue.component('meeting-setup-page', meetingSetup);
 Vue.component('vote-verify', resultsPage);
+Vue.component('meeting-home', meetingHome);
 
 export const routes =  [
+    {
+        name: 'home',
+        path: '/meeting-home',
+        icon: "fa fa-book",
+        label: "Home",
+        components: { main:  meetingHome},
+        default: true,
+        props:  true  //{default: true}
+
+    },
 
 
     {

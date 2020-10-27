@@ -37,9 +37,12 @@ const actions = {
     },
 
     loadMeeting({dispatch, commit, getters}, meeting) {
+        let meetingId = _.isNumber(meeting) ? meeting : meeting.id;
+
         return new Promise(((resolve, reject) => {
+
             //send to server
-            let url = routes.meetings.resource(meeting.id);
+            let url = routes.meetings.resource(meetingId);
             return Vue.axios.get(url)
                 .then((response) => {
                     let d = response.data;

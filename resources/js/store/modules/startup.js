@@ -22,7 +22,15 @@ const actions = {
 
                 dispatch('loadMotionFromPageData').then(function () {
 
-                    resolve();
+                    let meeting = getters.getMeeting;
+
+                    //get existing motions for meeting
+                    dispatch('loadMotionsForMeeting', meeting.id).then(function () {
+
+                        resolve();
+
+                    });
+
 
                 })
 
@@ -63,14 +71,23 @@ const actions = {
         return new Promise((resolve, reject) => {
             let data = window.startData;
             window.console.log('startup', 'start data', 25, data);
+            let meetingId = null;
+            if (!_.isUndefined(data.meeting_id)) {
+                meetingId = data.meeting_id;
+            }
+            //prefer the id if it is set directly on page
+            else if (!_.isUndefined(data.motion.meeting_id)) {
+                meetingId = data.motion.meeting_id;
+            }
 
-            if (_.isUndefined(data.meeting_id)) {
+            if (_.isNull(meetingId)) {
                 console.log('No meeting id in page data');
                 return resolve();
             }
 
+
             console.log("Loading meeting from server from id in page data")
-            dispatch('loadMeeting', data.meeting_id).then(function () {
+            dispatch('loadMeeting', meetingId).then(function () {
                 return resolve();
             });
 

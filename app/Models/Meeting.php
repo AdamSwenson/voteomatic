@@ -12,6 +12,14 @@ class Meeting extends Model
 
     protected $fillable= ['date','name'];
 
+    /**
+     * All the motions introduced at the meeting
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function motions(){
+    return $this->hasMany(Motion::class);
+    }
+
     public function resourceLink(){
         return $this->hasOne(ResourceLink::class);
     }

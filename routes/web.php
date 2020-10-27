@@ -64,7 +64,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
    ============================= */
 
 //main page where votes get cast
-Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage');
+//todo should probably rename all this since it's basically the application
+Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage')->name('main');
 
 
 /* =============================
@@ -86,6 +87,7 @@ Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@val
 //Route::get('meetings', [MeetingController::class, 'store']);
 
 Route::resource('meetings', MeetingController::class);
+Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
 Route::resource('motions', MotionController::class);
 Route::resource('votes', VoteController::class);
 

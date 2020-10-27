@@ -14,6 +14,8 @@ class MeetingFactory extends Factory
      */
     protected $model = Meeting::class;
 
+    public $names = ['Senate meeting', 'Annual plenary session', 'Board of Trustees meeting'];
+
     /**
      * Define the model's default state.
      *
@@ -22,7 +24,7 @@ class MeetingFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company,
+            'name' => $this->faker->randomElement($this->names),
             'date' => $this->faker->dateTimeThisCentury
         ];
     }

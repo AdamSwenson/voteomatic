@@ -54,7 +54,7 @@ export default {
         let me = this;
         //parse data from page and store stuff
         this.$store.dispatch('initialize').then(function () {
-
+            me.$router.push('meeting-home');
             window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });
 
