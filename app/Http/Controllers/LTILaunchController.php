@@ -78,7 +78,7 @@ class LTILaunchController extends Controller
 //                ->firstOrFail();
 //            $user = User::factory()->create();
 
-            $this->handleUser();
+            $this->handleUser($request);
 
             //we log them in via the usual laravel means
             //todo refactor this whole process to fit the laravel authentication patterns and utilities
