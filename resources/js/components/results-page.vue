@@ -101,11 +101,10 @@ export default {
         // },
 
         passed: function () {
-            return this.$store.getters.getPassed;
+            let results = this.$store.getters.getPassed;
+            if (_.isUndefined(results) || _.isNull(results)) return ' ----- '
 
-            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
-
-            // return this.results.passed ? 'PASSED' : 'FAILED';
+            return results ? 'PASSED' : 'FAILED';
 
         },
 
@@ -163,12 +162,12 @@ export default {
                 //motion should be loaded now
                 me.$store.dispatch('loadResults', me.motion).then(function () {
 
-                        //todo if want to block from getting vote totals put the break here
+                    //todo if want to block from getting vote totals put the break here
 
-                        me.$store.dispatch('loadCounts', me.motion).then(function () {
-                                window.console.log('waggleback', 'isReady', 159, me.isReady);
-                            });
+                    me.$store.dispatch('loadCounts', me.motion).then(function () {
+                        window.console.log('waggleback', 'isReady', 159, me.isReady);
                     });
+                });
             });
     }
 

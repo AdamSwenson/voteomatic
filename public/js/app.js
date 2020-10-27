@@ -2308,8 +2308,9 @@ __webpack_require__.r(__webpack_exports__);
     //     });
     // },
     passed: function passed() {
-      return this.$store.getters.getPassed; // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
-      // return this.results.passed ? 'PASSED' : 'FAILED';
+      var results = this.$store.getters.getPassed;
+      if (_.isUndefined(results) || _.isNull(results)) return ' ----- ';
+      return results ? 'PASSED' : 'FAILED';
     },
     // results: function () {
     //     if (_.isUndefined(this.motion)) return 100000000000;
