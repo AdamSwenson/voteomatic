@@ -18,8 +18,9 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
 
-                    $user = User::factory()->create();
-            Auth::login($user, true);
+//        $auth
+//                    $user = User::factory()->create();
+//            Auth::login($user, true);
 
         $this->user = Auth::user();
     }
