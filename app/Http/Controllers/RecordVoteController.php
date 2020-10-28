@@ -6,6 +6,7 @@ use App\Exceptions\DoubleVoteAttempt;
 use App\Http\Requests\VoteRequest;
 use App\Models\Motion;
 use App\Models\Vote;
+use App\Repositories\IVoterEligibilityRepository;
 use App\Repositories\VoterEligibilityRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,14 +39,17 @@ class RecordVoteController extends Controller
      */
     public function __construct()
     {
-        //todo inject from container
-        $this->voterEligibilityRepo = new VoterEligibilityRepository();
-//        $this->middleware('auth');
+
+        $this->voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
+//        $this->voterEligibilityRepo = new VoterEligibilityRepository();
+
+        $this->middleware('auth');
+        $this->middleware('vote-eligibility');
 
 
         // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-        Auth::loginUsingId(self::DEV_USER_ID);
-        $this->user = Auth::user();
+//        Auth::loginUsingId(self::DEV_USER_ID);
+//        $this->user = Auth::user();
 
 
     }
@@ -56,7 +60,7 @@ class RecordVoteController extends Controller
             if ($this->voterEligibilityRepo->hasAlreadyVoted($motion, $this->user)) {
 
                 // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-//                throw new DoubleVoteAttempt;
+                throw new DoubleVoteAttempt;
             }
 
             $vote = new Vote;

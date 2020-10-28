@@ -7,6 +7,7 @@ use App\Repositories\Assignment\IAssignmentRepository;
 use App\Repositories\Assignment\IReviewAssignmentRepository;
 use App\Repositories\Assignment\ReviewAssignmentRepository;
 use App\Repositories\Exam\IExamRepository;
+use App\Repositories\IVoterEligibilityRepository;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -27,6 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->bind(IVoterEligibilityRepository::class);
 
 
 //        $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
