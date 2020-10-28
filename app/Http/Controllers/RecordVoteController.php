@@ -55,6 +55,14 @@ class RecordVoteController extends Controller
     }
 
 
+    /**
+     * Saves the vote to the database and creates a record
+     * that the user has voted.
+     *
+     * @param Motion $motion
+     * @param VoteRequest $request
+     * @return Vote|string[]
+     */
     public function recordVote(Motion $motion, VoteRequest $request){
         try {
             if ($this->voterEligibilityRepo->hasAlreadyVoted($motion, $this->user)) {
