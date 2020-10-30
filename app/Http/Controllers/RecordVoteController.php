@@ -46,14 +46,9 @@ class RecordVoteController extends Controller
         $this->middleware('auth');
 //        $this->middleware('vote-eligibility');
 
-//
-//        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-        $env = env('APP_ENV');
-        if($env != 'production'){
+        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
+        $this->getUser();
 
-            Auth::loginUsingId(self::DEV_USER_ID);
-        }
-        $this->user = Auth::user();
 
     }
 

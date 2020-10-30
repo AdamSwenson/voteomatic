@@ -9,7 +9,9 @@
         <div class="card-body">
 
             <ul class="list-group list-group-flush">
-                <motion-select-button v-for="m in motions" :motion="m" :key="m.id"></motion-select-button>
+                <motion-select-button v-for="m in motions"
+                                      :motion="m"
+                                      :key="m.id"></motion-select-button>
 
 <!--                <li class="list-group-item">-->
 <!--                    <button class="btn btn-outline-info"-->
@@ -28,9 +30,13 @@
 
 <script>
 import MotionSelectButton from "../controls/motion-select-button";
+// import MeetingMixin from '../storeMixins/meetingMixin';
+// import MotionMixin from '../storeMixins/motionMixin';
+
 export default {
     name: "motions-card",
     components: {MotionSelectButton},
+    // mixins : [MotionMixin],
     computed: {
         motions: function () {
             let m = this.$store.getters.getStoredMotions;

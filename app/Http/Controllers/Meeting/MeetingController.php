@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Meeting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeetingRequest;
 use App\Models\Meeting;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
@@ -12,20 +13,33 @@ class MeetingController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth');
+        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
+        $this->getUser();
+
+//        $env = env('APP_ENV');
+//        if ($env != 'production') {
+//            //this is here in case I am dumb. it is not an excuse to be dumb
+//            //and fail to remove before production.
+//            Auth::loginUsingId(1, true);
+//        }else {
+//
+//
+//            $this->middleware('auth');
+//        }
+//        $this->user = Auth::user();
     }
 
 
-
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        //
-//    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $meetings = $this->user->meetings()->get();
+        return response()->json($meetings);
+    }
 
 //    /**
 //     * Show the form for creating a new resource.

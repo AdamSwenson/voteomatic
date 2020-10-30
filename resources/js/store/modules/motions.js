@@ -35,6 +35,13 @@ const mutations = {
 
     },
 
+    /**
+     * Sets the provided motion object as
+     * the currently active motion
+     *
+     * @param state
+     * @param motionObject
+     */
     setMotion: (state, motionObject) => {
         Vue.set(state, 'motion', motionObject);
     },

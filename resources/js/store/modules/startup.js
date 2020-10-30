@@ -22,7 +22,7 @@ const actions = {
 
                 dispatch('loadMotionFromPageData').then(function () {
 
-                    let meeting = getters.getMeeting;
+                    let meeting = getters.getActiveMeeting;
 
                     //get existing motions for meeting
                     dispatch('loadMotionsForMeeting', meeting.id).then(function () {

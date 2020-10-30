@@ -13,7 +13,7 @@ module.exports = {
          */
         meeting: {
             get : function(){
-                return this.$store.getters.getMeeting;
+                return this.$store.getters.getActiveMeeting;
             },
             set : function(v){
                 this.$store.commit('setMeeting', v);

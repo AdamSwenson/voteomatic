@@ -15,7 +15,7 @@ import MotionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "motion-select-button",
-    // mixins : [MotionMixin],
+
     data: function () {
         return {}
     },
@@ -29,13 +29,23 @@ export default {
             return 'btn btn-outline-primary'
         },
 
+
+    },
+
+    asyncComputed : {
+
+        selectedMotion : function (){
+            return  this.$store.getters.getActiveMotion;
+        },
+
         isSelected: function () {
-            let selected = this.$store.getters.getMotion;
 
-            if(_.isUndefined(selected) || _.isNull(selected)) return false
+            if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
 
-            return this.motion.id === selected.id
+            return this.motion.id === this.selectedMotion.id
         }
+
+
     },
 
     methods: {

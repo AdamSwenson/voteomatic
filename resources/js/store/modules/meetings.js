@@ -9,10 +9,31 @@ import * as routes from "../../routes";
 
 const state = {
 
-    meeting: null
+    meeting: null,
+
+    meetings: []
 };
 
 const mutations = {
+
+    /**
+     * Pushes a meeting object into meetings
+     * @param state
+     * @param meetingObject
+     */
+    addMeetingToStore: (state, meetingObject) => {
+        //todo double check that there is no reason to have duplicates or raise an error
+        let mi = -1;
+        _.forEach(state.meetings, function(m) {
+            if(m.id === meetingObject.id){
+                mi = 1;
+            }
+        });
+
+        if(mi === -1) {
+            state.meetings.push(meetingObject);
+        }
+    },
 
     setMeeting: (state, payload) => {
         Vue.set(state, 'meeting', payload);
@@ -24,8 +45,8 @@ const mutations = {
      * @param prop
      * @param val
      */
-    setMeetingProp : (state, {updateProp, updateVal}) => {
-    Vue.set(state.meeting, updateProp, updateVal);
+    setMeetingProp: (state, {updateProp, updateVal}) => {
+        Vue.set(state.meeting, updateProp, updateVal);
     }
 };
 
@@ -39,6 +60,8 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     let meeting = new Meeting(d.id, d.name, d.date);
+                    commit('addMeetingToStore', meeting);
+
                     commit('setMeeting', meeting);
                     resolve()
                 });
@@ -57,8 +80,39 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     let meeting = new Meeting(d.id, d.name, d.date);
+                    commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
                     resolve()
+                });
+        }));
+    },
+
+    /**
+     * Loads all meetings which the user has
+     * access to.
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
+    loadAllMeetings({dispatch, commit, getters}) {
+        // let meetingId = _.isNumber(meeting) ? meeting : meeting.id;
+
+        return new Promise(((resolve, reject) => {
+
+            //send to server
+            let url = routes.meetings.resource();
+            return Vue.axios.get(url)
+                .then((response) => {
+                    _.forEach(response.data, (d) => {
+                        // window.console.log('loadAllMeetings', d);
+                        let meeting = new Meeting(d.id, d.name, d.date);
+                        commit('addMeetingToStore', meeting);
+                        resolve()
+                    });
+
+
                 });
         }));
     },
@@ -80,7 +134,7 @@ const actions = {
             //todo consider whether worth rolling back
             commit('setMeetingProp', payload)
 
-            let meeting = getters.getMeeting;
+            let meeting = getters.getActiveMeeting;
 
             //send to server
             let url = routes.meetings.resource(meeting.id);
@@ -95,8 +149,12 @@ const actions = {
 
 const getters = {
 
-    getMeeting: (state) => {
+    getActiveMeeting: (state) => {
         return state.meeting;
+    },
+
+    getStoredMeetings : (state) => {
+    return state.meetings;
     }
 };
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Meeting\MeetingController;
+use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\ResultsController;
@@ -68,6 +69,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage')->name('main');
 
 
+/* =============================
+        Meetings
+   ============================= */
+Route::resource('meetings', MeetingController::class);
+Route::get('roster/{meeting}', [RosterController::class, 'getRoster']);
+
+/* =============================
+        Motions
+   ============================= */
+Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
+Route::resource('motions', MotionController::class);
+
 
 /* =============================
         Individual votes and vote history controllers
@@ -77,6 +90,7 @@ Route::get('/cast-votes/{meeting}', [VoteHistoryController::class, 'getPreviousl
 Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@recordVote' );
 
 Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@validateReceipt');
+Route::resource('votes', VoteController::class);
 
 
 /* =============================
@@ -95,9 +109,7 @@ Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResul
 //Route::post('meetings/{meeting}', [MeetingController::class, 'update']);
 //Route::get('meetings', [MeetingController::class, 'store']);
 
-Route::resource('meetings', MeetingController::class);
-Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
-Route::resource('motions', MotionController::class);
-Route::resource('votes', VoteController::class);
+
+
 
 

@@ -62,6 +62,15 @@ module.exports = {
             }
             return base + meetingId;
 
+        },
+
+        getRoster : (meetingId) => {
+            let base = normalizedRouteRoot() + 'roster/';
+            if(_.isNull(meetingId)) {
+                return base;
+            }
+            return base + meetingId;
+
         }
     },
 

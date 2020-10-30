@@ -33,6 +33,7 @@
                 <div class="select-meetings card-text">
                     <h4 class="card-title">Select meeting </h4>
                     <p><strong>ToDo</strong></p>
+                    <meetings-card></meetings-card>
 
                     <h4 class="card-title">Manage meeting access</h4>
                     <p><strong>ToDo</strong></p>
@@ -51,9 +52,11 @@ import * as routes from "../../routes";
 import Meeting from '../../models/Meeting';
 import MeetingMixin from '../storeMixins/meetingMixin';
 import Payload from "../../models/Payload";
+import MeetingsCard from "../navigation/meetings-card";
 
 export default {
     name: "meeting-setup",
+    components: {MeetingsCard},
     props: ['existingMeeting'],
 
     mixins: [MeetingMixin],
