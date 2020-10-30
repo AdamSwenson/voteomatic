@@ -4,8 +4,11 @@
 
 module.exports = {
 
+    getIsAdmin: (state) => {
+        return state.isAdmin;
+    },
 
-    getRouteRoot: (state) =>{
+    getRouteRoot: (state) => {
         return window.routeRoot;
-    }
+    },
 }

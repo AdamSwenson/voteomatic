@@ -20,11 +20,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //this will be non-admin users
         $num_users = 10;
 
 
         $meetings = Meeting::factory(2)->create();
+
         foreach ($meetings as $meeting) {
+
+            //make an admin user
+            $user = User::factory()->administrator()->create();
+            $meeting->users()->attach($user);
+
             for ($i = 0; $i < $num_users; $i++) {
                 $user = User::factory()->create();
                 $meeting->users()->attach($user);

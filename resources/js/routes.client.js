@@ -22,28 +22,42 @@ export const routes =  [
         label: "Home",
         components: { main:  meetingHome},
         default: true,
-        props:  true  //{default: true}
+        props:  true,
+        adminOnly : false
 
     },
 
 
     {
         name: 'vote',
-        path:   '/vote',
+        path: '/vote',
         icon: "fa fa-pencil",
         label: "Vote",
-        components: { main: votePage },
-        props:  true  //{default: true}
-
+        components: {main: votePage},
+        props: true,
+        adminOnly: false
     },
+
+
+    {
+        name: 'verify',
+        path: '/verify',
+        icon: "fa fa-check",
+        label: "Verify your vote",
+        components: { main:  voteVerify},
+        props:  true,
+        adminOnly : false
+    },
+
+
     {
         name: 'results',
         path: '/results'  ,
         icon: "fa fa-comments-o",
         label: "Results",
         components: { main: resultsPage },
-        props:  true  //{default: true}
-
+        props:  true,
+        adminOnly : false
     },
 
     {
@@ -51,8 +65,9 @@ export const routes =  [
         path: '/motion',
         icon: "fa fa-bar-chart",
         label: "Create motion",
-        components: { main: motionSetup },
-        props:  true  //{default: true}
+        components: {main: motionSetup},
+        props: true,
+        adminOnly : true,
 
     },
 
@@ -62,18 +77,8 @@ export const routes =  [
         icon: "fa fa-book",
         label: "Create meeting",
         components: { main:  meetingSetup},
-        props:  true  //{default: true}
-
-    },
-
-    {
-        name: 'verify',
-        path: '/verify',
-        icon: "fa fa-check",
-        label: "Verify your vote",
-        components: { main:  voteVerify},
-        props:  true  //{default: true}
-
+        props:  true,
+        adminOnly : true
     },
 
 

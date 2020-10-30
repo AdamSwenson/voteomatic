@@ -73,17 +73,8 @@ class LTILaunchController extends Controller
             $authenticator = AuthenticatorFactory::make($request);
             $authenticator->authenticate($request, $resourceLink);
 
-            //Now we look up the student based on the provided user id
-            //todo consider whether want to just add anyone who passes the oath hurdle or if want whitelisted students (if latter, this would be firstOrFail)
-//            $user = User::where(['lms_id' => $request->user_id])
-//                ->firstOrFail();
-//            $user = User::factory()->create();
-
+            //Get an existing user or create a new person in the db
             $this->handleUser($request);
-
-            //we log them in via the usual laravel means
-            //todo refactor this whole process to fit the laravel authentication patterns and utilities
-//            Auth::login($user, true);
 
             //We redirect to the activity page
             return redirect()->route('meetingHome', $resourceLink->meeting);
@@ -101,6 +92,7 @@ class LTILaunchController extends Controller
     /**
      * Creates or looks up the user and logs them
      * in.
+     *  //todo refactor this whole process to fit the laravel authentication patterns and utilities
      * @param LTIRequest $request
      */
     protected function handleUser(LTIRequest $request)

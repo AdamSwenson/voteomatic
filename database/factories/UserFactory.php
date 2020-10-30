@@ -42,7 +42,7 @@ class UserFactory extends Factory
     public function administrator(){
         return $this->state(function (array $attributes) {
             return [
-                'is_admin' => false,
+                'is_admin' => true,
             ];
         });
 

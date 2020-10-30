@@ -45,6 +45,9 @@ export default {
 
     data: function () {
         return {
+
+            adminOnly : [],
+
             activeClass: 'active',
             styling: 'nav-item',
 

@@ -1,6 +1,7 @@
 <template>
 
     <div class="voteomatic">
+
         <router-tabs></router-tabs>
 
 

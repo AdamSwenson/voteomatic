@@ -15,19 +15,7 @@ class MeetingController extends Controller
 
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
         $this->getUser();
-
-//        $env = env('APP_ENV');
-//        if ($env != 'production') {
-//            //this is here in case I am dumb. it is not an excuse to be dumb
-//            //and fail to remove before production.
-//            Auth::loginUsingId(1, true);
-//        }else {
-//
-//
-//            $this->middleware('auth');
-//        }
-//        $this->user = Auth::user();
-    }
+ }
 
 
     /**

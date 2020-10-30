@@ -19,6 +19,9 @@ class RosterController extends Controller
 
     /**
      * Gets all users associated with the meeting
+     *
+     * todo Not sure whether this is needed
+     *
      * @param Meeting $meeting
      * @return \Illuminate\Http\JsonResponse
      */

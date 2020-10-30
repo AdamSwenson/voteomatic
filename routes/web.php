@@ -35,13 +35,11 @@ Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 /* =============================
         Login, LTI authentication, and other admin
    ============================= */
-
 Auth::routes();
 
 // LTI access endpoint
 Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaunchRequest')->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
-
 
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
 Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');

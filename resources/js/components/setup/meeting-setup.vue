@@ -35,6 +35,8 @@
                     <p><strong>ToDo</strong></p>
                     <meetings-card></meetings-card>
 
+                    <h5>ToDo : Resource link handling</h5>
+
                     <h4 class="card-title">Manage meeting access</h4>
                     <p><strong>ToDo</strong></p>
 

@@ -2349,6 +2349,7 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   data: function data() {
     return {
+      adminOnly: [],
       activeClass: 'active',
       styling: 'nav-item',
       identifier: 'page-nav-tabs'
@@ -2590,6 +2591,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _navigation_meetings_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../navigation/meetings-card */ "./resources/js/components/navigation/meetings-card.vue");
+//
+//
 //
 //
 //
@@ -3506,6 +3509,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navigation/router-tabs */ "./resources/js/components/navigation/router-tabs.vue");
 /* harmony import */ var _controls_refresh_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controls/refresh-button */ "./resources/js/components/controls/refresh-button.vue");
+//
 //
 //
 //
@@ -42821,6 +42825,8 @@ var render = function() {
             _vm._v(" "),
             _c("meetings-card"),
             _vm._v(" "),
+            _c("h5", [_vm._v("ToDo : Resource link handling")]),
+            _vm._v(" "),
             _c("h4", { staticClass: "card-title" }, [
               _vm._v("Manage meeting access")
             ]),
@@ -62131,8 +62137,8 @@ var routes = [{
     main: _components_meeting_home__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   "default": true,
-  props: true //{default: true}
-
+  props: true,
+  adminOnly: false
 }, {
   name: 'vote',
   path: '/vote',
@@ -62141,38 +62147,8 @@ var routes = [{
   components: {
     main: _components_vote_page__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: true //{default: true}
-
-}, {
-  name: 'results',
-  path: '/results',
-  icon: "fa fa-comments-o",
-  label: "Results",
-  components: {
-    main: _components_results_page__WEBPACK_IMPORTED_MODULE_2__["default"]
-  },
-  props: true //{default: true}
-
-}, {
-  name: 'motion',
-  path: '/motion',
-  icon: "fa fa-bar-chart",
-  label: "Create motion",
-  components: {
-    main: _components_setup_motion_setup__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
-  props: true //{default: true}
-
-}, {
-  name: 'meeting',
-  path: '/meeting',
-  icon: "fa fa-book",
-  label: "Create meeting",
-  components: {
-    main: _components_setup_meeting_setup__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-  props: true //{default: true}
-
+  props: true,
+  adminOnly: false
 }, {
   name: 'verify',
   path: '/verify',
@@ -62181,8 +62157,38 @@ var routes = [{
   components: {
     main: _components_vote_verification_page__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  props: true //{default: true}
-
+  props: true,
+  adminOnly: false
+}, {
+  name: 'results',
+  path: '/results',
+  icon: "fa fa-comments-o",
+  label: "Results",
+  components: {
+    main: _components_results_page__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  props: true,
+  adminOnly: false
+}, {
+  name: 'motion',
+  path: '/motion',
+  icon: "fa fa-bar-chart",
+  label: "Create motion",
+  components: {
+    main: _components_setup_motion_setup__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  props: true,
+  adminOnly: true
+}, {
+  name: 'meeting',
+  path: '/meeting',
+  icon: "fa fa-book",
+  label: "Create meeting",
+  components: {
+    main: _components_setup_meeting_setup__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  props: true,
+  adminOnly: true
 } // {
 //     name: 'notes',
 //     path: this.routeToNotes,
@@ -62326,6 +62332,9 @@ module.exports = {};
  * Created by adam on 2020-07-13.
  */
 module.exports = {
+  getIsAdmin: function getIsAdmin(state) {
+    return state.isAdmin;
+  },
   getRouteRoot: function getRouteRoot(state) {
     return window.routeRoot;
   }
@@ -62974,13 +62983,16 @@ var actions = {
         getters = _ref.getters;
     return new Promise(function (resolve, reject) {
       window.console.log('startup', 'Initializing from page data');
-      dispatch('loadMeetingFromPageData').then(function () {
-        dispatch('loadMotionFromPageData').then(function () {
-          var meeting = getters.getActiveMeeting; //get existing motions for meeting
+      dispatch('loadIsAdminFromPageData').then(function () {
+        dispatch('loadMeetingFromPageData').then(function () {
+          dispatch('loadMotionFromPageData').then(function () {
+            var meeting = getters.getActiveMeeting; //get existing motions for meeting
 
-          dispatch('loadMotionsForMeeting', meeting.id).then(function () {
-            dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
-              resolve();
+            dispatch('loadMotionsForMeeting', meeting.id).then(function () {
+              //get motions which have already been handled
+              dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
+                resolve();
+              });
             });
           });
         });
@@ -62989,13 +63001,39 @@ var actions = {
   },
 
   /**
-   * Parses the things set in window.startData
-   * and sets them in store
+   * Sets whether the user is a meeting administrator
+   * (and thus allowed to see certain pages) from page data.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
    */
-  loadMotionFromPageData: function loadMotionFromPageData(_ref2) {
+  loadIsAdminFromPageData: function loadIsAdminFromPageData(_ref2) {
     var dispatch = _ref2.dispatch,
         commit = _ref2.commit,
         getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      var data = window.startData;
+
+      if (_.isUndefined(data.isAdmin) || _.isNull(data.isAdmin)) {
+        console.log('Page data does not contain admin info ');
+        return resolve();
+      }
+
+      console.log("Reading admin from page data", data.isAdmin);
+      commit('setAdmin', data.isAdmin);
+      resolve();
+    });
+  },
+
+  /**
+   * Parses the things set in window.startData
+   * and sets them in store
+   */
+  loadMotionFromPageData: function loadMotionFromPageData(_ref3) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       var data = window.startData;
 
@@ -63015,10 +63053,10 @@ var actions = {
    * Parses the things set in window.startData
    * and sets them in store
    */
-  loadMeetingFromPageData: function loadMeetingFromPageData(_ref3) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
+  loadMeetingFromPageData: function loadMeetingFromPageData(_ref4) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
     return new Promise(function (resolve, reject) {
       var data = window.startData;
       window.console.log('startup', 'start data', 25, data);
@@ -63063,7 +63101,13 @@ var getters = {};
 /**
  * Created by adam on 2020-07-13.
  */
-module.exports = {};
+module.exports = {
+  setAdmin: function setAdmin(state, _ref) {
+    var updateProp = _ref.updateProp,
+        updateVal = _ref.updateVal;
+    Vue.set(state, 'isAdmin', updateVal);
+  }
+};
 
 /***/ }),
 
@@ -63077,7 +63121,17 @@ module.exports = {};
 /**
  * Created by adam on 2020-07-13.
  */
-module.exports = {};
+module.exports = {
+  /**
+   * whether the user should be
+   * able to click on things which only
+   * admins can click, etc
+   *
+   * No actual security should hang on this,
+   * just interface management
+   */
+  isAdmin: false
+};
 
 /***/ }),
 

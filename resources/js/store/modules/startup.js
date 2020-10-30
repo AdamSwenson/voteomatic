@@ -18,18 +18,24 @@ const actions = {
         return new Promise((resolve, reject) => {
             window.console.log('startup', 'Initializing from page data');
 
-            dispatch('loadMeetingFromPageData').then(function () {
+            dispatch('loadIsAdminFromPageData').then(function () {
 
-                dispatch('loadMotionFromPageData').then(function () {
+                dispatch('loadMeetingFromPageData').then(function () {
 
-                    let meeting = getters.getActiveMeeting;
+                    dispatch('loadMotionFromPageData').then(function () {
 
-                    //get existing motions for meeting
-                    dispatch('loadMotionsForMeeting', meeting.id).then(function () {
+                        let meeting = getters.getActiveMeeting;
 
-                        dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function (){
+                        //get existing motions for meeting
+                        dispatch('loadMotionsForMeeting', meeting.id).then(function () {
 
-                            resolve();
+                            //get motions which have already been handled
+                            dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
+
+
+                                resolve();
+
+                            });
 
                         });
 
@@ -38,10 +44,33 @@ const actions = {
                 });
 
             });
-
         });
     },
 
+    /**
+     * Sets whether the user is a meeting administrator
+     * (and thus allowed to see certain pages) from page data.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    loadIsAdminFromPageData({dispatch, commit, getters}) {
+        return new Promise((resolve, reject) => {
+            let data = window.startData;
+
+            if (_.isUndefined(data.isAdmin) || _.isNull(data.isAdmin)) {
+                console.log('Page data does not contain admin info ');
+                return resolve();
+            }
+
+            console.log("Reading admin from page data", data.isAdmin);
+            commit('setAdmin', data.isAdmin);
+
+            resolve();
+
+        });
+    },
 
     /**
      * Parses the things set in window.startData
