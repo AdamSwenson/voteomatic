@@ -13,7 +13,7 @@ module.exports = {
          */
         motion: {
             get : function(){
-                return this.$store.getters.getMotion;
+                return this.$store.getters.getActiveMotion;
             },
 
             set : function(v){

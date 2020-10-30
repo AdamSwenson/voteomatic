@@ -45,7 +45,7 @@ export default {
 
     data: function () {
         return {
-            activeClass: 'is-active',
+            activeClass: 'active',
             styling: 'nav-item',
 
             identifier: 'page-nav-tabs',

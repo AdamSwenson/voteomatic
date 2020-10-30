@@ -50,8 +50,8 @@
                         id="requiresSelect"
                         v-model="requires">
                         <option disabled value="">Please select required vote</option>
-                        <option>Majority</option>
-                        <option>Two-thirds</option>
+                        <option value="0.5">Majority</option>
+                        <option value="0.66">Two-thirds</option>
 
                     </select>
                     <span>Selected: {{ requires }}</span>
@@ -63,20 +63,26 @@
 </template>
 
 <script>
-import * as routes from "../../routes";
-import Meeting from '../../models/Meeting';
-import Motion from '../../models/Motion';
 
 // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 let meetingId = 1;
 
+import * as routes from "../../routes";
+import Meeting from '../../models/Meeting';
+import MeetingMixin from '../storeMixins/meetingMixin';
+import MotionMixin from '../storeMixins/motionMixin';
+import Payload from "../../models/Payload";
+
 
 export default {
     name: "motion-setup",
-    props: ['existingMotion', 'meeting'],
+    props: ['existingMotion'],
+
+    mixins: [MeetingMixin, MotionMixin],
+
     data: function () {
         return {
-            motion: null,
+            // motion: null,
             showFields: false,
             placeholders: {
                 content: "Moved that tacos be eaten everyday.",
@@ -87,22 +93,6 @@ export default {
 
     computed: {
 
-        // motion: function () {
-        //     if (!_.isUndefined(this.existingMotion)) return this.existingMotion;
-        //
-        //     return new Promise(((resolve, reject) => {
-        //         //send to server
-        //         let url = routes.motions.resource();
-        //         let params = {meetingId: this.meeting.id};
-        //         return Vue.axios.post(url, params).then((response) => {
-        //             let d = response.data;
-        //             let motion = new Motion(d.id, d.content, d.description, d.requires);
-        //             return resolve(motion);
-        //         });
-        //     }));
-
-        // },
-
         motionType: {
             get: function () {
                 try {
@@ -112,6 +102,14 @@ export default {
                 }
             },
             set: function (v) {
+                let p = Payload.factory({
+                        'object': this.motion,
+                        'updateProp': 'type',
+                        'updateVal': v
+                    }
+                );
+                this.$store.dispatch('updateMotion', p);
+
             }
         },
 
@@ -123,8 +121,17 @@ export default {
                 return this.motion.content;
             },
             set(v) {
-                this.motion.content = v;
-                this.updateMotion();
+                let p = Payload.factory({
+                        'object': this.motion,
+                        'updateProp': 'content',
+                        'updateVal': v
+                    }
+                );
+                this.$store.dispatch('updateMotion', p);
+
+
+                // this.motion.content = v;
+                // this.updateMotion();
             }
         },
 
@@ -138,8 +145,14 @@ export default {
                 }
             },
             set(v) {
-                this.motion.description = v;
-                this.updateMotion();
+                let p = Payload.factory({
+                        'object': this.motion,
+                        'updateProp': 'description',
+                        'updateVal': v
+                    }
+                );
+                this.$store.dispatch('updateMotion', p);
+
             }
         },
 
@@ -152,8 +165,15 @@ export default {
                 }
             },
             set(v) {
-                this.motion.requires = v;
-                this.updateMotion();
+                let p = Payload.factory({
+                        'object': this.motion,
+                        'updateProp': 'requires',
+                        'updateVal': v
+                    }
+                );
+
+                this.$store.dispatch('updateMotion', p);
+
             }
         }
     },
@@ -161,55 +181,53 @@ export default {
     methods: {
         initializeMotion: function () {
 
-            let p = new Promise(((resolve, reject) => {
 
-                //send to server
+            let p = this.$store.dispatch('createMotion', this.meetingId);
+            let me = this;
+            p.then(() => {
+                this.showFields = true;
 
-                let url = routes.motions.resource();
+            });
 
-
-                // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
-                let params = {meeting_id: meetingId};
-                // let params = {meetingId: this.meeting.id};
-
-
-                return Vue.axios.post(url, params).then((response) => {
-                    let d = response.data;
-                    this.motion = new Motion(d.id, d.content, d.description, d.requires);
-                    return resolve(this.motion);
-
-                });
-            }));
+            //
+            // let p = new Promise(((resolve, reject) => {
+            //
+            //     //send to server
+            //
+            //     let url = routes.motions.resource();
+            //
+            //
+            //     // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
+            //     let params = {meeting_id: meetingId};
+            //     // let params = {meetingId: this.meeting.id};
+            //
+            //
+            //     return Vue.axios.post(url, params).then((response) => {
+            //         let d = response.data;
+            //         this.motion = new Motion(d.id, d.content, d.description, d.requires);
+            //         return resolve(this.motion);
+            //
+            //     });
+            // }));
         },
 
-        updateMotion: function () {
-            let p = new Promise(((resolve, reject) => {
-                //send to server
-                let url = routes.motions.resource(this.motion.id);
-                // Vue.axios.put(url,  this.meeting).then((response) => {
-                // Vue.axios.post(url, this.meeting).then((response) => {
-                Vue.axios.post(url, {data: this.motion, _method: 'put'}).then((response) => {
-                    let d = response.data;
-                    resolve()
-                });
-            }));
-        },
+        // updateMotion: function () {
+        //     let p = new Promise(((resolve, reject) => {
+        //         //send to server
+        //         let url = routes.motions.resource(this.motion.id);
+        //         // Vue.axios.put(url,  this.meeting).then((response) => {
+        //         // Vue.axios.post(url, this.meeting).then((response) => {
+        //         Vue.axios.post(url, {data: this.motion, _method: 'put'}).then((response) => {
+        //             let d = response.data;
+        //             resolve()
+        //         });
+        //     }));
+        // },
 
 
         handleClick: function () {
             this.initializeMotion();
-            this.showFields = true;
 
-            // return new Promise(((resolve, reject) => {
-            //     //send to server
-            //     // let url = routes.motion.resource();
-            //     Vue.axios.post(this.url).then((response) => {
-            //         let d = response.data;
-            //         this.motion = new Motion(d.id);
-            //         resolve()
-            //
-            //     });
-            // }));
         }
 
     }

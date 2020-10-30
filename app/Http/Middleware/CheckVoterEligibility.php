@@ -30,8 +30,8 @@ class CheckVoterEligibility
             return $next($request);
 
         } catch (DoubleVoteAttempt  $e) {
-            abort($e->errorCode)
-//todo error message
+            abort($e->errorCode);
+            //todo error message
         }
 
 

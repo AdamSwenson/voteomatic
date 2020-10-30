@@ -1981,6 +1981,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "refresh-button",
+  methods: {
+    handleClick: function handleClick() {
+      location.reload();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/yay-button.vue?vue&type=script&lang=js& ***!
@@ -2021,6 +2048,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navigation_motions_card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navigation/motions-card */ "./resources/js/components/navigation/motions-card.vue");
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
 //
 //
 //
@@ -2186,7 +2215,7 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   data: function data() {
     return {
-      activeClass: 'is-active',
+      activeClass: 'active',
       styling: 'nav-item',
       identifier: 'page-nav-tabs'
     };
@@ -2423,6 +2452,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Meeting */ "./resources/js/models/Meeting.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 //
 //
 //
@@ -2459,15 +2491,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "meeting-setup",
   props: ['existingMeeting'],
+  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
-      showFields: false,
-      meeting: null
+      showFields: false
     };
   },
   computed: {
@@ -2480,19 +2525,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       set: function set(v) {
-        this.meeting.date = v; //
-
-        this.updateMeeting(); //     let p = new Promise(((resolve, reject) => {
-        //         // console.log(routes.meetings);
-        //         //send to server
-        //         // let url = routes.meetings.resource(this._meeting.id);
-        //         Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
-        //
-        //             // Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
-        //             let d = response.data;
-        //             resolve()
-        //         });
-        //     }));
+        // this.meeting.date = v;
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_3__["default"].factory({
+          'object': this.meeting,
+          'updateProp': 'date',
+          'updateVal': v
+        });
+        this.$store.dispatch('updateMeeting', p);
       }
     },
     meetingName: {
@@ -2504,18 +2543,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       set: function set(v) {
-        this.meeting.name = v;
-        this.updateMeeting(); // //
-        // let p = new Promise(((resolve, reject) => {
-        //     //send to server
-        //     let url = routes.meetings.resource(this.meeting.id);
-        //     // Vue.axios.put(url,  this.meeting).then((response) => {
-        //     // Vue.axios.post(url, this.meeting).then((response) => {
-        //         Vue.axios.post(url, {data: this.meeting, _method: 'put'}).then((response) => {
-        //         let d = response.data;
-        //         resolve()
-        //     });
-        // }));
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_3__["default"].factory({
+          'object': this.meeting,
+          'updateProp': 'name',
+          'updateVal': v
+        });
+        window.console.log(p);
+        this.$store.dispatch('updateMeeting', p);
       }
     },
     url: function url() {
@@ -2538,35 +2572,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {// this.handleClick()
       }
     },
-    updateMeeting: function updateMeeting() {
-      var _this = this;
-
-      var p = new Promise(function (resolve, reject) {
-        //send to server
-        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["meetings"].resource(_this.meeting.id); // Vue.axios.put(url,  this.meeting).then((response) => {
-        // Vue.axios.post(url, this.meeting).then((response) => {
-
-        Vue.axios.post(url, {
-          data: _this.meeting,
-          _method: 'put'
-        }).then(function (response) {
-          var d = response.data;
-          resolve();
-        });
-      });
-    },
     handleClick: function handleClick() {
-      var _this2 = this;
-
-      this.showFields = true;
-      return new Promise(function (resolve, reject) {
-        //send to server
-        // let url = routes.motion.resource();
-        Vue.axios.post(_this2.url).then(function (response) {
-          var d = response.data;
-          _this2.meeting = new _models_Meeting__WEBPACK_IMPORTED_MODULE_1__["default"](d.id, d.name, d.date);
-          resolve();
-        });
+      var me = this;
+      var p = this.$store.dispatch('createMeeting');
+      p.then(function () {
+        me.showFields = true;
       });
     }
   }
@@ -2586,7 +2596,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Meeting */ "./resources/js/models/Meeting.js");
-/* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
+/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 //
 //
 //
@@ -2651,17 +2665,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
- // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+// todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var meetingId = 1;
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-setup",
-  props: ['existingMotion', 'meeting'],
+  props: ['existingMotion'],
+  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   data: function data() {
     return {
-      motion: null,
+      // motion: null,
       showFields: false,
       placeholders: {
         content: "Moved that tacos be eaten everyday.",
@@ -2670,20 +2687,6 @@ var meetingId = 1;
     };
   },
   computed: {
-    // motion: function () {
-    //     if (!_.isUndefined(this.existingMotion)) return this.existingMotion;
-    //
-    //     return new Promise(((resolve, reject) => {
-    //         //send to server
-    //         let url = routes.motions.resource();
-    //         let params = {meetingId: this.meeting.id};
-    //         return Vue.axios.post(url, params).then((response) => {
-    //             let d = response.data;
-    //             let motion = new Motion(d.id, d.content, d.description, d.requires);
-    //             return resolve(motion);
-    //         });
-    //     }));
-    // },
     motionType: {
       get: function get() {
         try {
@@ -2692,7 +2695,14 @@ var meetingId = 1;
           return '';
         }
       },
-      set: function set(v) {}
+      set: function set(v) {
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_4__["default"].factory({
+          'object': this.motion,
+          'updateProp': 'type',
+          'updateVal': v
+        });
+        this.$store.dispatch('updateMotion', p);
+      }
     },
     content: {
       get: function get() {
@@ -2703,8 +2713,13 @@ var meetingId = 1;
         return this.motion.content;
       },
       set: function set(v) {
-        this.motion.content = v;
-        this.updateMotion();
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_4__["default"].factory({
+          'object': this.motion,
+          'updateProp': 'content',
+          'updateVal': v
+        });
+        this.$store.dispatch('updateMotion', p); // this.motion.content = v;
+        // this.updateMotion();
       }
     },
     description: {
@@ -2716,8 +2731,12 @@ var meetingId = 1;
         }
       },
       set: function set(v) {
-        this.motion.description = v;
-        this.updateMotion();
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_4__["default"].factory({
+          'object': this.motion,
+          'updateProp': 'description',
+          'updateVal': v
+        });
+        this.$store.dispatch('updateMotion', p);
       }
     },
     requires: {
@@ -2729,8 +2748,12 @@ var meetingId = 1;
         }
       },
       set: function set(v) {
-        this.motion.requires = v;
-        this.updateMotion();
+        var p = _models_Payload__WEBPACK_IMPORTED_MODULE_4__["default"].factory({
+          'object': this.motion,
+          'updateProp': 'requires',
+          'updateVal': v
+        });
+        this.$store.dispatch('updateMotion', p);
       }
     }
   },
@@ -2738,50 +2761,45 @@ var meetingId = 1;
     initializeMotion: function initializeMotion() {
       var _this = this;
 
-      var p = new Promise(function (resolve, reject) {
-        //send to server
-        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["motions"].resource(); // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        var params = {
-          meeting_id: meetingId
-        }; // let params = {meetingId: this.meeting.id};
-
-        return Vue.axios.post(url, params).then(function (response) {
-          var d = response.data;
-          _this.motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_2__["default"](d.id, d.content, d.description, d.requires);
-          return resolve(_this.motion);
-        });
-      });
-    },
-    updateMotion: function updateMotion() {
-      var _this2 = this;
-
-      var p = new Promise(function (resolve, reject) {
-        //send to server
-        var url = _routes__WEBPACK_IMPORTED_MODULE_0__["motions"].resource(_this2.motion.id); // Vue.axios.put(url,  this.meeting).then((response) => {
-        // Vue.axios.post(url, this.meeting).then((response) => {
-
-        Vue.axios.post(url, {
-          data: _this2.motion,
-          _method: 'put'
-        }).then(function (response) {
-          var d = response.data;
-          resolve();
-        });
-      });
-    },
-    handleClick: function handleClick() {
-      this.initializeMotion();
-      this.showFields = true; // return new Promise(((resolve, reject) => {
+      var p = this.$store.dispatch('createMotion', this.meetingId);
+      var me = this;
+      p.then(function () {
+        _this.showFields = true;
+      }); //
+      // let p = new Promise(((resolve, reject) => {
+      //
       //     //send to server
-      //     // let url = routes.motion.resource();
-      //     Vue.axios.post(this.url).then((response) => {
+      //
+      //     let url = routes.motions.resource();
+      //
+      //
+      //     // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
+      //     let params = {meeting_id: meetingId};
+      //     // let params = {meetingId: this.meeting.id};
+      //
+      //
+      //     return Vue.axios.post(url, params).then((response) => {
       //         let d = response.data;
-      //         this.motion = new Motion(d.id);
-      //         resolve()
+      //         this.motion = new Motion(d.id, d.content, d.description, d.requires);
+      //         return resolve(this.motion);
       //
       //     });
       // }));
+    },
+    // updateMotion: function () {
+    //     let p = new Promise(((resolve, reject) => {
+    //         //send to server
+    //         let url = routes.motions.resource(this.motion.id);
+    //         // Vue.axios.put(url,  this.meeting).then((response) => {
+    //         // Vue.axios.post(url, this.meeting).then((response) => {
+    //         Vue.axios.post(url, {data: this.motion, _method: 'put'}).then((response) => {
+    //             let d = response.data;
+    //             resolve()
+    //         });
+    //     }));
+    // },
+    handleClick: function handleClick() {
+      this.initializeMotion();
     }
   }
 });
@@ -3053,6 +3071,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
  // import MotionContent from "./text-display/motion-content";
@@ -3074,7 +3096,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       voteRecorded: false,
-      vote: null // isReady: true
+      vote: null,
+      showButtons: false // isReady: true
 
     };
   },
@@ -3113,25 +3136,60 @@ __webpack_require__.r(__webpack_exports__);
         vote: voteType
       };
       return new Promise(function (resolve, reject) {
+        var me = _this;
         return Vue.axios.post(url, data).then(function (response) {
-          if (response.error) {
-            //todo error handling
-            _this.voteRecorded = true;
-          } else {
-            console.log(response.data);
-            _this.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.isYay, response.data.receipt);
-            _this.voteRecorded = true; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+          console.log(response.data);
+          me.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.isYay, response.data.receipt);
+          me.voteRecorded = true;
+          me.showButtons = false; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
 
-            resolve();
-          }
+          resolve();
+        })["catch"](function (error) {
+          // error handling
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+
+            if (error.response.status === 501) {
+              me.voteRecorded = true;
+              me.showButtons = false;
+            }
+          } // reject();
+
         });
       });
     }
   },
   asyncComputed: {
+    votedUponMotionIds: {
+      get: function get() {
+        //wait to make sure we have the present motion id ready to go.
+        return this.$store.getters.getMotionIdsUserVotedUpon;
+      } // default: []
+
+    },
+    hasVoted: {
+      get: function get() {
+        if (this.isReady) {
+          // if (!_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)) {
+          //wait to make sure we have the present motion id ready to go.
+          // let ids = this.$store.getters.getMotionIdsUserVotedUpon;
+          var hasVoted = this.votedUponMotionIds.includes(this.motion.id); //todo dev set the display for now
+
+          this.showButtons = !hasVoted;
+          return hasVoted;
+        }
+      } // default: null
+
+    },
     isReady: {
       get: function get() {
-        return !_.isUndefined(this.motion) && !_.isNull(this.motion);
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          //make sure vote records have been loaded
+          return !_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds); // return !_.isUndefined(this.hasVoted) && !_.isNull(this.hasVoted)
+        }
       },
       watch: ['motion']
     },
@@ -3192,6 +3250,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Vote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Vote */ "./resources/js/models/Vote.js");
+//
 //
 //
 //
@@ -3306,6 +3365,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navigation/router-tabs */ "./resources/js/components/navigation/router-tabs.vue");
+/* harmony import */ var _controls_refresh_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controls/refresh-button */ "./resources/js/components/controls/refresh-button.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -3331,9 +3395,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "voteomatic",
   components: {
+    RefreshButton: _controls_refresh_button__WEBPACK_IMPORTED_MODULE_4__["default"],
     RouterTabs: _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__["default"],
     VotePage: _vote_page__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3344,14 +3410,16 @@ __webpack_require__.r(__webpack_exports__);
       isSetup: false
     };
   },
-  computed: {
-    //the motion being voted upon
-    motion: function motion() {
-      var d = window.startData.motion;
-      var m = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__["default"](d); // let m = new Motion(d.id, d.content, d.description, d.requires);
-
-      return m;
-    }
+  computed: {//     //the motion being voted upon
+    //     motion: function () {
+    //         //todo convert to
+    //
+    //         let d = window.startData.motion;
+    //         let m = new Motion(d);
+    //
+    //         // let m = new Motion(d.id, d.content, d.description, d.requires);
+    //         return m
+    //     }
   },
   mounted: function mounted() {
     var me = this; //parse data from page and store stuff
@@ -42113,6 +42181,38 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-primary btn-lg",
+      attrs: { type: "button" },
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v("Refresh\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/yay-button.vue?vue&type=template&id=991d54e8&scoped=true& ***!
@@ -42484,11 +42584,13 @@ var render = function() {
                     }
                   }
                 })
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
+              ])
             ])
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._m(2)
       ])
     ])
   ])
@@ -42506,8 +42608,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "roster-area" }, [
-      _c("h4", [_vm._v("Meeting roster")])
+    return _c("div", { staticClass: "roster-area card-text" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Meeting roster")]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("ToDo")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "select-meetings card-text" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Select meeting ")]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("ToDo")])]),
+      _vm._v(" "),
+      _c("h4", { staticClass: "card-title" }, [
+        _vm._v("Manage meeting access")
+      ]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("ToDo")])])
     ])
   }
 ]
@@ -42693,9 +42813,13 @@ var render = function() {
                     _vm._v("Please select required vote")
                   ]),
                   _vm._v(" "),
-                  _c("option", [_vm._v("Majority")]),
+                  _c("option", { attrs: { value: "0.5" } }, [
+                    _vm._v("Majority")
+                  ]),
                   _vm._v(" "),
-                  _c("option", [_vm._v("Two-thirds")])
+                  _c("option", { attrs: { value: "0.66" } }, [
+                    _vm._v("Two-thirds")
+                  ])
                 ]
               ),
               _vm._v(" "),
@@ -42894,13 +43018,17 @@ var render = function() {
                       "div",
                       { staticClass: "text-right" },
                       [
-                        _c("vote-buttons", {
-                          attrs: { motion: _vm.motion },
-                          on: {
-                            "yay-clicked": _vm.handleYay,
-                            "nay-clicked": _vm.handleNay
-                          }
-                        })
+                        _vm.showButtons
+                          ? _c("vote-buttons", {
+                              attrs: { motion: _vm.motion },
+                              on: {
+                                "yay-clicked": _vm.handleYay,
+                                "nay-clicked": _vm.handleNay
+                              }
+                            })
+                          : _c("div", [
+                              _c("p", [_vm._v("You have already voted")])
+                            ])
                       ],
                       1
                     )
@@ -42988,7 +43116,7 @@ var render = function() {
           attrs: { type: "button" },
           on: { click: _vm.handleClick }
         },
-        [_vm._v("Verify vote\n        ")]
+        [_vm._v("Verify vote\n            ")]
       )
     ]),
     _vm._v(" "),
@@ -43040,9 +43168,7 @@ var render = function() {
               _vm._v("This is not a valid receipt")
             ]),
             _vm._v(" "),
-            _c("p", [
-              _vm._v("todo receipt here along with meeting / motion info")
-            ]),
+            _c("p", [_vm._v(" Receipt : " + _vm._s(_vm.receipt) + " ")]),
             _vm._v(" "),
             _c(
               "button",
@@ -43095,7 +43221,9 @@ var render = function() {
             1
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [_c("refresh-button")], 1)
     ],
     1
   )
@@ -59875,6 +60003,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/controls/refresh-button.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/controls/refresh-button.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./refresh-button.vue?vue&type=template&id=6082abe2&scoped=true& */ "./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true&");
+/* harmony import */ var _refresh_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./refresh-button.vue?vue&type=script&lang=js& */ "./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _refresh_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6082abe2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/controls/refresh-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./refresh-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/refresh-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./refresh-button.vue?vue&type=template&id=6082abe2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/refresh-button.vue?vue&type=template&id=6082abe2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/controls/yay-button.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/controls/yay-button.vue ***!
@@ -60498,7 +60695,7 @@ module.exports = {
      */
     motion: {
       get: function get() {
-        return this.$store.getters.getMotion;
+        return this.$store.getters.getActiveMotion;
       },
       set: function set(v) {
         this.$store.commit('setMotion', v);
@@ -61076,6 +61273,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -61120,7 +61321,14 @@ var Motion = /*#__PURE__*/function (_IModel) {
     _this.type = type;
     _this.types = ['main', 'amendment']; //todo
 
-    _this.type = 'main'; //used for selectors in creating motion
+    _this.type = 'main';
+    _this.requirementMap = [{
+      'percentage': 0.5,
+      'english': 'Majority'
+    }, {
+      'percentage': 0.66,
+      'english': 'Two-thirds'
+    }]; //used for selectors in creating motion
 
     _this.requiredVotes = {
       0.5: 'Majority',
@@ -61143,11 +61351,300 @@ var Motion = /*#__PURE__*/function (_IModel) {
     return _this;
   }
 
+  _createClass(Motion, [{
+    key: "getEnglishRequiresForNumeric",
+    value: function getEnglishRequiresForNumeric(num) {
+      return this.requirementMap.indexOf(function (d) {
+        return d.percentage === num;
+      });
+    }
+  }, {
+    key: "getNumericRequiresFromEnglish",
+    value: function getNumericRequiresFromEnglish(text) {
+      return this.requirementMap.indexOf(function (d) {
+        return d.english === text;
+      });
+    }
+  }]);
+
   return Motion;
 }(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 ;
+
+/***/ }),
+
+/***/ "./resources/js/models/Payload.js":
+/*!****************************************!*\
+  !*** ./resources/js/models/Payload.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Payload; });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * This is a transportation class.
+ * It is the common payload which all participating
+ * mutations and actions receive
+ */
+
+var Payload = /*#__PURE__*/function (_IModel) {
+  _inherits(Payload, _IModel);
+
+  var _super = _createSuper(Payload);
+
+  _createClass(Payload, null, [{
+    key: "fillableProps",
+
+    /**
+     * Returns a list of strings which are property
+     * names. These fields can be filled from the input
+     * @returns {[string,string]}
+     */
+    get: function get() {
+      return [// 'array',
+      'callback', 'id', 'mutateSilently', // 'options',
+      'object', // 'parent', 'parentNode',
+      // 'type',
+      'updateProp', 'updateVal' // 'updateValence',
+      ];
+    }
+  }]);
+
+  function Payload() {
+    var _this;
+
+    _classCallCheck(this, Payload);
+
+    _this = _super.call(this); //the object's db id
+
+    _this._id; //the index value of the object
+    // this._index;
+
+    /** Whether to fail to notify subscribers of the mutation */
+
+    _this.mutateSilently = false;
+    /** The object in the payload */
+
+    _this.object; //
+    // /** The string in the payload */
+    // this._str;
+    //
+    // /** The timestamp in the payload */
+    // this._stamp;
+    // this.options;
+    // this.type;
+
+    /** The name of the property to update */
+
+    _this.updateProp;
+    /** The new value to set the property in updateProp */
+
+    _this.updateVal;
+    _this._successCallback;
+    return _this;
+  } //
+  // get identifier() {
+  //
+  //     if ( this.obj instanceof Item ) return this.obj;
+  //
+  //     if ( this.serialNumber !== null ) return this.serialNumber;
+  //
+  //     if ( this.index !== null ) return this.index;
+  // }
+  //
+  // get identifierType() {
+  //
+  //     if ( this.obj instanceof Item ) return 'obj';
+  //
+  //     if ( this.serialNumber !== null ) return 'serialNumber';
+  //
+  //     if ( this.index !== null ) return 'index';
+  // }
+  //
+  //
+  // getStoredObject ( store ) {
+  //     switch ( this.identifierType ) {
+  //         case 'obj':
+  //             return this.obj;
+  //             break;
+  //         case 'serialNumber':
+  //             return store.getters.getItemBySerialNumber( this.serialNumber);
+  //             break;
+  //         case 'index':
+  //             return store.getters.getItemByIndex( this.index);
+  //             break;
+  //     }
+  //
+  // }
+
+
+  _createClass(Payload, [{
+    key: "callback",
+    get: function get() {
+      if (typeof this._successCallback === 'undefined') {
+        //dummy callable
+        return function () {
+          return true;
+        };
+      }
+
+      return this._successCallback();
+    },
+    set: function set(v) {
+      this._successCallback = v;
+    }
+    /*  ************************* Identifier values ************************* */
+    // get id() {
+    //     return this._id;
+    // }
+    // /**
+    //  * Retrieve the index where it is possible
+    //  * different fields could have different values.
+    //  * This enforces the order of precedence between the fields
+    //  */
+    // static getIndex( payload ) {
+    //     if ( this.checkIfPayload( payload ) ) {
+    //         //If an object is set, that object's index
+    //         //is always correct.
+    //         if ( typeof payload.obj !== 'undefined' && typeof payload.obj.index !== 'undefined' ) {
+    //             return payload.obj.index;
+    //         } else {
+    //             return payload.index;
+    //         }
+    //     }
+    // }
+    //
+    //
+    // get complexIndex(){
+    //     if(typeof this._index2 != 'undefined'){
+    //         return this._index
+    //     }
+    // }
+
+    /*  ************************* Payload values ************************* */
+    // get num() {
+    //     return this._num;
+    // }
+    //
+    // set num( v ) {
+    //     //todo numeric check
+    //     this._num = v;
+    // }
+    //
+    //     get obj() {
+    //         return this._obj;
+    //     }
+    //
+    //     set obj( val ) {
+    //         if ( typeof val == 'object' ) {
+    //             this._obj = val;
+    //         }
+    // //todo error handling
+    //     }
+    //
+    //
+    // get str() {
+    //     return this._obj;
+    // }
+    //
+    // set str( v ) {
+    //     //todo string check
+    //     this._str = v;
+    // }
+    //
+    // get objNode() {
+    //     return this._objNode
+    // }
+    //
+    // set objNode( val ) {
+    //     if ( !val instanceof Node ) throw new Error( "non-node attempting to be set as objNode in Payload" );
+    //     this._objNode = val;
+    // }
+    //
+    //
+    // get parentNode() {
+    //     return this._parentNode
+    // }
+    //
+    // set parentNode( val ) {
+    //     if ( !val instanceof Node ) throw new Error( "non-node attempting to be set as parentNode in Payload" );
+    //     this._parentNode = val;
+    // }
+
+  }], [{
+    key: "factory",
+    value: function factory(params) {
+      var p = new Payload();
+
+      if (typeof params !== 'undefined') {
+        //fill any fillable values
+        this.fillableProps.forEach(function (v) {
+          window.console.log(v);
+
+          if (typeof params[v] !== 'undefined') {
+            p[v] = params[v];
+          }
+        }); //
+        // //fill any aliased values
+        // for (let v in this.aliasMap) {
+        //     if ( typeof params[ v ] !== 'undefined' ) {
+        //         // console.log( 'alias', v, map[v] );
+        //         p[ this.aliasMap[ v ] ] = params[ v ];
+        //     }
+        // }
+      }
+
+      return p;
+    }
+  }, {
+    key: "checkIfPayload",
+    value: function checkIfPayload(payload) {
+      //received payload object case
+      if (payload instanceof Payload) {
+        return true;
+      }
+
+      return false; // throw new Exception( "Non Payload passed to a Payload requiring method" );
+    }
+  }, {
+    key: "aliasMap",
+    get: function get() {
+      return {};
+    }
+  }]);
+
+  return Payload;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
 
 /***/ }),
 
@@ -61370,6 +61867,11 @@ module.exports = {
       return normalizedRouteRoot() + 'record-vote/' + motionId;
     }
   },
+  castVotes: {
+    getVotedMotions: function getVotedMotions(meetingId) {
+      return normalizedRouteRoot() + 'cast-votes/' + meetingId;
+    }
+  },
   receipts: {
     validateReceipt: function validateReceipt() {
       return normalizedRouteRoot() + 'validation';
@@ -61551,13 +62053,25 @@ var state = {
 var mutations = {
   setMeeting: function setMeeting(state, payload) {
     Vue.set(state, 'meeting', payload);
+  },
+
+  /**
+   * Updates a property on the meeting object
+   * @param state
+   * @param prop
+   * @param val
+   */
+  setMeetingProp: function setMeetingProp(state, _ref) {
+    var updateProp = _ref.updateProp,
+        updateVal = _ref.updateVal;
+    Vue.set(state.meeting, updateProp, updateVal);
   }
 };
 var actions = {
-  createMeeting: function createMeeting(_ref) {
-    var dispatch = _ref.dispatch,
-        commit = _ref.commit,
-        getters = _ref.getters;
+  createMeeting: function createMeeting(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["meetings"].resource();
@@ -61569,10 +62083,10 @@ var actions = {
       });
     });
   },
-  loadMeeting: function loadMeeting(_ref2, meeting) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  loadMeeting: function loadMeeting(_ref3, meeting) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     var meetingId = _.isNumber(meeting) ? meeting : meeting.id;
     return new Promise(function (resolve, reject) {
       //send to server
@@ -61585,15 +62099,28 @@ var actions = {
       });
     });
   },
-  updateMeeting: function updateMeeting(_ref3, meeting) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
-    return new Promise(function (resolve, reject) {
-      //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["meetings"].resource(meeting.id); // Vue.axios.put(url,  this.meeting).then((response) => {
-      // Vue.axios.post(url, this.meeting).then((response) => {
 
+  /**
+   * Updates the meeting on the server and in
+   * the vue store.
+   * Expects a Payload object
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param payload Payload
+   * @returns {Promise<unknown>}
+   */
+  updateMeeting: function updateMeeting(_ref4, payload) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    return new Promise(function (resolve, reject) {
+      //make local change first
+      //todo consider whether worth rolling back
+      commit('setMeetingProp', payload);
+      var meeting = getters.getMeeting; //send to server
+
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["meetings"].resource(meeting.id);
       return Vue.axios.post(url, {
         data: meeting,
         _method: 'put'
@@ -61647,14 +62174,50 @@ var state = {
   /**
    * Store of loaded motions
    */
-  motions: []
+  motions: [],
+
+  /**
+   * Motions from this meeting which the user has already
+   * cast a vote on and should be locked out of voting again
+   */
+  motionIdsUserHasVotedUpon: []
 };
 var mutations = {
-  addMotionToStore: function addMotionToStore(state, payload) {
-    state.motions.push(payload); // Vue.set(state, 'motion', payload);
+  addMotionToStore: function addMotionToStore(state, motionObject) {
+    state.motions.push(motionObject); // Vue.set(state, 'motion', payload);
   },
-  setMotion: function setMotion(state, payload) {
-    Vue.set(state, 'motion', payload);
+  setMotion: function setMotion(state, motionObject) {
+    Vue.set(state, 'motion', motionObject);
+  },
+
+  /**
+   * Pushes a motion id into the list of motion is
+   * which the user has already voted on. This is
+   * used for client side restrictions on display.
+   *
+   * If the motion object is needed, it should be loaded
+   * separately via the id.
+   *
+   * @param state
+   * @param motionId
+   */
+  addVotedUponMotion: function addVotedUponMotion(state, motionId) {
+    //todo double check that there is no reason to have duplicates or raise an error
+    if (!state.motionIdsUserHasVotedUpon.includes(motionId)) {
+      state.motionIdsUserHasVotedUpon.push(motionId);
+    }
+  },
+
+  /**
+   * Updates a property on the motion object
+   * @param state
+   * @param prop
+   * @param val
+   */
+  setMotionProp: function setMotionProp(state, _ref) {
+    var updateProp = _ref.updateProp,
+        updateVal = _ref.updateVal;
+    Vue.set(state.motion, updateProp, updateVal);
   }
 };
 var actions = {
@@ -61667,14 +62230,17 @@ var actions = {
    * @param getters
    * @returns {Promise<unknown>}
    */
-  createMotion: function createMotion(_ref) {
-    var dispatch = _ref.dispatch,
-        commit = _ref.commit,
-        getters = _ref.getters;
+  createMotion: function createMotion(_ref2, meetingId) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].resource();
-      return Vue.axios.post(url).then(function (response) {
+      var p = {
+        'meetingId': meetingId
+      };
+      return Vue.axios.post(url, p).then(function (response) {
         var d = response.data;
         var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](d); // let motion = new Motion(d.id, d.name, d.date);
 
@@ -61693,10 +62259,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref2, motion) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  loadMotion: function loadMotion(_ref3, motion) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].resource(motion.id);
@@ -61709,10 +62275,39 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref3, meetingId) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
+
+  /**
+   * Populates the store of ids which represent
+   * motions the user has already cast a ballot on.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param meetingId
+   * @returns {Promise<unknown>}
+   */
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref4, meetingId) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    return new Promise(function (resolve, reject) {
+      //send to server
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["castVotes"].getVotedMotions(meetingId);
+      return Vue.axios.get(url).then(function (response) {
+        _.forEach(response.data, function (d) {
+          // todo or should we be storing ids? need to decide how best to do comparisons
+          // todo should we clear the store first? Can the list contain motions with duplicate ids?
+          // todo
+          var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](d);
+          commit('addVotedUponMotion', d);
+        });
+      });
+    });
+  },
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref5, meetingId) {
+    var dispatch = _ref5.dispatch,
+        commit = _ref5.commit,
+        getters = _ref5.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].getAllMotionsForMeeting(meetingId);
@@ -61737,15 +62332,17 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref4, motion) {
-    var dispatch = _ref4.dispatch,
-        commit = _ref4.commit,
-        getters = _ref4.getters;
+  updateMotion: function updateMotion(_ref6, payload) {
+    var dispatch = _ref6.dispatch,
+        commit = _ref6.commit,
+        getters = _ref6.getters;
     return new Promise(function (resolve, reject) {
-      //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].resource(motion.id); // Vue.axios.put(url,  this.motion).then((response) => {
-      // Vue.axios.post(url, this.motion).then((response) => {
+      //make local change first
+      //todo consider whether worth rolling back
+      commit('setMotionProp', payload);
+      var motion = getters.getActiveMotion; //send to server
 
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].resource(motion.id);
       return Vue.axios.post(url, {
         data: motion,
         _method: 'put'
@@ -61757,11 +62354,45 @@ var actions = {
   }
 };
 var getters = {
-  getMotion: function getMotion(state) {
+  /**
+   * Returns the currently set motion object.
+   * This will be the motion that is currently being voted on,
+   * edited, or whose results are being displayed.
+   * @param state
+   * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
+   */
+  getActiveMotion: function getActiveMotion(state) {
     return state.motion;
   },
+
+  /**
+   * Returns all motion objects which have
+   * been loaded from the server. May include motions
+   * the user has voted upon and un-voted motions.
+   * @param state
+   * @returns {[]|(function(): ([]|__webpack_exports__.default.computed.$store.getters.getStoredMotions))|{resource: (function(): string), getAllMotionsForMeeting: (function(*): string)}|{resource: (function(*=): string), getAllMotionsForMeeting: (function(*): string)}|{mutations: {addMotionToStore: function(*, *=): void, setMotion: function(*=, *=): void, addVotedUponMotion: function(*, *=): void}, state: {motion: null, motions: [], motionIdsUserHasVotedUpon: []}, getters: {getMotionsUserVotedUpon: function(*): *, getMotionIdsUserVotedUpon: function(*): [], getMotion: function(*): (null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: (function(*=): void), get: (function(): *)}|(function(): *)|(function(): Motion)|Motion), getStoredMotions: function(*): *}, actions: {createMotion({dispatch: *, commit?: *, getters: *}): Promise<unknown>, loadMotionsForMeeting({dispatch: *, commit?: *, getters: *}, *=): Promise<unknown>, loadMotionsUserHasVotedUpon({dispatch: *, commit?: *, getters: *}, *=): Promise<unknown>, loadMotion({dispatch: *, commit?: *, getters: *}, *): Promise<unknown>, updateMotion({dispatch: *, commit: *, getters: *}, *=): Promise<unknown>}}|(function(): ([]|default.computed.$store.getters.getStoredMotions))}
+   */
   getStoredMotions: function getStoredMotions(state) {
     return state.motions;
+  },
+  getMotionsUserVotedUpon: function getMotionsUserVotedUpon(state) {
+    var out = [];
+
+    _.forEach(state.motionIdsUserHasVotedUpon, function (motion) {
+      out.push(motion.id);
+    });
+
+    return out;
+    return state.motionIdsUserHasVotedUpon;
+  },
+  getMotionIdsUserVotedUpon: function getMotionIdsUserVotedUpon(state) {
+    var out = [];
+
+    _.forEach(state.motionIdsUserHasVotedUpon, function (motion) {
+      out.push(motion.id);
+    });
+
+    return out;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61906,7 +62537,9 @@ var actions = {
           var meeting = getters.getMeeting; //get existing motions for meeting
 
           dispatch('loadMotionsForMeeting', meeting.id).then(function () {
-            resolve();
+            dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
+              resolve();
+            });
           });
         });
       });

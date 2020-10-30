@@ -4,7 +4,9 @@
 
         <div class="card">
             <div class="card-body">
+
                 <h4 class="card-title">{{ meetingName }}</h4>
+
                 <h6 class="card-subtitle">{{meetingDate}}</h6>
 
                 <motions-card></motions-card>

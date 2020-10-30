@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\MeetingController;
-use App\Http\Controllers\MotionController;
+use App\Http\Controllers\Meeting\MeetingController;
+use App\Http\Controllers\Motion\MotionController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\ResultsController;
-use App\Http\Controllers\SetupController;
+use App\Http\Controllers\Dev\SetupController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\VoteHistoryController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,6 @@ Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
 
 
-
 // Index pages
 Route::get('/', function () {
     return view('home');
@@ -68,19 +68,28 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage')->name('main');
 
 
-/* =============================
-        Resource and other service controllers
-   ============================= */
 
+/* =============================
+        Individual votes and vote history controllers
+   ============================= */
+Route::get('/cast-votes/{meeting}', [VoteHistoryController::class, 'getPreviouslyCastVotes']);
 //controller which handles validating and recording votes
 Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@recordVote' );
 
+Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@validateReceipt');
 
+
+/* =============================
+        Vote totals controllers
+   ============================= */
 Route::get('results/{motion}/counts', '\App\Http\Controllers\ResultsController@getCounts');
 Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
 
-Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@validateReceipt');
 
+
+/* =============================
+        Resource and other service controllers
+   ============================= */
 
 //Route::get('meetings/{meeting}', [MeetingController::class, 'show']);
 //Route::post('meetings/{meeting}', [MeetingController::class, 'update']);

@@ -14,6 +14,10 @@
             </div>
         </div>
 
+        <div class="text-center">
+            <refresh-button></refresh-button>
+        </div>
+
     </div>
 
 </template>
@@ -25,10 +29,11 @@ import VotePage from "./vote-page";
 import Motion from '../models/Motion';
 import MeetingMixin from './storeMixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
+import RefreshButton from "./controls/refresh-button";
 
 export default {
     name: "voteomatic",
-    components: {RouterTabs, VotePage},
+    components: {RefreshButton, RouterTabs, VotePage},
 
     mixins: [MeetingMixin],
 
@@ -40,14 +45,19 @@ export default {
     },
 
     computed: {
-        //the motion being voted upon
-        motion: function () {
-            let d = window.startData.motion;
-            let m = new Motion(d);
 
-            // let m = new Motion(d.id, d.content, d.description, d.requires);
-            return m
-        }
+
+
+    //     //the motion being voted upon
+    //     motion: function () {
+    //         //todo convert to
+    //
+    //         let d = window.startData.motion;
+    //         let m = new Motion(d);
+    //
+    //         // let m = new Motion(d.id, d.content, d.description, d.requires);
+    //         return m
+    //     }
     },
 
     mounted: function () {

@@ -7,6 +7,6 @@ use Exception;
 class DoubleVoteAttempt extends Exception
 {
 
-    public $errorCode = 501;
+    const ERROR_CODE = 501;
     //
 }

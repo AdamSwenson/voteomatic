@@ -19,10 +19,19 @@ export default class Motion extends IModel {
         //todo
         this.type = 'main';
 
-        //used for selectors in creating motion
-        this.requiredVotes  ={ 0.5 : 'Majority', 0.66 : 'Two-thirds'};
 
-        switch(this.requires){
+        this.requirementMap = [
+            {'percentage': 0.5, 'english': 'Majority'},
+            {'percentage': 0.66, 'english': 'Two-thirds'}
+            ];
+
+
+        //used for selectors in creating motion
+        this.requiredVotes = {
+            0.5: 'Majority', 0.66: 'Two-thirds'
+        };
+
+        switch (this.requires) {
             case 0.5:
                 this.englishRequires = 'Majority';
                 break;
@@ -32,6 +41,19 @@ export default class Motion extends IModel {
             default:
                 this.englishRequires = '';
         }
+
+    }
+
+    getEnglishRequiresForNumeric(num){
+        return this.requirementMap.indexOf((d) => {
+            return d.percentage === num;
+        })
+    }
+
+    getNumericRequiresFromEnglish(text){
+        return this.requirementMap.indexOf((d) => {
+            return d.english === text;
+        })
 
     }
 };

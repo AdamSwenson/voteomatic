@@ -44,13 +44,16 @@ class RecordVoteController extends Controller
 //        $this->voterEligibilityRepo = new VoterEligibilityRepository();
 
         $this->middleware('auth');
-        $this->middleware('vote-eligibility');
+//        $this->middleware('vote-eligibility');
 
+//
+//        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
+        $env = env('APP_ENV');
+        if($env != 'production'){
 
-        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-//        Auth::loginUsingId(self::DEV_USER_ID);
-//        $this->user = Auth::user();
-
+            Auth::loginUsingId(self::DEV_USER_ID);
+        }
+        $this->user = Auth::user();
 
     }
 
@@ -97,7 +100,8 @@ class RecordVoteController extends Controller
             return $vote;
 
         }catch (DoubleVoteAttempt $e){
-            return ['error' => "Previously voted"];
+            abort($e::ERROR_CODE);
+//            return ['error' => "Previously voted"];
 //            print($e);
         }
     }

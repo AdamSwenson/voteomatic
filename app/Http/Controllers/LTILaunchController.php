@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\ResourceLink;
 use App\Models\User;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -102,25 +103,32 @@ class LTILaunchController extends Controller
      * in.
      * @param LTIRequest $request
      */
-    protected function handleUser(LTIRequest $request){
+    protected function handleUser(LTIRequest $request)
+    {
         $lastName = $request->lis_person_name_family;
 
         $firstName = $request->lis_person_name_given;
 
         $userIdHash = $request->user_id;
 
-        $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
+        //try looking them up if we've seen their id before
+        try {
+            $this->user = User::where('user_id_hash', $userIdHash)->firstOrFail();
+        }catch(ModelNotFoundException $e){
 
-        $this->user = User::factory()->create();
+            $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
 
-        $this->user->first_name = $firstName;
-        $this->user->last_name = $lastName;
-        $this->user->user_id_hash = $userIdHash;
+            $this->user = User::factory()->create();
 
-        $this->user->save();
+            $this->user->first_name = $firstName;
+            $this->user->last_name = $lastName;
+            $this->user->user_id_hash = $userIdHash;
+
+            $this->user->save();
+        }
 
         //associate them with the meeting
-
+        //todo
 
         Auth::login($this->user, true);
 

@@ -22,12 +22,23 @@
                         <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
                     </div>
 
-                    <div class="roster-area">
-                        <h4>Meeting roster</h4>
+                </div>
 
-                    </div>
+                <div class="roster-area card-text">
+                    <h4 class="card-title">Meeting roster</h4>
+
+                    <p><strong>ToDo</strong></p>
+                </div>
+
+                <div class="select-meetings card-text">
+                    <h4 class="card-title">Select meeting </h4>
+                    <p><strong>ToDo</strong></p>
+
+                    <h4 class="card-title">Manage meeting access</h4>
+                    <p><strong>ToDo</strong></p>
 
                 </div>
+
             </div>
         </div>
 
@@ -38,15 +49,18 @@
 
 import * as routes from "../../routes";
 import Meeting from '../../models/Meeting';
+import MeetingMixin from '../storeMixins/meetingMixin';
+import Payload from "../../models/Payload";
 
 export default {
     name: "meeting-setup",
     props: ['existingMeeting'],
+
+    mixins: [MeetingMixin],
+
     data: function () {
         return {
             showFields: false,
-
-            meeting: null
         }
     },
 
@@ -62,20 +76,15 @@ export default {
             },
 
             set(v) {
-                this.meeting.date = v;
-                //
-                this.updateMeeting();
-                //     let p = new Promise(((resolve, reject) => {
-                //         // console.log(routes.meetings);
-                //         //send to server
-                //         // let url = routes.meetings.resource(this._meeting.id);
-                //         Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
-                //
-                //             // Vue.axios.post(this.url,  {data: this.meeting, _method: 'put'}).then((response) => {
-                //             let d = response.data;
-                //             resolve()
-                //         });
-                //     }));
+                // this.meeting.date = v;
+                let p = Payload.factory({
+                        'object': this.meeting,
+                        'updateProp': 'date',
+                        'updateVal': v
+                    }
+                );
+                this.$store.dispatch('updateMeeting', p);
+
             }
         },
 
@@ -90,19 +99,14 @@ export default {
 
             },
             set(v) {
-                this.meeting.name = v;
-                this.updateMeeting();
-                // //
-                // let p = new Promise(((resolve, reject) => {
-                //     //send to server
-                //     let url = routes.meetings.resource(this.meeting.id);
-                //     // Vue.axios.put(url,  this.meeting).then((response) => {
-                //     // Vue.axios.post(url, this.meeting).then((response) => {
-                //         Vue.axios.post(url, {data: this.meeting, _method: 'put'}).then((response) => {
-                //         let d = response.data;
-                //         resolve()
-                //     });
-                // }));
+                let p = Payload.factory({
+                        'object': this.meeting,
+                        'updateProp': 'name',
+                        'updateVal': v
+                    }
+                );
+                window.console.log(p);
+                this.$store.dispatch('updateMeeting', p);
             }
         },
 
@@ -119,6 +123,7 @@ export default {
     //
     //   }
     // },
+
     methods: {
         initializeMeeting: function () {
             if (!_.isNull(this.existingMeeting) || _.isUndefined(this.existingMeeting)) {
@@ -130,33 +135,15 @@ export default {
 
         },
 
-        updateMeeting: function () {
-            let p = new Promise(((resolve, reject) => {
-                //send to server
-                let url = routes.meetings.resource(this.meeting.id);
-                // Vue.axios.put(url,  this.meeting).then((response) => {
-                // Vue.axios.post(url, this.meeting).then((response) => {
-                Vue.axios.post(url, {data: this.meeting, _method: 'put'}).then((response) => {
-                    let d = response.data;
-                    resolve()
-                });
-            }));
-        },
 
         handleClick: function () {
-            this.showFields = true;
+            let me = this;
+            let p = this.$store.dispatch('createMeeting');
+            p.then(function () {
+                me.showFields = true;
 
+            })
 
-            return new Promise(((resolve, reject) => {
-                //send to server
-                // let url = routes.motion.resource();
-                Vue.axios.post(this.url).then((response) => {
-                    let d = response.data;
-                    this.meeting = new Meeting(d.id, d.name, d.date);
-                    resolve()
-
-                });
-            }));
         }
 
     }

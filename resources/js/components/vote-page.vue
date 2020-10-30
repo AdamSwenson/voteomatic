@@ -24,10 +24,14 @@
                     <div class="card-footer">
                         <div class="text-right">
                             <vote-buttons
+                                v-if="showButtons"
                                 :motion="motion"
                                 v-on:yay-clicked="handleYay"
                                 v-on:nay-clicked="handleNay"
                             ></vote-buttons>
+                            <div v-else>
+                                <p>You have already voted</p>
+                            </div>
                         </div>
                     </div>
 
@@ -88,6 +92,8 @@ export default {
             voteRecorded: false,
             vote: null,
 
+            showButtons: false
+
             // isReady: true
         }
     },
@@ -122,27 +128,35 @@ export default {
             let url = routes.votes.recordVote(this.motion.id);
             let data = {
                 motionId: this.motion.id,
-                vote: voteType
+                vote: voteType,
             };
 
             return new Promise((resolve, reject) => {
-
-                return Vue.axios.post(url, data).then((response) => {
-
-                    if (response.error) {
-                        //todo error handling
-                        this.voteRecorded = true;
-
-                    } else {
+                let me = this;
+                return Vue.axios.post(url, data)
+                    .then((response) => {
                         console.log(response.data);
-
-                        this.vote = new Vote(response.data.isYay, response.data.receipt);
-                        this.voteRecorded = true;
+                        me.vote = new Vote(response.data.isYay, response.data.receipt);
+                        me.voteRecorded = true;
+                        me.showButtons = false;
                         //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
                         resolve();
-                    }
-                });
+                    })
+                    .catch(function (error) {
+                        // error handling
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            if (error.response.status === 501) {
+                                me.voteRecorded = true;
+                                me.showButtons = false;
+                            }
 
+                        }
+                        // reject();
+                    });
 
             });
 
@@ -150,10 +164,42 @@ export default {
     },
 
     asyncComputed: {
+        votedUponMotionIds:
+            {
+                get: function () {
+                    //wait to make sure we have the present motion id ready to go.
+                    return this.$store.getters.getMotionIdsUserVotedUpon;
+                },
+                // default: []
+            },
+
+        hasVoted: {
+            get: function () {
+if(this.isReady){
+                // if (!_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)) {
+                    //wait to make sure we have the present motion id ready to go.
+                    // let ids = this.$store.getters.getMotionIdsUserVotedUpon;
+                    let hasVoted = this.votedUponMotionIds.includes(this.motion.id);
+
+                    //todo dev set the display for now
+                    this.showButtons = !hasVoted;
+
+                    return hasVoted
+                }
+            }
+            ,
+            // default: null
+        },
+
         isReady: {
             get: function () {
 
-                return !_.isUndefined(this.motion) && !_.isNull(this.motion);
+                if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                    //make sure vote records have been loaded
+                    return !_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)
+
+                        // return !_.isUndefined(this.hasVoted) && !_.isNull(this.hasVoted)
+                }
             },
             watch: ['motion']
         },

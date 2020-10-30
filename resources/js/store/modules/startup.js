@@ -27,12 +27,15 @@ const actions = {
                     //get existing motions for meeting
                     dispatch('loadMotionsForMeeting', meeting.id).then(function () {
 
-                        resolve();
+                        dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function (){
+
+                            resolve();
+
+                        });
 
                     });
 
-
-                })
+                });
 
             });
 

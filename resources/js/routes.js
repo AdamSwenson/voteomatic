@@ -34,6 +34,14 @@ module.exports = {
         }
     },
 
+    castVotes: {
+
+        getVotedMotions : (meetingId) => {
+            return normalizedRouteRoot() + 'cast-votes/' + meetingId;
+
+        }
+    },
+
     receipts : {
         validateReceipt : () => {
             return normalizedRouteRoot() + 'validation';

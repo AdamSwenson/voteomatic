@@ -26,7 +26,8 @@
 
         <div class="alert alert-error" role="alert" v-if="showBad">
             <h4 class="alert-heading">This is not a valid receipt</h4>
-            <p>todo receipt here along with meeting / motion info</p>
+<!--            <p>todo receipt here along with meeting / motion info</p>-->
+            <p> Receipt : {{receipt}} </p>
 
             <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
 

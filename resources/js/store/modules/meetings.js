@@ -16,6 +16,16 @@ const mutations = {
 
     setMeeting: (state, payload) => {
         Vue.set(state, 'meeting', payload);
+    },
+
+    /**
+     * Updates a property on the meeting object
+     * @param state
+     * @param prop
+     * @param val
+     */
+    setMeetingProp : (state, {updateProp, updateVal}) => {
+    Vue.set(state.meeting, updateProp, updateVal);
     }
 };
 
@@ -54,12 +64,26 @@ const actions = {
     },
 
 
-    updateMeeting({dispatch, commit, getters}, meeting) {
+    /**
+     * Updates the meeting on the server and in
+     * the vue store.
+     * Expects a Payload object
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload Payload
+     * @returns {Promise<unknown>}
+     */
+    updateMeeting({dispatch, commit, getters}, payload) {
         return new Promise(((resolve, reject) => {
+            //make local change first
+            //todo consider whether worth rolling back
+            commit('setMeetingProp', payload)
+
+            let meeting = getters.getMeeting;
+
             //send to server
             let url = routes.meetings.resource(meeting.id);
-            // Vue.axios.put(url,  this.meeting).then((response) => {
-            // Vue.axios.post(url, this.meeting).then((response) => {
             return Vue.axios.post(url, {data: meeting, _method: 'put'})
                 .then((response) => {
                     let d = response.data;

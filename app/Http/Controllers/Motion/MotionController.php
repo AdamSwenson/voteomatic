@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Motion;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\MotionRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
