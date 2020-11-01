@@ -206,7 +206,7 @@ export default class Payload extends IModel{
 
             //fill any fillable values
             this.fillableProps.forEach( function ( v ) {
-                window.console.log(v);
+
                 if ( typeof params[ v ] !== 'undefined' ) {
                     p[ v ] = params[ v ];
                 }

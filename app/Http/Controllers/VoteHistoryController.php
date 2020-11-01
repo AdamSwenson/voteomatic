@@ -12,7 +12,7 @@ class VoteHistoryController extends Controller
 {
     //
 
-    private $user;
+    protected $user;
 
     public function __construct()
     {

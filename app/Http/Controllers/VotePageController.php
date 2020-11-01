@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Auth;
 class VotePageController extends Controller
 {
 
-    const DEV_USER_ID = 1;
-
-
     public function __construct()
     {
 
@@ -38,7 +35,7 @@ class VotePageController extends Controller
         $data = [
 
             'data' => [
-                'isAdmin' => $this->user->isAdmin,
+                'isAdmin' => $this->user->is_admin,
                 'motion' => $motion
             ]
         ];

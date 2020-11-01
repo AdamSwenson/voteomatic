@@ -19,7 +19,7 @@ class MeetingController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * Returns all meetings associated with the user
      *
      * @return \Illuminate\Http\Response
      */
@@ -48,6 +48,8 @@ class MeetingController extends Controller
     public function store(MeetingRequest $request)
     {
         $meeting = Meeting::create($request->all());
+        $this->user->meetings()->attach($meeting);
+        $this->user->save();
 //dd($meeting);
         return response()->json($meeting);
     }

@@ -26,6 +26,9 @@ class CreateMotionsTable extends Migration
             /** Main, procedural, amendment, etc */
             $table->text('type')->nullable();
 
+            /** Whether the motion has been voted upon  */
+            $table->boolean('is_complete')->default(false);
+
             $table->integer('meeting_id')->nullable();
 
 

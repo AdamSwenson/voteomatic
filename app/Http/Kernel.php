@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Exceptions\VoteSubmittedAfterMotionClosed;
+use App\Http\Middleware\CheckIfAlreadyVoted;
+use App\Http\Middleware\CheckIfMotionClosed;
 use App\Http\Middleware\CheckVoterEligibility;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -64,6 +67,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'vote-eligibility' => CheckVoterEligibility::class
+        'vote-eligibility' => CheckVoterEligibility::class,
+        'motion-closed' => CheckIfMotionClosed::class,
+        'previously-voted' => CheckIfAlreadyVoted::class
     ];
 }

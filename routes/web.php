@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
+use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\ReceiptValidationController;
+use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\Dev\SetupController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
+use App\Http\Controllers\VotePageController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +42,8 @@ Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 Auth::routes();
 
 // LTI access endpoint
-Route::post('/entry-test', '\App\Http\Controllers\LTILaunchController@handleLaunchRequest')->withoutMiddleware([ VerifyCsrfToken::class]);
+Route::post('/entry-test', [\App\Http\Controllers\LTILaunchController::class, 'handleLaunchRequest'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 
 Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
@@ -53,9 +58,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home/{meeting}', [App\Http\Controllers\HomeController::class, 'meetingIndex'])->name('meetingHome');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
+    ->name('meetingHome');
 
+Route::get('/home', [HomeController::class, 'index'])
+    ->name('home');
 
 
 /* =============================
@@ -64,7 +71,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //main page where votes get cast
 //todo should probably rename all this since it's basically the application
-Route::get('voter-page/{motion}', 'App\Http\Controllers\VotePageController@getVotePage')->name('main');
+Route::get('voter-page/{motion}', [VotePageController::class, 'getVotePage'])
+    ->name('main');
 
 
 /* =============================
@@ -77,6 +85,9 @@ Route::get('roster/{meeting}', [RosterController::class, 'getRoster']);
         Motions
    ============================= */
 Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
+//Route::post('motions/meeting/{meeting}', [MotionController::class, 'createMotion']);
+Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
+Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
 Route::resource('motions', MotionController::class);
 
 
@@ -85,17 +96,17 @@ Route::resource('motions', MotionController::class);
    ============================= */
 Route::get('/cast-votes/{meeting}', [VoteHistoryController::class, 'getPreviouslyCastVotes']);
 //controller which handles validating and recording votes
-Route::post('record-vote/{motion}', '\App\Http\Controllers\RecordVoteController@recordVote' );
+Route::post('record-vote/{motion}', [RecordVoteController::class, 'recordVote'] );
 
-Route::post('validation', '\App\Http\Controllers\ReceiptValidationController@validateReceipt');
+Route::post('validation', [ReceiptValidationController::class, 'validateReceipt']);
 Route::resource('votes', VoteController::class);
 
 
 /* =============================
         Vote totals controllers
    ============================= */
-Route::get('results/{motion}/counts', '\App\Http\Controllers\ResultsController@getCounts');
-Route::get('results/{motion}', '\App\Http\Controllers\ResultsController@getResults');
+Route::get('results/{motion}/counts', [ResultsController::class, 'getCounts']);
+Route::get('results/{motion}', [ResultsController::class, 'getResults']);
 
 
 

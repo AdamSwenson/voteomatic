@@ -1,10 +1,10 @@
 import Vue from 'vue'
 //Panes (main container for edit tools)
-import votePage from './components/vote-page'
-import resultsPage from './components/results-page'
+import votePage from './components/main/vote-page'
+import resultsPage from './components/main/results-page'
 import motionSetup from './components/setup/motion-setup'
 import meetingSetup from './components/setup/meeting-setup'
-import voteVerify from './components/vote-verification-page'
+import voteVerify from './components/main/vote-verification-page'
 import meetingHome from './components/meeting-home'
 
 Vue.component( 'vote-page', votePage );
@@ -74,7 +74,7 @@ export const routes =  [
     {
         name: 'meeting',
         path: '/meeting',
-        icon: "fa fa-book",
+        icon: "bi bi-sunglasses",
         label: "Create meeting",
         components: { main:  meetingSetup},
         props:  true,

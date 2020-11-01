@@ -7,21 +7,16 @@
         </div>
 
         <div class="card-body">
+            <div class="card-text">
+                <ul class="list-group list-group-flush">
 
-            <ul class="list-group list-group-flush">
-                <motion-select-button v-for="m in motions"
-                                      :motion="m"
-                                      :key="m.id"></motion-select-button>
+                    <motion-select-area v-for="m in motions"
+                                        :motion="m"
+                                        :key="m.id"
+                    ></motion-select-area>
 
-<!--                <li class="list-group-item">-->
-<!--                    <button class="btn btn-outline-info"-->
-<!--                            v-on:click="setMotion(m)"-->
-<!--                    >Select-->
-<!--                    </button>-->
-<!--                    {{ m.content }}-->
-<!--                </li>-->
-            </ul>
-
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -29,19 +24,20 @@
 </template>
 
 <script>
-import MotionSelectButton from "../controls/motion-select-button";
+import MotionSelectButton from "./motions/motion-select-button";
+import MotionSelectArea from "./motions/motion-select-area";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MotionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "motions-card",
-    components: {MotionSelectButton},
+    components: {MotionSelectArea, MotionSelectButton},
     // mixins : [MotionMixin],
     computed: {
         motions: function () {
             let m = this.$store.getters.getStoredMotions;
-        if(_.isUndefined(m)) return [];
-        return m;
+            if (_.isUndefined(m)) return [];
+            return m;
         }
         // default: []
 
@@ -55,9 +51,9 @@ export default {
     },
 
     methods: {
-        setMotion: function (motion) {
-            this.$store.commit('setMotion', motion);
-        }
+        // setMotion: function (motion) {
+        //     this.$store.commit('setMotion', motion);
+        // }
 
     },
 

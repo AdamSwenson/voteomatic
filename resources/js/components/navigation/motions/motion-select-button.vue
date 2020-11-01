@@ -1,21 +1,19 @@
 <template>
 
-    <li class="list-group-item">
-        <button v-bind:class="styling"
-                v-on:click="setMotion"
-        >Select
-        </button>
-        {{ motion.content }}
-    </li>
+    <button v-bind:class="styling"
+            v-on:click="setMotion"
+    >{{buttonText}}</button>
+
 </template>
 
 <script>
 
-import MotionMixin from '../storeMixins/motionMixin';
+import MotionMixin from '../../storeMixins/motionMixin';
+import EndVotingButton from "./end-voting-button";
 
 export default {
     name: "motion-select-button",
-
+    components: {EndVotingButton},
     data: function () {
         return {}
     },
@@ -32,10 +30,19 @@ export default {
 
     },
 
-    asyncComputed : {
+    asyncComputed: {
+        buttonText: {
+            get: function () {
+                if (this.isSelected) return "Selected";
 
-        selectedMotion : function (){
-            return  this.$store.getters.getActiveMotion;
+                return "Select"
+            },
+            default: 'Select'
+        },
+
+
+        selectedMotion: function () {
+            return this.$store.getters.getActiveMotion;
         },
 
         isSelected: function () {
@@ -46,14 +53,18 @@ export default {
         }
 
 
-    },
+    }
+    ,
 
     methods: {
         setMotion: function () {
             this.$store.commit('setMotion', this.motion);
         }
+        ,
 
-    },
+
+    }
+    ,
 }
 </script>
 

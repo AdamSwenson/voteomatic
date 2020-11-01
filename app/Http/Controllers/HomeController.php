@@ -16,13 +16,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
 
-//        $auth
-//                    $user = User::factory()->create();
-//            Auth::login($user, true);
 
-        $this->user = Auth::user();
+        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
+        $this->getUser();
+
     }
 
     /**
@@ -42,14 +40,16 @@ class HomeController extends Controller
         $data = [
 
             'data' => [
-                'meeting_id' => $meeting->id
+                'meeting_id' => $meeting->id,
+
+                'isAdmin' => $this->user->is_admin,
             ]
         ];
 
         return view('main', $data);
 
 
-        return view('home', ['user' => $this->user, 'name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
+//        return view('home', ['user' => $this->user, 'name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
 
 //        return view('home');
     }

@@ -6,6 +6,7 @@
  */
 
 import Motion from "../../models/Motion";
+import Payload from "../../models/Payload";
 
 const state = {};
 
@@ -65,7 +66,13 @@ const actions = {
             }
 
             console.log("Reading admin from page data", data.isAdmin);
-            commit('setAdmin', data.isAdmin);
+
+            let p = Payload.factory({
+                'updateProp' : 'isAdmin',
+                'updateVal' : data.isAdmin
+            });
+
+            commit('setAdmin', p);
 
             resolve();
 

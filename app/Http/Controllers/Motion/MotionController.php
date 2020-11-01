@@ -42,8 +42,17 @@ class MotionController extends Controller
         return response()->json($meeting->motions()->get());
     }
 
+    public function createMotion(Meeting $meeting, MotionRequest $request){
+        $motion = Motion::create($request->all());
+        $meeting->motions()->attach($motion);
+        return response()->json($motion);
+    }
+
     /**
      * Store a newly created resource in storage.
+     *
+     * This does not have an associated meeting and
+     * normally won't be used
      *
      * @param MotionRequest $request
      * @return Response
@@ -52,6 +61,12 @@ class MotionController extends Controller
     {
 //        dd($request->all());
         $motion = Motion::create($request->all());
+
+        if($request->has('meetingId')){
+            $meeting = Meeting::find($request->meetingId);
+            $meeting->motions()->save($motion);
+        }
+
         return response()->json($motion);
     }
 

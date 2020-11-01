@@ -1,22 +1,25 @@
 <template>
 
     <div class="voteomatic">
-
-        <router-tabs></router-tabs>
-
-
         <div class="card">
-            <div class="card-content">
-                <div class="content">
+            <div class="card-title">
+                <router-tabs></router-tabs>
+            </div>
 
-                    <router-view name="main"></router-view>
+            <div class="card-body">
+                <!--                <div class="content">-->
 
-                </div>
+                <router-view name="main"></router-view>
+
+                <!--                </div>-->
             </div>
         </div>
 
-        <div class="text-center">
-            <refresh-button></refresh-button>
+        <div class="card-footer">
+            <div class="text-center">
+                <refresh-button></refresh-button>
+            </div>
+
         </div>
 
     </div>
@@ -26,7 +29,7 @@
 <script>
 
 //The main page for anything
-import VotePage from "./vote-page";
+import VotePage from "./main/vote-page";
 import Motion from '../models/Motion';
 import MeetingMixin from './storeMixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
@@ -48,17 +51,16 @@ export default {
     computed: {
 
 
-
-    //     //the motion being voted upon
-    //     motion: function () {
-    //         //todo convert to
-    //
-    //         let d = window.startData.motion;
-    //         let m = new Motion(d);
-    //
-    //         // let m = new Motion(d.id, d.content, d.description, d.requires);
-    //         return m
-    //     }
+        //     //the motion being voted upon
+        //     motion: function () {
+        //         //todo convert to
+        //
+        //         let d = window.startData.motion;
+        //         let m = new Motion(d);
+        //
+        //         // let m = new Motion(d.id, d.content, d.description, d.requires);
+        //         return m
+        //     }
     },
 
     mounted: function () {

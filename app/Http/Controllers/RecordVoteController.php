@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\DoubleVoteAttempt;
+use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Requests\VoteRequest;
 use App\Models\Motion;
 use App\Models\Vote;
@@ -24,12 +25,11 @@ use Illuminate\Support\Facades\Auth;
 class RecordVoteController extends Controller
 {
 
-    const DEV_USER_ID = 1;
 
     /**
      * @var VoterEligibilityRepository
      */
-    public VoterEligibilityRepository $voterEligibilityRepo;
+    public IVoterEligibilityRepository $voterEligibilityRepo;
 
 
     /**
@@ -40,15 +40,13 @@ class RecordVoteController extends Controller
     public function __construct()
     {
 
-        $this->voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
-//        $this->voterEligibilityRepo = new VoterEligibilityRepository();
-
         $this->middleware('auth');
 //        $this->middleware('vote-eligibility');
+        $this->middleware('previously-voted');
+        $this->middleware('motion-closed');
 
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
         $this->getUser();
-
 
     }
 
@@ -62,15 +60,20 @@ class RecordVoteController extends Controller
      * @return Vote|string[]
      */
     public function recordVote(Motion $motion, VoteRequest $request){
-        try {
-            if ($this->voterEligibilityRepo->hasAlreadyVoted($motion, $this->user)) {
 
-                // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
+        try {
+            //This is already handled by the middleware. It probably should eventually be
+            //removed once there's no chance the middleware will accidentally get turned off.
+            //We need to be extra careful since there can't be a unique index protecting the
+            //vote. Though we could move the creation of the receipt/vote record before the vote and protect
+            //against double receipts. But that will require a bunch of exception checking and
+            //maybe rolling back the addition of the record, so doing this extra layer for now.
+            $this->voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
+            if ($this->voterEligibilityRepo->hasAlreadyVoted($motion, $this->user)) {
                 throw new DoubleVoteAttempt;
             }
 
             $vote = new Vote;
-
 
             if ($request->vote === 'yay') {
                 $vote->is_yay = true;
@@ -79,7 +82,8 @@ class RecordVoteController extends Controller
             }
 
             //if want to record null for abstentions that would go here
-            //after updating client to send an abstention
+            //after updating client to send an abstention.
+            //obviously, this will happen over my dead body.
 
             //Create a hash stored on vote which only the user
             //will have access to.
@@ -88,16 +92,16 @@ class RecordVoteController extends Controller
             $motion->votes()->save($vote);
             $motion->save();
 
-            //todo record that user has voted
+            //At this point, the vote itself has been saved.
+            //Now we need to separately record that user has voted
             $this->voterEligibilityRepo->recordVoted($motion, $this->user);
-
 
             return $vote;
 
         }catch (DoubleVoteAttempt $e){
             abort($e::ERROR_CODE);
-//            return ['error' => "Previously voted"];
-//            print($e);
+        }catch (VoteSubmittedAfterMotionClosed $e2){
+            abort($e::ERROR_CODE);
         }
     }
 }

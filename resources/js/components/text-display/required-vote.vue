@@ -12,6 +12,9 @@ name: "required-vote",
     props: ["motion"],
     computed: {
         requiredText: function () {
+
+            if(_.isUndefined(this.motion) || _.isNull(this.motion)) return '---'
+
             switch (this.motion.requires) {
                 case 0.5:
                     return "a majority";

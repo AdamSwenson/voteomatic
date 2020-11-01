@@ -77,7 +77,10 @@ module.exports = {
     motions: {
         /**
          * Path for the resource controller for motions.
-         * For create requests, leave the id empty
+         *
+         * In the unlikely circumstance that we want to make a create
+         * request which doesn't associate with a meeting, leave the id empty
+         *
          * @param motionId
          * @returns {string}
          */
@@ -87,6 +90,18 @@ module.exports = {
                 return base;
             }
             return base + motionId;
+        },
+
+        createMotion: (meetingId) => {
+            return normalizedRouteRoot() + 'motions/meeting/' + meetingId;
+        },
+
+        endVoting: (motionId) => {
+        return normalizedRouteRoot() + 'motions/close/' + motionId;
+        },
+
+        getCurrentMotion : (meetingId) => {
+            return normalizedRouteRoot() + 'motions/stack/' + meetingId;
         },
 
         getAllMotionsForMeeting: (meetingId) => {

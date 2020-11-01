@@ -1,88 +1,83 @@
 <template>
     <div class="card vote-page">
 
-        <div class="card-content">
+            <div class="card-header">
+                <h4 class="card-title">{{ cardTitle }}</h4>
+            </div>
 
-            <div class="vote-area card-body"
-                 v-if="isReady"
-            >
+            <div class="vote-area card-body">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Please vote on this motion</h5>
-                    </div>
+                <motion-content
+                    :motion="motion"
+                    :isReady="isReady"
+                ></motion-content>
 
-                    <div class="card-text">
-                        <p class="motion-content "
-                        >{{ motionContent }}</p>
-                        <!--                    <motion-content :motion="motion"></motion-content>-->
-                    </div>
+                <vote-receipt
+                    :receipt="receipt"
+                    v-if="vote"
+                ></vote-receipt>
 
+            </div>
 
-                    <vote-receipt :receipt="receipt" v-if="vote"></vote-receipt>
+            <div class="card-body">
+                <required-vote
+                    v-if="isReady"
+                    :motion="motion"
+                ></required-vote>
+            </div>
 
-                    <div class="card-footer">
-                        <div class="text-right">
-                            <vote-buttons
-                                v-if="showButtons"
-                                :motion="motion"
-                                v-on:yay-clicked="handleYay"
-                                v-on:nay-clicked="handleNay"
-                            ></vote-buttons>
-                            <div v-else>
-                                <p>You have already voted</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card-footer">
+                <vote-buttons
+                    v-if="showButtons"
+                    :motion="motion"
+                    v-on:yay-clicked="handleYay"
+                    v-on:nay-clicked="handleNay"
+                ></vote-buttons>
 
+                <div
+                    class="text-center"
+                    v-else>
+                    <p>You have already voted</p>
                 </div>
-                <!--        <div class="col"></div>-->
-                <!--        </div>-->
-
-                <required-vote :motion="motion"></required-vote>
-
-                <!--                <h5 class="card-subtitle">Specific instructions / notes</h5>-->
-                <!--                <div class="row">-->
-                <!--                    <div class="col">-->
-                <!--                        &lt;!&ndash;                <motion-description :motion=motion></motion-description>&ndash;&gt;-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-                <!--                <h5>General instructions</h5>-->
-                <!--                <div class="instructions row">-->
-                <!--                    <div class="col">-->
-                <!--                        <p>{{ instructions }}</p>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
             </div>
 
-            <div class="card-body loading-message" v-else>
-                <p>Please wait while your ballot loads.....</p>
-            </div>
+<!--        </div>-->
 
-        </div>
+        <!--        <required-vote :motion="motion"></required-vote>-->
+
+
     </div>
+
+    <!--    &lt;!&ndash;            If not ready&ndash;&gt;-->
+    <!--    <div class="card-body loading-message"-->
+    <!--         v-else>-->
+    <!--        <p>Please wait while your ballot loads.....</p>-->
+    <!--    </div>-->
+
+    <!--    </div>-->
+    <!--    </div>-->
 </template>
 
 <script>
 
-import Vote from '../models/Vote';
-import VoteButtons from "./vote-buttons";
-import RequiredVote from "./text-display/required-vote";
-// import MotionContent from "./text-display/motion-content";
+import Vote from '../../models/Vote';
+import VoteButtons from "../vote-buttons";
+import RequiredVote from "../text-display/required-vote";
+import MotionContent from "../text-display/motion-content";
 // import MotionDescription from "./text-display/motion-description";
-import * as routes from "../routes";
-import VoteReceipt from "./text-display/vote-receipt";
-import motionMixin from '../components/storeMixins/motionMixin';
+import * as routes from "../../routes";
+import VoteReceipt from "../text-display/vote-receipt";
+import motionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "vote-page",
     components: {
         VoteReceipt,
-        // MotionDescription, MotionContent,
+        // MotionDescription,
+        MotionContent,
         RequiredVote, VoteButtons
     },
+
     props: [],
 
     mixins: [motionMixin],
@@ -92,7 +87,12 @@ export default {
             voteRecorded: false,
             vote: null,
 
-            showButtons: false
+            showButtons: false,
+
+            titleText: {
+                unVoted: 'Please vote on this motion',
+                voted: 'Thank you for voting'
+            }
 
             // isReady: true
         }
@@ -129,6 +129,7 @@ export default {
             let data = {
                 motionId: this.motion.id,
                 vote: voteType,
+
             };
 
             return new Promise((resolve, reject) => {
@@ -164,6 +165,16 @@ export default {
     },
 
     asyncComputed: {
+        cardTitle: {
+            get: function () {
+                if (this.hasVoted) {
+                    return this.titleText.voted
+                }
+                return this.titleText.unVoted
+            },
+            default: ''
+        },
+
         votedUponMotionIds:
             {
                 get: function () {
@@ -175,8 +186,8 @@ export default {
 
         hasVoted: {
             get: function () {
-if(this.isReady){
-                // if (!_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)) {
+                if (this.isReady) {
+                    // if (!_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)) {
                     //wait to make sure we have the present motion id ready to go.
                     // let ids = this.$store.getters.getMotionIdsUserVotedUpon;
                     let hasVoted = this.votedUponMotionIds.includes(this.motion.id);
@@ -198,7 +209,7 @@ if(this.isReady){
                     //make sure vote records have been loaded
                     return !_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)
 
-                        // return !_.isUndefined(this.hasVoted) && !_.isNull(this.hasVoted)
+                    // return !_.isUndefined(this.hasVoted) && !_.isNull(this.hasVoted)
                 }
             },
             watch: ['motion']

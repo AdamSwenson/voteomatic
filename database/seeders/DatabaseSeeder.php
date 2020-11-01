@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             $meeting->save();
 
             $motions = Motion::factory(['meeting_id' => $meeting->id])
-                ->count(3)
+                ->count(5)
                 ->create();
 
             foreach ($motions as $motion){

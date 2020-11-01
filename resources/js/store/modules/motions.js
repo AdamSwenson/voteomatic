@@ -1,6 +1,6 @@
 import Motion from "../../models/Motion";
 import * as routes from "../../routes";
-
+import Payload from "../../models/Payload";
 
 /**
  * Created by adam on 2020-07-30.
@@ -30,7 +30,20 @@ const state = {
 
 const mutations = {
     addMotionToStore: (state, motionObject) => {
-        state.motions.push(motionObject);
+        //todo double check that there is no reason to have duplicates or raise an error
+        let mi = -1;
+        _.forEach(state.motions, function(m) {
+            if(m.id === motionObject.id){
+                mi = 1;
+            }
+        });
+
+        if(mi === -1) {
+            state.motions.push(motionObject);
+        }
+
+
+        // state.motions.push(motionObject);
         // Vue.set(state, 'motion', payload);
 
     },
@@ -72,7 +85,9 @@ const mutations = {
      */
     setMotionProp : (state, {updateProp, updateVal}) => {
         Vue.set(state.motion, updateProp, updateVal);
-    }
+    },
+
+
 };
 
 const actions = {
@@ -91,6 +106,7 @@ const actions = {
             //send to server
             let url = routes.motions.resource();
             let p = {'meetingId' : meetingId};
+            window.console.log('sending', p);
             return Vue.axios.post(url, p)
                 .then((response) => {
                     let d = response.data;
@@ -104,6 +120,39 @@ const actions = {
         }));
 
     },
+
+
+    endVotingOnMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.endVoting(motion.id);
+            return Vue.axios.post(url)
+                .then((response) => {
+                    let d = response.data;
+
+                    //todo this means that the motion must be selected in order to end voting. That probably makes sense...
+                    commit('setMotion', motion);
+
+                    let pl = Payload.factory({object : motion, updateProp: 'isComplete', updateVal: d.is_complete});
+
+                    //we leave it as the currently set motion so that
+                    //the results tab will provide results for the
+                    //immediate past motion.
+                    //Instead, we just update the completed property on the
+                    //motion
+                    commit('setMotionProp', pl);
+
+
+                    // let motion = new Motion(d);
+                    // // let motion = new Motion(d.id, d.name, d.date);
+                    // commit('addMotionToStore', motion);
+                    // commit('setMotion', motion);
+                    resolve()
+                });
+        }));
+
+    },
+
 
     /**
      * Gets the motion from the server
@@ -204,16 +253,27 @@ const actions = {
 
 const getters = {
 
-    /**
-     * Returns the currently set motion object.
-     * This will be the motion that is currently being voted on,
-     * edited, or whose results are being displayed.
-     * @param state
-     * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
-     */
-    getActiveMotion: (state) => {
-        return state.motion;
-    },
+        /**
+         * Returns the currently set motion object.
+         * This will be the motion that is currently being voted on,
+         * edited, or whose results are being displayed.
+         * @param state
+         * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
+         */
+        getActiveMotion: (state) => {
+            return state.motion;
+        },
+
+        getMotionById: (state, id) => (id) => {
+            // return function ( state, id ) {
+            let r = state.motions.filter(function (i) {
+                if (i.id === id) {
+                    return i;
+                }
+            });
+            return r[0];
+        },
+    // }( state, id )
 
     /**
      * Returns all motion objects which have

@@ -3,16 +3,15 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\DoubleVoteAttempt;
-use App\Models\Vote;
 use App\Repositories\IVoterEligibilityRepository;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckVoterEligibility
+class CheckIfAlreadyVoted
 {
     /**
-     * Check whether the voter is eligible to cast a vote,
+     * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
@@ -20,17 +19,17 @@ class CheckVoterEligibility
      */
     public function handle(Request $request, Closure $next)
     {
-//        $user = Auth::user();
-////        $motion = Motion::find($request->motion_id);
-//        $motion = $request->route()->parameter('motion');
-//
-//        $voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
-//
+        $user = Auth::user();
+        $motion = $request->route()->parameter('motion');
+        $voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
+
 //        try {
-//            $voterEligibilityRepo->isEligible($motion, $user);
+        if ($voterEligibilityRepo->hasAlreadyVoted($motion, $user)) {
+            abort(DoubleVoteAttempt::ERROR_CODE, DoubleVoteAttempt::MESSAGE);
+        }
 
-            return $next($request);
-
+        return $next($request);
+//
 //        } catch (DoubleVoteAttempt  $e) {
 //            abort($e::ERROR_CODE, $e::MESSAGE);
 //        }

@@ -9,8 +9,9 @@ class Motion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'description', 'requires', 'meeting_id', 'type'];
+    protected $fillable = ['content', 'description', 'is_complete', 'requires', 'meeting_id', 'type'];
 
+    protected $casts = ['is_complete' => 'boolean'];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
 
@@ -42,7 +43,7 @@ class Motion extends Model
      */
     public function getPassedAttribute()
     {
-     return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        return count($this->affirmativeVotes) > $this->voteCountThreshold;
     }
 
     /**
@@ -97,8 +98,19 @@ class Motion extends Model
         return $this->belongsToMany(User::class, 'motion_admins')->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function meeting()
+    {
+        return $this->belongsTo(Meeting::class);
+    }
 
-    public function recordedVoteRecord(){
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function recordedVoteRecord()
+    {
         return $this->hasMany(RecordedVoteRecord::class);
     }
 
@@ -107,7 +119,7 @@ class Motion extends Model
      */
     public function votes()
     {
-       return $this->hasMany(Vote::class);
+        return $this->hasMany(Vote::class);
     }
 
 

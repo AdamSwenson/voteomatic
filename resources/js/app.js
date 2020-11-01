@@ -67,7 +67,7 @@ Vue.use(AsyncComputed)
 Vue.component('voteomatic', require('./components/voteomatic').default);
 
 //todo DEV TOP LEVEL
-Vue.component('results', require('./components/results-page').default);
+Vue.component('results', require('./components/main/results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
 
 

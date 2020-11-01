@@ -9,6 +9,8 @@ module.exports = {
     503: "You are not authorized to create a new motion",
     504 : "You are not authorized to create a new meeting",
 
+    505: "Vote submitted after voting ended"
+
 
 }
 

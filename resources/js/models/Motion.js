@@ -4,15 +4,17 @@ export default class Motion extends IModel {
 
     /**
      * Create a new motion
+     * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id, content, description, requires, type}) {
+    constructor({id, content, description, requires, type, is_complete}) {
         super();
         this.id = id;
         this.content = content;
         this.description = description;
-        this.requires = requires;
+        this.requires = _.toNumber(requires);
         this.type = type;
+        this.isComplete = is_complete;
 
         this.types = ['main', 'amendment'];
 

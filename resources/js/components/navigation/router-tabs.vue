@@ -1,25 +1,31 @@
 <template>
 
-    <ul class="page-navigation-tabs nav nav-tabs is-centered is-boxed">
+    <div class="router-tabs" role="navigation">
+    <ul class=" nav nav-tabs">
+        <router-tab v-for="r in routes" :route="r" :key="r.name"></router-tab>
 
-        <router-link
-            v-for="r in routes"
-            v-bind:key="r.name"
-            tag="li"
-            v-bind:style="styling"
-            v-bind:active-class="activeClass"
-            v-bind:to="r.path"
-        >
-            <!--                <li class="nav-item">-->
-            <a class="page-nav nav-link">
-                    <span class="icon is-small">
-                            <i v-bind:class="r.icon" aria-hidden="true"></i>
-                        </span>
-                <span>{{ r.label }}</span>
-            </a>
-        </router-link>
+<!--        <router-link-->
+<!--            v-for="r in routes"-->
+<!--            v-bind:key="r.name"-->
+<!--            tag="li"-->
+<!--            v-bind:style="styling"-->
+<!--            v-bind:active-class="activeClass"-->
+<!--            v-bind:to="r.path"-->
+<!--        >-->
+<!--            &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
+<!--            <a class="page-nav nav-link">-->
+<!--                    <span class="icon is-small">-->
+<!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
+<!--&lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
+<!--                        </span>-->
+<!--                <span>{{ r.label }}</span>-->
+<!--            </a>-->
+<!--        </router-link>-->
 
     </ul>
+    </div>
 
 
 </template>
@@ -34,6 +40,7 @@
 <script>
 
 import {routes} from '../../routes.client';
+import RouterTab from "./router-tab";
 
 
 /**
@@ -41,12 +48,13 @@ import {routes} from '../../routes.client';
  * .
  */
 export default {
+    components: {RouterTab},
     props: [],
 
     data: function () {
         return {
 
-            adminOnly : [],
+            adminOnly: [],
 
             activeClass: 'active',
             styling: 'nav-item',
@@ -56,11 +64,33 @@ export default {
         };
     },
 
+    asyncComputed: {
+        isAdmin: {
+            get: function () {
+                return this.$store.getters.getIsAdmin;
+            },
+            default: false
+        }
+    },
+
 
     computed: {
 
         routes: function () {
-            return routes
+            let showRoutes = [];
+            let me = this;
+            _.forEach(routes, (r) => {
+                if (r.adminOnly) {
+                    if (me.isAdmin) {
+                        showRoutes.push(r);
+                    }
+                } else {
+                    showRoutes.push(r);
+                }
+            })
+
+            return showRoutes;
+            // return routes
         },
 
     },

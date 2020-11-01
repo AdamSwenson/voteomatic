@@ -14,12 +14,15 @@ class MotionFactory extends Factory
      */
     protected $model = Motion::class;
 
-    public $motionTexts = ["RESOLVED that tacos be served at every meeting",
-        "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
-        "That the pending matter be tabled",
-        "That the CSUN cats be invited to each Senate meeting",
-        "That the call for the 3 pending questions be approved",
-        "That the call for the previous question be approved"
+    public $motions = [
+        ['content' => "RESOLVED that tacos be served at every meeting",
+            'requires' => 0.5],
+        ['content' => "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
+            'requires' => 0.5],
+        ['content' => "That the pending matter be tabled", 'requires' => 0.5],
+        ['content' => "That the CSUN cats be invited to each Senate meeting", 'requires' => 0.5],
+        ['content' => "That the call for the 3 pending questions be approved", 'requires' => 0.66],
+        ['content' => "That the call for the previous question be approved", 'requires' => 0.66],
     ];
 
     public $descriptions = ["",
@@ -34,21 +37,22 @@ class MotionFactory extends Factory
      */
     public function definition()
     {
+        $m = $this->faker->randomElement($this->motions);
 
-        $requires = $this->faker->randomElement(Motion::ALLOWED_VOTE_REQUIREMENTS);
+//        $requires = $this->faker->randomElement(Motion::ALLOWED_VOTE_REQUIREMENTS);
 
-        $content = $this->faker->randomElement($this->motionTexts);
+//        $content = $this->faker->randomElement($this->motions);
 
         $description = $this->faker->randomElement($this->descriptions);
 
         return [
 
             /** The thing being voted upon */
-            'content' => $content,
+            'content' => $m['content'],
 
             'description' => $description,
 
-            'requires' => $requires
+            'requires' => $m['requires']
 
         ];
     }
@@ -79,5 +83,12 @@ class MotionFactory extends Factory
         });
     }
 
-
+    public function completed()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_complete' => true,
+            ];
+        });
+    }
 }

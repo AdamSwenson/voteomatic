@@ -10,9 +10,6 @@
         <p>Please record this receipt. Once you leave this page, it will not be possible to
             retrieve it. </p>
 
-        <h3>todo should send receipt via canvas message</h3>
-
-
         <hr>
         <p>The receipt is not linked to you in the database.
             You are the only one who knows it belongs to you. If you lose it, it will be

@@ -2,70 +2,92 @@
 
     <div class="motion-setup card">
         <div class="card-header">
-            <h1>Set up motion</h1>
+            <h4 class="card-title">Create and edit motion</h4>
         </div>
 
         <div class="card-body">
-            <button class="btn btn-primary"
-                    v-on:click="handleClick"
-            >Create new motion
-            </button>
 
-            <div class="setup-fields" v-if="showFields">
-
-                <p class="card-text">
-
-                    <label for="motion-content">It is moved that </label>
-                    <textarea id="motion-content" v-model="content"
-                              placeholder="placeholders.content"></textarea>
-                </p>
-
-
-                <p class="card-text">
-
-                    <label for="description">Optional description or instructions</label>
-                    <textarea id="description" v-model="description"
-                              placeholder="placeholders.description"></textarea>
-                </p>
-
-
-                <p class="card-text">
-                    todo
-                    <label for="typeSelect">Motion type</label>
-                    <select
-                        id="typeSelect"
-                        v-model="motionType">
-                        <option disabled value="">Please select motion type</option>
-                        <option>Main motion</option>
-                        <option>Amendment</option>
-                        <option>Procedural motion</option>
-                    </select>
-
-                    <span>Selected: {{ motionType }}</span>
-                </p>
-                <p class="card-text">
-                    todo
-                    <label for="requiresSelect">Vote required to pass</label>
-                    <select
-                        id="requiresSelect"
-                        v-model="requires">
-                        <option disabled value="">Please select required vote</option>
-                        <option value="0.5">Majority</option>
-                        <option value="0.66">Two-thirds</option>
-
-                    </select>
-                    <span>Selected: {{ requires }}</span>
-                </p>
+            <div class="closed-notice" v-if="isMotionComplete">
+                <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>
             </div>
+
+            <div class="setup-fields" v-else>
+                <form>
+
+                    <div class="form-group">
+                        <label for="motion-content">It is moved that </label>
+                        <textarea id="motion-content"
+                                  class="form-control"
+                                  rows="3"
+                                  v-model="content"
+                                  v-bind:placeholder="placeholders.content"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="description">Optional description or instructions</label>
+                        <textarea id="description"
+                                  class="form-control"
+                                  v-model="description"
+                                  v-bind:placeholder="placeholders.description"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="typeSelect">Motion type</label>
+                        <select
+                            id="typeSelect"
+                            class="form-control disabled"
+                            v-model="motionType">
+                            <option disabled value="">Please select motion type</option>
+                            <option>Main motion</option>
+                            <option>Amendment</option>
+                            <option>Procedural motion</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="requiresSelect">Vote required to pass</label>
+                        <select
+                            id="requiresSelect"
+                            class="form-control "
+                            v-model="requires"
+                        >
+                            <option disabled value="">Please select required vote</option>
+                            <option value="0.5">Majority</option>
+                            <option value="0.66">Two-thirds</option>
+
+                        </select>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+
+
         </div>
 
+            <div class="card-footer make-button-area">
+<!--                <p class="text-right">-->
+                    <button class="btn btn-primary"
+                            v-on:click="handleClick"
+                    >Create new motion
+                    </button>
+<!--                </p>-->
+            </div>
+
+
+        </div>
     </div>
 </template>
 
 <script>
 
-// todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-let meetingId = 1;
 
 import * as routes from "../../routes";
 import Meeting from '../../models/Meeting';
@@ -83,10 +105,10 @@ export default {
     data: function () {
         return {
             // motion: null,
-            showFields: false,
+            showFields: true,
             placeholders: {
-                content: "Moved that tacos be eaten everyday.",
-                description: "OPTIONAL"
+                content: "that tacos be declared the official food of this body.",
+                description: "(This is currently unused)"
             }
         }
     },
@@ -127,11 +149,18 @@ export default {
                         'updateVal': v
                     }
                 );
-                this.$store.dispatch('updateMotion', p);
 
+                if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
+                    //initialize first if no motion exists
+                    let me = this;
+                    this.$store.dispatch('createMotion', this.meeting.id).then(function(){
+                        me.$store.dispatch('updateMotion', p);
+                    });
 
-                // this.motion.content = v;
-                // this.updateMotion();
+                }else{
+                    //otherwise we can just update as normal
+                    this.$store.dispatch('updateMotion', p);
+                }
             }
         },
 
@@ -151,6 +180,7 @@ export default {
                         'updateVal': v
                     }
                 );
+
                 this.$store.dispatch('updateMotion', p);
 
             }
@@ -168,7 +198,7 @@ export default {
                 let p = Payload.factory({
                         'object': this.motion,
                         'updateProp': 'requires',
-                        'updateVal': v
+                        'updateVal': _.toNumber(v)
                     }
                 );
 
@@ -181,48 +211,13 @@ export default {
     methods: {
         initializeMotion: function () {
 
-
-            let p = this.$store.dispatch('createMotion', this.meetingId);
+            let p = this.$store.dispatch('createMotion', this.meeting.id);
             let me = this;
             p.then(() => {
                 this.showFields = true;
 
             });
-
-            //
-            // let p = new Promise(((resolve, reject) => {
-            //
-            //     //send to server
-            //
-            //     let url = routes.motions.resource();
-            //
-            //
-            //     // todo DEV!!!!!!!!!!!!!!!!!!!!!!!!!
-            //     let params = {meeting_id: meetingId};
-            //     // let params = {meetingId: this.meeting.id};
-            //
-            //
-            //     return Vue.axios.post(url, params).then((response) => {
-            //         let d = response.data;
-            //         this.motion = new Motion(d.id, d.content, d.description, d.requires);
-            //         return resolve(this.motion);
-            //
-            //     });
-            // }));
         },
-
-        // updateMotion: function () {
-        //     let p = new Promise(((resolve, reject) => {
-        //         //send to server
-        //         let url = routes.motions.resource(this.motion.id);
-        //         // Vue.axios.put(url,  this.meeting).then((response) => {
-        //         // Vue.axios.post(url, this.meeting).then((response) => {
-        //         Vue.axios.post(url, {data: this.motion, _method: 'put'}).then((response) => {
-        //             let d = response.data;
-        //             resolve()
-        //         });
-        //     }));
-        // },
 
 
         handleClick: function () {
@@ -236,4 +231,7 @@ export default {
 
 <style scoped>
 
+.setup-fields {
+    /*margin-top: 12em;*/
+}
 </style>

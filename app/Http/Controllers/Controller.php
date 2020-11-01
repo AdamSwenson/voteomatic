@@ -12,21 +12,25 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    const DEV_USER_ID = 1;
 
-public function getUser(){
-
-    // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-    $env = env('APP_ENV');
-    if ($env != 'production') {
-        //this is here in case I am dumb. it is not an excuse to be dumb
-        //and fail to remove before production.
-        Auth::loginUsingId(1, true);
-    }else {
+    public function getUser()
+    {
 
 
-        $this->middleware('auth');
+        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
+        $env = env('APP_ENV');
+        if ($env != 'production') {
+            //this is here in case I am dumb. it is not an excuse to be dumb
+            //and fail to remove before production.
+            Auth::loginUsingId(self::DEV_USER_ID, true);
+
+        } else {
+
+            $this->middleware('auth');
+        }
+
+        $this->user = Auth::user();
     }
-    $this->user = Auth::user();
-}
 
 }

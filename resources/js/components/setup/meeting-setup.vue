@@ -1,51 +1,57 @@
 <template>
     <div class="meeting-setup card">
         <div class="card-header">
-            <h1>Set up meeting</h1>
+            <h1>Create and edit meetings</h1>
         </div>
-        <div class="card-body">
+
+        <div class="card-body edit-meeting">
+            <!--            <div class="card-text">-->
+
+
+            <div class="setup-fields" v-if="showFields">
+
+                <label for="meeting-name">Meeting name</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="meeting-name" v-model="meetingName">
+                </div>
+
+                <label for="meeting-date">Meeting date</label>
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
+                </div>
+
+            </div>
+
             <div class="card-text">
                 <button class="btn btn-primary"
                         v-on:click="handleClick"
                 >Create new meeting
                 </button>
-
-                <div class="setup-fields" v-if="showFields">
-
-                    <label for="meeting-name">Meeting name</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="meeting-name" v-model="meetingName">
-                    </div>
-
-                    <label for="meeting-date">Meeting date</label>
-                    <div class="input-group mb-3">
-                        <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
-                    </div>
-
-                </div>
-
-                <div class="roster-area card-text">
-                    <h4 class="card-title">Meeting roster</h4>
-
-                    <p><strong>ToDo</strong></p>
-                </div>
-
-                <div class="select-meetings card-text">
-                    <h4 class="card-title">Select meeting </h4>
-                    <p><strong>ToDo</strong></p>
-                    <meetings-card></meetings-card>
-
-                    <h5>ToDo : Resource link handling</h5>
-
-                    <h4 class="card-title">Manage meeting access</h4>
-                    <p><strong>ToDo</strong></p>
-
-                </div>
-
             </div>
+
         </div>
 
+        <div class="card-body select-meetings">
+            <h4 class="card-title">Select meeting </h4>
+<!--            <p><strong>ToDo</strong></p>-->
+
+            <meetings-card></meetings-card>
+            <!--                    <h4 class="card-title">Manage meeting access</h4>-->
+            <!--                    <p><strong>ToDo</strong></p>-->
+
+        </div>
+
+
+        <div class="roster-area card-body">
+            <h4 class="card-title">Meeting roster</h4>
+
+            <p><strong>ToDo</strong></p>
+        </div>
+
+
     </div>
+
+
 </template>
 
 <script>
@@ -65,7 +71,7 @@ export default {
 
     data: function () {
         return {
-            showFields: false,
+            showFields: true,
         }
     },
 
