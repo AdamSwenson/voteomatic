@@ -1,7 +1,7 @@
 <template>
 
     <div class="router-tabs" role="navigation">
-    <ul class=" nav nav-tabs">
+    <ul class=" nav nav-tabs ">
         <router-tab v-for="r in routes" :route="r" :key="r.name"></router-tab>
 
 <!--        <router-link-->

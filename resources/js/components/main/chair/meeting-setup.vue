@@ -56,11 +56,11 @@
 
 <script>
 
-import * as routes from "../../routes";
-import Meeting from '../../models/Meeting';
-import MeetingMixin from '../storeMixins/meetingMixin';
-import Payload from "../../models/Payload";
-import MeetingsCard from "../navigation/meetings-card";
+import * as routes from "../../../routes";
+import Meeting from '../../../models/Meeting';
+import MeetingMixin from '../../storeMixins/meetingMixin';
+import Payload from "../../../models/Payload";
+import MeetingsCard from "../../navigation/meetings-card";
 
 export default {
     name: "meeting-setup",

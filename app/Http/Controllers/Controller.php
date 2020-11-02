@@ -14,13 +14,16 @@ class Controller extends BaseController
 
     const DEV_USER_ID = 1;
 
+    const DEV_NON_CHAIR_USER_ID = 2;
+
+
     public function getUser()
     {
 
 
         // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
         $env = env('APP_ENV');
-        if ($env != 'production') {
+        if ($env != 'production' && $env != 'testing') {
             //this is here in case I am dumb. it is not an excuse to be dumb
             //and fail to remove before production.
             Auth::loginUsingId(self::DEV_USER_ID, true);

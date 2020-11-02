@@ -2,8 +2,8 @@ import Vue from 'vue'
 //Panes (main container for edit tools)
 import votePage from './components/main/vote-page'
 import resultsPage from './components/main/results-page'
-import motionSetup from './components/setup/motion-setup'
-import meetingSetup from './components/setup/meeting-setup'
+import motionSetup from './components/main/chair/motion-setup'
+import meetingSetup from './components/main/chair/meeting-setup'
 import voteVerify from './components/main/vote-verification-page'
 import meetingHome from './components/meeting-home'
 

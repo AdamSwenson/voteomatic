@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import MeetingSetup from "./setup/meeting-setup";
-import MotionSetup from "./setup/motion-setup";
+import MeetingSetup from "./main/chair/meeting-setup";
+import MotionSetup from "./main/chair/motion-setup";
 import Meeting from "../models/Meeting";
 
 export default {

@@ -89,11 +89,11 @@
 <script>
 
 
-import * as routes from "../../routes";
-import Meeting from '../../models/Meeting';
-import MeetingMixin from '../storeMixins/meetingMixin';
-import MotionMixin from '../storeMixins/motionMixin';
-import Payload from "../../models/Payload";
+import * as routes from "../../../routes";
+import Meeting from '../../../models/Meeting';
+import MeetingMixin from '../../storeMixins/meetingMixin';
+import MotionMixin from '../../storeMixins/motionMixin';
+import Payload from "../../../models/Payload";
 
 
 export default {

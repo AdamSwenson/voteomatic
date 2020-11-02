@@ -1,27 +1,31 @@
 <template>
 
     <div class="voteomatic">
-        <div class="card">
-            <div class="card-title">
+<!--        <div class="card">-->
+<!--            <div class="card-title">-->
                 <router-tabs></router-tabs>
-            </div>
+<!--            </div>-->
 
-            <div class="card-body">
+<!--            <div class="card-body">-->
                 <!--                <div class="content">-->
 
                 <router-view name="main"></router-view>
 
                 <!--                </div>-->
-            </div>
-        </div>
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="card-footer">
-            <div class="text-center">
+<!--        <div class="card-footer">-->
+            <div class="text-center refresh-area">
                 <refresh-button></refresh-button>
-            </div>
+<!--            </div>-->
 
         </div>
 
+
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#heart-fill"/>
+        </svg>
     </div>
 
 </template>
@@ -68,6 +72,7 @@ export default {
         //parse data from page and store stuff
         this.$store.dispatch('initialize').then(function () {
             me.$router.push('meeting-home');
+
             window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });
 
@@ -78,5 +83,7 @@ export default {
 </script>
 
 <style scoped>
-
+.refresh-area{
+    margin-top: 2em;
+}
 </style>

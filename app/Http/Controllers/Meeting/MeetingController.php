@@ -42,14 +42,30 @@ class MeetingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param MeetingRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(MeetingRequest $request)
     {
-        $meeting = Meeting::create($request->all());
-        $this->user->meetings()->attach($meeting);
-        $this->user->save();
+        //Since we are creating the meeting without
+        //the fields filled in, we may have blank meetings
+        //in the database. Thus we will try to reuse an existing empty
+        //meeting object before actually creating a new one
+        $meeting = $this->user->meetings()
+            ->where('name', null)
+            ->where('date', null)
+            ->first();
+
+        if(! is_null($meeting)){
+            $meeting->update($request->all());
+            $meeting->save();
+        }else{
+            $meeting = Meeting::create($request->all());
+            $this->user->meetings()->attach($meeting);
+            $this->user->save();
+        }
+        $env = env('APP_ENV');
+
 //dd($meeting);
         return response()->json($meeting);
     }
