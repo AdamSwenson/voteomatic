@@ -14,7 +14,7 @@ const state = {
      * currently edited, or whose
      * results are being reported
      */
-    motion: null,
+    currentMotion: null,
 
     /**
      * Store of loaded motions
@@ -56,7 +56,7 @@ const mutations = {
      * @param motionObject
      */
     setMotion: (state, motionObject) => {
-        Vue.set(state, 'motion', motionObject);
+        Vue.set(state, 'currentMotion', motionObject);
     },
 
     /**
@@ -84,7 +84,7 @@ const mutations = {
      * @param val
      */
     setMotionProp : (state, {updateProp, updateVal}) => {
-        Vue.set(state.motion, updateProp, updateVal);
+        Vue.set(state.currentMotion, updateProp, updateVal);
     },
 
 
@@ -215,6 +215,9 @@ const actions = {
                         let motion = new Motion(d);
                         // let motion = new Motion(d.id, d.name, d.date);
                         commit('addMotionToStore', motion);
+                        if(d.is_current){
+                            commit('setMotion', motion)
+                        }
                     });
                     resolve()
 
@@ -222,9 +225,22 @@ const actions = {
         }));
     },
 
+    setCurrentMotion({dispatch, commit, getters}, {meetingId, motionId}) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.setCurrentMotion(meetingId, motionId);
+            return Vue.axios.post(url)
+                .then((response) => {
+                    let motion = getters.getMotionById(motionId);
+                    commit('setMotion', motion)
+                    resolve()
+                });
+        }));
+    },
 
     /**
-     * Sends new field entries to server
+     * Sends new field entries to server and
+     * adds them to the currently active motion
      *
      * @param dispatch
      * @param commit
@@ -261,7 +277,7 @@ const getters = {
          * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
          */
         getActiveMotion: (state) => {
-            return state.motion;
+            return state.currentMotion;
         },
 
         getMotionById: (state, id) => (id) => {
@@ -301,6 +317,16 @@ const getters = {
             out.push(motion.id);
         })
         return out;
+    },
+
+    /**
+     * Whether the user has voted on the motion which is
+     * currently active
+     * @param state
+     */
+    hasVotedOnCurrentMotion : (state) => {
+
+        return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
     }
 };
 

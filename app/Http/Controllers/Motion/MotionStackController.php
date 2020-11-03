@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Motion;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Repositories\IMotionStackRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -15,14 +16,23 @@ use Illuminate\Http\Request;
  */
 class MotionStackController extends Controller
 {
-    public function __construct(){
+    /**
+     * @var IMotionStackRepository|mixed
+     */
+    public $motionStackRepo;
+
+    public function __construct()
+    {
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
         $this->getUser();
+
+        $this->motionStackRepo = app()->make(IMotionStackRepository::class);
 
     }
 
 
-    public function markMotionComplete(Motion $motion){
+    public function markMotionComplete(Motion $motion)
+    {
         $motion->is_complete = true;
         $motion->save();
 
@@ -35,9 +45,17 @@ class MotionStackController extends Controller
      * Returns the motion at the top of the pending queue
      * @param Meeting $meeting
      */
-    public function getCurrentMotion(Meeting $meeting){
-
+    public function getCurrentMotion(Meeting $meeting)
+    {
+        $result = $this->motionStackRepo->getCurrentMotion($meeting);
+        return response()->json($result);
     }
 
+
+    public function setAsCurrentMotion(Meeting $meeting, Motion $motion)
+    {
+        $result = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+        return response()->json($result);
+    }
 
 }

@@ -8,12 +8,14 @@
 
 <script>
 
-import MotionMixin from '../../storeMixins/motionMixin';
+import MeetingMixin from '../../storeMixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
+import Payload from "../../../models/Payload";
 
 export default {
     name: "motion-select-button",
     components: {EndVotingButton},
+    mixins : [MeetingMixin],
     data: function () {
         return {}
     },
@@ -58,9 +60,10 @@ export default {
 
     methods: {
         setMotion: function () {
-            this.$store.commit('setMotion', this.motion);
-        }
-        ,
+            let pl = Payload.factory({'motionId' : this.motion.id, 'meetingId' : this.meeting.id});
+            this.$store.dispatch('setCurrentMotion', pl)
+            // this.$store.commit('setMotion', this.motion);
+        },
 
 
     }

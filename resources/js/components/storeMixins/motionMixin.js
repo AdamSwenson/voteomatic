@@ -30,8 +30,9 @@ module.exports = {
          */
         isMotionComplete: {
             get: function () {
-                // if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false
-                return this.motion.isComplete;
+                if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                    return this.motion.isComplete;
+                }
             },
             default: false
         },

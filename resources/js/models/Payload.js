@@ -20,6 +20,8 @@ export default class Payload extends IModel{
             'callback',
             'id',
             'mutateSilently',
+            'motionId',
+            'meetingId',
             // 'options',
             'object',
             // 'parent', 'parentNode',

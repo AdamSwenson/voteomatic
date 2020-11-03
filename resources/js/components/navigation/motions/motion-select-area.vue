@@ -9,12 +9,11 @@
         ></motion-select-button>
 
         <vote-nav-button
-            v-if="isSelected && ! isComplete"
+            :motion="motion"
+            v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
         ></vote-nav-button>
 
-        <span v-bind:class="motionStyle">
-        {{ motion.content }}
-        </span>
+        <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
         <motion-status-badge :is-passed="isPassed"></motion-status-badge>
 
@@ -38,6 +37,9 @@ export default {
     props: ['motion'],
 
     asyncComputed: {
+        hasVotedOnCurrentMotion : function(){
+          return this.$store.getters.hasVotedOnCurrentMotion;
+        },
 
         isChair : function(){
             return this.$store.getters.getIsAdmin;
@@ -76,10 +78,12 @@ export default {
             if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false
 
             return true
-
         },
 
 
+        /**
+         * Whether the motion has passed (after voting has been closed)
+         */
         isPassed: {
             get: function () {
                 //must return undefined until actually loaded
@@ -103,21 +107,37 @@ export default {
             },
         },
 
+        /**
+         * The current globally active motion
+         * @returns {any}
+         */
         selectedMotion: function () {
             return this.$store.getters.getActiveMotion;
         },
 
+        /**
+         * Whether the motion that has been handed to this
+         * component is the one globally selected.
+         * @returns {boolean}
+         */
         isSelected: function () {
-
             if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
 
             return this.motion.id === this.selectedMotion.id
         },
 
+        /**
+         * Whether voting has been closed.
+         * @returns {(function(): default.asyncComputed.motion.isComplete)|(function(): (__webpack_exports__.default.asyncComputed.motion.isComplete|undefined))|(function(): __webpack_exports__.default.asyncComputed.motion.isComplete)|(function(): (default.asyncComputed.motion.isComplete|undefined))}
+         */
         isComplete: function () {
             return this.motion.isComplete;
         },
 
+        /**
+         * The styling to apply to the motion text
+         * @returns {string}
+         */
         motionStyle: function () {
             if (this.isComplete) {
                 return 'text-muted';

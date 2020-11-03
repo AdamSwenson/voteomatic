@@ -87,6 +87,7 @@ Route::get('roster/{meeting}', [RosterController::class, 'getRoster']);
 Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
 //Route::post('motions/meeting/{meeting}', [MotionController::class, 'createMotion']);
 Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
+Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
 Route::resource('motions', MotionController::class);
 

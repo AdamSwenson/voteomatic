@@ -17,6 +17,9 @@
 
                 </ul>
             </div>
+
+            <end-voting-modal></end-voting-modal>
+
         </div>
 
 <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
@@ -30,12 +33,13 @@
 <script>
 import MotionSelectButton from "./motions/motion-select-button";
 import MotionSelectArea from "./motions/motion-select-area";
+import EndVotingModal from "./motions/end-voting-modal";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MotionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "motions-card",
-    components: {MotionSelectArea, MotionSelectButton},
+    components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
     // mixins : [MotionMixin],
     computed: {
         motions: function () {

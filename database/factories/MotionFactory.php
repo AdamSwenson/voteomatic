@@ -91,4 +91,16 @@ class MotionFactory extends Factory
             ];
         });
     }
+
+
+    public function current()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_current' => true,
+            ];
+        });
+    }
+
+
 }

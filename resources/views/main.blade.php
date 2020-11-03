@@ -4,7 +4,6 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md">
-                {{--                <h1>[Assignment name] {{ $name }}</h1>--}}
             </div>
         </div>
 

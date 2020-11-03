@@ -1,31 +1,33 @@
 <template>
 
     <div class="voteomatic">
-<!--        <div class="card">-->
-<!--            <div class="card-title">-->
-                <router-tabs></router-tabs>
-<!--            </div>-->
+        <!--        <div class="card">-->
+        <!--            <div class="card-title">-->
+        <router-tabs></router-tabs>
+        <!--            </div>-->
 
-<!--            <div class="card-body">-->
-                <!--                <div class="content">-->
+        <!--            <div class="card-body">-->
+        <!--                <div class="content">-->
 
-                <router-view name="main"></router-view>
+        <router-view name="main"></router-view>
 
-                <!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
-<!--        <div class="card-footer">-->
-            <div class="text-center refresh-area">
-                <refresh-button></refresh-button>
-<!--            </div>-->
+        <!--        <div class="card-footer">-->
+        <div class="text-center refresh-area">
+            <refresh-button></refresh-button>
+            <!--            </div>-->
+
 
         </div>
 
+        <chair-indicator></chair-indicator>
 
-        <svg class="bi" width="32" height="32" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#heart-fill"/>
-        </svg>
+        <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
+        <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
+        <!--        </svg>-->
     </div>
 
 </template>
@@ -38,10 +40,11 @@ import Motion from '../models/Motion';
 import MeetingMixin from './storeMixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
 import RefreshButton from "./controls/refresh-button";
+import ChairIndicator from "./text-display/chair-indicator";
 
 export default {
     name: "voteomatic",
-    components: {RefreshButton, RouterTabs, VotePage},
+    components: {ChairIndicator, RefreshButton, RouterTabs, VotePage},
 
     mixins: [MeetingMixin],
 
@@ -83,7 +86,7 @@ export default {
 </script>
 
 <style scoped>
-.refresh-area{
+.refresh-area {
     margin-top: 2em;
 }
 </style>

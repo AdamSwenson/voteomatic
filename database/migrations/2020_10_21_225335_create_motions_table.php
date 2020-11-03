@@ -29,6 +29,9 @@ class CreateMotionsTable extends Migration
             /** Whether the motion has been voted upon  */
             $table->boolean('is_complete')->default(false);
 
+            /** Whether this motion is the one pending before the body */
+            $table->boolean('is_current')->default(false);
+
             $table->integer('meeting_id')->nullable();
 
 

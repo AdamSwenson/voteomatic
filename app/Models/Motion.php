@@ -9,9 +9,16 @@ class Motion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'description', 'is_complete', 'requires', 'meeting_id', 'type'];
+    protected $fillable = [
+        'content',
+        'description',
+        'is_complete',
+        'is_current',
+        'meeting_id',
+        'requires',
+        'type'];
 
-    protected $casts = ['is_complete' => 'boolean'];
+    protected $casts = ['is_complete' => 'boolean', 'is_current' => 'boolean'];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
 

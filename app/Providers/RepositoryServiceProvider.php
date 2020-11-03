@@ -7,7 +7,9 @@ use App\Repositories\Assignment\IAssignmentRepository;
 use App\Repositories\Assignment\IReviewAssignmentRepository;
 use App\Repositories\Assignment\ReviewAssignmentRepository;
 use App\Repositories\Exam\IExamRepository;
+use App\Repositories\IMotionStackRepository;
 use App\Repositories\IVoterEligibilityRepository;
+use App\Repositories\MotionStackRepository;
 use App\Repositories\VoterEligibilityRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,7 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
 
         $this->app->bind(IVoterEligibilityRepository::class, VoterEligibilityRepository::class);
-
+$this->app->bind(IMotionStackRepository::class, MotionStackRepository::class);
 
 //        $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
 
