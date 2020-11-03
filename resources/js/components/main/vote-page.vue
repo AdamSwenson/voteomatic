@@ -7,10 +7,12 @@
 
             <div class="vote-area card-body">
 
+                <div class="text-center">
                 <motion-content
                     :motion="motion"
                     :isReady="isReady"
                 ></motion-content>
+                </div>
 
                 <vote-receipt
                     :receipt="receipt"

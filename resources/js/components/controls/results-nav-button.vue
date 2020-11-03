@@ -1,14 +1,15 @@
+
 <template>
 
-    <button class="btn btn-warning btn-lg btn-block"
+    <button class="btn btn-info btn-lg btn-block"
             v-on:click="handleClick"
-    >Vote</button>
+    >Results</button>
 
 </template>
 
 <script>
 export default {
-    name: "vote-nav-button",
+    name: "results-nav-button",
 
     props: ['motion'],
 
@@ -22,7 +23,7 @@ export default {
 
     methods: {
         handleClick: function () {
-this.$router.push('vote');
+            this.$router.push('results');
         }
 
     }

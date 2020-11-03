@@ -51,11 +51,11 @@ export default {
     asyncComputed: {
 
         styling: function () {
-            let style = "btn btn-danger ";
+            let style = "btn btn-danger btn-lg   btn-block";
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return style;
 
             if (this.isComplete) {
-                style = 'btn btn-danger disabled';
+                style = 'btn btn-danger btn-block disabled';
             }
             return style;
         },

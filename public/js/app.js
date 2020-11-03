@@ -2010,6 +2010,41 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "results-nav-button",
+  props: ['motion'],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      this.$router.push('results');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/vote-nav-button.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/vote-nav-button.vue?vue&type=script&lang=js& ***!
@@ -2605,6 +2640,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../text-display/vote-receipt */ "./resources/js/components/text-display/vote-receipt.vue");
 /* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
 /* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
 //
 //
 //
@@ -3264,11 +3301,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ['motion'],
   asyncComputed: {
     styling: function styling() {
-      var style = "btn btn-danger ";
+      var style = "btn btn-danger btn-lg   btn-block";
       if (_.isUndefined(this.motion) || _.isNull(this.motion)) return style;
 
       if (this.isComplete) {
-        style = 'btn btn-danger disabled';
+        style = 'btn btn-danger btn-block disabled';
       }
 
       return style;
@@ -3371,6 +3408,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _text_display_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../text-display/motion-status-badge */ "./resources/js/components/text-display/motion-status-badge.vue");
 /* harmony import */ var _controls_vote_nav_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../controls/vote-nav-button */ "./resources/js/components/controls/vote-nav-button.vue");
+/* harmony import */ var _controls_results_nav_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../controls/results-nav-button */ "./resources/js/components/controls/results-nav-button.vue");
 //
 //
 //
@@ -3397,6 +3435,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3405,6 +3459,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-select-area",
   components: {
+    ResultsNavButton: _controls_results_nav_button__WEBPACK_IMPORTED_MODULE_5__["default"],
     VoteNavButton: _controls_vote_nav_button__WEBPACK_IMPORTED_MODULE_4__["default"],
     MotionStatusBadge: _text_display_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__["default"],
     MotionSelectButton: _motion_select_button__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -3549,8 +3604,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['motion'],
   computed: {
     styling: function styling() {
-      if (this.isSelected) return 'btn btn-primary';
-      return 'btn btn-outline-primary';
+      if (this.isSelected) return 'btn btn-primary btn-lg btn-block';
+      return 'btn btn-outline-primary btn-lg  btn-block';
     }
   },
   asyncComputed: {
@@ -4010,6 +4065,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controls_nay_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls/nay-button */ "./resources/js/components/controls/nay-button.vue");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
 //
 //
 //
@@ -43085,7 +43142,7 @@ var render = function() {
   return _c(
     "button",
     {
-      staticClass: "btn btn-danger btn-lg",
+      staticClass: "btn btn-danger btn-lg btn-block",
       attrs: { type: "button" },
       on: { click: _vm.handleClick }
     },
@@ -43131,6 +43188,37 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-info btn-lg btn-block",
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v("Results")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/vote-nav-button.vue?vue&type=template&id=5e3de65e&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/controls/vote-nav-button.vue?vue&type=template&id=5e3de65e&scoped=true& ***!
@@ -43148,7 +43236,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "button",
-    { staticClass: "btn btn-primary", on: { click: _vm.handleClick } },
+    {
+      staticClass: "btn btn-warning btn-lg btn-block",
+      on: { click: _vm.handleClick }
+    },
     [_vm._v("Vote")]
   )
 }
@@ -43177,7 +43268,7 @@ var render = function() {
   return _c(
     "button",
     {
-      staticClass: "btn btn-success btn-lg",
+      staticClass: "btn btn-success btn-lg btn-block",
       attrs: { type: "button" },
       on: { click: _vm.handleClick }
     },
@@ -43678,9 +43769,16 @@ var render = function() {
       "div",
       { staticClass: "vote-area card-body" },
       [
-        _c("motion-content", {
-          attrs: { motion: _vm.motion, isReady: _vm.isReady }
-        }),
+        _c(
+          "div",
+          { staticClass: "text-center" },
+          [
+            _c("motion-content", {
+              attrs: { motion: _vm.motion, isReady: _vm.isReady }
+            })
+          ],
+          1
+        ),
         _vm._v(" "),
         _vm.vote
           ? _c("vote-receipt", { attrs: { receipt: _vm.receipt } })
@@ -44173,30 +44271,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "li",
-    { staticClass: "list-group-item ", class: _vm.styling },
-    [
-      _vm.isChair
-        ? _c("motion-select-button", { attrs: { motion: _vm.motion } })
-        : _vm._e(),
+  return _c("li", { staticClass: "list-group-item ", class: _vm.styling }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm" },
+        [
+          _vm.isChair && !_vm.isSelected
+            ? _c("motion-select-button", { attrs: { motion: _vm.motion } })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isSelected && !_vm.isComplete && !_vm.hasVotedOnCurrentMotion
+            ? _c("vote-nav-button", { attrs: { motion: _vm.motion } })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
-      _vm.isSelected && !_vm.isComplete && !_vm.hasVotedOnCurrentMotion
-        ? _c("vote-nav-button", { attrs: { motion: _vm.motion } })
-        : _vm._e(),
+      _c(
+        "div",
+        { staticClass: "col" },
+        [
+          _c("span", { class: _vm.motionStyle }, [
+            _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
+          ]),
+          _vm._v(" "),
+          _c("motion-status-badge", { attrs: { "is-passed": _vm.isPassed } })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("span", { class: _vm.motionStyle }, [
-        _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
-      ]),
-      _vm._v(" "),
-      _c("motion-status-badge", { attrs: { "is-passed": _vm.isPassed } }),
-      _vm._v(" "),
-      _vm.isSelected && !_vm.isComplete && _vm.isChair
-        ? _c("end-voting-button", { attrs: { motion: _vm.motion } })
-        : _vm._e()
-    ],
-    1
-  )
+      _c(
+        "div",
+        { staticClass: "col-sm" },
+        [
+          _vm.isSelected && !_vm.isComplete && _vm.isChair
+            ? _c("end-voting-button", { attrs: { motion: _vm.motion } })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isSelected && _vm.isComplete
+            ? _c("results-nav-button", { attrs: { motion: _vm.motion } })
+            : _vm._e()
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -44574,15 +44694,17 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col text-right" },
-        [_c("yay-button", { on: { "yay-clicked": _vm.handleYay } })],
+        { staticClass: "col" },
+        [_c("nay-button", { on: { "nay-clicked": _vm.handleNay } })],
         1
       ),
       _vm._v(" "),
+      _c("div", { staticClass: "col" }),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col text-left" },
-        [_c("nay-button", { on: { "nay-clicked": _vm.handleNay } })],
+        { staticClass: "col" },
+        [_c("yay-button", { on: { "yay-clicked": _vm.handleYay } })],
         1
       )
     ])
@@ -61469,6 +61591,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_refresh_button_vue_vue_type_template_id_6082abe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/results-nav-button.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/controls/results-nav-button.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true& */ "./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true&");
+/* harmony import */ var _results_nav_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./results-nav-button.vue?vue&type=script&lang=js& */ "./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _results_nav_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "b3ac875e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/controls/results-nav-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_nav_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-nav-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/results-nav-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_nav_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/controls/results-nav-button.vue?vue&type=template&id=b3ac875e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_nav_button_vue_vue_type_template_id_b3ac875e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

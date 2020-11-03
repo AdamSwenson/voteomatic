@@ -2,25 +2,40 @@
 
     <li class="list-group-item "
         v-bind:class="styling">
+        <div class="row">
+            <div class="col-sm">
+                <motion-select-button
+                    v-if="isChair && ! isSelected"
+                    :motion="motion"
+                ></motion-select-button>
 
-        <motion-select-button
-        v-if="isChair"
-            :motion="motion"
-        ></motion-select-button>
+                <vote-nav-button
+                    :motion="motion"
+                    v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
+                ></vote-nav-button>
+            </div>
 
-        <vote-nav-button
-            :motion="motion"
-            v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
-        ></vote-nav-button>
+            <div class="col">
 
-        <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+                <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
-        <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+                <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+            </div>
+            <div class="col-sm">
 
-        <end-voting-button
-            v-if="isSelected && ! isComplete && isChair"
-            :motion="motion"
-        ></end-voting-button>
+                <end-voting-button
+                    v-if="isSelected && ! isComplete && isChair"
+                    :motion="motion"
+                ></end-voting-button>
+
+                <results-nav-button
+                    v-if="isSelected && isComplete"
+                    :motion="motion"
+                ></results-nav-button>
+
+
+            </div>
+        </div>
     </li>
 </template>
 
@@ -30,18 +45,19 @@ import EndVotingButton from "./end-voting-button";
 import * as routes from "../../../routes";
 import MotionStatusBadge from "../../text-display/motion-status-badge";
 import VoteNavButton from "../../controls/vote-nav-button";
+import ResultsNavButton from "../../controls/results-nav-button";
 
 export default {
     name: "motion-select-area",
-    components: {VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton},
+    components: {ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton},
     props: ['motion'],
 
     asyncComputed: {
-        hasVotedOnCurrentMotion : function(){
-          return this.$store.getters.hasVotedOnCurrentMotion;
+        hasVotedOnCurrentMotion: function () {
+            return this.$store.getters.hasVotedOnCurrentMotion;
         },
 
-        isChair : function(){
+        isChair: function () {
             return this.$store.getters.getIsAdmin;
         },
 

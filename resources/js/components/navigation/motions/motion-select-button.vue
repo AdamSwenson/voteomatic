@@ -24,9 +24,9 @@ export default {
 
     computed: {
         styling: function () {
-            if (this.isSelected) return 'btn btn-primary'
+            if (this.isSelected) return 'btn btn-primary btn-lg btn-block'
 
-            return 'btn btn-outline-primary'
+            return 'btn btn-outline-primary btn-lg  btn-block'
         },
 
 
