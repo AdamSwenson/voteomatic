@@ -32,13 +32,13 @@ const mutations = {
     addMotionToStore: (state, motionObject) => {
         //todo double check that there is no reason to have duplicates or raise an error
         let mi = -1;
-        _.forEach(state.motions, function(m) {
-            if(m.id === motionObject.id){
+        _.forEach(state.motions, function (m) {
+            if (m.id === motionObject.id) {
                 mi = 1;
             }
         });
 
-        if(mi === -1) {
+        if (mi === -1) {
             state.motions.push(motionObject);
         }
 
@@ -72,7 +72,7 @@ const mutations = {
      */
     addVotedUponMotion: (state, motionId) => {
         //todo double check that there is no reason to have duplicates or raise an error
-        if(! state.motionIdsUserHasVotedUpon.includes(motionId)){
+        if (!state.motionIdsUserHasVotedUpon.includes(motionId)) {
             state.motionIdsUserHasVotedUpon.push(motionId);
         }
     },
@@ -83,7 +83,7 @@ const mutations = {
      * @param prop
      * @param val
      */
-    setMotionProp : (state, {updateProp, updateVal}) => {
+    setMotionProp: (state, {updateProp, updateVal}) => {
         Vue.set(state.currentMotion, updateProp, updateVal);
     },
 
@@ -105,7 +105,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource();
-            let p = {'meetingId' : meetingId};
+            let p = {'meetingId': meetingId};
             window.console.log('sending', p);
             return Vue.axios.post(url, p)
                 .then((response) => {
@@ -115,7 +115,7 @@ const actions = {
                     // let motion = new Motion(d.id, d.name, d.date);
                     commit('addMotionToStore', motion);
                     commit('setMotion', motion);
-                    resolve()
+                    return resolve(motion)
                 });
         }));
 
@@ -133,7 +133,7 @@ const actions = {
                     //todo this means that the motion must be selected in order to end voting. That probably makes sense...
                     commit('setMotion', motion);
 
-                    let pl = Payload.factory({object : motion, updateProp: 'isComplete', updateVal: d.is_complete});
+                    let pl = Payload.factory({object: motion, updateProp: 'isComplete', updateVal: d.is_complete});
 
                     //we leave it as the currently set motion so that
                     //the results tab will provide results for the
@@ -198,8 +198,8 @@ const actions = {
 
                     // todo should we clear the store first? Can the list contain motions with duplicate ids?
                     // todo
-                    let motion = new Motion(d);
-                    commit('addVotedUponMotion', d);
+                    // let motion = new Motion(d);
+                    commit('addVotedUponMotion', d.id);
                 });
             });
         }));
@@ -215,7 +215,7 @@ const actions = {
                         let motion = new Motion(d);
                         // let motion = new Motion(d.id, d.name, d.date);
                         commit('addMotionToStore', motion);
-                        if(d.is_current){
+                        if (d.is_current) {
                             commit('setMotion', motion)
                         }
                     });
@@ -269,26 +269,26 @@ const actions = {
 
 const getters = {
 
-        /**
-         * Returns the currently set motion object.
-         * This will be the motion that is currently being voted on,
-         * edited, or whose results are being displayed.
-         * @param state
-         * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
-         */
-        getActiveMotion: (state) => {
-            return state.currentMotion;
-        },
+    /**
+     * Returns the currently set motion object.
+     * This will be the motion that is currently being voted on,
+     * edited, or whose results are being displayed.
+     * @param state
+     * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
+     */
+    getActiveMotion: (state) => {
+        return state.currentMotion;
+    },
 
-        getMotionById: (state, id) => (id) => {
-            // return function ( state, id ) {
-            let r = state.motions.filter(function (i) {
-                if (i.id === id) {
-                    return i;
-                }
-            });
-            return r[0];
-        },
+    getMotionById: (state, id) => (id) => {
+        // return function ( state, id ) {
+        let r = state.motions.filter(function (i) {
+            if (i.id === id) {
+                return i;
+            }
+        });
+        return r[0];
+    },
     // }( state, id )
 
     /**
@@ -324,9 +324,85 @@ const getters = {
      * currently active
      * @param state
      */
-    hasVotedOnCurrentMotion : (state) => {
+    hasVotedOnCurrentMotion: (state) => {
 
         return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
+    },
+
+
+    /**
+     * Not actually a getter from state; doing this way to keep
+     * the definitions centrally. Returns the
+     * dict with all the properties of the standard motion
+     * templates.
+     * @param state
+     */
+    getStandardMotionDefinitions: (state) => {
+        return [
+            {
+                name: 'Adjourn',
+                content: "That the meeting be adjourned.",
+                description: "Meeting comes to an end.",
+                requires: 0.5
+            },
+
+
+            {
+                name: 'Committee of the Whole',
+                content: "That the body convene as a committee of the whole Chaired by the Chair",
+                description: "The formal deliberative process is suspended. The body" +
+                    "may work informally on an issue. No votes taken while in the committee of the whole" +
+                    "are binding on the main body. To communicate from the committee of the whole, the committee " +
+                    "of the whole should vote to Rise and Report",
+                requires: 0.5
+            },
+
+            {
+                name: 'Previous Question (Call the Question)',
+                content: "That the question is called",
+                description: "If approved, all debate ends on the pending motion and " +
+                    "the body moves immediately to a vote on the pending motion. If fails," +
+                    "debate continues on the pending motion",
+                requires: 0.66
+            },
+            {
+                name: 'Place on the Table',
+                content: "The pending motion is placed on the table",
+                description: "All action on the motion is paused so the body can attend to " +
+                    "other business. There is no scheduled time to resume action. Action " +
+                    "will resume upon a majority vote to Take from the Table. That motion may" +
+                    "be made whenever no main motion is pending",
+                requires: 0.5
+            },
+
+
+            {
+                name: 'Recess',
+                content: "That the body recess.",
+                description: "We take a break. This can be qualified to " +
+                    "say how long. The how long part is amendable.",
+                requires: 0.5
+            },
+
+            {
+                name: 'Reconsider (with notice)',
+                content: "That the body reconsider the motion that ",
+                description: "",
+                requires: 0.5
+            },
+
+            {
+                name: 'Reconsider (without notice)',
+                content: "That the body reconsider the motion that ",
+                description: "",
+                requires: 0.66
+            },
+
+
+
+        ]
+
+
     }
 };
 

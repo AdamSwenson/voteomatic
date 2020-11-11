@@ -16,6 +16,8 @@ class Controller extends BaseController
 
     const DEV_NON_CHAIR_USER_ID = 2;
 
+    const USE_CHAIR  = false;
+
 
     public function getUser()
     {
@@ -26,7 +28,12 @@ class Controller extends BaseController
         if ($env != 'production' && $env != 'testing') {
             //this is here in case I am dumb. it is not an excuse to be dumb
             //and fail to remove before production.
-            Auth::loginUsingId(self::DEV_USER_ID, true);
+            if(self::USE_CHAIR){
+                Auth::loginUsingId(self::DEV_USER_ID, true);
+
+            }else{
+                Auth::loginUsingId(self::DEV_NON_CHAIR_USER_ID, true);
+            }
 
         } else {
 

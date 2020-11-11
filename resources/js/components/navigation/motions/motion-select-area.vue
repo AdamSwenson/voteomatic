@@ -4,24 +4,28 @@
         v-bind:class="styling">
         <div class="row">
             <div class="col-sm">
+<!--                v-if="isChair && ! isSelected "-->
+<!---->
                 <motion-select-button
-                    v-if="isChair && ! isSelected"
+                    v-if="isChair  "
                     :motion="motion"
                 ></motion-select-button>
 
-                <vote-nav-button
-                    :motion="motion"
-                    v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
-                ></vote-nav-button>
             </div>
 
-            <div class="col">
+            <div class="col ">
 
                 <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
                 <motion-status-badge :is-passed="isPassed"></motion-status-badge>
             </div>
+
             <div class="col-sm">
+
+                <vote-nav-button
+                    :motion="motion"
+                    v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
+                ></vote-nav-button>
 
                 <end-voting-button
                     v-if="isSelected && ! isComplete && isChair"
@@ -76,15 +80,9 @@ export default {
 
         styling: {
             get: function () {
-                // if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ''
-                //
-                // if (this.isPassed) {
-                //     return 'bg-success';
-                // }
-                //
-                // if (!this.isPassed) {
-                //     return 'bg-danger'
-                // }
+                if(this.isSelected){
+                    return ' bg-info '
+                }
 
             },
             default: ''
@@ -159,7 +157,7 @@ export default {
                 return 'text-muted';
             }
             if (this.isSelected) {
-                return 'lead'
+                return 'lead font-weight-bold';
             }
         }
 

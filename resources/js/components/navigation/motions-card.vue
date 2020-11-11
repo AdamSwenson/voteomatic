@@ -22,9 +22,9 @@
 
         </div>
 
-<!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
-<!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
-<!--        </svg>-->
+        <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
+        <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
+        <!--        </svg>-->
     </div>
 
 
@@ -41,10 +41,16 @@ export default {
     name: "motions-card",
     components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
     // mixins : [MotionMixin],
-    computed: {
+
+    asyncComputed: {
         motions: function () {
             let m = this.$store.getters.getStoredMotions;
             if (_.isUndefined(m)) return [];
+
+            //Display them in FILO order
+            m = _.sortBy(m, ['id']);
+            m = _.reverse(m);
+
             return m;
         }
         // default: []

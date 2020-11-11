@@ -1,7 +1,7 @@
 
 <template>
 
-    <button class="btn btn-info btn-lg btn-block"
+    <button class="btn btn-warning btn-lg btn-block"
             v-on:click="handleClick"
     >Results</button>
 
