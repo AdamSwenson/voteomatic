@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\EntryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LTILaunchController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
@@ -42,15 +44,15 @@ Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 Auth::routes();
 
 // LTI access endpoint
-Route::post('/entry-test', [\App\Http\Controllers\LTILaunchController::class, 'handleLaunchRequest'])
+Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 
-Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
-Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
+Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
+Route::get('/entry-test', [EntryController::class, 'loginTest']);
 //Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 
-Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
+Route::get('/lticonfig', [EntryController::class, 'lticonfig']);
 
 
 // Index pages
@@ -123,3 +125,7 @@ Route::get('results/{motion}', [ResultsController::class, 'getResults']);
 
 
 
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia\Inertia::render('Dashboard');
+})->name('dashboard');

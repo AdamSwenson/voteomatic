@@ -55,6 +55,8 @@ class LTILaunchController extends Controller
     public function handleLaunchRequest(LTIRequest $request)
     {
         $j = $request->all();
+
+        //todo dev ONCE FULLY WORKING THIS SHOULD BE REMOVED IN PRODUCTION
         Log::debug($request);
 
         //Check if the activity is enabled and reject access if not
