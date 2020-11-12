@@ -70,7 +70,7 @@ Route::get('/home', [HomeController::class, 'index'])
 
 //main page where votes get cast
 //todo should probably rename all this since it's basically the application
-Route::get('voter-page/{motion}', [VotePageController::class, 'getVotePage'])
+Route::get('main/{motion}', [VotePageController::class, 'getVotePage'])
     ->name('main');
 
 
