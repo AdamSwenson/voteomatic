@@ -33,8 +33,7 @@ const actions = {
                             //get motions which have already been handled
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
-
-                                resolve();
+                                return resolve();
 
                             });
 

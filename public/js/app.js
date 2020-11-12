@@ -4653,10 +4653,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var me = this; //parse data from page and store stuff
 
-    this.$store.dispatch('initialize').then(function () {
+    var p = this.$store.dispatch('initialize');
+    p.then(function () {
       me.$router.push('meeting-home');
       window.console.log('voteomatic', 'isReady', 159, me.isReady);
     });
+    me.$router.push('meeting-home');
   }
 });
 
@@ -66248,7 +66250,7 @@ var actions = {
             dispatch('loadMotionsForMeeting', meeting.id).then(function () {
               //get motions which have already been handled
               dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
-                resolve();
+                return resolve();
               });
             });
           });

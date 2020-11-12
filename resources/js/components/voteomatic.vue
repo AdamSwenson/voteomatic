@@ -73,11 +73,14 @@ export default {
     mounted: function () {
         let me = this;
         //parse data from page and store stuff
-        this.$store.dispatch('initialize').then(function () {
+        let p = this.$store.dispatch('initialize');
+        p.then(function () {
             me.$router.push('meeting-home');
 
             window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });
+
+        me.$router.push('meeting-home');
 
     }
 
