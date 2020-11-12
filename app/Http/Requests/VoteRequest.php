@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class VoteRequest extends FormRequest
 {
@@ -14,6 +15,8 @@ class VoteRequest extends FormRequest
     public function authorize()
     {
         //todo set up authorization to vote
+        return Auth::check();
+
         return true;
     }
 

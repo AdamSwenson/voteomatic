@@ -56,10 +56,8 @@ Route::get('/lticonfig', [LTIConfigController::class, 'lticonfig']);
 
 // Index pages
 Route::get('/', [HomeController::class, 'index']);
-
 Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
     ->name('meetingHome');
-
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
 

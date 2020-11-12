@@ -132,8 +132,7 @@ class MotionController extends Controller
      * @param Motion $motion
      * @return Response
      */
-    public
-    function update(MotionRequest $request, Motion $motion)
+    public function update(MotionRequest $request, Motion $motion)
     {
 
         //this is necessary because the request object has

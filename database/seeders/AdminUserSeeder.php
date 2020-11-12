@@ -20,15 +20,15 @@ class AdminUserSeeder extends Seeder
                 'first_name' => 'Admin',
                 'last_name' => 'User',
                 'email' => env('DEV_ADMIN_EMAIL'),
-                'password' => env('DEV_ADMIN_PASS')
+                'password' => env('DEV_ADMIN_PASS'),
+                'is_admin' => true
                 ];
 
             User::create($props);
 
-
         }catch(Exception $e){
             Log::error($e);
         }
-        //
+
     }
 }

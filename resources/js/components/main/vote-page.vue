@@ -38,8 +38,9 @@
 
                 <div
                     class="text-center"
-                    v-else>
-                    <p>You have already voted</p>
+                    v-else
+                >
+                    <p>Your vote could not be recorded because you have already voted</p>
                 </div>
             </div>
 
@@ -139,10 +140,12 @@ export default {
                 return Vue.axios.post(url, data)
                     .then((response) => {
                         console.log(response.data);
-                        me.vote = new Vote(response.data.isYay, response.data.receipt);
+                        me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
                         me.voteRecorded = true;
                         me.showButtons = false;
                         //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+
+                        me.$store.commit('addVotedUponMotion', me.motion.id);
                         resolve();
                     })
                     .catch(function (error) {

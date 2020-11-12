@@ -6,10 +6,11 @@ export default class Vote extends IModel {
      * Create a new motion
      * @param params
      */
-    constructor(isYay, receipt) {
+    constructor(isYay, receipt, id=null) {
         super();
         this.isYay = isYay;
         this.receipt = receipt;
+        this.id = id;
 
     }
 

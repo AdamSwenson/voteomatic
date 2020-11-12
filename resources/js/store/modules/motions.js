@@ -304,17 +304,29 @@ const getters = {
 
     getMotionsUserVotedUpon: (state) => {
         let out = [];
-        _.forEach(state.motionIdsUserHasVotedUpon, (motion) => {
-            out.push(motion.id);
+        _.forEach(state.motionIdsUserHasVotedUpon, (motionId) => {
+            let r = state.motions.filter(function (i) {
+                if (i.id === motionId) {
+                    return i;
+                }
+            });
+            out.push(r[0]);
         })
         return out;
-        return state.motionIdsUserHasVotedUpon;
+        //
+        // let r = state.motions.filter(function (i) {
+        //     if (i.id === id) {
+        //         return i;
+        //     }
+        // });
+        // return r[0];
+        // return state.motionIdsUserHasVotedUpon;
     },
 
     getMotionIdsUserVotedUpon: (state) => {
         let out = [];
-        _.forEach(state.motionIdsUserHasVotedUpon, (motion) => {
-            out.push(motion.id);
+        _.forEach(state.motionIdsUserHasVotedUpon, (mid) => {
+            out.push(mid);
         })
         return out;
     },

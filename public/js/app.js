@@ -3105,6 +3105,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3174,10 +3175,11 @@ __webpack_require__.r(__webpack_exports__);
         var me = _this;
         return Vue.axios.post(url, data).then(function (response) {
           console.log(response.data);
-          me.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.isYay, response.data.receipt);
+          me.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.isYay, response.data.receipt, response.data.id);
           me.voteRecorded = true;
           me.showButtons = false; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
 
+          me.$store.commit('addVotedUponMotion', me.motion.id);
           resolve();
         })["catch"](function (error) {
           // error handling
@@ -44491,7 +44493,11 @@ var render = function() {
               on: { "yay-clicked": _vm.handleYay, "nay-clicked": _vm.handleNay }
             })
           : _c("div", { staticClass: "text-center" }, [
-              _c("p", [_vm._v("You have already voted")])
+              _c("p", [
+                _vm._v(
+                  "Your vote could not be recorded because you have already voted"
+                )
+              ])
             ])
       ],
       1
@@ -65163,11 +65169,14 @@ var Vote = /*#__PURE__*/function (_IModel) {
   function Vote(isYay, receipt) {
     var _this;
 
+    var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
     _classCallCheck(this, Vote);
 
     _this = _super.call(this);
     _this.isYay = isYay;
     _this.receipt = receipt;
+    _this.id = id;
     return _this;
   }
 
@@ -66013,18 +66022,29 @@ var getters = {
   getMotionsUserVotedUpon: function getMotionsUserVotedUpon(state) {
     var out = [];
 
-    _.forEach(state.motionIdsUserHasVotedUpon, function (motion) {
-      out.push(motion.id);
+    _.forEach(state.motionIdsUserHasVotedUpon, function (motionId) {
+      var r = state.motions.filter(function (i) {
+        if (i.id === motionId) {
+          return i;
+        }
+      });
+      out.push(r[0]);
     });
 
-    return out;
-    return state.motionIdsUserHasVotedUpon;
+    return out; //
+    // let r = state.motions.filter(function (i) {
+    //     if (i.id === id) {
+    //         return i;
+    //     }
+    // });
+    // return r[0];
+    // return state.motionIdsUserHasVotedUpon;
   },
   getMotionIdsUserVotedUpon: function getMotionIdsUserVotedUpon(state) {
     var out = [];
 
-    _.forEach(state.motionIdsUserHasVotedUpon, function (motion) {
-      out.push(motion.id);
+    _.forEach(state.motionIdsUserHasVotedUpon, function (mid) {
+      out.push(mid);
     });
 
     return out;
