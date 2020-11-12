@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LTI\LTIConfigController;
+use App\Http\Controllers\LTI\LTILaunchController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
@@ -30,11 +33,13 @@ use Illuminate\Support\Facades\Route;
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
    ============================= */
-Route::get('/dev/testlog', '\App\Http\Controllers\EntryController@logreturn');
+Route::get('/dev/testlog', [EntryController::class, 'logreturn']);
 Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
 //can't test with dev/ since that messes up route root for resource urls
 Route::get('/dev-test-setup', [SetupController::class, 'devView']);
-
+Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
+Route::get('/entry-test', [EntryController::class, 'loginTest']);
+//Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 
 /* =============================
         Login, LTI authentication, and other admin
@@ -42,21 +47,15 @@ Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 Auth::routes();
 
 // LTI access endpoint
-Route::post('/entry-test', [\App\Http\Controllers\LTILaunchController::class, 'handleLaunchRequest'])
+Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
-
-Route::get('/entry/{motion}', '\App\Http\Controllers\EntryController@handleLogin');
-Route::get('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
-//Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
-
-Route::get('/lticonfig', '\App\Http\Controllers\EntryController@lticonfig');
+//unused
+Route::get('/lticonfig', [LTIConfigController::class, 'lticonfig']);
 
 
 // Index pages
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
     ->name('meetingHome');

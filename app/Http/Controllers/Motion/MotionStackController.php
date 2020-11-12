@@ -24,7 +24,7 @@ class MotionStackController extends Controller
     public function __construct()
     {
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
+//        $this->getUser();
 
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
 
@@ -33,6 +33,7 @@ class MotionStackController extends Controller
 
     public function markMotionComplete(Motion $motion)
     {
+
         $motion->is_complete = true;
         $motion->save();
 

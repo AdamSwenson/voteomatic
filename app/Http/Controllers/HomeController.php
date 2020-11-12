@@ -16,10 +16,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
 
 
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
+//        $this->getUser();
 
     }
 
@@ -30,6 +31,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->getUser();
+//        $this->user = Auth::user();
+
 
         return view('home', ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
     }

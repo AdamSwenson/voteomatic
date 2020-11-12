@@ -14,7 +14,7 @@ class MeetingController extends Controller
     {
 
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
+//        $this->getUser();
  }
 
 
@@ -25,6 +25,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
+        $this->getUser();
         $meetings = $this->user->meetings()->get();
         return response()->json($meetings);
     }
@@ -47,6 +48,8 @@ class MeetingController extends Controller
      */
     public function store(MeetingRequest $request)
     {
+        $this->getUser();
+
         //Since we are creating the meeting without
         //the fields filled in, we may have blank meetings
         //in the database. Thus we will try to reuse an existing empty

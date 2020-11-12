@@ -45,9 +45,6 @@ class RecordVoteController extends Controller
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');
 
-        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
-
     }
 
 
@@ -62,6 +59,8 @@ class RecordVoteController extends Controller
     public function recordVote(Motion $motion, VoteRequest $request){
 
         try {
+            $this->getUser();
+
             //This is already handled by the middleware. It probably should eventually be
             //removed once there's no chance the middleware will accidentally get turned off.
             //We need to be extra careful since there can't be a unique index protecting the

@@ -20,18 +20,20 @@ use Illuminate\Support\Facades\Auth;
 class VotePageController extends Controller
 {
 
-    public function __construct()
-    {
-
-
-        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
-
-
-    }
+//    public function __construct()
+//    {
+//
+//
+//        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
+//        $this->getUser();
+//
+//
+//    }
 
     public function getVotePage(Motion $motion)
     {
+        $this->getUser();
+
         $data = [
 
             'data' => [

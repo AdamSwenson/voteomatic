@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dev;
 
 use App\Models\Motion;
 use Illuminate\Http\Request;
@@ -21,17 +21,17 @@ class EntryController extends Controller
         Log::debug($request);
         return view('entry', ['data' => $request]);
     }
-
-    public function lticonfig(Request $request)
-    {
-        Log::debug($request->all());
-
-        return response(file_get_contents(resource_path('lticonfig.xml')), 200, [
-            'Content-Type' => 'application/xml'
-        ]);
-
-//        return view('lticonfig');
-    }
+//
+//    public function lticonfig(Request $request)
+//    {
+//        Log::debug($request->all());
+//
+//        return response(file_get_contents(resource_path('lticonfig.xml')), 200, [
+//            'Content-Type' => 'application/xml'
+//        ]);
+//
+////        return view('lticonfig');
+//    }
 
     //todo SUPER DEV. REMOVE!!!!!!!!!!!!!!!!!!!
     public function logreturn(){

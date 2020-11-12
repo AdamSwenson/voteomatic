@@ -8,7 +8,7 @@ class VoteController extends Controller
 {
     public function __construct(){
         // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-        $this->getUser();
+//        $this->getUser();
 
     }
 
