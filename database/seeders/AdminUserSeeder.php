@@ -24,7 +24,7 @@ class AdminUserSeeder extends Seeder
 
             User::create($props);
 
-            
+
         }catch(Exception $e){
             Log::error($e);
         }
