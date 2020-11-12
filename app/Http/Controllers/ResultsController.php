@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Response;
 class ResultsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function devView(Motion $motion){
         return view('dev.dev-results', ['data' => ['motion' => $motion]]);
     }

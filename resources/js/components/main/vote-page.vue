@@ -40,7 +40,7 @@
                     class="text-center"
                     v-else
                 >
-                    <p>Your vote could not be recorded because you have already voted</p>
+                    <p>You have already voted</p>
                 </div>
             </div>
 

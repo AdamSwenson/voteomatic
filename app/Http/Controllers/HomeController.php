@@ -18,10 +18,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
 
-
-        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-//        $this->getUser();
-
     }
 
     /**

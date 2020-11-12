@@ -363,15 +363,16 @@ const getters = {
                 name: 'Committee of the Whole',
                 content: "That the body convene as a committee of the whole Chaired by the Chair",
                 description: "The formal deliberative process is suspended. The body" +
-                    "may work informally on an issue. No votes taken while in the committee of the whole" +
-                    "are binding on the main body. To communicate from the committee of the whole, the committee " +
+                    " may work informally on an issue. No votes taken while in the committee of the whole " +
+                    "are binding on the main body but they may be used to advise the main body on what to do. " +
+                    "To communicate from the committee of the whole, the committee " +
                     "of the whole should vote to Rise and Report",
                 requires: 0.5
             },
 
             {
                 name: 'Previous Question (Call the Question)',
-                content: "That the question is called",
+                content: "That the pending question is called",
                 description: "If approved, all debate ends on the pending motion and " +
                     "the body moves immediately to a vote on the pending motion. If fails," +
                     "debate continues on the pending motion",

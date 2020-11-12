@@ -12,10 +12,8 @@ class MeetingController extends Controller
 
     public function __construct()
     {
-
-        // TODO DEV ENSURE THE TEST HARNESS USER WAS REMOVED BEFORE ANY PRODUCTION USE
-//        $this->getUser();
- }
+        $this->middleware('auth');
+    }
 
 
     /**
@@ -59,10 +57,10 @@ class MeetingController extends Controller
             ->where('date', null)
             ->first();
 
-        if(! is_null($meeting)){
+        if (!is_null($meeting)) {
             $meeting->update($request->all());
             $meeting->save();
-        }else{
+        } else {
             $meeting = Meeting::create($request->all());
             $this->user->meetings()->attach($meeting);
             $this->user->save();
