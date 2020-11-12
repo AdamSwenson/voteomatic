@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LTI;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\AuthenticatorFactory;
 use App\LTI\Exceptions\LTIAuthenticationException;
