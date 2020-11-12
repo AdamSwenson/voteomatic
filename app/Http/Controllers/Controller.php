@@ -18,6 +18,7 @@ class Controller extends BaseController
 
     const USE_CHAIR  = false;
 
+    protected $user;
 
     public function __construct(){
         $this->middleware('auth');
