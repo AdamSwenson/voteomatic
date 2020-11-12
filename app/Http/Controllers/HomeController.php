@@ -31,7 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $this->getUser();
 //        $this->user = Auth::user();
 
 
@@ -40,6 +39,7 @@ class HomeController extends Controller
 
 
     public function meetingIndex(Meeting $meeting){
+        $this->getUser();
 
         $data = [
 
