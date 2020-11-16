@@ -17,9 +17,9 @@
 
 
 <script>
-import Payload from "../../../../models/Payload";
-import MeetingMixin from "../../../storeMixins/meetingMixin";
-import MotionMixin from "../../../storeMixins/motionMixin";
+import Payload from "../../../models/Payload";
+import MeetingMixin from "../../storeMixins/meetingMixin";
+import MotionMixin from "../../storeMixins/motionMixin";
 
 export default {
     name: "description-input",

@@ -7,10 +7,28 @@ import Payload from "../../models/Payload";
  */
 
 
+/**
+ * Returns the object stored in the array which
+ * has the provided id
+ *
+ * @param storageArray
+ * @param id
+ * @returns {*}
+ */
+function getById(storageArray, id){
+    // return function ( state, id ) {
+    let r = storageArray.filter(function (i) {
+        if (i.id === id) {
+            return i;
+        }
+    });
+    return r[0];
+}
+
 const state = {
 
     /**
-     * The motion being voted on,
+     * The id of the motion being voted on,
      * currently edited, or whose
      * results are being reported
      */
@@ -30,6 +48,7 @@ const state = {
 
 const mutations = {
     addMotionToStore: (state, motionObject) => {
+        window.console.log(motionObject);
         //todo double check that there is no reason to have duplicates or raise an error
         let mi = -1;
         _.forEach(state.motions, function (m) {
@@ -48,6 +67,15 @@ const mutations = {
 
     },
 
+    deleteMotion: (state, motionObject) => {
+        // let idx = state.motions.indexOf(motionObject);
+        // state.motions.pop(idx);
+        _.remove(state.motions, function (motion) {
+            return motion.id === motionObject.id;
+        });
+
+    },
+
     /**
      * Sets the provided motion object as
      * the currently active motion
@@ -56,7 +84,7 @@ const mutations = {
      * @param motionObject
      */
     setMotion: (state, motionObject) => {
-        Vue.set(state, 'currentMotion', motionObject);
+        Vue.set(state, 'currentMotion', motionObject.id);
     },
 
     /**
@@ -84,7 +112,12 @@ const mutations = {
      * @param val
      */
     setMotionProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.currentMotion, updateProp, updateVal);
+        // window.console.log(updateProp, updateVal);
+        let currentMotion = getById(state.motions, state.currentMotion);
+
+        Vue.set(currentMotion, updateProp, updateVal);
+
+        // Vue.set(state.currentMotion, updateProp, updateVal);
     },
 
 
@@ -102,6 +135,7 @@ const actions = {
      * @returns {Promise<unknown>}
      */
     createMotion({dispatch, commit, getters}, meetingId) {
+        let me = this;
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource();
@@ -114,8 +148,41 @@ const actions = {
                     let motion = new Motion(d);
                     // let motion = new Motion(d.id, d.name, d.date);
                     commit('addMotionToStore', motion);
-                    commit('setMotion', motion);
-                    return resolve(motion)
+
+                    let pl = {meetingId: meetingId, motionId: motion.id};
+
+                    return dispatch('setCurrentMotion', pl)
+                        .then(() => {
+                            return resolve(motion);
+                        });
+
+                    // commit('setMotion', motion);
+
+                });
+        }));
+
+    },
+
+    deleteMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.resource(motion.id);
+            return Vue.axios.delete(url)
+                .then((response) => {
+                    let d = response.data;
+
+                    //remove it from the list of motions
+                    commit('deleteMotion', motion);
+
+                    //check whether it is the currently set motion
+                    let activeMotino = getters.getActiveMotion;
+                    if (activeMotino.id === motion.id) {
+                        //we need to remove it and set another in its place
+                        let newActive = getters.getStoredMeetings[0];
+                        commit('setMotion', newActive);
+
+                    }
+                    return resolve()
                 });
         }));
 
@@ -225,6 +292,16 @@ const actions = {
         }));
     },
 
+    /**
+     * Sets the motion as the current one on the server
+     * and updates the local store
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meetingId
+     * @param motionId
+     * @returns {Promise<unknown>}
+     */
     setCurrentMotion({dispatch, commit, getters}, {meetingId, motionId}) {
         return new Promise(((resolve, reject) => {
             //send to server
@@ -267,6 +344,9 @@ const actions = {
     }
 };
 
+
+
+
 const getters = {
 
     /**
@@ -277,7 +357,8 @@ const getters = {
      * @returns {null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: function(*=): void, get: function(): *}|(function(): *)|(function(): Motion)|Motion}
      */
     getActiveMotion: (state) => {
-        return state.currentMotion;
+        return getById(state.motions, state.currentMotion)
+        // return state.currentMotion;
     },
 
     getMotionById: (state, id) => (id) => {
@@ -337,8 +418,9 @@ const getters = {
      * @param state
      */
     hasVotedOnCurrentMotion: (state) => {
+        return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion) > -1
 
-        return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
+        // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
     },
 
 
@@ -361,7 +443,7 @@ const getters = {
 
             {
                 name: 'Committee of the Whole',
-                content: "That the body convene as a committee of the whole Chaired by the Chair",
+                content: "That the body convene as a committee of the whole with this body's Chair as its Chair ",
                 description: "The formal deliberative process is suspended. The body" +
                     " may work informally on an issue. No votes taken while in the committee of the whole " +
                     "are binding on the main body but they may be used to advise the main body on what to do. " +
@@ -410,7 +492,6 @@ const getters = {
                 description: "",
                 requires: 0.66
             },
-
 
 
         ]

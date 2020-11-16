@@ -75,7 +75,7 @@ class MotionController extends Controller
             $motion = Motion::where('meeting_id', $request->meetingId)
                 ->where('content', null)
                 ->where('description', null)
-                ->where('requires', null)
+//                ->where('requires', null)
                 ->where('type', null)
                 ->where('is_complete', false)
                 ->first();
@@ -153,6 +153,8 @@ class MotionController extends Controller
      */
     public function destroy(Motion $motion)
     {
-        //
+        $motion->delete();
+
+        return response()->json(200);
     }
 }

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Payload from "../../../../models/Payload";
-import MeetingMixin from "../../../storeMixins/meetingMixin";
+import Payload from "../../../models/Payload";
+import MeetingMixin from "../../storeMixins/meetingMixin";
 
 export default {
     name: "motion-template-button",

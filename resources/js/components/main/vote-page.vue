@@ -64,7 +64,7 @@
 <script>
 
 import Vote from '../../models/Vote';
-import VoteButtons from "../vote-buttons";
+import VoteButtons from "../vote-casting/vote-buttons";
 import RequiredVote from "../text-display/required-vote";
 import MotionContent from "../text-display/motion-content";
 // import MotionDescription from "./text-display/motion-description";

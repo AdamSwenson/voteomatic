@@ -6,6 +6,16 @@
             Motions
         </div>
 
+<!--        <div class="card-body">-->
+<!--            <div class="card-text">-->
+<!--                <ul class="list-group list-group-flush">-->
+
+<!--                    <motion-select-area :motion="motion"></motion-select-area>-->
+
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <div class="card-body">
             <div class="card-text">
                 <ul class="list-group list-group-flush">
@@ -22,25 +32,22 @@
 
         </div>
 
-        <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
-        <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
-        <!--        </svg>-->
     </div>
 
 
 </template>
 
 <script>
-import MotionSelectButton from "./motions/motion-select-button";
-import MotionSelectArea from "./motions/motion-select-area";
-import EndVotingModal from "./motions/end-voting-modal";
+import MotionSelectButton from "./motion-select-button";
+import MotionSelectArea from "./motion-select-area";
+import EndVotingModal from "./end-voting-modal";
 // import MeetingMixin from '../storeMixins/meetingMixin';
-// import MotionMixin from '../storeMixins/motionMixin';
+import MotionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "motions-card",
     components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
-    // mixins : [MotionMixin],
+    mixins: [MotionMixin],
 
     asyncComputed: {
         motions: function () {
@@ -52,16 +59,9 @@ export default {
             m = _.reverse(m);
 
             return m;
-        }
-        // default: []
+        },
 
-        // motions: {
-        //     get: function () {
-        //
-        //         return this.$store.getters.getMotions;
-        //     },
-        //     // default: []
-        // }
+
     },
 
     methods: {

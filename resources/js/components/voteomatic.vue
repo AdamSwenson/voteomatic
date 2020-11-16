@@ -1,26 +1,21 @@
 <template>
 
     <div class="voteomatic">
-        <!--        <div class="card">-->
-        <!--            <div class="card-title">-->
+
+        <!--        <div class="row ">-->
+        <!--            <div class="col-8">-->
         <router-tabs></router-tabs>
         <!--            </div>-->
+        <!--            <div class="text-right refresh-area">-->
+        <!--                <refresh-button></refresh-button>-->
+        <!--        </div>-->
 
-        <!--            <div class="card-body">-->
-        <!--                <div class="content">-->
 
         <router-view name="main"></router-view>
 
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-        <!--        <div class="card-footer">-->
         <div class="text-center refresh-area">
+
             <refresh-button></refresh-button>
-            <!--            </div>-->
-
-
         </div>
 
         <chair-indicator></chair-indicator>
@@ -39,7 +34,7 @@ import VotePage from "./main/vote-page";
 import Motion from '../models/Motion';
 import MeetingMixin from './storeMixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
-import RefreshButton from "./controls/refresh-button";
+import RefreshButton from "./navigation/refresh-button";
 import ChairIndicator from "./text-display/chair-indicator";
 
 export default {

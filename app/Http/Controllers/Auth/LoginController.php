@@ -50,6 +50,10 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         Auth::login($user);
+
+        if($request->has('resource_link_id')){
+
+        }
 //        dd($user);
         //
     }
