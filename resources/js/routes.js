@@ -6,7 +6,7 @@
 const normalizedRouteRoot = () => {
     let url = window.routeRoot;
 
-    if(url[url.length] === '/') return url;
+    if (url[url.length] === '/') return url;
 
     return url + '/';
 }
@@ -18,32 +18,45 @@ const normalizedRouteRoot = () => {
  */
 module.exports = {
 
-    results : {
-        getCounts : (motionId) => {
+    auth: {
+        baseUrl: () => {
+            return normalizedRouteRoot();
+        },
+        logout: () => {
+            return normalizedRouteRoot() + 'logout'
+        },
+        nonLTILogin: () => {
+            return normalizedRouteRoot() + 'login';
+        },
+
+    },
+
+    results: {
+        getCounts: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId + '/counts'
         },
 
-        getResults : (motionId) => {
-          return normalizedRouteRoot() + 'results/' + motionId;
+        getResults: (motionId) => {
+            return normalizedRouteRoot() + 'results/' + motionId;
         }
     },
 
-    votes : {
-        recordVote : (motionId) => {
+    votes: {
+        recordVote: (motionId) => {
             return normalizedRouteRoot() + 'record-vote/' + motionId;
         }
     },
 
     castVotes: {
 
-        getVotedMotions : (meetingId) => {
+        getVotedMotions: (meetingId) => {
             return normalizedRouteRoot() + 'cast-votes/' + meetingId;
 
         }
     },
 
-    receipts : {
-        validateReceipt : () => {
+    receipts: {
+        validateReceipt: () => {
             return normalizedRouteRoot() + 'validation';
         }
     },
@@ -55,18 +68,18 @@ module.exports = {
          * @param meetingId
          * @returns {string}
          */
-        resource : (meetingId=null) =>{
+        resource: (meetingId = null) => {
             let base = normalizedRouteRoot() + 'meetings/';
-            if(_.isNull(meetingId)) {
+            if (_.isNull(meetingId)) {
                 return base;
             }
             return base + meetingId;
 
         },
 
-        getRoster : (meetingId) => {
+        getRoster: (meetingId) => {
             let base = normalizedRouteRoot() + 'roster/';
-            if(_.isNull(meetingId)) {
+            if (_.isNull(meetingId)) {
                 return base;
             }
             return base + meetingId;
@@ -84,9 +97,9 @@ module.exports = {
          * @param motionId
          * @returns {string}
          */
-        resource : (motionId=null) =>{
+        resource: (motionId = null) => {
             let base = normalizedRouteRoot() + 'motions/';
-            if(_.isNull(motionId)) {
+            if (_.isNull(motionId)) {
                 return base;
             }
             return base + motionId;
@@ -97,20 +110,20 @@ module.exports = {
         },
 
         endVoting: (motionId) => {
-        return normalizedRouteRoot() + 'motions/close/' + motionId;
+            return normalizedRouteRoot() + 'motions/close/' + motionId;
         },
 
-        getCurrentMotion : (meetingId) => {
+        getCurrentMotion: (meetingId) => {
             return normalizedRouteRoot() + 'motions/stack/' + meetingId;
         },
 
-        setCurrentMotion : (meetingId, motionId) => {
+        setCurrentMotion: (meetingId, motionId) => {
 
             return normalizedRouteRoot() + 'motions/stack/' + meetingId + '/' + motionId;
         },
         getAllMotionsForMeeting: (meetingId) => {
 
-            return normalizedRouteRoot()  + 'motions/meeting/' + meetingId;
+            return normalizedRouteRoot() + 'motions/meeting/' + meetingId;
         }
 
     }
