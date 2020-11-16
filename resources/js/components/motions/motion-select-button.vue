@@ -8,9 +8,9 @@
 
 <script>
 
-import MeetingMixin from '../../storeMixins/meetingMixin';
+import MeetingMixin from '../storeMixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
-import Payload from "../../../models/Payload";
+import Payload from "../../models/Payload";
 
 export default {
     name: "motion-select-button",

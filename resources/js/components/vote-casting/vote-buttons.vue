@@ -3,15 +3,22 @@
         <div class="row">
             <div class="col">
 
-                <nay-button v-on:nay-clicked="handleNay"></nay-button>
+<!--                <nay-button v-on:nay-clicked="handleNay"></nay-button>-->
+                <nay-button ></nay-button>
 
+                <vote-confirmation-modal type="nay"
+                                         v-on:nay-clicked="handleNay"
+                ></vote-confirmation-modal>
             </div>
 
             <div class="col"></div>
 
             <div class="col">
-
-                <yay-button v-on:yay-clicked="handleYay"></yay-button>
+                <yay-button ></yay-button>
+<!--                <yay-button v-on:yay-clicked="handleYay"></yay-button>-->
+                <vote-confirmation-modal type="yay"
+                                         v-on:yay-clicked="handleYay"
+                ></vote-confirmation-modal>
 
             </div>
         </div>
@@ -19,13 +26,14 @@
 </template>
 
 <script>
-import YayButton from "./controls/yay-button";
-import NayButton from "./controls/nay-button";
-import * as routes from "../routes";
+import YayButton from "./yay-button";
+import NayButton from "./nay-button";
+import * as routes from "../../routes";
+import VoteConfirmationModal from "./vote-confirmation-modal";
 
 export default {
     name: "vote-buttons",
-    components: {NayButton, YayButton},
+    components: {VoteConfirmationModal, NayButton, YayButton},
     props: ['motion'],
 
     data: function () {

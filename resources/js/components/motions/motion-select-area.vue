@@ -3,9 +3,9 @@
     <li class="list-group-item "
         v-bind:class="styling">
         <div class="row">
-            <div class="col-sm">
-<!--                v-if="isChair && ! isSelected "-->
-<!---->
+            <div class="col-sm "
+                 v-if="isChair"
+            >
                 <motion-select-button
                     v-if="isChair  "
                     :motion="motion"
@@ -24,9 +24,10 @@
 
                 <vote-nav-button
                     :motion="motion"
-                    v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"
+                    v-if="isSelected && ! isComplete "
                 ></vote-nav-button>
 
+<!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
                 <end-voting-button
                     v-if="isSelected && ! isComplete && isChair"
                     :motion="motion"
@@ -46,10 +47,10 @@
 <script>
 import MotionSelectButton from "./motion-select-button";
 import EndVotingButton from "./end-voting-button";
-import * as routes from "../../../routes";
-import MotionStatusBadge from "../../text-display/motion-status-badge";
-import VoteNavButton from "../../controls/vote-nav-button";
-import ResultsNavButton from "../../controls/results-nav-button";
+import * as routes from "../../routes";
+import MotionStatusBadge from "../text-display/motion-status-badge";
+import VoteNavButton from "../navigation/vote-nav-button";
+import ResultsNavButton from "../navigation/results-nav-button";
 
 export default {
     name: "motion-select-area",
@@ -65,35 +66,14 @@ export default {
             return this.$store.getters.getIsAdmin;
         },
 
-        styledResult: function () {
-            if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ''
 
-            if (this.isPassed) {
-                return "<span class='text-success'>Passed</span>";
-            }
-
-            if (!this.isPassed) {
-                return "<span class='text-danger'>Failed</span>";
-            }
-
+        /**
+         * Whether voting has been closed.
+         * @returns {(function(): default.asyncComputed.motion.isComplete)|(function(): (__webpack_exports__.default.asyncComputed.motion.isComplete|undefined))|(function(): __webpack_exports__.default.asyncComputed.motion.isComplete)|(function(): (default.asyncComputed.motion.isComplete|undefined))}
+         */
+        isComplete: function () {
+            return this.motion.isComplete;
         },
-
-        styling: {
-            get: function () {
-                if(this.isSelected){
-                    return ' bg-info '
-                }
-
-            },
-            default: ''
-        },
-
-        showStatusBadge: function () {
-            if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false
-
-            return true
-        },
-
 
         /**
          * Whether the motion has passed (after voting has been closed)
@@ -122,14 +102,6 @@ export default {
         },
 
         /**
-         * The current globally active motion
-         * @returns {any}
-         */
-        selectedMotion: function () {
-            return this.$store.getters.getActiveMotion;
-        },
-
-        /**
          * Whether the motion that has been handed to this
          * component is the one globally selected.
          * @returns {boolean}
@@ -140,13 +112,7 @@ export default {
             return this.motion.id === this.selectedMotion.id
         },
 
-        /**
-         * Whether voting has been closed.
-         * @returns {(function(): default.asyncComputed.motion.isComplete)|(function(): (__webpack_exports__.default.asyncComputed.motion.isComplete|undefined))|(function(): __webpack_exports__.default.asyncComputed.motion.isComplete)|(function(): (default.asyncComputed.motion.isComplete|undefined))}
-         */
-        isComplete: function () {
-            return this.motion.isComplete;
-        },
+
 
         /**
          * The styling to apply to the motion text
@@ -159,7 +125,46 @@ export default {
             if (this.isSelected) {
                 return 'lead font-weight-bold';
             }
-        }
+        },
+
+        /**
+         * The current globally active motion
+         * @returns {any}
+         */
+        selectedMotion: function () {
+            return this.$store.getters.getActiveMotion;
+        },
+
+        showStatusBadge: function () {
+            if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false
+
+            return true
+        },
+
+        styledResult: function () {
+            if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ''
+
+            if (this.isPassed) {
+                return "<span class='text-success'>Passed</span>";
+            }
+
+            if (!this.isPassed) {
+                return "<span class='text-danger'>Failed</span>";
+            }
+
+        },
+
+        styling: {
+            get: function () {
+                if(this.isSelected){
+                    return ' bg-info '
+                }
+
+            },
+            default: ''
+        },
+
+
 
 
     },

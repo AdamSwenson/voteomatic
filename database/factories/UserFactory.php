@@ -43,6 +43,28 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'is_admin' => true,
+
+            ];
+        });
+
+    }
+
+
+    /**
+     * Creates a non chair user with a known password / email for
+     * testing
+     *
+     * @return UserFactory
+     */
+    public function regUser(){
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => false,
+                'email' => 'testUser@example.com',
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+
             ];
         });
 

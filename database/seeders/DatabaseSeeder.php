@@ -23,14 +23,17 @@ class DatabaseSeeder extends Seeder
         //this will be non-admin users
         $num_users = 10;
 
-
         $meetings = Meeting::factory(2)->create();
 
-        foreach ($meetings as $meeting) {
+        //make an admin user
+        $adminUser = User::factory()->administrator()->create();
 
-            //make an admin user
-            $user = User::factory()->administrator()->create();
-            $meeting->users()->attach($user);
+        //make a regular user with known email and password
+        $devUser = User::factory()->regUser()->create();
+
+        foreach ($meetings as $meeting) {
+            $meeting->users()->attach($adminUser);
+            $meeting->users()->attach($devUser);
 
             for ($i = 0; $i < $num_users; $i++) {
                 $user = User::factory()->create();
@@ -53,25 +56,29 @@ class DatabaseSeeder extends Seeder
 
         }
 
-        $this->addDevCreds($meetings[0]);
+        $this->call([
+            AdminUserSeeder::class,
+            LTIDevCredsSeeder::class
+        ]);
+//        $this->addDevCreds($meetings[0]);
 
     }
 
-
-    public function addDevCreds($meeting)
-    {
-//        $meeting = Meeting::factory()->create();
-        $consumer = LTIConsumer::factory([
-            'consumer_key' => env('DEV_CONSUMER_KEY'),
-            'secret_key' => env('DEV_SHARED_KEY')
-        ])->create();
-
-        ResourceLink::factory([
-            'meeting_id' => $meeting->id,
-            'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
-            'lti_consumer_id' => $consumer->id
-        ])->create();
-
-
-    }
+//
+//    public function addDevCreds($meeting)
+//    {
+////        $meeting = Meeting::factory()->create();
+//        $consumer = LTIConsumer::factory([
+//            'consumer_key' => env('DEV_CONSUMER_KEY'),
+//            'secret_key' => env('DEV_SHARED_KEY')
+//        ])->create();
+//
+//        ResourceLink::factory([
+//            'meeting_id' => $meeting->id,
+//            'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
+//            'lti_consumer_id' => $consumer->id
+//        ])->create();
+//
+//
+//    }
 }

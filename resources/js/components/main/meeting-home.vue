@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import MotionsCard from "./navigation/motions-card";
-import MeetingMixin from './storeMixins/meetingMixin';
+import MotionsCard from "../motions/motions-card";
+import MeetingMixin from '../storeMixins/meetingMixin';
 
 export default {
     name: "meeting-home",

@@ -60,7 +60,7 @@ import * as routes from "../../../routes";
 import Meeting from '../../../models/Meeting';
 import MeetingMixin from '../../storeMixins/meetingMixin';
 import Payload from "../../../models/Payload";
-import MeetingsCard from "../../navigation/meetings-card";
+import MeetingsCard from "../../meetings/meetings-card";
 
 export default {
     name: "meeting-setup",

@@ -5,7 +5,7 @@ import resultsPage from './components/main/results-page'
 import motionSetup from './components/main/chair/motion-setup'
 import meetingSetup from './components/main/chair/meeting-setup'
 import voteVerify from './components/main/vote-verification-page'
-import meetingHome from './components/meeting-home'
+import meetingHome from './components/main/meeting-home'
 
 Vue.component( 'vote-page', votePage );
 Vue.component('results-page', resultsPage);

@@ -1,6 +1,9 @@
 <template>
 
-    <button type="button" class="btn btn-success btn-lg btn-block"
+    <button type="button"
+            class="btn btn-success btn-lg btn-block"
+            data-toggle="modal"
+            data-target="#yayConfirmationModal"
             v-on:click="handleClick"
     >Yay
     </button>
@@ -12,7 +15,7 @@ export default {
 
     methods: {
         handleClick: function () {
-            this.$emit('yay-clicked');
+            // this.$emit('yay-clicked');
         }
     }
 }
