@@ -4108,6 +4108,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
 /* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _refresh_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./refresh-button */ "./resources/js/components/navigation/refresh-button.vue");
 //
 //
 //
@@ -4157,10 +4158,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "page-navbar",
+  components: {
+    RefreshButton: _refresh_button__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   props: [],
   mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
@@ -45541,6 +45551,15 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "form",
+                  { staticClass: "form-inline" },
+                  [_c("refresh-button")],
+                  1
+                )
+              ]),
+              _vm._v(" "),
               _c("li", { staticClass: "nav-item dropdown" }, [
                 _c(
                   "a",
