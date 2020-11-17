@@ -2268,15 +2268,17 @@ __webpack_require__.r(__webpack_exports__);
     MotionsCard: _motions_motions_card__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
-  computed: {
-    meetingName: function meetingName() {
-      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
-      return this.meeting.name;
-    },
-    meetingDate: function meetingDate() {
-      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
-      return this.meeting.readableDate();
-    }
+  computed: {//     meetingName: function () {
+    //         if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+    //
+    //         return this.meeting.name;
+    //     },
+    //
+    //     meetingDate: function () {
+    //         if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+    //
+    //         return this.meeting.readableDate();
+    //     },
   }
 });
 
@@ -4017,8 +4019,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motion_select_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-select-button */ "./resources/js/components/motions/motion-select-button.vue");
 /* harmony import */ var _motion_select_area__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-select-area */ "./resources/js/components/motions/motion-select-area.vue");
 /* harmony import */ var _end_voting_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./end-voting-modal */ "./resources/js/components/motions/end-voting-modal.vue");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
+/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -4060,7 +4064,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
- // import MeetingMixin from '../storeMixins/meetingMixin';
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4070,7 +4074,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionSelectArea: _motion_select_area__WEBPACK_IMPORTED_MODULE_1__["default"],
     MotionSelectButton: _motion_select_button__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
+  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   asyncComputed: {
     motions: function motions() {
       var m = this.$store.getters.getStoredMotions;
@@ -4102,24 +4106,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
+/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -4170,10 +4158,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "page-navbar",
   props: [],
-  mixins: [],
+  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {
       appName: 'voteomatic'
@@ -44250,22 +44239,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "meeting-home" }, [
     _c("div", { staticClass: "card" }, [
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        [
-          _c("h4", { staticClass: "card-title" }, [
-            _vm._v(_vm._s(_vm.meetingName))
-          ]),
-          _vm._v(" "),
-          _c("h6", { staticClass: "card-subtitle" }, [
-            _vm._v(_vm._s(_vm.meetingDate))
-          ]),
-          _vm._v(" "),
-          _c("motions-card")
-        ],
-        1
-      )
+      _c("div", { staticClass: "card-body" }, [_c("motions-card")], 1)
     ])
   ])
 }
@@ -45493,7 +45467,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n            Motions\n        ")
+      _vm._v("\n            " + _vm._s(_vm.meetingDate) + "\n        ")
     ]),
     _vm._v(" "),
     _c(
@@ -45548,7 +45522,7 @@ var render = function() {
     [
       _c("div", { staticClass: "container" }, [
         _c("a", { staticClass: "navbar-brand", attrs: { href: _vm.baseUrl } }, [
-          _vm._v("\n            " + _vm._s(_vm.appName) + "\n        ")
+          _vm._v("\n                " + _vm._s(_vm.appName) + "\n            ")
         ]),
         _vm._v(" "),
         _c(
@@ -45558,7 +45532,13 @@ var render = function() {
             attrs: { id: "navbarSupportedContent" }
           },
           [
-            _c("ul", { staticClass: "navbar-nav mr-auto" }),
+            _c("ul", { staticClass: "navbar-nav mr-auto " }),
+            _vm._v(" "),
+            _c(
+              "span",
+              { staticClass: "navbar-text text-dark text-lg-center" },
+              [_vm._v(_vm._s(_vm.meetingName))]
+            ),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
               _c("li", { staticClass: "nav-item dropdown" }, [
@@ -45602,11 +45582,7 @@ var render = function() {
                         staticClass: "dropdown-item",
                         on: { click: _vm.logout }
                       },
-                      [
-                        _vm._v(
-                          "\n                            Logout\n                        "
-                        )
-                      ]
+                      [_vm._v("Logout")]
                     )
                   ]
                 )
@@ -65036,6 +65012,14 @@ module.exports = {
       set: function set(v) {
         this.$store.commit('setMeeting', v);
       }
+    },
+    meetingName: function meetingName() {
+      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+      return this.meeting.name;
+    },
+    meetingDate: function meetingDate() {
+      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+      return this.meeting.readableDate();
     }
   }
 };

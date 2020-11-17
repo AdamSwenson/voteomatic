@@ -19,6 +19,19 @@ module.exports = {
                 this.$store.commit('setMeeting', v);
 
             }
-        }
+        },
+
+
+        meetingName: function () {
+            if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+
+            return this.meeting.name;
+        },
+
+        meetingDate: function () {
+            if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+
+            return this.meeting.readableDate();
+        },
     }
 };

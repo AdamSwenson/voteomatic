@@ -3,7 +3,7 @@
     <div class="card">
 
         <div class="card-header">
-            Motions
+            {{ meetingDate }}
         </div>
 
 <!--        <div class="card-body">-->
@@ -41,13 +41,13 @@
 import MotionSelectButton from "./motion-select-button";
 import MotionSelectArea from "./motion-select-area";
 import EndVotingModal from "./end-voting-modal";
-// import MeetingMixin from '../storeMixins/meetingMixin';
+import MeetingMixin from '../storeMixins/meetingMixin';
 import MotionMixin from '../storeMixins/motionMixin';
 
 export default {
     name: "motions-card",
     components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
-    mixins: [MotionMixin],
+    mixins: [MotionMixin, MeetingMixin],
 
     asyncComputed: {
         motions: function () {
