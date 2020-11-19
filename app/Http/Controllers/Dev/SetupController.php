@@ -13,4 +13,7 @@ class SetupController extends Controller
         return view('dev.dev-setup', ['data' => ['meeting' => $meeting]]);
     }
 
+
+
+
 }

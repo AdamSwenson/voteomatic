@@ -51,12 +51,13 @@ import * as routes from "../../routes";
 import MotionStatusBadge from "../text-display/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
+import ChairMixin from "../storeMixins/chairMixin";
 
 export default {
     name: "motion-select-area",
     components: {ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton},
     props: ['motion'],
-
+mixins: [ChairMixin],
     asyncComputed: {
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;

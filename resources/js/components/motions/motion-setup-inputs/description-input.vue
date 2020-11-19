@@ -27,7 +27,7 @@ export default {
     props: [],
 
 
-    mixins: [MeetingMixin, MotionMixin],
+    mixins: [MeetingMixin], //MotionMixin],
 
     data: function () {
         return {
@@ -56,7 +56,8 @@ export default {
                     }
                 );
 
-                this.$store.dispatch('updateMotion', p);
+//                this.$store.dispatch('updateMotion', p);
+                this.$emit('update:description', p.updateVal);
 
             }
         },

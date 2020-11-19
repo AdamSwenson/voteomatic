@@ -1,7 +1,7 @@
 <template>
-    <button class="btn btn-primary"
+    <button class="btn btn-outline-primary"
             v-on:click="handleClick"
-    >Create blank motion
+    >Create main motion
     </button>
 
 </template>

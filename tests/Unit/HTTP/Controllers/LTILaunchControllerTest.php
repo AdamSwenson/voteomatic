@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\LTI;
 
 use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\OAuthAuthenticator;

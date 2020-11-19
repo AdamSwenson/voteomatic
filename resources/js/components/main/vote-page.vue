@@ -1,50 +1,58 @@
 <template>
     <div class="card vote-page">
 
-            <div class="card-header">
-                <h4 class="card-title">{{ cardTitle }}</h4>
-            </div>
+        <div class="card-header">
+            <h4 class="card-title">{{ cardTitle }}</h4>
+        </div>
 
-            <div class="vote-area card-body">
+        <div class="vote-area card-body">
 
-                <div class="text-center">
+            <div class="text-center">
                 <motion-content
                     :motion="motion"
                     :isReady="isReady"
+                    v-if="! isAmendment"
                 ></motion-content>
-                </div>
 
-                <vote-receipt
-                    :receipt="receipt"
-                    v-if="vote"
-                ></vote-receipt>
+                <amendment-text-display
+                    v-else-if="isReady && isAmendment"
+                    :amendment-text="motionContent"
+                    :original-text="originalText"
+                ></amendment-text-display>
 
             </div>
 
-            <div class="card-body">
-                <required-vote
-                    v-if="isReady"
-                    :motion="motion"
-                ></required-vote>
+            <vote-receipt
+                :receipt="receipt"
+                v-if="vote"
+            ></vote-receipt>
+
+        </div>
+
+        <div class="card-body">
+            <required-vote
+                v-if="isReady"
+                :motion="motion"
+            ></required-vote>
+        </div>
+
+        <div class="card-footer">
+            <vote-buttons
+                v-if="showButtons"
+                :motion="motion"
+                v-on:yay-clicked="handleYay"
+                v-on:nay-clicked="handleNay"
+            ></vote-buttons>
+
+            <div
+                class="text-center"
+                v-else
+            >
+                <p>You have already voted</p>
             </div>
+        </div>
 
-            <div class="card-footer">
-                <vote-buttons
-                    v-if="showButtons"
-                    :motion="motion"
-                    v-on:yay-clicked="handleYay"
-                    v-on:nay-clicked="handleNay"
-                ></vote-buttons>
-
-                <div
-                    class="text-center"
-                    v-else
-                >
-                    <p>You have already voted</p>
-                </div>
-            </div>
-
-<!--        </div>-->
+        <!--        </div>-->
 
         <!--        <required-vote :motion="motion"></required-vote>-->
 
@@ -71,10 +79,12 @@ import MotionContent from "../text-display/motion-content";
 import * as routes from "../../routes";
 import VoteReceipt from "../text-display/vote-receipt";
 import motionMixin from '../storeMixins/motionMixin';
+import AmendmentTextDisplay from "../motions/amendment-text-display";
 
 export default {
     name: "vote-page",
     components: {
+        AmendmentTextDisplay,
         VoteReceipt,
         // MotionDescription,
         MotionContent,
@@ -237,14 +247,37 @@ export default {
             // },
             // default: ''
         },
-        //
-        //     {
-        //     get: function () {
-        //         return this.motion.description;
-        //     },
-        //     default: ''
-        // }
-    },
+
+        originalMotion: {
+            get: function () {
+
+                if (this.isReady && this.isAmendment) {
+                    // let motion = this.$store.getters.getActiveMotion;
+                    // && ! _.isUndefined(this.motion.applies_to)
+                    // window.console.log('j', motion, motion.appliesTo, this.motion);
+                    let originalMotion = this.$store.getters.getMotionById(this.motion.appliesTo);
+                    return originalMotion;
+                }
+            },
+            // watch: 'isReady'
+        },
+
+        /**
+         * If the current motion is an amendment, this will
+         * get the text of the original so that the
+         * display component can figure out what's new.
+         * @returns {string|null|*}
+         */
+        originalText: function () {
+            if (!this.isReady || !this.isAmendment) return ''
+
+            if (!_.isUndefined(this.originalMotion) && ! _.isNull(this.originalMotion)){
+                return this.originalMotion.content
+            }
+        }
+
+    }
+    ,
 
     computed: {
         receipt: function () {

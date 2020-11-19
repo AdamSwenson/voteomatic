@@ -4,6 +4,7 @@ namespace Tests\Http\Controllers;
 
 use App\Http\Controllers\ResultsController;
 use App\Models\Motion;
+use App\Models\User;
 use Tests\TestCase;
 
 class ResultsControllerTest extends TestCase
@@ -17,6 +18,9 @@ class ResultsControllerTest extends TestCase
 
         $this->motion = Motion::factory()->create();
         $this->path = '/results/' . $this->motion->id;
+
+
+        $this->user = User::factory()->create();
     }
 
     /** @test */
@@ -26,11 +30,12 @@ class ResultsControllerTest extends TestCase
 //        $payload = ['counts' => false];
 
         //call
-        $response = $this->get($this->path); //, $payload);
+        $response = $this->actingAs($this->user)
+            ->get($this->path); //, $payload);
 
         //check
-        $response->assertStatus(200)
-        ->assertExactJson([
+        $response->assertStatus(200);
+        $response->assertExactJson([
             'passed' => $this->motion->passed,
             'totalVotes' => $this->motion->totalVotesCast
         ]); //checking exact to make sure counts not sent
@@ -47,7 +52,7 @@ class ResultsControllerTest extends TestCase
         $path = $this->path . '/counts';
 
         //call
-        $response = $this->get($path);
+        $response = $this->actingAs($this->user)->get($path);
 
         //check
         $response->assertStatus(200)

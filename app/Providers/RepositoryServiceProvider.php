@@ -33,7 +33,8 @@ class RepositoryServiceProvider extends ServiceProvider
     {
 
         $this->app->bind(IVoterEligibilityRepository::class, VoterEligibilityRepository::class);
-$this->app->bind(IMotionStackRepository::class, MotionStackRepository::class);
+        $this->app->bind(IMotionStackRepository::class, MotionStackRepository::class);
+        $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
 
 //        $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
 

@@ -71,7 +71,7 @@ Vue.component('page-navbar', require('./components/navigation/page-navbar').defa
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
-
+Vue.component('amendment-page', require('./components/main/amendment-page').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

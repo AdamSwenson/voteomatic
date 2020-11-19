@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\LTI\LTILaunchController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
+use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
@@ -40,6 +42,8 @@ Route::get('/dev-test-setup', [SetupController::class, 'devView']);
 Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
 Route::get('/entry-test', [EntryController::class, 'loginTest']);
 //Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
+Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
+
 
 /* =============================
         Login, LTI authentication, and other admin
@@ -86,6 +90,7 @@ Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeet
 Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
+Route::post('motions/second/{motion}', [MotionSecondController::class, 'markMotionSeconded']);
 Route::resource('motions', MotionController::class);
 
 

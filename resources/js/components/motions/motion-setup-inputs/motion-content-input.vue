@@ -19,10 +19,10 @@ import Payload from "../../../models/Payload";
 
 export default {
 name: "motion-content-input",
-    mixins: [MeetingMixin, MotionMixin],
+    mixins: [MeetingMixin], //, MotionMixin],
 
 
-    props : [],
+    props : ['motion'],
 
 
 data : function(){
@@ -49,18 +49,22 @@ computed : {
                     'updateVal': v
                 }
             );
+            //
+            // if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
+            //     //initialize first if no motion exists
+            //     let me = this;
+            //     this.$store.dispatch('createMotion', this.meeting.id).then(function () {
+            //         me.$store.dispatch('updateMotion', p);
+            //
+            //         me.$store.dispatch('updateMotion', p);
+            //     });
 
-            if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-                //initialize first if no motion exists
-                let me = this;
-                this.$store.dispatch('createMotion', this.meeting.id).then(function () {
-                    me.$store.dispatch('updateMotion', p);
-                });
-
-            } else {
+            // } else {
                 //otherwise we can just update as normal
-                this.$store.dispatch('updateMotion', p);
-            }
+                this.$emit('update:content', p.updateVal);
+                // this.$store.dispatch('updateMotion', p);
+
+            // }
         }
     },
 }

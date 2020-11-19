@@ -15,7 +15,7 @@ import Payload from "../../models/Payload";
  * @param id
  * @returns {*}
  */
-function getById(storageArray, id){
+function getById(storageArray, id) {
     // return function ( state, id ) {
     let r = storageArray.filter(function (i) {
         if (i.id === id) {
@@ -163,6 +163,37 @@ const actions = {
 
     },
 
+
+    createSubsidiaryMotion({dispatch, commit, getters}, payload) {
+        let me = this;
+
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.resource();
+            window.console.log('sending', payload);
+            return Vue.axios.post(url, payload)
+                .then((response) => {
+                    let d = response.data;
+
+                    let motion = new Motion(d);
+                    // let motion = new Motion(d.id, d.name, d.date);
+                    commit('addMotionToStore', motion);
+
+                    let pl = {meetingId: payload.meetingId, motionId: motion.id};
+
+                    return dispatch('setCurrentMotion', pl)
+                        .then(() => {
+                            return resolve(motion);
+                        });
+
+                    // commit('setMotion', motion);
+
+                });
+        }));
+
+    },
+
+
     deleteMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             //send to server
@@ -292,6 +323,31 @@ const actions = {
         }));
     },
 
+    secondMotion({dispatch, commit, getters}, {meetingId, motionId}) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.secondMotion(motionId);
+            return Vue.axios.post(url)
+                .then((response) => {
+                    //this assumes the motion being seconded is the current motion.
+                    //that should be normally the case except for high
+                    //precedence motions which can be made while something
+                    //else is waiting for a second. Those will be very
+                    //rare cases.
+                    let pl = Payload(
+                        {
+                            updateProp: 'seconded',
+                            updateVal: response.data.seconded
+                        });
+                    commit('setMotionProp', pl);
+
+                    return resolve();
+
+                });
+        }));
+    },
+
+
     /**
      * Sets the motion as the current one on the server
      * and updates the local store
@@ -332,6 +388,7 @@ const actions = {
             commit('setMotionProp', payload)
 
             let motion = getters.getActiveMotion;
+            window.console.log('updateMotion', payload, motion);
 
             //send to server
             let url = routes.motions.resource(motion.id);
@@ -343,8 +400,6 @@ const actions = {
         }));
     }
 };
-
-
 
 
 const getters = {
@@ -361,8 +416,9 @@ const getters = {
         // return state.currentMotion;
     },
 
-    getMotionById: (state, id) => (id) => {
+    getMotionById: (state) => (id) => {
         // return function ( state, id ) {
+        window.console.log(id, state, id);
         let r = state.motions.filter(function (i) {
             if (i.id === id) {
                 return i;
@@ -436,8 +492,11 @@ const getters = {
             {
                 name: 'Adjourn',
                 content: "That the meeting be adjourned.",
-                description: "Meeting comes to an end.",
-                requires: 0.5
+                description: "Meeting comes to an end. This is amendable with respect " +
+                    "to when the next meeting will be, if specified",
+                requires: 0.5,
+                type: 'procedural-main',
+                amendable: true
             },
 
 
@@ -449,7 +508,10 @@ const getters = {
                     "are binding on the main body but they may be used to advise the main body on what to do. " +
                     "To communicate from the committee of the whole, the committee " +
                     "of the whole should vote to Rise and Report",
-                requires: 0.5
+                requires: 0.5,
+                type: 'procedural-main',
+                amendable: true
+
             },
 
             {
@@ -458,7 +520,9 @@ const getters = {
                 description: "If approved, all debate ends on the pending motion and " +
                     "the body moves immediately to a vote on the pending motion. If fails," +
                     "debate continues on the pending motion",
-                requires: 0.66
+                requires: 0.66,
+                type: 'procedural-subsidiary',
+                amendable: false
             },
             {
                 name: 'Place on the Table',
@@ -467,7 +531,9 @@ const getters = {
                     "other business. There is no scheduled time to resume action. Action " +
                     "will resume upon a majority vote to Take from the Table. That motion may" +
                     "be made whenever no main motion is pending",
-                requires: 0.5
+                requires: 0.5,
+                type: 'procedural-subsidiary',
+                amendable: false
             },
 
 
@@ -476,21 +542,29 @@ const getters = {
                 content: "That the body recess.",
                 description: "We take a break. This can be qualified to " +
                     "say how long. The how long part is amendable.",
-                requires: 0.5
+                requires: 0.5,
+                type: 'procedural-main',
+                amendable: true
             },
 
             {
                 name: 'Reconsider (with notice)',
                 content: "That the body reconsider the motion that ",
                 description: "",
-                requires: 0.5
+                requires: 0.5,
+                type: 'procedural-main',
+                amendable: false
+
             },
 
             {
                 name: 'Reconsider (without notice)',
                 content: "That the body reconsider the motion that ",
                 description: "",
-                requires: 0.66
+                requires: 0.66,
+                type: 'procedural-main',
+                amendable: false
+
             },
 
 

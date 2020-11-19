@@ -41,5 +41,12 @@ module.exports = {
             return this.$store.getters.getActiveMotion;
         },
 
+        isAmendment: function(){
+            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                return this.motion.isAmendment();
+            }
+
+        }
+
     }
 };

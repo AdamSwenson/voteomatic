@@ -11,6 +11,7 @@
         "php": "^7.3",
         "doctrine/dbal": "^2.12",
         "fideloper/proxy": "^4.2",
+        "franzose/closure-table": "^6.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "izumi-kun/lti": "^1.2",

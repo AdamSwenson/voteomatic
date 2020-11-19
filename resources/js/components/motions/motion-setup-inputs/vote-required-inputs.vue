@@ -9,7 +9,7 @@
             <select
                 id="requiresSelect"
                 class="form-control "
-                v-model="requires"
+                v-model="requiredVote"
             >
                 <option disabled value="">Please select required vote</option>
                 <option value="0.5">Majority</option>
@@ -58,9 +58,9 @@ import MotionMixin from "../../storeMixins/motionMixin";
 export default {
     name: "vote-required-inputs",
 
-    props: [],
+    props: ['motion'],
 
-    mixins: [MeetingMixin, MotionMixin],
+    mixins: [MeetingMixin], //, MotionMixin],
 
     data: function () {
         return {
@@ -88,7 +88,7 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
 
 
         customRequires: {
@@ -100,48 +100,40 @@ export default {
                 }
             },
             set(v) {
+                let val = _.toNumber(v) / 100
+                window.console.log('custom requires', v, val);
 
                 let p = Payload.factory({
                         'object': this.motion,
                         'updateProp': 'requires',
-                        'updateVal': _.toNumber(v)
+                        'updateVal': val
                     }
                 );
 
-                this.$store.dispatch('updateMotion', p);
+                // this.$store.dispatch('updateMotion', p);
+                this.$emit('update:requires', p.updateVal);
 
             }
 
         },
 
 
-        requires: {
+        requiredVote: {
             get: function () {
+                if(this.showCustomRequires) return 'other'
                 try {
-                    // let r = _.toNumber(this.motion.requires);
-                    // let standardPcts = [0, 0.5, 0.66]
-                    // window.console.log('requ', r, standardPcts.indexOf(r));
-                    //
-                    // if(_.isUndefined(r) || _.isNull(r)){
-                    //     return '';
-                    // }
-                    // if (standardPcts.indexOf(r) === -1) {
-                    //
-                    //     //show the custom field
-                    //     this.showCustomRequires = true;
-                    // }
-
                     return this.motion.requires;
                 } catch (e) {
                     return ''
                 }
             },
             set(v) {
-
+                window.console.log(v);
                 if (v === 'other') {
                     this.showCustomRequires = true;
 
                 } else {
+                    this.showCustomRequires = false;
 
                     let p = Payload.factory({
                             'object': this.motion,
@@ -150,7 +142,8 @@ export default {
                         }
                     );
 
-                    this.$store.dispatch('updateMotion', p);
+                    // this.$store.dispatch('updateMotion', p);
+                    this.$emit('update:requires', p.updateVal);
 
                 }
 

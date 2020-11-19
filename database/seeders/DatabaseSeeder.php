@@ -8,6 +8,7 @@ use App\Models\Motion;
 use App\Models\ResourceLink;
 use App\Models\User;
 use App\Models\Vote;
+use Database\Seeders\AssignmentSeeder;
 use Database\Factories\ResourceLinkFactory;
 use Illuminate\Database\Seeder;
 
@@ -24,13 +25,13 @@ class DatabaseSeeder extends Seeder
         $num_users = 10;
 
         $meetings = Meeting::factory(2)->create();
+//try {
+    //make an admin user
+    $adminUser = User::factory()->administrator()->create();
 
-        //make an admin user
-        $adminUser = User::factory()->administrator()->create();
-
-        //make a regular user with known email and password
-        $devUser = User::factory()->regUser()->create();
-
+    //make a regular user with known email and password
+    $devUser = User::factory()->regUser()->create();
+//}catch(QueryException)
         foreach ($meetings as $meeting) {
             $meeting->users()->attach($adminUser);
             $meeting->users()->attach($devUser);
@@ -58,7 +59,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdminUserSeeder::class,
-            LTIDevCredsSeeder::class
+            LTIDevCredsSeeder::class,
+            AssignmentSeeder::class
         ]);
 //        $this->addDevCreds($meetings[0]);
 

@@ -24,9 +24,9 @@ import MotionMixin from "../../storeMixins/motionMixin";
 export default {
     name: "motion-type-input",
 
-    props: [],
+    props: ['motion'],
 
-    mixins: [MeetingMixin, MotionMixin],
+    mixins: [MeetingMixin],// MotionMixin],
 
     data: function () {
         return {}
@@ -49,7 +49,9 @@ export default {
                         'updateVal': v
                     }
                 );
-                this.$store.dispatch('updateMotion', p);
+
+                // this.$store.dispatch('updateMotion', p);
+                this.$emit('update:type', p.updateVal);
 
             }
         },

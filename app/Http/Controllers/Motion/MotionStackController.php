@@ -59,4 +59,52 @@ class MotionStackController extends Controller
         return response()->json($result);
     }
 
+
+    /**
+     * Creates or updates the stored map from a map
+     * sent by the client
+     * @param Meeting $meeting
+     * @param Request $request
+     * @return bool|\Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function storeOrder( Meeting $meeting, Request $request )
+    {
+        try {
+            $assignmentDao = app()->make(IAssignmentRepository::class);
+            $assignmentDao->processIncoming($meeting, $request->input('order'));
+            return $this->sendAjaxSuccess();
+        } catch (Exception $e) {
+            return $this->sendAjaxFailure();
+        }
+    }
+
+
+    /**
+     * Get the map of motions for the given meeting
+     *
+     * @param Meeting $meeting
+     * @return void
+     */
+    public function getOrder(Meeting $meeting)
+    {
+        $assignmentRepo = app()->make(IAssignmentRepository::class);
+
+        $out = $assignmentRepo->getMotionOrderForClient($meeting);
+
+        return response()->json($out);
+
+//        $out = ['data' => $meeting->id, 'children' => [], 'parent' => $meeting->id];
+//        //Get the meeting with the meeting as the motion id
+//        $assignmentTree = Assignment::where(['motion_id', $meeting->id])->get();
+//        if ( $assignmentTree->hasChildren() ) {
+//            $children = $assignmentTree->getChildren();
+//            foreach ( $children as $child ) {
+//                //We are receiving child Assignments, but we
+//                //want the Motion objects
+//
+//            }
+//        }
+        //
+    }
 }

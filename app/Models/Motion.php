@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Assignment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,7 @@ class Motion extends Model
     use HasFactory;
 
     protected $fillable = [
+        'applies_to',
         'content',
         'description',
         'is_complete',
@@ -18,9 +20,47 @@ class Motion extends Model
         'requires',
         'type'];
 
+    protected $motionTypes = ['main', 'privileged', 'amendment', 'procedural-main', 'procedural-subsidiary', 'incidental'];
+
     protected $casts = ['is_complete' => 'boolean', 'is_current' => 'boolean'];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
+
+
+    // ------------------ Motion tree related
+
+    /**
+     * Add a subsidiary motion to this motion.
+     * E.g,, if this is a main motion, the motion to amend would be
+     * the subsidiary.
+     * If this is an amendment, the second order amendment
+     * would be the subsidiary.
+     *
+     * Procedural motions such as the motion to table or the previous
+     * question should also be added through this method.
+     *
+     * @param Motion $subsidiaryMotion
+     */
+    public function addSubsidiaryMotion( Motion $subsidiaryMotion){
+        $subsidiaryMotion->applies_to = $this->id;
+        $subsidiaryMotion->save();
+    }
+
+    /**
+     * Returns all subsidiary direct descendent motions, FILO ordered
+     */
+    public function getSubsidiaryMotions(){
+        return Motion::where('applies_to', $this->id)->orderBy('id', 'desc')->get(); //->sortDesc();
+    }
+
+    /**
+     * Returns true if the motion is not subsidiary to any
+     * other motion
+     * NB, includes incidental motions
+     */
+    public function isMainMotion(){
+        return is_null($this->applies_to);
+    }
 
 
     // ------------------ properties
@@ -95,6 +135,17 @@ class Motion extends Model
 
 
     // ------------------ relationships
+
+
+    /**
+     * All assignments of a task to an activity
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assignment()
+    {
+        return $this->hasOne(Assignment::class);
+    }
+
 
     /**
      * All users authorized to alter the motion

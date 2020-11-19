@@ -1,7 +1,7 @@
 <template>
 
     <div class="motion-template-buttons">
-        <h5 class="card-subtitle">Create motion from template</h5>
+<!--        <h5 class="card-subtitle">Create motion from template</h5>-->
 
         <motion-template-button v-for="t in templates"
                                 :template="t"

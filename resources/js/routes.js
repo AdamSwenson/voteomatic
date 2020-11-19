@@ -124,6 +124,10 @@ module.exports = {
         getAllMotionsForMeeting: (meetingId) => {
 
             return normalizedRouteRoot() + 'motions/meeting/' + meetingId;
+        },
+
+        secondMotion : (motionId) => {
+        return normalizedRouteRoot() + 'motions/second/' + motionId;
         }
 
     }
