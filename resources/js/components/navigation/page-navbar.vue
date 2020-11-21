@@ -55,7 +55,7 @@
 <script>
 
 import * as routes from "../../routes";
-import MeetingMixin from '../storeMixins/meetingMixin';
+import MeetingMixin from '../../mixins/meetingMixin';
 import RefreshButton from "./refresh-button";
 
 export default {

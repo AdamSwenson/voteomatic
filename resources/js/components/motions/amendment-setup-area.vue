@@ -37,6 +37,12 @@
                     >Propose Amendment
                     </button>
                 </div>
+                <div class="col">
+                    <button class="btn btn-primary"
+                            v-on:click="handleReset"
+                    >Reset to original
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -46,8 +52,8 @@
 
 <script>
 
-import MotionMixin from "../storeMixins/motionMixin";
-import MeetingMixin from "../storeMixins/meetingMixin";
+import MotionMixin from "../../mixins/motionMixin";
+import MeetingMixin from "../../mixins/meetingMixin";
 import Payload from "../../models/Payload";
 import AmendmentTextDisplay from "./amendment-text-display";
 
@@ -98,45 +104,6 @@ export default {
             }
         },
 
-        // splitOrigText: function () {
-        //     if (_.isUndefined(this.motion)) return ''
-        //     return _.words(this.motion.content, /[^, ]+/g);
-        // },
-        //
-        // splitNewText: function () {
-        //     return _.words(this.localText, /[^, ]+/g);
-        // },
-        //
-        //
-        // taggedNewText: function () {
-        //     let out = "";
-        //     //whichever is longer to avoid truncating output
-        //     let maxIdx = (this.splitOrigText.length > this.splitNewText.length) ? this.splitOrigText.length : this.splitNewText.length;
-        //
-        //     for (let i = 0; i < maxIdx; i++) {
-        //         if (this.splitNewText[i] !== this.splitOrigText[i]) {
-        //             //something has changed
-        //             out += " <span class='text-danger'>";
-        //             out += this.splitNewText[i];
-        //             out += "</span>";
-        //         } else {
-        //             out += " " + this.splitNewText[i];
-        //         }
-        //
-        //     }
-        //
-        //     //todo this won't actually help since other users won't have access
-        //     let pl = Payload.factory({
-        //         updateProp: 'taggedAmendmentText',
-        //         updateVal: out
-        //     })
-        //     this.$store.commit('setMotionProp', pl);
-        //
-        //     return out;
-        //
-        //
-        // }
-
 
     },
 
@@ -149,88 +116,28 @@ export default {
                 type: 'amendment',
                 requires: 0.5
             };
-
-            let p = this.$store.dispatch('createSubsidiaryMotion', payload);
             let me = this;
+            let p = this.$store.dispatch('createSubsidiaryMotion', payload);
             p.then(() => {
+                me.$router.push('meeting-home');
             });
 
         },
 
-        // splitText: function () {
-        //
-        //     _.words(this.originalText, /[^, ]+/g);
-        //
-        //
-        // },
-        //
-        //
-        // tagWord: function (originalWord, newWord) {
-        //
-        //
-        // },
-        //
-        // /**
-        //  * An insertion or strike and insertion has occurred
-        //  */
-        // handleNewLarger: function (oldBag, newBag) {
-        //
-        // },
-        //
-        // check: function (oldText, newText) {
-        //     //Array of True/False corresponding to word indexes in new Text
-        //     // True indicates that has changed
-        //     let out = [];
-        //     let checkIdx = 0;
-        //
-        //     for (let i = 0; i < this.newText.length; i++) {
-        //         if (i > 0) {
-        //             //check whether the last word was changed
-        //
-        //             if (out[i - 1 === true]) {
-        //
-        //             }
-        //             //set the indexer for the old text to be the same
-        //
-        //         }
-        //         if (newText[i] == oldText[i]) {
-        //             //no change
-        //             out.push(false);
-        //         }
-        //
-        //         let checkIdx = i + 1;
-        //         return this.splitNewText[checkIdx] !== this.splitOrigText[i]
-        //
-        //     }
-        //
-        //
-        // },
-        //
-        // /**
-        //  * Check whether the
-        //  * @param newWordIndex
-        //  */
-        // isInsertion: function (newWordIndex) {
-        //     for (let i = 0; i < this.splitOrigText.length; i++) {
-        //         if (this.splitNewText[i] !== this.splitOrigText[i]) {
-        //             //something has changed
-        //
-        //             //
-        //             let checkIdx = i + 1;
-        //             return this.splitNewText[checkIdx] !== this.splitOrigText[i]
-        //         }
-        //     }
-        //     return false;
-        // }
+        /**
+         * Removes existing edits
+         */
+        handleReset: function () {
+            this.localText = this.motion.content;
+        }
+
+
     }
 
 }
 </script>
 
 <style scoped>
-.struck {
-    text-decoration: line-through;
-}
 
 
 </style>

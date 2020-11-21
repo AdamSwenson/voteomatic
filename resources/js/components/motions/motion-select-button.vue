@@ -8,7 +8,7 @@
 
 <script>
 
-import MeetingMixin from '../storeMixins/meetingMixin';
+import MeetingMixin from '../../mixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
 import Payload from "../../models/Payload";
 

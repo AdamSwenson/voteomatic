@@ -108,9 +108,9 @@
 
 import * as routes from "../../../routes";
 import Meeting from '../../../models/Meeting';
-import MeetingMixin from '../../storeMixins/meetingMixin';
-import MotionMixin from '../../storeMixins/motionMixin';
-import ChairMixin from "../../storeMixins/chairMixin";
+import MeetingMixin from '../../../mixins/meetingMixin';
+import MotionMixin from '../../../mixins/motionMixin';
+import ChairMixin from "../../../mixins/chairMixin";
 import Payload from "../../../models/Payload";
 import VoteRequiredInputs from "../../motions/motion-setup-inputs/vote-required-inputs";
 import MotionContentInput from "../../motions/motion-setup-inputs/motion-content-input";

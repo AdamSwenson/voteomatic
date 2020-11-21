@@ -41,8 +41,8 @@
 import MotionSelectButton from "./motion-select-button";
 import MotionSelectArea from "./motion-select-area";
 import EndVotingModal from "./end-voting-modal";
-import MeetingMixin from '../storeMixins/meetingMixin';
-import MotionMixin from '../storeMixins/motionMixin';
+import MeetingMixin from '../../mixins/meetingMixin';
+import MotionMixin from '../../mixins/motionMixin';
 
 export default {
     name: "motions-card",

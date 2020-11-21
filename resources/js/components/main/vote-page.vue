@@ -78,7 +78,7 @@ import MotionContent from "../text-display/motion-content";
 // import MotionDescription from "./text-display/motion-description";
 import * as routes from "../../routes";
 import VoteReceipt from "../text-display/vote-receipt";
-import motionMixin from '../storeMixins/motionMixin';
+import motionMixin from '../../mixins/motionMixin';
 import AmendmentTextDisplay from "../motions/amendment-text-display";
 
 export default {

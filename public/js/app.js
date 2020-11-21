@@ -1953,8 +1953,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../models/Meeting */ "./resources/js/models/Meeting.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _meetings_meetings_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../meetings/meetings-card */ "./resources/js/components/meetings/meetings-card.vue");
 //
@@ -2024,7 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
     MeetingsCard: _meetings_meetings_card__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: ['existingMeeting'],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
       showFields: true
@@ -2111,12 +2111,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../models/Meeting */ "./resources/js/models/Meeting.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../storeMixins/chairMixin */ "./resources/js/components/storeMixins/chairMixin.js");
-/* harmony import */ var _storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
 /* harmony import */ var _motions_motion_setup_inputs_motion_content_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-content-input */ "./resources/js/components/motions/motion-setup-inputs/motion-content-input.vue");
@@ -2270,7 +2270,7 @@ __webpack_require__.r(__webpack_exports__);
     VoteRequiredInputs: _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: ['existingMotion'],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
   data: function data() {
     return {
       // motion: null,
@@ -2325,8 +2325,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motions_motions_card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../motions/motions-card */ "./resources/js/components/motions/motions-card.vue");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2356,7 +2356,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     MotionsCard: _motions_motions_card__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   computed: {//     meetingName: function () {
     //         if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
     //
@@ -2385,8 +2385,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2450,7 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "results-page",
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
       showCounts: false
@@ -2524,8 +2524,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../text-display/vote-receipt */ "./resources/js/components/text-display/vote-receipt.vue");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
 //
 //
@@ -2618,7 +2618,7 @@ __webpack_require__.r(__webpack_exports__);
     VoteButtons: _vote_casting_vote_buttons__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
   data: function data() {
     return {
       voteRecorded: false,
@@ -2958,8 +2958,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3084,12 +3084,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3146,7 +3152,7 @@ __webpack_require__.r(__webpack_exports__);
     AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {
       localText: '',
@@ -3180,17 +3186,150 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(v) {
         this.localText = v;
       }
-    } // splitOrigText: function () {
-    //     if (_.isUndefined(this.motion)) return ''
-    //     return _.words(this.motion.content, /[^, ]+/g);
-    // },
-    //
-    // splitNewText: function () {
-    //     return _.words(this.localText, /[^, ]+/g);
-    // },
-    //
-    //
+    }
+  },
+  methods: {
+    handleClick: function handleClick() {
+      var payload = {
+        meetingId: this.meeting.id,
+        applies_to: this.motion.id,
+        content: this.localText,
+        type: 'amendment',
+        requires: 0.5
+      };
+      var me = this;
+      var p = this.$store.dispatch('createSubsidiaryMotion', payload);
+      p.then(function () {
+        me.$router.push('meeting-home');
+      });
+    },
+
+    /**
+     * Removes existing edits
+     */
+    handleReset: function handleReset() {
+      this.localText = this.motion.content;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _utilities_amendment_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/amendment.utilities */ "./resources/js/utilities/amendment.utilities.js");
+/* harmony import */ var _utilities_amendment_utilities__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utilities_amendment_utilities__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/**
+ *
+ *
+ *
+ *
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "amendment-text-display",
+  props: ['amendmentText', 'originalText'],
+  mixins: [],
+  data: function data() {
+    return {
+      /**
+       * Classes to attach to a word for different purposes
+       */
+      tags: {
+        changeStart: "<span class='text-danger altered-text'>",
+        changeStop: "</span>",
+        //todo dev maybe someday
+        //classes for use in secondary amendments
+        secondaryAmendment: {
+          //The initial amendment text
+          primary: {
+            insert: 'primary-insert',
+            strike: 'primary-strike',
+            strikeInsert: 'primary-strike-insert'
+          },
+          secondary: {
+            insert: '',
+            strike: '',
+            strikeInsert: ''
+          }
+        },
+        altered: 'text-monospace',
+        inserted: 'text-danger',
+        struck: 'struck'
+      }
+    };
+  },
+  asyncComputed: {
+    maxIdx: function maxIdx() {
+      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return '';
+      if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return '';
+      return this.splitOrigText.length > this.splitNewText.length ? this.splitOrigText.length : this.splitNewText.length;
+    },
+    splitOrigText: function splitOrigText() {
+      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return [];
+      return _.words(this.originalText, /[^, ]+/g);
+    },
+    splitNewText: function splitNewText() {
+      return _.words(this.amendmentText, /[^, ]+/g);
+    },
+    taggedNewText: function taggedNewText() {
+      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return '';
+      if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return '';
+      var me = this;
+      var out = [];
+      var changes = Object(_utilities_amendment_utilities__WEBPACK_IMPORTED_MODULE_1__["checkChanges"])(this.originalText, this.amendmentText); // window.console.log('change set', changes);
+
+      if (changes) {
+        for (var i = 0; i < this.amendmentText.length; i++) {
+          // window.console.log(changes, i);
+          // window.console.log(this.tags.changeStart, 'hd');
+          var w = '';
+
+          if (i === changes.startIndex) {
+            //we are on the first character in the changeset
+            //so add the starting tag
+            w += this.tags.changeStart; // window.console.log('tag', me.tags.changeStart);
+          } //add the actual character
+
+
+          w += me.amendmentText[i]; // window.console.log(me.splitNewText[i]);
+
+          if (i === changes.stopIndex) {
+            // window.console.log('stop');
+            //we are at the end of the changes
+            //so add the closing tag.
+            w += me.tags.changeStop;
+          } //push it into the list that we will later join
+
+
+          out.push(w);
+        }
+      }
+
+      return _.join(out, "");
+    } //
     // taggedNewText: function () {
+    //     if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
+    //     if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
+    //
     //     let out = "";
     //     //whichever is longer to avoid truncating output
     //     let maxIdx = (this.splitOrigText.length > this.splitNewText.length) ? this.splitOrigText.length : this.splitNewText.length;
@@ -3207,156 +3346,9 @@ __webpack_require__.r(__webpack_exports__);
     //
     //     }
     //
-    //     //todo this won't actually help since other users won't have access
-    //     let pl = Payload.factory({
-    //         updateProp: 'taggedAmendmentText',
-    //         updateVal: out
-    //     })
-    //     this.$store.commit('setMotionProp', pl);
-    //
     //     return out;
-    //
-    //
     // }
 
-  },
-  methods: {
-    handleClick: function handleClick() {
-      var payload = {
-        meetingId: this.meeting.id,
-        applies_to: this.motion.id,
-        content: this.localText,
-        type: 'amendment',
-        requires: 0.5
-      };
-      var p = this.$store.dispatch('createSubsidiaryMotion', payload);
-      var me = this;
-      p.then(function () {});
-    } // splitText: function () {
-    //
-    //     _.words(this.originalText, /[^, ]+/g);
-    //
-    //
-    // },
-    //
-    //
-    // tagWord: function (originalWord, newWord) {
-    //
-    //
-    // },
-    //
-    // /**
-    //  * An insertion or strike and insertion has occurred
-    //  */
-    // handleNewLarger: function (oldBag, newBag) {
-    //
-    // },
-    //
-    // check: function (oldText, newText) {
-    //     //Array of True/False corresponding to word indexes in new Text
-    //     // True indicates that has changed
-    //     let out = [];
-    //     let checkIdx = 0;
-    //
-    //     for (let i = 0; i < this.newText.length; i++) {
-    //         if (i > 0) {
-    //             //check whether the last word was changed
-    //
-    //             if (out[i - 1 === true]) {
-    //
-    //             }
-    //             //set the indexer for the old text to be the same
-    //
-    //         }
-    //         if (newText[i] == oldText[i]) {
-    //             //no change
-    //             out.push(false);
-    //         }
-    //
-    //         let checkIdx = i + 1;
-    //         return this.splitNewText[checkIdx] !== this.splitOrigText[i]
-    //
-    //     }
-    //
-    //
-    // },
-    //
-    // /**
-    //  * Check whether the
-    //  * @param newWordIndex
-    //  */
-    // isInsertion: function (newWordIndex) {
-    //     for (let i = 0; i < this.splitOrigText.length; i++) {
-    //         if (this.splitNewText[i] !== this.splitOrigText[i]) {
-    //             //something has changed
-    //
-    //             //
-    //             let checkIdx = i + 1;
-    //             return this.splitNewText[checkIdx] !== this.splitOrigText[i]
-    //         }
-    //     }
-    //     return false;
-    // }
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "amendment-text-display",
-  props: ['amendmentText', 'originalText'],
-  mixins: [],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    splitOrigText: function splitOrigText() {
-      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return [];
-      return _.words(this.originalText, /[^, ]+/g);
-    },
-    splitNewText: function splitNewText() {
-      return _.words(this.amendmentText, /[^, ]+/g);
-    },
-    taggedNewText: function taggedNewText() {
-      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return '';
-      if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return '';
-      var out = ""; //whichever is longer to avoid truncating output
-
-      var maxIdx = this.splitOrigText.length > this.splitNewText.length ? this.splitOrigText.length : this.splitNewText.length;
-
-      for (var i = 0; i < maxIdx; i++) {
-        if (this.splitNewText[i] !== this.splitOrigText[i]) {
-          //something has changed
-          out += " <span class='text-danger'>";
-          out += this.splitNewText[i];
-          out += "</span>";
-        } else {
-          out += " " + this.splitNewText[i];
-        }
-      }
-
-      return out;
-    }
   },
   computed: {}
 });
@@ -3372,8 +3364,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3386,7 +3378,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "create-motion-button",
   props: [],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -3498,8 +3490,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3543,7 +3535,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "end-voting-modal",
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -3573,8 +3565,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _text_display_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../text-display/motion-status-badge */ "./resources/js/components/text-display/motion-status-badge.vue");
 /* harmony import */ var _navigation_vote_nav_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../navigation/vote-nav-button */ "./resources/js/components/navigation/vote-nav-button.vue");
 /* harmony import */ var _navigation_results_nav_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../navigation/results-nav-button */ "./resources/js/components/navigation/results-nav-button.vue");
-/* harmony import */ var _storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../storeMixins/chairMixin */ "./resources/js/components/storeMixins/chairMixin.js");
-/* harmony import */ var _storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
+//
 //
 //
 //
@@ -3638,7 +3633,7 @@ __webpack_require__.r(__webpack_exports__);
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ['motion'],
-  mixins: [_storeMixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
+  mixins: [_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
   asyncComputed: {
     hasVotedOnCurrentMotion: function hasVotedOnCurrentMotion() {
       return this.$store.getters.hasVotedOnCurrentMotion;
@@ -3653,6 +3648,11 @@ __webpack_require__.r(__webpack_exports__);
      */
     isComplete: function isComplete() {
       return this.motion.isComplete;
+    },
+    isAmendment: function isAmendment() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isAmendment();
+      }
     },
 
     /**
@@ -3745,8 +3745,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _end_voting_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./end-voting-button */ "./resources/js/components/motions/end-voting-button.vue");
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 //
@@ -3765,7 +3765,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -3923,8 +3923,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3939,7 +3939,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "delete-motion-button",
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {
       styling: "btn btn-danger "
@@ -3970,8 +3970,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4029,7 +4029,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "delete-motion-modal",
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -4056,10 +4056,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4084,7 +4084,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "description-input",
   props: [],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   //MotionMixin],
   data: function data() {
     return {
@@ -4131,10 +4131,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vote_required_inputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
 /* harmony import */ var _delete_motion_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
 /* harmony import */ var _delete_motion_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _description_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
 /* harmony import */ var _motion_type_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./motion-type-input */ "./resources/js/components/motions/motion-setup-inputs/motion-type-input.vue");
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../models/Motion */ "./resources/js/models/Motion.js");
@@ -4239,7 +4239,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionContentInput: _motion_content_input__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
   data: function data() {
     return {
       draftMotion: null
@@ -4283,10 +4283,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vote_required_inputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
 /* harmony import */ var _delete_motion_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
 /* harmony import */ var _delete_motion_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _description_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
 /* harmony import */ var _motion_type_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./motion-type-input */ "./resources/js/components/motions/motion-setup-inputs/motion-type-input.vue");
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../models/Motion */ "./resources/js/models/Motion.js");
@@ -4398,7 +4398,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionContentInput: _motion_content_input__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: [],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
   data: function data() {
     return {
       draftMotion: null
@@ -4463,10 +4463,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 //
 //
@@ -4487,7 +4487,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-content-input",
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   //, MotionMixin],
   props: ['motion'],
   data: function data() {
@@ -4543,10 +4543,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../routingMixin */ "./resources/js/components/routingMixin.js");
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_routingMixin__WEBPACK_IMPORTED_MODULE_3__);
 //
@@ -4568,7 +4568,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-template-button",
   props: ["template"],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _routingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _routingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   data: function data() {
     return {
       styling: "btn btn-outline-info motion-template-button"
@@ -4706,10 +4706,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4733,7 +4733,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-type-input",
   props: ['motion'],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   // MotionMixin],
   data: function data() {
     return {};
@@ -4772,10 +4772,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4834,7 +4834,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "vote-required-inputs",
   props: ['motion'],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   //, MotionMixin],
   data: function data() {
     return {
@@ -4925,10 +4925,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motion_select_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-select-button */ "./resources/js/components/motions/motion-select-button.vue");
 /* harmony import */ var _motion_select_area__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-select-area */ "./resources/js/components/motions/motion-select-area.vue");
 /* harmony import */ var _end_voting_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./end-voting-modal */ "./resources/js/components/motions/end-voting-modal.vue");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -4980,7 +4980,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionSelectArea: _motion_select_area__WEBPACK_IMPORTED_MODULE_1__["default"],
     MotionSelectButton: _motion_select_button__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   asyncComputed: {
     motions: function motions() {
       var m = this.$store.getters.getStoredMotions;
@@ -5012,8 +5012,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _refresh_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./refresh-button */ "./resources/js/components/navigation/refresh-button.vue");
 //
 //
@@ -5078,7 +5078,7 @@ __webpack_require__.r(__webpack_exports__);
     RefreshButton: _refresh_button__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: [],
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {
       appName: 'voteomatic'
@@ -5808,8 +5808,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMixins/motionMixin */ "./resources/js/components/storeMixins/motionMixin.js");
-/* harmony import */ var _storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
+/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5869,7 +5869,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "vote-confirmation-modal",
   props: ['type'],
-  mixins: [_storeMixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -5945,8 +5945,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_vote_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main/vote-page */ "./resources/js/components/main/vote-page.vue");
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Motion */ "./resources/js/models/Motion.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storeMixins/meetingMixin */ "./resources/js/components/storeMixins/meetingMixin.js");
-/* harmony import */ var _storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navigation/router-tabs */ "./resources/js/components/navigation/router-tabs.vue");
 /* harmony import */ var _navigation_refresh_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./navigation/refresh-button */ "./resources/js/components/navigation/refresh-button.vue");
 /* harmony import */ var _text_display_chair_indicator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./text-display/chair-indicator */ "./resources/js/components/text-display/chair-indicator.vue");
@@ -5994,7 +5994,7 @@ __webpack_require__.r(__webpack_exports__);
     RouterTabs: _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__["default"],
     VotePage: _main_vote_page__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_storeMixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
       isReady: false,
@@ -10511,10 +10511,10 @@ exports.push([module.i, "\n.motion-content[data-v-1319c872] {\n    padding: 6em\
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10523,7 +10523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.struck[data-v-5e13023a] {\n    text-decoration: line-through;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.altered-text[data-v-388f3e82]{\n    font-weight: bold;\n}\n.struck[data-v-388f3e82] {\n    text-decoration: line-through;\n}\n\n/*\nClasses added to the primary amendment text when\ndisplaying a secondary amendment.\n*/\n.primary-insert[data-v-388f3e82]{\n}\n.primary-strike[data-v-388f3e82]{}\n.primary-strike-insert[data-v-388f3e82]{}\n", ""]);
 
 // exports
 
@@ -41836,15 +41836,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -45745,6 +45745,14 @@ var render = function() {
             { staticClass: "btn btn-danger", on: { click: _vm.handleClick } },
             [_vm._v("Propose Amendment\n                ")]
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.handleReset } },
+            [_vm._v("Reset to original\n                ")]
+          )
         ])
       ])
     ])
@@ -45986,6 +45994,12 @@ var render = function() {
         "div",
         { staticClass: "col " },
         [
+          _vm.isAmendment
+            ? _c("span", { staticClass: "badge badge-warning" }, [
+                _vm._v("Amendment")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("span", { class: _vm.motionStyle }, [
             _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
           ]),
@@ -65121,9 +65135,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amendment_setup_area_vue_vue_type_template_id_5e13023a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true& */ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true&");
 /* harmony import */ var _amendment_setup_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./amendment-setup-area.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& */ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -65131,7 +65143,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _amendment_setup_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _amendment_setup_area_vue_vue_type_template_id_5e13023a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _amendment_setup_area_vue_vue_type_template_id_5e13023a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -65160,22 +65172,6 @@ component.options.__file = "resources/js/components/motions/amendment-setup-area
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-setup-area.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&":
-/*!***************************************************************************************************************************!*\
-  !*** ./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& ***!
-  \***************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-setup-area.vue?vue&type=style&index=0&id=5e13023a&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_setup_area_vue_vue_type_style_index_0_id_5e13023a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -65208,7 +65204,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amendment_text_display_vue_vue_type_template_id_388f3e82_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./amendment-text-display.vue?vue&type=template&id=388f3e82&scoped=true& */ "./resources/js/components/motions/amendment-text-display.vue?vue&type=template&id=388f3e82&scoped=true&");
 /* harmony import */ var _amendment_text_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./amendment-text-display.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& */ "./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -65216,7 +65214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _amendment_text_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _amendment_text_display_vue_vue_type_template_id_388f3e82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _amendment_text_display_vue_vue_type_template_id_388f3e82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -65245,6 +65243,22 @@ component.options.__file = "resources/js/components/motions/amendment-text-displ
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-text-display.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&id=388f3e82&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_id_388f3e82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -67044,122 +67058,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/storeMixins/chairMixin.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/storeMixins/chairMixin.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * For any component that needs access to the
- * properties and other things related to
- * the user (not) being the chair.
- *
- * @type {{computed: {}}}
- */
-module.exports = {
-  asyncComputed: {
-    isChair: function isChair() {
-      return this.$store.getters.getIsAdmin;
-    }
-  }
-};
-
-/***/ }),
-
-/***/ "./resources/js/components/storeMixins/meetingMixin.js":
-/*!*************************************************************!*\
-  !*** ./resources/js/components/storeMixins/meetingMixin.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * For any component that needs access to the
- * current meeting.
- *
- * @type {{computed: {}}}
- */
-module.exports = {
-  computed: {
-    /**
-     * The current global meeting
-     */
-    meeting: {
-      get: function get() {
-        return this.$store.getters.getActiveMeeting;
-      },
-      set: function set(v) {
-        this.$store.commit('setMeeting', v);
-      }
-    },
-    meetingName: function meetingName() {
-      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
-      return this.meeting.name;
-    },
-    meetingDate: function meetingDate() {
-      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
-      return this.meeting.readableDate();
-    }
-  }
-};
-
-/***/ }),
-
-/***/ "./resources/js/components/storeMixins/motionMixin.js":
-/*!************************************************************!*\
-  !*** ./resources/js/components/storeMixins/motionMixin.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * For any component that needs access to the
- * current motion.
- *
- * @type {{computed: {}}}
- */
-module.exports = {
-  computed: {
-    /**
-     * The current global motion
-     */
-    motion: {
-      get: function get() {
-        return this.$store.getters.getActiveMotion;
-      },
-      set: function set(v) {
-        this.$store.commit('setMotion', v);
-      }
-    }
-  },
-  asyncComputed: {
-    /**
-     * If true, voting has ended on the motion.
-     * If false, voting has either not begun or is in progress
-     */
-    isMotionComplete: {
-      get: function get() {
-        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-          return this.motion.isComplete;
-        }
-      },
-      "default": false
-    },
-    selectedMotion: function selectedMotion() {
-      return this.$store.getters.getActiveMotion;
-    },
-    isAmendment: function isAmendment() {
-      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-        return this.motion.isAmendment();
-      }
-    }
-  }
-};
-
-/***/ }),
-
 /***/ "./resources/js/components/text-display/chair-indicator.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/text-display/chair-indicator.vue ***!
@@ -67883,6 +67781,122 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_voteomatic_vue_vue_type_template_id_b8f19e40_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/chairMixin.js":
+/*!*******************************************!*\
+  !*** ./resources/js/mixins/chairMixin.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * For any component that needs access to the
+ * properties and other things related to
+ * the user (not) being the chair.
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  asyncComputed: {
+    isChair: function isChair() {
+      return this.$store.getters.getIsAdmin;
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/meetingMixin.js":
+/*!*********************************************!*\
+  !*** ./resources/js/mixins/meetingMixin.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * For any component that needs access to the
+ * current meeting.
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  computed: {
+    /**
+     * The current global meeting
+     */
+    meeting: {
+      get: function get() {
+        return this.$store.getters.getActiveMeeting;
+      },
+      set: function set(v) {
+        this.$store.commit('setMeeting', v);
+      }
+    },
+    meetingName: function meetingName() {
+      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+      return this.meeting.name;
+    },
+    meetingDate: function meetingDate() {
+      if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+      return this.meeting.readableDate();
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/motionMixin.js":
+/*!********************************************!*\
+  !*** ./resources/js/mixins/motionMixin.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * For any component that needs access to the
+ * current motion.
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  computed: {
+    /**
+     * The current global motion
+     */
+    motion: {
+      get: function get() {
+        return this.$store.getters.getActiveMotion;
+      },
+      set: function set(v) {
+        this.$store.commit('setMotion', v);
+      }
+    }
+  },
+  asyncComputed: {
+    /**
+     * If true, voting has ended on the motion.
+     * If false, voting has either not begun or is in progress
+     */
+    isMotionComplete: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.motion.isComplete;
+        }
+      },
+      "default": false
+    },
+    selectedMotion: function selectedMotion() {
+      return this.$store.getters.getActiveMotion;
+    },
+    isAmendment: function isAmendment() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isAmendment();
+      }
+    }
+  }
+};
 
 /***/ }),
 
@@ -69430,7 +69444,7 @@ var getters = {
   getMotionById: function getMotionById(state) {
     return function (id) {
       // return function ( state, id ) {
-      window.console.log(id, state, id);
+      // window.console.log(id, state, id);
       var r = state.motions.filter(function (i) {
         if (i.id === id) {
           return i;
@@ -69843,6 +69857,115 @@ module.exports = {
    */
   isAdmin: false
 };
+
+/***/ }),
+
+/***/ "./resources/js/utilities/amendment.utilities.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/utilities/amendment.utilities.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var _this = this;
+
+// module.exports = {
+//
+//     methods: {
+//
+module.exports.findMaxSize = function (orig, amend) {
+  return orig.length > amend.length ? orig.length : amend.length;
+};
+
+module.exports.findChangeStart = function (searchIndex, orig, amend) {
+  var maxIdx = _this.findMaxSize(orig, amend);
+
+  for (searchIndex; searchIndex <= maxIdx; searchIndex++) {
+    if (orig[searchIndex] !== amend[searchIndex]) {
+      return searchIndex;
+    }
+  } // return null;
+
+};
+/**
+ * Receives two strings and returns an object
+ *      { startIndex : x, stopIndex : y}
+ * with the indexes of the first and last word in the change.
+ *
+ * @param oldText
+ * @param newText
+ * @param searchStartIndex
+ * @returns {boolean|{stopIndex: *, startIndex: undefined}}
+ */
+
+
+module.exports.checkChanges = function (oldText, newText) {
+  var searchStartIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  //any changes
+  var a = oldText.search(newText);
+  if (a > -1) return false;
+
+  var startIndex = _this.findChangeStart(searchStartIndex, oldText, newText);
+
+  var out = {
+    startIndex: startIndex,
+    //default all the way to end
+    stopIndex: newText.length
+  };
+
+  for (var i = startIndex; i <= newText.length; i++) {
+    var b = newText.length - i;
+
+    var c = _.join(_.takeRight(newText, b), '');
+
+    if (oldText.search(c) > -1) {
+      //we are back to the original
+      //so the index of the last change is the character
+      //immediately preceding this one.
+      out.stopIndex = i - 1;
+      return out;
+    }
+  }
+
+  return out;
+}; //     }
+// }
+//
+// /**
+//  * Returns the index of the last non-equal word.
+//  * Thus the closing tag goes between the index this returns
+//  * and the next item in the list.
+//  * @param searchStart
+//  * @param orig
+//  * @param amend
+//  * @returns {*[]|*}
+//  */
+// function findChangeEnd(searchStart, orig, amend) {
+//     let idx = searchStart;
+//     let otl = orig.length;
+//     let t = _.clone(orig);
+//     for (idx; idx <= otl; idx++) {
+//         t.splice(idx, 0, amend[idx]);
+//         if (_.isEqual(t, amend)) {
+//             return idx;
+//             //if mere addition, returns the start index
+//         }
+//     }
+//     return [t, amend];
+// }
+//
+// function isInsertion(originalBag, amendmentBag) {
+//     let changeStart = findChangeStart(0, originalBag, amendmentBag);
+//     if (_.isUndefined(changeStart)) return false;
+//     let changeEnd = findChangeEnd(changeStart, originalBag, amendmentBag);
+//     if (_.isUndefined(changeEnd)) return false;
+//
+//     return {
+//         type: 'insert',
+//         start: changeStart,
+//         end: changeEnd
+//     }
+// }
 
 /***/ }),
 

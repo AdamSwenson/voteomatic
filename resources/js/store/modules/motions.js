@@ -418,7 +418,7 @@ const getters = {
 
     getMotionById: (state) => (id) => {
         // return function ( state, id ) {
-        window.console.log(id, state, id);
+        // window.console.log(id, state, id);
         let r = state.motions.filter(function (i) {
             if (i.id === id) {
                 return i;

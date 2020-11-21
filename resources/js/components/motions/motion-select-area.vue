@@ -14,6 +14,9 @@
             </div>
 
             <div class="col ">
+                <span class="badge badge-warning"
+                      v-if="isAmendment"
+                >Amendment</span>
 
                 <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
@@ -27,7 +30,7 @@
                     v-if="isSelected && ! isComplete "
                 ></vote-nav-button>
 
-<!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
+                <!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
                 <end-voting-button
                     v-if="isSelected && ! isComplete && isChair"
                     :motion="motion"
@@ -51,13 +54,13 @@ import * as routes from "../../routes";
 import MotionStatusBadge from "../text-display/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
-import ChairMixin from "../storeMixins/chairMixin";
+import ChairMixin from "../../mixins/chairMixin";
 
 export default {
     name: "motion-select-area",
     components: {ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton},
     props: ['motion'],
-mixins: [ChairMixin],
+    mixins: [ChairMixin],
     asyncComputed: {
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;
@@ -74,6 +77,13 @@ mixins: [ChairMixin],
          */
         isComplete: function () {
             return this.motion.isComplete;
+        },
+
+        isAmendment: function(){
+            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                return this.motion.isAmendment();
+            }
+
         },
 
         /**
@@ -112,7 +122,6 @@ mixins: [ChairMixin],
 
             return this.motion.id === this.selectedMotion.id
         },
-
 
 
         /**
@@ -157,15 +166,13 @@ mixins: [ChairMixin],
 
         styling: {
             get: function () {
-                if(this.isSelected){
+                if (this.isSelected) {
                     return ' bg-info '
                 }
 
             },
             default: ''
         },
-
-
 
 
     },

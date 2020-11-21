@@ -32,7 +32,7 @@
 //The main page for anything
 import VotePage from "./main/vote-page";
 import Motion from '../models/Motion';
-import MeetingMixin from './storeMixins/meetingMixin';
+import MeetingMixin from '../mixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
 import RefreshButton from "./navigation/refresh-button";
 import ChairIndicator from "./text-display/chair-indicator";

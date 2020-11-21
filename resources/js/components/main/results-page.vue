@@ -59,7 +59,7 @@
 <script>
 import * as routes from "../../routes";
 import Motion from '../../models/Motion';
-import motionMixin from '../storeMixins/motionMixin';
+import motionMixin from '../../mixins/motionMixin';
 
 export default {
     name: "results-page",

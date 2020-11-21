@@ -10,7 +10,7 @@
 
 <script>
 
-import MeetingMixin from '../storeMixins/meetingMixin';
+import MeetingMixin from '../../mixins/meetingMixin';
 
 export default {
     name: "meeting-select-button",

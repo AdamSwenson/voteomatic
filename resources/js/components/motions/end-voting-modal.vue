@@ -32,7 +32,7 @@
 
 <script>
 
-import MotionMixin from '../storeMixins/motionMixin'
+import MotionMixin from '../../mixins/motionMixin'
 
 /**
  * Note, this will require that the end-voting-button is
