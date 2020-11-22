@@ -16,13 +16,13 @@ class MotionFactory extends Factory
 
     public $motions = [
         ['content' => "RESOLVED that tacos be served at every meeting",
-            'requires' => 0.5],
+            'requires' => 0.5, 'type'=>'main'],
         ['content' => "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
-            'requires' => 0.5],
-        ['content' => "That the pending matter be tabled", 'requires' => 0.5],
-        ['content' => "That the CSUN cats be invited to each Senate meeting", 'requires' => 0.5],
-        ['content' => "That the call for the 3 pending questions be approved", 'requires' => 0.66],
-        ['content' => "That the call for the previous question be approved", 'requires' => 0.66],
+            'requires' => 0.5, 'type'=>'main'],
+        ['content' => "That the pending matter be tabled", 'requires' => 0.5, 'type'=>'procedural-subsidiary'],
+        ['content' => "That the CSUN cats be invited to each Senate meeting", 'requires' => 0.5, 'type'=>'main'],
+        ['content' => "That the call for the 3 pending questions be approved", 'requires' => 0.66, 'type'=>'procedural-subsidiary'],
+        ['content' => "That the call for the previous question be approved", 'requires' => 0.66, 'type'=>'procedural-subsidiary'],
     ];
 
     public $descriptions = ["",
@@ -52,7 +52,9 @@ class MotionFactory extends Factory
 
             'description' => $description,
 
-            'requires' => $m['requires']
+            'requires' => $m['requires'],
+            'type' => $m['type'],
+            'seconded'=> false,
 
         ];
     }

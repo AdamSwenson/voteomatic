@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSecondedToMotionsTable extends Migration
+class AddSupersededByColumnToMotions extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddSecondedToMotionsTable extends Migration
     public function up()
     {
         Schema::table('motions', function (Blueprint $table) {
-            $table->boolean('seconded')->default(false);
+                $table->integer('superseded_by')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddSecondedToMotionsTable extends Migration
     public function down()
     {
         Schema::table('motions', function (Blueprint $table) {
-            $table->dropColumn('seconded');
+            $table->dropColumn('superseded_by');
         });
     }
 }

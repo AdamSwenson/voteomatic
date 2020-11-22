@@ -43,6 +43,7 @@ Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
 Route::get('/entry-test', [EntryController::class, 'loginTest']);
 //Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
 Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
+Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
 
 /* =============================

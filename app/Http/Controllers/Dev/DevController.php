@@ -30,4 +30,15 @@ class DevController extends Controller
             'motion' => $motion]]);
 
     }
+
+
+
+    public function tree(Meeting $motion)
+    {
+
+        return view('dev.dev-amendment', ['data' => [
+            'meeting' => $meeting,
+            'motion' => $motion]]);
+
+    }
 }

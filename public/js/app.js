@@ -3142,6 +3142,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -45742,16 +45745,16 @@ var render = function() {
         _c("div", { staticClass: "col" }, [
           _c(
             "button",
-            { staticClass: "btn btn-danger", on: { click: _vm.handleClick } },
-            [_vm._v("Propose Amendment\n                ")]
+            { staticClass: "btn btn-primary", on: { click: _vm.handleReset } },
+            [_vm._v("Reset to original\n                ")]
           )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col" }, [
           _c(
             "button",
-            { staticClass: "btn btn-primary", on: { click: _vm.handleReset } },
-            [_vm._v("Reset to original\n                ")]
+            { staticClass: "btn btn-danger", on: { click: _vm.handleClick } },
+            [_vm._v("Propose Amendment\n                ")]
           )
         ])
       ])
@@ -69248,23 +69251,39 @@ var actions = {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].endVoting(motion.id);
       return Vue.axios.post(url).then(function (response) {
-        var d = response.data; //todo this means that the motion must be selected in order to end voting. That probably makes sense...
+        //This will be the updated motion we just sent to the server
+        var endedMotion = response.data.ended; //If the motion was an amendment, the server will
+        //also return a new version of the motion which was amended.
+        //Otherwise, this will just be false
+
+        var superseding = response.data.superseding; //todo this means that the motion must be selected in order to end voting. That probably makes sense...
 
         commit('setMotion', motion);
         var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__["default"].factory({
           object: motion,
           updateProp: 'isComplete',
-          updateVal: d.is_complete
+          updateVal: endedMotion.is_complete
         }); //we leave it as the currently set motion so that
         //the results tab will provide results for the
         //immediate past motion.
         //Instead, we just update the completed property on the
         //motion
 
-        commit('setMotionProp', pl); // let motion = new Motion(d);
+        commit('setMotionProp', pl); //Handle swapping in the new motion if there was an amendment.
+
+        if (superseding) {
+          var original = getters.getMotionById(superseding.superseded_by); //remove that from the store (but don't delete from server!)
+
+          commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
+
+          var _motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](d);
+
+          commit('addMotionToStore', _motion);
+        } // let motion = new Motion(d);
         // // let motion = new Motion(d.id, d.name, d.date);
         // commit('addMotionToStore', motion);
         // commit('setMotion', motion);
+
 
         resolve();
       });

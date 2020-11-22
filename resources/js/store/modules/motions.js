@@ -226,12 +226,22 @@ const actions = {
             let url = routes.motions.endVoting(motion.id);
             return Vue.axios.post(url)
                 .then((response) => {
-                    let d = response.data;
+
+                    //This will be the updated motion we just sent to the server
+                    let endedMotion = response.data.ended;
+                    //If the motion was an amendment, the server will
+                    //also return a new version of the motion which was amended.
+                    //Otherwise, this will just be false
+                    let superseding = response.data.superseding;
 
                     //todo this means that the motion must be selected in order to end voting. That probably makes sense...
                     commit('setMotion', motion);
 
-                    let pl = Payload.factory({object: motion, updateProp: 'isComplete', updateVal: d.is_complete});
+                    let pl = Payload.factory({
+                        object: motion,
+                        updateProp: 'isComplete',
+                        updateVal: endedMotion.is_complete
+                    });
 
                     //we leave it as the currently set motion so that
                     //the results tab will provide results for the
@@ -239,6 +249,18 @@ const actions = {
                     //Instead, we just update the completed property on the
                     //motion
                     commit('setMotionProp', pl);
+
+
+                    //Handle swapping in the new motion if there was an amendment.
+                    if(superseding){
+                        let original = getters.getMotionById(superseding.superseded_by);
+                        //remove that from the store (but don't delete from server!)
+                        commit('deleteMotion', original);
+                        //make a new motion and add it to the store (but not to the server)
+                        let motion = new Motion(d);
+                        commit('addMotionToStore', motion);
+
+                    }
 
 
                     // let motion = new Motion(d);

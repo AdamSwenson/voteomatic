@@ -31,18 +31,21 @@
             </div>
 
             <div class="row">
-                <div class="col">
-                    <button class="btn btn-danger"
-                            v-on:click="handleClick"
-                    >Propose Amendment
-                    </button>
-                </div>
+
                 <div class="col">
                     <button class="btn btn-primary"
                             v-on:click="handleReset"
                     >Reset to original
                     </button>
                 </div>
+
+                <div class="col">
+                    <button class="btn btn-danger"
+                            v-on:click="handleClick"
+                    >Propose Amendment
+                    </button>
+                </div>
+
             </div>
 
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Motion;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class MotionStackController extends Controller
         $this->middleware('auth');
 
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
-
+        $this->motionRepo = app()->make(IMotionRepository::class);
     }
 
 
@@ -37,9 +38,25 @@ class MotionStackController extends Controller
         $motion->is_complete = true;
         $motion->save();
 
-        return response()->json($motion);
+        //this will return false if not an amendment
+        //otherwise it will return a new motion which has been amended with
+        //the motion passed in
+        $superseding = $this->motionRepo->handleAmendment($motion);
+
+        //We would set the superseding motion as current here
+        //Not doing so that people on the client can view the results
+        //and then manually select the superseding.
+        //todo That means the client needs to know about the superseding motion
+
+        $out = [
+            'ended' => $motion,
+            'superseding' => $superseding
+        ];
+
+        return response()->json($out);
 
     }
+
 
 
     /**
@@ -68,7 +85,7 @@ class MotionStackController extends Controller
      * @return bool|\Illuminate\Http\JsonResponse
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function storeOrder( Meeting $meeting, Request $request )
+    public function storeOrder(Meeting $meeting, Request $request)
     {
         try {
             $assignmentDao = app()->make(IAssignmentRepository::class);

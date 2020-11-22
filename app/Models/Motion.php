@@ -18,9 +18,31 @@ class Motion extends Model
         'is_current',
         'meeting_id',
         'requires',
+        'superseded_by',
         'type'];
 
-    protected $motionTypes = ['main', 'privileged', 'amendment', 'procedural-main', 'procedural-subsidiary', 'incidental'];
+    protected $motionTypes = [
+        'main',
+        'privileged',
+        'amendment',
+        'amendment-secondary',
+        'procedural-main',
+        'procedural-subsidiary',
+        'incidental'
+    ];
+
+    /**
+     * Names of motion types which denote that
+     * the motion should be handled as an amendment
+     * of another motion.
+     * This allows everything else to not worry about
+     * how we name the various possible forms of amendments
+     * @var array
+     */
+    public $amendmentTypes = [
+        'amendment',
+        'amendment-secondary',
+    ];
 
     protected $casts = ['is_complete' => 'boolean', 'is_current' => 'boolean'];
 
@@ -54,6 +76,30 @@ class Motion extends Model
     }
 
     /**
+     * When a motion has been altered by a subsidary action
+     * (e.g., an amendment), a separate process will create a
+     * new motion with the amended text which supersedes this motion.
+     * That motion gets passed in here, and the present motion
+     * is set as superseded by it.
+     *
+     * When a motion is superseded, it should not appear in the
+     * motion tree as it was never voted upon.
+     *
+     * @param Motion $supersedingMotion
+     */
+    public function markSuperseded(Motion $supersedingMotion){
+        $this->superseded_by = $supersedingMotion->id;
+        $this->save();
+    }
+
+
+    public function getSupersedingMotion(){
+        if(! is_null($this->superseded_by)){
+            return Motion::where('id', $this->superseded_by )->first();
+        }
+    }
+
+    /**
      * Returns true if the motion is not subsidiary to any
      * other motion
      * NB, includes incidental motions
@@ -62,6 +108,10 @@ class Motion extends Model
         return is_null($this->applies_to);
     }
 
+    public function isAmendment(){
+        $types = collect($this->amendmentTypes);
+        return $types->contains($this->type);
+    }
 
     // ------------------ properties
 

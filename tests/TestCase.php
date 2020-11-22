@@ -14,6 +14,12 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
+     * The object under test
+     * @var
+     */
+    public $object;
+
+    /**
      * @var \Faker\Generator
      */
     public $faker;
