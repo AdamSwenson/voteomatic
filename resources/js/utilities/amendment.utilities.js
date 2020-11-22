@@ -2,6 +2,46 @@
 //
 //     methods: {
 //
+let _ = require('lodash');
+
+const Diff = require('diff');
+
+module.exports.getTaggedChanges = (orig, amend, addedTag = 'text-danger', removedTag = 'struck') => {
+    let diff = Diff.diffWords(orig, amend);
+    let out = [];
+    window.console.log(diff);
+    diff.forEach((part) => {
+
+        // window.console.log(this.tags.changeStart, 'hd');
+        let w = '';
+        if (part.added) {
+            //we are on the first character in the changeset
+            //so add the starting tag
+            w += "<span class='" + addedTag + "'>";
+        }
+
+        if (part.removed) {
+            w += "<span class='" + removedTag + "'>";
+        }
+
+        //add the actual character
+        w += part.value;
+        // window.console.log(me.splitNewText[i]);
+
+        if (part.added || part.removed) {
+            //we are at the end of the changes
+            //so add the closing tag.
+            w += '</span>'
+        }
+
+        //push it into the list that we will later join
+        out.push(w);
+
+    });
+
+    return _.join(out, "");
+};
+
 
 module.exports.findMaxSize = (orig, amend) => {
     return (orig.length > amend.length) ? orig.length : amend.length;

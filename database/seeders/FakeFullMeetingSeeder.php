@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\Vote;
+use App\Repositories\IMotionRepository;
 use Illuminate\Database\Seeder;
 
 class FakeFullMeetingSeeder extends Seeder
@@ -19,6 +21,7 @@ class FakeFullMeetingSeeder extends Seeder
     {
 //        $voters = User::factory()->count(FakeFullMeetingSeeder::NUMBER_VOTERS)->create();
 
+        $repo  = app()->make(IMotionRepository::class);
         $meeting = Meeting::factory()->create();
 
 
@@ -28,7 +31,6 @@ class FakeFullMeetingSeeder extends Seeder
            'meeting_id' => $meeting->id,
            'type' => 'main'
         ]);
-
 
 
         //insert-primary
@@ -44,6 +46,9 @@ class FakeFullMeetingSeeder extends Seeder
         //defeated
         Vote::factory(['motion_id' => $m1a1->id])->affirmative()->count(3)->create();
         Vote::factory(['motion_id' => $m1a1->id])->negative()->count(7)->create();
+        $m1a1->is_complete = true;
+        $m1a1->save();
+
 
         //then the dog faction gets more direct
         //by removing not and praising the dog
@@ -72,16 +77,20 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.66,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a2a
+            'applies_to' => $m1a2a->id
         ]);
 
         //question is called
         Vote::factory(['motion_id' => $m1a2b->id])->affirmative()->count(8)->create();
         Vote::factory(['motion_id' => $m1a2b->id])->negative()->count(2)->create();
+        $m1a2b->is_complete = true;
+        $m1a2b->save();
 
         //Vote on the secondary
         Vote::factory(['motion_id' => $m1a2a->id])->affirmative()->count(8)->create();
         Vote::factory(['motion_id' => $m1a2a->id])->negative()->count(2)->create();
+        $m1a2a->is_complete = true;
+        $m1a2a->save();
 
         //now we have a problem.... the primary is replaced by the secondary
         //how do we represent that?
@@ -102,13 +111,14 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a3
+            'applies_to' => $m1a3->id
         ]);
 
         //Vote on tabling
         Vote::factory(['motion_id' => $m1a3a->id])->affirmative()->count(8)->create();
         Vote::factory(['motion_id' => $m1a3a->id])->negative()->count(2)->create();
-
+        $m1a3a->is_complete = true;
+        $m1a3a->save();
 
         $main2 = Motion::create([
             'content' => "That the CSUN cats be invited to every Senate meeting",
@@ -120,6 +130,8 @@ class FakeFullMeetingSeeder extends Seeder
         //Vote on main2
         Vote::factory(['motion_id' => $main2->id])->affirmative()->count(10)->create();
         Vote::factory(['motion_id' => $main2->id])->negative()->count(0)->create();
+        $main2->is_complete = true;
+        $main2->save();
 
         //back to the dog
         $m1a3b = Motion::create([
@@ -127,26 +139,29 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a3
+            'applies_to' => $m1a3->id
         ]);
 
         Vote::factory(['motion_id' => $m1a3b->id])->affirmative()->count(9)->create();
         Vote::factory(['motion_id' => $m1a3b->id])->negative()->count(1)->create();
+        $m1a3b->is_complete = true;
+        $m1a3b->save();
 
         //the amended amendment is adopted
         Vote::factory(['motion_id' => $m1a3->id])->affirmative()->count(9)->create();
         Vote::factory(['motion_id' => $m1a3->id])->negative()->count(1)->create();
-
+        $m1a3->is_complete = true;
+        $m1a3->save();
         //Now the main motion text is the amended text....
 
+        $main3 = $repo->handleApprovedAmendment($main1, $m1a3);
 
-        $m1a3b = Motion::create([
-            'content' => "That the tabled matter pertaining to dogs and hamburgers be taken from the table",
-            'requires' => 0.5,
-            'meeting_id' => $meeting->id,
-            'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a3
-        ]);
+        //finally we vote on the dog
+        Vote::factory(['motion_id' => $main3->id])->affirmative()->count(6)->create();
+        Vote::factory(['motion_id' => $main3->id])->negative()->count(4)->create();
+        $main3->is_complete = true;
+        $main3->save();
 
+        echo "Full meeting id: " . $meeting->id;
     }
 }

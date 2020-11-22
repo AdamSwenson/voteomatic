@@ -5,10 +5,11 @@
         <div class="card-body">
             <div class="row display-area text-center">
                 <div class="col">
-
-                    <amendment-text-display :amendment-text="localText"
-                                            :original-text="originalText"
-                    ></amendment-text-display>
+                    <blockquote class="blockquote mb-0">
+                        <amendment-text-display :amendment-text="localText"
+                                                :original-text="originalText"
+                        ></amendment-text-display>
+                    </blockquote>
 
                     <!--                    <h4>Amendment display</h4>-->
                     <!--                    <div class="clearfix"></div>-->

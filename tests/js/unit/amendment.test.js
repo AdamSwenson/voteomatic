@@ -1,6 +1,15 @@
 
 let _ = require('lodash');
-const {findMaxSize, checkChanges, findChangeStart} =require('../../../resources/js/utilities/amendment.utilities');
+const {findMaxSize, checkChanges, findChangeStart, getTaggedChanges} =require('../../../resources/js/utilities/amendment.utilities');
+
+
+test('getTaggedChanges --- insert in middle', () => {
+    let orig = "Dog eats tacos";
+    let amend = "Dog eats delicious tacos";
+    //i.e., we would put the tag immediately before each of these indexes
+    expect(getTaggedChanges(orig, amend)).toStrictEqual({startIndex: 9, stopIndex: 17});
+})
+
 
 
 test('check changes --- no change', () => {

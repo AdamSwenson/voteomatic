@@ -7,11 +7,12 @@ export default class Motion extends IModel {
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null}) {
+    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null}) {
         super();
         this.id = id;
         this.content = content;
         this.description = description;
+        this.superseded_by = superseded_by;
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
         this.applies_to = applies_to;
@@ -52,6 +53,10 @@ export default class Motion extends IModel {
                 this.englishRequires = '';
         }
 
+    }
+
+    isSuperseded(){
+        return ! _.isNull(this.superseded_by);
     }
 
     isAmendment() {

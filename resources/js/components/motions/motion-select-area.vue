@@ -3,6 +3,7 @@
     <li class="list-group-item "
         v-bind:class="styling">
         <div class="row">
+
             <div class="col-sm "
                  v-if="isChair"
             >
@@ -14,11 +15,22 @@
             </div>
 
             <div class="col ">
-                <span class="badge badge-warning"
-                      v-if="isAmendment"
+                <span
+                    class="badge badge-warning"
+                    v-if="isAmendment"
                 >Amendment</span>
 
-                <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+                <amendment-text-display
+                    v-if="isAmendment"
+                    :original-text="originalText"
+                    :amendment-text="motion.content"
+                    :tags="amendmentTags"
+                ></amendment-text-display>
+
+                <span
+                    v-else
+                    v-bind:class="motionStyle"
+                >   {{ motion.content }}   </span>
 
                 <motion-status-badge :is-passed="isPassed"></motion-status-badge>
             </div>
@@ -55,13 +67,28 @@ import MotionStatusBadge from "../text-display/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
+import AmendmentTextDisplay from "./amendment-text-display";
 
 export default {
     name: "motion-select-area",
-    components: {ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton},
+    components: {
+        AmendmentTextDisplay,
+        ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
+    },
     props: ['motion'],
     mixins: [ChairMixin],
+    data: function () {
+        return {
+            amendmentTags: {
+                inserted: 'amendment-added',
+                struck: 'struck',
+
+            }
+        }
+    },
     asyncComputed: {
+
+
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;
         },
@@ -79,7 +106,7 @@ export default {
             return this.motion.isComplete;
         },
 
-        isAmendment: function(){
+        isAmendment: function () {
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isAmendment();
             }
@@ -129,7 +156,7 @@ export default {
          * @returns {string}
          */
         motionStyle: function () {
-            if (this.isComplete) {
+            if (this.isComplete || this.motion.isSuperseded()) {
                 return 'text-muted';
             }
             if (this.isSelected) {
@@ -137,6 +164,14 @@ export default {
             }
         },
 
+        originalText: function () {
+            try {
+                let orig = this.$store.getters.getMotionById(this.motion.applies_to);
+                return orig.content;
+            } catch (e) {
+                return '';
+            }
+        },
         /**
          * The current globally active motion
          * @returns {any}
@@ -179,6 +214,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+
+.amendment-added{
+    text-decoration: underline;
+}
+
 
 </style>
