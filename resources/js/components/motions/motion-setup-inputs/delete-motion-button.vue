@@ -10,7 +10,7 @@
 
 <script>
 
-import MotionMixin from "../../../mixins/motionMixin";
+import MotionMixin from "../../../mixins/motionStoreMixin";
 
 export default {
     name: "delete-motion-button",

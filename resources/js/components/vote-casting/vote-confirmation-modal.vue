@@ -48,7 +48,7 @@
 
 <script>
 
-import MotionMixin from '../../mixins/motionMixin'
+import MotionMixin from '../../mixins/motionStoreMixin'
 
 /**
  * Note, this will require that the delete-motion-button is

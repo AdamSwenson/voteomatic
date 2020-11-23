@@ -59,12 +59,13 @@
 <script>
 import * as routes from "../../routes";
 import Motion from '../../models/Motion';
-import motionMixin from '../../mixins/motionMixin';
+import motionMixin from '../../mixins/motionStoreMixin';
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 
 export default {
     name: "results-page",
 
-    mixins: [motionMixin],
+    mixins: [motionMixin, motionObjectMixin],
 
     data: function () {
         return {

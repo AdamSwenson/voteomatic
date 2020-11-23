@@ -56,8 +56,10 @@
 
 <script>
 
-import MotionMixin from "../../mixins/motionMixin";
+import MotionMixin from "../../mixins/motionStoreMixin";
 import MeetingMixin from "../../mixins/meetingMixin";
+
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 import Payload from "../../models/Payload";
 import AmendmentTextDisplay from "./amendment-text-display";
 
@@ -66,7 +68,7 @@ export default {
     components: {AmendmentTextDisplay},
     props: [],
 
-    mixins: [MotionMixin, MeetingMixin],
+    mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
     data: function () {
         return {

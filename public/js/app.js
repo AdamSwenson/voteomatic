@@ -2113,23 +2113,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../models/Meeting */ "./resources/js/models/Meeting.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
-/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
-/* harmony import */ var _motions_motion_setup_inputs_motion_content_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-content-input */ "./resources/js/components/motions/motion-setup-inputs/motion-content-input.vue");
-/* harmony import */ var _motions_motion_setup_inputs_motion_type_input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-type-input */ "./resources/js/components/motions/motion-setup-inputs/motion-type-input.vue");
-/* harmony import */ var _motions_motion_setup_inputs_description_input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
-/* harmony import */ var _motions_motion_setup_inputs_motion_template_buttons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-template-buttons */ "./resources/js/components/motions/motion-setup-inputs/motion-template-buttons.vue");
-/* harmony import */ var _motions_create_motion_button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../motions/create-motion-button */ "./resources/js/components/motions/create-motion-button.vue");
-/* harmony import */ var _motions_motion_setup_inputs_delete_motion_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
-/* harmony import */ var _motions_motion_setup_inputs_delete_motion_modal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
-/* harmony import */ var _motions_motion_setup_inputs_main_motion_setup_area__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/main-motion-setup-area */ "./resources/js/components/motions/motion-setup-inputs/main-motion-setup-area.vue");
-/* harmony import */ var _motions_motion_setup_inputs_amendment_button__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/amendment-button */ "./resources/js/components/motions/motion-setup-inputs/amendment-button.vue");
-/* harmony import */ var _motions_amendment_setup_area__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../motions/amendment-setup-area */ "./resources/js/components/motions/amendment-setup-area.vue");
-/* harmony import */ var _motions_motion_setup_inputs_main_motion_edit_area__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/main-motion-edit-area */ "./resources/js/components/motions/motion-setup-inputs/main-motion-edit-area.vue");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
+/* harmony import */ var _motions_motion_setup_inputs_motion_content_input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-content-input */ "./resources/js/components/motions/motion-setup-inputs/motion-content-input.vue");
+/* harmony import */ var _motions_motion_setup_inputs_motion_type_input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-type-input */ "./resources/js/components/motions/motion-setup-inputs/motion-type-input.vue");
+/* harmony import */ var _motions_motion_setup_inputs_description_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
+/* harmony import */ var _motions_motion_setup_inputs_motion_template_buttons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/motion-template-buttons */ "./resources/js/components/motions/motion-setup-inputs/motion-template-buttons.vue");
+/* harmony import */ var _motions_create_motion_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../motions/create-motion-button */ "./resources/js/components/motions/create-motion-button.vue");
+/* harmony import */ var _motions_motion_setup_inputs_delete_motion_button__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
+/* harmony import */ var _motions_motion_setup_inputs_delete_motion_modal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
+/* harmony import */ var _motions_motion_setup_inputs_main_motion_setup_area__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/main-motion-setup-area */ "./resources/js/components/motions/motion-setup-inputs/main-motion-setup-area.vue");
+/* harmony import */ var _motions_motion_setup_inputs_amendment_button__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/amendment-button */ "./resources/js/components/motions/motion-setup-inputs/amendment-button.vue");
+/* harmony import */ var _motions_amendment_setup_area__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../motions/amendment-setup-area */ "./resources/js/components/motions/amendment-setup-area.vue");
+/* harmony import */ var _motions_motion_setup_inputs_main_motion_edit_area__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../motions/motion-setup-inputs/main-motion-edit-area */ "./resources/js/components/motions/motion-setup-inputs/main-motion-edit-area.vue");
 //
 //
 //
@@ -2235,6 +2237,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2256,21 +2259,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-setup",
   components: {
-    MainMotionEditArea: _motions_motion_setup_inputs_main_motion_edit_area__WEBPACK_IMPORTED_MODULE_17__["default"],
-    AmendmentSetupArea: _motions_amendment_setup_area__WEBPACK_IMPORTED_MODULE_16__["default"],
-    AmendmentButton: _motions_motion_setup_inputs_amendment_button__WEBPACK_IMPORTED_MODULE_15__["default"],
-    MainMotionSetupArea: _motions_motion_setup_inputs_main_motion_setup_area__WEBPACK_IMPORTED_MODULE_14__["default"],
-    DeleteMotionModal: _motions_motion_setup_inputs_delete_motion_modal__WEBPACK_IMPORTED_MODULE_13__["default"],
-    DeleteMotionButton: _motions_motion_setup_inputs_delete_motion_button__WEBPACK_IMPORTED_MODULE_12__["default"],
-    CreateMotionButton: _motions_create_motion_button__WEBPACK_IMPORTED_MODULE_11__["default"],
-    MotionTemplateButtons: _motions_motion_setup_inputs_motion_template_buttons__WEBPACK_IMPORTED_MODULE_10__["default"],
-    DescriptionInput: _motions_motion_setup_inputs_description_input__WEBPACK_IMPORTED_MODULE_9__["default"],
-    MotionTypeInput: _motions_motion_setup_inputs_motion_type_input__WEBPACK_IMPORTED_MODULE_8__["default"],
-    MotionContentInput: _motions_motion_setup_inputs_motion_content_input__WEBPACK_IMPORTED_MODULE_7__["default"],
-    VoteRequiredInputs: _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_6__["default"]
+    MainMotionEditArea: _motions_motion_setup_inputs_main_motion_edit_area__WEBPACK_IMPORTED_MODULE_18__["default"],
+    AmendmentSetupArea: _motions_amendment_setup_area__WEBPACK_IMPORTED_MODULE_17__["default"],
+    AmendmentButton: _motions_motion_setup_inputs_amendment_button__WEBPACK_IMPORTED_MODULE_16__["default"],
+    MainMotionSetupArea: _motions_motion_setup_inputs_main_motion_setup_area__WEBPACK_IMPORTED_MODULE_15__["default"],
+    DeleteMotionModal: _motions_motion_setup_inputs_delete_motion_modal__WEBPACK_IMPORTED_MODULE_14__["default"],
+    DeleteMotionButton: _motions_motion_setup_inputs_delete_motion_button__WEBPACK_IMPORTED_MODULE_13__["default"],
+    CreateMotionButton: _motions_create_motion_button__WEBPACK_IMPORTED_MODULE_12__["default"],
+    MotionTemplateButtons: _motions_motion_setup_inputs_motion_template_buttons__WEBPACK_IMPORTED_MODULE_11__["default"],
+    DescriptionInput: _motions_motion_setup_inputs_description_input__WEBPACK_IMPORTED_MODULE_10__["default"],
+    MotionTypeInput: _motions_motion_setup_inputs_motion_type_input__WEBPACK_IMPORTED_MODULE_9__["default"],
+    MotionContentInput: _motions_motion_setup_inputs_motion_content_input__WEBPACK_IMPORTED_MODULE_8__["default"],
+    VoteRequiredInputs: _motions_motion_setup_inputs_vote_required_inputs__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   props: ['existingMotion'],
-  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
   data: function data() {
     return {
       // motion: null,
@@ -2385,8 +2388,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2445,12 +2450,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "results-page",
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   data: function data() {
     return {
       showCounts: false
@@ -2524,9 +2530,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../text-display/vote-receipt */ "./resources/js/components/text-display/vote-receipt.vue");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
 //
 //
 //
@@ -2607,10 +2615,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "vote-page",
   components: {
-    AmendmentTextDisplay: _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_7__["default"],
+    AmendmentTextDisplay: _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__["default"],
     VoteReceipt: _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__["default"],
     // MotionDescription,
     MotionContent: _text_display_motion_content__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -2618,7 +2627,7 @@ __webpack_require__.r(__webpack_exports__);
     VoteButtons: _vote_casting_vote_buttons__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7___default.a],
   data: function data() {
     return {
       voteRecorded: false,
@@ -3084,12 +3093,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
 //
 //
 //
@@ -3146,6 +3157,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -3153,10 +3165,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "amendment-setup-area",
   components: {
-    AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
       localText: '',
@@ -3521,8 +3533,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -3555,6 +3569,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /**
  * Note, this will require that the end-voting-button is
@@ -3566,7 +3581,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "end-voting-modal",
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {};
   },
@@ -3731,9 +3746,6 @@ __webpack_require__.r(__webpack_exports__);
     hasVotedOnCurrentMotion: function hasVotedOnCurrentMotion() {
       return this.$store.getters.hasVotedOnCurrentMotion;
     },
-    // isChair: function () {
-    //     return this.$store.getters.getIsAdmin;
-    // },
 
     /**
      * Whether voting has been closed.
@@ -3742,12 +3754,6 @@ __webpack_require__.r(__webpack_exports__);
     isComplete: function isComplete() {
       return this.motion.isComplete;
     },
-    // isAmendment: function () {
-    //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-    //         return this.motion.isAmendment();
-    //     }
-    //
-    // },
 
     /**
      * Whether the motion has passed (after voting has been closed)
@@ -3794,14 +3800,6 @@ __webpack_require__.r(__webpack_exports__);
         return 'lead font-weight-bold';
       }
     },
-    // originalText: function () {
-    //     try {
-    //         let orig = this.$store.getters.getMotionById(this.motion.applies_to);
-    //         return orig.content;
-    //     } catch (e) {
-    //         return '';
-    //     }
-    // },
     proceduralStyle: function proceduralStyle() {
       switch (this.pendingMotionDegree) {
         case 2:
@@ -4043,8 +4041,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4059,7 +4057,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "delete-motion-button",
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {
       styling: "btn btn-danger "
@@ -4090,8 +4088,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4149,7 +4147,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "delete-motion-modal",
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -4178,8 +4176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4251,8 +4249,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vote_required_inputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
 /* harmony import */ var _delete_motion_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
 /* harmony import */ var _delete_motion_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _description_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
@@ -4359,7 +4357,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionContentInput: _motion_content_input__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
   data: function data() {
     return {
       draftMotion: null
@@ -4403,8 +4401,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vote_required_inputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-required-inputs */ "./resources/js/components/motions/motion-setup-inputs/vote-required-inputs.vue");
 /* harmony import */ var _delete_motion_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete-motion-button */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-button.vue");
 /* harmony import */ var _delete_motion_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./delete-motion-modal */ "./resources/js/components/motions/motion-setup-inputs/delete-motion-modal.vue");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _description_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./description-input */ "./resources/js/components/motions/motion-setup-inputs/description-input.vue");
@@ -4518,7 +4516,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionContentInput: _motion_content_input__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: [],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
   data: function data() {
     return {
       draftMotion: null
@@ -4585,8 +4583,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 //
 //
@@ -4665,10 +4663,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../routingMixin */ "./resources/js/components/routingMixin.js");
-/* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_routingMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../routingMixin */ "./resources/js/components/routingMixin.js");
+/* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_routingMixin__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -4681,6 +4681,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -4688,7 +4689,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-template-button",
   props: ["template"],
-  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _routingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _routingMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
   data: function data() {
     return {
       styling: "btn btn-outline-info motion-template-button"
@@ -4701,8 +4702,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     makeMain: function makeMain() {
-      //First we create and store a new motion from the
+      var me = this; //First we create and store a new motion from the
       //provided template
+
       var p = this.$store.dispatch('createMotion', me.meeting.id).then(function () {
         // return new Promise(((resolve, reject) => {
         _.forEach(me.template, function (v, k) {
@@ -4828,8 +4830,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4894,8 +4896,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -5047,8 +5049,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _end_voting_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./end-voting-modal */ "./resources/js/components/motions/end-voting-modal.vue");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -5088,6 +5092,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -5100,7 +5105,7 @@ __webpack_require__.r(__webpack_exports__);
     MotionSelectArea: _motion_select_area__WEBPACK_IMPORTED_MODULE_1__["default"],
     MotionSelectButton: _motion_select_button__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default.a, _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5___default.a],
   asyncComputed: {
     motions: function motions() {
       var m = this.$store.getters.getStoredMotions;
@@ -5928,8 +5933,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionMixin */ "./resources/js/mixins/motionMixin.js");
-/* harmony import */ var _mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5989,7 +5994,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "vote-confirmation-modal",
   props: ['type'],
-  mixins: [_mixins_motionMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
@@ -69714,16 +69719,60 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/mixins/motionMixin.js":
-/*!********************************************!*\
-  !*** ./resources/js/mixins/motionMixin.js ***!
-  \********************************************/
+/***/ "./resources/js/mixins/motionObjectMixin.js":
+/*!**************************************************!*\
+  !*** ./resources/js/mixins/motionObjectMixin.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * For any component that needs access to properties
+ * of whatever motion is set as this.motion (regardless of whether
+ * it is the currently active motion).
+ *
+ * For components that need access to the currently active motion
+ * see the motionStoretMixin
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  asyncComputed: {
+    /**
+     * If true, voting has ended on the motion.
+     * If false, voting has either not begun or is in progress
+     */
+    isMotionComplete: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.motion.isComplete;
+        }
+      },
+      "default": false
+    },
+    isAmendment: function isAmendment() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isAmendment();
+      }
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/motionStoreMixin.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/motionStoreMixin.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 /**
  * For any component that needs access to the
  * current motion.
+ *
+ * For components that need access to common features of motion objects
+ * (e.g., whether it has passed), see the motionObjectMixin
  *
  * @type {{computed: {}}}
  */
@@ -69753,15 +69802,17 @@ module.exports = {
         }
       },
       "default": false
-    },
-    selectedMotion: function selectedMotion() {
-      return this.$store.getters.getActiveMotion;
-    },
-    isAmendment: function isAmendment() {
-      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-        return this.motion.isAmendment();
-      }
-    }
+    } // selectedMotion: function () {
+    //     return this.$store.getters.getActiveMotion;
+    // },
+    //
+    // isAmendment: function(){
+    //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+    //         return this.motion.isAmendment();
+    //     }
+    //
+    // }
+
   }
 };
 

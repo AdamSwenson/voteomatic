@@ -42,12 +42,13 @@ import MotionSelectButton from "./motion-select-button";
 import MotionSelectArea from "./motion-select-area";
 import EndVotingModal from "./end-voting-modal";
 import MeetingMixin from '../../mixins/meetingMixin';
-import MotionMixin from '../../mixins/motionMixin';
+import MotionMixin from '../../mixins/motionStoreMixin';
 
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 export default {
     name: "motions-card",
     components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
-    mixins: [MotionMixin, MeetingMixin],
+    mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
     asyncComputed: {
         motions: function () {

@@ -109,7 +109,9 @@
 import * as routes from "../../../routes";
 import Meeting from '../../../models/Meeting';
 import MeetingMixin from '../../../mixins/meetingMixin';
-import MotionMixin from '../../../mixins/motionMixin';
+import MotionMixin from '../../../mixins/motionStoreMixin';
+
+import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import ChairMixin from "../../../mixins/chairMixin";
 import Payload from "../../../models/Payload";
 import VoteRequiredInputs from "../../motions/motion-setup-inputs/vote-required-inputs";
@@ -140,7 +142,7 @@ export default {
     },
     props: ['existingMotion'],
 
-    mixins: [MeetingMixin, MotionMixin, ChairMixin],
+    mixins: [MeetingMixin, MotionMixin, ChairMixin, motionObjectMixin],
 
     data: function () {
         return {

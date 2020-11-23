@@ -79,7 +79,7 @@ import MotionContentInput from "./motion-content-input";
 import VoteRequiredInputs from "./vote-required-inputs";
 import DeleteMotionButton from "./delete-motion-button";
 import DeleteMotionModal from "./delete-motion-modal";
-import MotionMixin from '../../../mixins/motionMixin';
+import MotionMixin from '../../../mixins/motionStoreMixin';
 import MeetingMixin from "../../../mixins/meetingMixin";
 import DescriptionInput from "./description-input";
 import MotionTypeInput from "./motion-type-input";

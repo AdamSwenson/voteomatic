@@ -78,7 +78,9 @@ import MotionContent from "../text-display/motion-content";
 // import MotionDescription from "./text-display/motion-description";
 import * as routes from "../../routes";
 import VoteReceipt from "../text-display/vote-receipt";
-import motionMixin from '../../mixins/motionMixin';
+import motionMixin from '../../mixins/motionStoreMixin';
+
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 import AmendmentTextDisplay from "../motions/amendment-text-display";
 
 export default {
@@ -93,7 +95,7 @@ export default {
 
     props: [],
 
-    mixins: [motionMixin],
+    mixins: [motionMixin, motionObjectMixin],
 
     data: function () {
         return {

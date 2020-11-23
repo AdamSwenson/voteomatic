@@ -32,7 +32,9 @@
 
 <script>
 
-import MotionMixin from '../../mixins/motionMixin'
+import MotionMixin from '../../mixins/motionStoreMixin';
+
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 
 /**
  * Note, this will require that the end-voting-button is
@@ -45,7 +47,7 @@ export default {
 
     props: [],
 
-    mixins: [MotionMixin],
+    mixins: [MotionMixin, motionObjectMixin],
 
     data: function () {
         return {}

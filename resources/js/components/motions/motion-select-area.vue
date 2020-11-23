@@ -128,10 +128,6 @@ export default {
             return this.$store.getters.hasVotedOnCurrentMotion;
         },
 
-        // isChair: function () {
-        //     return this.$store.getters.getIsAdmin;
-        // },
-
 
         /**
          * Whether voting has been closed.
@@ -141,12 +137,6 @@ export default {
             return this.motion.isComplete;
         },
 
-        // isAmendment: function () {
-        //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-        //         return this.motion.isAmendment();
-        //     }
-        //
-        // },
 
         /**
          * Whether the motion has passed (after voting has been closed)
@@ -198,15 +188,6 @@ export default {
                 return 'lead font-weight-bold';
             }
         },
-
-        // originalText: function () {
-        //     try {
-        //         let orig = this.$store.getters.getMotionById(this.motion.applies_to);
-        //         return orig.content;
-        //     } catch (e) {
-        //         return '';
-        //     }
-        // },
 
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {

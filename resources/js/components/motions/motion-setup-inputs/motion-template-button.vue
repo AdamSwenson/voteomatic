@@ -13,7 +13,9 @@
 <script>
 import Payload from "../../../models/Payload";
 import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionMixin from "../../../mixins/motionMixin";
+import MotionMixin from "../../../mixins/motionStoreMixin";
+
+import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import RoutingMixin from "../../routingMixin";
 
 export default {
@@ -21,7 +23,7 @@ export default {
 
     props: ["template"],
 
-    mixins: [MeetingMixin, MotionMixin, RoutingMixin],
+    mixins: [MeetingMixin, MotionMixin, motionObjectMixin, RoutingMixin],
 
     data: function () {
         return {
@@ -39,6 +41,8 @@ export default {
     methods: {
 
         makeMain : function(){
+            let me = this;
+
             //First we create and store a new motion from the
             //provided template
             let p = this.$store.dispatch('createMotion', me.meeting.id)

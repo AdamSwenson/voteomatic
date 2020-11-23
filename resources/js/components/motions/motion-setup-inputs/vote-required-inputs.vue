@@ -53,7 +53,7 @@
 <script>
 import Payload from "../../../models/Payload";
 import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionMixin from "../../../mixins/motionMixin";
+import MotionMixin from "../../../mixins/motionStoreMixin";
 
 export default {
     name: "vote-required-inputs",
