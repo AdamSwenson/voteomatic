@@ -3599,6 +3599,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+/* harmony import */ var _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../mixins/amendmentMixin */ "./resources/js/mixins/amendmentMixin.js");
+/* harmony import */ var _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__);
 //
 //
 //
@@ -3660,6 +3664,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -3679,7 +3711,7 @@ __webpack_require__.r(__webpack_exports__);
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ['motion'],
-  mixins: [_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default.a],
+  mixins: [_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default.a, _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default.a, _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default.a],
   data: function data() {
     return {
       amendmentTags: {
@@ -3689,12 +3721,19 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   asyncComputed: {
+    amendmentClass: function amendmentClass() {
+      if (this.isSecondOrder) {
+        return 'pl-5 ' + this.motionStyle;
+      }
+
+      return 'pl-4 ' + this.motionStyle;
+    },
     hasVotedOnCurrentMotion: function hasVotedOnCurrentMotion() {
       return this.$store.getters.hasVotedOnCurrentMotion;
     },
-    isChair: function isChair() {
-      return this.$store.getters.getIsAdmin;
-    },
+    // isChair: function () {
+    //     return this.$store.getters.getIsAdmin;
+    // },
 
     /**
      * Whether voting has been closed.
@@ -3703,11 +3742,12 @@ __webpack_require__.r(__webpack_exports__);
     isComplete: function isComplete() {
       return this.motion.isComplete;
     },
-    isAmendment: function isAmendment() {
-      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-        return this.motion.isAmendment();
-      }
-    },
+    // isAmendment: function () {
+    //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+    //         return this.motion.isAmendment();
+    //     }
+    //
+    // },
 
     /**
      * Whether the motion has passed (after voting has been closed)
@@ -3754,12 +3794,30 @@ __webpack_require__.r(__webpack_exports__);
         return 'lead font-weight-bold';
       }
     },
-    originalText: function originalText() {
-      try {
-        var orig = this.$store.getters.getMotionById(this.motion.applies_to);
-        return orig.content;
-      } catch (e) {
-        return '';
+    // originalText: function () {
+    //     try {
+    //         let orig = this.$store.getters.getMotionById(this.motion.applies_to);
+    //         return orig.content;
+    //     } catch (e) {
+    //         return '';
+    //     }
+    // },
+    proceduralStyle: function proceduralStyle() {
+      switch (this.pendingMotionDegree) {
+        case 2:
+          return 'pl-5';
+          break;
+
+        case 1:
+          return 'pl-4';
+          break;
+
+        case 0:
+          return '';
+          break;
+
+        default:
+          return '';
       }
     },
 
@@ -10604,7 +10662,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.amendment-added{\n    text-decoration: underline;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.amendment-added {\n    text-decoration: underline;\n}\n\n\n", ""]);
 
 // exports
 
@@ -47694,32 +47752,67 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col " },
-        [
-          _vm.isAmendment
-            ? _c("span", { staticClass: "badge badge-warning" }, [
-                _vm._v("Amendment")
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.isAmendment
-            ? _c("amendment-text-display", {
-                attrs: {
-                  "original-text": _vm.originalText,
-                  "amendment-text": _vm.motion.content,
-                  tags: _vm.amendmentTags
-                }
-              })
-            : _c("span", { class: _vm.motionStyle }, [
-                _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
-              ]),
-          _vm._v(" "),
-          _c("motion-status-badge", { attrs: { "is-passed": _vm.isPassed } })
-        ],
-        1
-      ),
+      _c("div", { staticClass: "col " }, [
+        _vm.isAmendment
+          ? _c(
+              "div",
+              { staticClass: "amendment-area ", class: _vm.amendmentClass },
+              [
+                _vm.isAmendment
+                  ? _c("span", { staticClass: "badge badge-warning" }, [
+                      _vm._v("Amendment")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isAmendment
+                  ? _c("amendment-text-display", {
+                      attrs: {
+                        "original-text": _vm.originalText,
+                        "amendment-text": _vm.motion.content,
+                        tags: _vm.amendmentTags
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("motion-status-badge", {
+                  attrs: { "is-passed": _vm.isPassed }
+                })
+              ],
+              1
+            )
+          : _vm.isProceduralSubsidiary
+          ? _c(
+              "div",
+              {
+                staticClass: "procedural-subsidiary-area",
+                class: _vm.proceduralStyle
+              },
+              [
+                _c("span", { class: _vm.motionStyle }, [
+                  _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
+                ]),
+                _vm._v(" "),
+                _c("motion-status-badge", {
+                  attrs: { "is-passed": _vm.isPassed }
+                })
+              ],
+              1
+            )
+          : _c(
+              "div",
+              { staticClass: "main-ish-area" },
+              [
+                _c("span", { class: _vm.motionStyle }, [
+                  _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
+                ]),
+                _vm._v(" "),
+                _c("motion-status-badge", {
+                  attrs: { "is-passed": _vm.isPassed }
+                })
+              ],
+              1
+            )
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -69514,6 +69607,50 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/mixins/amendmentMixin.js":
+/*!***********************************************!*\
+  !*** ./resources/js/mixins/amendmentMixin.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  asyncComputed: {
+    isAmendment: function isAmendment() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isAmendment();
+      }
+    },
+
+    /**
+     * Whether this is an amendment to an amendment.
+     * todo Make sure this doesn't also catch procedural motions like tabling
+     */
+    isSecondOrder: function isSecondOrder() {
+      if (!this.isAmendment) return false;
+
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.originalMotion.isAmendment(); //                return this.$store.getters.getMotionById(this.motion.applies_to);
+      }
+    },
+    originalMotion: function originalMotion() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.$store.getters.getMotionById(this.motion.applies_to);
+      }
+    },
+    originalText: function originalText() {
+      try {
+        var orig = this.$store.getters.getMotionById(this.motion.applies_to);
+        return orig.content;
+      } catch (e) {
+        return '';
+      }
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/mixins/chairMixin.js":
 /*!*******************************************!*\
   !*** ./resources/js/mixins/chairMixin.js ***!
@@ -69623,6 +69760,74 @@ module.exports = {
     isAmendment: function isAmendment() {
       if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
         return this.motion.isAmendment();
+      }
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/proceduralMixin.js":
+/*!************************************************!*\
+  !*** ./resources/js/mixins/proceduralMixin.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  asyncComputed: {
+    /**
+     * If the motion is a subsidiary procedural one,
+     * this will return the degree of the motion it
+     * applies to as follows:
+     *      0 : It applies to a main motion
+     *      1 : It applies to a primary amendment or procedural motion
+     *      2 : It applies to a secondary amendment or procedural motion
+     *
+     * todo Other possibilities e.g., a procedural motion on an amendment to a procedural motion
+     */
+    pendingMotionDegree: function pendingMotionDegree() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion) && this.isProcedural) {
+        var pendingMotion = this.$store.getters.getMotionById(this.motion.applies_to);
+
+        if (pendingMotion.isProcedural()) {
+          //it is a second order procedural motion
+          return 2;
+        }
+
+        if (pendingMotion.isAmendment()) {
+          //we need to check if it is primary or secondary
+          var amendmentParent = this.$store.getters.getMotionById(pendingMotion.applies_to);
+
+          if (amendmentParent.isAmendment()) {
+            //it is secondary
+            //todo sure would be nice to do this centrally or have it set on the model
+            return 2;
+          } // it is primary
+
+
+          return 1;
+        } // it is presumably main or procedural main
+
+
+        return 0;
+      }
+    },
+    isProcedural: function isProcedural() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isProcedural();
+      }
+    },
+
+    /**
+     * Whether this is a procedural motion which applies to a
+     * particular motion (e.g., tabling)
+     */
+    isProceduralSubsidiary: function isProceduralSubsidiary() {
+      if (!this.isProcedural) return false;
+
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isProceduralSubsidiary();
       }
     }
   }
@@ -69834,7 +70039,15 @@ var Motion = /*#__PURE__*/function (_IModel) {
      * hold the html marked up text  */
 
     _this.taggedAmendmentText = null;
-    _this.types = ['main', 'amendment']; //todo
+    _this.types = ['main', 'amendment'];
+    /**
+     * Motions with these types will be labeled as amendments
+     * todo It would be better to load this from the server so stays in sync
+     * @type {string[]}
+     */
+
+    _this.amendmentNames = ['amendment', 'primary-amendment', 'amendment-secondary'];
+    _this.proceduralMotionNames = ['privileged', 'procedural-main', 'procedural-subsidiary', 'incidental']; //todo
     //        this.type = 'main';
 
     _this.requirementMap = [{
@@ -69874,8 +70087,22 @@ var Motion = /*#__PURE__*/function (_IModel) {
   }, {
     key: "isAmendment",
     value: function isAmendment() {
-      var amendmentNames = ['amendment', 'primary-amendment', 'secondary-amendment'];
-      return _.includes(amendmentNames, this.type);
+      return _.includes(this.amendmentNames, this.type);
+    }
+    /**
+     * Whether the motion type is on the procedural motion
+     * names list
+     */
+
+  }, {
+    key: "isProcedural",
+    value: function isProcedural() {
+      return _.includes(this.proceduralMotionNames, this.type);
+    }
+  }, {
+    key: "isProceduralSubsidiary",
+    value: function isProceduralSubsidiary() {
+      return this.type === 'procedural-subsidiary';
     }
   }, {
     key: "getEnglishRequiresForNumeric",

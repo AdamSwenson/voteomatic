@@ -27,6 +27,22 @@ export default class Motion extends IModel {
 
         this.types = ['main', 'amendment'];
 
+        /**
+         * Motions with these types will be labeled as amendments
+         * todo It would be better to load this from the server so stays in sync
+         * @type {string[]}
+         */
+        this.amendmentNames = ['amendment',
+            'primary-amendment',
+            'amendment-secondary'];
+
+        this.proceduralMotionNames = [
+            'privileged',
+            'procedural-main',
+            'procedural-subsidiary',
+            'incidental'
+        ];
+
         //todo
 //        this.type = 'main';
 
@@ -60,8 +76,19 @@ export default class Motion extends IModel {
     }
 
     isAmendment() {
-        let amendmentNames = ['amendment', 'primary-amendment', 'secondary-amendment'];
-        return _.includes(amendmentNames, this.type);
+        return _.includes(this.amendmentNames, this.type);
+    }
+
+    /**
+     * Whether the motion type is on the procedural motion
+     * names list
+     */
+    isProcedural(){
+        return _.includes(this.proceduralMotionNames, this.type);
+    }
+
+    isProceduralSubsidiary(){
+        return this.type === 'procedural-subsidiary';
     }
 
     getEnglishRequiresForNumeric(num){

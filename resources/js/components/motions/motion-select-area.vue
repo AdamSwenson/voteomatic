@@ -15,24 +15,50 @@
             </div>
 
             <div class="col ">
-                <span
-                    class="badge badge-warning"
-                    v-if="isAmendment"
-                >Amendment</span>
 
-                <amendment-text-display
+                <div
                     v-if="isAmendment"
-                    :original-text="originalText"
-                    :amendment-text="motion.content"
-                    :tags="amendmentTags"
-                ></amendment-text-display>
+                    class="amendment-area "
+                    v-bind:class="amendmentClass">
 
-                <span
+                    <span
+                        class="badge badge-warning"
+                        v-if="isAmendment"
+                    >Amendment</span>
+
+                        <amendment-text-display
+                            v-if="isAmendment"
+                            :original-text="originalText"
+                            :amendment-text="motion.content"
+                            :tags="amendmentTags"
+                        ></amendment-text-display>
+
+                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+
+                </div>
+
+                <div
+                    class="procedural-subsidiary-area"
+                    v-bind:class="proceduralStyle"
+                    v-else-if="isProceduralSubsidiary"
+                >
+                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+
+                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+
+                </div>
+
+                <div
+                    class="main-ish-area"
                     v-else
-                    v-bind:class="motionStyle"
-                >   {{ motion.content }}   </span>
+                >
 
-                <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+
+                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+
+                </div>
+
             </div>
 
             <div class="col-sm">
@@ -68,6 +94,8 @@ import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
 import AmendmentTextDisplay from "./amendment-text-display";
+import AmendmentMixin from "../../mixins/amendmentMixin";
+import ProceduralMixin from "../../mixins/proceduralMixin";
 
 export default {
     name: "motion-select-area",
@@ -76,7 +104,7 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin],
     data: function () {
         return {
             amendmentTags: {
@@ -88,14 +116,21 @@ export default {
     },
     asyncComputed: {
 
+        amendmentClass: function () {
+
+            if (this.isSecondOrder) {
+                return 'pl-5 ' + this.motionStyle
+            }
+            return 'pl-4 ' + this.motionStyle;
+        },
 
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;
         },
 
-        isChair: function () {
-            return this.$store.getters.getIsAdmin;
-        },
+        // isChair: function () {
+        //     return this.$store.getters.getIsAdmin;
+        // },
 
 
         /**
@@ -106,12 +141,12 @@ export default {
             return this.motion.isComplete;
         },
 
-        isAmendment: function () {
-            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-                return this.motion.isAmendment();
-            }
-
-        },
+        // isAmendment: function () {
+        //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        //         return this.motion.isAmendment();
+        //     }
+        //
+        // },
 
         /**
          * Whether the motion has passed (after voting has been closed)
@@ -164,14 +199,31 @@ export default {
             }
         },
 
-        originalText: function () {
-            try {
-                let orig = this.$store.getters.getMotionById(this.motion.applies_to);
-                return orig.content;
-            } catch (e) {
-                return '';
+        // originalText: function () {
+        //     try {
+        //         let orig = this.$store.getters.getMotionById(this.motion.applies_to);
+        //         return orig.content;
+        //     } catch (e) {
+        //         return '';
+        //     }
+        // },
+
+        proceduralStyle: function () {
+            switch (this.pendingMotionDegree) {
+                case 2:
+                    return 'pl-5'
+                    break;
+                case  1:
+                    return 'pl-4'
+                    break;
+                case 0:
+                    return '';
+                    break;
+                default :
+                    return '';
             }
         },
+
         /**
          * The current globally active motion
          * @returns {any}
@@ -214,9 +266,9 @@ export default {
 }
 </script>
 
-<style >
+<style>
 
-.amendment-added{
+.amendment-added {
     text-decoration: underline;
 }
 

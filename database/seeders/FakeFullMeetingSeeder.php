@@ -85,6 +85,7 @@ class FakeFullMeetingSeeder extends Seeder
         Vote::factory(['motion_id' => $m1a2b->id])->negative()->count(2)->create();
         $m1a2b->is_complete = true;
         $m1a2b->save();
+        $m1a2->markSuperseded($m1a2b);
 
         //Vote on the secondary
         Vote::factory(['motion_id' => $m1a2a->id])->affirmative()->count(8)->create();
