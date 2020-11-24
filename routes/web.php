@@ -10,6 +10,7 @@ use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
+use App\Http\Controllers\Motion\MotionTemplateController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
@@ -92,6 +93,8 @@ Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotion
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
 Route::post('motions/second/{motion}', [MotionSecondController::class, 'markMotionSeconded']);
+Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates']);
+Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
 Route::resource('motions', MotionController::class);
 
 

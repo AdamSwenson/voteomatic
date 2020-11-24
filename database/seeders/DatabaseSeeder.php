@@ -60,7 +60,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminUserSeeder::class,
             LTIDevCredsSeeder::class,
-            AssignmentSeeder::class
+            AssignmentSeeder::class,
+            FakeFullMeetingSeeder::class
         ]);
 //        $this->addDevCreds($meetings[0]);
 

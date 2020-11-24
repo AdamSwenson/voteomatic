@@ -14,6 +14,7 @@ class Motion extends Model
         'applies_to',
         'content',
         'description',
+        'debatable',
         'is_complete',
         'is_current',
         'meeting_id',
@@ -21,6 +22,10 @@ class Motion extends Model
         'superseded_by',
         'type'];
 
+    /**
+     * All legitimate motion type names
+     * @var string[]
+     */
     protected $motionTypes = [
         'main',
         'privileged',
@@ -39,12 +44,22 @@ class Motion extends Model
      * how we name the various possible forms of amendments
      * @var array
      */
-    public $amendmentTypes = [
+    static public $amendmentTypes = [
         'amendment',
         'amendment-secondary',
     ];
 
-    protected $casts = ['is_complete' => 'boolean', 'is_current' => 'boolean'];
+    static public $proceduralTypes = [
+        'privileged',
+        'procedural-main',
+        'procedural-subsidiary',
+        'incidental'
+    ];
+
+
+    protected $casts = ['is_complete' => 'boolean',
+        'is_current' => 'boolean',
+        'debatable' => 'boolean'];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
 
@@ -63,7 +78,8 @@ class Motion extends Model
      *
      * @param Motion $subsidiaryMotion
      */
-    public function addSubsidiaryMotion( Motion $subsidiaryMotion){
+    public function addSubsidiaryMotion(Motion $subsidiaryMotion)
+    {
         $subsidiaryMotion->applies_to = $this->id;
         $subsidiaryMotion->save();
     }
@@ -71,7 +87,8 @@ class Motion extends Model
     /**
      * Returns all subsidiary direct descendent motions, FILO ordered
      */
-    public function getSubsidiaryMotions(){
+    public function getSubsidiaryMotions()
+    {
         return Motion::where('applies_to', $this->id)->orderBy('id', 'desc')->get(); //->sortDesc();
     }
 
@@ -87,15 +104,17 @@ class Motion extends Model
      *
      * @param Motion $supersedingMotion
      */
-    public function markSuperseded(Motion $supersedingMotion){
+    public function markSuperseded(Motion $supersedingMotion)
+    {
         $this->superseded_by = $supersedingMotion->id;
         $this->save();
     }
 
 
-    public function getSupersedingMotion(){
-        if(! is_null($this->superseded_by)){
-            return Motion::where('id', $this->superseded_by )->first();
+    public function getSupersedingMotion()
+    {
+        if (!is_null($this->superseded_by)) {
+            return Motion::where('id', $this->superseded_by)->first();
         }
     }
 
@@ -104,12 +123,19 @@ class Motion extends Model
      * other motion
      * NB, includes incidental motions
      */
-    public function isMainMotion(){
+    public function isMainMotion()
+    {
         return is_null($this->applies_to);
     }
 
-    public function isAmendment(){
-        $types = collect($this->amendmentTypes);
+    public function isAmendment()
+    {
+        $types = collect(self::$amendmentTypes);
+        return $types->contains($this->type);
+    }
+
+    public function isProcedural(){
+        $types = collect(self::$proceduralTypes);
         return $types->contains($this->type);
     }
 

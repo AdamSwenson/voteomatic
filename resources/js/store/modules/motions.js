@@ -43,12 +43,14 @@ const state = {
      * Motions from this meeting which the user has already
      * cast a vote on and should be locked out of voting again
      */
-    motionIdsUserHasVotedUpon: []
+    motionIdsUserHasVotedUpon: [],
+
+    standardMotionDefinitions: []
 };
 
 const mutations = {
     addMotionToStore: (state, motionObject) => {
-        window.console.log(motionObject);
+        // window.console.log(motionObject);
         //todo double check that there is no reason to have duplicates or raise an error
         let mi = -1;
         _.forEach(state.motions, function (m) {
@@ -85,6 +87,10 @@ const mutations = {
      */
     setMotion: (state, motionObject) => {
         Vue.set(state, 'currentMotion', motionObject.id);
+    },
+
+    setMotionTemplates: (state, templates) => {
+        Vue.set(state, 'standardMotionDefinitions', templates);
     },
 
     /**
@@ -252,7 +258,7 @@ const actions = {
 
 
                     //Handle swapping in the new motion if there was an amendment.
-                    if(superseding){
+                    if (superseding) {
                         let original = getters.getMotionById(superseding.superseded_by);
                         //remove that from the store (but don't delete from server!)
                         commit('deleteMotion', original);
@@ -308,6 +314,7 @@ const actions = {
      * @returns {Promise<unknown>}
      */
     loadMotionsUserHasVotedUpon({dispatch, commit, getters}, meetingId) {
+        window.console.log("Loading voted upon motions");
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.castVotes.getVotedMotions(meetingId);
@@ -321,11 +328,13 @@ const actions = {
                     // let motion = new Motion(d);
                     commit('addVotedUponMotion', d.id);
                 });
+                return resolve();
             });
         }));
     },
 
     loadMotionsForMeeting({dispatch, commit, getters}, meetingId) {
+        window.console.log('Loading motions for meeting');
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.getAllMotionsForMeeting(meetingId);
@@ -341,6 +350,28 @@ const actions = {
                     });
                     resolve()
 
+                });
+        }));
+    },
+
+    loadMotionTypesAndTemplates({dispatch, commit, getters}) {
+        window.console.log("Loading motion types and templates");
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.templates();
+            return Vue.axios.get(url)
+                .then((response) => {
+                    commit('setMotionTemplates', response.data);
+
+                    let url2 = routes.motions.types();
+                    return Vue.axios.get(url2)
+                        .then((response) => {
+                            //todo Figure out easiest way to use loaded types. If not easy, then ignore. The point is to make it easier to keep definitions on client and server in sync.
+
+                            // Motion.prototype.amendmentNames = response.data.amendment;
+                            // Motion.prototype.proceduralMotionNames = response.data.amendment;
+                            return resolve();
+                        });
                 });
         }));
     },
@@ -510,87 +541,89 @@ const getters = {
      * @param state
      */
     getStandardMotionDefinitions: (state) => {
-        return [
-            {
-                name: 'Adjourn',
-                content: "That the meeting be adjourned.",
-                description: "Meeting comes to an end. This is amendable with respect " +
-                    "to when the next meeting will be, if specified",
-                requires: 0.5,
-                type: 'procedural-main',
-                amendable: true
-            },
+        return state.standardMotionDefinitions;
 
-
-            {
-                name: 'Committee of the Whole',
-                content: "That the body convene as a committee of the whole with this body's Chair as its Chair ",
-                description: "The formal deliberative process is suspended. The body" +
-                    " may work informally on an issue. No votes taken while in the committee of the whole " +
-                    "are binding on the main body but they may be used to advise the main body on what to do. " +
-                    "To communicate from the committee of the whole, the committee " +
-                    "of the whole should vote to Rise and Report",
-                requires: 0.5,
-                type: 'procedural-main',
-                amendable: true
-
-            },
-
-            {
-                name: 'Previous Question (Call the Question)',
-                content: "That the pending question is called",
-                description: "If approved, all debate ends on the pending motion and " +
-                    "the body moves immediately to a vote on the pending motion. If fails," +
-                    "debate continues on the pending motion",
-                requires: 0.66,
-                type: 'procedural-subsidiary',
-                amendable: false
-            },
-            {
-                name: 'Place on the Table',
-                content: "The pending motion is placed on the table",
-                description: "All action on the motion is paused so the body can attend to " +
-                    "other business. There is no scheduled time to resume action. Action " +
-                    "will resume upon a majority vote to Take from the Table. That motion may" +
-                    "be made whenever no main motion is pending",
-                requires: 0.5,
-                type: 'procedural-subsidiary',
-                amendable: false
-            },
-
-
-            {
-                name: 'Recess',
-                content: "That the body recess.",
-                description: "We take a break. This can be qualified to " +
-                    "say how long. The how long part is amendable.",
-                requires: 0.5,
-                type: 'procedural-main',
-                amendable: true
-            },
-
-            {
-                name: 'Reconsider (with notice)',
-                content: "That the body reconsider the motion that ",
-                description: "",
-                requires: 0.5,
-                type: 'procedural-main',
-                amendable: false
-
-            },
-
-            {
-                name: 'Reconsider (without notice)',
-                content: "That the body reconsider the motion that ",
-                description: "",
-                requires: 0.66,
-                type: 'procedural-main',
-                amendable: false
-
-            },
-
-
-        ]
+        // return [
+        //     {
+        //         name: 'Adjourn',
+        //         content: "That the meeting be adjourned.",
+        //         description: "Meeting comes to an end. This is amendable with respect " +
+        //             "to when the next meeting will be, if specified",
+        //         requires: 0.5,
+        //         type: 'procedural-main',
+        //         amendable: true
+        //     },
+        //
+        //
+        //     {
+        //         name: 'Committee of the Whole',
+        //         content: "That the body convene as a committee of the whole with this body's Chair as its Chair ",
+        //         description: "The formal deliberative process is suspended. The body" +
+        //             " may work informally on an issue. No votes taken while in the committee of the whole " +
+        //             "are binding on the main body but they may be used to advise the main body on what to do. " +
+        //             "To communicate from the committee of the whole, the committee " +
+        //             "of the whole should vote to Rise and Report",
+        //         requires: 0.5,
+        //         type: 'procedural-main',
+        //         amendable: true
+        //
+        //     },
+        //
+        //     {
+        //         name: 'Previous Question (Call the Question)',
+        //         content: "That the pending question is called",
+        //         description: "If approved, all debate ends on the pending motion and " +
+        //             "the body moves immediately to a vote on the pending motion. If fails," +
+        //             "debate continues on the pending motion",
+        //         requires: 0.66,
+        //         type: 'procedural-subsidiary',
+        //         amendable: false
+        //     },
+        //     {
+        //         name: 'Place on the Table',
+        //         content: "The pending motion is placed on the table",
+        //         description: "All action on the motion is paused so the body can attend to " +
+        //             "other business. There is no scheduled time to resume action. Action " +
+        //             "will resume upon a majority vote to Take from the Table. That motion may" +
+        //             "be made whenever no main motion is pending",
+        //         requires: 0.5,
+        //         type: 'procedural-subsidiary',
+        //         amendable: false
+        //     },
+        //
+        //
+        //     {
+        //         name: 'Recess',
+        //         content: "That the body recess.",
+        //         description: "We take a break. This can be qualified to " +
+        //             "say how long. The how long part is amendable.",
+        //         requires: 0.5,
+        //         type: 'procedural-main',
+        //         amendable: true
+        //     },
+        //
+        //     {
+        //         name: 'Reconsider (with notice)',
+        //         content: "That the body reconsider the motion that ",
+        //         description: "",
+        //         requires: 0.5,
+        //         type: 'procedural-main',
+        //         amendable: false
+        //
+        //     },
+        //
+        //     {
+        //         name: 'Reconsider (without notice)',
+        //         content: "That the body reconsider the motion that ",
+        //         description: "",
+        //         requires: 0.66,
+        //         type: 'procedural-main',
+        //         amendable: false
+        //
+        //     },
+        //
+        //
+        // ]
 
 
     }

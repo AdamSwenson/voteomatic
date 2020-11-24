@@ -9,7 +9,7 @@ const Diff = require('diff');
 module.exports.getTaggedChanges = (orig, amend, addedTag = 'text-danger', removedTag = 'struck') => {
     let diff = Diff.diffWords(orig, amend);
     let out = [];
-    window.console.log(diff);
+    // window.console.log(diff);
     diff.forEach((part) => {
 
         // window.console.log(this.tags.changeStart, 'hd');

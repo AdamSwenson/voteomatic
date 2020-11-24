@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSupersededByColumnToMotions extends Migration
+class AddDebatableFieldToMotionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,8 @@ class AddSupersededByColumnToMotions extends Migration
     {
         Schema::table('motions', function (Blueprint $table) {
 
-            /** The id of the motion, if anywhich replaces this motion (e.g. after an amendment) */
-            $table->integer('superseded_by')->nullable();
+            /** Whether debate is allowed on the motion */
+            $table->boolean('debatable')->nullable();
 
         });
     }
@@ -29,7 +29,7 @@ class AddSupersededByColumnToMotions extends Migration
     public function down()
     {
         Schema::table('motions', function (Blueprint $table) {
-            $table->dropColumn('superseded_by');
+            $table->dropColumn('debatable');
         });
     }
 }

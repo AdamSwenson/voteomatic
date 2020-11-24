@@ -61,8 +61,17 @@ class MotionTest extends TestCase
         $this->markTestSkipped();
     }
 
+
+    public function testFactory()
+    {
+        $m = Motion::factory()->procedural()->create();
+        $this->assertInstanceOf(Motion::class, $m);
+
+    }
+
     public function testGetPassedAttribute()
     {
+
         $this->markTestSkipped();
 
     }

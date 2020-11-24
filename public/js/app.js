@@ -69754,7 +69754,12 @@ module.exports = {
       if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
         return this.motion.isAmendment();
       }
-    }
+    } // isDebatable: function(){
+    //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+    //         return this.motion.isDebatable();
+    //     }
+    // },
+
   }
 };
 
@@ -70757,6 +70762,12 @@ module.exports = {
     },
     secondMotion: function secondMotion(motionId) {
       return normalizedRouteRoot() + 'motions/second/' + motionId;
+    },
+    templates: function templates() {
+      return normalizedRouteRoot() + 'motions/templates';
+    },
+    types: function types() {
+      return normalizedRouteRoot() + 'motions/types';
     }
   }
 };
@@ -71100,12 +71111,13 @@ var state = {
    * Motions from this meeting which the user has already
    * cast a vote on and should be locked out of voting again
    */
-  motionIdsUserHasVotedUpon: []
+  motionIdsUserHasVotedUpon: [],
+  standardMotionDefinitions: []
 };
 var mutations = {
   addMotionToStore: function addMotionToStore(state, motionObject) {
-    window.console.log(motionObject); //todo double check that there is no reason to have duplicates or raise an error
-
+    // window.console.log(motionObject);
+    //todo double check that there is no reason to have duplicates or raise an error
     var mi = -1;
 
     _.forEach(state.motions, function (m) {
@@ -71137,6 +71149,9 @@ var mutations = {
    */
   setMotion: function setMotion(state, motionObject) {
     Vue.set(state, 'currentMotion', motionObject.id);
+  },
+  setMotionTemplates: function setMotionTemplates(state, templates) {
+    Vue.set(state, 'standardMotionDefinitions', templates);
   },
 
   /**
@@ -71342,6 +71357,7 @@ var actions = {
     var dispatch = _ref7.dispatch,
         commit = _ref7.commit,
         getters = _ref7.getters;
+    window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["castVotes"].getVotedMotions(meetingId);
@@ -71353,6 +71369,8 @@ var actions = {
           // let motion = new Motion(d);
           commit('addVotedUponMotion', d.id);
         });
+
+        return resolve();
       });
     });
   },
@@ -71360,6 +71378,7 @@ var actions = {
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
+    window.console.log('Loading motions for meeting');
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].getAllMotionsForMeeting(meetingId);
@@ -71378,12 +71397,32 @@ var actions = {
       });
     });
   },
-  secondMotion: function secondMotion(_ref9, _ref10) {
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref9) {
     var dispatch = _ref9.dispatch,
         commit = _ref9.commit,
         getters = _ref9.getters;
-    var meetingId = _ref10.meetingId,
-        motionId = _ref10.motionId;
+    window.console.log("Loading motion types and templates");
+    return new Promise(function (resolve, reject) {
+      //send to server
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].templates();
+      return Vue.axios.get(url).then(function (response) {
+        commit('setMotionTemplates', response.data);
+        var url2 = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].types();
+        return Vue.axios.get(url2).then(function (response) {
+          //todo Figure out easiest way to use loaded types. If not easy, then ignore. The point is to make it easier to keep definitions on client and server in sync.
+          // Motion.prototype.amendmentNames = response.data.amendment;
+          // Motion.prototype.proceduralMotionNames = response.data.amendment;
+          return resolve();
+        });
+      });
+    });
+  },
+  secondMotion: function secondMotion(_ref10, _ref11) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
+    var meetingId = _ref11.meetingId,
+        motionId = _ref11.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].secondMotion(motionId);
@@ -71413,12 +71452,12 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref11, _ref12) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
-    var meetingId = _ref12.meetingId,
-        motionId = _ref12.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref12, _ref13) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
+    var meetingId = _ref13.meetingId,
+        motionId = _ref13.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].setCurrentMotion(meetingId, motionId);
@@ -71440,10 +71479,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref13, payload) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
+  updateMotion: function updateMotion(_ref14, payload) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -71545,56 +71584,87 @@ var getters = {
    * @param state
    */
   getStandardMotionDefinitions: function getStandardMotionDefinitions(state) {
-    return [{
-      name: 'Adjourn',
-      content: "That the meeting be adjourned.",
-      description: "Meeting comes to an end. This is amendable with respect " + "to when the next meeting will be, if specified",
-      requires: 0.5,
-      type: 'procedural-main',
-      amendable: true
-    }, {
-      name: 'Committee of the Whole',
-      content: "That the body convene as a committee of the whole with this body's Chair as its Chair ",
-      description: "The formal deliberative process is suspended. The body" + " may work informally on an issue. No votes taken while in the committee of the whole " + "are binding on the main body but they may be used to advise the main body on what to do. " + "To communicate from the committee of the whole, the committee " + "of the whole should vote to Rise and Report",
-      requires: 0.5,
-      type: 'procedural-main',
-      amendable: true
-    }, {
-      name: 'Previous Question (Call the Question)',
-      content: "That the pending question is called",
-      description: "If approved, all debate ends on the pending motion and " + "the body moves immediately to a vote on the pending motion. If fails," + "debate continues on the pending motion",
-      requires: 0.66,
-      type: 'procedural-subsidiary',
-      amendable: false
-    }, {
-      name: 'Place on the Table',
-      content: "The pending motion is placed on the table",
-      description: "All action on the motion is paused so the body can attend to " + "other business. There is no scheduled time to resume action. Action " + "will resume upon a majority vote to Take from the Table. That motion may" + "be made whenever no main motion is pending",
-      requires: 0.5,
-      type: 'procedural-subsidiary',
-      amendable: false
-    }, {
-      name: 'Recess',
-      content: "That the body recess.",
-      description: "We take a break. This can be qualified to " + "say how long. The how long part is amendable.",
-      requires: 0.5,
-      type: 'procedural-main',
-      amendable: true
-    }, {
-      name: 'Reconsider (with notice)',
-      content: "That the body reconsider the motion that ",
-      description: "",
-      requires: 0.5,
-      type: 'procedural-main',
-      amendable: false
-    }, {
-      name: 'Reconsider (without notice)',
-      content: "That the body reconsider the motion that ",
-      description: "",
-      requires: 0.66,
-      type: 'procedural-main',
-      amendable: false
-    }];
+    return state.standardMotionDefinitions; // return [
+    //     {
+    //         name: 'Adjourn',
+    //         content: "That the meeting be adjourned.",
+    //         description: "Meeting comes to an end. This is amendable with respect " +
+    //             "to when the next meeting will be, if specified",
+    //         requires: 0.5,
+    //         type: 'procedural-main',
+    //         amendable: true
+    //     },
+    //
+    //
+    //     {
+    //         name: 'Committee of the Whole',
+    //         content: "That the body convene as a committee of the whole with this body's Chair as its Chair ",
+    //         description: "The formal deliberative process is suspended. The body" +
+    //             " may work informally on an issue. No votes taken while in the committee of the whole " +
+    //             "are binding on the main body but they may be used to advise the main body on what to do. " +
+    //             "To communicate from the committee of the whole, the committee " +
+    //             "of the whole should vote to Rise and Report",
+    //         requires: 0.5,
+    //         type: 'procedural-main',
+    //         amendable: true
+    //
+    //     },
+    //
+    //     {
+    //         name: 'Previous Question (Call the Question)',
+    //         content: "That the pending question is called",
+    //         description: "If approved, all debate ends on the pending motion and " +
+    //             "the body moves immediately to a vote on the pending motion. If fails," +
+    //             "debate continues on the pending motion",
+    //         requires: 0.66,
+    //         type: 'procedural-subsidiary',
+    //         amendable: false
+    //     },
+    //     {
+    //         name: 'Place on the Table',
+    //         content: "The pending motion is placed on the table",
+    //         description: "All action on the motion is paused so the body can attend to " +
+    //             "other business. There is no scheduled time to resume action. Action " +
+    //             "will resume upon a majority vote to Take from the Table. That motion may" +
+    //             "be made whenever no main motion is pending",
+    //         requires: 0.5,
+    //         type: 'procedural-subsidiary',
+    //         amendable: false
+    //     },
+    //
+    //
+    //     {
+    //         name: 'Recess',
+    //         content: "That the body recess.",
+    //         description: "We take a break. This can be qualified to " +
+    //             "say how long. The how long part is amendable.",
+    //         requires: 0.5,
+    //         type: 'procedural-main',
+    //         amendable: true
+    //     },
+    //
+    //     {
+    //         name: 'Reconsider (with notice)',
+    //         content: "That the body reconsider the motion that ",
+    //         description: "",
+    //         requires: 0.5,
+    //         type: 'procedural-main',
+    //         amendable: false
+    //
+    //     },
+    //
+    //     {
+    //         name: 'Reconsider (without notice)',
+    //         content: "That the body reconsider the motion that ",
+    //         description: "",
+    //         requires: 0.66,
+    //         type: 'procedural-main',
+    //         amendable: false
+    //
+    //     },
+    //
+    //
+    // ]
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -71744,7 +71814,9 @@ var actions = {
             dispatch('loadMotionsForMeeting', meeting.id).then(function () {
               //get motions which have already been handled
               dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
-                return resolve();
+                dispatch('loadMotionTypesAndTemplates').then(function () {
+                  return resolve();
+                });
               });
             });
           });
@@ -71913,8 +71985,8 @@ module.exports.getTaggedChanges = function (orig, amend) {
   var addedTag = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'text-danger';
   var removedTag = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'struck';
   var diff = Diff.diffWords(orig, amend);
-  var out = [];
-  window.console.log(diff);
+  var out = []; // window.console.log(diff);
+
   diff.forEach(function (part) {
     // window.console.log(this.tags.changeStart, 'hd');
     var w = '';

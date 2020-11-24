@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 
 class FakeFullMeetingSeeder extends Seeder
 {
-    const NUMBER_VOTERS = 10;
 
     /**
      * Run the database seeds.

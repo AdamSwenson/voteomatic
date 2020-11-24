@@ -31,8 +31,15 @@ module.exports = {
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isAmendment();
             }
+        },
 
-        }
+        // isDebatable: function(){
+        //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        //         return this.motion.isDebatable();
+        //     }
+        // },
+
+
 
     }
 };

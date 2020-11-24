@@ -128,7 +128,16 @@ module.exports = {
 
         secondMotion : (motionId) => {
         return normalizedRouteRoot() + 'motions/second/' + motionId;
-        }
+        },
+
+        templates : () => {
+        return normalizedRouteRoot() + 'motions/templates';
+        },
+
+        types : () => {
+            return normalizedRouteRoot() + 'motions/types';
+        },
+
 
     }
 
