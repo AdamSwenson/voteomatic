@@ -18,6 +18,7 @@ use App\Http\Controllers\Dev\SetupController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
 use App\Http\Controllers\VotePageController;
+use App\Http\Controllers\WaitlistController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -59,9 +60,13 @@ Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
 //unused
 Route::get('/lticonfig', [LTIConfigController::class, 'lticonfig']);
 
+Route::get('/waitlist', [WaitlistController::class, 'show'])
+    ->name('waitlist');
+Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
 
 // Index pages
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])
+    ->name('index');
 Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
     ->name('meetingHome');
 Route::get('/home', [HomeController::class, 'index'])

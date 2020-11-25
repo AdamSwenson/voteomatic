@@ -30,6 +30,7 @@ class HomeController extends Controller
 //        $this->user = Auth::user();
         $this->getUser();
 
+        return view('welcome',  ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
 
         return view('home', ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
     }

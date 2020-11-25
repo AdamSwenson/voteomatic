@@ -29,6 +29,10 @@ module.exports = {
             return normalizedRouteRoot() + 'login';
         },
 
+        waitlist : () => {
+        return normalizedRouteRoot() + 'waitlist';
+        }
+
     },
 
     results: {
