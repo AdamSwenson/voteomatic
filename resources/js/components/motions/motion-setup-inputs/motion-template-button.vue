@@ -1,7 +1,6 @@
 <template>
 
     <button
-
         v-bind:class="styling"
         v-on:click="handleClick">
         {{ name }}

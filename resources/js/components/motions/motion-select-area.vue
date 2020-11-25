@@ -21,10 +21,12 @@
                     class="amendment-area "
                     v-bind:class="amendmentClass">
 
-                    <span
-                        class="badge badge-warning"
-                        v-if="isAmendment"
-                    >Amendment</span>
+                    <motion-type-badge :motion="motion"></motion-type-badge>
+<!--                    <amendment-badge :motion="motion"></amendment-badge>-->
+<!--                    <span-->
+<!--                        class="badge badge-warning"-->
+<!--                        v-if="isAmendment"-->
+<!--                    >Amendment</span>-->
 
                         <amendment-text-display
                             v-if="isAmendment"
@@ -89,17 +91,21 @@
 import MotionSelectButton from "./motion-select-button";
 import EndVotingButton from "./end-voting-button";
 import * as routes from "../../routes";
-import MotionStatusBadge from "../text-display/motion-status-badge";
+import MotionStatusBadge from "./badges/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
 import AmendmentTextDisplay from "./amendment-text-display";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import ProceduralMixin from "../../mixins/proceduralMixin";
+// import AmendmentBadge from "./badges/amendment-badge";
+import MotionTypeBadge from "./badges/motion-type-badge";
 
 export default {
     name: "motion-select-area",
     components: {
+        MotionTypeBadge,
+        // AmendmentBadge,
         AmendmentTextDisplay,
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },

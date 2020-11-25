@@ -20,6 +20,7 @@ class MotionFactory extends Factory
             'requires' => 0.5, 'type' => 'main', 'description' => ""],
         ['content' => "RESOLVED That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
             'requires' => 0.5, 'type' => 'main'],
+
         ['content' => "That the pending matter be tabled",
             'requires' => 0.5,
             'type' => 'procedural-subsidiary'

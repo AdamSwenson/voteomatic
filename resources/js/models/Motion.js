@@ -7,17 +7,19 @@ export default class Motion extends IModel {
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null}) {
+    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null, debatable=null}) {
         super();
         this.id = id;
         this.content = content;
         this.description = description;
         this.superseded_by = superseded_by;
+        this.debatable = debatable;
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
         this.applies_to = applies_to;
         this.seconded = seconded;
         this.requires = _.toNumber(requires);
+
         this.type = type;
         this.isComplete = is_complete;
 

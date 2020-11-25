@@ -47,24 +47,33 @@ class MotionTemplateRepository
         ],
 
         [
-            'name' =>
-                'Previous Question (Call the Question)',
-            'content' => "That the pending question is called",
-            'description' => "If it is approved, all debate ends on the pending motion and the body moves immediately to a vote on the pending motion.
-                If it fails, debate continues on the pending motion",
+            'name' => 'Previous Question (Call the Question)',
+            'content' => "That the pending question be called for",
+            'description' => "If this motion is approved, all debate ends on the pending motion and the body moves immediately to a vote on the pending motion.
+                If this motion fails, debate continues on the pending motion",
             'requires' => 0.66,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
             'debatable' => false
         ],
         [
-            'name' =>
-                'Place on the Table',
-            'content' => "The pending motion is placed on the table",
+            'name' => 'Place on the Table',
+            'content' => "That the pending motion be placed on the table",
             'description' => "All action on the motion is paused so the body can attend to
                 other business. There is no scheduled time to resume action. Action
                 will resume upon a majority vote to Take from the Table. That motion may
                 be made whenever no main motion is pending",
+            'requires' => 0.5,
+            'type' => 'procedural-subsidiary',
+            'amendable' => false,
+            'debatable' => false,
+        ],
+
+        [
+            'name' => 'Take from the Table',
+            'content' => "That the specified motion be taken from the table.",
+            'description' => "If this motion passes, the tabled motion is resumed. The state of the motion is exactly
+             the same as when it was tabled. This motion may be made whenever no main motion is pending",
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,

@@ -33,6 +33,10 @@ module.exports = {
             }
         },
 
+        isMotionReady: function () {
+            return ! _.isUndefined(this.motion) && ! _.isNull(this.motion);
+        }
+
         // isDebatable: function(){
         //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
         //         return this.motion.isDebatable();

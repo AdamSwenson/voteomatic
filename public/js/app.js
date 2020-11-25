@@ -2535,6 +2535,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2616,9 +2634,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "vote-page",
   components: {
+    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__["default"],
+    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__["default"],
+    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_9__["default"],
     AmendmentTextDisplay: _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__["default"],
     VoteReceipt: _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__["default"],
     // MotionDescription,
@@ -2754,7 +2778,7 @@ __webpack_require__.r(__webpack_exports__);
     motionDescription: function motionDescription() {
       if (this.isReady) {
         // get: function () {
-        return this.motion.content;
+        return this.motion.description;
       } // },
       // default: ''
 
@@ -3398,6 +3422,235 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "debatable-badge",
+  props: ["motion"],
+  mixins: [_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    show: function show() {
+      //will be null if hasn't been set
+      return !_.isNull(this.debatable) && !_.isUndefined(this.debatable);
+    },
+    debatable: function debatable() {
+      return this.motion.debatable;
+    },
+    labelText: function labelText() {
+      if (_.isNull(this.debatable)) return '';
+      if (this.debatable) return "Debatable";
+      return "Not debatable";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "motion-status-badge",
+  props: ["isPassed"],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  computed: {},
+  asyncComputed: {
+    showBadge: function showBadge() {
+      //If the thing hasn't been voted on yet, isPassed will be undefined
+      if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false;
+      return true;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "motion-type-badge",
+  props: ["motion"],
+  mixins: [_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
+  data: function data() {
+    return {
+      procedural: {
+        styling: 'badge-primary',
+        text: 'Procedural'
+      },
+      amendment: {
+        styling: 'badge-warning',
+        text: 'Amendment'
+      }
+    };
+  },
+  asyncComputed: {
+    styling: function styling() {
+      //stupid async
+      if (this.isMotionReady) {
+        if (this.isAmendment) return this.amendment.styling;
+        if (this.isProcedural) return this.procedural.styling;
+      }
+    },
+    labelText: function labelText() {
+      //stupid async
+      if (this.isMotionReady) {
+        if (this.isAmendment) return this.amendment.text;
+        if (this.isProcedural) return this.procedural.text;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "required-vote-badge",
+  props: ["motion"],
+  mixins: [_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  data: function data() {
+    return {
+      majority: {
+        styling: 'badge-info',
+        text: 'Majority',
+        tip: 'A majority means greater than 50% of all votes cast.'
+      },
+      twoThirds: {
+        styling: 'badge-warning',
+        text: 'Two-thirds',
+        tip: 'This requires greater than 2/3 of all votes cast.'
+      }
+    };
+  },
+  asyncComputed: {
+    requirement: function requirement() {
+      if (this.isMotionReady) {
+        switch (this.motion.requires) {
+          case 0.5:
+            return this.majority;
+            break;
+
+          case 0.66:
+            return this.twoThirds;
+            break;
+        }
+      }
+    },
+    badgeStyling: {
+      get: function get() {
+        //stupid async
+        if (this.isMotionReady && !_.isUndefined(this.requirement)) {
+          return this.requirement.styling;
+        }
+      },
+      "default": ''
+    },
+    labelText: {
+      get: function get() {
+        if (this.isMotionReady && !_.isUndefined(this.requirement)) {
+          return this.requirement.text;
+        }
+      },
+      "default": ''
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js& ***!
@@ -3608,7 +3861,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _end_voting_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./end-voting-button */ "./resources/js/components/motions/end-voting-button.vue");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _text_display_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../text-display/motion-status-badge */ "./resources/js/components/text-display/motion-status-badge.vue");
+/* harmony import */ var _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./badges/motion-status-badge */ "./resources/js/components/motions/badges/motion-status-badge.vue");
 /* harmony import */ var _navigation_vote_nav_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../navigation/vote-nav-button */ "./resources/js/components/navigation/vote-nav-button.vue");
 /* harmony import */ var _navigation_results_nav_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../navigation/results-nav-button */ "./resources/js/components/navigation/results-nav-button.vue");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
@@ -3618,6 +3871,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+//
+//
 //
 //
 //
@@ -3713,15 +3969,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+ // import AmendmentBadge from "./badges/amendment-badge";
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-select-area",
   components: {
+    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__["default"],
+    // AmendmentBadge,
     AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__["default"],
     ResultsNavButton: _navigation_results_nav_button__WEBPACK_IMPORTED_MODULE_5__["default"],
     VoteNavButton: _navigation_vote_nav_button__WEBPACK_IMPORTED_MODULE_4__["default"],
-    MotionStatusBadge: _text_display_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__["default"],
+    MotionStatusBadge: _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_3__["default"],
     MotionSelectButton: _motion_select_button__WEBPACK_IMPORTED_MODULE_0__["default"],
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -4669,7 +4929,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../routingMixin */ "./resources/js/components/routingMixin.js");
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_routingMixin__WEBPACK_IMPORTED_MODULE_4__);
-//
 //
 //
 //
@@ -5640,52 +5899,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.motion.content;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "motion-status-badge",
-  props: ["isPassed"],
-  mixins: [],
-  data: function data() {
-    return {};
-  },
-  computed: {},
-  asyncComputed: {
-    showBadge: function showBadge() {
-      //If the thing hasn't been voted on yet, isPassed will be undefined
-      if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false;
-      return true;
     }
   }
 });
@@ -47169,16 +47382,40 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-body" },
-      [
-        _vm.isReady
-          ? _c("required-vote", { attrs: { motion: _vm.motion } })
-          : _vm._e()
-      ],
-      1
-    ),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col" },
+          [
+            _vm.isReady
+              ? _c("required-vote", { attrs: { motion: _vm.motion } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isReady
+              ? _c("motion-type-badge", { attrs: { motion: _vm.motion } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isReady
+              ? _c("required-vote-badge", { attrs: { motion: _vm.motion } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isReady
+              ? _c("debatable-badge", { attrs: { motion: _vm.motion } })
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col" }, [
+          _c("p", { staticClass: "motionDescription text-muted" }, [
+            _vm._v(_vm._s(_vm.motionDescription))
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -47559,6 +47796,118 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.show
+    ? _c("span", { staticClass: "badge badge-warning" }, [
+        _vm._v(_vm._s(_vm.labelText))
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", { staticClass: "result-badge" }, [
+    !_vm.showBadge
+      ? _c("span", { staticClass: "no-results" })
+      : _vm.isPassed
+      ? _c("span", { staticClass: "badge badge-success" }, [_vm._v("Passed")])
+      : !_vm.isPassed
+      ? _c("span", { staticClass: "badge badge-danger" }, [_vm._v("Failed")])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", { staticClass: "badge ", class: _vm.styling }, [
+    _vm._v(_vm._s(_vm.labelText))
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", { staticClass: "badge ", class: _vm.badgeStyling }, [
+    _vm._v(_vm._s(_vm.labelText))
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/create-motion-button.vue?vue&type=template&id=5dff8235&scoped=true&":
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/motions/create-motion-button.vue?vue&type=template&id=5dff8235&scoped=true& ***!
@@ -47763,11 +48112,7 @@ var render = function() {
               "div",
               { staticClass: "amendment-area ", class: _vm.amendmentClass },
               [
-                _vm.isAmendment
-                  ? _c("span", { staticClass: "badge badge-warning" }, [
-                      _vm._v("Amendment")
-                    ])
-                  : _vm._e(),
+                _c("motion-type-badge", { attrs: { motion: _vm.motion } }),
                 _vm._v(" "),
                 _vm.isAmendment
                   ? _c("amendment-text-display", {
@@ -49248,38 +49593,6 @@ var render = function() {
     _c("blockquote", { staticClass: "blockquote mb-0" }, [
       _vm._v("\n    " + _vm._s(_vm.content) + "\n    ")
     ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("span", { staticClass: "result-badge" }, [
-    !_vm.showBadge
-      ? _c("span", { staticClass: "no-results" })
-      : _vm.isPassed
-      ? _c("span", { staticClass: "badge badge-success" }, [_vm._v("Passed")])
-      : !_vm.isPassed
-      ? _c("span", { staticClass: "badge badge-danger" }, [_vm._v("Failed")])
-      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -67090,6 +67403,282 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/motions/badges/debatable-badge.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/motions/badges/debatable-badge.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./debatable-badge.vue?vue&type=template&id=2542143c&scoped=true& */ "./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true&");
+/* harmony import */ var _debatable_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./debatable-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _debatable_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2542143c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/badges/debatable-badge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_debatable_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./debatable-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_debatable_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true& ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./debatable-badge.vue?vue&type=template&id=2542143c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/debatable-badge.vue?vue&type=template&id=2542143c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_debatable_badge_vue_vue_type_template_id_2542143c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-status-badge.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-status-badge.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true& */ "./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true&");
+/* harmony import */ var _motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-status-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0ccf3fbd",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/badges/motion-status-badge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-status-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-status-badge.vue?vue&type=template&id=0ccf3fbd&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_0ccf3fbd_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-type-badge.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-type-badge.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true& */ "./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true&");
+/* harmony import */ var _motion_type_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-type-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _motion_type_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "4f6aaf76",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/badges/motion-type-badge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_type_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-type-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_type_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/motion-type-badge.vue?vue&type=template&id=4f6aaf76&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_type_badge_vue_vue_type_template_id_4f6aaf76_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/required-vote-badge.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/required-vote-badge.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true& */ "./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true&");
+/* harmony import */ var _required_vote_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./required-vote-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _required_vote_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "68d3736c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/badges/required-vote-badge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./required-vote-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/motions/badges/required-vote-badge.vue?vue&type=template&id=68d3736c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_required_vote_badge_vue_vue_type_template_id_68d3736c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/create-motion-button.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/motions/create-motion-button.vue ***!
@@ -69042,75 +69631,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/text-display/motion-status-badge.vue":
-/*!**********************************************************************!*\
-  !*** ./resources/js/components/text-display/motion-status-badge.vue ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true& */ "./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true&");
-/* harmony import */ var _motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-status-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "2abeb89d",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/text-display/motion-status-badge.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-status-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-status-badge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true&":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true& ***!
-  \*****************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/text-display/motion-status-badge.vue?vue&type=template&id=2abeb89d&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_status_badge_vue_vue_type_template_id_2abeb89d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/text-display/required-vote.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/text-display/required-vote.vue ***!
@@ -69754,6 +70274,9 @@ module.exports = {
       if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
         return this.motion.isAmendment();
       }
+    },
+    isMotionReady: function isMotionReady() {
+      return !_.isUndefined(this.motion) && !_.isNull(this.motion);
     } // isDebatable: function(){
     //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
     //         return this.motion.isDebatable();
@@ -70075,7 +70598,9 @@ var Motion = /*#__PURE__*/function (_IModel) {
         _ref$seconded = _ref.seconded,
         seconded = _ref$seconded === void 0 ? null : _ref$seconded,
         _ref$superseded_by = _ref.superseded_by,
-        superseded_by = _ref$superseded_by === void 0 ? null : _ref$superseded_by;
+        superseded_by = _ref$superseded_by === void 0 ? null : _ref$superseded_by,
+        _ref$debatable = _ref.debatable,
+        debatable = _ref$debatable === void 0 ? null : _ref$debatable;
 
     _classCallCheck(this, Motion);
 
@@ -70083,7 +70608,8 @@ var Motion = /*#__PURE__*/function (_IModel) {
     _this.id = id;
     _this.content = content;
     _this.description = description;
-    _this.superseded_by = superseded_by; //if it is subsidiary, this is the motion
+    _this.superseded_by = superseded_by;
+    _this.debatable = debatable; //if it is subsidiary, this is the motion
 
     _this.appliesTo = applies_to;
     _this.applies_to = applies_to;

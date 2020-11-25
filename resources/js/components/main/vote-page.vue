@@ -30,10 +30,25 @@
         </div>
 
         <div class="card-body">
-            <required-vote
-                v-if="isReady"
-                :motion="motion"
-            ></required-vote>
+            <div class="row">
+                <div class="col">
+                    <required-vote v-if="isReady" :motion="motion"></required-vote>
+
+                    <motion-type-badge v-if="isReady" :motion="motion"></motion-type-badge>
+
+                    <required-vote-badge v-if="isReady" :motion="motion"></required-vote-badge>
+
+                    <debatable-badge v-if="isReady" :motion="motion"></debatable-badge>
+                </div>
+                <div class="col">
+
+                </div>
+
+                <div class="col">
+                    <p class="motionDescription text-muted">{{motionDescription}}</p>
+
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -82,10 +97,16 @@ import motionMixin from '../../mixins/motionStoreMixin';
 
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 import AmendmentTextDisplay from "../motions/amendment-text-display";
+import RequiredVoteBadge from "../motions/badges/required-vote-badge";
+import DebatableBadge from "../motions/badges/debatable-badge";
+import MotionTypeBadge from "../motions/badges/motion-type-badge";
 
 export default {
     name: "vote-page",
     components: {
+        MotionTypeBadge,
+        DebatableBadge,
+        RequiredVoteBadge,
         AmendmentTextDisplay,
         VoteReceipt,
         // MotionDescription,
@@ -244,7 +265,7 @@ export default {
         motionDescription: function () {
             if (this.isReady) {
                 // get: function () {
-                return this.motion.content;
+                return this.motion.description;
             }
             // },
             // default: ''
@@ -273,7 +294,7 @@ export default {
         originalText: function () {
             if (!this.isReady || !this.isAmendment) return ''
 
-            if (!_.isUndefined(this.originalMotion) && ! _.isNull(this.originalMotion)){
+            if (!_.isUndefined(this.originalMotion) && !_.isNull(this.originalMotion)) {
                 return this.originalMotion.content
             }
         }

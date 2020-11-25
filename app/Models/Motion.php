@@ -49,6 +49,14 @@ class Motion extends Model
         'amendment-secondary',
     ];
 
+    /**
+     * Names of motion types which denote that
+     * the motion should be handled as an procedural
+     * motion.
+     * This allows everything else to not worry about
+     * how we name the various possible forms of procedural motion
+     * @var array
+     */
     static public $proceduralTypes = [
         'privileged',
         'procedural-main',
