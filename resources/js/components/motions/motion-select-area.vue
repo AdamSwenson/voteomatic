@@ -22,20 +22,20 @@
                     v-bind:class="amendmentClass">
 
                     <motion-type-badge :motion="motion"></motion-type-badge>
-<!--                    <amendment-badge :motion="motion"></amendment-badge>-->
-<!--                    <span-->
-<!--                        class="badge badge-warning"-->
-<!--                        v-if="isAmendment"-->
-<!--                    >Amendment</span>-->
 
-                        <amendment-text-display
-                            v-if="isAmendment"
-                            :original-text="originalText"
-                            :amendment-text="motion.content"
-                            :tags="amendmentTags"
-                        ></amendment-text-display>
+                    <amendment-text-display
+                        v-if="isAmendment"
+                        :original-text="originalText"
+                        :amendment-text="motion.content"
+                        :tags="amendmentTags"
+                    ></amendment-text-display>
 
-                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+                    <br/>
+
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
+
+                    <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>
 
                 </div>
 
@@ -46,6 +46,11 @@
                 >
                     <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
+                    <br/>
+
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
+
                     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
 
                 </div>
@@ -54,8 +59,12 @@
                     class="main-ish-area"
                     v-else
                 >
-
                     <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+
+                    <br/>
+
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
 
                     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
 
@@ -100,10 +109,14 @@ import AmendmentMixin from "../../mixins/amendmentMixin";
 import ProceduralMixin from "../../mixins/proceduralMixin";
 // import AmendmentBadge from "./badges/amendment-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
+import RequiredVoteBadge from "./badges/required-vote-badge";
+import DebatableBadge from "./badges/debatable-badge";
 
 export default {
     name: "motion-select-area",
     components: {
+        DebatableBadge,
+        RequiredVoteBadge,
         MotionTypeBadge,
         // AmendmentBadge,
         AmendmentTextDisplay,

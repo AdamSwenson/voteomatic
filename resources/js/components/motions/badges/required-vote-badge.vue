@@ -22,7 +22,7 @@ export default {
         return {
 
             majority: {
-                styling: 'badge-info',
+                styling: 'badge-secondary',
                 text: 'Majority',
                 tip: 'A majority means greater than 50% of all votes cast.'
             },

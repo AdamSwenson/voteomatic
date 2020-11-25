@@ -3604,7 +3604,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       majority: {
-        styling: 'badge-info',
+        styling: 'badge-secondary',
         text: 'Majority',
         tip: 'A majority means greater than 50% of all votes cast.'
       },
@@ -3872,6 +3872,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3973,9 +3984,13 @@ __webpack_require__.r(__webpack_exports__);
  // import AmendmentBadge from "./badges/amendment-badge";
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "motion-select-area",
   components: {
+    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_12__["default"],
+    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__["default"],
     MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__["default"],
     // AmendmentBadge,
     AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -48124,9 +48139,21 @@ var render = function() {
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _c("motion-status-badge", {
-                  attrs: { "is-passed": _vm.isPassed }
-                })
+                _c("br"),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("required-vote-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("debatable-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isComplete
+                  ? _c("motion-status-badge", {
+                      attrs: { "is-passed": _vm.isPassed }
+                    })
+                  : _vm._e()
               ],
               1
             )
@@ -48142,6 +48169,16 @@ var render = function() {
                   _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
                 ]),
                 _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("required-vote-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("debatable-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("motion-status-badge", {
                   attrs: { "is-passed": _vm.isPassed }
                 })
@@ -48155,6 +48192,16 @@ var render = function() {
                 _c("span", { class: _vm.motionStyle }, [
                   _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
                 ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("required-vote-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.isComplete && !_vm.motion.isSuperseded()
+                  ? _c("debatable-badge", { attrs: { motion: _vm.motion } })
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("motion-status-badge", {
                   attrs: { "is-passed": _vm.isPassed }
