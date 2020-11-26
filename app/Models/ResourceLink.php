@@ -10,6 +10,8 @@ class ResourceLink extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['meeting_id', 'lti_consumer_id', 'description', 'resource_link_id'];
+
     /**
      * The consuming application (canvas) info
      * todo For now this is just one to one. consider expanding if others use

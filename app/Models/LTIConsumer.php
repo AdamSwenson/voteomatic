@@ -18,6 +18,8 @@ class LTIConsumer extends Model
     //
     use HasFactory;
 
+    protected $fillable = ['name', 'secret_key', 'consumer_key'];
+
     public function resourceLink(){
         return $this->hasMany(ResourceLink::class);
     }

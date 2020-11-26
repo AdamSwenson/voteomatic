@@ -1,7 +1,75 @@
 <?php
 //
 //
-//namespace App\Repositories;
+namespace App\Repositories;
+
+
+use App\Models\LTIConsumer;
+use App\Models\Meeting;
+use App\Models\ResourceLink;
+use Illuminate\Support\Str;
+
+class LTIRepository
+{
+
+    const KEY_LENGTH = 32;
+
+static public function generateConsumerKey(){
+    return Str::random(self::KEY_LENGTH);
+}
+
+
+    static public function generateSecretKey(){
+        return Str::random(self::KEY_LENGTH);
+    }
+
+    static public function generateResourceLinkId(){
+        return Str::random(self::KEY_LENGTH);
+    }
+
+    /**
+     * Creates the credentials and database entry for a new
+     * canvas/other lti instance  which will connect to the voteomatic
+     *
+     * @param $name
+     */
+    public function createLTIConsumer($name){
+        return LTIConsumer::create([
+            'name' => $name,
+            'consumer_key' => self::generateConsumerKey(),
+            'secret_key' => self::generateSecretKey(),
+
+        ]);
+
+
+    }
+
+    /**
+     * @param LTIConsumer $consumer
+     * @param Meeting $meeting
+     * @param null $description
+     * @return
+     */
+    public function createResourceLink(LTIConsumer $consumer, Meeting $meeting, $description=null){
+
+        return ResourceLink::create([
+            'lti_consumer_id' => $consumer->id,
+            'meeting_id' => $meeting->id,
+            'description' => $description,
+            'resource_link_id' => self::generateResourceLinkId()
+        ]);
+
+    }
+}
+
+
+
+
+
+
+
+
+
 //
 //use App\LTI\Authenticators\OAuth\OAuthUtil;
 //use IMSGlobal\LTI\ToolProvider\DataConnector\DataConnector;
