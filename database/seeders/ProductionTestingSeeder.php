@@ -30,13 +30,25 @@ class ProductionTestingSeeder extends Seeder
     public function run()
     {
 
+        try {
+            //we make 1 admin user since
+            //everyone else logging in will be
+            //non-admins
+            $this->call([AdminUserSeeder::class]);
+        } catch (Illuminate\Database\QueryException $e) {
+        }
+
+        try {
+            $this->call([LTIDevCredsSeeder::class]);
+        } catch (Illuminate\Database\QueryException $e) {
+        }
+
 
         $this->call([
-            AdminUserSeeder::class,
-            LTIDevCredsSeeder::class,
             AssignmentSeeder::class,
             FakeFullMeetingSeeder::class
         ]);
+
 //
 //        //we make 1 admin user since
 //        //everyone else logging in will be
