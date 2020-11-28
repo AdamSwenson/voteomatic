@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class AdminUserSeeder extends Seeder
 {
@@ -26,9 +28,12 @@ class AdminUserSeeder extends Seeder
 
             User::create($props);
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             Log::error($e);
         }
-
+        catch(QueryException $e2)
+        {
+            Log::error($e2);
+        }
     }
 }
