@@ -57,6 +57,10 @@ Auth::routes();
 // LTI access endpoint
 Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
+
+Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingLaunchRequest'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
+
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 
 //unused

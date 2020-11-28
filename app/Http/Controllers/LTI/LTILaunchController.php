@@ -56,6 +56,8 @@ class LTILaunchController extends Controller
     public function handleLaunchRequest(LTIRequest $request)
     {
         $j = $request->all();
+
+        //todo remove
         Log::debug($request);
 
         //Check if the activity is enabled and reject access if not
@@ -84,11 +86,65 @@ class LTILaunchController extends Controller
             Log::debug($e);
 
             abort(403, 'Unauthorized action.');
-            //todo logging and error handling here
 
         }
 
     }
+
+
+    /**
+     * Receives the launch request from a link
+     * which contains the meeting id.
+     *
+     * This is the newer version.
+     *
+     * lti:create-tool-consumer
+     *  key: tacokey
+     *  name: taco
+     * secret: nom
+     * @param LTIRequest $request
+     * @param Meeting $meeting
+     * @return void
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function handleMeetingLaunchRequest(LTIRequest $request, Meeting $meeting)
+    {
+
+        //todo remove
+        Log::debug($request);
+
+        //Check if the activity is enabled and reject access if not
+        //todo Do this (later) or maybe add as middleware
+
+        //The LTIRequest object has already checked that the needed
+        //fields are populated.
+        try {
+
+            //We verify that the oath signature on the incoming post
+            //request is valid
+            $resourceLink = ResourceLink::where(['resource_link_id' => $request->resource_link_id])
+                ->firstOrFail();
+            //todo error handling if not found
+
+            $authenticator = AuthenticatorFactory::make($request);
+            $authenticator->authenticate($request, $resourceLink);
+
+            //Get an existing user or create a new person in the db
+            $this->handleUser($request);
+
+            //We redirect to the activity page
+            return redirect()->route('meetingHome', $meeting->id);
+
+        } catch (LTIAuthenticationException $e) {
+            Log::debug($e);
+
+            abort(403, 'Unauthorized action.');
+
+        }
+
+    }
+
 
     /**
      * Creates or looks up the user and logs them

@@ -15,12 +15,22 @@ class Meeting extends Model
     protected $fillable= ['date','name'];
 
 
+    public function getOwner(){
+        return User::find($this->owner_id);
+    }
+
+// ----------------------- start
+//These are from an initial attempt at the motion tree based on
+// the gradeomatic structures. May end up using later if need much richer
+// tree. But presently not used.
 
     /**
      * Adds an Motion to the meeting either with the meeting itself
      * or another motion as the parent.
      * Returns the Assignment object representing the location of the
      * motion in the heirarchy.
+     *
+     * todo dev unused
      *
      * @param Motion $motion
      * @param $parentId
@@ -104,6 +114,7 @@ class Meeting extends Model
         $this->initializeAssignmentRoot();
     }
 
+    //----------------------- end
 
     /* =======================
         Relationships
