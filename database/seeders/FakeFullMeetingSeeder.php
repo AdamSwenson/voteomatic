@@ -162,6 +162,15 @@ class FakeFullMeetingSeeder extends Seeder
         $main3->is_complete = true;
         $main3->save();
 
+        //The currently pending motion
+        Motion::create([
+            'content' => "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
+            'requires' => 0.5,
+            'type' => 'main',
+            'meeting_id' => $meeting->id
+        ]);
+
+
         echo "Full meeting id: " . $meeting->id;
     }
 }
