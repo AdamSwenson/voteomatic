@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,6 +42,9 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -70,4 +74,41 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+
+
+    /**
+     * Temporarily overwriting the following until ready
+     * for public use
+     *
+     */
+
+
+    /**
+     * todo Remove this once ready for prime time
+     *
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return redirect()->route('waitlist');
+
+//        return view('auth.register');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * todo Remove this once ready for prime time
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        return redirect()->route('waitlist');
+    }
+
+
 }

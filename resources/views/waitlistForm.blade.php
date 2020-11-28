@@ -16,6 +16,11 @@
                 </div>
 
                 <div class="card-body">
+                    <p>The voteomatic is not yet available to the general public.</p>
+                    <p>Please fill out this form and we will notify you when it is available.</p>
+                </div>
+
+                <div class="card-body">
 
                     <form id="waitlistForm"
                           name="waitlistForm"
