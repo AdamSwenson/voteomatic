@@ -9,6 +9,6 @@ class WaitlistEntry extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['email','name', 'organization'];
+    protected $fillable= ['email', 'name', 'organization', 'notes'];
 
 }

@@ -15,6 +15,10 @@ class CreateWaitlistEntriesTable extends Migration
     {
         Schema::create('waitlist_entries', function (Blueprint $table) {
             $table->id();
+            $table->text('email');
+            $table->text('name');
+            $table->text('organization')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

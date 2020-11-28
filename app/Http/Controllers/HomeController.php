@@ -7,6 +7,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class HomeController
+ *
+ * Handles requests for main pages available to
+ * authenticated users.
+ *
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
@@ -21,6 +29,9 @@ class HomeController extends Controller
     }
 
     /**
+     * NB, this is not the public index page. That's
+     * handled by Guest/PublicIndexController
+     *
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
@@ -29,8 +40,6 @@ class HomeController extends Controller
     {
 //        $this->user = Auth::user();
         $this->getUser();
-
-        return view('welcome',  ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
 
         return view('home', ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
     }

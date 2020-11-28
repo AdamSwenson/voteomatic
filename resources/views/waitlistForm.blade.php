@@ -16,14 +16,16 @@
                 </div>
 
                 <div class="card-body">
-                    <form id="waitlist-form"
+
+                    <form id="waitlistForm"
+                          name="waitlistForm"
                           action="{{ route('waitlist') }}"
                           method="POST"
                     >
 
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="name" class="form-control">
+                            <input type="text" id="name" name="name" class="form-control">
                         </div>
 
 
@@ -31,6 +33,7 @@
                             <label for="email">Email address</label>
                             <input type="email"
                                    id="email"
+                                   name="email"
                                    class="form-control"
                                    aria-describedby="emailHelp">
                             <small id="emailHelp"
@@ -40,26 +43,35 @@
 
 
                         <div class="form-group">
-                            <label for="organization">Organization</label>
-                            <input type="text" id="organization" class="form-control"/>
+                            <label for="organization">Organization (optional)</label>
+                            <input type="text" id="organization"
+                                   name="organization"
+                                   class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="notes">Notes</label>
+                            <label for="notes">Notes (optional)</label>
                             <textarea id="notes"
+                                      name="notes"
                                       class="form-control"
                             ></textarea>
+                            <small id="notesHelp"
+                                   class="form-text text-muted"
+                            >If there's anything else you'd like us to know....</small>
                         </div>
 
                         @csrf
 
-                    </form>
+                        <button type='submit' class="btn btn-primary"
+                                onclick="document.waitlistForm.submit();"
 
-                    <button type='submit' class="btn btn-primary"
-                            onclick="event.preventDefault();
-            document.getElementById('waitlist-form').submit();"
-                    >Add me to the waitlist
-                    </button>
+                        >Add me to the waitlist
+                        </button>
+
+                    </form>
+{{--                    document.getElementById('waitlistForm').submit();"--}}
+{{--                    event.preventDefault();--}}
+
                 </div>
             </div>
         </div>

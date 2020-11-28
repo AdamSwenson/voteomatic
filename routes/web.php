@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
+use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
 use App\Http\Controllers\LTI\LTILaunchController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\Dev\SetupController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
 use App\Http\Controllers\VotePageController;
-use App\Http\Controllers\WaitlistController;
+use App\Http\Controllers\Guest\WaitlistController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -57,20 +58,27 @@ Auth::routes();
 Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
+
 //unused
 Route::get('/lticonfig', [LTIConfigController::class, 'lticonfig']);
 
-Route::get('/waitlist', [WaitlistController::class, 'show'])
-    ->name('waitlist');
-Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
-
-// Index pages
-Route::get('/', [HomeController::class, 'index'])
-    ->name('index');
+// main pages
 Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
     ->name('meetingHome');
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
+
+
+/* =============================
+        Publicly accessible
+   ============================= */
+// Public index
+Route::get('/', [PublicIndexController::class, 'index'])
+    ->name('index');
+// Waitlist
+Route::get('/waitlist', [WaitlistController::class, 'show'])
+    ->name('waitlist');
+Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
 
 
 /* =============================

@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class WaitlistRequest extends FormRequest
 {
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,8 +26,18 @@ class WaitlistRequest extends FormRequest
     public function rules()
     {
         return [
-//            'name' => ''
-            //
+//            'email' => 'email|required',
+//            'name' => 'required',
+//            'organization' => 'nullable',
+//            'notes' => 'nullable'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+//            'email.required' => 'We need to know your e-mail address!',
+//            'name.required' => 'We need to know your name!'
         ];
     }
 }
