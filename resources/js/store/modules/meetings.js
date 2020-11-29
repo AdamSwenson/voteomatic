@@ -35,6 +35,14 @@ const mutations = {
         }
     },
 
+
+    deleteMeeting: (state, meetingObject) => {
+        _.remove(state.meetings, function (meeting) {
+            return meeting.id === meetingObject.id;
+        });
+
+    },
+
     setMeeting: (state, payload) => {
         Vue.set(state, 'meeting', payload);
     },
@@ -66,8 +74,33 @@ const actions = {
                     resolve()
                 });
         }));
+    },
+
+
+    deleteMeeting({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.meetings.resource(meeting.id);
+            return Vue.axios.delete(url)
+                .then((response) => {
+                    let d = response.data;
+
+                    //remove it from the list of meetings
+                    commit('deleteMeeting', meeting);
+
+                    //check whether it is the currently set meeting
+                    let activeMeeting = getters.getActiveMeeting;
+                    if (activeMeeting.id === meeting.id) {
+                        //we need to remove it and set another in its place
+                        let newActive = getters.getStoredMeetings[0];
+                        commit('setMeeting', newActive);
+                    }
+                    return resolve()
+                });
+        }));
 
     },
+
 
     loadMeeting({dispatch, commit, getters}, meeting) {
         let meetingId = _.isNumber(meeting) ? meeting : meeting.id;

@@ -3,7 +3,7 @@
     <div class="card">
 
         <div class="card-header">
-            Meetings
+            <h4 class="card-title">Meetings</h4>
         </div>
 
         <div class="card-body">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import MeetingSelectButton from "./meeting-select-button";
+import MeetingSelectButton from "./meeting-select-area";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MeetingMixin from '../storeMixins/meetingMixin';
 

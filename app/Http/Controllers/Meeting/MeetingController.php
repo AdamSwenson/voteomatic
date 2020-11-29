@@ -117,11 +117,16 @@ class MeetingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Meeting $meeting
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Meeting $meeting)
     {
-        //
+
+        $meeting->delete();
+
+        //todo Votes and motions also delete
+
+        return response()->json(200);
     }
 }
