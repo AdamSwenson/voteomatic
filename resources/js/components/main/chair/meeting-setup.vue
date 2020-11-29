@@ -22,18 +22,28 @@
 
             </div>
 
-            <div class="card-text">
-                <button class="btn btn-primary"
-                        v-on:click="handleClick"
-                >Create new meeting
-                </button>
+
+            <div class="meeting-link card-body" v-if="meetingLink">
+
+                <h5 class="card-title">Paste this link into the assignment on Canvas</h5>
+                <div class="pl-5">
+                    <p class="card-text user-select-all">{{ meetingLink }}</p>
+                </div>
             </div>
 
-        </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <button class="btn btn-primary"
+                            v-on:click="handleClick"
+                    >Create new meeting
+                    </button>
+                </div>
 
+            </div>
+        </div>
         <div class="card-body select-meetings">
             <h4 class="card-title">Select meeting </h4>
-<!--            <p><strong>ToDo</strong></p>-->
+            <!--            <p><strong>ToDo</strong></p>-->
 
             <meetings-card></meetings-card>
             <!--                    <h4 class="card-title">Manage meeting access</h4>-->
@@ -72,7 +82,25 @@ export default {
     data: function () {
         return {
             showFields: true,
+
+            linkBase: "https://voteomatic.com/lti-entry/"
         }
+    },
+
+
+    asyncComputed: {
+
+        /**
+         * The link that the user will enter into
+         * canvas
+         */
+        meetingLink: {
+            get: function () {
+                return this.linkBase + this.meeting.id;
+            },
+            default: false
+        },
+
     },
 
 
@@ -98,6 +126,7 @@ export default {
 
             }
         },
+
 
         meetingName: {
             get: function () {

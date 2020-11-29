@@ -2013,6 +2013,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2027,8 +2037,21 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
   data: function data() {
     return {
-      showFields: true
+      showFields: true,
+      linkBase: "https://voteomatic.com/lti-entry/"
     };
+  },
+  asyncComputed: {
+    /**
+     * The link that the user will enter into
+     * canvas
+     */
+    meetingLink: {
+      get: function get() {
+        return this.linkBase + this.meeting.id;
+      },
+      "default": false
+    }
   },
   computed: {
     meetingDate: {
@@ -47166,12 +47189,28 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "card-text" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.handleClick } },
-          [_vm._v("Create new meeting\n                ")]
-        )
+      _vm.meetingLink
+        ? _c("div", { staticClass: "meeting-link card-body" }, [
+            _c("h5", { staticClass: "card-title" }, [
+              _vm._v("Paste this link into the assignment on Canvas")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pl-5" }, [
+              _c("p", { staticClass: "card-text user-select-all" }, [
+                _vm._v(_vm._s(_vm.meetingLink))
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "card-text" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.handleClick } },
+            [_vm._v("Create new meeting\n                ")]
+          )
+        ])
       ])
     ]),
     _vm._v(" "),
