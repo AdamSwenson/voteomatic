@@ -167,11 +167,16 @@ class LTILaunchController extends Controller
 
             $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
 
-            $this->user = User::factory()->create();
+            $this->user = User::create([
+                'email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'user_id_hash' => $userIdHash
+            ]);
 
-            $this->user->first_name = $firstName;
-            $this->user->last_name = $lastName;
-            $this->user->user_id_hash = $userIdHash;
+//            $this->user->first_name = $firstName;
+//            $this->user->last_name = $lastName;
+//            $this->user->user_id_hash = $userIdHash;
 
             $this->user->save();
         }

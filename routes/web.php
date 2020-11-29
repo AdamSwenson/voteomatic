@@ -62,7 +62,6 @@ Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingL
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
-
 //unused
 Route::get('/lticonfig', [LTIConfigController::class, 'lticonfig']);
 
