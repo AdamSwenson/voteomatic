@@ -102,25 +102,25 @@ class LTIRequest extends FormRequest
         //actions will need to be checked against ToolPRoviderBase before using if need them
         return [
 //            /* Oauth stuff */
-//            'oauth_consumer_key' => ['required'],
-//            'oath_nonce' => ['required'],
-//            'oath_signature' => ['required'],
-//            'oath_signature_method' => ['required'],
-//            'oath_timestamp' => ['required'],
-//            'oath_version'  => ['required'],
-//
-//            /* LTI */
-//            'lti_message_type' => ['required', Rule::in(self::$MESSAGE_TYPES)],
-//            'lti_version' => ['required', Rule::in(self::$LTI_VERSIONS)],
-//
-//            /* The Canvas assignment which is linking to the meeting */
-//            'resource_link_id' => ['required'],
-//            'resource_link_title' => ['required'],
-//
-//            /* The user's info */
-//            'user_id' => ['required'],
-//             'lis_person_name_family' => ['required'],
-//            'lis_person_name_given' => ['required']
+            'oauth_consumer_key' => ['required'],
+            'oauth_nonce' => ['required'],
+            'oauth_signature' => ['required'],
+            'oauth_signature_method' => ['required'],
+            'oauth_timestamp' => ['required'],
+            'oauth_version'  => ['required'],
+
+            /* LTI */
+            'lti_message_type' => ['required', Rule::in(self::$MESSAGE_TYPES)],
+            'lti_version' => ['required', Rule::in(self::$LTI_VERSIONS)],
+
+            /* The Canvas assignment which is linking to the meeting */
+            'resource_link_id' => ['required'],
+            'resource_link_title' => ['required'],
+
+            /* The user's info */
+            'user_id' => ['required'],
+             'lis_person_name_family' => ['required'],
+            'lis_person_name_given' => ['required']
 
         ];
     }
