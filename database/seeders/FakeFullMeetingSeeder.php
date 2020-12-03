@@ -167,6 +167,7 @@ class FakeFullMeetingSeeder extends Seeder
             'content' => "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
             'requires' => 0.5,
             'type' => 'main',
+            'is_current' => true,
             'meeting_id' => $meeting->id
         ]);
 
