@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories;
 
+use App\Http\Requests\LTIRequest;
 use App\Models\LTIConsumer;
 use App\Models\Meeting;
 use App\Models\ResourceLink;
@@ -48,22 +49,79 @@ class LTIRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function createResourceLink()
+    public function createResourceLinkEntry()
     {
         $description = $this->faker->paragraph;
         $meeting = Meeting::factory()->create();
         $consumer = LTIConsumer::factory()->create();
+        $resourceLinkId = $this->faker->sha1;
 
-        $result = $this->object->createResourceLink($consumer, $meeting, $description);
+        $result = $this->object->createResourceLinkEntry($consumer, $meeting, $resourceLinkId, $description);
 
         $this->assertInstanceOf(ResourceLink::class, $result);
-        $this->assertEquals(LTIRepository::KEY_LENGTH, Str::of($result->resource_link_id)->length(), "Consumer key is correct length");
+        $this->assertEquals($resourceLinkId, $result->resource_link_id, "Incoming link id was store");
         $this->assertEquals($meeting->id, $result->meeting_id);
         $this->assertEquals($consumer->id, $result->lti_consumer_id);
         $this->assertEquals($description, $result->description);
+    }
 
+//
+//    /** @test */
+//    public function handleResourceLinkInRequestExistingModel()
+//    {
+//        $request = new LTIRequest();
+//        $resourceLink = ResourceLink::factory()->create();
+//        $request['resource_link_id'] = $resourceLink->resource_link_id;
+//
+//        //call
+//        $result = $this->object->getResourceLinkFromRequest($request);
+//
+//        //check
+//        $this->assertTrue($resourceLink->is($result), "Correct model returned" );
+//
+//    }
+
+
+    /** @test */
+    public function getResourceLinkFromRequestExistingModel()
+    {
+        $request = new LTIRequest();
+        $resourceLink = ResourceLink::factory()->create();
+        $request['resource_link_id'] = $resourceLink->resource_link_id;
+        $meeting = Meeting::factory()->create();
+
+        //call
+        $result = $this->object->getResourceLinkFromRequest($request, $meeting);
+
+        //check
+        $this->assertTrue($resourceLink->is($result), "Correct model returned" );
 
     }
 
-}
+    /** @test */
+    public function getResourceLinkFromRequestWhenNoExistingModel()
+    {
+        $id = $this->faker->sha1;
+        $description = $this->faker->company;
+        $consumer = LTIConsumer::factory()->create();
 
+        $request = new LTIRequest();
+        $request['resource_link_id'] = $id;
+        $request['resource_link_title'] = $description;
+        $request['oauth_consumer_key'] = $consumer->consumer_key;
+        $meeting = Meeting::factory()->create();
+
+        //call
+        $result = $this->object->getResourceLinkFromRequest($request, $meeting);
+
+        //check
+        $this->assertDatabaseHas('resource_links', [
+            'resource_link_id' => $id,
+            'lti_consumer_id' => $consumer->id,
+            'meeting_id' => $meeting->id,
+            'description' => $description
+        ]);
+
+        $this->assertInstanceOf(ResourceLink::class, $result, "Returns expected object");
+    }
+}

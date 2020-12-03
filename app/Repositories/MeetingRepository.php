@@ -32,7 +32,7 @@ class MeetingRepository
 
         $consumer = LTIConsumer::where('consumer_key', $consumerKey)->firstOrFail();
 
-        $link = $this->ltiRepo->createResourceLink($consumer, $meeting,  $meeting->name);
+        $link = $this->ltiRepo->createResourceLinkEntry($consumer, $meeting,  $meeting->name);
 
         return $meeting;
 

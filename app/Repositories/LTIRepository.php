@@ -4,9 +4,11 @@
 namespace App\Repositories;
 
 
+use App\Http\Requests\LTIRequest;
 use App\Models\LTIConsumer;
 use App\Models\Meeting;
 use App\Models\ResourceLink;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 /**
@@ -33,16 +35,17 @@ class LTIRepository implements ILTIRepository
         return Str::random(self::KEY_LENGTH);
     }
 
-    static public function generateResourceLinkId()
-    {
-        return Str::random(self::KEY_LENGTH);
-    }
+//    static public function generateResourceLinkId()
+//    {
+////        return Str::random(self::KEY_LENGTH);
+//    }
 
     /**
      * Creates the credentials and database entry for a new
      * canvas/other lti instance  which will connect to the voteomatic
      *
      * @param $name
+     * @return LTIConsumer
      */
     public function createLTIConsumer($name)
     {
@@ -50,29 +53,68 @@ class LTIRepository implements ILTIRepository
             'name' => $name,
             'consumer_key' => self::generateConsumerKey(),
             'secret_key' => self::generateSecretKey(),
-
         ]);
 
 
     }
 
     /**
+     * When we get the resource link for our new assignment,
+     * we add it to the database.
+     *
      * @param LTIConsumer $consumer
      * @param Meeting $meeting
+     * @param $resourceLinkId
      * @param null $description
-     * @return
+     * @return ResourceLink
      */
-    public function createResourceLink(LTIConsumer $consumer, Meeting $meeting, $description = null)
+    public function createResourceLinkEntry(LTIConsumer $consumer, Meeting $meeting, $resourceLinkId, $description = null)
     {
 
         return ResourceLink::create([
             'lti_consumer_id' => $consumer->id,
             'meeting_id' => $meeting->id,
             'description' => $description,
-            'resource_link_id' => self::generateResourceLinkId()
+            'resource_link_id' => $resourceLinkId
         ]);
 
     }
+
+    /**
+     * When there is an LTI launch request, this handles
+     * getting the resource link object.
+     *
+     * Since each new assignment in Canvas will have a unique
+     * resource link id, we will have to catch the incoming id
+     * the first time we see the meeting id in a request. Thereafter,
+     * we can just look it up.
+     *
+     * @param LTIRequest $request
+     * @param Meeting $meeting
+     * @return ResourceLink
+     */
+    public function getResourceLinkFromRequest(LTIRequest $request, Meeting $meeting)
+    {
+        try {
+            return ResourceLink::where([
+                'resource_link_id' => $request->resource_link_id
+            ])->firstOrFail();
+
+        } catch (ModelNotFoundException $e) {
+            //we can't just use firstOrCreate since we need to look up the lti consumer first
+            $consumerKey = $request->oauth_consumer_key;
+            $consumer = LTIConsumer::where('consumer_key', $consumerKey)->first();
+
+            return ResourceLink::create([
+                'description' => $request->resource_link_title,
+                'meeting_id' => $meeting->id,
+                'lti_consumer_id' => $consumer->id,
+                'resource_link_id' => $request->resource_link_id
+            ]);
+
+        }
+    }
+
 }
 
 

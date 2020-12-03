@@ -11,6 +11,8 @@ use App\Models\ResourceLink;
 use IMSGlobal\LTI\ToolProvider\ToolConsumer;
 //use Faker\Generator as Faker;
 use Faker;
+use Ramsey\Uuid\Type\Integer;
+
 /**
  * Class LTIPayloadMaker
  * Creates dummy LTI payloads for testing
@@ -24,7 +26,7 @@ class LTIPayloadMaker
     const LTI_VERSION = 'LTI-1p0';
     const OAUTH_CALLBACK = 'about:blank';
 
-    public static function makePayload( Meeting $meeting, $endpoint = 'https://www.test.com/test', $resourceLink=null, $student=null, $otherData = [])
+    public static function makePayload(Meeting $meeting, $endpoint = 'https://www.test.com/test', $resourceLink=null, $user=null, $otherData = [])
     {
         /**
          * Notes
@@ -62,18 +64,23 @@ class LTIPayloadMaker
             $resourceLink->ltiConsumer()->associate($consumer)->save();
         }
 
-        $student = $student ? $student : User::factory()->create();
+        //if we just got the id as resource link
+        $resourceLinkId = is_integer($resourceLink) ? $resourceLink : $resourceLink->id;
+
+        $user = $user ? $user : User::factory()->create();
 
         //default data fields
         $data = [
             'lti_message_type' => self::MESSAGE_TYPE,
             'lti_version' => self::LTI_VERSION,
             'oauth_callback' => self::OAUTH_CALLBACK,
+
             'oauth_consumer_key' => $resourceLink->ltiConsumer->consumer_key,
 
-            'resource_link_id' => $resourceLink->resource_link_id,
+            'resource_link_id' => $resourceLinkId,
 
-            'user_id' => $student->lms_id
+            'user_id' => $user->user_id_hash
+
             //these will be added by the tool consumer below
 //            'oath_nonce' => $faker->sha1,
 //            'oath_signature' => ['required'],
@@ -97,6 +104,36 @@ class LTIPayloadMaker
 
 //        public static function addSignature($endpoint, $consumerKey, $consumerSecret, $data, $method = 'POST', $type = null)
         $t = ToolConsumer::addSignature($endpoint, $resourceLink->ltiConsumer->consumerKey, $resourceLink->ltiConsumer->secret_key, $data);
+
+        return $t;
+
+    }
+
+
+
+    static public function specifyPayloadContents($endpoint, $consumerKey, $consumerSecretKey, $resourceLinkId, $userId, $otherData){
+        $faker = Faker\Factory::create();
+
+        //default data fields
+        $data = [
+            'lti_message_type' => self::MESSAGE_TYPE,
+            'lti_version' => self::LTI_VERSION,
+            'oauth_callback' => self::OAUTH_CALLBACK,
+
+            'oauth_consumer_key' => $consumerKey,
+            'resource_link_id' => $resourceLinkId,
+
+            'user_id' => $userId,
+            'lis_person_name_family' => $faker->lastName,
+            'lis_person_name_given' => $faker->firstName
+        ];
+
+        //add any additional data params
+        foreach ($otherData as $k => $v) {
+            $data[$k] = $v;
+        }
+
+        $t = ToolConsumer::addSignature($endpoint, $consumerKey, $consumerSecretKey, $data);
 
         return $t;
 

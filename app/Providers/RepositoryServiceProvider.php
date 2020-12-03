@@ -10,10 +10,12 @@ use App\Repositories\Exam\IExamRepository;
 use App\Repositories\ILTIRepository;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
+use App\Repositories\IUserRepository;
 use App\Repositories\IVoterEligibilityRepository;
 use App\Repositories\LTIRepository;
 use App\Repositories\MotionRepository;
 use App\Repositories\MotionStackRepository;
+use App\Repositories\UserRepository;
 use App\Repositories\VoterEligibilityRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,6 +44,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IMotionRepository::class, MotionRepository::class);
 
         $this->app->bind(IMotionStackRepository::class, MotionStackRepository::class);
+
+        $this->app->bind(IUserRepository::class, UserRepository::class);
 
         $this->app->bind(IVoterEligibilityRepository::class, VoterEligibilityRepository::class);
 
