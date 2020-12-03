@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //this will be non-admin users
+        //this will be voters, not actual users
         $num_users = 10;
 
         $meetings = Meeting::factory(2)->create();
@@ -36,10 +36,10 @@ class DatabaseSeeder extends Seeder
             $meeting->users()->attach($adminUser);
             $meeting->users()->attach($devUser);
 
-            for ($i = 0; $i < $num_users; $i++) {
-                $user = User::factory()->create();
-                $meeting->users()->attach($user);
-            }
+//            for ($i = 0; $i < $num_users; $i++) {
+//                $user = User::factory()->create();
+//                $meeting->users()->attach($user);
+//            }
 
             $meeting->save();
 
