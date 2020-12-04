@@ -67,15 +67,24 @@ export default {
 
     mounted: function () {
         let me = this;
+
+        //We're going to push it to the home tab
+        //before loading anything. That way we both have
+        //something open (and not a blank card) and
+        //don't send them back to the home tab if they've
+        //clicked another tab while things were loading.
+        me.$router.push('meeting-home');
+
+
         //parse data from page and store stuff
         let p = this.$store.dispatch('initialize');
         p.then(function () {
-            me.$router.push('meeting-home');
+            // me.$router.push('meeting-home');
 
             window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });
 
-        me.$router.push('meeting-home');
+        // me.$router.push('meeting-home');
 
     }
 

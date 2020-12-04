@@ -14,7 +14,11 @@ module.exports = {
          */
         pendingMotionDegree: function(){
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion) && this.isProcedural) {
+
                 let pendingMotion = this.$store.getters.getMotionById(this.motion.applies_to);
+
+                //It isn't attached to another motion so it must be main
+                if(_.isUndefined(pendingMotion)) return 0;
 
                 if(pendingMotion.isProcedural()){
                     //it is a second order procedural motion

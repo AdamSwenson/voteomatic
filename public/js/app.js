@@ -3266,6 +3266,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
  // import Payload from "../../models/Payload";
 
@@ -3573,6 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _meeting_select_area__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./meeting-select-area */ "./resources/js/components/meetings/meeting-select-area.vue");
+//
 //
 //
 //
@@ -4123,7 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       procedural: {
-        styling: 'badge-primary',
+        styling: 'badge-secondary',
         text: 'Procedural'
       },
       amendment: {
@@ -4183,7 +4189,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       majority: {
-        styling: 'badge-secondary',
+        styling: 'badge-primary',
         text: 'Majority',
         tip: 'A majority means greater than 50% of all votes cast.'
       },
@@ -4453,6 +4459,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 /* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
 /* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -6945,14 +6955,19 @@ __webpack_require__.r(__webpack_exports__);
     //     }
   },
   mounted: function mounted() {
-    var me = this; //parse data from page and store stuff
+    var me = this; //We're going to push it to the home tab
+    //before loading anything. That way we both have
+    //something open (and not a blank card) and
+    //don't send them back to the home tab if they've
+    //clicked another tab while things were loading.
+
+    me.$router.push('meeting-home'); //parse data from page and store stuff
 
     var p = this.$store.dispatch('initialize');
     p.then(function () {
-      me.$router.push('meeting-home');
+      // me.$router.push('meeting-home');
       window.console.log('voteomatic', 'isReady', 159, me.isReady);
-    });
-    me.$router.push('meeting-home');
+    }); // me.$router.push('meeting-home');
   }
 });
 
@@ -48393,7 +48408,9 @@ var render = function() {
       _c("p", { staticClass: "text-secondary" }, [
         _vm._v("[ Optional agenda will be here ]")
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -48403,6 +48420,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [_vm._v("Meeting information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("div", { staticClass: "card-text" }, [
+        _vm._v(
+          "NB, this page doesn't do anything useful unless\n            you have the the voteomatic configured as an app in your own canvas class."
+        )
+      ])
     ])
   }
 ]
@@ -49149,6 +49178,8 @@ var render = function() {
                 class: _vm.proceduralStyle
               },
               [
+                _c("motion-type-badge", { attrs: { motion: _vm.motion } }),
+                _vm._v(" "),
                 _c("span", { class: _vm.motionStyle }, [
                   _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
                 ]),
@@ -49173,6 +49204,8 @@ var render = function() {
               "div",
               { staticClass: "main-ish-area" },
               [
+                _c("motion-type-badge", { attrs: { motion: _vm.motion } }),
+                _vm._v(" "),
                 _c("span", { class: _vm.motionStyle }, [
                   _vm._v("   " + _vm._s(_vm.motion.content) + "   ")
                 ]),
@@ -50695,11 +50728,13 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("p", [_c("strong", [_vm._v(" " + _vm._s(_vm.receipt))])]),
+      _c("p", { staticClass: "user-select-all" }, [
+        _c("strong", [_vm._v(" " + _vm._s(_vm.receipt))])
+      ]),
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "Please record this receipt. Once you leave this page, it will not be possible to\n        retrieve it. "
+          "Please record this receipt. Once you leave this screen, it will not be possible to\n        retrieve it. "
         )
       ]),
       _vm._v(" "),
@@ -71992,7 +72027,9 @@ module.exports = {
      */
     pendingMotionDegree: function pendingMotionDegree() {
       if (!_.isUndefined(this.motion) && !_.isNull(this.motion) && this.isProcedural) {
-        var pendingMotion = this.$store.getters.getMotionById(this.motion.applies_to);
+        var pendingMotion = this.$store.getters.getMotionById(this.motion.applies_to); //It isn't attached to another motion so it must be main
+
+        if (_.isUndefined(pendingMotion)) return 0;
 
         if (pendingMotion.isProcedural()) {
           //it is a second order procedural motion

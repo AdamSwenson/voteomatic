@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Meeting;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MeetingFactory extends Factory
@@ -32,7 +33,7 @@ class MeetingFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement($this->names),
-            'date' => $this->faker->dateTimeThisCentury
+            'date' => Carbon::now() //$this->faker->dateTimeThisCentury
         ];
     }
 }

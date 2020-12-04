@@ -44,6 +44,8 @@
                     v-bind:class="proceduralStyle"
                     v-else-if="isProceduralSubsidiary"
                 >
+                    <motion-type-badge :motion="motion"></motion-type-badge>
+
                     <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
                     <br/>
@@ -59,6 +61,8 @@
                     class="main-ish-area"
                     v-else
                 >
+                    <motion-type-badge :motion="motion"></motion-type-badge>
+
                     <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
 
                     <br/>

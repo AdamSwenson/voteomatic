@@ -22,6 +22,11 @@
 
         </div>
 
+        <div class="card-footer">
+            <div class="card-text">NB, this page doesn't do anything useful unless
+                you have the the voteomatic configured as an app in your own canvas class.</div>
+        </div>
+
     </div>
 
 
