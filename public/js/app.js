@@ -2502,6 +2502,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 //
 //
 //
@@ -2560,12 +2563,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "results-page",
+  components: {
+    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_6__["default"],
+    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_5__["default"],
+    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
   mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   data: function data() {
     return {
@@ -2579,15 +2627,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   asyncComputed: {
     passed: function passed() {
-      var results = this.$store.getters.getPassed;
-      if (_.isUndefined(results) || _.isNull(results)) return ' ----- ';
-      return results ? 'PASSED' : 'FAILED';
+      // let results = this.$store.getters.getPassed;
+      if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- ';
+      return this.results ? 'PASSED' : 'FAILED';
     },
     yayCount: function yayCount() {
       return this.$store.getters.getYayCount;
     },
     nayCount: function nayCount() {
       return this.$store.getters.getNayCount;
+    },
+    results: function results() {
+      return this.$store.getters.getPassed;
+    },
+    resultStyle: function resultStyle() {
+      if (_.isUndefined(this.results) || _.isNull(this.results)) return '';
+      if (this.passed) return "bg-success";
+      return "bg-danger";
     },
     totalVotes: function totalVotes() {
       return this.$store.getters.getTotalVoteCount;
@@ -4044,8 +4100,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     labelText: function labelText() {
       if (_.isNull(this.debatable)) return '';
-      if (this.debatable) return "Debatable";
-      return "Not debatable";
+      if (this.debatable) return "";
+      return "No debate allowed";
     }
   }
 });
@@ -47856,49 +47912,58 @@ var render = function() {
   return _c("div", { staticClass: "motion-results" }, [
     _vm.isMotionComplete
       ? _c("div", { staticClass: "card results-display" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(_vm.motion.content))
-            ]),
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("blockquote", [_vm._v(_vm._s(_vm.motion.content))]),
+                _vm._v(" "),
+                _c("required-vote-badge", { attrs: { motion: _vm.motion } }),
+                _vm._v(" "),
+                _c("debatable-badge", { attrs: { motion: _vm.motion } }),
+                _vm._v(" "),
+                _c("motion-type-badge", { attrs: { motion: _vm.motion } })
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
-              _vm._v(
-                "This motion required " + _vm._s(_vm.motion.englishRequires)
-              )
-            ]),
-            _vm._v(" "),
-            _c("h1", { staticClass: "card-text" }, [
-              _vm._v("The motion " + _vm._s(_vm.passed))
+            _c("div", { staticClass: "card-body", class: _vm.resultStyle }, [
+              _c("h1", { staticClass: "card-title " }, [
+                _vm._v("The motion " + _vm._s(_vm.passed))
+              ])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "card-text" }, [
-              _c("dl", { staticClass: "row" }, [
-                _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Yays")]),
-                _vm._v(" "),
-                _c("dd", { staticClass: "col-sm-9" }, [
-                  _vm._v(_vm._s(_vm.yayCount))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("dl", { staticClass: "row" }, [
-                _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Nays")]),
-                _vm._v(" "),
-                _c("dd", { staticClass: "col-sm-9" }, [
-                  _vm._v(_vm._s(_vm.nayCount))
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _c("dl", { staticClass: "row" }, [
-                _c("dt", { staticClass: "col-sm-3" }, [
-                  _vm._v("Total votes cast")
+          _c("div", { staticClass: " card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "card-text" }, [
+                _c("dl", { staticClass: "row" }, [
+                  _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Yays")]),
+                  _vm._v(" "),
+                  _c("dd", { staticClass: "col-sm-9" }, [
+                    _vm._v(_vm._s(_vm.yayCount))
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("dd", { staticClass: "col-sm-9" }, [
-                  _vm._v(_vm._s(_vm.totalVotes))
+                _c("dl", { staticClass: "row" }, [
+                  _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Nays")]),
+                  _vm._v(" "),
+                  _c("dd", { staticClass: "col-sm-9" }, [
+                    _vm._v(_vm._s(_vm.nayCount))
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c("dl", { staticClass: "row" }, [
+                  _c("dt", { staticClass: "col-sm-3" }, [
+                    _vm._v("Total votes cast")
+                  ]),
+                  _vm._v(" "),
+                  _c("dd", { staticClass: "col-sm-9" }, [
+                    _vm._v(_vm._s(_vm.totalVotes))
+                  ])
                 ])
               ])
             ])
@@ -50972,7 +51037,7 @@ var render = function() {
       },
       on: { click: _vm.handleClick }
     },
-    [_vm._v("Yay\n")]
+    [_vm._v("Aye")]
   )
 }
 var staticRenderFns = []
@@ -71990,6 +72055,14 @@ module.exports = {
         }
       },
       "default": false
+    },
+
+    /**
+     * Whether voting has been closed.
+     * @returns {{default: boolean, get: (function(): (module.exports.asyncComputed.isMotionComplete.motion.isComplete|undefined))}}
+     */
+    isComplete: function isComplete() {
+      return this.isMotionComplete;
     } // selectedMotion: function () {
     //     return this.$store.getters.getActiveMotion;
     // },

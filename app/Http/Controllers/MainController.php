@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
  * people cast their votes
  * @package App\Http\Controllers
  */
-class VotePageController extends Controller
+class MainController extends Controller
 {
     public function __construct()
     {

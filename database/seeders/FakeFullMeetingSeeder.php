@@ -76,7 +76,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.66,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a2a->id
+            'applies_to' => $m1a2a->id,
+            'debatable' => false
         ]);
 
         //question is called
@@ -111,7 +112,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a3->id
+            'applies_to' => $m1a3->id,
+            'debatable' => false
         ]);
 
         //Vote on tabling
@@ -139,7 +141,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
-            'applies_to' => $m1a3->id
+            'applies_to' => $m1a3->id,
+            'debatable' => false
         ]);
 
         Vote::factory(['motion_id' => $m1a3b->id])->affirmative()->count(9)->create();
@@ -172,6 +175,6 @@ class FakeFullMeetingSeeder extends Seeder
         ]);
 
 
-        echo "Full meeting id: " . $meeting->id;
+        echo "\nFull meeting id: " . $meeting->id . "\n";
     }
 }

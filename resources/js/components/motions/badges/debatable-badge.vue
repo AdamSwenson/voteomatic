@@ -32,8 +32,8 @@ asyncComputed : {
 
     labelText : function(){
         if(_.isNull(this.debatable)) return ''
-        if(this.debatable) return "Debatable"
-        return "Not debatable"
+        if(this.debatable) return ""
+        return "No debate allowed"
     }
 }
 

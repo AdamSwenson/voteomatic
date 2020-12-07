@@ -18,7 +18,7 @@ use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\Dev\SetupController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
-use App\Http\Controllers\VotePageController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\Guest\WaitlistController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -90,7 +90,7 @@ Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
 
 //main page where votes get cast
 //todo should probably rename all this since it's basically the application
-Route::get('main/{motion}', [VotePageController::class, 'getVotePage'])
+Route::get('main/{motion}', [MainController::class, 'getVotePage'])
     ->name('main');
 
 

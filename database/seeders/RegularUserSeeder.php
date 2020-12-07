@@ -7,7 +7,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
-class AdminUserSeeder extends Seeder
+class RegularUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,12 +19,12 @@ class AdminUserSeeder extends Seeder
         try{
 
             $props = [
-                'first_name' => 'Admin',
-                'last_name' => 'User',
-                'email' => env('DEV_ADMIN_EMAIL'),
-                'password' => env('DEV_USER_ADMIN_PASSWORD'),
-                'is_admin' => true
-                ];
+                'is_admin' => false,
+                'first_name' => 'Test',
+                'last_name' => 'Regular User',
+                'email' => env('DEV_USER_REGULAR_EMAIL'),
+                'password' => env('DEV_USER_REGULAR_PASSWORD'),
+            ];
 
             User::create($props);
 

@@ -30,9 +30,11 @@ class UserRepository implements IUserRepository
     {
         $userIdHash = $request->user_id;
 
-        //try looking them up if we've seen their id before
         try {
+
+            //try looking them up if we've seen their id before
             $user = User::where('user_id_hash', $userIdHash)->firstOrFail();
+
         }catch(ModelNotFoundException $e){
             //if they are new, we create them in the db
             $lastName = $request->lis_person_name_family;

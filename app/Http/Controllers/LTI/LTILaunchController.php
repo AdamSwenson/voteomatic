@@ -149,6 +149,7 @@ class LTILaunchController extends Controller
 
             //Get an existing user or create a new person in the db
             $user = $this->userRepository->getUserFromRequest($request, $meeting);
+
             //Log them in
             Auth::login($user, true);
 

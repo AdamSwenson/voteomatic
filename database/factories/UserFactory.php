@@ -30,8 +30,8 @@ class UserFactory extends Factory
 
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-//            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'password' => Str::random(30),
+
+          'password' => Str::random(30),
             'remember_token' => Str::random(10),
         ];
 
@@ -52,8 +52,11 @@ class UserFactory extends Factory
 
 
     /**
-     * Creates a non chair user with a known password / email for
-     * testing
+     * Creates a non chair user.
+     * Normally this won't be needed, since
+     * it is (at least at present) the default factory.
+     * But it may be useful elsewhere to be able to be explicit
+     * about what user is being created.
      *
      * @return UserFactory
      */
@@ -61,11 +64,6 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'is_admin' => false,
-                'email' => 'testUser@example.com',
-                'first_name' => 'Test',
-                'last_name' => 'User',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-
             ];
         });
 
