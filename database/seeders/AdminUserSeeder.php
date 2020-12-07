@@ -21,7 +21,7 @@ class AdminUserSeeder extends Seeder
             $props = [
                 'first_name' => 'Admin',
                 'last_name' => 'User',
-                'email' => env('DEV_ADMIN_EMAIL'),
+                'email' => env('DEV_USER_ADMIN_EMAIL'),
                 'password' => env('DEV_USER_ADMIN_PASSWORD'),
                 'is_admin' => true
                 ];

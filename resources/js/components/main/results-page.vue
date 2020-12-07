@@ -145,9 +145,10 @@ export default {
         },
 
         resultStyle: function () {
+            //nb results will be a boolean
             if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
 
-            if (this.passed) return "bg-success"
+            if (this.results) return "bg-success"
 
             return "bg-danger";
         },
