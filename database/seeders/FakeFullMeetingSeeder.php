@@ -176,5 +176,7 @@ class FakeFullMeetingSeeder extends Seeder
 
 
         echo "\nFull meeting id: " . $meeting->id . "\n";
+
+        return $meeting;
     }
 }

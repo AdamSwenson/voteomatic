@@ -12,7 +12,7 @@ use function Tests\helpers\recursiveAdder;
 
 class MotionTreeRepositoryTest extends TestCase
 {
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 

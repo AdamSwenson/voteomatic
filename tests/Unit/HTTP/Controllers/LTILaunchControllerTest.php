@@ -53,7 +53,7 @@ class LTILaunchControllerTest extends TestCase
     public $user;
     public $object;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
         $this->object = new LTILaunchController;

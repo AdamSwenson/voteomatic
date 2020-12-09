@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Demo\LTIDemoController;
+use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\Guest\PublicIndexController;
@@ -20,6 +22,7 @@ use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Guest\WaitlistController;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +73,20 @@ Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
     ->name('meetingHome');
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
+
+
+/* =============================
+        Demo mode
+   ============================= */
+Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
+Route::post('lti/member-demo', [LTIDemoController::class, 'launchMemberDemo'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
+
+Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
+Route::post('web/member-demo', [WebDemoController::class, 'launchChairDemo'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 
 /* =============================

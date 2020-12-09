@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**

@@ -10,7 +10,7 @@ use Tests\TestCase;
 class LTIFacadeTest extends TestCase
 {
 
-    protected $object;
+    public $object;
 
     public function setUp():void
     {

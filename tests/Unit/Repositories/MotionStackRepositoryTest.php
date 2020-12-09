@@ -15,7 +15,7 @@ class MotionStackRepositoryTest extends TestCase
     public $currentMotion;
     private $completedMotions;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 

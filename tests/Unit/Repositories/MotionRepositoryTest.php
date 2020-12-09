@@ -9,7 +9,7 @@ use Tests\TestCase;
 class MotionRepositoryTest extends TestCase
 {
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
         $this->object = new MotionRepository();

@@ -12,9 +12,9 @@ use Tests\TestCase;
 class LTIServiceProviderTest extends TestCase
 {
 
-    protected $object;
+//    protected $object;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
     }

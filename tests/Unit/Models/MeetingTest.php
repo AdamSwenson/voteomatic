@@ -14,7 +14,7 @@ class MeetingTest extends TestCase
      */
     public $obj;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
         $this->obj = Meeting::factory()->create();

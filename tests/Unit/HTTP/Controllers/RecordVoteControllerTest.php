@@ -24,7 +24,7 @@ class RecordVoteControllerTest extends TestCase
     public $motion;
     public string $url;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
         $this->user = User::factory()->create();

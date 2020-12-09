@@ -9,9 +9,9 @@ use Tests\helpers\LTIPayloadMaker;
 class LTIRequestTest extends TestCase
 {
 
-    protected $object;
+    public $object;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
         $this->object = new LTIRequest();

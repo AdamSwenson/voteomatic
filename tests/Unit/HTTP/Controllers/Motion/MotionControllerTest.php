@@ -22,7 +22,7 @@ class MotionControllerTest extends TestCase
      */
     public $meeting;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 
