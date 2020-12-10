@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Demo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\LTI\LTILaunchController;
 use App\Http\Requests\LTIRequest;
 use App\Repositories\IUserRepository;
 use Database\Seeders\FakeFullMeetingSeeder;
@@ -58,7 +59,8 @@ class LTIDemoController extends Controller
         $user->is_admin = true;
         $user->save();
 
-        return redirect()->route('lti-launch', $meeting);
+        return redirect()->action([LTILaunchController::class, 'handleMeetingLaunchRequest'], [$meeting]);
+//        return redirect()->route('lti-launch', $meeting);
 
 
     }
