@@ -44,6 +44,7 @@ class LTIDemoController extends Controller
      */
     public function launchChairDemo(LTIRequest $request)
     {
+        Log::debug("=========== LTIDemoController@launchChairDemo ===========");
         Log::debug($request);
 
         //Set up new meeting for them to play with.
@@ -64,6 +65,7 @@ class LTIDemoController extends Controller
 
     public function launchMemberDemo(LTIRequest $request)
     {
+        Log::debug("=========== LTIDemoController@launchMemberDemo ===========");
         Log::debug($request);
 
         //Set up new meeting for them to play with.
