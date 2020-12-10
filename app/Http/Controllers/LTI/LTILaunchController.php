@@ -141,7 +141,6 @@ class LTILaunchController extends Controller
         //The LTIRequest object has already checked that the needed
         //fields are populated.
         try {
-
             $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
 
             //We verify that the oath signature on the incoming post
