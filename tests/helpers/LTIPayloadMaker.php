@@ -71,15 +71,22 @@ class LTIPayloadMaker
 
         //default data fields
         $data = [
+            /* LTI */
             'lti_message_type' => self::MESSAGE_TYPE,
             'lti_version' => self::LTI_VERSION,
-            'oauth_callback' => self::OAUTH_CALLBACK,
 
-            'oauth_consumer_key' => $resourceLink->ltiConsumer->consumer_key,
-
+            /* The Canvas assignment which is linking to the meeting */
             'resource_link_id' => $resourceLinkId,
+            'resource_link_title' => $resourceLink->description,
 
-            'user_id' => $user->user_id_hash
+            /* The user's info */
+            'user_id' => $user->user_id_hash,
+            'lis_person_name_family' => $user->last_name,
+            'lis_person_name_given' => $user->first_name,
+
+            /* Oauth stuff */
+            'oauth_callback' => self::OAUTH_CALLBACK,
+            'oauth_consumer_key' => $resourceLink->ltiConsumer->consumer_key,
 
             //these will be added by the tool consumer below
 //            'oath_nonce' => $faker->sha1,

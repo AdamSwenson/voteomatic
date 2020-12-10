@@ -44,7 +44,7 @@ class UserRepository implements IUserRepository
             $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
 
             //If in demo mode everyone will be created as a chair
-            $admin = env(IS_DEMO, false) ? true : false;
+//            $admin = env(IS_CHAIR_DEMO, false) ? true : false;
 
             $user = User::create([
                 'email' => $email,
@@ -52,7 +52,7 @@ class UserRepository implements IUserRepository
                 'last_name' => $lastName,
                 'user_id_hash' => $userIdHash,
                 'password' => Str::random(100),
-                'is_admin' => $admin
+//                'is_admin' => $admin
             ]);
 
             $user->save();

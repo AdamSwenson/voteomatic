@@ -36,7 +36,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
@@ -62,7 +63,8 @@ Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingLaunchRequest'])
-    ->withoutMiddleware([ VerifyCsrfToken::class]);
+    ->withoutMiddleware([ VerifyCsrfToken::class])
+->name('lti-launch');
 
 //Route::post('/lti/{meeting}', 'LTILaunchController@handleLaunchRequest');
 //unused
@@ -78,27 +80,16 @@ Route::get('/home', [HomeController::class, 'index'])
 /* =============================
         Demo mode
    ============================= */
-Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
+Route::post('lti/chair-demo', [LTIDemoController::class, 'launchChairDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('lti/member-demo', [LTIDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
-Route::post('web/member-demo', [WebDemoController::class, 'launchChairDemo'])
+Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
-
-/* =============================
-        Publicly accessible
-   ============================= */
-// Public index
-Route::get('/', [PublicIndexController::class, 'index'])
-    ->name('index');
-// Waitlist
-Route::get('/waitlist', [WaitlistController::class, 'show'])
-    ->name('waitlist');
-Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
 
 
 /* =============================
@@ -162,3 +153,13 @@ Route::get('results/{motion}', [ResultsController::class, 'getResults']);
 
 
 
+/* =============================
+        Publicly accessible
+   ============================= */
+// Public index
+Route::get('/', [PublicIndexController::class, 'index'])
+    ->name('index');
+// Waitlist
+Route::get('/waitlist', [WaitlistController::class, 'show'])
+    ->name('waitlist');
+Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);

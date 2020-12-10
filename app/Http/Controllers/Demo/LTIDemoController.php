@@ -7,6 +7,7 @@ use App\Http\Requests\LTIRequest;
 use App\Repositories\IUserRepository;
 use Database\Seeders\FakeFullMeetingSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class LTIDemoController
@@ -44,19 +45,37 @@ class LTIDemoController extends Controller
     public function launchChairDemo(LTIRequest $request)
     {
         Log::debug($request);
-//        abort(403);;
-        dd($request);
 
+        //Set up new meeting for them to play with.
         $seeder = new FakeFullMeetingSeeder();
         $meeting = $seeder->run();
-        return response()->json($meeting);
+
+        //Get an existing user or create a new person in the db
+//        config(['app.is_chair_demo' => true]);
+        $user = $this->userRepository->getUserFromRequest($request, $meeting);
+        //Make them a chair
+        $user->is_admin = true;
+        $user->save();
+
+        return redirect()->route('lti-launch', $meeting);
 
 
     }
 
     public function launchMemberDemo(LTIRequest $request)
     {
+        Log::debug($request);
 
+        //Set up new meeting for them to play with.
+        $seeder = new FakeFullMeetingSeeder();
+        $meeting = $seeder->run();
+
+        //Get an existing user or create a new person in the db
+        //and associate them with the meeting
+        $user = $this->userRepository->getUserFromRequest($request, $meeting);
+
+
+        return redirect()->route('lti-launch', $meeting);
 
     }
 

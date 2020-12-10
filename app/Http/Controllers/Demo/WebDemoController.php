@@ -12,12 +12,13 @@ class WebDemoController extends Controller
 
     public function launchChairDemo(LTIRequest $request){
 
-
+abort(404);
 
     }
 
     public function launchMemberDemo(LTIRequest $request){
 
+        abort(404);
 
 
     }

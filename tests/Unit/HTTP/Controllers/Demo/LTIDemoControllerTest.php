@@ -6,6 +6,7 @@ use App\Http\Controllers\Demo\LTIDemoController;
 
 //use PHPUnit\Framework\TestCase;
 use App\Http\Controllers\LTI\LTILaunchController;
+use App\Http\Requests\LTIRequest;
 use App\Models\LTIConsumer;
 use App\Models\Meeting;
 use App\Models\ResourceLink;
@@ -13,6 +14,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Mockery;
 use Tests\helpers\LTIPayloadMaker;
 use Tests\TestCase;
 
@@ -59,51 +61,76 @@ class LTIDemoControllerTest extends TestCase
      */
     public $memberPath;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
-        $this->object = new LTILaunchController;
-
-        $this->urlBase = 'http://localhost';
+        $this->object = new LTIDemoController();
 
         $this->resourceLink = ResourceLink::factory()->create();
         $this->consumer = LTIConsumer::factory()->create();
         $this->resourceLink->ltiConsumer()->associate($this->consumer)->save();
-$this->meeting = Meeting::factory()->create();
-        $this->chairPath = $this->urlBase . "/lti/chair-demo";
-        $this->memberPath = $this->urlBase . "/lti/member-demo";
-
-        /** @var  endpoint The fully specified url used for the signature */
-//        $this->endpoint = $this->urlBase . $this->path;
-
+        $this->meeting = Meeting::factory()->create();
         $this->user = User::factory()->create();
         $this->payload = LTIPayloadMaker::makePayload($this->meeting, $this->endpoint, $this->resourceLink, $this->user);
 
-        $this->expectedUrl = "/home/" . $this->meeting->id;
+
+        $this->chairPath = "lti/chair-demo";
+        $this->memberPath = "lti/member-demo";
+
 
     }
 
 
-    public function testLaunchMemberDemo()
-    {
+//    public function testLaunchChairDemoCalledDirectly()
+//    {
+//
+//        $response = $this->object->launchChairDemo(new LTIRequest());
+//        //call
+//
+//    }
 
-    }
-
-    public function testLaunchChairDemo()
+    /** @test */
+    public function launchChairDemoFullStack()
     {
+        //verify our user is not a chair
+        $this->assertNull($this->user->is_admin, "user is not starting as a chair");
+
         //call
-        $response = $this->post('http://localhost/taco', $this->payload);
-
-//        $response = $this->post($this->chairPath, $this->payload);
+        $response = $this->post($this->chairPath, $this->payload);
 
         //check
-        //Check that redirected correctly
+        //Check that redirected correctly to lti entry point with new meeting
+        $expectedMeetingId = $this->meeting->id + 1;
+        $this->expectedUrl = "lti-entry/" . $expectedMeetingId;
         $response->assertRedirect($this->expectedUrl);
 
-        //Check that student logged in
-        $this->assertEquals($this->user->id, Auth::id(), "Expected student logged in");
-
+        //check that was made a chair
+        $this->user->refresh();
+        $this->assertTrue($this->user->is_admin, "user has been set as chair");
 
     }
+
+
+    /** @test */
+    public function launchMemberDemoFullStack()
+    {
+        //verify our user is not a chair
+        $this->assertNull($this->user->is_admin, "user is not starting as a chair");
+
+        //call
+        $response = $this->post($this->memberPath, $this->payload);
+
+        //check
+        //Check that redirected correctly to lti entry point with new meeting
+        $expectedMeetingId = $this->meeting->id + 1;
+        $this->expectedUrl = "lti-entry/" . $expectedMeetingId;
+        $response->assertRedirect($this->expectedUrl);
+
+        //check that was not made a chair
+        $this->user->refresh();
+        $this->assertFalse($this->user->is_admin, "user is still not  chair");
+
+    }
+
 
 }

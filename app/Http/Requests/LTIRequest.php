@@ -101,7 +101,7 @@ class LTIRequest extends FormRequest
         //NB, these are all what is required for launching; other
         //actions will need to be checked against ToolPRoviderBase before using if need them
         return [
-//            /* Oauth stuff */
+            /* Oauth stuff */
             'oauth_consumer_key' => ['required'],
             'oauth_nonce' => ['required'],
             'oauth_signature' => ['required'],
