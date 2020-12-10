@@ -131,6 +131,8 @@ class LTILaunchController extends Controller
     {
 
         //todo remove
+
+        Log::debug("=========== LTILaunchController@handleMeetingLaunchRequest ===========");
         Log::debug($request);
 
         //Check if the activity is enabled and reject access if not
