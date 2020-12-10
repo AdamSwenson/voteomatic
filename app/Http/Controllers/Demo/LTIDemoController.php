@@ -7,6 +7,8 @@ use App\Http\Controllers\LTI\LTILaunchController;
 use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\AuthenticatorFactory;
 use App\LTI\Exceptions\LTIAuthenticationException;
+use App\LTI\LTI;
+use App\Repositories\ILTIRepository;
 use App\Repositories\IUserRepository;
 use Database\Seeders\FakeFullMeetingSeeder;
 use Illuminate\Http\Request;
@@ -32,10 +34,25 @@ class LTIDemoController extends Controller
      * @var IUserRepository|mixed
      */
     public $userRepository;
+    /**
+     * @var ILTIRepository|mixed
+     */
+    public $LTIRepository;
+    /**
+     * @var LTI|mixed
+     */
+    public $lti;
 
     public function __construct(){
 //        $this->middleware('auth');
 
+
+        //create an lti object to use by instantiating via
+        //the lti service provider
+        $this->lti = app()->make(LTI::class);
+
+        //we do this here since type hinting messes with the tests
+        $this->LTIRepository = app()->make(ILTIRepository::class);
         $this->userRepository = app()->make(IUserRepository::class);
 
     }
