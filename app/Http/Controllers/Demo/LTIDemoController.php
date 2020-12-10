@@ -59,7 +59,7 @@ class LTIDemoController extends Controller
         $user->is_admin = true;
         $user->save();
 
-        return redirect()->action([LTILaunchController::class, 'handleMeetingLaunchRequest'], [$meeting]);
+        return redirect()->action([LTILaunchController::class, 'handleMeetingLaunchRequest'], [$meeting])->withInput();
 //        return redirect()->route('lti-launch', $meeting);
 
 
