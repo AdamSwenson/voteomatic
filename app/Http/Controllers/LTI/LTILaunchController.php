@@ -141,12 +141,15 @@ class LTILaunchController extends Controller
         //The LTIRequest object has already checked that the needed
         //fields are populated.
         try {
-            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
 
-            //We verify that the oath signature on the incoming post
-            //request is valid
-            $authenticator = AuthenticatorFactory::make($request);
-            $authenticator->authenticate($request, $resourceLink);
+            $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
+//
+//            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
+//
+//            //We verify that the oath signature on the incoming post
+//            //request is valid
+//            $authenticator = AuthenticatorFactory::make($request);
+//            $authenticator->authenticate($request, $resourceLink);
 
             //Get an existing user or create a new person in the db
             $user = $this->userRepository->getUserFromRequest($request, $meeting);

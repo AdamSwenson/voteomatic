@@ -181,6 +181,7 @@ return [
          * Custom service providers
          */
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\RouteMacroServiceProvider::class
 
     ],
 

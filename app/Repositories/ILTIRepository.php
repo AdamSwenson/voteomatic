@@ -54,4 +54,20 @@ interface ILTIRepository
      * @return ResourceLink
      */
     public function createResourceLinkEntry(LTIConsumer $consumer, Meeting $meeting, $resourceLinkId, $description = null);
+
+
+    /**
+     * Handles, ahem, the LTI aspects of the meeting launch request.
+     * That involves:
+     *      - Performing the OAuth authentication on the LTI request
+     *      - Looking up or creating a resource link for the meeting.
+     *
+     *
+     * @param LTIRequest $request
+     * @param Meeting $meeting
+     * @throws \App\LTI\Exceptions\InvalidLTILogin
+     * @throws \App\LTI\Exceptions\OAuthException
+     */
+    public function handleMeetingLaunchRequest(LTIRequest $request, Meeting $meeting);
+
   }

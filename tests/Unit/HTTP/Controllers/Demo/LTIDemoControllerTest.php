@@ -63,6 +63,10 @@ class LTIDemoControllerTest extends TestCase
 
     public function setUp(): void
     {
+        $this->chairPath = "lti/chair-demo";
+        $this->memberPath = "lti/member-demo";
+
+
         parent::setUp();
         $this->object = new LTIDemoController();
 
@@ -73,9 +77,6 @@ class LTIDemoControllerTest extends TestCase
         $this->user = User::factory()->create();
         $this->payload = LTIPayloadMaker::makePayload($this->meeting, $this->endpoint, $this->resourceLink, $this->user);
 
-
-        $this->chairPath = "lti/chair-demo";
-        $this->memberPath = "lti/member-demo";
 
 
     }
@@ -92,6 +93,8 @@ class LTIDemoControllerTest extends TestCase
     /** @test */
     public function launchChairDemoFullStack()
     {
+        $this->payload = LTIPayloadMaker::makePayload($this->meeting, $this->chairPath, $this->resourceLink, $this->user);
+
         //verify our user is not a chair
         $this->assertNull($this->user->is_admin, "user is not starting as a chair");
 

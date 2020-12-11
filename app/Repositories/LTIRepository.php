@@ -5,10 +5,14 @@ namespace App\Repositories;
 
 
 use App\Http\Requests\LTIRequest;
+use App\LTI\Authenticators\AuthenticatorFactory;
+use App\LTI\Exceptions\LTIAuthenticationException;
 use App\Models\LTIConsumer;
 use App\Models\Meeting;
 use App\Models\ResourceLink;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
@@ -113,6 +117,38 @@ class LTIRepository implements ILTIRepository
             ]);
 
         }
+    }
+
+
+    /**
+     * Handles, ahem, the LTI aspects of the meeting launch request.
+     * That involves:
+     *      - Performing the OAuth authentication on the LTI request
+     *      - Looking up or creating a resource link for the meeting.
+     *
+     *
+     * @param LTIRequest $request
+     * @param Meeting $meeting
+     * @throws \App\LTI\Exceptions\InvalidLTILogin
+     * @throws \App\LTI\Exceptions\OAuthException
+     */
+    public function handleMeetingLaunchRequest(LTIRequest $request, Meeting $meeting)
+    {
+//        $userRepository = app()->make(IUserRepository::class);
+
+        $resourceLink = $this->getResourceLinkFromRequest($request, $meeting);
+
+        //We verify that the oath signature on the incoming post
+        //request is valid
+        $authenticator = AuthenticatorFactory::make($request);
+        $authenticator->authenticate($request, $resourceLink);
+
+//        //Get an existing user or create a new person in the db
+//        $user = $userRepository->getUserFromRequest($request, $meeting);
+//
+//        //Log them in
+//        Auth::login($user, true);
+
     }
 
 }
