@@ -7,9 +7,6 @@
         "laravel"
     ],
     "license": "MIT",
-
-
-
     "require": {
         "php": "^7.3",
         "doctrine/dbal": "^2.12",
