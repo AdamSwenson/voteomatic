@@ -236,7 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //package facades
-        'LTIFacade' => App\LTI\LTIFacade::class
+       // 'LTIFacade' => App\LTI\LTIFacade::class
 
     ],
 
