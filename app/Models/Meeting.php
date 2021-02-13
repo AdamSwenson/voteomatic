@@ -12,8 +12,9 @@ class Meeting extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['date','name'];
+    protected $fillable= ['date','name', 'is_election'];
 
+    protected $casts = ['is_election' => 'boolean'];
 
     public function getOwner(){
         return User::find($this->owner_id);

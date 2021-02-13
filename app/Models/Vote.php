@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Election\Candidate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,14 @@ public function makeReceiptHash(){
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * For use in elections only
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function candidate(){
+        return $this->belongsTo(Candidate::class);
     }
 
 

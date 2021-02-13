@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Assignment;
+use App\Models\Election\Candidate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -262,6 +263,10 @@ class Motion extends Model
     public function votes()
     {
         return $this->hasMany(Vote::class);
+    }
+
+    public function candidates(){
+        return $this->hasMany(Candidate::class);
     }
 
 
