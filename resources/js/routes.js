@@ -35,6 +35,24 @@ module.exports = {
 
     },
 
+    election: {
+      candidates: (motionId) => {
+          return normalizedRouteRoot() + 'election/candidate/' + motionId;
+      },
+
+        electionDetails : (meetingId) => {
+            return normalizedRouteRoot() + 'election/' + meetingId;
+        },
+
+        getOffices : (meetingId) => {
+            return normalizedRouteRoot() + 'election/office/' + meetingId;
+        },
+
+        recordVote: (motionId) => {
+      return normalizedRouteRoot() + 'election/vote/' + motionId;
+      }
+    },
+
     results: {
         getCounts: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId + '/counts'

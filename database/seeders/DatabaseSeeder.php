@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             RegularUserSeeder::class,
             LTIDevCredsSeeder::class,
-            FakeFullMeetingSeeder::class
+            FakeFullMeetingSeeder::class,
+            FullElectionWithoutVotesSeeder::class
         ]);
 
 //try {

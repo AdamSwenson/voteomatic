@@ -49,4 +49,6 @@ class Controller extends BaseController
         $this->user = Auth::user();
     }
 
+
+
 }

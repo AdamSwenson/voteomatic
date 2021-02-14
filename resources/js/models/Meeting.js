@@ -1,5 +1,9 @@
 import IModel from "./IModel";
 
+/**
+ * A meeting is either a, ahem, meeting where votes
+ * take place or an election for multiple offices
+ */
 export default class Meeting extends IModel {
 
     /**

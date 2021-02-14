@@ -14,10 +14,12 @@ import * as mutations from './mutations'
 import * as state from './state'
 
 //modules
+import elections from "./modules/elections";
 import meetings from './modules/meetings';
 import motions from './modules/motions';
 import startup from "./modules/startup";
 import results from "./modules/results";
+import votes from "./modules/votes";
 
 Vue.use(Vuex);
 
@@ -49,10 +51,12 @@ export default new Vuex.Store({
     plugins: [], //[ apiPlugin, websocketPlugin ],
 
     modules: {
+        elections,
         meetings,
         motions,
         results,
-        startup
+        startup,
+        votes
     }
 
 // }

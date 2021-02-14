@@ -419,7 +419,7 @@ const actions = {
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
                     commit('setMotion', motion)
-                    resolve()
+                    return resolve()
                 });
         }));
     },

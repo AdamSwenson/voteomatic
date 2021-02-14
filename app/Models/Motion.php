@@ -28,10 +28,11 @@ class Motion extends Model
      * @var string[]
      */
     protected $motionTypes = [
-        'main',
-        'privileged',
         'amendment',
         'amendment-secondary',
+        'election',
+        'main',
+        'privileged',
         'procedural-main',
         'procedural-subsidiary',
         'incidental'
@@ -66,7 +67,8 @@ class Motion extends Model
     ];
 
 
-    protected $casts = ['is_complete' => 'boolean',
+    protected $casts = [
+        'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'debatable' => 'boolean'];
 

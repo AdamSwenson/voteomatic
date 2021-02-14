@@ -7,7 +7,7 @@ namespace App\Repositories\Election;
 use App\Models\Election\Candidate;
 use App\Models\Motion;
 
-class ElectionRepository
+class ElectionRepository implements IElectionRepository
 {
 
 
@@ -22,6 +22,18 @@ class ElectionRepository
         $candidate->motion()->associate($motion);
 
         return $candidate;
+    }
+
+
+    public function addOfficeToElection(Meeting $election, $officeName='', $description=''){
+        $office = Motion::create([
+            'content' => $officeName,
+        'description' => $description]);
+
+        $election->motion()->associate($office);
+
+        return $election;
+
     }
 
 

@@ -40,7 +40,9 @@ class MeetingFactory extends Factory
     public function election()
     {
         return $this->state(function (array $attributes) {
-            return ['is_election' => true];
+            return [
+                'name' => $this->faker->randomElement($this->names) . " ELECTION!",
+                'is_election' => true];
         });
     }
 
