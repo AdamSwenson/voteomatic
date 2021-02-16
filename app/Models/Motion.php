@@ -18,6 +18,8 @@ class Motion extends Model
         'debatable',
         'is_complete',
         'is_current',
+        /** For elections, this defines how many people can be elected to the office */
+        'max_winners',
         'meeting_id',
         'requires',
         'superseded_by',

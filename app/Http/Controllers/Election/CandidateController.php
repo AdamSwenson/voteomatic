@@ -48,19 +48,25 @@ class CandidateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Motion $office
+     * @param Motion $motion
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Motion $office)
+    public function store(Request $request, Motion $motion)
     {
-        $candidate = $this->electionRepo->addCandidate($office, $request->name, $request->info);
+        $candidate = $this->electionRepo->addCandidate($motion, $request->name, $request->info, $request->is_write_in);
 
         return response()->json($candidate);
 
     }
 
+    /**
+     * Returns non-write in candidates for office
+     *
+     * @param Motion $motion
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getCandidatesForOffice(Motion $motion){
-        return response()->json($motion->candidates);
+        return response()->json($motion->candidates()->official()->get());
     }
 
     /**
@@ -93,10 +99,9 @@ class CandidateController extends Controller
      * @param Candidate $candidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Candidate $candidate)
+    public function update(Motion $motion, Candidate $candidate, Request $request)
     {
         $d = $request->all();
-        $d = $d['data'];
         $candidate->update($d);
         return response()->json($candidate);
 

@@ -21,7 +21,12 @@ class Candidate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'info'];
+    protected $fillable = [
+        'name',
+        'info',
+        'is_write_in',
+        'motion_id'
+    ];
 
     /**
      * Returns the total votes cast for the candidate
@@ -40,6 +45,21 @@ class Candidate extends Model
         return $this->getVoteTotal();
     }
 
+
+    /**
+     * Returns the non-write in candidates
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOfficial($query)
+    {
+        return $query->where('is_write_in', '=', false)->orWhere('is_write_in', '=', null);
+    }
+
+
+    public function scopeWriteIn($query){
+        return $query->where('is_write_in', true);
+    }
 
 
     /*

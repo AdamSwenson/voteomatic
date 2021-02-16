@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Election;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Election\ElectionVoteRequest;
 use App\Http\Requests\VoteRequest;
 use App\Models\Election\Candidate;
 use App\Models\Motion;
@@ -38,29 +39,54 @@ class ElectionVoteController extends Controller
      * that the user has voted.
      *
      * @param Motion $motion
-     * @param VoteRequest $request
+     * @param ElectionVoteRequest $request
      * @return Vote|string[]
      */
-    public function recordVote(Motion $motion, VoteRequest $request){
+    public function recordVote(Motion $motion, ElectionVoteRequest $request)
+    {
 
         try {
             $this->getUser();
+            $candidates = [];
+            foreach ($request->candidateIds as $candidateId) {
 
-            $vote = new Vote;
+                //Look up the object to make sure it exists
+                //We don't just look at the id to avoid id spraying mischief
+                $candidates[] = Candidate::where('motion_id', $motion->id)
+                    ->where('id', $candidateId)
+                    ->firstOrFail();
 
-            //todo Write in candidates
+            }
 
-            $candidate = Candidate::find($request->candidate_id);
+            foreach ($request->writeIns as $name) {
+                $candidates[] = Candidate::create(['name' => $name,
+                    'motion_id' => $motion->id,
+                    'is_write_in' => true,
+                ]);
+            }
 
-            $vote->candidate()->associate($candidate);
+            //Now that we have a list of all the candidates,
+            //we can double check that there's not too many
 
+            //And now record votes
+            $hash = Vote::makeReceiptHash();
+
+            foreach($candidates as $candidate){
+                Vote::create([
+                    'motion_id' => $motion->id,
+                    'candidate_id' => $candidate->id,
+                    'receipt' => $hash
+                ]);
+            }
+
+            return response()->json(['receipt' => $hash]);
 
             //Create a hash stored on vote which only the user
             //will have access to.
 //            $vote->makeReceiptHash();
-
-            $motion->votes()->save($vote);
-            $motion->save();
+//
+//            $motion->votes()->save($vote);
+//            $motion->save();
 
 //
 //
@@ -101,11 +127,11 @@ class ElectionVoteController extends Controller
 //            //Now we need to separately record that user has voted
 //            $this->voterEligibilityRepo->recordVoted($motion, $this->user);
 
-            return $vote;
+//            return $vote;
 
-        }catch (DoubleVoteAttempt $e){
+        } catch (DoubleVoteAttempt $e) {
             abort($e::ERROR_CODE);
-        }catch (VoteSubmittedAfterMotionClosed $e2){
+        } catch (VoteSubmittedAfterMotionClosed $e2) {
             abort($e2::ERROR_CODE);
         }
     }

@@ -149,6 +149,7 @@ class MotionFactory extends Factory
 
                 'requires' => 1.0,
                 'type' => 'election',
+                'max_winners' => 1,
                 'seconded' => true,
             ];
         });

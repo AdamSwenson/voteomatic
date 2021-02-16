@@ -419,6 +419,7 @@ const actions = {
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
                     commit('setMotion', motion)
+                    window.console.log('currentMotion set', motion);
                     return resolve()
                 });
         }));
@@ -481,6 +482,11 @@ const getters = {
     },
     // }( state, id )
 
+    getMotionByIndex: (state) => (index) => {
+        return state.motions[index];
+    },
+
+
     /**
      * Returns all motion objects which have
      * been loaded from the server. May include motions
@@ -489,6 +495,10 @@ const getters = {
      * @returns {[]|(function(): ([]|__webpack_exports__.default.computed.$store.getters.getStoredMotions))|{resource: (function(): string), getAllMotionsForMeeting: (function(*): string)}|{resource: (function(*=): string), getAllMotionsForMeeting: (function(*): string)}|{mutations: {addMotionToStore: function(*, *=): void, setMotion: function(*=, *=): void, addVotedUponMotion: function(*, *=): void}, state: {motion: null, motions: [], motionIdsUserHasVotedUpon: []}, getters: {getMotionsUserVotedUpon: function(*): *, getMotionIdsUserVotedUpon: function(*): [], getMotion: function(*): (null|{set: module.exports.computed.motion.set, get: (function(): module.exports.computed.motion.$store.getters.getMotion)}|{set: (function(*=): void), get: (function(): *)}|(function(): *)|(function(): Motion)|Motion), getStoredMotions: function(*): *}, actions: {createMotion({dispatch: *, commit?: *, getters: *}): Promise<unknown>, loadMotionsForMeeting({dispatch: *, commit?: *, getters: *}, *=): Promise<unknown>, loadMotionsUserHasVotedUpon({dispatch: *, commit?: *, getters: *}, *=): Promise<unknown>, loadMotion({dispatch: *, commit?: *, getters: *}, *): Promise<unknown>, updateMotion({dispatch: *, commit: *, getters: *}, *=): Promise<unknown>}}|(function(): ([]|default.computed.$store.getters.getStoredMotions))}
      */
     getStoredMotions: (state) => {
+        return state.motions;
+    },
+
+    getMotions: (state) => {
         return state.motions;
     },
 

@@ -12,7 +12,25 @@ const idify = (ObjectOrId) =>{
 }
 
 
+/**
+ * Returns the object stored in the array which
+ * has the provided id
+ *
+ * @param storageArray
+ * @param id
+ * @returns {*}
+ */
+const getById = (storageArray, id) =>{
+    // return function ( state, id ) {
+    let r = storageArray.filter(function (i) {
+        if (i.id === id) {
+            return i;
+        }
+    });
+    return r[0];
+}
+
 
 export  {
-    idify
+    idify, getById
 };

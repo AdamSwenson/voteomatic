@@ -27,4 +27,12 @@ class CandidateFactory extends Factory
             //
         ];
     }
+
+    public function writeIn(){
+        return $this->state(function (array $attributes) {
+            return [
+                'is_write_in' => true
+            ];
+        });
+    }
 }

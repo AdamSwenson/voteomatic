@@ -11,16 +11,19 @@ class ElectionRepository implements IElectionRepository
 {
 
 
-    public function addCandidate(Motion $motion, $name = '', $info = '')
+    public function addCandidate(Motion $motion, $name = '', $info = '', $isWriteIn=false)
     {
-
         $candidate = Candidate::create([
             'name' => $name,
-            'info' => $info
+            'info' => $info,
+            'is_write_in' => $isWriteIn,
+            'motion_id' => $motion->id
         ]);
 
-        $candidate->motion()->associate($motion);
+//        $candidate->motion()->associate($motion);
 
+        $candidate->save();
+//dd($motion);
         return $candidate;
     }
 

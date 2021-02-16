@@ -2,18 +2,20 @@ import IModel from "./IModel";
 
 export default class Motion extends IModel {
 
+
     /**
      * Create a new motion
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null, debatable=null}) {
+    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
         super();
         this.id = id;
         this.content = content;
         this.description = description;
         this.superseded_by = superseded_by;
         this.debatable = debatable;
+        this.max_winners = max_winners;
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
         this.applies_to = applies_to;

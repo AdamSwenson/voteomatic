@@ -36,8 +36,13 @@ module.exports = {
     },
 
     election: {
-      candidates: (motionId) => {
-          return normalizedRouteRoot() + 'election/candidate/' + motionId;
+
+        candidates: (motionId, candidateId=null) => {
+          let r = normalizedRouteRoot() + 'election/' + motionId + '/candidates';
+          if(! _.isNull(candidateId)){
+              r = r + '/' + candidateId;
+          }
+          return r;
       },
 
         electionDetails : (meetingId) => {

@@ -98,7 +98,10 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
 /* =============================
         Election
    ============================= */
-Route::get('election/candidate/{motion}', [CandidateController::class, 'getCandidatesForOffice']);
+Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
+Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
+
+Route::get('election/{motion}/candidates', [CandidateController::class, 'getCandidatesForOffice']);
 //Route::resource('election/candidate/{motion}', CandidateController::class);
 //Route::resource('election/{meeting}', )
 Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
