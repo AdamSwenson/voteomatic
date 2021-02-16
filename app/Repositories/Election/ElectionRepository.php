@@ -102,14 +102,20 @@ class ElectionRepository implements IElectionRepository
      */
     public function getResults(Motion $motion, $returnCandidateObjects=false)
     {
+
+        $out = [];
         if($returnCandidateObjects){
+
+//            $results = collect($motion->candidates)->sortByDesc('totalVotesReceived');
+//foreach($results-)
+//
             return collect($motion->candidates)
                 ->sortByDesc('totalVotesReceived');
         }
 
         return collect($motion->candidates)
             ->sortByDesc('totalVotesReceived')
-            ->pluck('totalVotesReceived', 'name');
+            ->pluck('totalVotesReceived', 'name', 'id');
     }
 
     /**
@@ -124,11 +130,16 @@ class ElectionRepository implements IElectionRepository
         $results = $this->getResults($motion, true);
 
         $out = [];
-
+//dd($results);
         foreach($results as $result){
+
+            $pct = $motion->totalVotesCast > 0 ? $result->totalVotesReceived / $motion->totalVotesCast : 0;
+
             $out[] = [
-                'candidate' => $result,
-                'pct_of_total' =>  $result->totalVotesReceived / $motion->totalVotesCast
+                'candidateId' => $result->id,
+                'candidateName' => $result->name,
+                'voteCount' => $result->totalVotesReceived,
+                'pct_of_total' => $pct
             ];
         }
 

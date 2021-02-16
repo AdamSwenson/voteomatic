@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 class ElectionController extends Controller
 {
 
-    const DEV_ELECTION_ID = 85;
+//    const DEV_ELECTION_ID = 85;
+
+
+    //with votes
+    const DEV_ELECTION_ID = 86;
 
     public function dev(){
 

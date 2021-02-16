@@ -8,12 +8,14 @@
             </div>
 
             <div class="col-md-8">
+
                 <div class="card-body">
+
                     <writein-input :candidate="candidate" ></writein-input>
                 </div>
 
-
             </div>
+
         </div>
     </div>
 

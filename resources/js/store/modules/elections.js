@@ -2,9 +2,12 @@ import * as routes from "../../routes";
 import Meeting from "../../models/Meeting";
 import Candidate from "../../models/Candidate";
 import {getById} from "../../utilities/object.utilities";
+import Result from "../../models/Result";
 
 const state = {
-    candidates: []
+    candidates: [],
+
+    electionResults: []
 };
 
 const mutations = {
@@ -20,6 +23,12 @@ const mutations = {
         Vue.set(currentMotion, updateProp, updateVal);
 
     },
+
+    addResults: (state, results) => {
+        state.electionResults.push(results);
+        // Vue.set(state.electionResults, motionId, results);
+
+    }
 
 };
 
@@ -64,6 +73,20 @@ const actions = {
 
     },
 
+    loadResultsForOffice({dispatch, commit, getters}, motionId) {
+        let url = routes.election.getResults(motionId);
+
+        return new Promise(((resolve, reject) => {
+            return Vue.axios.get(url).then((response) => {
+                _.forEach(response.data, (d) => {
+                    let r = new Result(d);
+                    commit('addResults', r);
+                });
+
+                resolve();
+            });
+        }));
+    },
 
     // loadOfficesForElection({dispatch, commit, getters}, meetingId) {
     //     let url = routes.election.getOffices(meetingId);
@@ -229,7 +252,25 @@ const getters = {
         return motions.filter((motion) => {
             return !_.includes(getters.getMotionIdsUserVotedUpon, motion.id);
         });
-    }
+    },
+
+    getOfficeResults: (state) => (motion) => {
+        return state.electionResults.filter((r) => {
+            return r.motionId === motion.id;
+        });
+
+        // return state.electionResults[motionId];
+    },
+    //
+    // getVoteCounts: (state) => (motionId) => {
+    // return state.electionResults[motionId].counts;
+    // },
+    //
+    //
+    // getVoteShares: (state) => (motionId) => {
+    //     return state.electionResults[motionId].shares;
+    // }
+
 
 };
 

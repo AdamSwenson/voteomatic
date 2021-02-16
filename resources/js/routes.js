@@ -29,33 +29,37 @@ module.exports = {
             return normalizedRouteRoot() + 'login';
         },
 
-        waitlist : () => {
-        return normalizedRouteRoot() + 'waitlist';
+        waitlist: () => {
+            return normalizedRouteRoot() + 'waitlist';
         }
 
     },
 
     election: {
 
-        candidates: (motionId, candidateId=null) => {
-          let r = normalizedRouteRoot() + 'election/' + motionId + '/candidates';
-          if(! _.isNull(candidateId)){
-              r = r + '/' + candidateId;
-          }
-          return r;
-      },
+        candidates: (motionId, candidateId = null) => {
+            let r = normalizedRouteRoot() + 'election/' + motionId + '/candidates';
+            if (!_.isNull(candidateId)) {
+                r = r + '/' + candidateId;
+            }
+            return r;
+        },
 
-        electionDetails : (meetingId) => {
+        electionDetails: (meetingId) => {
             return normalizedRouteRoot() + 'election/' + meetingId;
         },
 
-        getOffices : (meetingId) => {
+        getOffices: (meetingId) => {
             return normalizedRouteRoot() + 'election/office/' + meetingId;
         },
 
+        getResults: (motionId) => {
+            return normalizedRouteRoot() + 'election/' + motionId + '/results';
+        },
+
         recordVote: (motionId) => {
-      return normalizedRouteRoot() + 'election/vote/' + motionId;
-      }
+            return normalizedRouteRoot() + 'election/vote/' + motionId;
+        }
     },
 
     results: {
@@ -153,15 +157,15 @@ module.exports = {
             return normalizedRouteRoot() + 'motions/meeting/' + meetingId;
         },
 
-        secondMotion : (motionId) => {
-        return normalizedRouteRoot() + 'motions/second/' + motionId;
+        secondMotion: (motionId) => {
+            return normalizedRouteRoot() + 'motions/second/' + motionId;
         },
 
-        templates : () => {
-        return normalizedRouteRoot() + 'motions/templates';
+        templates: () => {
+            return normalizedRouteRoot() + 'motions/templates';
         },
 
-        types : () => {
+        types: () => {
             return normalizedRouteRoot() + 'motions/types';
         },
 

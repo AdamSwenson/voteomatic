@@ -5,11 +5,9 @@
             <h2 class="card-title">{{ officeName }}</h2>
         </div>
 
-        <!--        <div class="card-body">-->
-        <!--            <h4 class="card-subtitle">Please vote for up to {{maxWinners}}</h4>-->
-        <!--        </div>-->
         <max-winners-instruction></max-winners-instruction>
         <overselection-warning></overselection-warning>
+
         <!--        <div class="card-body instructions" v-if="instructions.length > 0">-->
         <!--            {{ instructions }}-->
         <!--        </div>-->
@@ -34,6 +32,8 @@
             <write-in-controls></write-in-controls>
         </div>
 
+        <election-results-card></election-results-card>
+
         <div class="card-footer">
             <cast-ballot-button></cast-ballot-button>
         </div>
@@ -51,10 +51,12 @@ import OverselectionWarning from "./overselection-warning";
 import MaxWinnersInstruction from "./max-winners-instruction";
 import WriteinRow from "./writein-row";
 import WriteInControls from "./write-in-controls";
+import ElectionResultsCard from "./results/election-results-card";
 
 export default {
     name: "election-card",
     components: {
+        ElectionResultsCard,
         WriteInControls,
         WriteinRow,  MaxWinnersInstruction, OverselectionWarning, CastBallotButton, CandidateRow
     },
@@ -83,6 +85,7 @@ export default {
             },
             watch: ['candidates']
         },
+
         candidates: {
 
             get: function () {
