@@ -261,6 +261,23 @@ const getters = {
 
         // return state.electionResults[motionId];
     },
+
+    /**
+     * This takes into account how many winners there can be
+     * for an office.
+     *
+     * @param state
+     * @returns {function(*)}
+     */
+    getOfficeWinners : (state, getters) => (motion) => {
+    let results = getters.getOfficeResults(motion);
+
+    //dev should probably do this on server
+
+    //todo check for ties
+
+        },
+
     //
     // getVoteCounts: (state) => (motionId) => {
     // return state.electionResults[motionId].counts;

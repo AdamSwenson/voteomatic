@@ -2433,7 +2433,23 @@ __webpack_require__.r(__webpack_exports__);
       if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.result)) return this.result.voteCount;
     },
     styling: function styling() {
-      if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.result) && this.result.isMajorityWinner) return "bg-success";
+      if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.result)) {
+        if (this.result.isWinner) return 'bg-success';
+        if (this.result.isRunoffParticipant) return 'bg-warning'; //
+        // switch (this.result) {
+        //
+        //     case this.result.isWinner:
+        //         return 'bg-success';
+        //         break;
+        //
+        //     case this.result.isRunoffParticipant:
+        //         return 'bg-warning';
+        //         break;
+        //
+        //     default:
+        //         return ''
+        // }
+      }
     },
     voteShare: function voteShare() {
       if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.result)) {
@@ -49011,7 +49027,7 @@ var render = function() {
   return _c("div", { staticClass: "office-results-card card" }, [
     _c("div", { staticClass: "card-header" }, [
       _c("h2", { staticClass: "card-title" }, [
-        _vm._v("Results for the election to " + _vm._s(_vm.officeName))
+        _vm._v(_vm._s(_vm.officeName) + " results")
       ])
     ]),
     _vm._v(" "),
@@ -75185,7 +75201,11 @@ var Result = /*#__PURE__*/function (_IModel) {
         _ref$voteCount = _ref.voteCount,
         voteCount = _ref$voteCount === void 0 ? null : _ref$voteCount,
         _ref$pctOfTotal = _ref.pctOfTotal,
-        pctOfTotal = _ref$pctOfTotal === void 0 ? null : _ref$pctOfTotal;
+        pctOfTotal = _ref$pctOfTotal === void 0 ? null : _ref$pctOfTotal,
+        _ref$isWinner = _ref.isWinner,
+        isWinner = _ref$isWinner === void 0 ? null : _ref$isWinner,
+        _ref$isRunoffParticip = _ref.isRunoffParticipant,
+        isRunoffParticipant = _ref$isRunoffParticip === void 0 ? null : _ref$isRunoffParticip;
 
     _classCallCheck(this, Result);
 
@@ -75195,6 +75215,8 @@ var Result = /*#__PURE__*/function (_IModel) {
     _this.candidateName = candidateName;
     _this.voteCount = voteCount;
     _this.pctOfTotal = pctOfTotal;
+    _this.isWinner = isWinner;
+    _this.isRunoffParticipant = isRunoffParticipant;
     return _this;
   }
 
@@ -75217,12 +75239,11 @@ var Result = /*#__PURE__*/function (_IModel) {
 
       s = Number(s);
       return s;
-    }
-  }, {
-    key: "isMajorityWinner",
-    get: function get() {
-      return this.pctOfTotal > 0.5;
-    }
+    } //
+    // get isMajorityWinner(){
+    //     return this.pctOfTotal > 0.5;
+    // }
+
   }]);
 
   return Result;
@@ -75940,6 +75961,20 @@ var getters = {
       return state.electionResults.filter(function (r) {
         return r.motionId === motion.id;
       }); // return state.electionResults[motionId];
+    };
+  },
+
+  /**
+   * This takes into account how many winners there can be
+   * for an office.
+   *
+   * @param state
+   * @returns {function(*)}
+   */
+  getOfficeWinners: function getOfficeWinners(state, getters) {
+    return function (motion) {
+      var results = getters.getOfficeResults(motion); //dev should probably do this on server
+      //todo check for ties
     };
   } //
   // getVoteCounts: (state) => (motionId) => {

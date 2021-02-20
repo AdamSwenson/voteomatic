@@ -2,7 +2,7 @@
     <div class="office-results-card card">
 
         <div class="card-header">
-            <h2 class="card-title">Results for the election to {{ officeName }}</h2>
+            <h2 class="card-title">{{ officeName }} results</h2>
         </div>
 
         <div class="card-body">

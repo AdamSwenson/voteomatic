@@ -6,14 +6,15 @@ import IModel from "./IModel";
  */
 export default class Result extends IModel {
 
-
-    constructor({motionId = null, candidateId = null, candidateName = null, voteCount = null, pctOfTotal = null}) {
+    constructor({motionId = null, candidateId = null, candidateName = null, voteCount = null, pctOfTotal = null, isWinner=null, isRunoffParticipant=null}) {
         super();
         this.motionId = motionId;
         this.candidateId = candidateId;
         this.candidateName = candidateName;
         this.voteCount = voteCount;
         this.pctOfTotal = pctOfTotal;
+        this.isWinner = isWinner;
+        this.isRunoffParticipant = isRunoffParticipant;
 
     }
 
@@ -33,8 +34,8 @@ export default class Result extends IModel {
         s = Number(s);
         return s;
     }
-
-    get isMajorityWinner(){
-        return this.pctOfTotal > 0.5;
-    }
+    //
+    // get isMajorityWinner(){
+    //     return this.pctOfTotal > 0.5;
+    // }
 }

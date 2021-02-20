@@ -4,57 +4,60 @@
 namespace App\Repositories\Election;
 
 
-use App\Models\Election\Candidate;
 use App\Models\Motion;
+use App\Repositories\Election\Calculators\ResultsCalculatorFactory;
 
-/**
- * Class ElectionRepository
- *
- * Handles setup and getting parts of an election.
- *
- * Votes and results are handled elsewhere
- *
- * @package App\Repositories\Election
- */
-class ElectionRepository implements IElectionRepository
+class ElectionResultsRepository implements IElectionResultsRepository
 {
 
 
-    public function addCandidate(Motion $motion, $name = '', $info = '', $isWriteIn=false)
+
+    /**
+     * Returns a collection with the expected keys etc that the client is expecting
+     *
+     * @param Motion $motion
+     * @param bool $returnCandidateObjects
+     * @return \Illuminate\Support\Collection
+     */
+    public function getResultsForClient(Motion $motion)
     {
-        $candidate = Candidate::create([
-            'name' => $name,
-            'info' => $info,
-            'is_write_in' => $isWriteIn,
-            'motion_id' => $motion->id
-        ]);
+        $calculator = ResultsCalculatorFactory::make($motion);
 
-//        $candidate->motion()->associate($motion);
+        $out = [];
 
-        $candidate->save();
-//dd($motion);
-        return $candidate;
+        foreach($calculator->results as $candidate){
+
+            $out[] = [
+                'motionId' => $motion->id,
+                'candidateId' => $candidate->id,
+                'candidateName' => $candidate->name,
+                'voteCount' => $candidate->totalVotesReceived,
+                'pctOfTotal' => $candidate->getShareOfVotesCast(),
+                'isWinner' => $calculator->isWinner($candidate),
+                'isRunoffParticipant' => $calculator->isRunoffParticipant($candidate)
+
+            ];
+        }
+
+
+        return collect($out);
+//
+//        $out = [];
+//        if($returnCandidateObjects){
+//
+////            $results = collect($motion->candidates)->sortByDesc('totalVotesReceived');
+////foreach($results-)
+////
+//            return collect($motion->candidates)
+//                ->sortByDesc('totalVotesReceived');
+//        }
+//
+//        return collect($motion->candidates)
+//            ->sortByDesc('totalVotesReceived')
+//            ->pluck('totalVotesReceived', 'name', 'id');
     }
 
 
-    public function addOfficeToElection(Meeting $election, $officeName='', $description=''){
-        $office = Motion::create([
-            'content' => $officeName,
-        'description' => $description]);
-
-        $election->motion()->associate($office);
-
-        return $election;
-
-    }
-
-
-    public function getCandidates(Motion $motion)
-    {
-
-        return $motion->candidates;
-
-    }
 
 //    /**
 //     * Returns the candidate(s) with
@@ -94,39 +97,7 @@ class ElectionRepository implements IElectionRepository
 //        return collect($top);
 //
 //    }
-//
-//
-//
-//    /**
-//     * Returns a collection of [candidate name => vote total]
-//     * entries from most to least votes.
-//     *
-//     * If the $returnCandidateObjects param is true, it will
-//     * return a collection of Candidate objects in descending order
-//     * by vote total
-//     *
-//     * @param Motion $motion
-//     * @param bool $returnCandidateObjects
-//     * @return \Illuminate\Support\Collection
-//     */
-//    public function getResults(Motion $motion, $returnCandidateObjects=false)
-//    {
-//
-//        $out = [];
-//        if($returnCandidateObjects){
-//
-////            $results = collect($motion->candidates)->sortByDesc('totalVotesReceived');
-////foreach($results-)
-////
-//            return collect($motion->candidates)
-//                ->sortByDesc('totalVotesReceived');
-//        }
-//
-//        return collect($motion->candidates)
-//            ->sortByDesc('totalVotesReceived')
-//            ->pluck('totalVotesReceived', 'name', 'id');
-//    }
-//
+
 //    /**
 //     * Returns a collection of arrays:
 //     *     candidate => Candidate object,
@@ -155,6 +126,5 @@ class ElectionRepository implements IElectionRepository
 ////        return collect($out);
 //
 //    }
-
 
 }

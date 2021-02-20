@@ -45,6 +45,17 @@ class Candidate extends Model
         return $this->getVoteTotal();
     }
 
+    /**
+     * Returns the percentage of the votes cast in the election
+     * as a float between 0.0 - 1.0
+     * (Looks up the motion details itself since the motion id is stored on
+     * the candidate)
+     * @return float|int
+     */
+    public function getShareOfVotesCast(){
+        return $this->motion->totalVotesCast > 0 ? $this->totalVotesReceived / $this->motion->totalVotesCast : 0;
+    }
+
 
     /**
      * Returns the non-write in candidates
