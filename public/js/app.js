@@ -7064,6 +7064,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -51831,11 +51836,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "nav",
-    { staticClass: "navbar navbar-expand-md navbar-light bg-white shadow-sm" },
+    {
+      staticClass: "navbar navbar-expand-md navbar-dark shadow-sm ",
+      staticStyle: { "background-color": "darkblue" }
+    },
     [
       _c("div", { staticClass: "container" }, [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: _vm.baseUrl } }, [
-          _vm._v("\n                " + _vm._s(_vm.appName) + "\n            ")
+        _c("span", { staticClass: "navbar-brand mb-0 h1" }, [
+          _vm._v(_vm._s(_vm.meetingName))
         ]),
         _vm._v(" "),
         _c(
@@ -51846,12 +51854,6 @@ var render = function() {
           },
           [
             _c("ul", { staticClass: "navbar-nav mr-auto " }),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticClass: "navbar-text text-dark text-lg-center" },
-              [_vm._v(_vm._s(_vm.meetingName))]
-            ),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
               _c("li", { staticClass: "nav-item" }, [
@@ -70014,15 +70016,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/election/write-in-controls.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true& */ "./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true&");
 /* harmony import */ var _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -70052,7 +70053,7 @@ component.options.__file = "resources/js/components/election/write-in-controls.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

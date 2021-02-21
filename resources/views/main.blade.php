@@ -7,14 +7,13 @@
 
 @section('content')
 
-
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md">
-            </div>
-        </div>
+{{--        <div class="row justify-content-center">--}}
+{{--            <div class="col-md">--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-1">
 
             <div class="col-md">
 
