@@ -5468,6 +5468,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -49369,11 +49374,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "nav",
-    { staticClass: "navbar navbar-expand-md navbar-light bg-white shadow-sm" },
+    {
+      staticClass: "navbar navbar-expand-md navbar-dark shadow-sm ",
+      staticStyle: { "background-color": "darkblue" }
+    },
     [
       _c("div", { staticClass: "container" }, [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: _vm.baseUrl } }, [
-          _vm._v("\n                " + _vm._s(_vm.appName) + "\n            ")
+        _c("span", { staticClass: "navbar-brand mb-0 h1" }, [
+          _vm._v(_vm._s(_vm.meetingName))
         ]),
         _vm._v(" "),
         _c(
@@ -49384,12 +49392,6 @@ var render = function() {
           },
           [
             _c("ul", { staticClass: "navbar-nav mr-auto " }),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticClass: "navbar-text text-dark text-lg-center" },
-              [_vm._v(_vm._s(_vm.meetingName))]
-            ),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
               _c("li", { staticClass: "nav-item" }, [
