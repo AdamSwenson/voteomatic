@@ -1,17 +1,22 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm " style="background-color: darkblue;">
+
+<!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
         <div class="container">
 
-            <a class="navbar-brand"
-               v-bind:href="baseUrl">
-                {{ appName }}
-            </a>
+<!--            <a class="navbar-brand"-->
+<!--               v-bind:href="baseUrl">-->
+<!--                {{ appName }}-->
+<!--            </a>-->
+
+            <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
+
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto "></ul>
 
-                <span class="navbar-text text-dark text-lg-center">{{meetingName}}</span>
+<!--                <span class="navbar-text text-dark text-lg-center">{{meetingName}}</span>-->
 
 <!--                <span class="navbar-text text-muted ">{{meetingDate}}</span>-->
 
