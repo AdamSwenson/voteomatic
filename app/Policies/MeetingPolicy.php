@@ -33,6 +33,8 @@ class MeetingPolicy
     {
         // todo this may eventually get a check for whether the user is associated with the meeting. Depends on how the order of adding folks to the meeting happens after LTI launch
         return true;
+
+        return $user->isChair() || sizeof($meeting->users()->where('id', $user->id)->first()) > 0 ;
     }
 
     /**
@@ -43,14 +45,8 @@ class MeetingPolicy
      */
     public function create(User $user)
     {
-        dd($user->is_admin);
+        return $user->isChair();
 
-        //Only administrators should be able to mess with meetings
-        if(! $this->is_admin){
-            throw IneligibleMeetingCreator;
-        }
-
-        return $user->is_admin;
     }
 
     /**
@@ -62,11 +58,13 @@ class MeetingPolicy
      */
     public function update(User $user, Meeting $meeting)
     {
-dd($user->is_admin);
+        return $user->is($meeting->getOwner());
+
+        //dd($user->is_admin);
 
 
         //Only administrators should be able to mess with meetings
-        return $user->is_admin;
+//        return $user->is_admin;
     }
 
     /**
@@ -78,6 +76,7 @@ dd($user->is_admin);
      */
     public function delete(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;
@@ -86,12 +85,13 @@ dd($user->is_admin);
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $Meeting
+     * @param \App\Models\User $user
+     * @param Meeting $meeting
      * @return mixed
      */
     public function restore(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;
@@ -100,12 +100,13 @@ dd($user->is_admin);
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $Meeting
+     * @param \App\Models\User $user
+     * @param Meeting $meeting
      * @return mixed
      */
     public function forceDelete(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;

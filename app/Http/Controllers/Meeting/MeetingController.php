@@ -13,6 +13,7 @@ class MeetingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->setLoggedInUser();
     }
 
 
@@ -23,7 +24,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $this->getUser();
+
         $meetings = $this->user->meetings()->get();
         return response()->json($meetings);
     }
@@ -39,14 +40,16 @@ class MeetingController extends Controller
 //    }
 //
     /**
-     * Store a newly created resource in storage.
+     * Create and store a new meeting with the logged in user
+     * as owner
      *
      * @param MeetingRequest $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(MeetingRequest $request)
     {
-        $this->getUser();
+        $this->authorize('create', Meeting::class);
 
         //Since we are creating the meeting without
         //the fields filled in, we may have blank meetings
@@ -55,13 +58,16 @@ class MeetingController extends Controller
         $meeting = $this->user->meetings()
             ->where('name', null)
             ->where('date', null)
+//            ->where('owner_id', $this->user->id)
             ->first();
 
         if (!is_null($meeting)) {
             $meeting->update($request->all());
+            $meeting->owner_id = $this->user->id;
             $meeting->save();
         } else {
             $meeting = Meeting::create($request->all());
+            $meeting->owner_id = $this->user->id;
             $this->user->meetings()->attach($meeting);
             $this->user->save();
         }
@@ -81,17 +87,6 @@ class MeetingController extends Controller
     {
         return response()->json($meeting);
     }
-//
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit($id)
-//    {
-//        //
-//    }
 
     /**
      * Update the specified resource in storage.
@@ -102,7 +97,7 @@ class MeetingController extends Controller
      */
     public function update(Meeting $meeting, MeetingRequest $request)
     {
-
+        $this->authorize('update', $meeting);
         //this is necessary because the request object has
         // at the top level:
         //      data : stuff we want,
@@ -122,6 +117,7 @@ class MeetingController extends Controller
      */
     public function destroy(Meeting $meeting)
     {
+        $this->authorize('delete', $meeting);
 
         $meeting->delete();
 

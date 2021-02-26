@@ -50,6 +50,18 @@ class UserFactory extends Factory
 
     }
 
+    /**
+     * Someone who may create and over see votes on motions
+     */
+    public function chair(){
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => true,
+            ];
+        });
+
+    }
+
 
     /**
      * Creates a non chair user.

@@ -51,6 +51,25 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * Whether this user is a chair
+     * Currently this is the same as being an administrator
+     * but we may want to change that.
+     * @return mixed
+     */
+    public function isChair(){
+        return $this->is_admin;
+    }
+
+    /**
+     * Whether the user is an administrator.
+     * Currently this is the same as being the chair
+     * @return mixed
+     */
+    public function isAdministrator(){
+        return $this->is_admin;
+    }
+
     // ------------------ relationships
     /**
      * Any motions which the user is an administrator for

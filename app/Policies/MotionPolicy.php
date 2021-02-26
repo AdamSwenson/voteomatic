@@ -2,18 +2,13 @@
 
 namespace App\Policies;
 
+use App\Models\Motion;
 use App\Models\User;
-use App\Models\Vote;
 use Illuminate\Auth\Access\HandlesAuthorization;
-//use Illuminate\Support\Facades\Response;
-use Illuminate\Auth\Access\Response;
 
-class VotePolicy
+class MotionPolicy
 {
     use HandlesAuthorization;
-
-
-
 
     /**
      * Determine whether the user can view any models.
@@ -30,10 +25,10 @@ class VotePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\Motion  $motion
      * @return mixed
      */
-    public function view(User $user, Vote $vote)
+    public function view(User $user, Motion $motion)
     {
         //
     }
@@ -46,54 +41,42 @@ class VotePolicy
      */
     public function create(User $user)
     {
-
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\Motion  $motion
      * @return mixed
      */
-    public function update(User $user, Vote $vote)
+    public function update(User $user, Motion $motion)
     {
-        //todo decide whether should follow robz instead
-        Response::deny('Votes cannot be changed once cast.');
-
-//        $moton = $vote->motion;
-//
-//        return $user->id === $post->user_id
-//            ? Response::allow()
-//            : Response::deny('You do not own this post.');
-//
-//        //
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\Motion  $motion
      * @return mixed
      */
-    public function delete(User $user, Vote $vote)
+    public function delete(User $user, Motion $motion)
     {
-        Response::deny('Votes cannot be changed once cast.');
-
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\Motion  $motion
      * @return mixed
      */
-    public function restore(User $user, Vote $vote)
+    public function restore(User $user, Motion $motion)
     {
-        Response::deny('Votes cannot be changed once cast.');
         //
     }
 
@@ -101,13 +84,11 @@ class VotePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\Motion  $motion
      * @return mixed
      */
-    public function forceDelete(User $user, Vote $vote)
+    public function forceDelete(User $user, Motion $motion)
     {
-        Response::deny('Votes cannot be changed once cast.');
-
         //
     }
 }

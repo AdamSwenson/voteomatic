@@ -2,18 +2,13 @@
 
 namespace App\Policies;
 
+use App\Models\RecordedVoteRecord;
 use App\Models\User;
-use App\Models\Vote;
 use Illuminate\Auth\Access\HandlesAuthorization;
-//use Illuminate\Support\Facades\Response;
-use Illuminate\Auth\Access\Response;
 
-class VotePolicy
+class RecordedVoteRecordPolicy
 {
     use HandlesAuthorization;
-
-
-
 
     /**
      * Determine whether the user can view any models.
@@ -30,12 +25,12 @@ class VotePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\RecordedVoteRecord  $recordedVoteRecord
      * @return mixed
      */
-    public function view(User $user, Vote $vote)
+    public function view(User $user, RecordedVoteRecord $recordedVoteRecord)
     {
-        //
+        return $user->isChair() || $recordedVoteRecord->user_id === $user->id;
     }
 
     /**
@@ -46,7 +41,6 @@ class VotePolicy
      */
     public function create(User $user)
     {
-
         return true;
     }
 
@@ -54,60 +48,47 @@ class VotePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\RecordedVoteRecord  $recordedVoteRecord
      * @return mixed
      */
-    public function update(User $user, Vote $vote)
+    public function update(User $user, RecordedVoteRecord $recordedVoteRecord)
     {
-        //todo decide whether should follow robz instead
-        Response::deny('Votes cannot be changed once cast.');
-
-//        $moton = $vote->motion;
-//
-//        return $user->id === $post->user_id
-//            ? Response::allow()
-//            : Response::deny('You do not own this post.');
-//
-//        //
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\RecordedVoteRecord  $recordedVoteRecord
      * @return mixed
      */
-    public function delete(User $user, Vote $vote)
+    public function delete(User $user, RecordedVoteRecord $recordedVoteRecord)
     {
-        Response::deny('Votes cannot be changed once cast.');
-
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\RecordedVoteRecord  $recordedVoteRecord
      * @return mixed
      */
-    public function restore(User $user, Vote $vote)
+    public function restore(User $user, RecordedVoteRecord $recordedVoteRecord)
     {
-        Response::deny('Votes cannot be changed once cast.');
-        //
+        return $user->isChair();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote  $vote
+     * @param  \App\Models\RecordedVoteRecord  $recordedVoteRecord
      * @return mixed
      */
-    public function forceDelete(User $user, Vote $vote)
+    public function forceDelete(User $user, RecordedVoteRecord $recordedVoteRecord)
     {
-        Response::deny('Votes cannot be changed once cast.');
-
-        //
+        return false;
     }
 }

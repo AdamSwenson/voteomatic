@@ -59,7 +59,7 @@ class RecordVoteController extends Controller
     public function recordVote(Motion $motion, VoteRequest $request){
 
         try {
-            $this->getUser();
+            $this->setLoggedInUser();
 
             //This is already handled by the middleware. It probably should eventually be
             //removed once there's no chance the middleware will accidentally get turned off.

@@ -24,7 +24,7 @@ class VoteHistoryController extends Controller
 
     public function getPreviouslyCastVotes(Meeting $meeting)
     {
-        $this->getUser();
+        $this->setLoggedInUser();
 
         $out = [];
 

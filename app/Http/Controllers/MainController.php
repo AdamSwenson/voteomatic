@@ -26,7 +26,7 @@ class MainController extends Controller
 
     public function getVotePage(Motion $motion)
     {
-        $this->getUser();
+        $this->setLoggedInUser();
 
         $data = [
 
