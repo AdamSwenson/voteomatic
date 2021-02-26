@@ -1,3 +1,5 @@
+let _ = require('lodash');
+
 /**
  * Usually used when handed a parameter that could be either an object
  * with an id property or the id itself.  This returns
@@ -6,7 +8,9 @@
  * @returns {Number|*}
  */
 const idify = (ObjectOrId) =>{
-    if (ObjectOrId instanceof Number) return ObjectOrId;
+    if (_.isNumber(ObjectOrId)) return ObjectOrId;
+
+//    if (ObjectOrId instanceof Number) return ObjectOrId;
 
     return ObjectOrId.id;
 }
