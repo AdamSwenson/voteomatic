@@ -24,7 +24,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
-
+$this->authorize('view', Meeting::class);
         $meetings = $this->user->meetings()->get();
         return response()->json($meetings);
     }
@@ -85,6 +85,8 @@ class MeetingController extends Controller
      */
     public function show(Meeting $meeting)
     {
+        $this->authorize('view', $meeting);
+
         return response()->json($meeting);
     }
 

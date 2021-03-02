@@ -96,7 +96,6 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
    ============================= */
 
 //main page where votes get cast
-//todo should probably rename all this since it's basically the application
 Route::get('main/{motion}', [MainController::class, 'getVotePage'])
     ->name('main');
 

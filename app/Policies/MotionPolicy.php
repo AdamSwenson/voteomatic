@@ -10,6 +10,40 @@ class MotionPolicy
 {
     use HandlesAuthorization;
 
+    public function setAsCurrent(User $user, Motion $motion){
+//todo should this be chair only?
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user);
+
+    }
+
+    public function markComplete(User $user, Motion $motion){
+//todo should this be chair only?
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user);
+
+    }
+
+    public function secondMotion(User $user, Motion $motion){
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user);
+    }
+
+    public function castVoteOnMotion(User $user, Motion $motion){
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user);
+    }
+
+
+public function viewMotionResults(User $user, Motion $motion){
+    $meeting = $motion->meeting;
+    return $meeting->isPartOfMeeting($user);
+
+}
+
+
+//=========================== CRUD
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +52,7 @@ class MotionPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +64,17 @@ class MotionPolicy
      */
     public function view(User $user, Motion $motion)
     {
-        //
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user);
+
+//$meeting= $motion->meeting()->first();
+//$meeting->isPartOfMeeting($user);
+
+        return true;
+    }
+
+    public function viewAll(User $user){
+        return false;
     }
 
     /**
@@ -41,7 +85,10 @@ class MotionPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isChair();
+
+        //todo Eventually for VOT-6
+        return true;
     }
 
     /**
@@ -53,7 +100,10 @@ class MotionPolicy
      */
     public function update(User $user, Motion $motion)
     {
-        //
+        return $user->isChair();
+
+        //todo Eventually for VOT-6
+        return true;
     }
 
     /**
@@ -65,7 +115,7 @@ class MotionPolicy
      */
     public function delete(User $user, Motion $motion)
     {
-        //
+        return $user->isChair();
     }
 
     /**
@@ -77,7 +127,7 @@ class MotionPolicy
      */
     public function restore(User $user, Motion $motion)
     {
-        //
+        return $user->isChair();
     }
 
     /**
@@ -89,6 +139,6 @@ class MotionPolicy
      */
     public function forceDelete(User $user, Motion $motion)
     {
-        //
+        return $user->isChair();
     }
 }

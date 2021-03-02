@@ -22,11 +22,13 @@ class MainController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->setLoggedInUser();
     }
 
     public function getVotePage(Motion $motion)
     {
-        $this->setLoggedInUser();
+
+        $this->authorize('view', $motion);
 
         $data = [
 

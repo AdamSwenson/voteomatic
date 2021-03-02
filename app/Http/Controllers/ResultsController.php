@@ -31,6 +31,8 @@ class ResultsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCounts(Motion $motion, ResultsRequest $request){
+        $this->authorize('viewMotionResults', $motion);
+
         /*
          * We aren't going to just send the motion object
          * because we don't necessarily want everyone seeing
@@ -61,6 +63,9 @@ class ResultsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getResults(Motion $motion, ResultsRequest $request){
+
+        $this->authorize('viewMotionResults', $motion);
+
         /*
          * We aren't going to just send the motion object
          * because we don't necessarily want everyone seeing
