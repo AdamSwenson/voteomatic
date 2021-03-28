@@ -173,6 +173,17 @@ class FakeFullMeetingSeeder extends Seeder
         $main3->is_complete = true;
         $main3->save();
 
+
+        //Add our real users as voters on motions up to this point
+        foreach(Motion::all() as $motion){
+            foreach($realUsers as $user) {
+                RecordedVoteRecord::create([
+                    'motion_id' => $motion->id,
+                    'user_id' => $user->id
+                ]);
+            }
+        }
+
         //The currently pending motion
         Motion::create([
             'content' => "That the proposed curriculum regarding the study of tacos, especially pertaining to their deliciousness, be approved",
@@ -182,15 +193,6 @@ class FakeFullMeetingSeeder extends Seeder
             'meeting_id' => $meeting->id
         ]);
 
-        //Add our real users as voters
-        foreach(Motion::all() as $motion){
-            foreach($realUsers as $user) {
-                RecordedVoteRecord::create([
-                    'motion_id' => $motion->id,
-                    'user_id' => $user->id
-                ]);
-            }
-        }
 
         echo "\nFull meeting id: " . $meeting->id . "\n";
 
