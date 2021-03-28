@@ -77487,6 +77487,7 @@ module.exports.checkChanges = function (oldText, newText) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "idify", function() { return idify; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getById", function() { return getById; });
+var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * Usually used when handed a parameter that could be either an object
  * with an id property or the id itself.  This returns
@@ -77494,8 +77495,11 @@ __webpack_require__.r(__webpack_exports__);
  * @param ObjectOrId
  * @returns {Number|*}
  */
+
+
 var idify = function idify(ObjectOrId) {
-  if (ObjectOrId instanceof Number) return ObjectOrId;
+  if (_.isNumber(ObjectOrId)) return ObjectOrId; //    if (ObjectOrId instanceof Number) return ObjectOrId;
+
   return ObjectOrId.id;
 };
 /**
