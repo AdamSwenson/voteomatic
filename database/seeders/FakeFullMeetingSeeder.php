@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\RecordedVoteRecord;
 use App\Models\User;
 use App\Models\Vote;
 use App\Repositories\IMotionRepository;
@@ -24,7 +25,9 @@ class FakeFullMeetingSeeder extends Seeder
         $repo  = app()->make(IMotionRepository::class);
         $meeting = Meeting::factory()->create();
 
-        foreach(User::all() as $user){
+        //we will need them later to be voters
+        $realUsers = User::all();
+        foreach($realUsers as $user){
             $meeting->addUserToMeeting($user);
         }
 
@@ -179,6 +182,15 @@ class FakeFullMeetingSeeder extends Seeder
             'meeting_id' => $meeting->id
         ]);
 
+        //Add our real users as voters
+        foreach(Motion::all() as $motion){
+            foreach($realUsers as $user) {
+                RecordedVoteRecord::create([
+                    'motion_id' => $motion->id,
+                    'user_id' => $user->id
+                ]);
+            }
+        }
 
         echo "\nFull meeting id: " . $meeting->id . "\n";
 
