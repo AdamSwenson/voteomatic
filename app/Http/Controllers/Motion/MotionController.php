@@ -38,7 +38,7 @@ class MotionController extends Controller
      */
     public function getAllForMeeting(Meeting $meeting)
     {
-        $this->authorize('viewAllMeetingMotions', $meeting);
+        $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting]);
 
 
         return response()->json($meeting->motions()->get());

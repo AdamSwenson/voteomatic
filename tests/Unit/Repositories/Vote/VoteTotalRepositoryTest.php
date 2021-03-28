@@ -18,7 +18,7 @@ class VoteTotalRepositoryTest extends TestCase
 
     public function testCastVotes()
     {
-
+$this->markTestSkipped('Probably deprecated ');
     }
 
 }

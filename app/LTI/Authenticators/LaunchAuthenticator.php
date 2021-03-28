@@ -16,10 +16,11 @@ use IMSGlobal\LTI\ToolProvider\Context;
 use IMSGlobal\LTI\ToolProvider\OAuthDataStore;
 use IMSGlobal\LTI\ToolProvider\ResourceLink;
 use IMSGlobal\LTI\ToolProvider\ResourceLinkShareKey;
+
 //use IMSGlobal\LTI\ToolProvider\ToolConsumer;
 use IMSGlobal\LTI\ToolProvider\User;
 
-class LaunchAuthenticator  implements IAuthenticator
+class LaunchAuthenticator implements IAuthenticator
 {
     private $dataConnector;
 
@@ -46,8 +47,8 @@ class LaunchAuthenticator  implements IAuthenticator
         }
 
         $now = time();
-//check if within timespan that enabled
 
+        //check if within timespan that enabled
         if (is_null($this->consumer->enableFrom) || ($this->consumer->enableFrom <= $now)) {
             throw InvalidLTILogin('Tool consumer access is not yet available.');
         }
@@ -210,143 +211,142 @@ class LaunchAuthenticator  implements IAuthenticator
 //        }
 //    }
 //}
-public function setRequestContext()
-{
+    public function setRequestContext()
+    {
 // Set the request context
-    if (isset($_POST['context_id'])) {
-        $this->context = Context::fromConsumer($this->consumer, trim($_POST['context_id']));
-        $title = '';
-        if (isset($_POST['context_title'])) {
-            $title = trim($_POST['context_title']);
-        }
-        if (empty($title)) {
-            $title = "Course {$this->context->getId()}";
-        }
-        $this->context->title = $title;
-    }
-}
-
-public function setResourceLink(){
-// Set the request resource link
-    if (isset($_POST['resource_link_id'])) {
-        $contentItemId = '';
-        if (isset($_POST['custom_content_item_id'])) {
-            $contentItemId = $_POST['custom_content_item_id'];
-        }
-        $this->resourceLink = ResourceLink::fromConsumer($this->consumer, trim($_POST['resource_link_id']), $contentItemId);
-        $title = '';
-        if (isset($_POST['resource_link_title'])) {
-            $title = trim($_POST['resource_link_title']);
-        }
-        if (empty($title)) {
-            $title = "Resource {$this->resourceLink->getId()}";
-        }
-        $this->resourceLink->title = $title;
-// Delete any existing custom parameters
-        foreach ($this->consumer->getSettings() as $name => $value) {
-            if (strpos($name, 'custom_') === 0) {
-                $this->consumer->setSetting($name);
-                $doSaveConsumer = true;
+        if (isset($_POST['context_id'])) {
+            $this->context = Context::fromConsumer($this->consumer, trim($_POST['context_id']));
+            $title = '';
+            if (isset($_POST['context_title'])) {
+                $title = trim($_POST['context_title']);
             }
+            if (empty($title)) {
+                $title = "Course {$this->context->getId()}";
+            }
+            $this->context->title = $title;
         }
-        if (!empty($this->context)) {
-            foreach ($this->context->getSettings() as $name => $value) {
+    }
+
+    public function setResourceLink()
+    {
+// Set the request resource link
+        if (isset($_POST['resource_link_id'])) {
+            $contentItemId = '';
+            if (isset($_POST['custom_content_item_id'])) {
+                $contentItemId = $_POST['custom_content_item_id'];
+            }
+            $this->resourceLink = ResourceLink::fromConsumer($this->consumer, trim($_POST['resource_link_id']), $contentItemId);
+            $title = '';
+            if (isset($_POST['resource_link_title'])) {
+                $title = trim($_POST['resource_link_title']);
+            }
+            if (empty($title)) {
+                $title = "Resource {$this->resourceLink->getId()}";
+            }
+            $this->resourceLink->title = $title;
+// Delete any existing custom parameters
+            foreach ($this->consumer->getSettings() as $name => $value) {
                 if (strpos($name, 'custom_') === 0) {
-                    $this->context->setSetting($name);
+                    $this->consumer->setSetting($name);
+                    $doSaveConsumer = true;
                 }
             }
-        }
-        foreach ($this->resourceLink->getSettings() as $name => $value) {
-            if (strpos($name, 'custom_') === 0) {
-                $this->resourceLink->setSetting($name);
+            if (!empty($this->context)) {
+                foreach ($this->context->getSettings() as $name => $value) {
+                    if (strpos($name, 'custom_') === 0) {
+                        $this->context->setSetting($name);
+                    }
+                }
             }
-        }
+            foreach ($this->resourceLink->getSettings() as $name => $value) {
+                if (strpos($name, 'custom_') === 0) {
+                    $this->resourceLink->setSetting($name);
+                }
+            }
 
 // Save LTI parameters
-        foreach (self::$LTI_CONSUMER_SETTING_NAMES as $name) {
-            if (isset($_POST[$name])) {
-                $this->consumer->setSetting($name, $_POST[$name]);
-            } else {
-                $this->consumer->setSetting($name);
-            }
-        }
-        if (!empty($this->context)) {
-            foreach (self::$LTI_CONTEXT_SETTING_NAMES as $name) {
+            foreach (self::$LTI_CONSUMER_SETTING_NAMES as $name) {
                 if (isset($_POST[$name])) {
-                    $this->context->setSetting($name, $_POST[$name]);
+                    $this->consumer->setSetting($name, $_POST[$name]);
                 } else {
-                    $this->context->setSetting($name);
+                    $this->consumer->setSetting($name);
+                }
+            }
+            if (!empty($this->context)) {
+                foreach (self::$LTI_CONTEXT_SETTING_NAMES as $name) {
+                    if (isset($_POST[$name])) {
+                        $this->context->setSetting($name, $_POST[$name]);
+                    } else {
+                        $this->context->setSetting($name);
+                    }
+                }
+            }
+            foreach (self::$LTI_RESOURCE_LINK_SETTING_NAMES as $name) {
+                if (isset($_POST[$name])) {
+                    $this->resourceLink->setSetting($name, $_POST[$name]);
+                } else {
+                    $this->resourceLink->setSetting($name);
+                }
+            }
+// Save other custom parameters
+            foreach ($_POST as $name => $value) {
+                if ((strpos($name, 'custom_') === 0) &&
+                    !in_array($name, array_merge(self::$LTI_CONSUMER_SETTING_NAMES, self::$LTI_CONTEXT_SETTING_NAMES, self::$LTI_RESOURCE_LINK_SETTING_NAMES))) {
+                    $this->resourceLink->setSetting($name, $value);
                 }
             }
         }
-        foreach (self::$LTI_RESOURCE_LINK_SETTING_NAMES as $name) {
-            if (isset($_POST[$name])) {
-                $this->resourceLink->setSetting($name, $_POST[$name]);
-            } else {
-                $this->resourceLink->setSetting($name);
-            }
-        }
-// Save other custom parameters
-        foreach ($_POST as $name => $value) {
-            if ((strpos($name, 'custom_') === 0) &&
-                !in_array($name, array_merge(self::$LTI_CONSUMER_SETTING_NAMES, self::$LTI_CONTEXT_SETTING_NAMES, self::$LTI_RESOURCE_LINK_SETTING_NAMES))) {
-                $this->resourceLink->setSetting($name, $value);
-            }
-        }
-    }
 
 // Set the user instance
-    $userId = '';
-    if (isset($_POST['user_id'])) {
-        $userId = trim($_POST['user_id']);
-    }
+        $userId = '';
+        if (isset($_POST['user_id'])) {
+            $userId = trim($_POST['user_id']);
+        }
 
-    $this->user = User::fromResourceLink($this->resourceLink, $userId);
+        $this->user = User::fromResourceLink($this->resourceLink, $userId);
 
 // Set the user name
-    $firstname = (isset($_POST['lis_person_name_given'])) ? $_POST['lis_person_name_given'] : '';
-    $lastname = (isset($_POST['lis_person_name_family'])) ? $_POST['lis_person_name_family'] : '';
-    $fullname = (isset($_POST['lis_person_name_full'])) ? $_POST['lis_person_name_full'] : '';
-    $this->user->setNames($firstname, $lastname, $fullname);
+        $firstname = (isset($_POST['lis_person_name_given'])) ? $_POST['lis_person_name_given'] : '';
+        $lastname = (isset($_POST['lis_person_name_family'])) ? $_POST['lis_person_name_family'] : '';
+        $fullname = (isset($_POST['lis_person_name_full'])) ? $_POST['lis_person_name_full'] : '';
+        $this->user->setNames($firstname, $lastname, $fullname);
 
 // Set the user email
-    $email = (isset($_POST['lis_person_contact_email_primary'])) ? $_POST['lis_person_contact_email_primary'] : '';
-    $this->user->setEmail($email, $this->defaultEmail);
-
-
+        $email = (isset($_POST['lis_person_contact_email_primary'])) ? $_POST['lis_person_contact_email_primary'] : '';
+        $this->user->setEmail($email, $this->defaultEmail);
 
 
 // Persist changes to consumer
-if ($doSaveConsumer) {
-    $this->consumer->save();
-}
-if ($this->ok && isset($this->context)) {
-    $this->context->save();
-}
-if ($this->ok && isset($this->resourceLink)) {
-    if (!empty($this->context)) {
-        $this->resourceLink->setContextId($this->context->getRecordId());
-    }
+        if ($doSaveConsumer) {
+            $this->consumer->save();
+        }
+        if ($this->ok && isset($this->context)) {
+            $this->context->save();
+        }
+        if ($this->ok && isset($this->resourceLink)) {
+            if (!empty($this->context)) {
+                $this->resourceLink->setContextId($this->context->getRecordId());
+            }
 
 // Check if a share arrangement is in place for this resource link
-    $this->ok = $this->checkForShare();
+            $this->ok = $this->checkForShare();
 
 // Persist changes to resource link
-    $this->resourceLink->save();
+            $this->resourceLink->save();
 
 // Save the user instance
-    $this->user->setResourceLinkId($this->resourceLink->getRecordId());
-    if (isset($_POST['lis_result_sourcedid'])) {
-        if ($this->user->ltiResultSourcedId !== $_POST['lis_result_sourcedid']) {
-            $this->user->ltiResultSourcedId = $_POST['lis_result_sourcedid'];
-            $this->user->save();
+            $this->user->setResourceLinkId($this->resourceLink->getRecordId());
+            if (isset($_POST['lis_result_sourcedid'])) {
+                if ($this->user->ltiResultSourcedId !== $_POST['lis_result_sourcedid']) {
+                    $this->user->ltiResultSourcedId = $_POST['lis_result_sourcedid'];
+                    $this->user->save();
+                }
+            } else if (!empty($this->user->ltiResultSourcedId)) {
+                $this->user->ltiResultSourcedId = '';
+                $this->user->save();
+            }
         }
-    } else if (!empty($this->user->ltiResultSourcedId)) {
-        $this->user->ltiResultSourcedId = '';
-        $this->user->save();
-    }
-}
 
-}
+    }
 
 }

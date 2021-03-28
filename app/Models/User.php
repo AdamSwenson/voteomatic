@@ -45,6 +45,10 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
+    /**
+     * Getter for name
+     * @return string
+     */
     public function getNameAttribute(){
         return $this->first_name . ' ' . $this->last_name;
 //        return $this->attributes['firstName'] . ' ' . $this->attributes['lastName'];

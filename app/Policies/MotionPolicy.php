@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -41,6 +42,19 @@ public function viewMotionResults(User $user, Motion $motion){
 
 }
 
+    /**
+     * NB, this is used where the only param is a meeting object.
+     * Thus it needs to be called like this:
+     *         $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting])
+     *
+     * @param User $user
+     * @param Meeting $meeting
+     * @return bool
+     */
+    public function viewAllMeetingMotions(User $user, Meeting $meeting)
+    {
+        return $meeting->isPartOfMeeting($user);
+    }
 
 //=========================== CRUD
 

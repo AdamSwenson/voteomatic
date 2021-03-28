@@ -11,19 +11,19 @@ class MeetingPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * While this might more naturally be part of the motion policy,
-     * it is here since the request for all motions gets a meeting object
-     * as argument.
-     *
-     * @param User $user
-     * @param Meeting $meeting
-     * @return bool
-     */
-    public function viewAllMeetingMotions(User $user, Meeting $meeting)
-    {
-        return $meeting->isPartOfMeeting($user);
-    }
+//    /**
+//     * While this might more naturally be part of the motion policy,
+//     * it is here since the request for all motions gets a meeting object
+//     * as argument.
+//     *
+//     * @param User $user
+//     * @param Meeting $meeting
+//     * @return bool
+//     */
+//    public function viewAllMeetingMotions(User $user, Meeting $meeting)
+//    {
+//        return $meeting->isPartOfMeeting($user);
+//    }
 
     /**
      * Determine whether the user can view any models.
