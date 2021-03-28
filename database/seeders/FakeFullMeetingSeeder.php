@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
 use App\Models\Vote;
 use App\Repositories\IMotionRepository;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,10 @@ class FakeFullMeetingSeeder extends Seeder
 
         $repo  = app()->make(IMotionRepository::class);
         $meeting = Meeting::factory()->create();
+
+        foreach(User::all() as $user){
+            $meeting->addUserToMeeting($user);
+        }
 
 
         $main1 = Motion::create([
