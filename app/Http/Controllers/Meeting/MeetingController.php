@@ -13,7 +13,6 @@ class MeetingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->setLoggedInUser();
     }
 
 
@@ -24,7 +23,10 @@ class MeetingController extends Controller
      */
     public function index()
     {
-$this->authorize('view', Meeting::class);
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('view', Meeting::class);
         $meetings = $this->user->meetings()->get();
         return response()->json($meetings);
     }

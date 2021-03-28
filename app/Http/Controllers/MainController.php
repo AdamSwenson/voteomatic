@@ -27,7 +27,10 @@ class MainController extends Controller
 
     public function getVotePage(Motion $motion)
     {
+
+        //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
+
 
         $this->authorize('view', $motion);
 

@@ -18,8 +18,7 @@ class MotionSecondController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->setLoggedInUser();
-    }
+      }
 
 
     /**
@@ -28,6 +27,9 @@ class MotionSecondController extends Controller
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function markMotionSeconded(Motion $motion){
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('secondMotion', $motion);
 
         $motion->seconded = true;

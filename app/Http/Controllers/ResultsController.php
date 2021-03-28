@@ -31,6 +31,9 @@ class ResultsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCounts(Motion $motion, ResultsRequest $request){
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('viewMotionResults', $motion);
 
         /*
@@ -63,6 +66,9 @@ class ResultsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getResults(Motion $motion, ResultsRequest $request){
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
 
         $this->authorize('viewMotionResults', $motion);
 

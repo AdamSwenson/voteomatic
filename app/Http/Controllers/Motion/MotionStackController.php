@@ -31,7 +31,6 @@ class MotionStackController extends Controller
     {
 
         $this->middleware('auth');
-        $this->setLoggedInUser();
 
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->motionRepo = app()->make(IMotionRepository::class);
@@ -45,6 +44,9 @@ class MotionStackController extends Controller
      */
     public function markMotionComplete(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('markComplete', $motion);
 
         $motion->is_complete = true;
@@ -78,6 +80,9 @@ class MotionStackController extends Controller
      */
     public function getCurrentMotion(Meeting $meeting)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('viewAllMeetingMotions', $meeting);
 
         $result = $this->motionStackRepo->getCurrentMotion($meeting);
@@ -93,6 +98,9 @@ class MotionStackController extends Controller
      */
     public function setAsCurrentMotion(Meeting $meeting, Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('setAsCurrent', $motion);
 
         $result = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);

@@ -43,7 +43,6 @@ class RecordVoteController extends Controller
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');
 
-        $this->setLoggedInUser();
     }
 
 
@@ -57,6 +56,9 @@ class RecordVoteController extends Controller
      */
     public function recordVote(Motion $motion, VoteRequest $request)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('castVoteOnMotion', $motion);
 
         try {

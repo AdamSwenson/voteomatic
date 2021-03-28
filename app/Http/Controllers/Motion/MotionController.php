@@ -14,7 +14,6 @@ class MotionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->setLoggedInUser();
     }
 
     /**
@@ -25,6 +24,9 @@ class MotionController extends Controller
      */
     public function index()
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('viewAll', Motion::class);
 
         return Motion::all();
@@ -38,6 +40,10 @@ class MotionController extends Controller
      */
     public function getAllForMeeting(Meeting $meeting)
     {
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting]);
 
 
@@ -57,6 +63,10 @@ class MotionController extends Controller
      */
     public function store(MotionRequest $request)
     {
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('create', Motion::class);
 
 
@@ -112,6 +122,9 @@ class MotionController extends Controller
      */
     public function show(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('view', $motion);
 
         return response()->json($motion);
@@ -128,6 +141,9 @@ class MotionController extends Controller
      */
     public function update(MotionRequest $request, Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('update', $motion);
 
         //this is necessary because the request object has
@@ -149,6 +165,9 @@ class MotionController extends Controller
      */
     public function destroy(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('delete', $motion);
 
         $motion->delete();
