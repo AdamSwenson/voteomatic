@@ -8,11 +8,11 @@ The Voteomatic helps academic senates and other deliberative bodies do their wor
 
 - Completely anonymous voting
 
-- Allows members to authenticate through the LTI interface of learning management systems. No creating passwords or figuring out who is a member. Just put all members in a Canvas/Moodle/etc course. 
+- Members authenticate through the campus earning management system. No creating passwords or figuring out who is a member. Just put all members in a Canvas/Moodle/etc course. 
 
 - Basic parliamentary procedure built in from the ground up.
 
-- Easy export of the motion tree to aid in compiling meeting minutes.
+- Export the motion tree to help compile meeting minutes.
 
 
 ### Anonymity
