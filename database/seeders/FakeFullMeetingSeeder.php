@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Vote;
 use App\Repositories\IMotionRepository;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class FakeFullMeetingSeeder extends Seeder
 {
