@@ -16,6 +16,7 @@ class FakeFullMeetingSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * @param null $meeting
      * @param null $user
      * @return void
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -27,7 +28,7 @@ class FakeFullMeetingSeeder extends Seeder
         $repo  = app()->make(IMotionRepository::class);
 
         //use the meeting provided or create a fresh one
-        $meeting = $meeting ? ! is_null($meeting) : Meeting::factory()->create();
+        $meeting = ! is_null($meeting) ? $meeting   : Meeting::factory()->create();
 
         //we will need them later to be voters
 
