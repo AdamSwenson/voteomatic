@@ -30,7 +30,7 @@ class ProductionLiveSeeder extends Seeder
         $this->call([
 
             //Resource link etc for LTI access
-            LTIDevCredsSeeder::class
+            LTILiveCredsSeeder::class
         ]);
 
     }
