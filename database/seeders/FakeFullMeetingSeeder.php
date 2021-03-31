@@ -36,6 +36,7 @@ class FakeFullMeetingSeeder extends Seeder
         if(! is_null($user)){
             $realUsers = [$user];
             Log::debug('adding current user');
+
         }else{
             Log::debug('adding all users');
             //todo This seems like it will add all users, not just the current person
@@ -44,15 +45,13 @@ class FakeFullMeetingSeeder extends Seeder
 //            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
 //            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first()
 //        ];
+            foreach($realUsers as $user){
+                $meeting->addUserToMeeting($user);
+            }
 
         }
 
-
-        foreach($realUsers as $user){
-            $meeting->addUserToMeeting($user);
-        }
-
-
+        
         $main1 = Motion::create([
            'content' => "That the dog not be given hamburgers",
            'requires' => 0.5,
@@ -196,7 +195,7 @@ class FakeFullMeetingSeeder extends Seeder
 
 
         //Add our real users as voters on motions up to this point
-        foreach(Motion::all() as $motion){
+        foreach($meeting->motions()->get() as $motion){
             foreach($realUsers as $user) {
                 //using factory so won't have to enable mass assignment for creation
                 RecordedVoteRecord::factory()->create([
