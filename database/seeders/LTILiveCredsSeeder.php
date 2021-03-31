@@ -27,7 +27,7 @@ class LTILiveCredsSeeder extends Seeder
     {
         $meeting = Meeting::find(1);
 
-        if(is_null($meeting)) {
+        if (is_null($meeting)) {
             $meeting = Meeting::create();
         }
 
@@ -45,14 +45,12 @@ class LTILiveCredsSeeder extends Seeder
         ])->create();
 
 
-        echo "Created LTI credentials  \n";
+        echo "\n \n Created LTI credentials  \n";
         echo "\n Consumer key: {$consumer->consumer_key} \n";
         echo "\n Secret key: {$consumer->secret_key} \n";
         echo "\n Resource link: {$resourceLink->resource_link_id} \n";
         echo "\n Meeting id: {$meeting->id} \n";
-
-
-
+        echo "\n \n";
 
 
     }
