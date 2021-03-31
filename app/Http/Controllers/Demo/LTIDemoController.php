@@ -8,6 +8,7 @@ use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\AuthenticatorFactory;
 use App\LTI\Exceptions\LTIAuthenticationException;
 use App\LTI\LTI;
+use App\Models\Meeting;
 use App\Repositories\ILTIRepository;
 use App\Repositories\IUserRepository;
 use Database\Seeders\FakeFullMeetingSeeder;
@@ -72,7 +73,9 @@ class LTIDemoController extends Controller
         try {
             //Set up new meeting for them to play with.
             $seeder = new FakeFullMeetingSeeder();
-            $meeting = $seeder->run();
+
+            $meeting = Meeting::factory()->create();
+
 
             $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
 
@@ -91,6 +94,10 @@ class LTIDemoController extends Controller
             $user->save();
             //Log them in
             Auth::login($user, true);
+
+            //Finally we populate the meeting with motions and votes. We do this here
+            //so that the the user can be added as a voter on past motions.
+            $seeder->run($meeting, $user);
 
             //We redirect to the main app page
             return redirect()->route('meetingHome', $meeting->id);
