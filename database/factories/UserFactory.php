@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'user_id_hash' => $this->faker->sha1,
             'sis_id' => $this->faker->randomNumber(6),
 
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $this->faker->sha1 . $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
 
           'password' => Str::random(30),
