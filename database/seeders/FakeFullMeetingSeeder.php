@@ -26,7 +26,12 @@ class FakeFullMeetingSeeder extends Seeder
         $meeting = Meeting::factory()->create();
 
         //we will need them later to be voters
-        $realUsers = User::all();
+//        $realUsers = User::all();
+        $realUsers = [
+            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
+            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first()
+        ];
+
         foreach($realUsers as $user){
             $meeting->addUserToMeeting($user);
         }
