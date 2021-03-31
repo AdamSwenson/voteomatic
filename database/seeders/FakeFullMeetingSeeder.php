@@ -177,7 +177,8 @@ class FakeFullMeetingSeeder extends Seeder
         //Add our real users as voters on motions up to this point
         foreach(Motion::all() as $motion){
             foreach($realUsers as $user) {
-                RecordedVoteRecord::create([
+                //using factory so won't have to enable mass assignment for creation
+                RecordedVoteRecord::factory()->create([
                     'motion_id' => $motion->id,
                     'user_id' => $user->id
                 ]);
