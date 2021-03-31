@@ -72,14 +72,11 @@ class LTIDemoController extends Controller
         Log::debug($request);
         try {
             //Set up new meeting for them to play with.
-            $seeder = new FakeFullMeetingSeeder();
-
             $meeting = Meeting::factory()->create();
-
 
             $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
 
-//
+
 //            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
 //
 //            //We verify that the oath signature on the incoming post
@@ -89,14 +86,17 @@ class LTIDemoController extends Controller
 
             //Get an existing user or create a new person in the db
             $user = $this->userRepository->getUserFromRequest($request, $meeting);
+
             //Make them a chair
             $user->is_admin = true;
             $user->save();
+
             //Log them in
             Auth::login($user, true);
 
             //Finally we populate the meeting with motions and votes. We do this here
             //so that the the user can be added as a voter on past motions.
+            $seeder = new FakeFullMeetingSeeder();
             $seeder->run($meeting, $user);
 
             //We redirect to the main app page
@@ -109,10 +109,6 @@ class LTIDemoController extends Controller
 
         }
 
-//        return redirect()->action([LTILaunchController::class, 'handleMeetingLaunchRequest'], [$meeting, $request]);
-//        return redirect()->route('lti-launch', $meeting);
-
-
     }
 
     public function launchMemberDemo(LTIRequest $request)
@@ -123,15 +119,16 @@ class LTIDemoController extends Controller
 
         try {
             //Set up new meeting for them to play with.
-            $seeder = new FakeFullMeetingSeeder();
-            $meeting = $seeder->run();
+            $meeting = Meeting::factory()->create();
 
-            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
-
-            //We verify that the oath signature on the incoming post
-            //request is valid
-            $authenticator = AuthenticatorFactory::make($request);
-            $authenticator->authenticate($request, $resourceLink);
+            $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
+//
+//            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
+//
+//            //We verify that the oath signature on the incoming post
+//            //request is valid
+//            $authenticator = AuthenticatorFactory::make($request);
+//            $authenticator->authenticate($request, $resourceLink);
 
             //Get an existing user or create a new person in the db
             //and associate them with the meeting
@@ -144,10 +141,13 @@ class LTIDemoController extends Controller
             //Log them in
             Auth::login($user, true);
 
+            //Finally we populate the meeting with motions and votes. We do this here
+            //so that the the user can be added as a voter on past motions.
+            $seeder = new FakeFullMeetingSeeder();
+            $seeder->run($meeting, $user);
+
             //We redirect to the main app page
             return redirect()->route('meetingHome', $meeting->id);
-
-            //return redirect()->route('lti-launch', $meeting);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);
