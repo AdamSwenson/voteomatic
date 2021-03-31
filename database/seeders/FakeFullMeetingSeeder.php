@@ -16,21 +16,33 @@ class FakeFullMeetingSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * @param null $user
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function run()
+    public function run($meeting=null, $user=null)
     {
 //        $voters = User::factory()->count(FakeFullMeetingSeeder::NUMBER_VOTERS)->create();
 
         $repo  = app()->make(IMotionRepository::class);
-        $meeting = Meeting::factory()->create();
+
+        //use the meeting provided or create a fresh one
+        $meeting = $meeting ? ! is_null($meeting) : Meeting::factory()->create();
 
         //we will need them later to be voters
-//        $realUsers = User::all();
-        $realUsers = [
-            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
-            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first()
-        ];
+
+        if(! is_null($user)){
+            $realUsers = [$user];
+        }else{
+            //todo This seems like it will add all users, not just the current person
+            $realUsers = User::all();
+//        $realUsers = [
+//            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
+//            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first()
+//        ];
+
+        }
+
 
         foreach($realUsers as $user){
             $meeting->addUserToMeeting($user);
