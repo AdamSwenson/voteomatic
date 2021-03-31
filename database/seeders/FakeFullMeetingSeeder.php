@@ -34,7 +34,9 @@ class FakeFullMeetingSeeder extends Seeder
 
         if(! is_null($user)){
             $realUsers = [$user];
+            Log::debug('adding current user');
         }else{
+            Log::debug('adding all users');
             //todo This seems like it will add all users, not just the current person
             $realUsers = User::all();
 //        $realUsers = [
