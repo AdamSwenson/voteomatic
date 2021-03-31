@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Demo\LTIDemoController;
 use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
@@ -57,7 +58,15 @@ use Illuminate\Support\Facades\Route;
 /* =============================
         Login, LTI authentication, and other admin
    ============================= */
-Auth::routes();
+
+//See VOT-29 for why this can't be used.
+//Auth::routes();
+
+//Login (Currently only used by administrator)
+Route::post('login', [LoginController::class, 'login']);
+// Logout Route
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // LTI access endpoint
 Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
@@ -68,7 +77,7 @@ Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingL
     ->name('lti-launch');
 
 //unused
-Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
+//Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
 
 
 /* =============================
