@@ -51,7 +51,7 @@ class FakeFullMeetingSeeder extends Seeder
 
         }
 
-        
+
         $main1 = Motion::create([
            'content' => "That the dog not be given hamburgers",
            'requires' => 0.5,
