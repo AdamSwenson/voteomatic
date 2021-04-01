@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repositories;
+namespace App\Repositories;
 
 use App\Models\LTIConsumer;
 use App\Models\Meeting;

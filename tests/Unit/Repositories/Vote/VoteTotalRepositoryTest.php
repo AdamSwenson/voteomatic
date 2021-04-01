@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repositories\Vote;
+namespace App\Repositories\Vote;
 
 use App\Repositories\Vote\VoteTotalRepository;
 

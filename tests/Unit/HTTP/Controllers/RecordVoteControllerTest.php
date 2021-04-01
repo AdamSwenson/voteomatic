@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;

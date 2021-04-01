@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Meeting;
+namespace App\Http\Controllers\Meeting;
 
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Models\Meeting;

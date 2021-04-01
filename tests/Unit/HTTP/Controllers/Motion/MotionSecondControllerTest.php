@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Motion;
+namespace App\Http\Controllers\Motion;
 
 use App\Http\Controllers\Motion\MotionSecondController;
 

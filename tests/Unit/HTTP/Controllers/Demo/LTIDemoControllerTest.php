@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Demo;
+namespace App\Http\Controllers\Demo;
 
 use App\Http\Controllers\Demo\LTIDemoController;
 

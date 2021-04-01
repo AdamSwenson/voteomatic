@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repositories;
+namespace App\Repositories;
 
 use App\Models\Motion;
 use App\Repositories\MotionRepository;
