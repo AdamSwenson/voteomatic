@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-
-
 /**
  * Class RecordVoteController
  *
@@ -56,10 +54,15 @@ class RecordVoteController extends Controller
      * @param VoteRequest $request
      * @return Vote|string[]
      */
-    public function recordVote(Motion $motion, VoteRequest $request){
+    public function recordVote(Motion $motion, VoteRequest $request)
+    {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('castVoteOnMotion', $motion);
 
         try {
-            $this->getUser();
+//            $this->setLoggedInUser();
 
             //This is already handled by the middleware. It probably should eventually be
             //removed once there's no chance the middleware will accidentally get turned off.
@@ -97,9 +100,9 @@ class RecordVoteController extends Controller
 
             return $vote;
 
-        }catch (DoubleVoteAttempt $e){
+        } catch (DoubleVoteAttempt $e) {
             abort($e::ERROR_CODE);
-        }catch (VoteSubmittedAfterMotionClosed $e2){
+        } catch (VoteSubmittedAfterMotionClosed $e2) {
             abort($e::ERROR_CODE);
         }
     }

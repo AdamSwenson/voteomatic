@@ -45,11 +45,34 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
+    /**
+     * Getter for name
+     * @return string
+     */
     public function getNameAttribute(){
         return $this->first_name . ' ' . $this->last_name;
 //        return $this->attributes['firstName'] . ' ' . $this->attributes['lastName'];
     }
 
+
+    /**
+     * Whether this user is a chair
+     * Currently this is the same as being an administrator
+     * but we may want to change that.
+     * @return mixed
+     */
+    public function isChair(){
+        return $this->is_admin;
+    }
+
+    /**
+     * Whether the user is an administrator.
+     * Currently this is the same as being the chair
+     * @return mixed
+     */
+    public function isAdministrator(){
+        return $this->is_admin;
+    }
 
     // ------------------ relationships
     /**

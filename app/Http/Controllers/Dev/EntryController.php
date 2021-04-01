@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dev;
 
+use App\Http\Controllers\Controller;
 use App\Models\Motion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

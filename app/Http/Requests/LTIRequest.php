@@ -101,20 +101,27 @@ class LTIRequest extends FormRequest
         //NB, these are all what is required for launching; other
         //actions will need to be checked against ToolPRoviderBase before using if need them
         return [
-//            'lti_message_type' => ['required', Rule::in(self::$MESSAGE_TYPES)],
-//            'lti_version' => ['required', Rule::in(self::$LTI_VERSIONS)],
-//
-//            'oauth_consumer_key' => ['required'],
-//            'oath_nonce' => ['required'],
-//            'oath_signature' => ['required'],
-//            'oath_signature_method' => ['required'],
-//            'oath_timestamp' => ['required'],
-//            'oath_version'  => ['required'],
-//
-//            'resource_link_id' => ['required'],
-//
-//            'user_id' => ['required']
-//            //
+            /* Oauth stuff */
+            'oauth_consumer_key' => ['required'],
+            'oauth_nonce' => ['required'],
+            'oauth_signature' => ['required'],
+            'oauth_signature_method' => ['required'],
+            'oauth_timestamp' => ['required'],
+            'oauth_version'  => ['required'],
+
+            /* LTI */
+            'lti_message_type' => ['required', Rule::in(self::$MESSAGE_TYPES)],
+            'lti_version' => ['required', Rule::in(self::$LTI_VERSIONS)],
+
+            /* The Canvas assignment which is linking to the meeting */
+            'resource_link_id' => ['required'],
+            'resource_link_title' => ['required'],
+
+            /* The user's info */
+            'user_id' => ['required'],
+             'lis_person_name_family' => ['required'],
+            'lis_person_name_given' => ['required']
+
         ];
     }
 
@@ -126,11 +133,11 @@ class LTIRequest extends FormRequest
     public function messages()
     {
         return [
-            'lti_message_type.required' => self::BAD_TYPE_MSG,
-            'lti_message_type.in' => self::BAD_TYPE_MSG,
-            'lti_version.required' => self::BAD_VERSION_MSG,
-            'lti_version.in' => self::BAD_VERSION_MSG,
-            'oauth_consumer_key.required' => self::BAD_CONSUMER_KEY,
+//            'lti_message_type.required' => self::BAD_TYPE_MSG,
+//            'lti_message_type.in' => self::BAD_TYPE_MSG,
+//            'lti_version.required' => self::BAD_VERSION_MSG,
+//            'lti_version.in' => self::BAD_VERSION_MSG,
+//            'oauth_consumer_key.required' => self::BAD_CONSUMER_KEY,
 
         ];
     }

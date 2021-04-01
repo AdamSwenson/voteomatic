@@ -16,13 +16,13 @@ class AssignmentRepositoryTest extends TestCase
 
     public $rootAssignment;
     public $rootMotion;
-    protected $object;
+
     /**
      * @var AssignmentDataMaker
      */
     private $dataMaker;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 

@@ -5,6 +5,11 @@
  * @type {{computed: {}}}
  */
 module.exports = {
+    data: function () {
+        return {
+            linkBase: "https://voteomatic.com/lti-entry/"
+        }
+    },
 
     computed: {
 
@@ -17,8 +22,20 @@ module.exports = {
             },
             set : function(v){
                 this.$store.commit('setMeeting', v);
-
             }
+        },
+
+
+        /**
+         * The link that the user will enter into
+         * canvas
+         */
+        meetingLink: {
+
+            get: function () {
+                return this.linkBase + this.meeting.id;
+            },
+            default: false
         },
 
 

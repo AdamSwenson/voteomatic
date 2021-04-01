@@ -17,7 +17,7 @@ class MotionTestCase extends TestCase
     public int $totalNay;
     public $yayVotes;
 
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
 

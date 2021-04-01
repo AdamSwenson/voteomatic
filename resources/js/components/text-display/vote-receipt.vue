@@ -5,9 +5,9 @@
 
         <p>The fact that your vote was counted can be verified with this receipt:</p>
 
-        <p><strong> {{ receipt }}</strong></p>
+        <p class="user-select-all"><strong> {{ receipt }}</strong></p>
 
-        <p>Please record this receipt. Once you leave this page, it will not be possible to
+        <p>Please record this receipt. Once you leave this screen, it will not be possible to
             retrieve it. </p>
 
         <hr>

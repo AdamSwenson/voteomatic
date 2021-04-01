@@ -19,6 +19,27 @@ class Meeting extends Model
         return User::find($this->owner_id);
     }
 
+
+    /**
+     * Checks whether the user is on the meeting roster.
+     * This is a helpful shortcut for various authorization tasks
+     *
+     * @param User $user
+     */
+    public function isPartOfMeeting(User $user){
+        return ! is_null($this->users()->where('id', $user->id)->first());
+    }
+
+    /**
+     * Adds the user to the meeting roster
+     * @param User $user
+     */
+    public function addUserToMeeting(User $user){
+        $this->users()->attach($user);
+        $this->push();
+    }
+
+
 // ----------------------- start
 //These are from an initial attempt at the motion tree based on
 // the gradeomatic structures. May end up using later if need much richer

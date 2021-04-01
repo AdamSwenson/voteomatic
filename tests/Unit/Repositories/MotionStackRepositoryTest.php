@@ -15,7 +15,7 @@ class MotionStackRepositoryTest extends TestCase
     public $currentMotion;
     private $completedMotions;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 
@@ -80,6 +80,7 @@ class MotionStackRepositoryTest extends TestCase
         $this->object->setAsCurrentMotion($meeting, $motion);
 
         //check
+        $prevCurrent->refresh();
         $this->assertFalse($prevCurrent->is_current, "Previous motion has been unset as current");
 
         $this->assertTrue($motion->is_current, "Motion has been set");

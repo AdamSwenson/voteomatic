@@ -22,6 +22,11 @@ class MotionStackController extends Controller
      */
     public $motionStackRepo;
 
+    /**
+     * @var IMotionRepository|mixed
+     */
+    public $motionRepo;
+
     public function __construct()
     {
 
@@ -32,8 +37,17 @@ class MotionStackController extends Controller
     }
 
 
+    /**
+     * @param Motion $motion
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function markMotionComplete(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('markComplete', $motion);
 
         $motion->is_complete = true;
         $motion->save();
@@ -58,20 +72,37 @@ class MotionStackController extends Controller
     }
 
 
-
     /**
      * Returns the motion at the top of the pending queue
      * @param Meeting $meeting
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function getCurrentMotion(Meeting $meeting)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('viewAllMeetingMotions', $meeting);
+
         $result = $this->motionStackRepo->getCurrentMotion($meeting);
         return response()->json($result);
     }
 
 
+    /**
+     * @param Meeting $meeting
+     * @param Motion $motion
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function setAsCurrentMotion(Meeting $meeting, Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('setAsCurrent', $motion);
+
         $result = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
         return response()->json($result);
     }
@@ -80,6 +111,9 @@ class MotionStackController extends Controller
     /**
      * Creates or updates the stored map from a map
      * sent by the client
+     *
+     * dev Possibly deprecated....
+     *
      * @param Meeting $meeting
      * @param Request $request
      * @return bool|\Illuminate\Http\JsonResponse
@@ -100,11 +134,16 @@ class MotionStackController extends Controller
     /**
      * Get the map of motions for the given meeting
      *
+     * dev Possibly deprecated....
+     *
      * @param Meeting $meeting
      * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function getOrder(Meeting $meeting)
     {
+        $this->authorize('viewAllMeetingMotions', $meeting);
+
         $assignmentRepo = app()->make(IAssignmentRepository::class);
 
         $out = $assignmentRepo->getMotionOrderForClient($meeting);

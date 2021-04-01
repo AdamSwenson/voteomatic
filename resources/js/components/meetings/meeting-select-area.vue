@@ -11,13 +11,17 @@
 <script>
 
 import MeetingMixin from '../../mixins/meetingMixin';
+import ChairMixin from "../../mixins/chairMixin";
+
 
 export default {
-    name: "meeting-select-button",
+    name: "meeting-select-area",
 
+    mixins : [ChairMixin],
     data: function () {
         return {}
     },
+
 
     props: ['meeting'],
 

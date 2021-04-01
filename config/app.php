@@ -181,6 +181,7 @@ return [
          * Custom service providers
          */
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\RouteMacroServiceProvider::class
 
     ],
 
@@ -235,7 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //package facades
-        'LTIFacade' => App\LTI\LTIFacade::class
+       // 'LTIFacade' => App\LTI\LTIFacade::class
 
     ],
 

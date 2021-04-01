@@ -4,44 +4,81 @@
 
         <div class="card results-display" v-if="isMotionComplete">
 
-            <div class="card-body">
-                <h5 class="card-title">{{ motion.content }}</h5>
 
-                <h6 class="card-subtitle mb-2 text-muted">This motion required {{ motion.englishRequires }}</h6>
+            <div class="card">
+                <!--                <div class="card-header">-->
 
-                <h1 class="card-text">The motion {{ passed }}</h1>
-            </div>
+                <!--                    <h3 class="card-title">{{ motion.content }}</h3>-->
 
-            <div class="card-body">
-                <div class="card-text">
-                    <dl class="row">
-                        <dt class="col-sm-3">Yays</dt>
-                        <dd class="col-sm-9">{{ yayCount }}</dd>
-                    </dl>
+                <!--                    <br/>-->
 
-                    <dl class="row">
-                        <dt class="col-sm-3">Nays</dt>
-                        <dd class="col-sm-9">{{ nayCount }}</dd>
-                    </dl>
+                <!--                    <required-vote-badge :motion="motion"></required-vote-badge>-->
 
-                    <dl class="row">
-                        <dt class="col-sm-3">Abstentions</dt>
-                        <dd class="col-sm-9">No such thing</dd>
-                    </dl>
+                <!--                </div>-->
 
-                    <dl class="row">
-                        <dt class="col-sm-3">Total votes cast</dt>
-                        <dd class="col-sm-9">{{ totalVotes }}</dd>
-                    </dl>
+                <div class="card-body">
+
+                    <blockquote>{{ motion.content }}</blockquote>
+                    <!--                    <h4 class="card-title">{{ // motion.content }}</h4>-->
+
+                    <!--                    <br/>-->
+
+                    <required-vote-badge :motion="motion"></required-vote-badge>
+                    <debatable-badge :motion="motion"></debatable-badge>
+                    <motion-type-badge :motion="motion"></motion-type-badge>
+
+
+
                 </div>
 
+                <div class="card-body" v-bind:class="resultStyle">
+                    <h1 class="card-title ">The motion {{ passed }}</h1>
+                </div>
+
+                <!--                <h6 class="card-subtitle mb-2 text-muted">This motion required {{ motion.englishRequires }}</h6>-->
+
+                <!--                <div class="card-text">-->
+                <!--                </div>-->
             </div>
+
+            <!--        </div>-->
+
+            <!--            <div class="card-body">-->
+            <div class=" card">
+                <div class="card-body">
+                    <div class="card-text">
+                        <dl class="row">
+                            <dt class="col-sm-3">Yays</dt>
+                            <dd class="col-sm-9">{{ yayCount }}</dd>
+                        </dl>
+
+                        <dl class="row">
+                            <dt class="col-sm-3">Nays</dt>
+                            <dd class="col-sm-9">{{ nayCount }}</dd>
+                        </dl>
+
+                        <dl class="row">
+                            <dt class="col-sm-3">Abstentions</dt>
+                            <dd class="col-sm-9">No such thing</dd>
+                        </dl>
+
+                        <dl class="row">
+                            <dt class="col-sm-3">Total votes cast</dt>
+                            <dd class="col-sm-9">{{ totalVotes }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!--            </div>-->
+
         </div>
 
         <div class="card vote-in-progress" v-else>
+
             <div class="card-header ">
                 <h4 class="card-title">Voting is still in progress.</h4>
             </div>
+
             <div class="card-body">
 
                 <h5 class="card-title"> The results will be available once voting is
@@ -61,10 +98,13 @@ import * as routes from "../../routes";
 import Motion from '../../models/Motion';
 import motionMixin from '../../mixins/motionStoreMixin';
 import motionObjectMixin from "../../mixins/motionObjectMixin";
+import RequiredVoteBadge from "../motions/badges/required-vote-badge";
+import DebatableBadge from "../motions/badges/debatable-badge";
+import MotionTypeBadge from "../motions/badges/motion-type-badge";
 
 export default {
     name: "results-page",
-
+    components: {MotionTypeBadge, DebatableBadge, RequiredVoteBadge},
     mixins: [motionMixin, motionObjectMixin],
 
     data: function () {
@@ -84,10 +124,10 @@ export default {
     asyncComputed: {
 
         passed: function () {
-            let results = this.$store.getters.getPassed;
-            if (_.isUndefined(results) || _.isNull(results)) return ' ----- '
+            // let results = this.$store.getters.getPassed;
+            if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
 
-            return results ? 'PASSED' : 'FAILED';
+            return this.results ? 'PASSED' : 'FAILED';
 
         },
 
@@ -98,6 +138,19 @@ export default {
 
         nayCount: function () {
             return this.$store.getters.getNayCount
+        },
+
+        results : function(){
+            return this.$store.getters.getPassed;
+        },
+
+        resultStyle: function () {
+            //nb results will be a boolean
+            if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
+
+            if (this.results) return "bg-success"
+
+            return "bg-danger";
         },
 
         totalVotes: function () {

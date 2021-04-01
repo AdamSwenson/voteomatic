@@ -20,25 +20,11 @@ class LTIDevCredsSeeder extends Seeder
     public function run()
     {
 
-        $meetings = Meeting::all();
-        if (! isset($meetings)) {
+        $meeting = Meeting::find(1);
+
+        if(is_null($meeting)) {
             $meeting = Meeting::factory()->create();
-        }else {
-            $meeting = $meetings[0];
         }
-
-        //todo Set up commented part instead so will only have one entry
-//        $name = 'Development consumer';
-//
-//        $consumer = LTIConsumer::where('consumer_key', env('DEV_CONSUMER_KEY'))
-//            ->where('secret_key', env('DEV_SHARED_KEY'))
-//            ->where('name', $name)->firstOrCreate();
-
-//        ResourceLink::where('meeting_id', $meeting->id)
-//            ->where('resource_link_id', env('DEV_RESOURCE_LINK_ID'))
-//            ->where('lti_consumer_id',  $consumer->id)
-//            ->where('description', $meeting->name)
-//            ->firstOrCreate();
 
 
         $consumer = LTIConsumer::factory([
@@ -55,8 +41,5 @@ class LTIDevCredsSeeder extends Seeder
         ])->create();
 
 
-
-
-        //
     }
 }

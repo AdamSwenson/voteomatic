@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Faker\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 //use PHPUnit\Framework\TestCase;
@@ -12,6 +13,11 @@ abstract class TestCase extends BaseTestCase
 //abstract class TestCase extends TestCase
 {
     use CreatesApplication;
+
+    //Mainly using so don't get false failures when
+    //faker runs out of, e.g., email addresses
+    //Also speeds up a bit
+    use RefreshDatabase;
 
     /**
      * The object under test
@@ -24,7 +30,7 @@ abstract class TestCase extends BaseTestCase
      */
     public $faker;
 
-    public function setUp(): void
+    public function setUp():void
     {
         parent::setUp();
 

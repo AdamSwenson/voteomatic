@@ -40,6 +40,15 @@ module.exports = {
             default: false
         },
 
+        /**
+         * Whether voting has been closed.
+         * @returns {{default: boolean, get: (function(): (module.exports.asyncComputed.isMotionComplete.motion.isComplete|undefined))}}
+         */
+        isComplete: function () {
+            return this.isMotionComplete;
+        },
+
+
         // selectedMotion: function () {
         //     return this.$store.getters.getActiveMotion;
         // },

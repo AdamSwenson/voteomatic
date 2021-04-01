@@ -10,12 +10,17 @@ use App\LTI\LTI;
 use App\Models\Meeting;
 use App\Models\ResourceLink;
 use App\Models\User;
+use App\Repositories\ILTIRepository;
+use App\Repositories\IUserRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 //use App\Providers\LTIServiceProvider;
 
@@ -34,17 +39,34 @@ class LTILaunchController extends Controller
      * @var LTI
      */
     public $lti;
+    /**
+     * @var ILTIRepository
+     */
+    public $LTIRepository;
+    /**
+     * @var IUserRepository
+     */
+    public $userRepository;
 
+    /**
+     * LTILaunchController constructor.
+     * @throws BindingResolutionException
+     */
     public function __construct()
     {
         //create an lti object to use by instantiating via
         //the lti service provider
         $this->lti = app()->make(LTI::class);
+
+        //we do this here since type hinting messes with the tests
+        $this->LTIRepository = app()->make(ILTIRepository::class);
+        $this->userRepository = app()->make(IUserRepository::class);
     }
 
 
     /**
      * Receives the launch request
+     * @deprecated
      *
      * lti:create-tool-consumer
      *  key: tacokey
@@ -98,20 +120,19 @@ class LTILaunchController extends Controller
      *
      * This is the newer version.
      *
-     * lti:create-tool-consumer
-     *  key: tacokey
-     *  name: taco
-     * secret: nom
+     *
      * @param LTIRequest $request
      * @param Meeting $meeting
      * @return void
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function handleMeetingLaunchRequest(LTIRequest $request, Meeting $meeting)
     {
 
         //todo remove
+
+        Log::debug("=========== LTILaunchController@handleMeetingLaunchRequest ===========");
         Log::debug($request);
 
         //Check if the activity is enabled and reject access if not
@@ -121,19 +142,26 @@ class LTILaunchController extends Controller
         //fields are populated.
         try {
 
-            //We verify that the oath signature on the incoming post
-            //request is valid
-            $resourceLink = ResourceLink::where(['resource_link_id' => $request->resource_link_id])
-                ->firstOrFail();
-            //todo error handling if not found
-
-            $authenticator = AuthenticatorFactory::make($request);
-            $authenticator->authenticate($request, $resourceLink);
+            $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
+//
+//            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
+//
+//            //We verify that the oath signature on the incoming post
+//            //request is valid
+//            $authenticator = AuthenticatorFactory::make($request);
+//            $authenticator->authenticate($request, $resourceLink);
 
             //Get an existing user or create a new person in the db
-            $this->handleUser($request);
+            $user = $this->userRepository->getUserFromRequest($request, $meeting);
 
-            //We redirect to the activity page
+            //add them to the meeting
+            //dev step added in VOT-1
+            $meeting->addUserToMeeting($user);
+
+            //Log them in
+            Auth::login($user, true);
+
+            //We redirect to the main app page
             return redirect()->route('meetingHome', $meeting->id);
 
         } catch (LTIAuthenticationException $e) {
@@ -149,6 +177,9 @@ class LTILaunchController extends Controller
     /**
      * Creates or looks up the user and logs them
      * in.
+     *
+     * @deprecated Replaced with UserRepository
+     *
      *  //todo refactor this whole process to fit the laravel authentication patterns and utilities
      * @param LTIRequest $request
      */
@@ -167,11 +198,16 @@ class LTILaunchController extends Controller
 
             $email = "currently-unusable-" . $firstName . '.' . $lastName . '@csun.edu';
 
-            $this->user = User::factory()->create();
+            $this->user = User::create([
+                'email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'user_id_hash' => $userIdHash
+            ]);
 
-            $this->user->first_name = $firstName;
-            $this->user->last_name = $lastName;
-            $this->user->user_id_hash = $userIdHash;
+//            $this->user->first_name = $firstName;
+//            $this->user->last_name = $lastName;
+//            $this->user->user_id_hash = $userIdHash;
 
             $this->user->save();
         }

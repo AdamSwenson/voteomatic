@@ -17,16 +17,22 @@ use Illuminate\Support\Facades\Auth;
  * people cast their votes
  * @package App\Http\Controllers
  */
-class VotePageController extends Controller
+class MainController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     public function getVotePage(Motion $motion)
     {
-        $this->getUser();
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+
+        $this->authorize('view', $motion);
 
         $data = [
 
