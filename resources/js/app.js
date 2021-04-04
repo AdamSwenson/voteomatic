@@ -23,11 +23,12 @@ Vue.use(VueAxios, axios)
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import VueRouter from 'vue-router'
 Vue.use( VueRouter );
-//
-// // Define some routes
-// // Each route should map to a component. The "component" can
-// // either be an actual component constructor created via
-// // Vue.extend(), or just a component options object.
+
+
+// Define some routes
+// Each route should map to a component. The "component" can
+// either be an actual component constructor created via
+// Vue.extend(), or just a component options object.
 import  {routes} from './routes.client';
 // import { routes } from './routes';
 
@@ -67,6 +68,8 @@ Vue.use(AsyncComputed)
 Vue.component('voteomatic', require('./components/voteomatic').default);
 Vue.component('page-navbar', require('./components/navigation/page-navbar').default);
 Vue.component('waitlist', require('./components/waitlist').default);
+Vue.component('home-page', require('./components/home-page').default);
+
 
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/results-page').default);

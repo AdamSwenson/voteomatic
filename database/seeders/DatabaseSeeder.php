@@ -12,6 +12,14 @@ use Database\Seeders\AssignmentSeeder;
 use Database\Factories\ResourceLinkFactory;
 use Illuminate\Database\Seeder;
 
+/**
+ * This seeds the database for development
+ *
+ *
+ *
+ * Class DatabaseSeeder
+ * @package Database\Seeders
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,8 +29,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        $meetings = Meeting::factory(2)->create();
+        Meeting::factory(2)->create();
 
         $this->call([
             AdminUserSeeder::class,
@@ -30,6 +37,20 @@ class DatabaseSeeder extends Seeder
             LTIDevCredsSeeder::class,
             FakeFullMeetingSeeder::class
         ]);
+
+        $meetings = Meeting::all();
+
+        $users = [
+            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
+            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first(),
+        ];
+
+        foreach($users as $user){
+            foreach($meetings as $meeting){
+                $meeting->addUserToMeeting($user);
+            }
+        }
+
 
 //try {
     //make an admin user

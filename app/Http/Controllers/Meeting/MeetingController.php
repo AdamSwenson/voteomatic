@@ -26,7 +26,7 @@ class MeetingController extends Controller
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
 
-        $this->authorize('view', Meeting::class);
+        $this->authorize('viewIndex', Meeting::class);
         $meetings = $this->user->meetings()->get();
         return response()->json($meetings);
     }

@@ -26,14 +26,15 @@ class MeetingPolicy
 //    }
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view all
+     * meetings associated with them.
      *
      * @param \App\Models\User $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewIndex(User $user)
     {
-        //
+        return $user->isChair();
     }
 
     /**

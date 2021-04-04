@@ -35,7 +35,32 @@
 
 
                 </div>
+
+                <home-page></home-page>
+
             </div>
         </div>
+
+
+        {{ method_field('PUT') }}
+
+        {{ method_field('PATCH') }}
+
+        {{ method_field('DELETE') }}
+
+        <input type="hidden" id="routeRoot" data="{{ url('') }}"/>
+        <input type="hidden" id="userName" data="{{ Auth::user()->name }}"/>
+        <input type="hidden" id="env" data="{{ config('app.env') }}"/>
+
     </div>
+@endsection
+
+
+@section('scriptArea')
+
+    <script type="text/javascript">
+        window.routeRoot = document.getElementById('routeRoot').getAttribute('data');
+        window.userName = document.getElementById('userName').getAttribute('data');
+        window.env = document.getElementById('env').getAttribute('data');
+    </script>
 @endsection

@@ -98,12 +98,15 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
 /* =============================
         Main application pages
    ============================= */
-//Internal landing page after login
-Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
-    ->name('meetingHome');
+//Internal landing page after non-lti login
+//Route::get('/home/{meeting}', [HomeController::class, 'index'])
+//    ->name('meetingHome');
 
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
+
+//If no meeting specified, should take to the internal home page
+Route::get('main', [HomeController::class, 'index'] );
 
 
 //main page where votes get cast
