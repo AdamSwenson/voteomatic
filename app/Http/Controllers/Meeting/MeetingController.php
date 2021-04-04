@@ -51,6 +51,9 @@ class MeetingController extends Controller
      */
     public function store(MeetingRequest $request)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('create', Meeting::class);
 
         //Since we are creating the meeting without
@@ -65,14 +68,21 @@ class MeetingController extends Controller
 
         if (!is_null($meeting)) {
             $meeting->update($request->all());
-            $meeting->owner_id = $this->user->id;
-            $meeting->save();
+
         } else {
             $meeting = Meeting::create($request->all());
-            $meeting->owner_id = $this->user->id;
-            $this->user->meetings()->attach($meeting);
-            $this->user->save();
+
+//            $meeting->setOwner($this->user);
+//            $meeting->addUserToMeeting($this->user);
+//
+//            $this->user->meetings()->attach($meeting);
+//            $this->user->save();
         }
+
+        $meeting->addUserToMeeting($this->user);
+        $meeting->setOwner($this->user);
+
+
         $env = env('APP_ENV');
 
 //dd($meeting);
@@ -87,6 +97,9 @@ class MeetingController extends Controller
      */
     public function show(Meeting $meeting)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('view', $meeting);
 
         return response()->json($meeting);
@@ -101,7 +114,11 @@ class MeetingController extends Controller
      */
     public function update(Meeting $meeting, MeetingRequest $request)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('update', $meeting);
+
         //this is necessary because the request object has
         // at the top level:
         //      data : stuff we want,
@@ -121,6 +138,9 @@ class MeetingController extends Controller
      */
     public function destroy(Meeting $meeting)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
         $this->authorize('delete', $meeting);
 
         $meeting->delete();

@@ -93,7 +93,7 @@ class MeetingPolicy
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
-        return $user->is_admin;
+//        return $user->is_admin;
     }
 
     /**

@@ -90,6 +90,33 @@ class MeetingTest extends TestCase
         ]);
     }
 
+
+    /**
+     * @test
+     */
+    public function getOwner()
+    {
+        $user = User::factory()->create();
+        $this->obj->owner_id = $user->id;
+        $this->obj->fresh();
+
+        $owner = $this->obj->getOwner();
+        $this->assertTrue($user->is($owner));
+
+    }
+
+    /** @test */
+    public function setOwner()
+    {
+        $user = User::factory()->create();
+        $this->obj->setOwner($user);
+        $this->obj->fresh();
+
+        $this->assertEquals($user->id, $this->obj->owner_id, "Sets owner");
+
+    }
+
+
     public function testUsers()
     {
         $this->markTestSkipped();

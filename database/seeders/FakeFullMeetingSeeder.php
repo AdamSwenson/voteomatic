@@ -15,7 +15,11 @@ class FakeFullMeetingSeeder extends Seeder
 {
 
     /**
-     * Run the database seeds.
+     * Creates the full meeting with motions and votes.
+     *
+     * NB, it will add the user(s) to the meeting. Ownership of the
+     * meeting must be handled elsewhere. That allows this to be used
+     * for all user categories.
      *
      * @param null $meeting
      * @param null $user

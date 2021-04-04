@@ -40,20 +40,22 @@ class DatabaseSeeder extends Seeder
 
         $meetings = Meeting::all();
 
+        $adminUser = User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first();
         $users = [
-            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
+            $adminUser,
             User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first(),
         ];
 
-        foreach($users as $user){
-            foreach($meetings as $meeting){
+        foreach ($meetings as $meeting) {
+            foreach ($users as $user) {
                 $meeting->addUserToMeeting($user);
             }
+            $meeting->setOwner($adminUser);
         }
 
 
 //try {
-    //make an admin user
+        //make an admin user
 //    $adminUser = User::factory()->administrator()->create();
 
 //    $devUser = User::factory()->regUser()->create();

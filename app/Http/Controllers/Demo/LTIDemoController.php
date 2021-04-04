@@ -84,6 +84,9 @@ class LTIDemoController extends Controller
             $user->is_admin = true;
             $user->save();
 
+            //make them the owner of the meeting
+            $meeting->setOwner($user);
+
             //Log them in
             Auth::login($user, true);
 
