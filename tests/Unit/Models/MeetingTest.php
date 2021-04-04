@@ -45,6 +45,7 @@ class MeetingTest extends TestCase
     /** @test */
     public function assignMotionMainMotion()
     {
+        $this->markTestSkipped('Method seems to be unused');
 
         $this->obj->initializeAssignmentRoot();
 

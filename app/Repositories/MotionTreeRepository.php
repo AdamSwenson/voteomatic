@@ -7,6 +7,14 @@ namespace App\Repositories;
 use App\Models\Meeting;
 use App\Models\Motion;
 
+/**
+ * dev I think this was my initial attempt at handling the stack. Probably deprecated.
+ *
+ * @deprecated
+ *
+ * Class MotionTreeRepository
+ * @package App\Repositories
+ */
 class MotionTreeRepository
 {
 

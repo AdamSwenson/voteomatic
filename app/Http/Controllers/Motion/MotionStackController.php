@@ -83,9 +83,10 @@ class MotionStackController extends Controller
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
 
-        $this->authorize('viewAllMeetingMotions', $meeting);
+        $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting]);
 
         $result = $this->motionStackRepo->getCurrentMotion($meeting);
+
         return response()->json($result);
     }
 

@@ -38,30 +38,29 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $this->user = Auth::user();
         $this->setLoggedInUser();
 
         return view('home', ['name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
     }
 
-
-    public function meetingIndex(Meeting $meeting){
-        $this->setLoggedInUser();
-
-        $data = [
-
-            'data' => [
-                'meeting_id' => $meeting->id,
-
-                'isAdmin' => $this->user->is_admin,
-            ]
-        ];
-
-        return view('main', $data);
-
-
-//        return view('home', ['user' => $this->user, 'name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
-
-//        return view('home');
-    }
+//
+//    public function meetingIndex(Meeting $meeting){
+//        $this->setLoggedInUser();
+//
+//        $data = [
+//
+//            'data' => [
+//                'meeting_id' => $meeting->id,
+//
+//                'isAdmin' => $this->user->is_admin,
+//            ]
+//        ];
+//
+//        return view('main', $data);
+//
+//
+////        return view('home', ['user' => $this->user, 'name' => $this->user->name, 'uidHash' =>$this->user->userIdHash]);
+//
+////        return view('home');
+//    }
 }

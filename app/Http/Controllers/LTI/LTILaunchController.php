@@ -66,6 +66,7 @@ class LTILaunchController extends Controller
 
     /**
      * Receives the launch request
+     *
      * @deprecated
      *
      * lti:create-tool-consumer

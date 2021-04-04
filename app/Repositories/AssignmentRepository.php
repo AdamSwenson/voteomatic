@@ -10,31 +10,15 @@ use App\Models\Motion;
 class AssignmentRepository implements IAssignmentRepository
 {
 
-
-    public function addMainMotionToTree(Meeting $meeting, Motion $motion){
-        $root = $meeting->getAssignmentRoot();
-
-        //get the existing top level motions
-        $topLevel = $meeting->assignments()->where('parent_id', );
-
+    static function addChildren(Assignment $assignment, $numChildren = 5)
+    {
+        for ($k = 0; $k < $numChildren; $k++) {
+            $ec = new Assignment(['motion_id' => Motion::factory()->create()->id]);
+            $assignment->addChild($ec);
+        }
+        $assignment->save();
+        return $assignment;
     }
-
-
-    public function addSubsidiaryMotionToTree(Meeting $meeting, Motion $pendingMotion, Motion $subsidiaryMotion){
-        $subsidiaryMotion->applies_to = $pendingMotion->id;
-        $subsidiaryMotion->save();
-    }
-
-
-
-
-
-
-
-
-
-
-
 
     static public function recursiveMaker(Meeting $meeting, $motionId, $parentId, $depth, $maxLevels, $currentLevel)
     {
@@ -47,33 +31,17 @@ class AssignmentRepository implements IAssignmentRepository
     }
 
 
-    /**
-     * Assigns a motion to a particular location in the
-     * hierarchy under the given meeting amd returns
-     * the Assignment object representing that location
-     *
-     * @param Meeting $meeting
-     * @param motion $motion
-     * @param $parentId
-     * @param $depth The child number of the motion
-     * @return Assignment
-     */
-    static public function makeAssignment(Meeting $meeting, Motion $motion, $parentId, $depth)
-    {
-//        $motionAssignment = new Assignment(['motion_id' => $motion->id]);
-//        $motionAssignment->save();
-        $motionAssignment = $meeting->assignMotion($motion, $parentId, $depth);
-        return $motionAssignment;
+    public function addMainMotionToTree(Meeting $meeting, Motion $motion){
+        $root = $meeting->getAssignmentRoot();
+
+        //get the existing top level motions
+        $topLevel = $meeting->assignments()->where('parent_id', );
+
     }
 
-    static function addChildren(Assignment $assignment, $numChildren = 5)
-    {
-        for ($k = 0; $k < $numChildren; $k++) {
-            $ec = new Assignment(['motion_id' => Motion::factory()->create()->id]);
-            $assignment->addChild($ec);
-        }
-        $assignment->save();
-        return $assignment;
+    public function addSubsidiaryMotionToTree(Meeting $meeting, Motion $pendingMotion, Motion $subsidiaryMotion){
+        $subsidiaryMotion->applies_to = $pendingMotion->id;
+        $subsidiaryMotion->save();
     }
 
     public function canBeSynced($record)
@@ -85,63 +53,11 @@ class AssignmentRepository implements IAssignmentRepository
         return true;
     }
 
-    /**
-     * Stores the incoming array from the client in
-     * the database.
-     *
-     * The expected format of incoming is a list of arrays
-     * with the form
-     *      MeetingId
-     *      parentId The id of the motion or Meeting which is the parent
-     *      motionId The id of the motion in question
-     *      position The sibling order of the motion
-     * }
-     * @param Meeting $meeting
-     * @param $incoming
-     */
-    public function processIncoming(Meeting $meeting, $incoming)
+    public function childrenGetter(Assignment $assignment)
     {
-        //We start by deleting all of the existing assignments
-        //for the Meeting.
-        //todo Wrap in a transaction so this can be rolled back if there is an error
-        $meeting->resetAssignments();
+        return $assignment->getChildren()->sortBy('position');
 
-        //Process the incoming array
-        foreach ($incoming as $record) {
-            //check to make sure an unready motion hasn't slipped by
-            if ($this->canBeSynced($record)) {
-
-                //find the motion
-                $motion = Motion::where('id', $record['motionId'])->first();
-
-                if ($motion) {
-                    $depth = $record['position'];
-                    $meeting->assignMotion($motion, $record['parentId'], $depth);
-                }
-            }
-        }
     }
-    //To clean up, we need to remove a record which was
-    //a side effect todo and likely an indication of problems!
-    //of the processing.
-    //This record was created on the first pass through the incoming array
-    //which always includes the Meeting as its root.
-    //We simply put the Meeting id in as the motion id.
-    //But this can't serve as the root of the tree,
-    //since an motion and Meeting could have the same id (they are
-    //in different tables).
-    // So we solved it by creating a
-    //new motion without a parent as the root which has
-    //the Meeting as its Meeting. This stands in for the Meeting
-    //Thus when we query the Meeting assignments the root motion
-    //is this second record.
-    //
-    //For now, we've left the original record in up to this point.
-    //Eventually we will want to avoid creating it in the first place.
-    //So let's remove it.
-//        Assignment::where('motion_id', $Meeting->id)
-//            ->where('Meeting_id' , $Meeting->id)
-//            ->delete();
 
 
     /**
@@ -203,13 +119,6 @@ class AssignmentRepository implements IAssignmentRepository
 
     }
 
-
-    public function childrenGetter(Assignment $assignment)
-    {
-        return $assignment->getChildren()->sortBy('position');
-
-    }
-
     /**
      * Gets the order of motions for use by the
      * system which creates the draft for export.
@@ -240,5 +149,84 @@ class AssignmentRepository implements IAssignmentRepository
         return $out;
 
     }
+
+    /**
+     * Assigns a motion to a particular location in the
+     * hierarchy under the given meeting amd returns
+     * the Assignment object representing that location
+     *
+     * @param Meeting $meeting
+     * @param motion $motion
+     * @param $parentId
+     * @param $depth The child number of the motion
+     * @return Assignment
+     */
+    static public function makeAssignment(Meeting $meeting, Motion $motion, $parentId, $depth)
+    {
+//        $motionAssignment = new Assignment(['motion_id' => $motion->id]);
+//        $motionAssignment->save();
+        $motionAssignment = $meeting->assignMotion($motion, $parentId, $depth);
+        return $motionAssignment;
+    }
+
+
+    /**
+     * Stores the incoming array from the client in
+     * the database.
+     *
+     * The expected format of incoming is a list of arrays
+     * with the form
+     *      MeetingId
+     *      parentId The id of the motion or Meeting which is the parent
+     *      motionId The id of the motion in question
+     *      position The sibling order of the motion
+     * }
+     * @param Meeting $meeting
+     * @param $incoming
+     */
+    public function processIncoming(Meeting $meeting, $incoming)
+    {
+        //We start by deleting all of the existing assignments
+        //for the Meeting.
+        //todo Wrap in a transaction so this can be rolled back if there is an error
+        $meeting->resetAssignments();
+
+        //Process the incoming array
+        foreach ($incoming as $record) {
+            //check to make sure an unready motion hasn't slipped by
+            if ($this->canBeSynced($record)) {
+
+                //find the motion
+                $motion = Motion::where('id', $record['motionId'])->first();
+
+                if ($motion) {
+                    $depth = $record['position'];
+                    $meeting->assignMotion($motion, $record['parentId'], $depth);
+                }
+            }
+        }
+    }
+    //To clean up, we need to remove a record which was
+    //a side effect todo and likely an indication of problems!
+    //of the processing.
+    //This record was created on the first pass through the incoming array
+    //which always includes the Meeting as its root.
+    //We simply put the Meeting id in as the motion id.
+    //But this can't serve as the root of the tree,
+    //since an motion and Meeting could have the same id (they are
+    //in different tables).
+    // So we solved it by creating a
+    //new motion without a parent as the root which has
+    //the Meeting as its Meeting. This stands in for the Meeting
+    //Thus when we query the Meeting assignments the root motion
+    //is this second record.
+    //
+    //For now, we've left the original record in up to this point.
+    //Eventually we will want to avoid creating it in the first place.
+    //So let's remove it.
+//        Assignment::where('motion_id', $Meeting->id)
+//            ->where('Meeting_id' , $Meeting->id)
+//            ->delete();
+
 
 }

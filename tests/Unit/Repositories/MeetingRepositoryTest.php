@@ -24,6 +24,8 @@ class MeetingRepositoryTest extends TestCase
 
     public function testCreateWithResourceLink()
     {
+//todo Figure out if actually unused.
+        $this->markTestSkipped('Method is likely unused');
 
         $consumer = LTIConsumer::factory()->create();
 
