@@ -89,11 +89,13 @@ class MeetingControllerTest extends TestCase
         //prep
         $meetings = Meeting::factory()->count(3)->create();
         foreach ($meetings as $meeting) {
-            $this->user->meetings()->attach($meeting);
+            $meeting->setOwner($this->user);
+            $meeting->addUserToMeeting($this->user);
+//            $this->user->meetings()->attach($meeting);
         }
         $blankMeeting = Meeting::create();
-        $this->user->meetings()->attach($blankMeeting);
-        $this->user->save();
+        $blankMeeting->setOwner($this->user);
+        $blankMeeting->addUserToMeeting($this->user);
 
         $countBefore = sizeOf($this->user->meetings()->get());
 
@@ -106,11 +108,9 @@ class MeetingControllerTest extends TestCase
         $this->assertEquals(200, $response->status(), "Expected 200 response code returned");
 
         //We are expecting the size not to have changed
-        //$meetings + the blank meeting
-        $expect = sizeOf($meetings) + 1;
         $countAfter = sizeOf($this->user->meetings()->get());
 
-        $this->assertEquals($countBefore, $countAfter, "No new meeting created");
+        $this->assertEquals($countBefore, $countAfter, "Number of meetings did not change .");
 
     }
 

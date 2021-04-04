@@ -5,14 +5,22 @@ namespace App\Http\Controllers\Meeting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeetingRequest;
 use App\Models\Meeting;
+use App\Repositories\IMeetingRepository;
 use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
 
+    /**
+     * @var IMeetingRepository|mixed
+     */
+    public $meetingRepo;
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->meetingRepo = app()->make(IMeetingRepository::class);
     }
 
 
@@ -56,37 +64,34 @@ class MeetingController extends Controller
 
         $this->authorize('create', Meeting::class);
 
-        //Since we are creating the meeting without
-        //the fields filled in, we may have blank meetings
-        //in the database. Thus we will try to reuse an existing empty
-        //meeting object before actually creating a new one
-        $meeting = $this->user->meetings()
-            ->where('name', null)
-            ->where('date', null)
-//            ->where('owner_id', $this->user->id)
-            ->first();
+        $meeting = $this->meetingRepo->createMeetingForUser($this->user);
 
-        if (!is_null($meeting)) {
-            $meeting->update($request->all());
+        $meeting->update($request->all());
 
-        } else {
-            $meeting = Meeting::create($request->all());
-
-//            $meeting->setOwner($this->user);
-//            $meeting->addUserToMeeting($this->user);
-//
-//            $this->user->meetings()->attach($meeting);
-//            $this->user->save();
-        }
-
-        $meeting->addUserToMeeting($this->user);
-        $meeting->setOwner($this->user);
-
-
-        $env = env('APP_ENV');
-
-//dd($meeting);
         return response()->json($meeting);
+
+//        //dev This potentially allows me to fill in a meeting of which you were previously the owner. Is that a problem...
+//
+//        //Since we are creating the meeting without
+//        //the fields filled in, we may have blank meetings
+//        //in the database. Thus we will try to reuse an existing empty
+//        //meeting object before actually creating a new one
+//        $meeting = $this->user->meetings()
+//            ->where('name', null)
+//            ->where('date', null)
+//            ->first();
+//
+//        if (!is_null($meeting)) {
+//            $meeting->update($request->all());
+//
+//        } else {
+//            $meeting = Meeting::create($request->all());
+//        }
+//
+//        $meeting->addUserToMeeting($this->user);
+//        $meeting->setOwner($this->user);
+//
+//        return response()->json($meeting);
     }
 
     /**

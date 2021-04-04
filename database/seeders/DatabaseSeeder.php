@@ -53,57 +53,6 @@ class DatabaseSeeder extends Seeder
             $meeting->setOwner($adminUser);
         }
 
-
-//try {
-        //make an admin user
-//    $adminUser = User::factory()->administrator()->create();
-
-//    $devUser = User::factory()->regUser()->create();
-//}catch(QueryException)
-//        foreach ($meetings as $meeting) {
-////            $meeting->users()->attach($adminUser);
-////            $meeting->users()->attach($devUser);
-////
-////            for ($i = 0; $i < $num_users; $i++) {
-////                $user = User::factory()->create();
-////                $meeting->users()->attach($user);
-////            }
-//
-//            $meeting->save();
-//
-//            $motions = Motion::factory(['meeting_id' => $meeting->id])
-//                ->count(5)
-//                ->create();
-//
-//            foreach ($motions as $motion){
-//                for ($i = 0; $i < $num_users; $i++) {
-//                    Vote::factory(['motion_id' => $motion->id])
-//                        ->count(10)
-//                        ->create();
-//                }
-//            }
-//
-//        }
-
-//        $this->addDevCreds($meetings[0]);
-
     }
 
-//
-//    public function addDevCreds($meeting)
-//    {
-////        $meeting = Meeting::factory()->create();
-//        $consumer = LTIConsumer::factory([
-//            'consumer_key' => env('DEV_CONSUMER_KEY'),
-//            'secret_key' => env('DEV_SHARED_KEY')
-//        ])->create();
-//
-//        ResourceLink::factory([
-//            'meeting_id' => $meeting->id,
-//            'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
-//            'lti_consumer_id' => $consumer->id
-//        ])->create();
-//
-//
-//    }
 }
