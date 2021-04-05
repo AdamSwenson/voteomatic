@@ -18,6 +18,9 @@ use Illuminate\Support\Str;
  */
 class LTILiveCredsSeeder extends Seeder
 {
+    public $consumerName = 'Production consumer';
+
+
     /**
      * Run the database seeds.
      *
@@ -25,20 +28,25 @@ class LTILiveCredsSeeder extends Seeder
      */
     public function run()
     {
+        //We don't want multiple entries
+        if(! is_null(LTIConsumer::where('name', $this->consumerName)->first())) {
+            return true;
+        }
+
         $meeting = Meeting::find(1);
 
         if (is_null($meeting)) {
             $meeting = Meeting::create();
         }
 
-        $consumer = LTIConsumer::factory([
-            'name' => 'Production consumer',
+        $consumer = LTIConsumer::create([
+            'name' => $this->consumerName,
             'consumer_key' => Str::random(40),
             'secret_key' => Str::random(40)
         ])->create();
 
 
-        $resourceLink = ResourceLink::factory([
+        $resourceLink = ResourceLink::create([
             'meeting_id' => $meeting->id,
             'resource_link_id' => Str::random(40),
             'lti_consumer_id' => $consumer->id
