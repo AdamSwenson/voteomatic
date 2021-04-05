@@ -32,14 +32,17 @@ class AdminUserSeeder extends Seeder
         }
         catch(PDOException $e1){
             Log::error($e1);
+            echo($e1);
         }
         catch(QueryException $e2)
         {
             Log::error($e2);
+//            echo($e2);
         }
 
         catch(Exception $e){
             Log::error($e);
+            echo($e);
         }
     }
 }

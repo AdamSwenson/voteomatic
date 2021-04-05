@@ -30,7 +30,7 @@ class ProductionDemoSeeder extends Seeder
 
         $this->call([
             //Resource link etc for LTI access
-            LTIDevCredsSeeder::class
+            LTIDemoCredsSeeder::class
         ]);
 
     }

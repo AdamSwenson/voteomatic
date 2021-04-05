@@ -9,6 +9,9 @@ use Illuminate\Database\Seeder;
 
 class LTIDevCredsSeeder extends Seeder
 {
+
+    public $consumerName = 'Development consumer';
+
     /**
      * Creates the keys used in the LTI authentication
      * process on the first meeting in the database.
@@ -19,6 +22,11 @@ class LTIDevCredsSeeder extends Seeder
      */
     public function run()
     {
+        //We don't want multiple entries
+        if(! is_null(LTIConsumer::where('name', $this->consumerName)->first())) {
+            return true;
+        }
+
 
         $meeting = Meeting::find(1);
 
@@ -27,14 +35,14 @@ class LTIDevCredsSeeder extends Seeder
         }
 
 
-        $consumer = LTIConsumer::factory([
-                'name' => 'Development consumer',
+        $consumer = LTIConsumer::create([
+                'name' => $this->consumerName,
                 'consumer_key' => env('DEV_CONSUMER_KEY'),
                 'secret_key' => env('DEV_SHARED_KEY')
             ])->create();
 
 
-        ResourceLink::factory([
+        ResourceLink::create([
             'meeting_id' => $meeting->id,
             'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
             'lti_consumer_id' => $consumer->id
