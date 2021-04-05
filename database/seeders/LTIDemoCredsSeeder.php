@@ -40,8 +40,8 @@ class LTIDemoCredsSeeder extends Seeder
 
         $consumer = LTIConsumer::create([
             'name' => $this->consumerName,
-            'consumer_key' => Str::random(40),
-            'secret_key' => Str::random(40)
+            'consumer_key' => env('CSUN_PRODUCTION_CONSUMER_KEY'),
+            'secret_key' => env('CSUN_PRODUCTION_SECRET_KEY')
         ])->create();
 
 
@@ -50,6 +50,20 @@ class LTIDemoCredsSeeder extends Seeder
             'resource_link_id' => Str::random(40),
             'lti_consumer_id' => $consumer->id
         ])->create();
+// dev this is how needs to be done
+//
+//        $consumer = LTIConsumer::create([
+//            'name' => $this->consumerName,
+//            'consumer_key' => Str::random(40),
+//            'secret_key' => Str::random(40)
+//        ])->create();
+//
+//
+//        $resourceLink = ResourceLink::create([
+//            'meeting_id' => $meeting->id,
+//            'resource_link_id' => Str::random(40),
+//            'lti_consumer_id' => $consumer->id
+//        ])->create();
 
 
         echo "\n \n Created LTI credentials for {$this->consumerName} \n";
