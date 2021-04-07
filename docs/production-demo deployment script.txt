@@ -1,0 +1,42 @@
+
+[2021-04-07] Note that all the caches get cleared before the seeder runs because the
+environment variables can't be accessed once cached. That creates problems because we need to
+use (for now) some set values in the LTI resource link etc. See VOT-29 for earlier descriptions
+of these issues
+
+
+######
+cd /home/forge/demo.voteomatic.com
+git pull origin demo
+$FORGE_COMPOSER install --no-interaction --prefer-dist --optimize-autoloader
+
+( flock -w 10 9 || exit 1
+    echo 'Restarting FPM...'; sudo -S service $FORGE_PHP_FPM reload ) 9>/tmp/fpmlock
+
+if [ -f artisan ]; then
+    $FORGE_PHP artisan optimize:clear
+    $FORGE_PHP artisan route:clear
+    $FORGE_PHP artisan config:clear
+    $FORGE_PHP artisan view:clear
+    $FORGE_PHP artisan migrate --force
+    $FORGE_PHP artisan db:seed --class=ProductionLiveSeeder --force
+    $FORGE_PHP artisan view:cache
+    $FORGE_PHP artisan route:cache
+    $FORGE_PHP artisan config:cache
+    $FORGE_PHP artisan optimize
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+################
