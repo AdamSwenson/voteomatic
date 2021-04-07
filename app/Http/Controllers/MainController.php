@@ -26,7 +26,7 @@ class MainController extends Controller
 
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
-dd($this->user);
+dd($motion);
 
         $this->authorize('view', $motion);
 
