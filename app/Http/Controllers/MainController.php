@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class VotePageController
  *
- * todo  THIS HAS BASICALLY BECOME THE MAIN APP CONTROLLER. REFACTOR / RENAME ACCORDINGLY
- *
- * todo DEV BEFORE PUSHING TO PRODUCTION, REMOVE DEV AUTHENTICATION
  *
  * This is in charge of displaying the page where
  * people cast their votes
@@ -22,7 +19,6 @@ class MainController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
     }
 
     public function getVotePage(Motion $motion)
@@ -30,7 +26,7 @@ class MainController extends Controller
 
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
-
+dd($this->user);
 
         $this->authorize('view', $motion);
 
