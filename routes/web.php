@@ -104,6 +104,10 @@ Route::get('/home', [HomeController::class, 'index'])
 //If no meeting specified, should also take to the internal home page
 Route::get('main', [HomeController::class, 'index'] );
 
+//Internal landing page after lti login
+Route::get('/home/{meeting}', [MainController::class, 'meetingHome'])
+    ->name('meetingHome');
+
 
 //main page where votes get cast
 Route::get('main/{motion}', [MainController::class, 'getVotePage'])

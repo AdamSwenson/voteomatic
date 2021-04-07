@@ -97,7 +97,7 @@ class LTIDemoController extends Controller
 
             //We redirect to the main app page
             //dev Fixing problem introduced in 15562eb
-            return redirect()->route('main', $meeting->id);
+            return redirect()->route('meetingHome', $meeting->id);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);
@@ -139,7 +139,7 @@ class LTIDemoController extends Controller
 
             //We redirect to the main app page
             //dev Fixing problem introduced in 15562eb
-            return redirect()->route('main', $meeting->id);
+            return redirect()->route('meetingHome', $meeting->id);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);

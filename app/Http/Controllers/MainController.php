@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meeting;
 use App\Models\Motion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,12 +22,30 @@ class MainController extends Controller
         $this->middleware('auth');
     }
 
+
+    public function meetingHome(Meeting $meeting){
+        $this->setLoggedInUser();
+
+        $data = [
+
+            'data' => [
+                'meeting_id' => $meeting->id,
+
+                'isAdmin' => $this->user->is_admin,
+            ]
+        ];
+
+        return view('main', $data);
+
+    }
+
+
+
     public function getVotePage(Motion $motion)
     {
 
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
-dd($motion);
 
         $this->authorize('view', $motion);
 
