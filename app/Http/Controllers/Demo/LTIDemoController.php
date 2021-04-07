@@ -102,7 +102,7 @@ class LTIDemoController extends Controller
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);
 
-            abort(403, 'Unauthorized action.');
+            abort(408, 'Error in LTI authentication.');
 
         }
 

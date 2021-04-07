@@ -15,4 +15,8 @@ use Exception;
 class LTIAuthenticationException  extends Exception
 {
 
+    protected $code = 408;
+
+    protected $message = 'Error in LTI authentication';
+
 }
