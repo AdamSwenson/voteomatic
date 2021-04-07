@@ -53,7 +53,9 @@ Feel free to review the following migration files (used to create the database t
 
 ### Authentication via LTI
 
-Here's the problem. Asking members to create their own login credentials is a pain. It's a hassle for the administrators who have to ensure only members have joined. Of course, everyone already has a secure login to university resources. Unfortunately, campus IT will be rightly leery of allowing a small 3rd party app use of the campus login system.
+Here's the problem. Asking members to create their own login credentials is a pain. It's a hassle for the administrators who have to ensure only members have joined. 
+
+Of course, everyone already has a secure login to university resources. Unfortunately, campus IT will be rightly leery of allowing a small 3rd party app use of the campus login system.
 
 Fortunately, most modern learning management systems (e.g., Canvas, Moodle, et al) provide a secure way for students to complete assignments in 3rd party apps. Thus by creating a Canvas/Moodle/et al course containing all and only members, we can ensure the integrity of votes with minimal hassle. Everyone logs into the learning management system and then accesses the voteomatic as though it were an assignment. Problem solved.
 
@@ -64,10 +66,27 @@ Fortunately, most modern learning management systems (e.g., Canvas, Moodle, et a
 
 - When logged in as a Chair, the user is able to do dumb things with the motion tree. To wit, when a motion has been superseded by amendments or other subsidiary motions, it will be possible for the original to be set as the active motion for everyone to vote on. This will be fixed at some point, but is low priority since it only presents problems if the Chair is making bad choices. 
 
+- Some of the Chair-only functions for creating and editing meetings are a bit buggy. Most of these have been patched in development branches; not all the patches have been merged into the production branches. (If that sentence makes no sense, checkout some of github's tutorials and join us in the wonderful world of version control --it's not just for code!)
+
 
 ## Bugs, complaints, suggestions for improvement
 
 I will be grateful for any suggestions on how to improve the voteomatic. Please report any issues via https://github.com/AdamSwenson/voteomatic/issues or otherwise get in touch.
+
+## Browsers
+
+The voteomatic has been tested on :
+
+    - Firefox (macOS; Windows user agent)
+
+    - Chrome (macOS; Windows user agent)
+
+    - Safari (14.0.3)
+
+    - Safari iOS (13.1.3)
+
+    - Microsoft Edge (User agent)
+
 
 
 
