@@ -19,6 +19,11 @@ class AdminUserSeeder extends Seeder
     {
         try {
 
+            //We don't want multiple entries
+            if(! is_null(User::where('email',  env('DEV_USER_ADMIN_EMAIL'))->first())) {
+                return true;
+            }
+
             $props = [
                 'first_name' => 'Admin',
                 'last_name' => 'User',
