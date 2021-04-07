@@ -70481,24 +70481,29 @@ var Meeting = /*#__PURE__*/function (_IModel) {
   _createClass(Meeting, [{
     key: "readableDate",
     value: function readableDate() {
-      var d = Date.parse(this.date);
-      var ye = new Intl.DateTimeFormat('en', {
-        year: 'numeric'
-      }).format(d);
-      var mo = new Intl.DateTimeFormat('en', {
-        month: 'long'
-      }).format(d);
-      var da = new Intl.DateTimeFormat('en', {
-        day: '2-digit'
-      }).format(d);
-      var out = "".concat(da, " ").concat(mo, " ").concat(ye); //
-      // let o_date = new Intl.DateTimeFormat;
-      // // const f_date = (m_ca, m_it) => Object({...m_ca, [m_it.type]: m_it.value});
-      // const m_date = o_date.formatToParts().reduce(this.date, {});
-      // let out = m_date.year + '-' + m_date.month + '-' + m_date.day ;
-      // window.console.log(out);
+      try {
+        var d = Date.parse(this.date);
+        var ye = new Intl.DateTimeFormat('en', {
+          year: 'numeric'
+        }).format(d);
+        var mo = new Intl.DateTimeFormat('en', {
+          month: 'long'
+        }).format(d);
+        var da = new Intl.DateTimeFormat('en', {
+          day: '2-digit'
+        }).format(d);
+        var out = "".concat(da, " ").concat(mo, " ").concat(ye); //
+        // let o_date = new Intl.DateTimeFormat;
+        // // const f_date = (m_ca, m_it) => Object({...m_ca, [m_it.type]: m_it.value});
+        // const m_date = o_date.formatToParts().reduce(this.date, {});
+        // let out = m_date.year + '-' + m_date.month + '-' + m_date.day ;
+        // window.console.log(out);
 
-      return out;
+        return out;
+      } catch (e) {
+        window.console.log('Error from VOT-39');
+        window.console.log(e);
+      }
     }
   }]);
 

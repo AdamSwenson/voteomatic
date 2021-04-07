@@ -4,7 +4,7 @@ https://github.com/AdamSwenson/voteomatic
 
 ## WHATIS
 
-The Voteomatic helps academic senates and other deliberative bodies do their work. 
+The Voteomatic helps faculty / academic senates and other deliberative bodies do their work. 
 
 Watch a demo here: https://www.youtube.com/watch?v=JY6gaY3ArQE
 
@@ -61,6 +61,8 @@ Fortunately, most modern learning management systems (e.g., Canvas, Moodle, et a
 ## Known quirks / annoying things
 
 - Users will have to refresh their browsers periodically to see updated content. For example, a refresh will be required to view results once voting has ended or to see a newly made motion. I may eventually update the program to obviate this hassle.
+
+- When logged in as a Chair, the user is able to do dumb things with the motion tree. To wit, when a motion has been superseded by amendments or other subsidiary motions, it will be possible for the original to be set as the active motion for everyone to vote on. This will be fixed at some point, but is low priority since it only presents problems if the Chair is making bad choices. 
 
 
 ## Bugs, complaints, suggestions for improvement

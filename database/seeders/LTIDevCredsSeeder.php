@@ -41,7 +41,7 @@ class LTIDevCredsSeeder extends Seeder
                 'secret_key' => env('DEV_SHARED_KEY')
             ])->create();
 
-
+echo $meeting->id;
         ResourceLink::create([
             'meeting_id' => $meeting->id,
             'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
