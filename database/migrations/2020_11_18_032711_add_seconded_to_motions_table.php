@@ -14,7 +14,7 @@ class AddSecondedToMotionsTable extends Migration
     public function up()
     {
         Schema::table('motions', function (Blueprint $table) {
-            $table->boolean('seconded')->default(false);
+            $table->boolean('seconded')->default(false)->nullable();
         });
     }
 
