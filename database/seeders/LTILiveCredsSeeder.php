@@ -39,10 +39,11 @@ class LTILiveCredsSeeder extends Seeder
             $meeting = Meeting::create();
         }
 
+
         $consumer = LTIConsumer::create([
             'name' => $this->consumerName,
-            'consumer_key' => Str::random(40),
-            'secret_key' => Str::random(40)
+            'consumer_key' => env('CSUN_PRODUCTION_CONSUMER_KEY'),
+            'secret_key' => env('CSUN_PRODUCTION_SECRET_KEY')
         ])->create();
 
 

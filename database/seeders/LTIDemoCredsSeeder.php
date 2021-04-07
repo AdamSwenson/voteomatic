@@ -50,6 +50,9 @@ class LTIDemoCredsSeeder extends Seeder
             'resource_link_id' => Str::random(40),
             'lti_consumer_id' => $consumer->id
         ])->create();
+
+
+
 // dev this is how needs to be done
 //
 //        $consumer = LTIConsumer::create([
