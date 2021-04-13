@@ -26,6 +26,10 @@ class MainController extends Controller
     public function meetingHome(Meeting $meeting){
         $this->setLoggedInUser();
 
+        //todo Probably need to enable this after April meeting See VOT-41
+//        $this->authorize('view', $meeting);
+
+
         $data = [
 
             'data' => [
