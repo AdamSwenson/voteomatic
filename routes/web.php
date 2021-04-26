@@ -107,6 +107,7 @@ Route::get('election/{motion}/results', [ElectionResultsController::class, 'getR
 //Route::resource('election/candidate/{motion}', CandidateController::class);
 //Route::resource('election/{meeting}', )
 Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
+
 /* =============================
         Main application pages
    ============================= */
