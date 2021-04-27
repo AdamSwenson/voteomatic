@@ -1,5 +1,7 @@
 import Meeting from "../../models/Meeting";
 import * as routes from "../../routes";
+import Election from "../../models/Election";
+import MainObjectFactory from "../../models/MainObjectFactory";
 
 
 /**
@@ -111,8 +113,8 @@ const actions = {
             let url = routes.meetings.resource(meetingId);
             return Vue.axios.get(url)
                 .then((response) => {
-                    let d = response.data;
-                    let meeting = new Meeting(d.id, d.name, d.date);
+                    //Will create either a Meeting or an Election object
+                    let meeting = MainObjectFactory.make(response);
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
                     resolve()

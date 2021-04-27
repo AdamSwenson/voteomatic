@@ -37,6 +37,41 @@ module.exports = {
 
     election: {
 
+        resource : {
+            candidate: (candidateId = null) => {
+                let r = normalizedRouteRoot() + 'candidates';
+                if (!_.isNull(candidateId)) {
+                    r = r + '/' + candidateId;
+                }
+                return r;
+            },
+
+
+            election: (meetingId = null) => {
+                let r = normalizedRouteRoot() + 'elections/';
+
+                if (!_.isNull(meetingId)) {
+                    r += meetingId;
+                }
+                return r;
+            },
+
+            office : (motionId = null) => {
+                let r = normalizedRouteRoot() + 'offices/';
+
+                if (!_.isNull(motionId)) {
+                    r += motionId;
+                }
+                return r;
+            },
+
+
+        },
+
+        // createOffice: (meetingId) => {
+        //     return normalizedRouteRoot() + 'election/office/' + meetingId;
+        // },
+
         candidates: (motionId, candidateId = null) => {
             let r = normalizedRouteRoot() + 'election/' + motionId + '/candidates';
             if (!_.isNull(candidateId)) {
@@ -53,9 +88,19 @@ module.exports = {
             return normalizedRouteRoot() + 'election/office/' + meetingId;
         },
 
+        /**
+         * Everyone who could be a candidate in the election
+         * @param motionId
+         */
+        getPool: (motionId) => {
+            return normalizedRouteRoot() + 'election/setup/office/' + motionId + '/pool';
+        },
+
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'election/' + motionId + '/results';
         },
+
+
 
         recordVote: (motionId) => {
             return normalizedRouteRoot() + 'election/vote/' + motionId;

@@ -3,14 +3,33 @@ import Meeting from "../../models/Meeting";
 import Candidate from "../../models/Candidate";
 import {getById} from "../../utilities/object.utilities";
 import Result from "../../models/Result";
+import Election from "../../models/Election";
+import {idify} from "../../utilities/object.utilities";
+import Motion from "../../models/Motion";
 
 const state = {
     candidates: [],
+
+    /**
+     * Used during election setup. Holds candidate
+     * objects who have a motion id, but they are not necessarily
+     * candidates.
+     */
+    candidatePool: [],
 
     electionResults: []
 };
 
 const mutations = {
+
+    /**
+     * Adds a potential candidate to the pool for an office
+     * @param state
+     * @param candidateObject
+     */
+    addCandidateToPool: (state, candidateObject) => {
+        state.candidatePool.push(candidateObject);
+    },
 
     addCandidateToStore: (state, candidateObject) => {
         state.candidates.push(candidateObject);
@@ -28,28 +47,43 @@ const mutations = {
         state.electionResults.push(results);
         // Vue.set(state.electionResults, motionId, results);
 
+    },
+
+    removeCandidate: (state, candidateObject) => {
+        _.remove(state.candidates, function (candidate) {
+            return candidate.id === candidateObject.id;
+        });
+
     }
 
 };
 
 
 const actions = {
-    addOfficialCandidateToOfficeElection({dispatch, commit, getters}, {name, info, motionId}) {
-        let data = {name: name, info: info, is_write_in: false};
 
-        let url = routes.election.candidates(motionId);
+
+    /**
+     * NB, while the candidate object may exist on the client as
+     * part of the candidatePool, it may not yet exist on the server
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param candidate
+     * @returns {Promise<unknown>}
+     */
+    addOfficialCandidateToOfficeElection({dispatch, commit, getters}, candidate) {
+
+        let url = routes.election.resource.candidate();
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, data).then((response) => {
+            return Vue.axios.post(url, candidate).then((response) => {
                 let candidate = new Candidate(response.data);
                 commit('addCandidateToStore', candidate);
-
                 resolve();
             });
         }));
-
-
     },
 
     addWriteInCandidateToOfficeElection({dispatch, commit, getters}, {name, info, motionId}) {
@@ -72,6 +106,59 @@ const actions = {
 
 
     },
+
+    createElection: function ({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            // let data = {name : name, date : date};
+            let url = routes.election.resource.election()
+            return Vue.axios.post(url)
+                .then((response) => {
+                    let meeting = new Election(response.data);
+                    commit('addMeetingToStore', meeting);
+                    commit('setMeeting', meeting);
+                    resolve()
+                });
+        }));
+    },
+
+    /**
+     * Creates a new elected office within the meeting.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting Meeting object or meeting id
+     * @returns {Promise<unknown>}
+     */
+    createOffice({dispatch, commit, getters}, meeting) {
+
+        let url = routes.election.resource.office();
+
+        let data = {
+            meetingId: idify(meeting),
+            //NB, an office is represented by a motion, hence we need to use
+            //the expected keys even though it seems odd in this context
+            content: '',
+            description: ''
+        };
+
+        return new Promise(((resolve, reject) => {
+
+            return Vue.axios.post(url, data).then((response) => {
+                let motion = new Motion(response.data);
+                commit('addMotionToStore', motion);
+                commit('setMotion', motion);
+
+                dispatch('loadCandidatePool', motion).then((response) => {
+                    resolve();
+                });
+
+            });
+        }));
+
+
+    },
+
 
     loadResultsForOffice({dispatch, commit, getters}, motionId) {
         let url = routes.election.getResults(motionId);
@@ -111,6 +198,28 @@ const actions = {
     //
     // },
 
+
+    loadCandidatePool({dispatch, commit, getters}, motionId) {
+        motionId = idify(motionId);
+        let url = routes.election.getPool(motionId);
+        return new Promise(((resolve, reject) => {
+            // window.console.log(url);
+
+            return Vue.axios.get(url).then((response) => {
+                _.forEach(response.data, (d) => {
+                    let candidate = new Candidate(d);
+                    commit('addCandidateToPool', candidate);
+                });
+
+                return resolve();
+
+            });
+
+        }));
+
+    },
+
+
     /**
      * Get candidates for an office
      *
@@ -144,8 +253,7 @@ const actions = {
 
         }));
 
-    }
-    ,
+    },
 
     /**
      * Sets the next elected office as the current motion
@@ -188,17 +296,47 @@ const actions = {
 
     },
 
+
+    /**
+     * Makes the person no longer a candidate for the office
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     * @returns {Promise<unknown>}
+     */
+    removeCandidate({dispatch, commit, getters}, candidate) {
+        let motionId = getters.getActiveMotion.id;
+        // let url = routes.election.candidates(motionId, payload.id);
+        let url = routes.election.resource.candidate(candidate.id);
+
+        return new Promise(((resolve, reject) => {
+
+                return Vue.axios.delete(url).then((response) => {
+
+                    commit('removeCandidate', candidate);
+                    resolve();
+
+                });
+
+
+            })
+        );
+
+    },
+
+
     updateCandidate({dispatch, commit, getters}, payload) {
         let motionId = getters.getActiveMotion.id;
         // let url = routes.election.candidates(motionId, payload.id);
-        let url = routes.election.candidates(motionId, payload.id);
+        let url = routes.election.resource.candidate(payload.id);
 
         let data = {};
         data[payload.updateProp] = payload.updateVal;
 
         return new Promise(((resolve, reject) => {
 
-                return Vue.axios.post(url, data).then((response) => {
+                return Vue.axios.patch(url, data).then((response) => {
 
                     commit('setCandidateProp', payload);
                     resolve();
@@ -225,11 +363,26 @@ const getters = {
      * @returns {function(*): *}
      */
     getCandidatesForOffice: (state) => (motion) => {
+        let motionId = idify(motion);
         return state.candidates.filter(function (c) {
-            return c.motion_id === motion.id && c.isWriteIn !== true;
+            return c.motion_id === motionId && c.isWriteIn !== true;
         })
 
     },
+
+    /**
+     * Returns all candidate objects from the pool for the
+     * provided motion
+     * @param state
+     * @returns {function(*): *[]}
+     */
+    getCandidatePoolForOffice: (state) => (motion) => {
+        return state.candidatePool.filter(function (c) {
+            return c.motion_id === motion.id
+        })
+
+    },
+
 
     getWriteInCandidatesForCurrentOffice: (state, getters) => {
         let motion = getters.getActiveMotion;
@@ -269,14 +422,14 @@ const getters = {
      * @param state
      * @returns {function(*)}
      */
-    getOfficeWinners : (state, getters) => (motion) => {
-    let results = getters.getOfficeResults(motion);
+    getOfficeWinners: (state, getters) => (motion) => {
+        let results = getters.getOfficeResults(motion);
 
-    //dev should probably do this on server
+        //dev should probably do this on server
 
-    //todo check for ties
+        //todo check for ties
 
-        },
+    },
 
     //
     // getVoteCounts: (state) => (motionId) => {

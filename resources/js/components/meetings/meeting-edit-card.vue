@@ -2,18 +2,27 @@
     <div class="meeting-edit-card card">
         <div class="controls-area card-header">
 
-            <button class="btn btn-primary"
-                    v-on:click="handleClick"
-            >Create new meeting
-            </button>
+            <election-edit-controls
+                v-if="type === 'election'"
+                v-on:showArea="handleEditButtonClick"
+            ></election-edit-controls>
 
-            <button class="btn btn-warning"
-                    v-on:click="handleEditButtonClick"
-            >Edit current meeting
-            </button>
+            <meeting-edit-controls
+                v-else
+                v-on:showArea="handleEditButtonClick"
+            ></meeting-edit-controls>
+            <!--            <button class="btn btn-primary"-->
+            <!--                    v-on:click="handleClick"-->
+            <!--            >Create new {{type}}-->
+            <!--            </button>-->
 
-            <delete-meeting-button></delete-meeting-button>
-            <delete-meeting-modal></delete-meeting-modal>
+            <!--            <button class="btn btn-warning"-->
+            <!--                    v-on:click="handleEditButtonClick"-->
+            <!--            >Edit current {{type}}-->
+            <!--            </button>-->
+
+            <!--            <delete-meeting-button></delete-meeting-button>-->
+            <!--            <delete-meeting-modal></delete-meeting-modal>-->
 
         </div>
 
@@ -27,19 +36,19 @@
                  v-if="showArea === 'edit' || showArea === 'create'"
             >
 
-                <label for="meeting-name">Meeting name</label>
+                <label for="meeting-name">{{ typeCapitalized }} name</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="meeting-name" v-model="meetingName">
                 </div>
 
-                <label for="meeting-date">Meeting date</label>
+                <label for="meeting-date">{{ typeCapitalized }} date</label>
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
                 </div>
 
                 <p class="text-muted">Your entries are automatically saved on the
                     server as you type. You don't need to click anything when you are done.</p>
-                <p class="text-muted">If you do not type anything, there will be a blank meeting. Use the delete
+                <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete
                     button below to fix this.</p>
 
             </div>
@@ -57,10 +66,14 @@ import DeleteMotionButton from "../motions/motion-setup-inputs/delete-motion-but
 import DeleteMotionModal from "../motions/motion-setup-inputs/delete-motion-modal";
 import DeleteMeetingButton from "./delete-meeting-button";
 import DeleteMeetingModal from "./delete-meeting-modal";
+import MeetingEditControls from "./meeting-edit-controls";
+import ElectionEditControls from "../election/setup/election-edit-controls";
 
 export default {
     name: "meeting-edit-card",
-    components: {DeleteMeetingModal, DeleteMeetingButton, DeleteMotionModal, DeleteMotionButton},
+    components: {
+        ElectionEditControls,
+        MeetingEditControls, DeleteMeetingModal, DeleteMeetingButton, DeleteMotionModal, DeleteMotionButton},
     props: [],
 
     mixins: [MeetingMixin],
@@ -100,17 +113,20 @@ export default {
 
 
     computed: {
+
         editAreaTitle: function () {
+            let t = '';
             switch (this.showArea) {
                 case 'create':
-                    return "Create meeting";
+                    t = "Create "; // . this.type;
                     break;
                 case 'edit':
-                    return 'Edit meeting';
+                    t = 'Edit '// . this.type;
                     break
-                default:
-                    return '';
+                // default:
+                //     return '';
             }
+            return t + this.type;
         },
 
         meetingDate: {
@@ -169,18 +185,19 @@ export default {
     methods: {
 
 
-        handleClick: function () {
-            let me = this;
-            let p = this.$store.dispatch('createMeeting');
-            p.then(function () {
-                me.showFields = true;
-                me.showArea = 'create';
-            })
-        },
+        // handleClick: function () {
+        //     let me = this;
+        //     let p = this.$store.dispatch('createMeeting');
+        //     p.then(function () {
+        //         me.showFields = true;
+        //         me.showArea = 'create';
+        //     })
+        // },
 
 
-        handleEditButtonClick: function () {
-            this.showArea = 'edit';
+        handleEditButtonClick: function (v) {
+            this.showFields = !this.showFields;
+            this.showArea = v;
         }
     }
 

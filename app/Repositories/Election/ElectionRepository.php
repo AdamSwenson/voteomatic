@@ -5,6 +5,7 @@ namespace App\Repositories\Election;
 
 
 use App\Models\Election\Candidate;
+use App\Models\Meeting;
 use App\Models\Motion;
 
 /**
@@ -20,7 +21,7 @@ class ElectionRepository implements IElectionRepository
 {
 
 
-    public function addCandidate(Motion $motion, $name = '', $info = '', $isWriteIn=false)
+    public function addCandidate(Motion $motion, $name = '', $info = '', $isWriteIn = false)
     {
         $candidate = Candidate::create([
             'name' => $name,
@@ -37,14 +38,15 @@ class ElectionRepository implements IElectionRepository
     }
 
 
-    public function addOfficeToElection(Meeting $election, $officeName='', $description=''){
+    public function addOfficeToElection(Meeting $election, $officeName = '', $description = '')
+    {
         $office = Motion::create([
             'content' => $officeName,
-        'description' => $description]);
+            'description' => $description,
+            'meeting_id' => $election->id
+        ]);
 
-        $election->motion()->associate($office);
-
-        return $election;
+        return $office;
 
     }
 

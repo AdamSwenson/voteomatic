@@ -3,6 +3,7 @@
 namespace Database\Factories\Election;
 
 use App\Models\Election\Candidate;
+use App\Models\Motion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CandidateFactory extends Factory
@@ -21,9 +22,12 @@ class CandidateFactory extends Factory
      */
     public function definition()
     {
+//        $motion = Motion::factory()->make();
+
         return [
             'name' => $this->faker->name,
-            'info' => $this->faker->sentence
+            'info' => $this->faker->sentence,
+            'motion_id' => null
             //
         ];
     }

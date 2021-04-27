@@ -282,6 +282,9 @@ const actions = {
 
     /**
      * Gets the motion from the server
+     *
+     * //dev Does this actually work? Shouldn't it add to store too?
+     *
      * @param dispatch
      * @param commit
      * @param getters

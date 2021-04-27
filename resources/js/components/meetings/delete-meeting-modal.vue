@@ -9,7 +9,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteMeetingModalLabel">Delete Meeting</h5>
+                    <h5 class="modal-title" id="deleteMeetingModalLabel">Delete {{ typeCapitalized }}</h5>
                     <button type="button"
                             class="close"
                             data-dismiss="modal"
@@ -19,8 +19,8 @@
                 </div>
 
                 <div class="modal-body">
-                    <p> You are about to permanently delete this meeting.</p>
-                    <p>All of the meeting's motions and votes will also be deleted.</p>
+                    <p> You are about to permanently delete this {{ type }}.</p>
+                    <p>All of the {{ type }}'s {{ subsidiaryType }} and votes will also be deleted.</p>
                     <p>This cannot be undone</p>
                     <p>Are you sure?</p>
                 </div>
@@ -29,13 +29,15 @@
                     <button type="button"
                             class="btn btn-secondary"
                             data-dismiss="modal"
-                    >No</button>
+                    >No
+                    </button>
 
                     <button type="button"
                             class="btn btn-primary"
                             data-dismiss="modal"
                             v-on:click="handleClick"
-                    >Yes. Delete it.</button>
+                    >Yes. Delete it.
+                    </button>
 
                 </div>
             </div>
@@ -65,7 +67,17 @@ export default {
         return {}
     },
 
-    computed: {},
+    computed: {
+        // type: function () {
+        //     return this.meeting.type;
+        // },
+        //
+        // typeCapitalized: function () {
+        //     return this.type.toUpperCase();
+        // },
+
+
+    },
 
     methods: {
         handleClick: function () {

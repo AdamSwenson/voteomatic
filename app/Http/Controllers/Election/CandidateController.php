@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CandidateCreationRequest;
 use App\Models\Election\Candidate;
 use App\Models\Motion;
 use App\Repositories\Election\IElectionRepository;
@@ -34,15 +35,15 @@ class CandidateController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+//    /**
+//     * Show the form for creating a new resource.
+//     *
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function create()
+//    {
+//        //
+//    }
 
     /**
      * Store a newly created resource in storage.
@@ -51,8 +52,10 @@ class CandidateController extends Controller
      * @param Motion $motion
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Motion $motion)
+    public function store(CandidateCreationRequest $request)
     {
+        $motion = Motion::find($request->motion_id);
+
         $candidate = $this->electionRepo->addCandidate($motion, $request->name, $request->info, $request->is_write_in);
 
         return response()->json($candidate);
@@ -99,7 +102,7 @@ class CandidateController extends Controller
      * @param Candidate $candidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Motion $motion, Candidate $candidate, Request $request)
+    public function update(Candidate $candidate, Request $request)
     {
         $d = $request->all();
         $candidate->update($d);
@@ -109,6 +112,8 @@ class CandidateController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * This makes the person no longer a candidate for an office
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

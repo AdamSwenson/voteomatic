@@ -1,0 +1,58 @@
+<template>
+    <div class="card" style="width: 18rem;">
+
+        <div class="card-header">
+            <div class="h4 card-title">Add candidates to the election for this office</div>
+        </div>
+
+        <ul class="list-group list-group-flush">
+
+            <candidate-setup-row v-for="candidate in candidatePool" :candidate="candidate" :key="candidate.id"
+                                 :is-pool="true"></candidate-setup-row>
+
+        </ul>
+
+    </div>
+
+
+</template>
+
+<script>
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
+import CandidateSetupRow from "./candidate-setup-row";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+
+export default {
+    name: "candidate-pool-card",
+    components: {CandidateSetupRow},
+    props: [],
+
+    mixins: [MeetingMixin, MotionStoreMixin],
+
+    data: function () {
+        return {}
+    },
+
+    asyncComputed: {
+        candidatePool: {
+            get: function () {
+                if (!isReadyToRock(this.motion)) return [];
+                return this.$store.getters.getCandidatePoolForOffice(this.motion);
+            },
+            default: [],
+            watch: ['motion']
+        }
+
+    },
+
+    computed: {},
+
+    methods: {}
+
+}
+</script>
+
+<style scoped>
+
+</style>

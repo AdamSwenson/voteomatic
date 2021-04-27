@@ -18,7 +18,17 @@ export default class Meeting extends IModel {
         this.id = id;
         this.date = date;
 
+        /** The string used on buttons etc */
+        this.type = 'meeting';
+
+        /**
+         * What the basic things we operate on are called.
+         * Again used for buttons etc
+         */
+        this.subsidiaryType = 'motion';
+
     }
+
 
     readableDate(){
 

@@ -3,6 +3,7 @@
 namespace Tests\Repositories\Election;
 
 use App\Models\Election\Candidate;
+use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\Vote;
 use App\Repositories\Election\ElectionRepository;
@@ -42,7 +43,6 @@ class ElectionRepositoryTest extends TestCase
     {
         parent::setUp();
         $this->object = new ElectionRepository();
-
 
         $this->motion = Motion::factory()->create();
         $this->candidates = Candidate::factory()->count(5)->create(['motion_id' => $this->motion->id]);
@@ -215,6 +215,25 @@ class ElectionRepositoryTest extends TestCase
         foreach ($results as $result) {
             $this->assertInstanceOf(Candidate::class, $result['candidate'], "Returned collection contains Candidate objects");
         }
+
+    }
+
+    /** @test  */
+    public function addOfficeToElection(){
+        $election = Meeting::factory()->election()->create();
+
+        $name = $this->faker->company;
+        $description = $this->faker->sentence;
+
+        //call
+        $result = $this->object->addOfficeToElection($election, $name, $description);
+
+        //check
+        $this->assertInstanceOf(Motion::class, $result);
+        $this->assertEquals($name, $result->content);
+        $this->assertEquals($description, $result->description);
+
+        $this->assertTrue($result->is($election->motions()->where('id', $result->id)->first()), "office associated with election");
 
     }
 

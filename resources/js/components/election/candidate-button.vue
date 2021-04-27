@@ -14,6 +14,7 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 export default {
     name: "candidate-button",
 
+
     props: ['candidate'],
 
     mixins: [],

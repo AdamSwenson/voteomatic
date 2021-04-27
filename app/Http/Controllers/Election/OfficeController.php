@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MotionRequest;
+use App\Http\Requests\OfficeCreationRequest;
 use App\Models\Meeting;
 use App\Repositories\Election\IElectionRepository;
 use Illuminate\Http\Request;
@@ -45,15 +46,23 @@ class OfficeController extends Controller
 //    }
 
     /**
-     * Store a newly created resource in storage.
+     * Create an office and associate it with the election
+     * provided in the request.
+     *
+     * Returns the office (motion) object
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MotionRequest $request, Meeting $election)
+    public function store(OfficeCreationRequest $request)
     {
-        $office = $this->electionRepo->addOfficeToElection($election, $request['content'], $request->description);
 
+        $election = Meeting::find($request->meetingId);
+
+//        dd($request);
+//        $election = $request->getElection();
+//        dd($election);
+        $office = $this->electionRepo->addOfficeToElection($election, $request['content'], $request->description);
         return response()->json($office);
     }
 

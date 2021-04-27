@@ -7,7 +7,9 @@ use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\Election\CandidateController;
 use App\Http\Controllers\Election\ElectionController;
 use App\Http\Controllers\Election\ElectionResultsController;
+use App\Http\Controllers\Election\ElectionSetupController;
 use App\Http\Controllers\Election\ElectionVoteController;
+use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -56,7 +58,10 @@ Route::get('/entry-test', [EntryController::class, 'loginTest']);
 Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
 Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
+
+Route::get('dev/election/setup', [ElectionSetupController::class, 'dev']);
 Route::get('dev/election', [ElectionController::class, 'dev'] );
+
 
 
 /* =============================
@@ -99,14 +104,28 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
 /* =============================
         Election
    ============================= */
-Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
-Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
+//Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
+//Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
 
 Route::get('election/{motion}/candidates', [CandidateController::class, 'getCandidatesForOffice']);
 Route::get('election/{motion}/results', [ElectionResultsController::class, 'getResults']);
 //Route::resource('election/candidate/{motion}', CandidateController::class);
 //Route::resource('election/{meeting}', )
 Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
+
+//setup
+Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
+Route::get('election/setup/office/{motion}/pool', [ElectionSetupController::class, 'getCandidatePool']);
+
+Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
+Route::resource('elections', ElectionController::class);
+Route::resource('offices', OfficeController::class);
+
+Route::resource('candidates', CandidateController::class);
+
+
+
+
 
 /* =============================
         Main application pages

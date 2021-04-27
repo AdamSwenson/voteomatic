@@ -3,7 +3,7 @@
         v-bind:class="styling"
         data-toggle="modal"
         data-target="#deleteMeetingModal"
-    >Delete Meeting</button>
+    >Delete {{type}}</button>
 
 
 </template>
@@ -26,7 +26,17 @@ export default {
         }
     },
 
-    computed: {},
+    computed: {
+        // type : function(){
+        //     return this.meeting.type
+        // },
+        //
+        // typeCapitalized : function(){
+        //     return this.type.toUpperCase();
+        // },
+        //
+
+    },
     methods: {
     //     handleClick: function () {
     //
