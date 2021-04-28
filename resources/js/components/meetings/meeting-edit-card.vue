@@ -11,6 +11,9 @@
                 v-else
                 v-on:showArea="handleEditButtonClick"
             ></meeting-edit-controls>
+
+
+
             <!--            <button class="btn btn-primary"-->
             <!--                    v-on:click="handleClick"-->
             <!--            >Create new {{type}}-->
@@ -41,7 +44,7 @@
                     <input type="text" class="form-control" id="meeting-name" v-model="meetingName">
                 </div>
 
-                <label for="meeting-date">{{ typeCapitalized }} date</label>
+                <label for="meeting-date">{{ typeCapitalized }} date  <span class="text-secondary">(optional)</span></label>
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
                 </div>
@@ -49,7 +52,7 @@
                 <p class="text-muted">Your entries are automatically saved on the
                     server as you type. You don't need to click anything when you are done.</p>
                 <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete
-                    button below to fix this.</p>
+                    button to fix this.</p>
 
             </div>
 
@@ -68,20 +71,28 @@ import DeleteMeetingButton from "./delete-meeting-button";
 import DeleteMeetingModal from "./delete-meeting-modal";
 import MeetingEditControls from "./meeting-edit-controls";
 import ElectionEditControls from "../election/setup/election-edit-controls";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "meeting-edit-card",
     components: {
         ElectionEditControls,
         MeetingEditControls, DeleteMeetingModal, DeleteMeetingButton, DeleteMotionModal, DeleteMotionButton},
-    props: [],
+    props: ['shouldShowFields'],
+// {
+//         showFields: {
+//             type: Boolean,
+//             default: false
+//         },
+//     },
 
     mixins: [MeetingMixin],
 
     data: function () {
 
         return {
-            showFields: false,
+
+            showFields: isReadyToRock(this.shouldShowFields) ? this.shouldShowFields : false,
 
             /**
              * What set of fields to show
@@ -90,7 +101,7 @@ export default {
              *      edit
              *      create
              */
-            showArea: false,
+            showArea: 'edit',
 
         }
     },

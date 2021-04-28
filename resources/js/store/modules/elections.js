@@ -6,6 +6,7 @@ import Result from "../../models/Result";
 import Election from "../../models/Election";
 import {idify} from "../../utilities/object.utilities";
 import Motion from "../../models/Motion";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 const state = {
     candidates: [],
@@ -32,7 +33,18 @@ const mutations = {
     },
 
     addCandidateToStore: (state, candidateObject) => {
-        state.candidates.push(candidateObject);
+        //todo This attempt to filter duplicates doesn't work because the candidate objects have different ids
+        window.console.log(getById(state.candidates, candidateObject.id));
+        if(! isReadyToRock(getById(state.candidates, candidateObject.id))){
+
+            state.candidates.push(candidateObject);
+        }
+
+        // window.console.log(state.candidates.indexOf(candidateObject));
+        // if(state.candidates.indexOf(candidateObject) === -1){
+        //
+        // }
+
     },
 
     setCandidateProp: (state, {id, updateProp, updateVal}) => {
@@ -42,6 +54,7 @@ const mutations = {
         Vue.set(currentMotion, updateProp, updateVal);
 
     },
+
 
     addResults: (state, results) => {
         state.electionResults.push(results);
@@ -146,6 +159,7 @@ const actions = {
 
             return Vue.axios.post(url, data).then((response) => {
                 let motion = new Motion(response.data);
+
                 commit('addMotionToStore', motion);
                 commit('setMotion', motion);
 
@@ -335,19 +349,15 @@ const actions = {
         data[payload.updateProp] = payload.updateVal;
 
         return new Promise(((resolve, reject) => {
-
                 return Vue.axios.patch(url, data).then((response) => {
-
                     commit('setCandidateProp', payload);
                     resolve();
-
                 });
-
-
             })
         );
 
     },
+
 
 };
 

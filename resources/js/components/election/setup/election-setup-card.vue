@@ -2,35 +2,15 @@
     <div class="election-card card">
 
         <div class="card-header">
-            <h2 class="card-title">Setup election</h2>
+            <h1 class="card-title">{{ title }} <span class="text-danger"></span></h1>
         </div>
 
+        <election-edit-card></election-edit-card>
 
-            <meeting-edit-card></meeting-edit-card>
-
-<!--            <candidate-row v-for="candidate in candidates"-->
-<!--                           :key="candidate.id"-->
-<!--                           :candidate="candidate"-->
-<!--            ></candidate-row>-->
-
-<!--            <writein-row v-if="writeInCandidates.length > 0"-->
-<!--                         v-for="candidate in writeInCandidates"-->
-<!--                         :candidate="candidate"-->
-<!--                         :key="candidate.id"-->
-<!--            ></writein-row>-->
-
-
-        <office-setup-card></office-setup-card>
-
-        <current-candidates-card></current-candidates-card>
-        <candidate-pool-card></candidate-pool-card>
-
-        <div class="card-footer">
-
-            <create-office-button></create-office-button>
-        </div>
+        <office-setup-card v-if="showOfficeSetup"></office-setup-card>
 
     </div>
+
 </template>
 
 <script>
@@ -44,17 +24,22 @@ import WriteInControls from "../write-in-controls";
 import CreateElectionButton from "./create-election-button";
 import CreateOfficeButton from "./create-office-button";
 import MeetingEditCard from "../../meetings/meeting-edit-card";
-import OfficeSetupCard from "./office-setup-card";
+import OfficeSetupCard from "./office-edit-card";
 import CurrentCandidatesCard from "./current-candidates-card";
 import AddCandidatesCard from "./candidate-pool-card";
 import CandidatePoolCard from "./candidate-pool-card";
+import OfficeEditCard from "./office-edit-card";
+import ElectionEditCard from "./election-edit-card";
 
 export default {
     name: "election-setup-card",
     components: {
+        ElectionEditCard,
+        OfficeEditCard,
         CandidatePoolCard,
         AddCandidatesCard,
-        CurrentCandidatesCard, OfficeSetupCard, MeetingEditCard, CreateOfficeButton, CreateElectionButton},
+        CurrentCandidatesCard, OfficeSetupCard, MeetingEditCard, CreateOfficeButton, CreateElectionButton
+    },
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin],
@@ -65,6 +50,10 @@ export default {
 
 
     asyncComputed: {
+        electionName: function () {
+            if (!isReadyToRock(this.meeting)) return "Election setup"
+            return this.meeting.name;
+        },
 
         office: {
             get: function () {
@@ -73,55 +62,6 @@ export default {
             default: null
 
         },
-
-        // writeInCandidates: {
-        //     get: function () {
-        //         return this.$store.getters.getWriteInCandidatesForCurrentOffice;
-        //     },
-        //     watch: ['candidates']
-        // },
-
-        // candidates: {
-        //
-        //     get: function () {
-        //         let me = this;
-        //         if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
-        //
-        //             return me.$store.getters.getCandidatesForOffice(me.motion);
-        //
-        //         }
-        //         return []
-        //
-        //         // //dev hackery
-        //         //     let firstMotion = this.$store.getters.getStoredMotions;
-        //         //
-        //         //     if (firstMotion.length === 0) return [];
-        //         //
-        //         //     firstMotion = firstMotion[0];
-        //         //     window.console.log(firstMotion, "first motion");
-        //         //     //
-        //         //     return this.$store.dispatch('setCurrentMotion', {
-        //         //         meetingId: this.meeting.id,
-        //         //         motionId: firstMotion.id,
-        //         //     }).then(() => {
-        //         //
-        //         //         return me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-        //         //
-        //         //             return me.$store.getters.getCandidatesForOffice(me.motion);
-        //         //
-        //         //         });
-        //         //     })
-        //         //
-        //         //
-        //         // }
-        //
-        //     },
-        //
-        //     watch: ['motion'],
-        //
-        //     default: []
-        //
-        // },
 
         instructions: {
             get: function () {
@@ -134,23 +74,14 @@ export default {
 
         },
 
-        maxWinners: {
-            get: function () {
-                if (isReadyToRock(this.motion)) return this.motion.max_winners;
 
-                // return ''
-            },
-
-            default: null
-
-            // },
+        showOfficeSetup: function () {
+            return isReadyToRock(this.motion);
         },
 
-        officeName: {
-            get: function () {
-                if (isReadyToRock(this.motion)) return this.motion.content;
-            },
-            default: ''
+        title: function () {
+            if (isReadyToRock(this.motion) && isReadyToRock(this.motion.name) && this.motion.name.length > 0) return this.motion.name;
+            return "Setup election";
         }
     },
 

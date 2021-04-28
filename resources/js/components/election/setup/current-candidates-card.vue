@@ -1,21 +1,18 @@
 <template>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 25rem;">
         <div class="card-header">
             <h4 class="card-title">Candidates</h4></div>
 
-<!--        <div class="card-body" >-->
             <ul class="list-group list-group-flush">
-                <candidate-setup-row v-for="candidate in candidates" :candidate="candidate" :key="candidate.id"
-                                     :is-pool="false"></candidate-setup-row>
+                <candidate-setup-row
+                    v-for="candidate in candidates"
+                    :candidate="candidate"
+                    :key="candidate.id"
+                    :is-pool="false"
+                    v-on:selection="handleSelection"
+                ></candidate-setup-row>
             </ul>
-            <!--                    class="list-group-item"-->
-            <!--                ><button class="btn btn-warning" v-on:click="handleClick"-->
-            <!--                    >Remove</button>  {{ candidate.name }}</li>-->
-
-            <!--            </ul>-->
-
-<!--        </div>-->
 
     </div>
 
@@ -35,7 +32,9 @@ export default {
     mixins: [MeetingMixin, MotionStoreMixin],
 
     data: function () {
-        return {}
+        return {
+            events : 0
+        }
     },
 
     asyncComputed: {
@@ -45,14 +44,21 @@ export default {
                 return this.$store.getters.getCandidatesForOffice(this.motion);
             },
             default: [],
-            watch: ['motion']
+            watch: ['motion', 'events']
         },
 
     },
 
     computed: {},
 
-    methods: {}
+    methods: {
+        handleSelection : function(){
+            //this increments a dummy variable so that the
+            //async computed property will know to change
+            this.events += 1;
+            window.console.log('selection-handler', this.events);
+        }
+    }
 
 }
 </script>

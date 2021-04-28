@@ -56,7 +56,16 @@ class CandidateController extends Controller
     {
         $motion = Motion::find($request->motion_id);
 
-        $candidate = $this->electionRepo->addCandidate($motion, $request->name, $request->info, $request->is_write_in);
+        if($request->has('id')){
+            //If the candidate already exists, we can skip the
+            //creation process and send the same object back to the client.
+            $candidate = Candidate::where('id', $request->id)
+                ->where('motion_id', $motion->id)
+                ->first();
+        }else{
+            $candidate = $this->electionRepo->addCandidate($motion, $request->name, $request->info, $request->is_write_in);
+        }
+
 
         return response()->json($candidate);
 

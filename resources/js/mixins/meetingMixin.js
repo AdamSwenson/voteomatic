@@ -80,6 +80,11 @@ module.exports = {
         subsidiaryType: function () {
             if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
             return this.meeting.subsidiaryType;
+        },
+
+        subsidiaryTypeCapitalized : function(){
+            if (_.isUndefined(this.meeting) || _.isNull(this.meeting)) return '';
+            return  _.capitalize(this.meeting.subsidiaryType);
         }
 
     }

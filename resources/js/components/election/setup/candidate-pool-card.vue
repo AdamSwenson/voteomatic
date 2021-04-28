@@ -1,14 +1,18 @@
 <template>
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 25rem;">
 
         <div class="card-header">
-            <div class="h4 card-title">Add candidates to the election for this office</div>
+            <div class="h4 card-title">Candidate pool</div>
         </div>
 
         <ul class="list-group list-group-flush">
 
-            <candidate-setup-row v-for="candidate in candidatePool" :candidate="candidate" :key="candidate.id"
-                                 :is-pool="true"></candidate-setup-row>
+            <candidate-setup-row
+                v-for="candidate in candidatePool"
+                :candidate="candidate"
+                :key="candidate.id"
+                :is-pool="true"
+            ></candidate-setup-row>
 
         </ul>
 
@@ -42,7 +46,8 @@ export default {
             },
             default: [],
             watch: ['motion']
-        }
+        },
+
 
     },
 
