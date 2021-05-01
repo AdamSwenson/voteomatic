@@ -129,6 +129,7 @@ const actions = {
                     let meeting = new Election(response.data);
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
+                    window.console.log('d');
                     resolve()
                 });
         }));
@@ -188,6 +189,23 @@ const actions = {
             });
         }));
     },
+
+    // loadAllElections({dispatch, commit, getters}){
+    //     return new Promise(((resolve, reject) => {
+    //
+    //         //send to server
+    //         let url = routes.election.resource.election();
+    //         return Vue.axios.get(url)
+    //             .then((response) => {
+    //                 _.forEach(response.data, (d) => {
+    //                     // window.console.log('loadAllMeetings', d);
+    //                     let election = new Election(d);
+    //                     commit('addMeetingToStore', election);
+    //                     resolve()
+    //                 });
+    //             });
+    //     }));
+    // },
 
     // loadOfficesForElection({dispatch, commit, getters}, meetingId) {
     //     let url = routes.election.getOffices(meetingId);

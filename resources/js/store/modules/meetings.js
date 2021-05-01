@@ -2,6 +2,7 @@ import Meeting from "../../models/Meeting";
 import * as routes from "../../routes";
 import Election from "../../models/Election";
 import MainObjectFactory from "../../models/MainObjectFactory";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 
 /**
@@ -122,9 +123,23 @@ const actions = {
         }));
     },
 
+
+    /**
+     * A more descriptively named alias for the actions
+     * which loads both meetings and elections
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    loadAllEvents({dispatch, commit, getters}) {
+        dispatch('loadAllMeetings');
+    },
+
     /**
      * Loads all meetings which the user has
-     * access to.
+     * access to. This includes both regular meetings
+     * and elections.
+     * dev Should this be renamed loadAllEvents? That would be more descriptive....
      * @param dispatch
      * @param commit
      * @param getters
@@ -141,13 +156,17 @@ const actions = {
             return Vue.axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
-                        // window.console.log('loadAllMeetings', d);
-                        let meeting = new Meeting(d.id, d.name, d.date);
-                        commit('addMeetingToStore', meeting);
-                        resolve()
+                        if(isReadyToRock(d.is_election) && d.is_election){
+                            let election = new Election(d);
+                            commit('addMeetingToStore', election);
+                        }
+                        else{
+                            // window.console.log('loadAllMeetings', d);
+                            let meeting = new Meeting(d.id, d.name, d.date);
+                            commit('addMeetingToStore', meeting);
+                        }
                     });
-
-
+                    resolve();
                 });
         }));
     },

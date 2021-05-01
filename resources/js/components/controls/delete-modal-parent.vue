@@ -2,14 +2,16 @@
 
     <!-- Modal -->
     <div class="modal fade"
-         id="deleteMeetingModal"
+         v-bind:id="modalId"
          tabindex="-1"
-         aria-labelledby="deleteMeetingModalLabel"
+         v-bind:aria-labelledby="labelId"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteMeetingModalLabel">Delete {{ typeCapitalized }}</h5>
+                    <h5 class="modal-title"
+                        v-bind:id="labelId"
+                    >Delete {{ typeCapitalized }}</h5>
                     <button type="button"
                             class="close"
                             data-dismiss="modal"
@@ -18,11 +20,7 @@
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <p> You are about to permanently delete this {{ type }}.</p>
-                    <p>All of the {{ type }}'s {{ subsidiaryType }} and votes will also be deleted.</p>
-                    <p>This cannot be undone</p>
-                    <p>Are you sure?</p>
+                <div class="modal-body" v-html="modalText">
                 </div>
 
                 <div class="modal-footer">
@@ -49,6 +47,7 @@
 <script>
 
 import MeetingMixin from '../../mixins/meetingMixin'
+import ModeMixin from "../../mixins/modeMixin";
 
 /**
  * Note, this will require that the delete-meeting-button is
@@ -57,43 +56,60 @@ import MeetingMixin from '../../mixins/meetingMixin'
  * by vue or vuex events.
  */
 export default {
-    name: "delete-meeting-modal",
+    name: "delete-modal-parent",
 
     props: [],
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, ModeMixin],
 
     data: function () {
         return {}
     },
 
     computed: {
-        // type: function () {
-        //     return this.meeting.type;
-        // },
-        //
-        // typeCapitalized: function () {
-        //     return this.type.toUpperCase();
-        // },
+        modalId: function () {
+            return "#delete" + _.capitalize(this.eventType) + "Modal"
+        },
+        labelId: function () {
+            return "delete" + _.capitalize(this.eventType) + "ModalLabel";
+        },
+
+        modalText: function () {
+
+            return `<p> You are about to permanently delete this ${this.eventType}.</p>
+            <p>All of the ${this.eventType}'s ${this.subsidiaryType} and votes will also be deleted.</p>
+            <p>This cannot be undone</p>
+            <p>Are you sure?</p>`;
+        },
+
+
+        /**
+         * First letter capitalized for use in labels etc
+         * @returns {string}
+         */
+        typeCapitalized : function(){
+            return _.capitalize(this.eventType);
+        },
+
 
 
     },
 
     methods: {
         handleClick: function () {
+            //
+            //     let me = this;
+            //
+            //     //First we create and store a new meeting from the
+            //     //provided template
+            //     let p = this.$store.dispatch('deleteMeeting', me.meeting)
+            //         .then(function () {
+            //         });
+            // }
 
-            let me = this;
-
-            //First we create and store a new meeting from the
-            //provided template
-            let p = this.$store.dispatch('deleteMeeting', me.meeting)
-                .then(function () {
-                });
         }
 
     }
-
-
 }
 
 </script>

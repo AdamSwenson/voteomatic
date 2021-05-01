@@ -9,11 +9,11 @@
         <div class="card-body">
 
             <ul class="list-group list-group-flush"
-            v-if="isReady">
+                v-if="isReady">
 
                 <meeting-select-button v-for="m in meetings"
-                                      :meeting="m"
-                                      :key="m.id">
+                                       :meeting="m"
+                                       :key="m.id">
 
                 </meeting-select-button>
 
@@ -21,30 +21,32 @@
 
         </div>
 
-       </div>
+    </div>
 
 
 </template>
 
 <script>
-import MeetingSelectButton from "./meeting-select-area";
+import MeetingSelectButton from "../meetings/meeting-select-area";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MeetingMixin from '../storeMixins/meetingMixin';
 
 export default {
-    name: "meetings-card",
+
     components: {MeetingSelectButton},
     // mixins : [MeetingMixin],
-    data : function (){
+    data: function () {
         return {
-            isReady : false
+            isReady: false
         }
     },
     asyncComputed: {
         meetings: function () {
             let m = this.$store.getters.getStoredMeetings;
-        if(_.isUndefined(m)) return [];
-        return m;
+            if (_.isUndefined(m)) return [];
+            return _.filter(m, (meeting) => {
+                return meeting.type === 'meeting';
+            });
         }
     },
 
@@ -56,9 +58,9 @@ export default {
     },
 
     mounted() {
-        let p = this.$store.dispatch('loadAllMeetings' );
+        let p = this.$store.dispatch('loadAllMeetings');
         let me = this;
-        p.then(function(){
+        p.then(function () {
             me.isReady = true;
         });
     }

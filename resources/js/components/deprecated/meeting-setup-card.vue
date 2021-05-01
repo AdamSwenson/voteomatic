@@ -1,64 +1,38 @@
 <template>
-    <div class="meeting-edit-card card">
-        <div class="controls-area card-header">
+<div class="meeting-setup-card card">
 
-            <election-edit-controls
-                v-if="type === 'election'"
-                v-on:showArea="handleEditButtonClick"
-            ></election-edit-controls>
+        <event-edit-card></event-edit-card>
+</div>
 
-            <meeting-edit-controls
-                v-else
-                v-on:showArea="handleEditButtonClick"
-            ></meeting-edit-controls>
+        <!--        <div class="setup-fields" v-if="showFields">-->
 
+<!--        <div class="card-header">-->
+<!--            <h4 class="card-title">{{ editAreaTitle }} <span class="text-danger">(Chair only)</span></h4>-->
+<!--        </div>-->
 
+<!--        <div class="card-body edit-meeting">-->
 
-            <!--            <button class="btn btn-primary"-->
-            <!--                    v-on:click="handleClick"-->
-            <!--            >Create new {{type}}-->
-            <!--            </button>-->
+<!--            &lt;!&ndash;        <div class="card-body edit-meeting"&ndash;&gt;-->
+<!--            &lt;!&ndash;                 v-if="showArea === 'edit' || showArea === 'create'"&ndash;&gt;-->
+<!--            &lt;!&ndash;            >&ndash;&gt;-->
 
-            <!--            <button class="btn btn-warning"-->
-            <!--                    v-on:click="handleEditButtonClick"-->
-            <!--            >Edit current {{type}}-->
-            <!--            </button>-->
+<!--            <label for="meeting-name">{{ eventTypeCapitalized }} name</label>-->
+<!--            <div class="input-group mb-3">-->
+<!--                <input type="text" class="form-control" id="meeting-name" v-model="meetingName">-->
+<!--            </div>-->
 
-            <!--            <delete-meeting-button></delete-meeting-button>-->
-            <!--            <delete-meeting-modal></delete-meeting-modal>-->
+<!--            <label for="meeting-date">{{ eventTypeCapitalized }} date <span-->
+<!--                class="text-secondary">(optional)</span></label>-->
+<!--            <div class="input-group mb-3">-->
+<!--                <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">-->
+<!--            </div>-->
 
-        </div>
+<!--            <entry-instructions></entry-instructions>-->
 
-        <div class="setup-fields" v-if="showFields">
+<!--        </div>-->
 
-            <div class="card-header">
-                <h4 class="card-title">{{ editAreaTitle }} <span class="text-danger">(Chair only)</span></h4>
-            </div>
+        <!--        </div>-->
 
-            <div class="card-body edit-meeting"
-                 v-if="showArea === 'edit' || showArea === 'create'"
-            >
-
-                <label for="meeting-name">{{ typeCapitalized }} name</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="meeting-name" v-model="meetingName">
-                </div>
-
-                <label for="meeting-date">{{ typeCapitalized }} date  <span class="text-secondary">(optional)</span></label>
-                <div class="input-group mb-3">
-                    <input type="date" class="form-control" id="meeting-date" v-model="meetingDate">
-                </div>
-
-                <p class="text-muted">Your entries are automatically saved on the
-                    server as you type. You don't need to click anything when you are done.</p>
-                <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete
-                    button to fix this.</p>
-
-            </div>
-
-        </div>
-
-    </div>
 </template>
 
 <script>
@@ -67,32 +41,35 @@ import * as routes from "../../routes";
 import MeetingMixin from '../../mixins/meetingMixin';
 import DeleteMotionButton from "../motions/motion-setup-inputs/delete-motion-button";
 import DeleteMotionModal from "../motions/motion-setup-inputs/delete-motion-modal";
-import DeleteMeetingButton from "./delete-meeting-button";
-import DeleteMeetingModal from "./delete-meeting-modal";
-import MeetingEditControls from "./meeting-edit-controls";
-import ElectionEditControls from "../election/setup/election-edit-controls";
+import DeleteMeetingButton from "../meetings/controls/delete-meeting-button";
+import DeleteMeetingModal from "../meetings/controls/delete-meeting-modal";
+import MeetingEditControls from "../meetings/meeting-edit-controls";
+import ElectionEditControls from "../election/setup/controls/election-setup-controls";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import ModeMixin from "../../mixins/modeMixin";
+import EntryInstructions from "../controls/entry-instructions";
+import EventEditCard from "../controls/event-edit-card";
+import MeetingsCard from "./meetings-card";
 
 export default {
-    name: "meeting-edit-card",
     components: {
+        MeetingsCard,
+        EventEditCard,
+        EntryInstructions,
         ElectionEditControls,
-        MeetingEditControls, DeleteMeetingModal, DeleteMeetingButton, DeleteMotionModal, DeleteMotionButton},
-    props: ['shouldShowFields'],
-// {
-//         showFields: {
-//             type: Boolean,
-//             default: false
-//         },
-//     },
+        MeetingEditControls, DeleteMeetingModal, DeleteMeetingButton, DeleteMotionModal, DeleteMotionButton
+    },
 
-    mixins: [MeetingMixin],
+    props: [],
+
+    mixins: [MeetingMixin, ModeMixin],
+
 
     data: function () {
 
         return {
 
-            showFields: isReadyToRock(this.shouldShowFields) ? this.shouldShowFields : false,
+            // showFields: isReadyToRock(this.shouldShowFields) ? this.shouldShowFields : false,
 
             /**
              * What set of fields to show
@@ -101,7 +78,7 @@ export default {
              *      edit
              *      create
              */
-            showArea: 'edit',
+            // showArea: 'edit',
 
         }
     },

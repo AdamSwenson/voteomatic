@@ -2,7 +2,7 @@
     <div class="card office-setup">
 
         <div class="card-body">
-            <office-edit-card-card></office-edit-card-card>
+            <office-edit-card></office-edit-card>
         </div>
 
         <div class="card-body">
@@ -24,9 +24,13 @@
 </template>
 
 <script>
+import CandidatePoolCard from "./candidate-pool-card";
+import CurrentCandidatesCard from "./current-candidates-card";
+import OfficeEditCard from "./office-edit-card";
+
 export default {
     name: "office-setup-card",
-
+    components: {OfficeEditCard, CurrentCandidatesCard, CandidatePoolCard},
     props: [],
 
     mixins: [],

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MeetingSetup from "./main/chair/meeting-setup";
+import MeetingSetup from "./meetings/meeting-setup-card";
 import MotionSetup from "./main/chair/motion-setup";
 import Meeting from "../models/Meeting";
 

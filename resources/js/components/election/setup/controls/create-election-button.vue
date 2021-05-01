@@ -1,13 +1,13 @@
 
 <script>
-import buttonParent from "../../parents/button-parent";
-
+import buttonParent from "../../../parents/button-parent";
+import ModeMixin from "../../../../mixins/modeMixin";
 export default {
     name: "create-election-button",
 extends : buttonParent,
     props: [],
 
-    mixins: [],
+    mixins: [ModeMixin],
 
     data: function () {
         return {
@@ -20,6 +20,7 @@ extends : buttonParent,
     methods: {
         handleClick : function(){
             window.console.log('Create election clicked');
+            // this.setElection();
             this.$store.dispatch('createElection');
 
         }

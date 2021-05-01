@@ -56,18 +56,21 @@ class MeetingController extends Controller
             ->where('name', null)
             ->where('date', null)
             ->first();
+//todo Should this be checking that the user is owner? Otherwise a user who is a member in a different meeting could take over ownership (of a blank event)....
+        //todo is this enough to ensure that the meeting is empty? maybe a method on meeting would be better?
 
         if (!is_null($meeting)) {
             $meeting->update($request->all());
-            $meeting->save();
         } else {
             $meeting = Meeting::create($request->all());
             $this->user->meetings()->attach($meeting);
             $this->user->save();
-        }
-        $env = env('APP_ENV');
 
-//dd($meeting);
+            //todo Do we always want the creator to be the owner?
+            $meeting->owner_id = $this->user->id;
+        }
+        $meeting->save();
+
         return response()->json($meeting);
     }
 

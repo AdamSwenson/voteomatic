@@ -1,42 +1,54 @@
 <template>
-    <div class="election-card card">
+    <div class="election-card">
 
-        <div class="card-header">
-            <h2 class="card-title">{{ officeName }}</h2>
+        <div class="card" v-if="isElection">
+
+            <div class="card-header">
+                <h2 class="card-title">{{ officeName }}</h2>
+            </div>
+
+            <max-winners-instruction></max-winners-instruction>
+            <overselection-warning></overselection-warning>
+
+            <!--        <div class="card-body instructions" v-if="instructions.length > 0">-->
+            <!--            {{ instructions }}-->
+            <!--        </div>-->
+
+            <div class="card-body">
+
+                <candidate-row v-for="candidate in candidates"
+                               :key="candidate.id"
+                               :candidate="candidate"
+                ></candidate-row>
+
+                <writein-row v-if="writeInCandidates.length > 0"
+                             v-for="candidate in writeInCandidates"
+                             :candidate="candidate"
+                             :key="candidate.id"
+                ></writein-row>
+
+            </div>
+
+
+            <div class="card-body">
+                <write-in-controls></write-in-controls>
+            </div>
+
+            <election-results-card></election-results-card>
+
+            <div class="card-footer">
+                <cast-ballot-button></cast-ballot-button>
+            </div>
+
         </div>
 
-        <max-winners-instruction></max-winners-instruction>
-        <overselection-warning></overselection-warning>
-
-        <!--        <div class="card-body instructions" v-if="instructions.length > 0">-->
-        <!--            {{ instructions }}-->
-        <!--        </div>-->
-
-        <div class="card-body">
-
-            <candidate-row v-for="candidate in candidates"
-                           :key="candidate.id"
-                           :candidate="candidate"
-            ></candidate-row>
-
-            <writein-row v-if="writeInCandidates.length > 0"
-                         v-for="candidate in writeInCandidates"
-                         :candidate="candidate"
-                         :key="candidate.id"
-            ></writein-row>
+        <div class="wrong-mode-message card" v-else>
+            <div class="card-body">
+                <p class="card-text">There is no pending election</p>
+            </div>
 
         </div>
 
-
-        <div class="card-body">
-            <write-in-controls></write-in-controls>
-        </div>
-
-        <election-results-card></election-results-card>
-
-        <div class="card-footer">
-            <cast-ballot-button></cast-ballot-button>
-        </div>
 
     </div>
 </template>
@@ -52,22 +64,34 @@ import MaxWinnersInstruction from "./max-winners-instruction";
 import WriteinRow from "./writein-row";
 import WriteInControls from "./write-in-controls";
 import ElectionResultsCard from "./results/election-results-card";
+import ModeMixin from "../../mixins/modeMixin";
 
 export default {
     name: "election-card",
     components: {
         ElectionResultsCard,
         WriteInControls,
-        WriteinRow,  MaxWinnersInstruction, OverselectionWarning, CastBallotButton, CandidateRow
+        WriteinRow, MaxWinnersInstruction, OverselectionWarning, CastBallotButton, CandidateRow
     },
     props: [],
 
-    mixins: [MeetingMixin, MotionStoreMixin],
-
+    mixins: [MeetingMixin, MotionStoreMixin, ModeMixin],
 
     data: function () {
         return {}
     },
+
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            // vm.setElection();
+
+            window.console.log('entering election route. Mode:', vm.mode);
+
+            // access to component instance via `vm`
+        })
+    },
+
+
 
     asyncComputed: {
 

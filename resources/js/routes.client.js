@@ -1,29 +1,45 @@
 import Vue from 'vue'
 //Panes (main container for edit tools)
-import votePage from './components/main/vote-page'
+
+import store from "./store/index";
+
+import ballotSetupCard from "./components/main/ballot-setup-card";
+// import electionCard from "./components/election/election-card";
+// import electionSetupCard from "./components/election/setup/election-setup-card";
+//import votePage from './components/main/vote-page'
 import resultsPage from './components/main/results-page'
-import motionSetup from './components/main/chair/motion-setup'
-import meetingSetup from './components/main/chair/meeting-setup'
+// import motionSetup from './components/main/chair/motion-setup'
+// import meetingSetup from './components/main/chair/meeting-setup'
 import voteVerify from './components/main/vote-verification-page'
 import meetingHome from './components/main/meeting-home'
+import eventSetupCard from "./components/main/chair/event-setup-card";
+import voteCard from "./components/main/vote-card";
 
-Vue.component( 'vote-page', votePage );
-Vue.component('results-page', resultsPage);
-Vue.component('motion-setup-page', motionSetup);
-Vue.component('meeting-setup-page', meetingSetup);
-Vue.component('vote-verify', resultsPage);
+Vue.component('ballot-setup-card', ballotSetupCard);
+// Vue.component('election-card', electionCard);
+// Vue.component('election-setup-card', electionSetupCard);
+Vue.component(('event-setup-card', eventSetupCard));
+
 Vue.component('meeting-home', meetingHome);
 
-export const routes =  [
+// Vue.component('meeting-setup-page', meetingSetup);
+// Vue.component('motion-setup-page', motionSetup);
+Vue.component('results-page', resultsPage);
+// Vue.component( 'vote-page', votePage );
+Vue.component('vote-card', voteCard);
+Vue.component('vote-verify', resultsPage);
+
+
+export const routes = [
     {
         name: 'home',
         path: '/meeting-home',
         icon: "fa fa-book",
         label: "Home",
-        components: { main:  meetingHome},
+        components: {main: meetingHome},
         default: true,
-        props:  true,
-        adminOnly : false
+        props: true,
+        adminOnly: false
 
     },
 
@@ -33,7 +49,8 @@ export const routes =  [
         path: '/vote',
         icon: "fa fa-pencil",
         label: "Vote",
-        components: {main: votePage},
+        // components: {main: votePage},
+        components: {main: voteCard},
         props: true,
         adminOnly: false
     },
@@ -44,58 +61,81 @@ export const routes =  [
         path: '/verify',
         icon: "fa fa-check",
         label: "Verify your vote",
-        components: { main:  voteVerify},
-        props:  true,
-        adminOnly : false
+        components: {main: voteVerify},
+        props: true,
+        adminOnly: false
     },
 
 
     {
         name: 'results',
-        path: '/results'  ,
+        path: '/results',
         icon: "fa fa-comments-o",
         label: "Results",
-        components: { main: resultsPage },
-        props:  true,
-        adminOnly : false
-    },
-
-    {
-        name: 'motion',
-        path: '/motion',
-        icon: "fa fa-bar-chart",
-        label: "Create motion",
-        components: {main: motionSetup},
+        components: {main: resultsPage},
         props: true,
-        adminOnly : true,
+        adminOnly: false
+    },
+
+    {
+        name: 'ballot',
+        path: '/ballot',
+        icon: "fa fa-bar-chart",
+        get label() {
+            if (store.getters.isElection) return "Create office";
+            return "Create motion";
+        },
+        components: {main: ballotSetupCard},
+        props: true,
+        adminOnly: true,
 
     },
 
     {
-        name: 'meeting',
-        path: '/meeting',
-        icon: "bi bi-sunglasses",
-        label: "Create meeting",
-        components: { main:  meetingSetup},
-        props:  true,
-        adminOnly : true
+        name: 'setup',
+        path: '/setup',
+        get label() {
+            if (store.getters.isElection) return "Setup election";
+            return "Setup meeting";
+        },
+        components: {main: eventSetupCard},
+        props: true,
+        adminOnly: true
     },
 
 
     // {
-    //     name: 'notes',
-    //     path: this.routeToNotes,
-    //     icon: "fa fa-sticky-note-o",
-    //     label: "Notes"
+    //     name: 'meeting',
+    //     path: '/meeting',
+    //     icon: "bi bi-sunglasses",
+    //     label: "Setup meeting",
+    //     components: {main: meetingSetup},
+    //     props: true,
+    //     adminOnly: true
+    // },
+
+    // {
+    //     name: 'election',
+    //     path: '/election',
+    //     label: 'Election',
+    //     components: {main: electionCard},
+    //     props: true,
+    //     adminOnly: false
+    // },
+
+    // {
+    //     name: 'election-setup',
+    //     path: '/election-setup',
+    //     label: 'Election setup',
+    //     components: {main: electionSetupCard},
+    //     props: true,
+    //     adminOnly: true
     // },
 
 
-//grading
-//     {
-//         path: '/',
-//         components: { questionPanelArea: questionPanel },
-//         props:  true  //{default: true}
-//     }, //props: (route) => {return route.index;}},
+
+
+
 ];
 
 // export default {

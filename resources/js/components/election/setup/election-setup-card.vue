@@ -1,14 +1,18 @@
 <template>
-    <div class="election-card card">
+    <div class="election-setup-card card">
 
-        <div class="card-header">
-            <h1 class="card-title">{{ title }} <span class="text-danger"></span></h1>
+
+        <div class="non-chair" v-if="! isChair">
+            <event-display-card></event-display-card>
+             </div>
+
+        <div class="chair" v-else>
+
+            <event-edit-card v-if="isInEventEditingMode"></event-edit-card>
+
+            <event-display-card v-else></event-display-card>
+
         </div>
-
-        <election-edit-card></election-edit-card>
-
-        <office-setup-card v-if="showOfficeSetup"></office-setup-card>
-
     </div>
 
 </template>
@@ -21,19 +25,28 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from '../../../utilities/readiness.utilities';
 import WriteinRow from "../writein-row";
 import WriteInControls from "../write-in-controls";
-import CreateElectionButton from "./create-election-button";
-import CreateOfficeButton from "./create-office-button";
-import MeetingEditCard from "../../meetings/meeting-edit-card";
+import CreateElectionButton from "./controls/create-election-button";
+import CreateOfficeButton from "./controls/create-office-button";
+import MeetingEditCard from "../../deprecated/meeting-setup-card";
 import OfficeSetupCard from "./office-edit-card";
 import CurrentCandidatesCard from "./current-candidates-card";
 import AddCandidatesCard from "./candidate-pool-card";
 import CandidatePoolCard from "./candidate-pool-card";
 import OfficeEditCard from "./office-edit-card";
-import ElectionEditCard from "./election-edit-card";
+import ElectionEditCard from "../../deprecated/election-edit-card";
+import ModeMixin from "../../../mixins/modeMixin";
+import ElectionSetupControls from "./controls/election-setup-controls";
+import EventEditCard from "../../controls/event-edit-card";
+import EventDisplayCard from "../../common/event-display-card";
+import ChairMixin from "../../../mixins/chairMixin";
 
 export default {
     name: "election-setup-card",
+
     components: {
+        EventDisplayCard,
+        EventEditCard,
+        ElectionSetupControls,
         ElectionEditCard,
         OfficeEditCard,
         CandidatePoolCard,
@@ -42,11 +55,28 @@ export default {
     },
     props: [],
 
-    mixins: [MeetingMixin, MotionStoreMixin],
+    mixins: [MeetingMixin, MotionStoreMixin, ModeMixin, ChairMixin,],
 
     data: function () {
         return {}
     },
+
+    // beforeRouteEnter (to, from, next) {
+    //     next(vm => {
+    //
+    //         window.console.log('entering election setup route. Mode:', vm.mode);
+    //
+    //         // access to component instance via `vm`
+    //     })
+    // },
+    //
+    // beforeRouteUpdate (to, from, next) {
+    //
+    //         // this.setElection();
+    //
+    //         window.console.log('entering election setup update route. Mode:', vm.mode);
+    //     next();
+    // },
 
 
     asyncComputed: {
@@ -87,43 +117,47 @@ export default {
 
     computed: {},
 
-    methods: {}
-    ,
+    methods: {},
 
     mounted() {
-
-//todo DEV ONLY
-        let me = this;
-        //parse data from page and store stuff
-        let p = this.$store.dispatch('initialize');
-        p.then(function () {
-            // me.$router.push('meeting-home');
-            // if (isReadyToRock(me.meeting)) {
-
-            //dev hackery
-            let firstMotion = me.$store.getters.getStoredMotions;
-
-            if (firstMotion.length === 0) return [];
-
-            firstMotion = firstMotion[0];
-            window.console.log(firstMotion, "first motion");
-            //
-            me.$store.dispatch('setCurrentMotion', {
-                meetingId: me.meeting.id,
-                motionId: firstMotion.id,
-            }).then(() => {
-
-                me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-
-                    window.console.log('voteomatic', 'isReady', 159, me.isReady);
-                });
-
-            })
-
-
-            // }
-
-        });
+//         if (isReadyToRock(this.meeting) && this.meeting.type === 'meeting') {
+//             //todo should not access the election if there's not an election set
+//             // this.$router.push('home');
+//         }
+//
+//
+// //todo DEV ONLY only needed if loading on blade template
+//         let me = this;
+//         //parse data from page and store stuff
+//         let p = this.$store.dispatch('initialize');
+//         p.then(function () {
+//             // me.$router.push('meeting-home');
+//             // if (isReadyToRock(me.meeting)) {
+//
+//             //dev hackery
+//             let firstMotion = me.$store.getters.getStoredMotions;
+//
+//             if (firstMotion.length === 0) return [];
+//
+//             firstMotion = firstMotion[0];
+//             window.console.log(firstMotion, "first motion");
+//             //
+//             me.$store.dispatch('setCurrentMotion', {
+//                 meetingId: me.meeting.id,
+//                 motionId: firstMotion.id,
+//             }).then(() => {
+//
+//                 me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+//
+//                     window.console.log('voteomatic', 'isReady', 159, me.isReady);
+//                 });
+//
+//             })
+//
+//
+//             // }
+//
+//         });
 
 
         // this.$store.dispatch('loadElectionCandidates', this.motion.id);

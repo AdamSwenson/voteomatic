@@ -1,36 +1,31 @@
-<template>
-    <button
-        v-bind:class="styling"
-        data-toggle="modal"
-        data-target="#deleteMeetingModal"
-    >Delete {{type}}</button>
-
-
-</template>
 
 <script>
 
-import MeetingMixin from '../../mixins/meetingMixin'
+import MeetingMixin from '../../../mixins/meetingMixin'
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
+import ModeMixin from "../../../mixins/modeMixin";
+import DeleteButtonParent from "../../controls/delete-button-parent";
 
 export default {
     name: "delete-meeting-button",
-
+    extends: DeleteButtonParent,
     props: [],
-    mixins: [MeetingMixin],
-
+    mixins: [MeetingMixin, ModeMixin],
 
     data: function () {
         return {
-            styling: "btn btn-danger "
+            label: 'Delete meeting',
 
         }
     },
 
     computed: {
-        // type : function(){
-        //     return this.meeting.type
+
+        // label : function(){
+        //     if(this.isMeeting) return 'Delete meeting';
+        //     // if(this.isElection) return 'Delete election';
         // },
-        //
+
         // typeCapitalized : function(){
         //     return this.type.toUpperCase();
         // },
@@ -38,7 +33,8 @@ export default {
 
     },
     methods: {
-    //     handleClick: function () {
+        // handleClick: function () {
+
     //
     //         let me = this;
     //

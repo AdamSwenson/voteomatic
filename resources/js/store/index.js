@@ -16,6 +16,7 @@ import * as state from './state'
 //modules
 import elections from "./modules/elections";
 import meetings from './modules/meetings';
+import modes from "./modules/modes";
 import motions from './modules/motions';
 import startup from "./modules/startup";
 import results from "./modules/results";
@@ -53,6 +54,7 @@ export default new Vuex.Store({
     modules: {
         elections,
         meetings,
+        modes,
         motions,
         results,
         startup,

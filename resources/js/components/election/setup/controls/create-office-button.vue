@@ -1,6 +1,7 @@
 <script>
-import buttonParent from "../../parents/button-parent";
-import MeetingMixin from "../../../mixins/meetingMixin";
+import buttonParent from "../../../parents/button-parent";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import ModeMixin from "../../../../mixins/modeMixin";
 
 export default {
     name: "create-office-button",
@@ -8,7 +9,7 @@ export default {
     props: [],
 
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, ModeMixin],
 
     data: function () {
         return {
@@ -21,6 +22,7 @@ export default {
     methods: {
         handleClick: function () {
             window.console.log('Create office clicked');
+            // this.setElection();
             this.$store.dispatch('createOffice', this.meeting);
         }
     }

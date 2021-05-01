@@ -1,8 +1,9 @@
 <template>
 
-    <div class="roster-area card">
+    <div class="participants-list-card card">
+
         <div class="card-header">
-            <h4 class="card-title">Meeting roster  <span class="text-danger">(Chair only)</span></h4>
+            <h4 class="card-title">{{title}}</h4>
         </div>
 
         <div class="card-body">
@@ -19,19 +20,30 @@ import Payload from "../../models/Payload";
 import * as routes from "../../routes";
 import MeetingMixin from '../../mixins/meetingMixin';
 import ChairMixin from '../../mixins/chairMixin';
+import ModeMixin from "../../mixins/modeMixin";
 
 export default {
-name: "roster-card",
+name: "participants-list-card",
 
 props : [],
 
-mixins : [MeetingMixin],
+    mixins: [MeetingMixin, ChairMixin, ModeMixin],
 
-data : function(){
+
+    data : function(){
     return {}
 },
 
-asyncComputed : {},
+asyncComputed : {
+    title: function(){
+        if(this.isElection) return "Voters";
+        if(this.isMeeting) return "Members";
+    },
+
+    participants : function(){
+        return [];
+    }
+},
 
 computed : {},
 

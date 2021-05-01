@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import OfficeListCard from "./office-list-card";
-import MeetingEditCard from "../../meetings/meeting-edit-card";
+import OfficeListCard from "../election/setup/office-list-card";
+import MeetingEditCard from "./meeting-setup-card";
 export default {
     name: "election-edit-card",
     components: {MeetingEditCard, OfficeListCard},

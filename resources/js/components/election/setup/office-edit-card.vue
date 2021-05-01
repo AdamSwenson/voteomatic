@@ -17,10 +17,9 @@
                 <input type="number" class="form-control" id="office-max-winners" v-model="maxWinners">
             </div>
 
-            <p class="text-muted">Your entries are automatically saved on the
-                server as you type. You don't need to click anything when you are done.</p>
-            <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete
-                button below to fix this.</p>
+            <p class="text-muted">Your entries are saved as you type. You don't need to click anything when you are done.</p>
+<!--            <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete-->
+<!--                button below to fix this.</p>-->
 
         </div>
 
@@ -42,13 +41,14 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import CandidateRow from "../candidate-row";
 import Payload from "../../../models/Payload";
+import MeetingPropertiesMixin from "../../../mixins/meetingPropertiesMixin";
 
 export default {
     name: "office-edit-card",
     components: {CandidateRow},
     props: [],
 
-    mixins: [MeetingMixin, MotionStoreMixin],
+    mixins: [MeetingMixin, MotionStoreMixin, MeetingPropertiesMixin],
 
 
     data: function () {
