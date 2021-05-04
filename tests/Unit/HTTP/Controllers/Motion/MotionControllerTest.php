@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Motion;
+namespace App\Http\Controllers\Motion;
 
 use App\Http\Controllers\Motion\MotionController;
 use App\Models\Meeting;
@@ -21,35 +21,73 @@ class MotionControllerTest extends TestCase
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     public $meeting;
+    /**
+     * @var string
+     */
+    private $url;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        Auth::logIn($this->user);
+        $this->user = User::factory()->chair()->create();
+
         $this->urlBase = '/motions';
+
         $this->meeting = Meeting::factory()->create();
+        $this->user->meetings()->attach($this->meeting);
+        $this->user->push();
+
+        $this->motion = Motion::factory()->create();
+        $this->meeting->motions()->save($this->motion);
+        $this->meeting->push();
+
+        $this->url = $this->urlBase . '/' . $this->motion->id;
+
     }
 
-//
-//    public function testStore()
-//    {
-//
-//    }
+    /** @test */
+    public function index()
+    {
+        $response = $this->actingAs($this->user)
+            ->get($this->urlBase);
 
+
+        $response->assertStatus(403, "No one gets to see every motion");
+    }
+
+    /** @test  */
+    public function getAllForMeeting(){
+        $this->markTestIncomplete();
+    }
+
+    /** @test  */
+    public function getAllForMeetingAllowsMember(){
+        $url = '/motions/meeting/' . $this->meeting->id;
+        $response = $this->actingAs($this->user)->get($url);
+
+        $response->assertSuccessful();
+    }
+
+
+    /** @test  */
+    public function getAllForMeetingDenysNonMember(){
+        $url = '/motions/meeting/' . $this->meeting->id;
+        $response = $this->actingAs(User::factory()->create())->get($url);
+
+        $response->assertStatus(403);
+    }
 
     /** @test */
     public function storeWhenNoPreexistingBlankMotion()
     {
         //prep
         $motions = Motion::factory()->count(3)->create();
-        foreach ($motions as $motion){
+        foreach ($motions as $motion) {
             $this->meeting->motions()->save($motion);
         }
         $this->meeting->save();
         $countBefore = sizeOf($this->meeting->motions()->get());
-
 
         //call
         $data = ['meetingId' => $this->meeting->id];
@@ -75,7 +113,7 @@ class MotionControllerTest extends TestCase
 
         //prep
         $motions = Motion::factory()->count(3)->create();
-        foreach ($motions as $motion){
+        foreach ($motions as $motion) {
             $this->meeting->motions()->save($motion);
         }
         $blankMotion = motion::create();
@@ -98,6 +136,105 @@ class MotionControllerTest extends TestCase
 
         $this->assertEquals($countBefore, $countAfter, "No new motion created");
 
+    }
+
+
+    /** @test */
+    public function storePreventsNonChair()
+    {
+
+        $nonChair = User::factory()->regUser()->create();
+
+        //call
+        $response = $this->actingAs($nonChair)
+            ->withSession(['foo' => 'bar'])
+            ->post($this->urlBase);
+
+        //check
+        $response->assertStatus(403);
+    }
+
+
+    /** @test */
+    public function update()
+    {
+        $motionId = $this->motion->id;
+        $payload = ['data' => ['content' => 'bar']];
+
+        //call
+        $response = $this->actingAs($this->user)
+            ->put($this->url, $payload);
+
+        //check
+        $response->assertSuccessful();
+
+        $this->motion->refresh();
+
+        $motion = Motion::find($motionId);
+        $this->assertEquals('bar', $motion->content);
+//        $this->assertEquals('bar', $this->motion->name);
+
+    }
+
+    /** @test */
+    public function updatePreventsNonChair()
+    {
+        $payload = ['data' => ['name' => 'bar']];
+
+        $meeting = Meeting::factory()->create(['owner_id' => $this->user->id]);
+        $nonChair = User::factory()->regUser()->create();
+
+        //call
+        $response = $this->actingAs($nonChair)
+            ->put($this->url, $payload);
+
+        //check
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function destroy()
+    {
+        $motionId = $this->motion->id;
+        //call
+        $response = $this->actingAs($this->user)
+            ->delete($this->url);
+
+        //check
+        $response->assertSuccessful();
+
+        $this->assertEmpty(Motion::find($motionId));
+
+
+    }
+
+
+
+    /** @test */
+    public function destroyAllowsChair()
+    {
+
+        //call
+        $response = $this->actingAs($this->user)
+            ->delete($this->url);
+
+        //check
+        $response->assertSuccessful();
+    }
+
+
+
+    /** @test */
+    public function destroyPreventsNonChair()
+    {
+        $nonChair = User::factory()->regUser()->create();
+
+        //call
+        $response = $this->actingAs($nonChair)
+            ->delete($this->url);
+
+        //check
+        $response->assertStatus(403);
     }
 
 

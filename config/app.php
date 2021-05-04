@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\FortifyServiceProvider;
+
 return [
 
     /*
@@ -162,10 +164,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        /*
-         * Package Service Providers...
-         */
-        App\Providers\LTIServiceProvider::class,
 
 
         /*
@@ -176,6 +174,14 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /*
+         * Package Service Providers...
+         */
+        App\Providers\LTIServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+//        App\Providers\JetstreamServiceProvider::class,
+
 
         /*
          * Custom service providers

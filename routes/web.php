@@ -30,6 +30,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Guest\WaitlistController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,63 +43,60 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+//Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
+//    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 /* =============================
         todo DEV ROUTES TO BE REMOVED IN PRODUCTION
    ============================= */
-Route::get('/dev/testlog', [EntryController::class, 'logreturn']);
-Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
-//can't test with dev/ since that messes up route root for resource urls
-Route::get('/dev-test-setup', [SetupController::class, 'devView']);
-Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
-Route::get('/entry-test', [EntryController::class, 'loginTest']);
-//Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
-Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
-Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
-
-
-Route::get('dev/election/setup', [ElectionSetupController::class, 'dev']);
-Route::get('dev/election', [ElectionController::class, 'dev'] );
-
+//Route::get('/dev/testlog', [EntryController::class, 'logreturn']);
+//Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
+////can't test with dev/ since that messes up route root for resource urls
+//Route::get('/dev-test-setup', [SetupController::class, 'devView']);
+//Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
+//Route::get('/entry-test', [EntryController::class, 'loginTest']);
+////Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
+//Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
+//Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
 
 /* =============================
         Login, LTI authentication, and other admin
    ============================= */
-Auth::routes();
+
+//See VOT-29 for why this can't be used.
+//Auth::routes();
+
+//Login (Currently only used by administrator)
+Route::post('login', [LoginController::class, 'login']);
+// Logout Route
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // LTI access endpoint
-Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+//Route::post('/entry-test', [LTILaunchController::class, 'handleLaunchRequest'])
+//    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingLaunchRequest'])
-    ->withoutMiddleware([VerifyCsrfToken::class])
+    ->withoutMiddleware([ VerifyCsrfToken::class])
     ->name('lti-launch');
 
 //unused
-Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
-
-// main pages
-Route::get('/home/{meeting}', [HomeController::class, 'meetingIndex'])
-    ->name('meetingHome');
-Route::get('/home', [HomeController::class, 'index'])
-    ->name('home');
+//Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
 
 
 /* =============================
         Demo mode
    ============================= */
 Route::post('lti/chair-demo', [LTIDemoController::class, 'launchChairDemo'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('lti/member-demo', [LTIDemoController::class, 'launchMemberDemo'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->withoutMiddleware([ VerifyCsrfToken::class]);
 
 
 /* =============================
@@ -130,9 +128,18 @@ Route::resource('candidates', CandidateController::class);
 /* =============================
         Main application pages
    ============================= */
+//Internal landing page after non-lti login
+Route::get('/home', [HomeController::class, 'index'])
+    ->name('home');
+//If no meeting specified, should also take to the internal home page
+Route::get('main', [HomeController::class, 'index'] );
+
+//Internal landing page after lti login
+Route::get('/home/{meeting}', [MainController::class, 'meetingHome'])
+    ->name('meetingHome');
+
 
 //main page where votes get cast
-//todo should probably rename all this since it's basically the application
 Route::get('main/{motion}', [MainController::class, 'getVotePage'])
     ->name('main');
 
@@ -162,7 +169,7 @@ Route::resource('motions', MotionController::class);
    ============================= */
 Route::get('/cast-votes/{meeting}', [VoteHistoryController::class, 'getPreviouslyCastVotes']);
 //controller which handles validating and recording votes
-Route::post('record-vote/{motion}', [RecordVoteController::class, 'recordVote']);
+Route::post('record-vote/{motion}', [RecordVoteController::class, 'recordVote'] );
 
 Route::post('validation', [ReceiptValidationController::class, 'validateReceipt']);
 Route::resource('votes', VoteController::class);
@@ -175,14 +182,6 @@ Route::get('results/{motion}/counts', [ResultsController::class, 'getCounts']);
 Route::get('results/{motion}', [ResultsController::class, 'getResults']);
 
 
-/* =============================
-        Resource and other service controllers
-   ============================= */
-
-//Route::get('meetings/{meeting}', [MeetingController::class, 'show']);
-//Route::post('meetings/{meeting}', [MeetingController::class, 'update']);
-//Route::get('meetings', [MeetingController::class, 'store']);
-
 
 /* =============================
         Publicly accessible
@@ -194,3 +193,16 @@ Route::get('/', [PublicIndexController::class, 'index'])
 Route::get('/waitlist', [WaitlistController::class, 'show'])
     ->name('waitlist');
 Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
+
+
+
+/* =============================
+        Resource and other service controllers
+   ============================= */
+
+//Route::get('meetings/{meeting}', [MeetingController::class, 'show']);
+//Route::post('meetings/{meeting}', [MeetingController::class, 'update']);
+//Route::get('meetings', [MeetingController::class, 'store']);
+
+
+

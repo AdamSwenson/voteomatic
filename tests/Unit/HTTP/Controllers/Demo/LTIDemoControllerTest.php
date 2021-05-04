@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Demo;
+namespace App\Http\Controllers\Demo;
 
 use App\Http\Controllers\Demo\LTIDemoController;
 
@@ -75,6 +75,7 @@ class LTIDemoControllerTest extends TestCase
         $this->resourceLink->ltiConsumer()->associate($this->consumer)->save();
         $this->meeting = Meeting::factory()->create();
         $this->user = User::factory()->create();
+        $this->meeting->addUserToMeeting($this->user);
         $this->payload = LTIPayloadMaker::makePayload($this->meeting, $this->endpoint, $this->resourceLink, $this->user);
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Unit\Models;
 //namespace Tests\Unit;
 //namespace Tests;
 
@@ -11,7 +11,7 @@ use Tests\TestCase;
 class MotionTestCase extends TestCase
 {
 
-    protected $object;
+    public $object;
     public $nayVotes;
     public int $totalYay;
     public int $totalNay;

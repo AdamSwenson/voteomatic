@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
+use PDOException;
 
 class AdminUserSeeder extends Seeder
 {
@@ -16,7 +17,12 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        try{
+        try {
+
+            //We don't want multiple entries
+            if(! is_null(User::where('email',  env('DEV_USER_ADMIN_EMAIL'))->first())) {
+                return true;
+            }
 
             $props = [
                 'first_name' => 'Admin',
@@ -24,16 +30,24 @@ class AdminUserSeeder extends Seeder
                 'email' => env('DEV_USER_ADMIN_EMAIL'),
                 'password' => env('DEV_USER_ADMIN_PASSWORD'),
                 'is_admin' => true
-                ];
+            ];
 
             User::create($props);
 
-        }catch(\Exception $e){
-            Log::error($e);
+        }
+        catch(PDOException $e1){
+            Log::error($e1);
+            echo($e1);
         }
         catch(QueryException $e2)
         {
             Log::error($e2);
+//            echo($e2);
+        }
+
+        catch(Exception $e){
+            Log::error($e);
+            echo($e);
         }
     }
 }

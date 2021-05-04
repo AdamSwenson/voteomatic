@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repositories\Vote;
+namespace App\Repositories\Vote;
 
 use App\Repositories\Vote\VoteTotalRepository;
 
@@ -18,7 +18,7 @@ class VoteTotalRepositoryTest extends TestCase
 
     public function testCastVotes()
     {
-
+$this->markTestSkipped('Probably deprecated ');
     }
 
 }

@@ -66,6 +66,7 @@ class LTILaunchController extends Controller
 
     /**
      * Receives the launch request
+     *
      * @deprecated
      *
      * lti:create-tool-consumer
@@ -153,6 +154,10 @@ class LTILaunchController extends Controller
 
             //Get an existing user or create a new person in the db
             $user = $this->userRepository->getUserFromRequest($request, $meeting);
+
+            //add them to the meeting
+            //dev step added in VOT-1
+            $meeting->addUserToMeeting($user);
 
             //Log them in
             Auth::login($user, true);

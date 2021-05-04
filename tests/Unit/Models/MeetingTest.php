@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Models;
+namespace Tests\Unit\Models;
 
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
 use Tests\TestCase;
 
 class MeetingTest extends TestCase
@@ -14,15 +15,37 @@ class MeetingTest extends TestCase
      */
     public $obj;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
         $this->obj = Meeting::factory()->create();
     }
 
     /** @test */
+    public function isPartOfMeeting()
+    {
+        $num = 5;
+        $users = User::factory()->count($num)->create();
+
+        foreach ($users as $user) {
+            $user->meetings()->attach($this->obj);
+            $user->push();
+        }
+
+        //check
+        foreach ($users as $user) {
+            $this->assertTrue($this->obj->isPartOfMeeting($user), "returns true when user part of meeting");
+        }
+
+        $nonMember = User::factory()->create();
+        $this->assertFalse($this->obj->isPartOfMeeting($nonMember), "Returns false for non-member");
+
+    }
+
+    /** @test */
     public function assignMotionMainMotion()
     {
+        $this->markTestSkipped('Method seems to be unused');
 
         $this->obj->initializeAssignmentRoot();
 
@@ -45,12 +68,13 @@ class MeetingTest extends TestCase
     /** @test */
     public function resetAssignments()
     {
-
+        $this->markTestIncomplete();
     }
 
     /** @test */
     public function getAssignmentRoot()
     {
+        $this->markTestIncomplete();
 
     }
 
@@ -64,8 +88,35 @@ class MeetingTest extends TestCase
             'meeting_id' => $this->obj->id,
             'parent_id' => null,
             'motion_id' => null
-            ]);
+        ]);
     }
+
+
+    /**
+     * @test
+     */
+    public function getOwner()
+    {
+        $user = User::factory()->create();
+        $this->obj->owner_id = $user->id;
+        $this->obj->fresh();
+
+        $owner = $this->obj->getOwner();
+        $this->assertTrue($user->is($owner));
+
+    }
+
+    /** @test */
+    public function setOwner()
+    {
+        $user = User::factory()->create();
+        $this->obj->setOwner($user);
+        $this->obj->fresh();
+
+        $this->assertEquals($user->id, $this->obj->owner_id, "Sets owner");
+
+    }
+
 
     public function testUsers()
     {

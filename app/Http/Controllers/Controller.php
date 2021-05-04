@@ -25,29 +25,37 @@ class Controller extends BaseController
 
     }
 
-    public function getUser()
-    {
-
-//
-//        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
-//        $env = env('APP_ENV');
-//        if ($env != 'production' && $env != 'testing') {
-//            //this is here in case I am dumb. it is not an excuse to be dumb
-//            //and fail to remove before production.
-//            if(self::USE_CHAIR){
-//                Auth::loginUsingId(self::DEV_USER_ID, true);
-//
-//            }else{
-//                Auth::loginUsingId(self::DEV_NON_CHAIR_USER_ID, true);
-//            }
-//
-//        } else {
-//
-//            $this->middleware('auth');
-//        }
-
+    /**
+     * Check with Auth to get the user and
+     * set them as $this->user
+     */
+    protected function setLoggedInUser(){
         $this->user = Auth::user();
     }
+//
+//    public function setLoggedInUser()
+//    {
+//
+////
+////        // TODO DEV REMOVE BEFORE ANY PRODUCTION USE
+////        $env = env('APP_ENV');
+////        if ($env != 'production' && $env != 'testing') {
+////            //this is here in case I am dumb. it is not an excuse to be dumb
+////            //and fail to remove before production.
+////            if(self::USE_CHAIR){
+////                Auth::loginUsingId(self::DEV_USER_ID, true);
+////
+////            }else{
+////                Auth::loginUsingId(self::DEV_NON_CHAIR_USER_ID, true);
+////            }
+////
+////        } else {
+////
+////            $this->middleware('auth');
+////        }
+//
+//        $this->user = Auth::user();
+//    }
 
 
 

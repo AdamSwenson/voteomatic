@@ -9,6 +9,9 @@ use Illuminate\Database\Seeder;
 
 class LTIDevCredsSeeder extends Seeder
 {
+
+    public $consumerName = 'Development consumer';
+
     /**
      * Creates the keys used in the LTI authentication
      * process on the first meeting in the database.
@@ -19,44 +22,32 @@ class LTIDevCredsSeeder extends Seeder
      */
     public function run()
     {
-
-        $meetings = Meeting::all();
-        if (! isset($meetings)) {
-            $meeting = Meeting::factory()->create();
-        }else {
-            $meeting = $meetings[0];
+        //We don't want multiple entries
+        if(! is_null(LTIConsumer::where('name', $this->consumerName)->first())) {
+            return true;
         }
 
-        //todo Set up commented part instead so will only have one entry
-//        $name = 'Development consumer';
-//
-//        $consumer = LTIConsumer::where('consumer_key', env('DEV_CONSUMER_KEY'))
-//            ->where('secret_key', env('DEV_SHARED_KEY'))
-//            ->where('name', $name)->firstOrCreate();
 
-//        ResourceLink::where('meeting_id', $meeting->id)
-//            ->where('resource_link_id', env('DEV_RESOURCE_LINK_ID'))
-//            ->where('lti_consumer_id',  $consumer->id)
-//            ->where('description', $meeting->name)
-//            ->firstOrCreate();
+        $meeting = Meeting::find(1);
+
+        if(is_null($meeting)) {
+            $meeting = Meeting::factory()->create();
+        }
 
 
-        $consumer = LTIConsumer::factory([
-                'name' => 'Development consumer',
+        $consumer = LTIConsumer::create([
+                'name' => $this->consumerName,
                 'consumer_key' => env('DEV_CONSUMER_KEY'),
                 'secret_key' => env('DEV_SHARED_KEY')
             ])->create();
 
-
-        ResourceLink::factory([
+echo $meeting->id;
+        ResourceLink::create([
             'meeting_id' => $meeting->id,
             'resource_link_id' => env('DEV_RESOURCE_LINK_ID'),
             'lti_consumer_id' => $consumer->id
         ])->create();
 
 
-
-
-        //
     }
 }

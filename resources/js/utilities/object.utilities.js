@@ -1,5 +1,6 @@
 let _ = require('lodash');
 
+
 /**
  * Usually used when handed a parameter that could be either an object
  * with an id property or the id itself.  This returns
@@ -7,10 +8,10 @@ let _ = require('lodash');
  * @param ObjectOrId
  * @returns {Number|*}
  */
-const idify = (ObjectOrId) =>{
-    if (_.isNumber(ObjectOrId)) return ObjectOrId;
-
-//    if (ObjectOrId instanceof Number) return ObjectOrId;
+module.exports.idify = (ObjectOrId) =>{
+// const idify = (ObjectOrId) =>{
+    if(_.isNumber(ObjectOrId)) return ObjectOrId;
+    // if (ObjectOrId instanceof Number) return ObjectOrId;
 
     return ObjectOrId.id;
 }
@@ -24,7 +25,7 @@ const idify = (ObjectOrId) =>{
  * @param id
  * @returns {*}
  */
-const getById = (storageArray, id) =>{
+module.exports.getById = (storageArray, id) =>{
     // return function ( state, id ) {
     let r = storageArray.filter(function (i) {
         if (i.id === id) {
@@ -35,6 +36,8 @@ const getById = (storageArray, id) =>{
 }
 
 
-export  {
-    idify, getById
-};
+// export  {
+//     idify, getById
+// };
+
+

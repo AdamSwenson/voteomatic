@@ -22,7 +22,7 @@ class AssignmentRepositoryTest extends TestCase
      */
     private $dataMaker;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -37,154 +37,35 @@ class AssignmentRepositoryTest extends TestCase
         //inside static methods, so (re)instantiating the class.
         $this->dataMaker = new AssignmentDataMaker();
 
-
     }
-//
-//    public function testCanBeSynced()
-//    {
-//
-//    }
 
-//    public function testGetPositionForClient()
-//    {
-//
-//    }
-//
-//    public function testRecursiveMaker()
-//    {
-//
-//    }
-//
-    public function testMakeAssignment()
-    {
-        $depth = 5;
-        $result = AssignmentRepository::makeAssignment($this->meeting, $this->motion1, $this->rootAssignment->id, $depth);
-
-        $this->assertInstanceOf(Assignment::class, $result);
-        $this->assertEquals($this->rootAssignment->id, $result->parent_id);
-        $this->assertEquals($depth, $result->depth);
-
-     }
-
+    // ----------------------------------- static methods
 
     /** @test */
-    public function getPositionForDraft()
+    public function addChildren()
     {
-        $meeting = Meeting::factory()->create();
-        $numLevels = 3;
-        $numChildren = 3;
-        $expectedDescendants = 24;
-
-        //Was getting problem with the recursive function
-        //inside static methods, so (re)instantiating the class.
-        $this->dataMaker = new AssignmentDataMaker();
-
-        //call
-        $assigned = $this->dataMaker->makeMeetingData($meeting, $numLevels, $numChildren);
-
-        $tree = $this->object->getPositionForDraft($meeting);
-
-        $this->assertNotEmpty($tree);
-        $this->assertEquals($expectedDescendants, sizeof($tree), "correct number returned");
-
-        //todo check the details
-
-    }
-//    public function testAddChildren()
-//    {
-//
-//    }
-
-//    public function testProcessIncoming()
-//    {
-//
-//    }
-
-    /** @test */
-    public function processIncoming()
-    {
-        $numLevels = 3;
-        $numAtLevel = 3;
-        $motion0 = Motion::factory()->create(); //sib
-        $motion1 = Motion::factory()->create(); //sib
-        $motion2 = Motion::factory()->create(); //sib
-        $motion3 = Motion::factory()->create(); //child of 1
-//        meetingId: 9, motionId: 81, parentId: 9, position: 0}
-        $order = [
-            ['meetingId' => $this->meeting->id, 'parentId' => $motion0->id, 'motionId' => $motion1->id, 'position' => 0],
-            ['meetingId' => $this->meeting->id, 'parentId' => $motion0->id, 'motionId' => $motion2->id, 'position' => 1],
-            ['meetingId' => $this->meeting->id, 'parentId' => $motion1->id, 'motionId' => $motion3->id, 'position' => 0]];
-
-        //call
-        $this->object->processIncoming($this->meeting, $order);
-
-        //check
-        $assignments = Assignment::where('meeting_id', $this->meeting->id)->get();
-
-        //Check that the desired records are present
-        $this->assertDatabaseHas('assignments', [
-            'meeting_id' => $this->meeting->id,
-            'motion_id' => $motion1->id,
-            'position' => 0]);
-        $this->assertDatabaseHas('assignments', [
-            'meeting_id' => $this->meeting->id,
-            'motion_id' => $motion2->id,
-            'position' => 1]);
-        $this->assertDatabaseHas('assignments', [
-            'meeting_id' => $this->meeting->id,
-            'motion_id' => $motion3->id,
-//            'parent_id' => Assignment::where('meeting_id', $this->meeting1->id)->
-            'position' => 0]);
-
-        //Check tha these are the only records for the meeting1
-        $this->assertEquals(5, $assignments->count());
-    }
-
-
-    public function sadPathProcessIncomingWhereUnsetMotionIdsHaveSnuckIn()
-    {
-
+        $this->markTestSkipped('likely unused method');
     }
 
     /** @test */
-    public function getPositionForClient2()
+    public function testRecursiveMaker()
     {
-        $numLevels = 3;
-        $numChildren = 3;
-
-        //Was getting problem with the recursive function
-        //inside static methods, so (re)instantiating the class.
-        $dataMaker = new AssignmentDataMaker();
+        $this->markTestSkipped('likely unused method');
+    }
 
 
-        $this->markTestSkipped('problem with redeclaring recursiveAdder in data maker');
+    // --------------------------------- Others
 
-        $d = $dataMaker->makeMeetingData($this->meeting, $numLevels, $numChildren);
-        $children = $d->getChildren();
-
-        //call
-        $result = $this->object->getMotionTreeForClient($this->meeting);
-
-        //check
-//NB, we are skipping the root motion
-        $this->assertEquals(sizeof($children) + 1, sizeOf($result['position']));
-
-        //starting at 1 so that we can just use the order array
-        // without having to shoehorn the root element in
-        for ($i = 0; $i < sizeof($children); $i++) {
-            $this->assertEquals($children[$i]->motion_id, $result['position'][$i]['motionId']);
-        }
-
-//        //check that the root is there
-//        $root = $result['position'][0];
-//        $this->assertEquals($root['parentId'], null, "parent id of root is null");
-//        $this->assertEquals($this->rootMotion, $root);
-
+    /** @test */
+    public function canBeSynced()
+    {
+        $this->markTestSkipped('Possible gradeomatic relic?');
     }
 
     /** @test */
-    public function getPositionForClient()
+    public function getMotionTreeForClient()
     {
+        $this->markTestIncomplete('problem with redeclaring recursiveAdder in data maker');
 
         //prep
         $motion0 = $this->rootMotion;
@@ -239,9 +120,132 @@ class AssignmentRepositoryTest extends TestCase
         $this->assertEquals($this->rootMotion, $root);
     }
 
-    public function testThatDoesNotDeleteExistingOrderOnLoad()
+    /** @test */
+    public function getMotionTreeForClientForClient2()
     {
+        $this->markTestSkipped('problem with redeclaring recursiveAdder in data maker');
 
+        $numLevels = 3;
+        $numChildren = 3;
+
+        //Was getting problem with the recursive function
+        //inside static methods, so (re)instantiating the class.
+        $dataMaker = new AssignmentDataMaker();
+
+        $d = $dataMaker->makeMeetingData($this->meeting, $numLevels, $numChildren);
+        $children = $d->getChildren();
+
+        //call
+        $result = $this->object->getMotionTreeForClient($this->meeting);
+
+        //check
+//NB, we are skipping the root motion
+        $this->assertEquals(sizeof($children) + 1, sizeOf($result['position']));
+
+        //starting at 1 so that we can just use the order array
+        // without having to shoehorn the root element in
+        for ($i = 0; $i < sizeof($children); $i++) {
+            $this->assertEquals($children[$i]->motion_id, $result['position'][$i]['motionId']);
+        }
+
+//        //check that the root is there
+//        $root = $result['position'][0];
+//        $this->assertEquals($root['parentId'], null, "parent id of root is null");
+//        $this->assertEquals($this->rootMotion, $root);
+
+    }
+
+
+    /** @test */
+    public function getPositionForDraft()
+    {
+        $this->markTestSkipped('Refers to no longer existing method....');
+
+        $meeting = Meeting::factory()->create();
+        $numLevels = 3;
+        $numChildren = 3;
+        $expectedDescendants = 24;
+
+        //Was getting problem with the recursive function
+        //inside static methods, so (re)instantiating the class.
+        $this->dataMaker = new AssignmentDataMaker();
+
+        //call
+        $assigned = $this->dataMaker->makeMeetingData($meeting, $numLevels, $numChildren);
+
+        $tree = $this->object->getPositionForDraft($meeting);
+
+        $this->assertNotEmpty($tree);
+        $this->assertEquals($expectedDescendants, sizeof($tree), "correct number returned");
+
+        //todo check the details
+
+    }
+
+
+    /** @test */
+    public function makeAssignment()
+    {
+        $depth = 5;
+        $result = AssignmentRepository::makeAssignment($this->meeting, $this->motion1, $this->rootAssignment->id, $depth);
+
+        $this->assertInstanceOf(Assignment::class, $result);
+        $this->assertEquals($this->rootAssignment->id, $result->parent_id);
+        $this->assertEquals($depth, $result->depth);
+
+    }
+
+
+    /** @test */
+    public function processIncoming()
+    {
+        $numLevels = 3;
+        $numAtLevel = 3;
+        $motion0 = Motion::factory()->create(); //sib
+        $motion1 = Motion::factory()->create(); //sib
+        $motion2 = Motion::factory()->create(); //sib
+        $motion3 = Motion::factory()->create(); //child of 1
+//        meetingId: 9, motionId: 81, parentId: 9, position: 0}
+        $order = [
+            ['meetingId' => $this->meeting->id, 'parentId' => $motion0->id, 'motionId' => $motion1->id, 'position' => 0],
+            ['meetingId' => $this->meeting->id, 'parentId' => $motion0->id, 'motionId' => $motion2->id, 'position' => 1],
+            ['meetingId' => $this->meeting->id, 'parentId' => $motion1->id, 'motionId' => $motion3->id, 'position' => 0]];
+
+        //call
+        $this->object->processIncoming($this->meeting, $order);
+
+        //check
+        $assignments = Assignment::where('meeting_id', $this->meeting->id)->get();
+
+        //Check that the desired records are present
+        $this->assertDatabaseHas('assignments', [
+            'meeting_id' => $this->meeting->id,
+            'motion_id' => $motion1->id,
+            'position' => 0]);
+        $this->assertDatabaseHas('assignments', [
+            'meeting_id' => $this->meeting->id,
+            'motion_id' => $motion2->id,
+            'position' => 1]);
+        $this->assertDatabaseHas('assignments', [
+            'meeting_id' => $this->meeting->id,
+            'motion_id' => $motion3->id,
+//            'parent_id' => Assignment::where('meeting_id', $this->meeting1->id)->
+            'position' => 0]);
+
+        //Check tha these are the only records for the meeting1
+        $this->assertEquals(5, $assignments->count());
+    }
+
+    /** @test */
+    public function sadPathProcessIncomingWhereUnsetMotionIdsHaveSnuckIn()
+    {
+        $this->markTestSkipped('Possible gradeomatic relic?');
+    }
+
+    /** @test */
+    public function doesNotDeleteExistingOrderOnLoad()
+    {
+        $this->markTestSkipped('Possible gradeomatic relic?');
     }
 
     /** @test */

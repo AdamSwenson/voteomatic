@@ -4,24 +4,56 @@ namespace Database\Seeders;
 
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\RecordedVoteRecord;
+use App\Models\User;
 use App\Models\Vote;
 use App\Repositories\IMotionRepository;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class FakeFullMeetingSeeder extends Seeder
 {
 
     /**
-     * Run the database seeds.
+     * Creates the full meeting with motions and votes.
      *
+     * NB, it will add the user(s) to the meeting. Ownership of the
+     * meeting must be handled elsewhere. That allows this to be used
+     * for all user categories.
+     *
+     * @param null $meeting
+     * @param null $user
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function run()
+    public function run($meeting=null, $user=null)
     {
 //        $voters = User::factory()->count(FakeFullMeetingSeeder::NUMBER_VOTERS)->create();
 
         $repo  = app()->make(IMotionRepository::class);
-        $meeting = Meeting::factory()->create();
+
+        //use the meeting provided or create a fresh one
+        $meeting = ! is_null($meeting) ? $meeting   : Meeting::factory()->create();
+
+        //we will need them later to be voters
+
+        if(! is_null($user)){
+            $realUsers = [$user];
+            Log::debug('adding current user');
+
+        }else{
+            Log::debug('adding all users');
+            //todo This seems like it will add all users, not just the current person
+            $realUsers = User::all();
+//        $realUsers = [
+//            User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first(),
+//            User::where('email', env('DEV_USER_REGULAR_EMAIL'))->first()
+//        ];
+            foreach($realUsers as $user){
+                $meeting->addUserToMeeting($user);
+            }
+
+        }
 
 
         $main1 = Motion::create([
@@ -164,6 +196,18 @@ class FakeFullMeetingSeeder extends Seeder
         Vote::factory(['motion_id' => $main3->id])->negative()->count(4)->create();
         $main3->is_complete = true;
         $main3->save();
+
+
+        //Add our real users as voters on motions up to this point
+        foreach($meeting->motions()->get() as $motion){
+            foreach($realUsers as $user) {
+                //using factory so won't have to enable mass assignment for creation
+                RecordedVoteRecord::factory()->create([
+                    'motion_id' => $motion->id,
+                    'user_id' => $user->id
+                ]);
+            }
+        }
 
         //The currently pending motion
         Motion::create([

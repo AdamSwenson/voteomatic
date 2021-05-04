@@ -24,7 +24,7 @@ class RecordedVoteRecordFactory extends Factory
     public function definition()
     {
         $motion = Motion::factory()->create();
-        $user = User::factory()->create();
+        $user = User::factory()->make();
 
         return [
             'motion_id' => $motion->id,

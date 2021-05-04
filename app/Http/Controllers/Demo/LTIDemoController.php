@@ -8,6 +8,7 @@ use App\Http\Requests\LTIRequest;
 use App\LTI\Authenticators\AuthenticatorFactory;
 use App\LTI\Exceptions\LTIAuthenticationException;
 use App\LTI\LTI;
+use App\Models\Meeting;
 use App\Repositories\ILTIRepository;
 use App\Repositories\IUserRepository;
 use Database\Seeders\FakeFullMeetingSeeder;
@@ -67,62 +68,58 @@ class LTIDemoController extends Controller
     public function launchChairDemo(LTIRequest $request)
     {
         Log::debug("=========== LTIDemoController@launchChairDemo ===========");
+        Log::debug("[" . env('APP_ENV'). "]");
         Log::debug($request);
         try {
             //Set up new meeting for them to play with.
-            $seeder = new FakeFullMeetingSeeder();
-            $meeting = $seeder->run();
+            $meeting = Meeting::factory()->create();
 
+            //Authenticate the incoming request
             $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
-
-//
-//            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
-//
-//            //We verify that the oath signature on the incoming post
-//            //request is valid
-//            $authenticator = AuthenticatorFactory::make($request);
-//            $authenticator->authenticate($request, $resourceLink);
 
             //Get an existing user or create a new person in the db
             $user = $this->userRepository->getUserFromRequest($request, $meeting);
+
             //Make them a chair
             $user->is_admin = true;
             $user->save();
+
+            //make them the owner of the meeting
+            $meeting->setOwner($user);
+
             //Log them in
             Auth::login($user, true);
 
+            //Finally we populate the meeting with motions and votes. We do this here
+            //so that the the user can be added as a voter on past motions.
+            $seeder = new FakeFullMeetingSeeder();
+            $seeder->run($meeting, $user);
+
             //We redirect to the main app page
+            //dev Fixing problem introduced in 15562eb
             return redirect()->route('meetingHome', $meeting->id);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);
 
-            abort(403, 'Unauthorized action.');
+            abort(408, 'Error in LTI authentication.');
 
         }
-
-//        return redirect()->action([LTILaunchController::class, 'handleMeetingLaunchRequest'], [$meeting, $request]);
-//        return redirect()->route('lti-launch', $meeting);
-
 
     }
 
     public function launchMemberDemo(LTIRequest $request)
     {
         Log::debug("=========== LTIDemoController@launchMemberDemo ===========");
+        Log::debug("[" . env('APP_ENV'). "]");
         Log::debug($request);
 
         try {
             //Set up new meeting for them to play with.
-            $seeder = new FakeFullMeetingSeeder();
-            $meeting = $seeder->run();
+            $meeting = Meeting::factory()->create();
 
-            $resourceLink = $this->LTIRepository->getResourceLinkFromRequest($request, $meeting);
-
-            //We verify that the oath signature on the incoming post
-            //request is valid
-            $authenticator = AuthenticatorFactory::make($request);
-            $authenticator->authenticate($request, $resourceLink);
+            //Authenticate the incoming request
+            $this->LTIRepository->handleMeetingLaunchRequest($request, $meeting);
 
             //Get an existing user or create a new person in the db
             //and associate them with the meeting
@@ -135,10 +132,14 @@ class LTIDemoController extends Controller
             //Log them in
             Auth::login($user, true);
 
-            //We redirect to the main app page
-            return redirect()->route('meetingHome', $meeting->id);
+            //Finally we populate the meeting with motions and votes. We do this here
+            //so that the the user can be added as a voter on past motions.
+            $seeder = new FakeFullMeetingSeeder();
+            $seeder->run($meeting, $user);
 
-            //return redirect()->route('lti-launch', $meeting);
+            //We redirect to the main app page
+            //dev Fixing problem introduced in 15562eb
+            return redirect()->route('meetingHome', $meeting->id);
 
         } catch (LTIAuthenticationException $e) {
             Log::debug($e);

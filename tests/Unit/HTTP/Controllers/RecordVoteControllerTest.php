@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 
 use App\Http\Controllers\RecordVoteController;
+use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use App\Repositories\IVoterEligibilityRepository;
@@ -28,7 +29,10 @@ class RecordVoteControllerTest extends TestCase
     {
         parent::setUp();
         $this->user = User::factory()->create();
-        $this->motion = Motion::factory()->create();
+        $this->meeting = Meeting::factory()->create();
+        $this->meeting->addUserToMeeting($this->user);
+//        $this->meeting->users()->attach($this->user);
+        $this->motion = Motion::factory()->create(['meeting_id' => $this->meeting->id]);
         $this->url = 'record-vote/' . $this->motion->id;
 
     }
@@ -51,7 +55,6 @@ class RecordVoteControllerTest extends TestCase
 
         //call
         $response = $this->actingAs($this->user)
-            ->withSession(['foo' => 'bar'])
             ->post($this->url, $data);
 
         //check
@@ -109,4 +112,19 @@ class RecordVoteControllerTest extends TestCase
         $this->assertEquals(sizeof($recordedVotes), 0, "No votes recorded for motion");
 
     }
+
+    /** @test  */
+    public function recordVoteNonMemberUser(){
+        $data = ['vote' => $this->faker->randomElement(['yay', 'nay'])];
+
+        //call
+        $nonMember = User::factory()->create();
+        $response = $this->actingAs($nonMember)
+            ->post($this->url, $data);
+
+        //check
+        $response->assertStatus(403);
+
+    }
+
 }

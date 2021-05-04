@@ -12,11 +12,13 @@ use App\Repositories\Election\IElectionRepository;
 use App\Repositories\Election\IElectionResultsRepository;
 use App\Repositories\Exam\IExamRepository;
 use App\Repositories\ILTIRepository;
+use App\Repositories\IMeetingRepository;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
 use App\Repositories\IUserRepository;
 use App\Repositories\IVoterEligibilityRepository;
 use App\Repositories\LTIRepository;
+use App\Repositories\MeetingRepository;
 use App\Repositories\MotionRepository;
 use App\Repositories\MotionStackRepository;
 use App\Repositories\UserRepository;
@@ -48,6 +50,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IElectionResultsRepository::class, ElectionResultsRepository::class);
 
         $this->app->bind(ILTIRepository::class, LTIRepository::class);
+
+        $this->app->bind(IMeetingRepository::class, MeetingRepository::class);
 
         $this->app->bind(IMotionRepository::class, MotionRepository::class);
 

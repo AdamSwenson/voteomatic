@@ -14,39 +14,42 @@ class MotionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-     }
+    }
 
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function index()
+    {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
 
+        $this->authorize('viewAll', Motion::class);
+
+        return Motion::all();
+    }
+
+
+    /**
+     * @param Meeting $meeting
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function getAllForMeeting(Meeting $meeting)
     {
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting]);
+
+
         return response()->json($meeting->motions()->get());
     }
 
-    public function createMotion(Meeting $meeting, MotionRequest $request)
-    {
-        $motion = Motion::create($request->all());
-        $meeting->motions()->attach($motion);
-        return response()->json($motion);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,9 +59,17 @@ class MotionController extends Controller
      *
      * @param MotionRequest $request
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(MotionRequest $request)
     {
+
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('create', Motion::class);
+
+
         if (!$request->has('meetingId')) {
             //If we decide to allow motions to be created
             //independent of a meeting, we will hit this
@@ -107,22 +118,18 @@ class MotionController extends Controller
      *
      * @param Motion $motion
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('view', $motion);
+
         return response()->json($motion);
     }
 
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param \App\Models\Motion $motion
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit(Motion $motion)
-//    {
-//        //
-//    }
 
     /**
      * Update the specified resource in storage.
@@ -130,9 +137,14 @@ class MotionController extends Controller
      * @param Request $request
      * @param Motion $motion
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(MotionRequest $request, Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('update', $motion);
 
         //this is necessary because the request object has
         // at the top level:
@@ -153,6 +165,11 @@ class MotionController extends Controller
      */
     public function destroy(Motion $motion)
     {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('delete', $motion);
+
         $motion->delete();
 
         return response()->json(200);

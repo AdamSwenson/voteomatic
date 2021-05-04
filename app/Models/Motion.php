@@ -23,6 +23,7 @@ class Motion extends Model
         'meeting_id',
         'requires',
         'superseded_by',
+        'seconded',
         'type'];
 
     /**
@@ -72,7 +73,9 @@ class Motion extends Model
     protected $casts = [
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
-        'debatable' => 'boolean'];
+        'debatable' => 'boolean',
+        'seconded' => 'boolean'
+    ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
 

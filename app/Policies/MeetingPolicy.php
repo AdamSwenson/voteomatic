@@ -11,87 +11,101 @@ class MeetingPolicy
 {
     use HandlesAuthorization;
 
+//    /**
+//     * While this might more naturally be part of the motion policy,
+//     * it is here since the request for all motions gets a meeting object
+//     * as argument.
+//     *
+//     * @param User $user
+//     * @param Meeting $meeting
+//     * @return bool
+//     */
+//    public function viewAllMeetingMotions(User $user, Meeting $meeting)
+//    {
+//        return $meeting->isPartOfMeeting($user);
+//    }
+
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view all
+     * meetings associated with them.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewIndex(User $user)
     {
-        //
+        return $user->isChair();
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $meeting
+     * @param \App\Models\User $user
+     * @param \App\Models\Meeting $meeting
      * @return mixed
      */
     public function view(User $user, Meeting $meeting)
     {
         // todo this may eventually get a check for whether the user is associated with the meeting. Depends on how the order of adding folks to the meeting happens after LTI launch
         return true;
+
+        return $user->isChair() || sizeof($meeting->users()->where('id', $user->id)->first()) > 0;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create meetings.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return mixed
      */
     public function create(User $user)
     {
-        dd($user->is_admin);
+        return $user->isChair();
 
-        //Only administrators should be able to mess with meetings
-        if(! $this->is_admin){
-            throw IneligibleMeetingCreator;
-        }
-
-        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $meeting
+     * @param \App\Models\User $user
+     * @param \App\Models\Meeting $meeting
      * @return mixed
      */
     public function update(User $user, Meeting $meeting)
     {
-dd($user->is_admin);
+        return $user->is($meeting->getOwner());
 
+        //dd($user->is_admin);
 
         //Only administrators should be able to mess with meetings
-        return $user->is_admin;
+//        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $Meeting
+     * @param \App\Models\User $user
+     * @param Meeting $meeting
      * @return mixed
      */
     public function delete(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
-        return $user->is_admin;
+//        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $Meeting
+     * @param \App\Models\User $user
+     * @param Meeting $meeting
      * @return mixed
      */
     public function restore(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;
@@ -100,12 +114,13 @@ dd($user->is_admin);
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Meeting  $Meeting
+     * @param \App\Models\User $user
+     * @param Meeting $meeting
      * @return mixed
      */
     public function forceDelete(User $user, Meeting $meeting)
     {
+        return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;

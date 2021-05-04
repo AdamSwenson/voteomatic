@@ -33,10 +33,10 @@ class CreateResourceLinksTable extends Migration
             $table->text('description')->nullable();
 
             /** Foreign key for associated meeting */
-            $table->integer('meeting_id');
+            $table->integer('meeting_id')->nullable();
 
             //For oauth access
-            $table->integer('lti_consumer_id');
+            $table->integer('lti_consumer_id')->nullable();
 
 //            $table->string('consumer_key')->nullable();
 //            $table->string('secret_key')->nullable();

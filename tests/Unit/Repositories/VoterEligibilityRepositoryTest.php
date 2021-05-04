@@ -38,8 +38,13 @@ class VoterEligibilityRepositoryTest extends TestCase
     /** @test */
     public function hasAlreadyVotedWhenHasVoted()
     {
-        $preexisting = RecordedVoteRecord::factory()->create();
-        $user = $preexisting->user;
+        //creating the user since the recorded vote record factory
+        //needs to soft-make the user (otherwise slows down the seeder
+        //in the demo version)
+        $user = User::factory()->create();
+        $preexisting = RecordedVoteRecord::factory()->create(
+            ['user_id' => $user->id]
+        );
         $motion = $preexisting->motion;
 
         //call
@@ -53,9 +58,15 @@ class VoterEligibilityRepositoryTest extends TestCase
     /** @test */
     public function isEligibleRaisesExceptionWhenAlreadyVoted()
     {
-        $preexisting = RecordedVoteRecord::factory()->create();
-        $user = $preexisting->user;
+        //creating the user since the recorded vote record factory
+        //needs to soft-make the user (otherwise slows down the seeder
+        //in the demo version)
+        $user = User::factory()->create();
+        $preexisting = RecordedVoteRecord::factory()->create(
+            ['user_id' => $user->id]
+        );
         $motion = $preexisting->motion;
+
         $this->expectException(DoubleVoteAttempt::class);
 
         //call

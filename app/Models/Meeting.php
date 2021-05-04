@@ -8,6 +8,10 @@ use App\Models\Motion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Meeting
+ * @package App\Models
+ */
 class Meeting extends Model
 {
     use HasFactory;
@@ -16,9 +20,48 @@ class Meeting extends Model
 
     protected $casts = ['is_election' => 'boolean'];
 
-    public function getOwner(){
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
         return User::find($this->owner_id);
     }
+
+    /**
+     * Adds the provided user as an owner of the
+     * meeting.
+     *
+     * @param User $user
+     */
+    public function setOwner(User $user)
+    {
+        $this->owner_id = $user->id;
+        $this->save();
+    }
+
+
+    /**
+     * Checks whether the user is on the meeting roster.
+     * This is a helpful shortcut for various authorization tasks
+     *
+     * @param User $user
+     */
+    public function isPartOfMeeting(User $user)
+    {
+        return !is_null($this->users()->where('id', $user->id)->first());
+    }
+
+    /**
+     * Adds the user to the meeting roster
+     * @param User $user
+     */
+    public function addUserToMeeting(User $user)
+    {
+        $this->users()->attach($user);
+        $this->push();
+    }
+
 
 // ----------------------- start
 //These are from an initial attempt at the motion tree based on
@@ -93,7 +136,7 @@ class Meeting extends Model
         if ($this->getAssignmentRoot()) return true;
         $assignment = Assignment::create([
 //            'motion_id' => $this->id,
-        'motion_id' => null,
+            'motion_id' => null,
             'meeting_id' => $this->id,
             'parent_id' => null
         ]);
@@ -130,15 +173,18 @@ class Meeting extends Model
      * All the motions introduced at the meeting
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function motions(){
-    return $this->hasMany(Motion::class);
+    public function motions()
+    {
+        return $this->hasMany(Motion::class);
     }
 
-    public function resourceLink(){
+    public function resourceLink()
+    {
         return $this->hasOne(ResourceLink::class);
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany(User::class);
     }
 }

@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'user_id_hash' => $this->faker->sha1,
             'sis_id' => $this->faker->randomNumber(6),
 
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $this->faker->sha1 . $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
 
           'password' => Str::random(30),
@@ -45,6 +45,18 @@ class UserFactory extends Factory
             return [
                 'is_admin' => true,
 
+            ];
+        });
+
+    }
+
+    /**
+     * Someone who may create and over see votes on motions
+     */
+    public function chair(){
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => true,
             ];
         });
 

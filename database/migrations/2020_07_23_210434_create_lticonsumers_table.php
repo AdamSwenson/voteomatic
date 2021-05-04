@@ -39,6 +39,6 @@ class CreateLTIConsumersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consumers');
+        Schema::dropIfExists('l_t_i_consumers');
     }
 }

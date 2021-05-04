@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repositories;
+namespace App\Repositories;
 
 use App\Http\Requests\LTIRequest;
 use App\Models\Meeting;
