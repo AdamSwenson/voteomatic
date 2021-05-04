@@ -12,33 +12,35 @@ use Illuminate\Support\Facades\Auth;
 class DevController extends Controller
 {
     //
-
     public function __construct()
     {
-        $this->user = User::factory()->administrator()->create();
-        Auth::login($this->user);
+        $this->middleware('auth');
     }
 
 
-    public function amendment(Motion $motion)
-    {
-
-        $meeting = Meeting::factory()->create();
-
-        return view('dev.dev-amendment', ['data' => [
-            'meeting' => $meeting,
-            'motion' => $motion]]);
-
+    public function showMeeting(Meeting $meeting){
+        return redirect()->route('meetingHome', $meeting);
     }
 
-
-
-    public function tree(Meeting $motion)
-    {
-
-        return view('dev.dev-amendment', ['data' => [
-            'meeting' => $meeting,
-            'motion' => $motion]]);
-
-    }
+//    public function amendment(Motion $motion)
+//    {
+//
+//        $meeting = Meeting::factory()->create();
+//
+//        return view('dev.dev-amendment', ['data' => [
+//            'meeting' => $meeting,
+//            'motion' => $motion]]);
+//
+//    }
+//
+//
+//
+//    public function tree(Meeting $motion)
+//    {
+//
+//        return view('dev.dev-amendment', ['data' => [
+//            'meeting' => $meeting,
+//            'motion' => $motion]]);
+//
+//    }
 }

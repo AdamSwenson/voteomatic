@@ -67,8 +67,7 @@ class ElectionController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->getUser();
+        $this->setLoggedInUser();
 
         //Since we are creating the meeting without
         //the fields filled in, we may have blank meetings
