@@ -68,8 +68,9 @@ export default {
 
     computed: {
         modalId: function () {
-            return "#delete" + _.capitalize(this.eventType) + "Modal"
+            return "deleteModal"
         },
+
         labelId: function () {
             return "delete" + _.capitalize(this.eventType) + "ModalLabel";
         },

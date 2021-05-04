@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import MeetingSelectButton from "../meetings/meeting-select-area";
+import MeetingSelectButton from "../meetings/meeting-list-item";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MeetingMixin from '../storeMixins/meetingMixin';
 

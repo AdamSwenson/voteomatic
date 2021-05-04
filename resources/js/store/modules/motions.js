@@ -1,6 +1,10 @@
 import Motion from "../../models/Motion";
 import * as routes from "../../routes";
 import Payload from "../../models/Payload";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+import Office from "../../models/Office";
+import BallotObjectFactory from "../../models/BallotObjectFactory";
+import {idify} from "../../utilities/object.utilities";
 
 /**
  * Created by adam on 2020-07-30.
@@ -68,6 +72,16 @@ const mutations = {
         // Vue.set(state, 'motion', payload);
 
     },
+
+    /**
+     * Empties the list of motions. Used when changing
+     * meetings / elections
+     * @param state
+     */
+    clearMotions : (state) => {
+        state.motions = [];
+    },
+
 
     deleteMotion: (state, motionObject) => {
         // let idx = state.motions.indexOf(motionObject);
@@ -336,21 +350,38 @@ const actions = {
         }));
     },
 
-    loadMotionsForMeeting({dispatch, commit, getters}, meetingId) {
-        window.console.log('Loading motions for meeting');
+    loadMotionsForMeeting({dispatch, commit, getters}, meeting) {
+        //we need this to determine whether election or regular
+        // let meeting = getters.getMeetingById(meetingId);
+
+        window.console.log('Loading motions for meeting ', meeting);
         return new Promise(((resolve, reject) => {
+
             //send to server
-            let url = routes.motions.getAllMotionsForMeeting(meetingId);
+            let url = routes.motions.getAllMotionsForMeeting(idify(meeting));
             return Vue.axios.get(url)
                 .then((response) => {
+                    //Need to do this so that we don't have to
+                    //check motions for their meetings every time
+                    //we access the stack.
+                    commit('clearMotions');
+
                     _.forEach(response.data, (d) => {
-                        let motion = new Motion(d);
+                        let m = BallotObjectFactory.make(d, meeting);
+                        // let m = null;
+                        // if(isReadyToRock(meeting.is_election) && meeting.is_election){
+                        //      m= new Office(d);
+                        // }else{
+                        //     m = new Motion(d);
+                        // }
+
                         // let motion = new Motion(d.id, d.name, d.date);
-                        commit('addMotionToStore', motion);
+                        commit('addMotionToStore', m);
                         if (d.is_current) {
-                            commit('setMotion', motion)
+                            commit('setMotion', m)
                         }
                     });
+
                     resolve()
 
                 });

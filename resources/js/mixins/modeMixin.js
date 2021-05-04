@@ -67,7 +67,8 @@ module.exports = {
 
         setElection: function () {
             this.$store.dispatch('setElectionMode').then(() => {
-                // this.$store.dispatch('loadAllEvents').then(() => {
+                // let election = this.$store.getters.getActiveMeeting;
+                    // .then(() => {
                     window.console.log('election mode set ', this.eventType);
                 // });
             });

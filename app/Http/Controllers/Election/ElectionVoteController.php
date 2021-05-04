@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Election;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Election\ElectionVoteRequest;
+use App\Http\Requests\ElectionVoteRequest;
 use App\Http\Requests\VoteRequest;
 use App\Models\Election\Candidate;
 use App\Models\Motion;

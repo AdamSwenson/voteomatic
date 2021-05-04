@@ -1,7 +1,12 @@
 <template>
     <div class="election-card">
+        <div class="election-complete-card card" v-if="isComplete">
+            <div class="card-body">
+                <p class="card-text">Thank you for voting!</p>
+            </div>
+        </div>
 
-        <div class="card" v-if="isElection">
+        <div class="card" v-else-if="isElection">
 
             <div class="card-header">
                 <h2 class="card-title">{{ officeName }}</h2>
@@ -34,13 +39,15 @@
                 <write-in-controls></write-in-controls>
             </div>
 
-            <election-results-card></election-results-card>
+<!--            <election-results-card></election-results-card>-->
 
             <div class="card-footer">
                 <cast-ballot-button></cast-ballot-button>
             </div>
 
         </div>
+
+
 
         <div class="wrong-mode-message card" v-else>
             <div class="card-body">
@@ -163,6 +170,10 @@ export default {
 
         },
 
+        isComplete : function(){
+          return this.$store.getters.isElectionComplete;
+        },
+
         maxWinners: {
             get: function () {
                 if (isReadyToRock(this.motion)) return this.motion.max_winners;
@@ -189,39 +200,45 @@ export default {
     ,
 
     mounted() {
-
-//todo DEV ONLY
         let me = this;
-        //parse data from page and store stuff
-        let p = this.$store.dispatch('initialize');
-        p.then(function () {
-            // me.$router.push('meeting-home');
-            // if (isReadyToRock(me.meeting)) {
 
-            //dev hackery
-            let firstMotion = me.$store.getters.getStoredMotions;
+        me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
 
-            if (firstMotion.length === 0) return [];
-
-            firstMotion = firstMotion[0];
-            window.console.log(firstMotion, "first motion");
-            //
-            me.$store.dispatch('setCurrentMotion', {
-                meetingId: me.meeting.id,
-                motionId: firstMotion.id,
-            }).then(() => {
-
-                me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-
-                    window.console.log('voteomatic', 'isReady', 159, me.isReady);
-                });
-
-            })
+            window.console.log('election-card', 'isReady', 159, me.isReady);
+        });
+//
+// //todo DEV ONLY
+//         let me = this;
+//         //parse data from page and store stuff
+//         let p = this.$store.dispatch('initialize');
+//         p.then(function () {
+//             // me.$router.push('meeting-home');
+//             // if (isReadyToRock(me.meeting)) {
+//
+//             //dev hackery
+//             let firstMotion = me.$store.getters.getStoredMotions;
+//
+//             if (firstMotion.length === 0) return [];
+//
+//             firstMotion = firstMotion[0];
+//             window.console.log(firstMotion, "first motion");
+//             //
+//             me.$store.dispatch('setCurrentMotion', {
+//                 meetingId: me.meeting.id,
+//                 motionId: firstMotion.id,
+//             }).then(() => {
+//
+//                 me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+//
+//                     window.console.log('voteomatic', 'isReady', 159, me.isReady);
+//                 });
+//
+//             })
 
 
             // }
 
-        });
+        // });
 
 
         // this.$store.dispatch('loadElectionCandidates', this.motion.id);

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="motion-results">
+    <div class="motion-results-page">
 
         <div class="card results-display" v-if="isMotionComplete">
 
@@ -103,7 +103,7 @@ import DebatableBadge from "../motions/badges/debatable-badge";
 import MotionTypeBadge from "../motions/badges/motion-type-badge";
 
 export default {
-    name: "results-page",
+    name: "motion-results-page",
     components: {MotionTypeBadge, DebatableBadge, RequiredVoteBadge},
     mixins: [motionMixin, motionObjectMixin],
 

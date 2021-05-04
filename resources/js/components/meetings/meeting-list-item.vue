@@ -15,7 +15,7 @@ import ChairMixin from "../../mixins/chairMixin";
 
 
 export default {
-    name: "meeting-select-area",
+    name: "meeting-list-item",
 
     mixins : [ChairMixin],
     data: function () {
@@ -53,7 +53,8 @@ export default {
 
     methods: {
         setMeeting: function () {
-            this.$store.commit('setMeeting', this.meeting);
+            this.$store.dispatch('setActiveMeeting', this.meeting);
+            // this.$store.commit('setMeeting', this.meeting);
         }
 
     },

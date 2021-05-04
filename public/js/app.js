@@ -2028,7 +2028,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meetings_meeting_select_area__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meetings/meeting-select-area */ "./resources/js/components/meetings/meeting-select-area.vue");
+/* harmony import */ var _meetings_meeting_list_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meetings/meeting-list-item */ "./resources/js/components/meetings/meeting-list-item.vue");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
@@ -2073,7 +2073,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "event-list-card",
   components: {
-    MeetingSelectButton: _meetings_meeting_select_area__WEBPACK_IMPORTED_MODULE_0__["default"]
+    MeetingSelectButton: _meetings_meeting_list_item__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default.a, _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_3___default.a, _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_4___default.a],
   // mixins : [MeetingMixin],
@@ -2240,7 +2240,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     modalId: function modalId() {
-      return "#delete" + _.capitalize(this.type) + "Modal";
+      return "deleteModal";
+    },
+    target: function target() {
+      return '#' + this.modalId;
     } // label : function(){
     // },
     // typeCapitalized : function(){
@@ -2338,7 +2341,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     modalId: function modalId() {
-      return "#delete" + _.capitalize(this.eventType) + "Modal";
+      return "deleteModal";
     },
     labelId: function labelId() {
       return "delete" + _.capitalize(this.eventType) + "ModalLabel";
@@ -2972,7 +2975,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meetings_meeting_select_area__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meetings/meeting-select-area */ "./resources/js/components/meetings/meeting-select-area.vue");
+/* harmony import */ var _meetings_meeting_list_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meetings/meeting-list-item */ "./resources/js/components/meetings/meeting-list-item.vue");
 //
 //
 //
@@ -3006,7 +3009,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    MeetingSelectButton: _meetings_meeting_select_area__WEBPACK_IMPORTED_MODULE_0__["default"]
+    MeetingSelectButton: _meetings_meeting_list_item__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   // mixins : [MeetingMixin],
   data: function data() {
@@ -3242,7 +3245,12 @@ __webpack_require__.r(__webpack_exports__);
       window.console.log('Record Vote button clicked');
       var me = this;
       this.$store.dispatch('castElectionVote').then(function () {
-        me.$store.dispatch('nextOffice');
+        me.$store.dispatch('nextOffice').then(function () {})["catch"](function () {
+          //If there are no further offices to vote
+          //upon, it will reject.
+          me.$emit('election-complete');
+          window.console.log('election complete');
+        });
       });
     }
   }
@@ -3273,6 +3281,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3415,6 +3430,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       "default": ''
     },
+    isComplete: function isComplete() {
+      return this.$store.getters.isElectionComplete;
+    },
     maxWinners: {
       get: function get() {
         if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__["isReadyToRock"])(this.motion)) return this.motion.max_winners; // return ''
@@ -3432,28 +3450,40 @@ __webpack_require__.r(__webpack_exports__);
   computed: {},
   methods: {},
   mounted: function mounted() {
-    //todo DEV ONLY
-    var me = this; //parse data from page and store stuff
-
-    var p = this.$store.dispatch('initialize');
-    p.then(function () {
-      // me.$router.push('meeting-home');
-      // if (isReadyToRock(me.meeting)) {
-      //dev hackery
-      var firstMotion = me.$store.getters.getStoredMotions;
-      if (firstMotion.length === 0) return [];
-      firstMotion = firstMotion[0];
-      window.console.log(firstMotion, "first motion"); //
-
-      me.$store.dispatch('setCurrentMotion', {
-        meetingId: me.meeting.id,
-        motionId: firstMotion.id
-      }).then(function () {
-        me.$store.dispatch('loadElectionCandidates', me.motion.id).then(function () {
-          window.console.log('voteomatic', 'isReady', 159, me.isReady);
-        });
-      }); // }
-    }); // this.$store.dispatch('loadElectionCandidates', this.motion.id);
+    var me = this;
+    me.$store.dispatch('loadElectionCandidates', me.motion.id).then(function () {
+      window.console.log('election-card', 'isReady', 159, me.isReady);
+    }); //
+    // //todo DEV ONLY
+    //         let me = this;
+    //         //parse data from page and store stuff
+    //         let p = this.$store.dispatch('initialize');
+    //         p.then(function () {
+    //             // me.$router.push('meeting-home');
+    //             // if (isReadyToRock(me.meeting)) {
+    //
+    //             //dev hackery
+    //             let firstMotion = me.$store.getters.getStoredMotions;
+    //
+    //             if (firstMotion.length === 0) return [];
+    //
+    //             firstMotion = firstMotion[0];
+    //             window.console.log(firstMotion, "first motion");
+    //             //
+    //             me.$store.dispatch('setCurrentMotion', {
+    //                 meetingId: me.meeting.id,
+    //                 motionId: firstMotion.id,
+    //             }).then(() => {
+    //
+    //                 me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+    //
+    //                     window.console.log('voteomatic', 'isReady', 159, me.isReady);
+    //                 });
+    //
+    //             })
+    // }
+    // });
+    // this.$store.dispatch('loadElectionCandidates', this.motion.id);
   }
 });
 
@@ -4816,6 +4846,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _candidate_pool_card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-pool-card */ "./resources/js/components/election/setup/candidate-pool-card.vue");
 /* harmony import */ var _current_candidates_card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./current-candidates-card */ "./resources/js/components/election/setup/current-candidates-card.vue");
 /* harmony import */ var _office_edit_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./office-edit-card */ "./resources/js/components/election/setup/office-edit-card.vue");
+/* harmony import */ var _office_list_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./office-list-card */ "./resources/js/components/election/setup/office-list-card.vue");
+/* harmony import */ var _controls_create_office_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controls/create-office-button */ "./resources/js/components/election/setup/controls/create-office-button.vue");
 //
 //
 //
@@ -4841,12 +4873,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "office-setup-card",
   components: {
+    CreateOfficeButton: _controls_create_office_button__WEBPACK_IMPORTED_MODULE_4__["default"],
+    OfficeListCard: _office_list_card__WEBPACK_IMPORTED_MODULE_3__["default"],
     OfficeEditCard: _office_edit_card__WEBPACK_IMPORTED_MODULE_2__["default"],
     CurrentCandidatesCard: _current_candidates_card__WEBPACK_IMPORTED_MODULE_1__["default"],
     CandidatePoolCard: _candidate_pool_card__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -5506,10 +5548,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-page.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/results-page.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5628,7 +5670,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "results-page",
+  name: "motion-results-page",
   components: {
     MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_6__["default"],
     DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -5697,6 +5739,55 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.loadResults();
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-card.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/results-card.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _election_results_election_results_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../election/results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
+/* harmony import */ var _motion_results_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./motion-results-page */ "./resources/js/components/main/motion-results-page.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "results-card",
+  components: {
+    MotionResultsPage: _motion_results_page__WEBPACK_IMPORTED_MODULE_4__["default"],
+    ElectionResultsCard: _election_results_election_results_card__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  props: [],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default.a, _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {}
 });
 
 /***/ }),
@@ -6600,10 +6691,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6626,7 +6717,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "meeting-select-area",
+  name: "meeting-list-item",
   mixins: [_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {};
@@ -6649,7 +6740,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     setMeeting: function setMeeting() {
-      this.$store.commit('setMeeting', this.meeting);
+      this.$store.dispatch('setActiveMeeting', this.meeting); // this.$store.commit('setMeeting', this.meeting);
     }
   }
 });
@@ -48989,7 +49080,7 @@ var render = function() {
     "button",
     {
       class: _vm.styling,
-      attrs: { "data-toggle": "modal", "data-target": "#deleteMeetingModal" },
+      attrs: { "data-toggle": "modal", "data-target": _vm.target },
       on: { click: _vm.handleClick }
     },
     [_vm._v(_vm._s(_vm.label))]
@@ -49550,7 +49641,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "election-card" }, [
-    _vm.isElection
+    _vm.isComplete
+      ? _c("div", { staticClass: "election-complete-card card" }, [_vm._m(0)])
+      : _vm.isElection
       ? _c(
           "div",
           { staticClass: "card" },
@@ -49595,8 +49688,6 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("election-results-card"),
-            _vm._v(" "),
             _c(
               "div",
               { staticClass: "card-footer" },
@@ -49606,10 +49697,18 @@ var render = function() {
           ],
           1
         )
-      : _c("div", { staticClass: "wrong-mode-message card" }, [_vm._m(0)])
+      : _c("div", { staticClass: "wrong-mode-message card" }, [_vm._m(1)])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("p", { staticClass: "card-text" }, [_vm._v("Thank you for voting!")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -50222,6 +50321,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card office-setup" }, [
+    _c("div", { staticClass: "card-header" }, [_c("create-office-button")], 1),
+    _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [_c("office-edit-card")], 1),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -50241,7 +50342,9 @@ var render = function() {
           1
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [_c("office-list-card")], 1)
   ])
 }
 var staticRenderFns = []
@@ -50623,10 +50726,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50638,7 +50741,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "motion-results" }, [
+  return _c("div", { staticClass: "motion-results-page" }, [
     _vm.isMotionComplete
       ? _c("div", { staticClass: "card results-display" }, [
           _c("div", { staticClass: "card" }, [
@@ -50743,6 +50846,35 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "results-card card" },
+    [_vm.isElection ? _c("election-results-card") : _c("motion-results-page")],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -51164,10 +51296,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true&":
-/*!*******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true& ***!
-  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -70440,7 +70572,7 @@ Vue.component('voteomatic', __webpack_require__(/*! ./components/voteomatic */ "
 Vue.component('page-navbar', __webpack_require__(/*! ./components/navigation/page-navbar */ "./resources/js/components/navigation/page-navbar.vue")["default"]);
 Vue.component('waitlist', __webpack_require__(/*! ./components/waitlist */ "./resources/js/components/waitlist.vue")["default"]); //todo DEV TOP LEVEL
 
-Vue.component('results', __webpack_require__(/*! ./components/main/results-page */ "./resources/js/components/main/results-page.vue")["default"]);
+Vue.component('results', __webpack_require__(/*! ./components/main/motion-results-page */ "./resources/js/components/main/motion-results-page.vue")["default"]);
 Vue.component('setup-page', __webpack_require__(/*! ./components/setup-page */ "./resources/js/components/setup-page.vue")["default"]);
 Vue.component('amendment-page', __webpack_require__(/*! ./components/main/amendment-page */ "./resources/js/components/main/amendment-page.vue")["default"]);
 Vue.component('election-card', __webpack_require__(/*! ./components/election/election-card */ "./resources/js/components/election/election-card.vue")["default"]);
@@ -73393,17 +73525,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/main/results-page.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/main/results-page.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/main/motion-results-page.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/main/motion-results-page.vue ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./results-page.vue?vue&type=template&id=4eb321e1&scoped=true& */ "./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true&");
-/* harmony import */ var _results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./results-page.vue?vue&type=script&lang=js& */ "./resources/js/components/main/results-page.vue?vue&type=script&lang=js&");
+/* harmony import */ var _motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true& */ "./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true&");
+/* harmony import */ var _motion_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-results-page.vue?vue&type=script&lang=js& */ "./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -73413,50 +73545,119 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _motion_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "4eb321e1",
+  "5776ad9c",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/main/results-page.vue"
+component.options.__file = "resources/js/components/main/motion-results-page.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/main/results-page.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-results-page.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/motion-results-page.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/motion-results-page.vue?vue&type=template&id=5776ad9c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_results_page_vue_vue_type_template_id_5776ad9c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/main/results-card.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/main/results-card.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./results-card.vue?vue&type=template&id=1afb11e2&scoped=true& */ "./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true&");
+/* harmony import */ var _results_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./results-card.vue?vue&type=script&lang=js& */ "./resources/js/components/main/results-card.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _results_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1afb11e2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/main/results-card.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/main/results-card.vue?vue&type=script&lang=js&":
 /*!********************************************************************************!*\
-  !*** ./resources/js/components/main/results-page.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/main/results-card.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-page.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-page.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-card.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_results_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true&":
+/***/ "./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true&":
 /*!**************************************************************************************************!*\
-  !*** ./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true& ***!
+  !*** ./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true& ***!
   \**************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-page.vue?vue&type=template&id=4eb321e1&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-page.vue?vue&type=template&id=4eb321e1&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./results-card.vue?vue&type=template&id=1afb11e2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/main/results-card.vue?vue&type=template&id=1afb11e2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_page_vue_vue_type_template_id_4eb321e1_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_results_card_vue_vue_type_template_id_1afb11e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -74025,17 +74226,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/meetings/meeting-select-area.vue":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/meetings/meeting-select-area.vue ***!
-  \******************************************************************/
+/***/ "./resources/js/components/meetings/meeting-list-item.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/meetings/meeting-list-item.vue ***!
+  \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true& */ "./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true&");
-/* harmony import */ var _meeting_select_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./meeting-select-area.vue?vue&type=script&lang=js& */ "./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js&");
+/* harmony import */ var _meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true& */ "./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true&");
+/* harmony import */ var _meeting_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./meeting-list-item.vue?vue&type=script&lang=js& */ "./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -74045,50 +74246,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _meeting_select_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _meeting_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "0cf2ba80",
+  "2501a1b8",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/meetings/meeting-select-area.vue"
+component.options.__file = "resources/js/components/meetings/meeting-list-item.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_select_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-select-area.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-select-area.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_select_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-list-item.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-list-item.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true&":
-/*!*************************************************************************************************************!*\
-  !*** ./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true& ***!
-  \*************************************************************************************************************/
+/***/ "./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true& ***!
+  \***********************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-select-area.vue?vue&type=template&id=0cf2ba80&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/meetings/meeting-list-item.vue?vue&type=template&id=2501a1b8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_select_area_vue_vue_type_template_id_0cf2ba80_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_list_item_vue_vue_type_template_id_2501a1b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -77528,7 +77729,8 @@ module.exports = {
       var _this = this;
 
       this.$store.dispatch('setElectionMode').then(function () {
-        // this.$store.dispatch('loadAllEvents').then(() => {
+        // let election = this.$store.getters.getActiveMeeting;
+        // .then(() => {
         window.console.log('election mode set ', _this.eventType); // });
       });
     },
@@ -77728,6 +77930,63 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/models/BallotObjectFactory.js":
+/*!****************************************************!*\
+  !*** ./resources/js/models/BallotObjectFactory.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BallotObjectFactory; });
+/* harmony import */ var _Meeting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Meeting */ "./resources/js/models/Meeting.js");
+/* harmony import */ var _Election__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Election */ "./resources/js/models/Election.js");
+/* harmony import */ var _Office__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Office */ "./resources/js/models/Office.js");
+/* harmony import */ var _Motion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Motion */ "./resources/js/models/Motion.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+/**
+ * Determines whether an incoming response from the server
+ * is a meeting or an election (or other encompassing object)
+ * and creates the appropriate object
+ */
+
+var BallotObjectFactory = /*#__PURE__*/function () {
+  function BallotObjectFactory() {
+    _classCallCheck(this, BallotObjectFactory);
+  }
+
+  _createClass(BallotObjectFactory, null, [{
+    key: "make",
+    value: function make(data, meeting) {
+      // window.console.log('mainObjectFactory', data, data.is_election);
+      if (meeting.is_election === true) {
+        // window.console.log('y');
+        return new _Office__WEBPACK_IMPORTED_MODULE_2__["default"](data);
+      } else {
+        return new _Motion__WEBPACK_IMPORTED_MODULE_3__["default"](data);
+      }
+    }
+  }]);
+
+  return BallotObjectFactory;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Candidate.js":
 /*!******************************************!*\
   !*** ./resources/js/models/Candidate.js ***!
@@ -77891,6 +78150,59 @@ var Election = /*#__PURE__*/function (_Meeting) {
 
 /***/ }),
 
+/***/ "./resources/js/models/EventObjectFactory.js":
+/*!***************************************************!*\
+  !*** ./resources/js/models/EventObjectFactory.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EventObjectFactory; });
+/* harmony import */ var _Meeting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Meeting */ "./resources/js/models/Meeting.js");
+/* harmony import */ var _Election__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Election */ "./resources/js/models/Election.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+/**
+ * Determines whether an incoming response from the server
+ * is a meeting or an election (or other encompassing object)
+ * and creates the appropriate object
+ */
+
+var EventObjectFactory = /*#__PURE__*/function () {
+  function EventObjectFactory() {
+    _classCallCheck(this, EventObjectFactory);
+  }
+
+  _createClass(EventObjectFactory, null, [{
+    key: "make",
+    value: function make(data) {
+      // window.console.log('mainObjectFactory', data, data.is_election);
+      if (data.is_election === true) {
+        // window.console.log('y');
+        return new _Election__WEBPACK_IMPORTED_MODULE_1__["default"](data);
+      } else {
+        return new _Meeting__WEBPACK_IMPORTED_MODULE_0__["default"](data.id, data.name, data.date);
+      }
+    }
+  }]);
+
+  return EventObjectFactory;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/IModel.js":
 /*!***************************************!*\
   !*** ./resources/js/models/IModel.js ***!
@@ -77917,60 +78229,6 @@ function IModel() {
 
 
 ;
-
-/***/ }),
-
-/***/ "./resources/js/models/MainObjectFactory.js":
-/*!**************************************************!*\
-  !*** ./resources/js/models/MainObjectFactory.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MainObjectFactory; });
-/* harmony import */ var _Meeting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Meeting */ "./resources/js/models/Meeting.js");
-/* harmony import */ var _Election__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Election */ "./resources/js/models/Election.js");
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-/**
- * Determines whether an incoming response from the server
- * is a meeting or an election (or other encompassing object)
- * and creates the appropriate object
- */
-
-var MainObjectFactory = /*#__PURE__*/function () {
-  function MainObjectFactory() {
-    _classCallCheck(this, MainObjectFactory);
-  }
-
-  _createClass(MainObjectFactory, null, [{
-    key: "make",
-    value: function make(response) {
-      window.console.log('mainObjectFactory', response.data, response.data.is_election);
-
-      if (response.data.is_election === true) {
-        window.console.log('y');
-        return new _Election__WEBPACK_IMPORTED_MODULE_1__["default"](response.data);
-      } else {
-        return new _Meeting__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.id, response.data.name, response.data.date);
-      }
-    }
-  }]);
-
-  return MainObjectFactory;
-}();
-
-
 
 /***/ }),
 
@@ -78262,6 +78520,77 @@ var Motion = /*#__PURE__*/function (_IModel) {
 
 
 ;
+
+/***/ }),
+
+/***/ "./resources/js/models/Office.js":
+/*!***************************************!*\
+  !*** ./resources/js/models/Office.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Office; });
+/* harmony import */ var _Motion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Motion */ "./resources/js/models/Motion.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * A Motion to elect some folks
+ */
+
+var Office = /*#__PURE__*/function (_Motion) {
+  _inherits(Office, _Motion);
+
+  var _super = _createSuper(Office);
+
+  function Office(_ref) {
+    var _this;
+
+    var _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id,
+        _ref$content = _ref.content,
+        content = _ref$content === void 0 ? null : _ref$content,
+        _ref$description = _ref.description,
+        description = _ref$description === void 0 ? null : _ref$description;
+
+    _classCallCheck(this, Office);
+
+    _this = _super.call(this, {
+      id: id,
+      content: content,
+      description: description
+    });
+    _this.type = 'office'; // this.id = id;
+    // this.content = content;
+    // this.description = description;
+    // super(id, content, description);
+
+    return _this;
+  }
+
+  return Office;
+}(_Motion__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
 
 /***/ }),
 
@@ -78729,7 +79058,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _components_main_ballot_setup_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/main/ballot-setup-card */ "./resources/js/components/main/ballot-setup-card.vue");
-/* harmony import */ var _components_main_results_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/main/results-page */ "./resources/js/components/main/results-page.vue");
+/* harmony import */ var _components_main_results_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/main/results-card */ "./resources/js/components/main/results-card.vue");
 /* harmony import */ var _components_main_vote_verification_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/main/vote-verification-page */ "./resources/js/components/main/vote-verification-page.vue");
 /* harmony import */ var _components_main_meeting_home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/main/meeting-home */ "./resources/js/components/main/meeting-home.vue");
 /* harmony import */ var _components_main_chair_event_setup_card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/main/chair/event-setup-card */ "./resources/js/components/main/chair/event-setup-card.vue");
@@ -78755,10 +79084,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(('event-setup-card', _compo
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('meeting-home', _components_main_meeting_home__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vue.component('meeting-setup-page', meetingSetup);
 // Vue.component('motion-setup-page', motionSetup);
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('results-page', _components_main_results_page__WEBPACK_IMPORTED_MODULE_3__["default"]); // Vue.component( 'vote-page', votePage );
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('results-card', _components_main_results_card__WEBPACK_IMPORTED_MODULE_3__["default"]); // Vue.component( 'vote-page', votePage );
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vote-card', _components_main_vote_card__WEBPACK_IMPORTED_MODULE_7__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vote-verify', _components_main_results_page__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vote-verify', _components_main_results_card__WEBPACK_IMPORTED_MODULE_3__["default"]);
 var routes = [{
   name: 'home',
   path: '/meeting-home',
@@ -78797,7 +79126,7 @@ var routes = [{
   icon: "fa fa-comments-o",
   label: "Results",
   components: {
-    main: _components_main_results_page__WEBPACK_IMPORTED_MODULE_3__["default"]
+    main: _components_main_results_card__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: true,
   adminOnly: false
@@ -79321,7 +79650,7 @@ var actions = {
         var meeting = new _models_Election__WEBPACK_IMPORTED_MODULE_5__["default"](response.data);
         commit('addMeetingToStore', meeting);
         commit('setMeeting', meeting);
-        window.console.log('d');
+        window.console.log('election created id: ', meeting.id);
         resolve();
       });
     });
@@ -79359,10 +79688,25 @@ var actions = {
       });
     });
   },
-  loadResultsForOffice: function loadResultsForOffice(_ref7, motionId) {
+
+  /**
+   * Alias for deleting motions which represent offices
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   */
+  deleteOffice: function deleteOffice(_ref7, motion) {
     var dispatch = _ref7.dispatch,
         commit = _ref7.commit,
         getters = _ref7.getters;
+    dispatch('deleteMotion', motion);
+  },
+  loadResultsForOffice: function loadResultsForOffice(_ref8, motionId) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit,
+        getters = _ref8.getters;
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].getResults(motionId);
     return new Promise(function (resolve, reject) {
       return Vue.axios.get(url).then(function (response) {
@@ -79413,10 +79757,10 @@ var actions = {
   //
   //
   // },
-  loadCandidatePool: function loadCandidatePool(_ref8, motionId) {
-    var dispatch = _ref8.dispatch,
-        commit = _ref8.commit,
-        getters = _ref8.getters;
+  loadCandidatePool: function loadCandidatePool(_ref9, motionId) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
     motionId = Object(_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__["idify"])(motionId);
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].getPool(motionId);
     return new Promise(function (resolve, reject) {
@@ -79441,10 +79785,10 @@ var actions = {
    * @param getters
    * @returns {Promise<unknown>}
    */
-  loadElectionCandidates: function loadElectionCandidates(_ref9, motionId) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  loadElectionCandidates: function loadElectionCandidates(_ref10, motionId) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].candidates(motionId);
     return new Promise(function (resolve, reject) {
       return Vue.axios.get(url).then(function (response) {
@@ -79473,10 +79817,10 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  nextOffice: function nextOffice(_ref10, motionId) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
+  nextOffice: function nextOffice(_ref11, motionId) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     return new Promise(function (resolve, reject) {
       var idx = getters.getMotions.indexOf(getters.getActiveMotion);
       var unvotedOffices = getters.getUnvotedOffices;
@@ -79492,6 +79836,7 @@ var actions = {
             return resolve();
           });
         });
+      } else {// reject();
       }
     });
   },
@@ -79504,10 +79849,10 @@ var actions = {
    * @param payload
    * @returns {Promise<unknown>}
    */
-  removeCandidate: function removeCandidate(_ref11, candidate) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  removeCandidate: function removeCandidate(_ref12, candidate) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
     var motionId = getters.getActiveMotion.id; // let url = routes.election.candidates(motionId, payload.id);
 
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].resource.candidate(candidate.id);
@@ -79518,10 +79863,10 @@ var actions = {
       });
     });
   },
-  updateCandidate: function updateCandidate(_ref12, payload) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
+  updateCandidate: function updateCandidate(_ref13, payload) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
     var motionId = getters.getActiveMotion.id; // let url = routes.election.candidates(motionId, payload.id);
 
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].resource.candidate(payload.id);
@@ -79567,6 +79912,12 @@ var getters = {
       });
     };
   },
+  getElectionOffices: function getElectionOffices(state, getters) {
+    return function (election) {
+      var motions = getters.getMotions;
+      return _.filter(motions, function (m) {});
+    };
+  },
   getWriteInCandidatesForCurrentOffice: function getWriteInCandidatesForCurrentOffice(state, getters) {
     var motion = getters.getActiveMotion;
     return state.candidates.filter(function (c) {
@@ -79605,6 +79956,15 @@ var getters = {
       var results = getters.getOfficeResults(motion); //dev should probably do this on server
       //todo check for ties
     };
+  },
+
+  /**
+   * Returns true if all offices in the current election
+   * have been voted upon. False otherwise
+   */
+  isElectionComplete: function isElectionComplete(state, getters) {
+    var unvoted = getters.getUnvotedOffices;
+    return unvoted.length === 0;
   } //
   // getVoteCounts: (state) => (motionId) => {
   // return state.electionResults[motionId].counts;
@@ -79638,8 +79998,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_Election__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Election */ "./resources/js/models/Election.js");
-/* harmony import */ var _models_MainObjectFactory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/MainObjectFactory */ "./resources/js/models/MainObjectFactory.js");
+/* harmony import */ var _models_EventObjectFactory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/EventObjectFactory */ "./resources/js/models/EventObjectFactory.js");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+
 
 
 
@@ -79727,11 +80089,12 @@ var actions = {
 
         if (activeMeeting.id === meeting.id) {
           //we need to remove it and set another in its place
-          var newActive = getters.getStoredMeetings[0];
-          commit('setMeeting', newActive);
-        }
+          var newActive = getters.getStoredMeetings[0]; // commit('setMeeting', newActive);
 
-        return resolve();
+          dispatch('setActiveMeeting', newActive).then(function () {
+            return resolve();
+          });
+        }
       });
     });
   },
@@ -79745,10 +80108,12 @@ var actions = {
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["meetings"].resource(meetingId);
       return Vue.axios.get(url).then(function (response) {
         //Will create either a Meeting or an Election object
-        var meeting = _models_MainObjectFactory__WEBPACK_IMPORTED_MODULE_3__["default"].make(response);
+        var meeting = _models_EventObjectFactory__WEBPACK_IMPORTED_MODULE_3__["default"].make(response.data);
         commit('addMeetingToStore', meeting);
         commit('setMeeting', meeting);
         resolve();
+      })["catch"](function (response) {
+        window.console.log("Error in loadMeeting ", response);
       });
     });
   },
@@ -79788,16 +80153,46 @@ var actions = {
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__["meetings"].resource();
       return Vue.axios.get(url).then(function (response) {
         _.forEach(response.data, function (d) {
-          if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__["isReadyToRock"])(d.is_election) && d.is_election) {
-            var election = new _models_Election__WEBPACK_IMPORTED_MODULE_2__["default"](d);
-            commit('addMeetingToStore', election);
-          } else {
-            // window.console.log('loadAllMeetings', d);
-            var meeting = new _models_Meeting__WEBPACK_IMPORTED_MODULE_0__["default"](d.id, d.name, d.date);
-            commit('addMeetingToStore', meeting);
-          }
+          //Will create either a Meeting or an Election object
+          var e = _models_EventObjectFactory__WEBPACK_IMPORTED_MODULE_3__["default"].make(d);
+          commit('addMeetingToStore', e); // if(isReadyToRock(d.is_election) && d.is_election){
+          //     let election = new Election(d);
+          //     commit('addMeetingToStore', election);
+          // }
+          // else{
+          //     // window.console.log('loadAllMeetings', d);
+          //     let meeting = new Meeting(d.id, d.name, d.date);
+          //     commit('addMeetingToStore', meeting);
+          // }
         });
 
+        resolve();
+      })["catch"](function (response) {
+        window.console.log('bad load', response);
+      });
+    });
+  },
+
+  /**
+   * Sets the meeting or election as the current one,
+   * clears out the motion stack, and loads motions / offices
+   * for the meeting.
+   *
+   * Used mainly by chair for selecting and switching between meetings
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param meeting
+   * @returns {Promise<unknown>}
+   */
+  setActiveMeeting: function setActiveMeeting(_ref7, meeting) {
+    var dispatch = _ref7.dispatch,
+        commit = _ref7.commit,
+        getters = _ref7.getters;
+    return new Promise(function (resolve, reject) {
+      commit('setMeeting', meeting);
+      dispatch('loadMotionsForMeeting', meeting).then(function () {
         resolve();
       });
     });
@@ -79813,10 +80208,10 @@ var actions = {
    * @param payload Payload
    * @returns {Promise<unknown>}
    */
-  updateMeeting: function updateMeeting(_ref7, payload) {
-    var dispatch = _ref7.dispatch,
-        commit = _ref7.commit,
-        getters = _ref7.getters;
+  updateMeeting: function updateMeeting(_ref8, payload) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit,
+        getters = _ref8.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -79840,6 +80235,11 @@ var getters = {
   },
   getStoredMeetings: function getStoredMeetings(state) {
     return state.meetings;
+  },
+  getMeetingById: function getMeetingById(state) {
+    return function (id) {
+      return Object(_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_5__["getById"])(state.meetings, id);
+    };
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -80064,6 +80464,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _models_Office__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/Office */ "./resources/js/models/Office.js");
+/* harmony import */ var _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/BallotObjectFactory */ "./resources/js/models/BallotObjectFactory.js");
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+
+
+
+
 
 
 
@@ -80127,6 +80535,15 @@ var mutations = {
     } // state.motions.push(motionObject);
     // Vue.set(state, 'motion', payload);
 
+  },
+
+  /**
+   * Empties the list of motions. Used when changing
+   * meetings / elections
+   * @param state
+   */
+  clearMotions: function clearMotions(state) {
+    state.motions = [];
   },
   deleteMotion: function deleteMotion(state, motionObject) {
     // let idx = state.motions.indexOf(motionObject);
@@ -80373,22 +80790,35 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref8, meetingId) {
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref8, meeting) {
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
-    window.console.log('Loading motions for meeting');
+    //we need this to determine whether election or regular
+    // let meeting = getters.getMeetingById(meetingId);
+    window.console.log('Loading motions for meeting ', meeting);
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].getAllMotionsForMeeting(meetingId);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__["motions"].getAllMotionsForMeeting(Object(_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_6__["idify"])(meeting));
       return Vue.axios.get(url).then(function (response) {
-        _.forEach(response.data, function (d) {
-          var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](d); // let motion = new Motion(d.id, d.name, d.date);
+        //Need to do this so that we don't have to
+        //check motions for their meetings every time
+        //we access the stack.
+        commit('clearMotions');
 
-          commit('addMotionToStore', motion);
+        _.forEach(response.data, function (d) {
+          var m = _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_5__["default"].make(d, meeting); // let m = null;
+          // if(isReadyToRock(meeting.is_election) && meeting.is_election){
+          //      m= new Office(d);
+          // }else{
+          //     m = new Motion(d);
+          // }
+          // let motion = new Motion(d.id, d.name, d.date);
+
+          commit('addMotionToStore', m);
 
           if (d.is_current) {
-            commit('setMotion', motion);
+            commit('setMotion', m);
           }
         });
 

@@ -18,7 +18,9 @@ const state = {
      */
     candidatePool: [],
 
-    electionResults: []
+    electionResults: [],
+
+
 };
 
 const mutations = {
@@ -35,7 +37,7 @@ const mutations = {
     addCandidateToStore: (state, candidateObject) => {
         //todo This attempt to filter duplicates doesn't work because the candidate objects have different ids
         window.console.log(getById(state.candidates, candidateObject.id));
-        if(! isReadyToRock(getById(state.candidates, candidateObject.id))){
+        if (!isReadyToRock(getById(state.candidates, candidateObject.id))) {
 
             state.candidates.push(candidateObject);
         }
@@ -129,7 +131,7 @@ const actions = {
                     let meeting = new Election(response.data);
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
-                    window.console.log('d');
+                    window.console.log('election created id: ', meeting.id);
                     resolve()
                 });
         }));
@@ -172,6 +174,18 @@ const actions = {
         }));
 
 
+    },
+
+    /**
+     * Alias for deleting motions which represent offices
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     */
+    deleteOffice({dispatch, commit, getters}, motion) {
+        dispatch('deleteMotion', motion);
     },
 
 
@@ -321,6 +335,8 @@ const actions = {
 
 
                 });
+            }else{
+                // reject();
             }
 
 
@@ -381,6 +397,7 @@ const actions = {
 
 const getters = {
 
+
     /**
      * A motion represents a elected position which is
      * decided during an election (i.e., a meeting).
@@ -408,6 +425,15 @@ const getters = {
         return state.candidatePool.filter(function (c) {
             return c.motion_id === motion.id
         })
+
+    },
+
+    getElectionOffices: (state, getters) => (election) => {
+        let motions = getters.getMotions;
+        return _.filter(motions, (m) => {
+
+
+        });
 
     },
 
@@ -459,6 +485,15 @@ const getters = {
 
     },
 
+    /**
+     * Returns true if all offices in the current election
+     * have been voted upon. False otherwise
+     */
+    isElectionComplete : (state, getters) => {
+        let unvoted = getters.getUnvotedOffices;
+
+        return unvoted.length === 0;
+    }
     //
     // getVoteCounts: (state) => (motionId) => {
     // return state.electionResults[motionId].counts;

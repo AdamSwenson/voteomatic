@@ -2,7 +2,7 @@
     <button
         v-bind:class="styling"
         data-toggle="modal"
-        data-target="#deleteMeetingModal"
+        v-bind:data-target="target"
         v-on:click="handleClick"
     >{{label}}</button>
 
@@ -30,8 +30,12 @@ export default {
     computed: {
 
         modalId : function(){
-          return "#delete" + _.capitalize(this.type) + "Modal"
+          return "deleteModal"
         },
+
+        target : function(){
+            return '#' + this.modalId;
+        }
 
         // label : function(){
         // },

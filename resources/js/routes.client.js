@@ -7,7 +7,7 @@ import ballotSetupCard from "./components/main/ballot-setup-card";
 // import electionCard from "./components/election/election-card";
 // import electionSetupCard from "./components/election/setup/election-setup-card";
 //import votePage from './components/main/vote-page'
-import resultsPage from './components/main/results-page'
+import resultsCard from './components/main/results-card'
 // import motionSetup from './components/main/chair/motion-setup'
 // import meetingSetup from './components/main/chair/meeting-setup'
 import voteVerify from './components/main/vote-verification-page'
@@ -24,10 +24,10 @@ Vue.component('meeting-home', meetingHome);
 
 // Vue.component('meeting-setup-page', meetingSetup);
 // Vue.component('motion-setup-page', motionSetup);
-Vue.component('results-page', resultsPage);
+Vue.component('results-card', resultsCard);
 // Vue.component( 'vote-page', votePage );
 Vue.component('vote-card', voteCard);
-Vue.component('vote-verify', resultsPage);
+Vue.component('vote-verify', resultsCard);
 
 
 export const routes = [
@@ -72,7 +72,7 @@ export const routes = [
         path: '/results',
         icon: "fa fa-comments-o",
         label: "Results",
-        components: {main: resultsPage},
+        components: {main: resultsCard},
         props: true,
         adminOnly: false
     },

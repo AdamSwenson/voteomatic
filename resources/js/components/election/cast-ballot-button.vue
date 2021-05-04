@@ -42,7 +42,15 @@ export default {
 
             this.$store.dispatch('castElectionVote')
                 .then(() => {
-                    me.$store.dispatch('nextOffice');
+                    me.$store.dispatch('nextOffice')
+                        .then(() => {
+                    })
+                        .catch(() => {
+                            //If there are no further offices to vote
+                            //upon, it will reject.
+                            me.$emit('election-complete');
+                            window.console.log('election complete');
+                    });
                 });
 
         }
