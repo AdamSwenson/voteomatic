@@ -7,6 +7,7 @@ import Election from "../../models/Election";
 import {idify} from "../../utilities/object.utilities";
 import Motion from "../../models/Motion";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import PoolMember from "../../models/PoolMember";
 
 const state = {
     candidates: [],
@@ -47,6 +48,15 @@ const mutations = {
         //
         // }
 
+    },
+
+    clearCandidates: (state) => {
+        state.candidates = [];
+        window.console.log('candidates', state.candidates);
+    },
+
+    clearPool: (state) => {
+        state.candidatePool = [];
     },
 
     setCandidateProp: (state, {id, updateProp, updateVal}) => {
@@ -131,6 +141,8 @@ const actions = {
                     let meeting = new Election(response.data);
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
+                    //now set to be in editing mode
+
                     window.console.log('election created id: ', meeting.id);
                     resolve()
                 });
@@ -252,8 +264,9 @@ const actions = {
             // window.console.log(url);
 
             return Vue.axios.get(url).then((response) => {
+                commit('clearPool');
                 _.forEach(response.data, (d) => {
-                    let candidate = new Candidate(d);
+                    let candidate = new PoolMember(d);
                     commit('addCandidateToPool', candidate);
                 });
 
@@ -267,7 +280,10 @@ const actions = {
 
 
     /**
-     * Get candidates for an office
+     * Get candidates for an office. These are the people
+     * who have been nominated.
+     *
+     * (The pool contains those eligible to be nominated)
      *
      *
      * @param dispatch
@@ -281,14 +297,14 @@ const actions = {
         return new Promise(((resolve, reject) => {
 
             return Vue.axios.get(url).then((response) => {
-
+                commit('clearCandidates');
                 _.forEach(response.data, (d) => {
 
                     window.console.log('loadElectionCandidates', d);
 
                     let candidate = new Candidate(d);
 
-                    window.console.log('obj', candidate);
+                    // window.console.log('obj', candidate);
                     commit('addCandidateToStore', candidate);
 
                 });
@@ -335,7 +351,7 @@ const actions = {
 
 
                 });
-            }else{
+            } else {
                 // reject();
             }
 
@@ -422,6 +438,12 @@ const getters = {
      * @returns {function(*): *[]}
      */
     getCandidatePoolForOffice: (state) => (motion) => {
+//         let candidateIds = [];
+//         _.forEach(state.candidates, (c) => {
+// candidateIds.push(c);
+//         });
+//     return
+//         window.console.log('cl', candidateIds);
         return state.candidatePool.filter(function (c) {
             return c.motion_id === motion.id
         })
@@ -489,11 +511,11 @@ const getters = {
      * Returns true if all offices in the current election
      * have been voted upon. False otherwise
      */
-    isElectionComplete : (state, getters) => {
+    isElectionComplete: (state, getters) => {
         let unvoted = getters.getUnvotedOffices;
 
         return unvoted.length === 0;
-    }
+    },
     //
     // getVoteCounts: (state) => (motionId) => {
     // return state.electionResults[motionId].counts;
@@ -504,6 +526,20 @@ const getters = {
     //     return state.electionResults[motionId].shares;
     // }
 
+    /**
+     * Returns false if a pool member is already a candidate
+     *
+     * @param state
+     * @param getters
+     */
+    isPoolMemberACandidate: (state, getters) => (motion, poolMember) => {
+        let candidates = getters.getCandidatesForOffice(motion);
+        return _.forEach(candidates, (candidate) => {
+            if (candidate.pool_member_id === poolMember.id) return true;
+        });
+        return false;
+
+    }
 
 };
 

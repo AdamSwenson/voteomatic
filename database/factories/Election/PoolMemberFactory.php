@@ -2,18 +2,18 @@
 
 namespace Database\Factories\Election;
 
-use App\Models\Election\Candidate;
-use App\Models\Motion;
+use App\Models\Election\PoolMember;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CandidateFactory extends Factory
+class PoolMemberFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Candidate::class;
+    protected $model = PoolMember::class;
 
     /**
      * Define the model's default state.
@@ -22,22 +22,10 @@ class CandidateFactory extends Factory
      */
     public function definition()
     {
-//        $motion = Motion::factory()->make();
-
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'info' => $this->faker->sentence
-
-            //
         ];
-    }
-
-    public function writeIn(){
-        return $this->state(function (array $attributes) {
-            return [
-                'is_write_in' => true
-            ];
-        });
     }
 }

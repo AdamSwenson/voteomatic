@@ -1,6 +1,6 @@
 <template>
     <li class="list-group-item"
-    v-if="showRow"
+        v-if="showRow"
     >
         <button class="btn "
                 v-bind:class="styling"
@@ -16,13 +16,17 @@
 <script>
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import {getById} from "../../../utilities/object.utilities";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
+import MeetingPropertiesMixin from "../../../mixins/meetingPropertiesMixin";
 
 export default {
     name: "candidate-setup-row",
 
     props: ['candidate', 'isPool'],
 
-    mixins: [],
+    mixins: [MotionStoreMixin],
+
 
     data: function () {
         return {
@@ -50,8 +54,8 @@ export default {
 
         isCandidate: function () {
             let c = getById(this.candidates, this.candidate.id);
-        return isReadyToRock(c);
-            },
+            return isReadyToRock(c);
+        },
 
         selected: {
             get: function () {
@@ -68,9 +72,10 @@ export default {
             // default: false
         },
 
-        showRow : function (){
-            if(this.isPool){
-              return !  this.isCandidate;
+        showRow: function () {
+            if (this.isPool) {
+                return !this.$store.getters.isPoolMemberACandidate(this.motion, this.candidate);
+//              return !  this.isCandidate;
             }
             return true;
         },

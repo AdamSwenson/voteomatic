@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Election\Candidate;
+use App\Models\Election\PoolMember;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ElectionSetupController extends Controller
+class CandidatePoolController extends Controller
 {
 
 
@@ -26,22 +27,22 @@ class ElectionSetupController extends Controller
     }
 
 
-    public function dev()
-    {
-
-        //todo  Note, we'll actually want to usually start from no existing meeting/election
-
-        $election = Meeting::factory()->election()->create();
-
-        $data = ['data' => [
-            'meeting' => $election,
-            'meeting_id' => $election->id
-        ]
-        ];
-
-
-        return view('dev.dev-election-setup', $data);
-    }
+//    public function dev()
+//    {
+//
+//        //todo  Note, we'll actually want to usually start from no existing meeting/election
+//
+//        $election = Meeting::factory()->election()->create();
+//
+//        $data = ['data' => [
+//            'meeting' => $election,
+//            'meeting_id' => $election->id
+//        ]
+//        ];
+//
+//
+//        return view('dev.dev-election-setup', $data);
+//    }
 
     /**
      * Returns everyone who could be a candidate for the office.
@@ -51,10 +52,11 @@ class ElectionSetupController extends Controller
      * use the same pool.
      */
     public function getCandidatePool(Motion $motion){
-
+//dev this is all dev stuff
         //todo Returns all members of the meeting or somehow gets from canvas
 
-        $pool = Candidate::factory()->count(10)->create(['motion_id' => $motion->id]);
+
+        $pool = PoolMember::factory()->count(10)->create(['motion_id' => $motion->id]);
 
         return response()->json($pool);
 

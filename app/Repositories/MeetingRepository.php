@@ -61,9 +61,38 @@ class MeetingRepository implements IMeetingRepository
         $meeting = Meeting::create();
         $meeting->addUserToMeeting($user);
         $meeting->setOwner($user);
+        //in case the empty meeting was an election
+        $meeting->is_election = false;
+        $meeting->save();
         return $meeting;
 
     }
+
+    /**
+     * Creates an election with the user as owner and member
+     *
+     * If an empty election already exists, returns that one.
+     * NB, if the empty event was a meeting (not election), sets it as election
+     * @param User $user
+     */
+    public function createElectionForUser(User $user)
+    {
+        $emptyMeetings = $this->getEmptyMeetingsForUser($user);
+
+        if (sizeof($emptyMeetings) > 0) {
+            return $emptyMeetings->first();
+        }
+
+        $meeting = Meeting::create();
+        $meeting->addUserToMeeting($user);
+        $meeting->setOwner($user);
+        $meeting->is_election = true;
+        $meeting->save();
+        return $meeting;
+
+    }
+
+
 
     /**
      * If a user clicks create new meeting but doesn't fill in

@@ -3937,6 +3937,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 /* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
 /* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/meetingPropertiesMixin */ "./resources/js/mixins/meetingPropertiesMixin.js");
+/* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -3952,12 +3958,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "candidate-setup-row",
   props: ['candidate', 'isPool'],
-  mixins: [],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_3___default.a],
   data: function data() {
     return {
       events: 0
@@ -3996,7 +4005,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     showRow: function showRow() {
       if (this.isPool) {
-        return !this.isCandidate;
+        return !this.$store.getters.isPoolMemberACandidate(this.motion, this.candidate); //              return !  this.isCandidate;
       }
 
       return true;
@@ -4062,8 +4071,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleClick: function handleClick() {
       window.console.log('Create election clicked'); // this.setElection();
+      //this actually does all the things to get set up
+      //including activating the edit display.
 
-      this.$store.dispatch('createElection');
+      this.$store.dispatch('setElectionMode'); // this.$store.dispatch('createElection');
     }
   }
 });
@@ -4437,10 +4448,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_event_display_card__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../common/event-display-card */ "./resources/js/components/common/event-display-card.vue");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17__);
-//
-//
-//
-//
 //
 //
 //
@@ -50221,20 +50228,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "election-setup-card card" }, [
-    !_vm.isChair
-      ? _c("div", { staticClass: "non-chair" }, [_c("event-display-card")], 1)
-      : _c(
-          "div",
-          { staticClass: "chair" },
-          [
-            _vm.isInEventEditingMode
-              ? _c("event-edit-card")
-              : _c("event-display-card")
-          ],
-          1
-        )
-  ])
+  return _c(
+    "div",
+    { staticClass: "election-setup-card card" },
+    [
+      _vm.isChair
+        ? _c(
+            "div",
+            { staticClass: "chair" },
+            [_vm.isInEventEditingMode ? _c("event-edit-card") : _vm._e()],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("event-display-card")
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -78231,27 +78241,39 @@ var Candidate = /*#__PURE__*/function (_IModel) {
 
     var _ref$id = _ref.id,
         id = _ref$id === void 0 ? null : _ref$id,
-        _ref$name = _ref.name,
-        name = _ref$name === void 0 ? null : _ref$name,
+        _ref$first_name = _ref.first_name,
+        first_name = _ref$first_name === void 0 ? null : _ref$first_name,
+        _ref$last_name = _ref.last_name,
+        last_name = _ref$last_name === void 0 ? null : _ref$last_name,
         _ref$info = _ref.info,
         info = _ref$info === void 0 ? null : _ref$info,
         _ref$motion_id = _ref.motion_id,
         motion_id = _ref$motion_id === void 0 ? null : _ref$motion_id,
         _ref$is_write_in = _ref.is_write_in,
-        is_write_in = _ref$is_write_in === void 0 ? null : _ref$is_write_in;
+        is_write_in = _ref$is_write_in === void 0 ? null : _ref$is_write_in,
+        _ref$pool_member_id = _ref.pool_member_id,
+        pool_member_id = _ref$pool_member_id === void 0 ? null : _ref$pool_member_id;
 
     _classCallCheck(this, Candidate);
 
     _this = _super.call(this);
     _this.id = id;
-    _this.name = name;
+    _this.first_name = first_name;
+    _this.last_name = last_name;
     _this.info = info;
     _this.motion_id = motion_id;
     _this.is_write_in = is_write_in;
+    _this.pool_member_id = pool_member_id; // this.type = 'nominated';
+
     return _this;
   }
 
   _createClass(Candidate, [{
+    key: "name",
+    get: function get() {
+      return this.first_name + " " + this.last_name;
+    }
+  }, {
     key: "isWriteIn",
     get: function get() {
       return this.is_write_in;
@@ -79057,6 +79079,96 @@ var Payload = /*#__PURE__*/function (_IModel) {
 
 /***/ }),
 
+/***/ "./resources/js/models/PoolMember.js":
+/*!*******************************************!*\
+  !*** ./resources/js/models/PoolMember.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PoolMember; });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * One person running for one office.
+ *
+ * Importantly, the candidate knows the id of the election (motion)
+ */
+
+var PoolMember = /*#__PURE__*/function (_IModel) {
+  _inherits(PoolMember, _IModel);
+
+  var _super = _createSuper(PoolMember);
+
+  function PoolMember(_ref) {
+    var _this;
+
+    var _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id,
+        _ref$first_name = _ref.first_name,
+        first_name = _ref$first_name === void 0 ? null : _ref$first_name,
+        _ref$last_name = _ref.last_name,
+        last_name = _ref$last_name === void 0 ? null : _ref$last_name,
+        _ref$info = _ref.info,
+        info = _ref$info === void 0 ? null : _ref$info,
+        _ref$motion_id = _ref.motion_id,
+        motion_id = _ref$motion_id === void 0 ? null : _ref$motion_id;
+
+    _classCallCheck(this, PoolMember);
+
+    _this = _super.call(this);
+    _this.id = id;
+    _this.first_name = first_name;
+    _this.last_name = last_name;
+    _this.info = info;
+    _this.motion_id = motion_id;
+    _this.type = 'pool';
+    return _this;
+  }
+
+  _createClass(PoolMember, [{
+    key: "name",
+    get: function get() {
+      return this.first_name + " " + this.last_name;
+    }
+  }, {
+    key: "motionId",
+    get: function get() {
+      return motion_id;
+    }
+  }]);
+
+  return PoolMember;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Result.js":
 /*!***************************************!*\
   !*** ./resources/js/models/Result.js ***!
@@ -79729,6 +79841,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Election__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/Election */ "./resources/js/models/Election.js");
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _models_PoolMember__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../models/PoolMember */ "./resources/js/models/PoolMember.js");
+
 
 
 
@@ -79769,6 +79883,13 @@ var mutations = {
     //
     // }
 
+  },
+  clearCandidates: function clearCandidates(state) {
+    state.candidates = [];
+    window.console.log('candidates', state.candidates);
+  },
+  clearPool: function clearPool(state) {
+    state.candidatePool = [];
   },
   setCandidateProp: function setCandidateProp(state, _ref) {
     var id = _ref.id,
@@ -79844,7 +79965,8 @@ var actions = {
       return Vue.axios.post(url).then(function (response) {
         var meeting = new _models_Election__WEBPACK_IMPORTED_MODULE_5__["default"](response.data);
         commit('addMeetingToStore', meeting);
-        commit('setMeeting', meeting);
+        commit('setMeeting', meeting); //now set to be in editing mode
+
         window.console.log('election created id: ', meeting.id);
         resolve();
       });
@@ -79961,8 +80083,10 @@ var actions = {
     return new Promise(function (resolve, reject) {
       // window.console.log(url);
       return Vue.axios.get(url).then(function (response) {
+        commit('clearPool');
+
         _.forEach(response.data, function (d) {
-          var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__["default"](d);
+          var candidate = new _models_PoolMember__WEBPACK_IMPORTED_MODULE_8__["default"](d);
           commit('addCandidateToPool', candidate);
         });
 
@@ -79972,7 +80096,10 @@ var actions = {
   },
 
   /**
-   * Get candidates for an office
+   * Get candidates for an office. These are the people
+   * who have been nominated.
+   *
+   * (The pool contains those eligible to be nominated)
    *
    *
    * @param dispatch
@@ -79987,10 +80114,12 @@ var actions = {
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].candidates(motionId);
     return new Promise(function (resolve, reject) {
       return Vue.axios.get(url).then(function (response) {
+        commit('clearCandidates');
+
         _.forEach(response.data, function (d) {
           window.console.log('loadElectionCandidates', d);
-          var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__["default"](d);
-          window.console.log('obj', candidate);
+          var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__["default"](d); // window.console.log('obj', candidate);
+
           commit('addCandidateToStore', candidate);
         });
 
@@ -80102,6 +80231,12 @@ var getters = {
    */
   getCandidatePoolForOffice: function getCandidatePoolForOffice(state) {
     return function (motion) {
+      //         let candidateIds = [];
+      //         _.forEach(state.candidates, (c) => {
+      // candidateIds.push(c);
+      //         });
+      //     return
+      //         window.console.log('cl', candidateIds);
       return state.candidatePool.filter(function (c) {
         return c.motion_id === motion.id;
       });
@@ -80160,7 +80295,8 @@ var getters = {
   isElectionComplete: function isElectionComplete(state, getters) {
     var unvoted = getters.getUnvotedOffices;
     return unvoted.length === 0;
-  } //
+  },
+  //
   // getVoteCounts: (state) => (motionId) => {
   // return state.electionResults[motionId].counts;
   // },
@@ -80170,6 +80306,21 @@ var getters = {
   //     return state.electionResults[motionId].shares;
   // }
 
+  /**
+   * Returns false if a pool member is already a candidate
+   *
+   * @param state
+   * @param getters
+   */
+  isPoolMemberACandidate: function isPoolMemberACandidate(state, getters) {
+    return function (motion, poolMember) {
+      var candidates = getters.getCandidatesForOffice(motion);
+      return _.forEach(candidates, function (candidate) {
+        if (candidate.pool_member_id === poolMember.id) return true;
+      });
+      return false;
+    };
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   actions: actions,

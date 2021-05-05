@@ -6,7 +6,7 @@ use App\Models\Motion;
 
 interface IElectionRepository
 {
-    public function addCandidate(Motion $motion, $name = '', $info = '', $isWriteIn=false);
+//    public function addCandidate(Motion $motion, $first_name = '', $info = '', $isWriteIn=false);
 
     public function getCandidates(Motion $motion);
 //

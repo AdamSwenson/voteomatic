@@ -22,10 +22,12 @@ class Candidate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'info',
         'is_write_in',
-        'motion_id'
+        'motion_id',
+        'pool_member_id'
     ];
 
     /**
@@ -90,6 +92,14 @@ class Candidate extends Model
      */
     public function motion(){
         return $this->belongsTo(Motion::class);
+    }
+
+    /**
+     * The candidate when they were
+     * a pool member (if they were)
+     */
+    public function poolMember(){
+        return $this->hasOne(PoolMember::class);
     }
 
 

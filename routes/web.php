@@ -7,7 +7,7 @@ use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\Election\CandidateController;
 use App\Http\Controllers\Election\ElectionController;
 use App\Http\Controllers\Election\ElectionResultsController;
-use App\Http\Controllers\Election\ElectionSetupController;
+use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Guest\PublicIndexController;
@@ -114,7 +114,7 @@ Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVot
 
 //setup
 Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
-Route::get('election/setup/office/{motion}/pool', [ElectionSetupController::class, 'getCandidatePool']);
+Route::get('election/setup/office/{motion}/pool', [CandidatePoolController::class, 'getCandidatePool']);
 
 Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
 Route::resource('elections', ElectionController::class);

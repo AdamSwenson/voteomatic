@@ -1,18 +1,14 @@
 <template>
     <div class="election-setup-card card">
 
-
-        <div class="non-chair" v-if="! isChair">
-            <event-display-card></event-display-card>
-             </div>
-
-        <div class="chair" v-else>
+        <div class="chair" v-if="isChair">
 
             <event-edit-card v-if="isInEventEditingMode"></event-edit-card>
 
-            <event-display-card v-else></event-display-card>
-
         </div>
+
+        <event-display-card ></event-display-card>
+
     </div>
 
 </template>

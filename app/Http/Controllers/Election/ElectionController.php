@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
+use App\Repositories\IMeetingRepository;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
@@ -14,6 +15,10 @@ class ElectionController extends Controller
 
     //with votes
     const DEV_ELECTION_ID = 86;
+    /**
+     * @var IMeetingRepository|mixed
+     */
+    public $meetingRepo;
 
     public function dev()
     {
@@ -34,6 +39,7 @@ class ElectionController extends Controller
 
     public function __construct()
     {
+        $this->meetingRepo = app()->make(IMeetingRepository::class);
         $this->middleware('auth');
     }
 
@@ -69,34 +75,40 @@ class ElectionController extends Controller
     {
         $this->setLoggedInUser();
 
+        //todo authorization
+
         //Since we are creating the meeting without
         //the fields filled in, we may have blank meetings
         //in the database. Thus we will try to reuse an existing empty
         //meeting object before actually creating a new one
-        $election = $this->user->meetings()
-            ->where('name', null)
-            ->where('date', null)
-            ->where('is_election', true)
-            ->first();
-//todo Should this be checking that the user is owner? Otherwise a user who is a member in a different meeting could take over ownership (of a blank event)....
-        //todo is this enough to ensure that the meeting is empty? maybe a method on meeting would be better?
-
-        if (!is_null($election)) {
-            $election->update($request->all());
-        } else {
-            $election = Meeting::create($request->all());
-
-            //todo Do we always want the creator to be the owner?
-            $election->owner_id = $this->user->id;
-        }
-
-        $election->is_election = true;
-        $election->save();
-
-        $this->user->meetings()->attach($election);
-        $this->user->save();
-
+        $election = $this->meetingRepo->createElectionForUser($this->user);
+        $election->update($request->all());
         return response()->json($election);
+
+//        $election = $this->user->meetings()
+//            ->where('name', null)
+//            ->where('date', null)
+//            ->where('is_election', true)
+//            ->first();
+////todo Should this be checking that the user is owner? Otherwise a user who is a member in a different meeting could take over ownership (of a blank event)....
+//        //todo is this enough to ensure that the meeting is empty? maybe a method on meeting would be better?
+//
+//        if (!is_null($election)) {
+//            $election->update($request->all());
+//        } else {
+//            $election = Meeting::create($request->all());
+//
+//            //todo Do we always want the creator to be the owner?
+//            $election->owner_id = $this->user->id;
+//        }
+//
+//        $election->is_election = true;
+//        $election->save();
+//
+//        $this->user->meetings()->attach($election);
+//        $this->user->save();
+
+//        return response()->json($election);
     }
 
     /**

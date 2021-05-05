@@ -21,7 +21,11 @@ extends : buttonParent,
         handleClick : function(){
             window.console.log('Create election clicked');
             // this.setElection();
-            this.$store.dispatch('createElection');
+
+            //this actually does all the things to get set up
+            //including activating the edit display.
+            this.$store.dispatch('setElectionMode');
+            // this.$store.dispatch('createElection');
 
         }
     }
