@@ -3988,8 +3988,8 @@ __webpack_require__.r(__webpack_exports__);
       "default": []
     },
     isCandidate: function isCandidate() {
-      var c = Object(_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_1__["getById"])(this.candidates, this.candidate.id);
-      return Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(c);
+      return this.$store.getters.isPoolMemberACandidate(this.motion, this.candidate); // let c = getById(this.candidates, this.candidate.id);
+      // return isReadyToRock(c);
     },
     selected: {
       get: function get() {
@@ -4027,7 +4027,7 @@ __webpack_require__.r(__webpack_exports__);
         //Make them into a candidate
         // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
         window.console.log('add', 'candidate-setup-row button clicked for ', this.candidate.name);
-        this.$store.dispatch('addOfficialCandidateToOfficeElection', this.candidate);
+        this.$store.dispatch('addPoolMemberToOfficeElection', this.candidate);
       } else {
         //remove them as a candidate
         window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);
@@ -78251,8 +78251,8 @@ var Candidate = /*#__PURE__*/function (_IModel) {
         motion_id = _ref$motion_id === void 0 ? null : _ref$motion_id,
         _ref$is_write_in = _ref.is_write_in,
         is_write_in = _ref$is_write_in === void 0 ? null : _ref$is_write_in,
-        _ref$pool_member_id = _ref.pool_member_id,
-        pool_member_id = _ref$pool_member_id === void 0 ? null : _ref$pool_member_id;
+        _ref$person_id = _ref.person_id,
+        person_id = _ref$person_id === void 0 ? null : _ref$person_id;
 
     _classCallCheck(this, Candidate);
 
@@ -78263,7 +78263,8 @@ var Candidate = /*#__PURE__*/function (_IModel) {
     _this.info = info;
     _this.motion_id = motion_id;
     _this.is_write_in = is_write_in;
-    _this.pool_member_id = pool_member_id; // this.type = 'nominated';
+    _this.person_id = person_id; // this.pool_member_id = pool_member_id;
+    // this.type = 'nominated';
 
     return _this;
   }
@@ -79136,7 +79137,9 @@ var PoolMember = /*#__PURE__*/function (_IModel) {
         _ref$info = _ref.info,
         info = _ref$info === void 0 ? null : _ref$info,
         _ref$motion_id = _ref.motion_id,
-        motion_id = _ref$motion_id === void 0 ? null : _ref$motion_id;
+        motion_id = _ref$motion_id === void 0 ? null : _ref$motion_id,
+        _ref$person_id = _ref.person_id,
+        person_id = _ref$person_id === void 0 ? null : _ref$person_id;
 
     _classCallCheck(this, PoolMember);
 
@@ -79146,6 +79149,7 @@ var PoolMember = /*#__PURE__*/function (_IModel) {
     _this.last_name = last_name;
     _this.info = info;
     _this.motion_id = motion_id;
+    _this.person_id = person_id;
     _this.type = 'pool';
     return _this;
   }
@@ -79539,7 +79543,7 @@ module.exports = {
     resource: {
       candidate: function candidate() {
         var candidateId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var r = normalizedRouteRoot() + 'candidates';
+        var r = normalizedRouteRoot() + '/election/candidates';
 
         if (!_.isNull(candidateId)) {
           r = r + '/' + candidateId;
@@ -79563,6 +79567,16 @@ module.exports = {
 
         if (!_.isNull(motionId)) {
           r += motionId;
+        }
+
+        return r;
+      },
+      people: function people() {
+        var personId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        var r = normalizedRouteRoot() + '/election/people';
+
+        if (!_.isNull(personId)) {
+          r = r + '/' + personId;
         }
 
         return r;
@@ -79593,10 +79607,16 @@ module.exports = {
      * @param motionId
      */
     getPool: function getPool(motionId) {
-      return normalizedRouteRoot() + 'election/setup/office/' + motionId + '/pool';
+      return normalizedRouteRoot() + 'election/pool/' + motionId;
+    },
+    addToPool: function addToPool(motionId, personId) {
+      return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
     },
     getResults: function getResults(motionId) {
       return normalizedRouteRoot() + 'election/' + motionId + '/results';
+    },
+    nominatePoolMember: function nominatePoolMember(poolMemberId) {
+      return normalizedRouteRoot() + 'election/nominate/' + poolMemberId;
     },
     recordVote: function recordVote(motionId) {
       return normalizedRouteRoot() + 'election/vote/' + motionId;
@@ -79919,13 +79939,14 @@ var actions = {
    * @param candidate
    * @returns {Promise<unknown>}
    */
-  addOfficialCandidateToOfficeElection: function addOfficialCandidateToOfficeElection(_ref2, candidate) {
+  addPoolMemberToOfficeElection: function addPoolMemberToOfficeElection(_ref2, poolMember) {
     var dispatch = _ref2.dispatch,
         commit = _ref2.commit,
         getters = _ref2.getters;
-    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].resource.candidate();
+    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].nominatePoolMember(poolMember.id); // let url = routes.election.resource.candidate();
+
     return new Promise(function (resolve, reject) {
-      return Vue.axios.post(url, candidate).then(function (response) {
+      return Vue.axios.post(url).then(function (response) {
         var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__["default"](response.data);
         commit('addCandidateToStore', candidate);
         resolve();
@@ -80205,6 +80226,14 @@ var actions = {
   }
 };
 var getters = {
+  getCandidateByPersonId: function getCandidateByPersonId(state) {
+    return function (personId) {
+      return state.candidates.filter(function (c) {
+        return c.person_id === personId;
+      });
+    };
+  },
+
   /**
    * A motion represents a elected position which is
    * decided during an election (i.e., a meeting).
@@ -80314,9 +80343,13 @@ var getters = {
    */
   isPoolMemberACandidate: function isPoolMemberACandidate(state, getters) {
     return function (motion, poolMember) {
-      var candidates = getters.getCandidatesForOffice(motion);
-      return _.forEach(candidates, function (candidate) {
-        if (candidate.pool_member_id === poolMember.id) return true;
+      var officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id);
+      window.console.log('ispac', officesMemberIsCandidate);
+      if (!Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__["isReadyToRock"])(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false; //Now we check to see if it is the same office. This shouldn't be needed
+      //unless the candidates/pool don't get cleared. Thus keeping
+
+      return _.forEach(officesMemberIsCandidate, function (candidate) {
+        if (candidate.motion_id === poolMember.motion_id) return true;
       });
       return false;
     };

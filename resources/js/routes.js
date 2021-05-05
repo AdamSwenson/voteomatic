@@ -37,9 +37,9 @@ module.exports = {
 
     election: {
 
-        resource : {
+        resource: {
             candidate: (candidateId = null) => {
-                let r = normalizedRouteRoot() + 'candidates';
+                let r = normalizedRouteRoot() + '/election/candidates';
                 if (!_.isNull(candidateId)) {
                     r = r + '/' + candidateId;
                 }
@@ -56,7 +56,7 @@ module.exports = {
                 return r;
             },
 
-            office : (motionId = null) => {
+            office: (motionId = null) => {
                 let r = normalizedRouteRoot() + 'offices/';
 
                 if (!_.isNull(motionId)) {
@@ -64,6 +64,14 @@ module.exports = {
                 }
                 return r;
             },
+
+            people: (personId = null) => {
+                let r = normalizedRouteRoot() + '/election/people';
+                if (!_.isNull(personId)) {
+                    r = r + '/' + personId;
+                }
+                return r;
+            }
 
 
         },
@@ -93,14 +101,20 @@ module.exports = {
          * @param motionId
          */
         getPool: (motionId) => {
-            return normalizedRouteRoot() + 'election/setup/office/' + motionId + '/pool';
+            return normalizedRouteRoot() + 'election/pool/' + motionId;
+        },
+
+        addToPool: (motionId, personId) => {
+            return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
         },
 
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'election/' + motionId + '/results';
         },
 
-
+        nominatePoolMember: (poolMemberId) => {
+            return normalizedRouteRoot() + 'election/nominate/' + poolMemberId;
+        },
 
         recordVote: (motionId) => {
             return normalizedRouteRoot() + 'election/vote/' + motionId;

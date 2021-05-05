@@ -53,8 +53,9 @@ export default {
         },
 
         isCandidate: function () {
-            let c = getById(this.candidates, this.candidate.id);
-            return isReadyToRock(c);
+            return this.$store.getters.isPoolMemberACandidate(this.motion, this.candidate);
+            // let c = getById(this.candidates, this.candidate.id);
+            // return isReadyToRock(c);
         },
 
         selected: {
@@ -104,7 +105,7 @@ export default {
                 // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
                 window.console.log('add', 'candidate-setup-row button clicked for ', this.candidate.name);
 
-                this.$store.dispatch('addOfficialCandidateToOfficeElection', this.candidate);
+                this.$store.dispatch('addPoolMemberToOfficeElection', this.candidate);
             } else {
                 //remove them as a candidate
                 window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);

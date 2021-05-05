@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CandidateCreationRequest;
+use App\Http\Requests\Election\CandidateRequest;
 use App\Models\Election\Candidate;
+use App\Models\Election\Person;
+use App\Models\Election\PoolMember;
 use App\Models\Motion;
+use App\Repositories\Election\ICandidateRepository;
 use App\Repositories\Election\IElectionRepository;
 use Illuminate\Http\Request;
 
@@ -16,34 +19,36 @@ class CandidateController extends Controller
      * @var IElectionRepository|mixed
      */
     public $electionRepo;
+    /**
+     * @var ICandidateRepository|mixed
+     */
+    public $candidateRepo;
 
     public function __construct()
     {
         $this->middleware('auth');
-
+        $this->candidateRepo = app()->make(ICandidateRepository::class);
         $this->electionRepo = app()->make(IElectionRepository::class);
     }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
+    /**
+     * Handles providing the client with the data it expects
+     * when it asks for a candidate
+     * @param Candidate $candidate
+     */
+    public function makeCandidateResponse(Candidate $candidate)
+    {
+        return [
+            'id' => $candidate->id,
+            'first_name' => $candidate->person->first_name,
+            'last_name' => $candidate->person->last_name,
+            'info' => $candidate->person->info,
+            'motion_id' => $candidate->motion->id,
+            'person_id' => $candidate->person->id
+        ];
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,7 +57,7 @@ class CandidateController extends Controller
      * @param Motion $motion
      * @return \Illuminate\Http\Response
      */
-    public function store(CandidateCreationRequest $request)
+    public function store(CandidateRequest $request)
     {
         $motion = Motion::find($request->motion_id);
 
@@ -71,9 +76,30 @@ class CandidateController extends Controller
 //        }
 
 
-        return response()->json($candidate);
+        return response()->json($this->makeCandidateResponse($candidate));
 
     }
+
+
+    /**
+     * @param Motion $motion
+     * @param Person $person
+     * @param $request
+     */
+    public function addCandidateToBallot(PoolMember $poolMember, Request $request)
+    {
+        $motion = $poolMember->motion;
+        $person = $poolMember->person;
+
+        $writeIn = null;
+        if ($request->has('is_write_in')) {
+            $writeIn = $request->is_write_in;
+        }
+        $candidate = $this->candidateRepo->addCandidateToBallot($motion, $person, $writeIn);
+
+        return response()->json($this->makeCandidateResponse($candidate));
+    }
+
 
     /**
      * Returns non-write in candidates for office
@@ -81,9 +107,25 @@ class CandidateController extends Controller
      * @param Motion $motion
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCandidatesForOffice(Motion $motion){
-        return response()->json($motion->candidates()->official()->get());
+    public function getOfficialCandidatesForOffice(Motion $motion)
+    {
+        $candidates = $this->candidateRepo->getOfficialCandidatesForOffice($motion);
+
+        $out = [];
+
+        foreach($candidates as $candidate){
+            $out[] = $this->makeCandidateResponse($candidate);
+        }
+
+        return response()->json($out);
+
+
+//        return response()->json($motion->candidates()->official()->get());
     }
+
+
+//    public function removeCandidateFromBallot(Candidate $candidate)
+
 
     /**
      * Display the specified resource.
@@ -93,7 +135,7 @@ class CandidateController extends Controller
      */
     public function show(Candidate $candidate)
     {
-        return response()->json($candidate);
+        return response()->json($this->makeCandidateResponse($candidate));
 
     }
 
@@ -115,11 +157,11 @@ class CandidateController extends Controller
      * @param Candidate $candidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Candidate $candidate, Request $request)
+    public function update(Candidate $candidate, CandidateRequest $request)
     {
         $d = $request->all();
         $candidate->update($d);
-        return response()->json($candidate);
+        return response()->json($this->makeCandidateResponse($candidate));
 
     }
 
@@ -128,10 +170,10 @@ class CandidateController extends Controller
      *
      * This makes the person no longer a candidate for an office
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Candidate $candidate)
+    public function destroy(Motion $motion, Candidate $candidate)
     {
         $candidate->delete();
         return response()->json(200);

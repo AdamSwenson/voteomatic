@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Assignment;
 use App\Models\Election\Candidate;
+use App\Models\Election\PoolMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -276,5 +277,8 @@ class Motion extends Model
         return $this->hasMany(Candidate::class);
     }
 
+    public function poolMembers(){
+        return $this->hasMany(PoolMember::class);
+    }
 
 }

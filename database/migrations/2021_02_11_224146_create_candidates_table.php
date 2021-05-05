@@ -16,21 +16,27 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
 
-            /** The name of the person this model represents */
-            $table->text('first_name')->nullable();
-
-            /** The name of the person this model represents */
-            $table->text('last_name')->nullable();
-
-            /** Any additional data that accompanies them. E.g., a bio or link to a profile */
-            $table->text('info')->nullable();
+//            /** The name of the person this model represents */
+//            $table->text('first_name')->nullable();
+//
+//            /** The name of the person this model represents */
+//            $table->text('last_name')->nullable();
+//
+//            /** Any additional data that accompanies them. E.g., a bio or link to a profile */
+//            $table->text('info')->nullable();
 
             /** The motion representing the election for a office */
-            $table->integer('motion_id')->nullable();
+            $table->integer('motion_id');
 
-            $table->integer('pool_member_id')->nullable();
+            /** The person who has been nominated to the office  */
+            $table->integer('person_id');
 
-            $table->index(['motion_id', 'pool_member_id']);
+            /** Whether the person became a candidate through being written in on a ballot */
+            $table->boolean('is_write_in')->nullable();
+
+//            $table->integer('pool_member_id')->nullable();
+
+//            $table->index(['motion_id', 'pool_member_id']);
 
             $table->timestamps();
         });

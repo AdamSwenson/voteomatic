@@ -97,13 +97,14 @@ const actions = {
      * @param candidate
      * @returns {Promise<unknown>}
      */
-    addOfficialCandidateToOfficeElection({dispatch, commit, getters}, candidate) {
+    addPoolMemberToOfficeElection({dispatch, commit, getters}, poolMember) {
 
-        let url = routes.election.resource.candidate();
+        let url = routes.election.nominatePoolMember(poolMember.id);
+        // let url = routes.election.resource.candidate();
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, candidate).then((response) => {
+            return Vue.axios.post(url).then((response) => {
                 let candidate = new Candidate(response.data);
                 commit('addCandidateToStore', candidate);
                 resolve();
@@ -413,6 +414,11 @@ const actions = {
 
 const getters = {
 
+    getCandidateByPersonId: (state) => (personId) => {
+        return state.candidates.filter((c) => {
+            return c.person_id === personId;
+        });
+    },
 
     /**
      * A motion represents a elected position which is
@@ -533,9 +539,14 @@ const getters = {
      * @param getters
      */
     isPoolMemberACandidate: (state, getters) => (motion, poolMember) => {
-        let candidates = getters.getCandidatesForOffice(motion);
-        return _.forEach(candidates, (candidate) => {
-            if (candidate.pool_member_id === poolMember.id) return true;
+        let officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id);
+        window.console.log('ispac', officesMemberIsCandidate);
+        if(!isReadyToRock(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false;
+
+        //Now we check to see if it is the same office. This shouldn't be needed
+        //unless the candidates/pool don't get cleared. Thus keeping
+        return _.forEach(officesMemberIsCandidate, (candidate) => {
+            if (candidate.motion_id === poolMember.motion_id) return true;
         });
         return false;
 

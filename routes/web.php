@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Demo\LTIDemoController;
 use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Election\ElectionResultsController;
 use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
+use App\Http\Controllers\Election\PersonController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -106,21 +108,30 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
 //Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
 //Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
 
-Route::get('election/{motion}/candidates', [CandidateController::class, 'getCandidatesForOffice']);
+Route::get('election/{motion}/candidates', [CandidateController::class, 'getOfficialCandidatesForOffice']);
 Route::get('election/{motion}/results', [ElectionResultsController::class, 'getResults']);
 //Route::resource('election/candidate/{motion}', CandidateController::class);
 //Route::resource('election/{meeting}', )
 Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
 
-//setup
+//setup office/position
 Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
-Route::get('election/setup/office/{motion}/pool', [CandidatePoolController::class, 'getCandidatePool']);
 
 Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
 Route::resource('elections', ElectionController::class);
 Route::resource('offices', OfficeController::class);
 
-Route::resource('candidates', CandidateController::class);
+//pool of eligible nominees for office
+Route::get('election/pool/{motion}', [CandidatePoolController::class, 'getCandidatePool']);
+Route::post('election/pool/{motion}/{person}', [CandidatePoolController::class, 'addPersonToPool']);
+
+Route::post('election/nominate/{poolMember}', [CandidateController::class, 'addCandidateToBallot']);
+
+Route::resource('election/people', PersonController::class);
+
+//Handles update and destroy
+Route::resource('election/candidates', CandidateController::class);
+
 
 
 

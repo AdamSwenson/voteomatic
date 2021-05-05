@@ -9,7 +9,7 @@ import IModel from "./IModel";
 export default class Candidate extends IModel {
 
 
-    constructor({id = null, first_name = null, last_name=null, info = null, motion_id=null, is_write_in=null, pool_member_id=null}) {
+    constructor({id = null, first_name = null, last_name=null, info = null, motion_id=null, is_write_in=null, person_id=null}) {
         super();
         this.id = id;
         this.first_name = first_name;
@@ -17,7 +17,8 @@ export default class Candidate extends IModel {
         this.info = info;
         this.motion_id = motion_id;
         this.is_write_in = is_write_in;
-        this.pool_member_id = pool_member_id;
+        this.person_id = person_id;
+        // this.pool_member_id = pool_member_id;
 
         // this.type = 'nominated';
 

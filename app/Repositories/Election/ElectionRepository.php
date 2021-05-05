@@ -4,7 +4,7 @@
 namespace App\Repositories\Election;
 
 
-use App\Http\Requests\CandidateCreationRequest;
+use App\Http\Requests\CandidateRequest;
 use App\Models\Election\Candidate;
 use App\Models\Meeting;
 use App\Models\Motion;
@@ -22,33 +22,33 @@ class ElectionRepository implements IElectionRepository
 {
 
 
-    public function addCandidate(Motion $motion, CandidateCreationRequest $request)
-    {
-
-//        //NB, id here is the pool member's id
-//        if ($request->has('id')) {
-//            //Check if the pool member has been added as a candidate yet
-//            $candidate = Candidate::where('pool_member_id', $request->id)
-//                ->where('motion_id', $motion->id)
-//                ->first();
+//    public function addCandidate(Motion $motion, CandidateRequest $request)
+//    {
 //
-//            if (is_null($candidate)) {
-                $candidate = Candidate::create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'info' => $request->info,
-                    'pool_member_id' => $request->id,
-                    'motion_id' => $motion->id
-                ]);
-//            }
-//        }
-
-
-//        $candidate->motion()->associate($motion);
-
-//dd($motion);
-        return $candidate;
-    }
+////        //NB, id here is the pool member's id
+////        if ($request->has('id')) {
+////            //Check if the pool member has been added as a candidate yet
+////            $candidate = Candidate::where('pool_member_id', $request->id)
+////                ->where('motion_id', $motion->id)
+////                ->first();
+////
+////            if (is_null($candidate)) {
+//                $candidate = Candidate::create([
+//                    'first_name' => $request->first_name,
+//                    'last_name' => $request->last_name,
+//                    'info' => $request->info,
+//                    'pool_member_id' => $request->id,
+//                    'motion_id' => $motion->id
+//                ]);
+////            }
+////        }
+//
+//
+////        $candidate->motion()->associate($motion);
+//
+////dd($motion);
+//        return $candidate;
+//    }
 
 
     public function addOfficeToElection(Meeting $election, $officeName = '', $description = '')
