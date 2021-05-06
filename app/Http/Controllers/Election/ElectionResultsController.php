@@ -33,6 +33,10 @@ class ElectionResultsController extends Controller
 
     public function getResults(Motion $motion)
     {
+        //todo check that election has closed
+
+        $this->setLoggedInUser();
+
         $out = $this->electionResultsRepo->getResultsForClient($motion);
 
         return response()->json($out);

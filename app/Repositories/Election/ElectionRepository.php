@@ -51,12 +51,13 @@ class ElectionRepository implements IElectionRepository
 //    }
 
 
-    public function addOfficeToElection(Meeting $election, $officeName = '', $description = '')
+    public function addOfficeToElection(Meeting $election, $officeName = '', $description = '', $maxWinners=1)
     {
         $office = Motion::create([
             'content' => $officeName,
             'description' => $description,
-            'meeting_id' => $election->id
+            'meeting_id' => $election->id,
+            'max_winners' => $maxWinners
         ]);
 
         return $office;

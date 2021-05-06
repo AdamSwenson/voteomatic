@@ -27,6 +27,9 @@ class Person extends Model
         'info' => 'array'
     ];
 
+
+
+
     public function candidates(){
 return $this->hasMany(Candidate::class);
     }

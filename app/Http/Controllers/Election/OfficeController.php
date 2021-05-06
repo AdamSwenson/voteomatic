@@ -62,7 +62,7 @@ class OfficeController extends Controller
 //        dd($request);
 //        $election = $request->getElection();
 //        dd($election);
-        $office = $this->electionRepo->addOfficeToElection($election, $request['content'], $request->description);
+        $office = $this->electionRepo->addOfficeToElection($election, $request['content'], $request->description, 1);
         return response()->json($office);
     }
 

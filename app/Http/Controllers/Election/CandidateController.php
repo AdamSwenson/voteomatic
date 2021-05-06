@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Election\CandidateRequest;
+use App\Http\Requests\Election\WriteInCandidateRequest;
 use App\Models\Election\Candidate;
 use App\Models\Election\Person;
 use App\Models\Election\PoolMember;
@@ -46,7 +47,8 @@ class CandidateController extends Controller
             'last_name' => $candidate->person->last_name,
             'info' => $candidate->person->info,
             'motion_id' => $candidate->motion->id,
-            'person_id' => $candidate->person->id
+            'person_id' => $candidate->person->id,
+            'is_write_in' => $candidate->is_write_in
         ];
     }
 
@@ -91,13 +93,41 @@ class CandidateController extends Controller
         $motion = $poolMember->motion;
         $person = $poolMember->person;
 
-        $writeIn = null;
-        if ($request->has('is_write_in')) {
-            $writeIn = $request->is_write_in;
-        }
-        $candidate = $this->candidateRepo->addCandidateToBallot($motion, $person, $writeIn);
+        $candidate = $this->candidateRepo->addCandidateToBallot($motion, $person);
 
         return response()->json($this->makeCandidateResponse($candidate));
+    }
+
+    public function addWriteInCandidate(Motion $motion, WriteInCandidateRequest $request){
+        //authorize regular user!
+
+        //Check whether the write in candidate duplicates an existing candidate
+        $possibleDuplicates = Person::where('first_name', $request->first_name)
+            ->where('last_name', $request->last_name)
+            ->get();
+
+        if(sizeof($possibleDuplicates) > 0){
+            $currentCandidates = [];
+        }
+
+
+        //First create a person
+        $person = Person::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'info' => $request->info,
+        ]);
+
+        //Now make them a candidate
+        $candidate = Candidate::create([
+            'motion_id' => $motion->id,
+            'person_id' => $person->id,
+            'is_write_in' => true
+        ]);
+
+        //Send the candidate to the client
+        return response()->json($this->makeCandidateResponse($candidate));
+
     }
 
 
@@ -150,30 +180,29 @@ class CandidateController extends Controller
 //        //
 //    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Candidate $candidate
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Candidate $candidate, CandidateRequest $request)
-    {
-        $d = $request->all();
-        $candidate->update($d);
-        return response()->json($this->makeCandidateResponse($candidate));
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param \Illuminate\Http\Request $request
+//     * @param Candidate $candidate
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(Candidate $candidate, CandidateRequest $request)
+//    {
+//        $d = $request->all();
+//        $candidate->update($d);
+//        return response()->json($this->makeCandidateResponse($candidate));
+//
+//    }
 
-    }
-
     /**
-     * Remove the specified resource from storage.
      *
      * This makes the person no longer a candidate for an office
      *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Motion $motion, Candidate $candidate)
+    public function removeCandidate(Candidate $candidate)
     {
         $candidate->delete();
         return response()->json(200);

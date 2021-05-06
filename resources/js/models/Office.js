@@ -6,9 +6,9 @@ import Motion from "./Motion";
 export default class Office extends Motion {
 
 
-    constructor({id = null, content = null, description = null})
+    constructor({id = null, content = null, description = null, max_winners=null})
     {
-        super({id, content, description});
+        super({id, content, description, max_winners});
 
         this.type = 'office';
 

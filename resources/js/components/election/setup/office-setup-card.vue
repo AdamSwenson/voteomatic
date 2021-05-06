@@ -5,6 +5,10 @@
         </div>
 
         <div class="card-body">
+            <office-list-card></office-list-card>
+        </div>
+
+        <div class="card-body">
             <office-edit-card></office-edit-card>
         </div>
 
@@ -23,9 +27,7 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <office-list-card></office-list-card>
-        </div>
+
     </div>
 </template>
 

@@ -75,7 +75,9 @@ class Motion extends Model
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'debatable' => 'boolean',
-        'seconded' => 'boolean'
+        'seconded' => 'boolean',
+        //election
+        'max_winners' => 'integer'
     ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];

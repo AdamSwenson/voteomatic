@@ -8,44 +8,47 @@
 
         <div class="card-body">
 
-            <office-results-card v-for="motion in motions" :key="motion.id" :motion="motion"></office-results-card>
+            <office-results-card :motion="motion"></office-results-card>
+<!--            <office-results-card v-for="motion in motions" :key="motion.id" :motion="motion"></office-results-card>-->
 
 
         </div>
 
     </div>
 </template>
-<div class="election-results-card card">
+<!--<div class="election-results-card card">-->
 
 
-<div class="card-header">
-    <h2 class="card-title">Results for the election </h2>
-</div>
+<!--<div class="card-header">-->
+<!--    <h2 class="card-title">Results for the election </h2>-->
+<!--</div>-->
 
-<div class="card-body">
+<!--<div class="card-body">-->
 
-    <office-results-card
-        v-if="motions.length > 0"
-        v-for="motion in motions"
-        :key="motion.id"
-        :motion="motion"
-    ></office-results-card>
+<!--    <office-results-card-->
+<!--        v-if="motions.length > 0"-->
+<!--        v-for="motion in motions"-->
+<!--        :key="motion.id"-->
+<!--        :motion="motion"-->
+<!--    ></office-results-card>-->
 
-</div>
+<!--</div>-->
 
 
-</div>
+<!--</div>-->
 <script>
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import OfficeResultsCard from "./office-results-card";
+import ModeMixin from "../../../mixins/modeMixin";
+import ChairMixin from "../../../mixins/chairMixin";
 
 export default {
     name: "election-results-card",
     components: {OfficeResultsCard},
     props: [],
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, MotionStoreMixin, ],
 
     data: function () {
         return {}
@@ -57,8 +60,6 @@ export default {
                 return this.$store.getters.getMotions;
             },
             default: []
-
-
         }
     },
 

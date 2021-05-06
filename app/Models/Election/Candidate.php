@@ -31,6 +31,17 @@ class Candidate extends Model
 //        'pool_member_id'
     ];
 
+    protected $casts = [
+        'is_write_in' => 'boolean'
+    ];
+
+
+
+    public function getNameAttribute(){
+        return $this->person->first_name . ' ' . $this->person->last_name;
+    }
+
+
     /**
      * Returns the total votes cast for the candidate
      * @return int

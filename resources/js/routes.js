@@ -38,13 +38,13 @@ module.exports = {
     election: {
 
         resource: {
-            candidate: (candidateId = null) => {
-                let r = normalizedRouteRoot() + '/election/candidates';
-                if (!_.isNull(candidateId)) {
-                    r = r + '/' + candidateId;
-                }
-                return r;
-            },
+            // candidate: (candidateId) => {
+            //     let r = normalizedRouteRoot() + '/election/candidate';
+            //     if (!_.isNull(candidateId)) {
+            //         r = r + '/' + candidateId;
+            //     }
+            //     return r;
+            // },
 
 
             election: (meetingId = null) => {
@@ -76,6 +76,15 @@ module.exports = {
 
         },
 
+        addToPool: (motionId, personId) => {
+            return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
+        },
+
+        addWriteIn: (motionId) => {
+            return normalizedRouteRoot() + 'election/write-in/' + motionId;
+        },
+
+
         // createOffice: (meetingId) => {
         //     return normalizedRouteRoot() + 'election/office/' + meetingId;
         // },
@@ -103,11 +112,6 @@ module.exports = {
         getPool: (motionId) => {
             return normalizedRouteRoot() + 'election/pool/' + motionId;
         },
-
-        addToPool: (motionId, personId) => {
-            return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
-        },
-
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'election/' + motionId + '/results';
         },
@@ -118,6 +122,16 @@ module.exports = {
 
         recordVote: (motionId) => {
             return normalizedRouteRoot() + 'election/vote/' + motionId;
+        },
+
+        removeCandidate: (candidateId) => {
+            return normalizedRouteRoot() + 'election/candidate/' + candidateId;
+            //     if (!_.isNull(candidateId)) {
+            //         r = r + '/' + candidateId;
+            //     }
+            //     return r;
+            // },
+
         }
     },
 

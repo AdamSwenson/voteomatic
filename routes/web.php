@@ -129,8 +129,10 @@ Route::post('election/nominate/{poolMember}', [CandidateController::class, 'addC
 
 Route::resource('election/people', PersonController::class);
 
+Route::post('election/write-in/{motion}', [CandidateController::class, 'addWriteInCandidate']);
+
 //Handles update and destroy
-Route::resource('election/candidates', CandidateController::class);
+Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
 
 
 

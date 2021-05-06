@@ -99,7 +99,7 @@ export default {
     methods: {
 
         handleClick: function () {
-
+let me = this;
             if (!this.selected) {
                 //Make them into a candidate
                 // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
@@ -109,9 +109,13 @@ export default {
             } else {
                 //remove them as a candidate
                 window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);
-                this.$store.dispatch('removeCandidate', this.candidate);
+                this.$store.dispatch('removeCandidate', this.candidate).then(function(){
+                    me.events += 1;
+
+                });
             }
             this.events += 1;
+
             this.$emit('selection');
 
         }

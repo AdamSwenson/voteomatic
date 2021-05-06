@@ -41,8 +41,12 @@ export default {
     asyncComputed: {
         candidatePool: {
             get: function () {
+                let me = this;
                 if (!isReadyToRock(this.motion)) return [];
-                return this.$store.getters.getCandidatePoolForOffice(this.motion);
+                return this.$store.dispatch('loadCandidatePool', this.motion.id).then(function(){
+                    return me.$store.getters.getCandidatePoolForOffice(me.motion);
+                })
+
             },
             default: [],
             watch: ['motion']

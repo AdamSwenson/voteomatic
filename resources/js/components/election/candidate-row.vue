@@ -17,7 +17,9 @@
                     <p class="card-text">
                         {{ candidateInfo }}
                     </p>
-
+<p v-if="isWriteIn">
+    <write-in-badge></write-in-badge>
+</p>
                     <!--                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
                 </div>
             </div>
@@ -39,12 +41,13 @@
 <script>
 import CandidateButton from "./candidate-button";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import WriteInBadge from "./write-in/write-in-badge";
 
 export default {
 
     name: "candidate-row",
 
-    components: {CandidateButton},
+    components: {WriteInBadge, CandidateButton},
 
     props: ['candidate'],
 
@@ -65,6 +68,10 @@ export default {
             if (isReadyToRock(this.candidate)) return this.candidate.info;
 
             return '';
+        },
+
+        isWriteIn : function(){
+        return isReadyToRock(this.candidate) && this.candidate.is_write_in === true;
 
         }
     },

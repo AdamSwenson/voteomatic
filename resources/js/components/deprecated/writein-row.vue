@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import CandidateButton from "./candidate-button";
+import CandidateButton from "../election/candidate-button";
 import WriteinInput from "./writein-input";
 import MotionMixin from "../../mixins/motionStoreMixin";
 

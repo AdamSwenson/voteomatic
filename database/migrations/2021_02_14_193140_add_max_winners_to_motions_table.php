@@ -15,7 +15,7 @@ class AddMaxWinnersToMotionsTable extends Migration
     {
         Schema::table('motions', function (Blueprint $table) {
             /** For elections, this defines how many people can be elected to the office */
-            $table->integer('max_winners')->default(1)->nullable();
+            $table->integer('max_winners')->nullable();
         });
     }
 

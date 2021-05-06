@@ -9,7 +9,7 @@
                aria-describedby="writeInHelp"
                v-model="name"
         >
-        <small id="writeInHelp" class="form-text text-muted">Enter the person's name here. If you change your mind, de-select it using the button to the left </small>
+        <small id="writeInHelp" class="form-text text-muted">Enter the person's name here. If you change your mind, de-select them using the button to the left </small>
     </div>
 </template>
 

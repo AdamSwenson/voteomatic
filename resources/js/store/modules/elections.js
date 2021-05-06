@@ -112,10 +112,10 @@ const actions = {
         }));
     },
 
-    addWriteInCandidateToOfficeElection({dispatch, commit, getters}, {name, info, motionId}) {
-        let data = {name: name, info: info, is_write_in: true};
+    addWriteInCandidateToOfficeElection({dispatch, commit, getters}, {first_name, last_name, info, motionId}) {
+        let data = {first_name: first_name, last_name : last_name, info: info, is_write_in: true};
 
-        let url = routes.election.candidates(motionId);
+        let url = routes.election.addWriteIn(motionId);
 
         return new Promise(((resolve, reject) => {
 
@@ -371,9 +371,8 @@ const actions = {
      * @returns {Promise<unknown>}
      */
     removeCandidate({dispatch, commit, getters}, candidate) {
-        let motionId = getters.getActiveMotion.id;
         // let url = routes.election.candidates(motionId, payload.id);
-        let url = routes.election.resource.candidate(candidate.id);
+        let url = routes.election.removeCandidate(candidate.id);
 
         return new Promise(((resolve, reject) => {
 
@@ -391,23 +390,23 @@ const actions = {
     },
 
 
-    updateCandidate({dispatch, commit, getters}, payload) {
-        let motionId = getters.getActiveMotion.id;
-        // let url = routes.election.candidates(motionId, payload.id);
-        let url = routes.election.resource.candidate(payload.id);
-
-        let data = {};
-        data[payload.updateProp] = payload.updateVal;
-
-        return new Promise(((resolve, reject) => {
-                return Vue.axios.patch(url, data).then((response) => {
-                    commit('setCandidateProp', payload);
-                    resolve();
-                });
-            })
-        );
-
-    },
+    // updateCandidate({dispatch, commit, getters}, payload) {
+    //     let motionId = getters.getActiveMotion.id;
+    //     // let url = routes.election.candidates(motionId, payload.id);
+    //     let url = routes.election.resource.candidate(payload.id);
+    //
+    //     let data = {};
+    //     data[payload.updateProp] = payload.updateVal;
+    //
+    //     return new Promise(((resolve, reject) => {
+    //             return Vue.axios.patch(url, data).then((response) => {
+    //                 commit('setCandidateProp', payload);
+    //                 resolve();
+    //             });
+    //         })
+    //     );
+    //
+    // },
 
 
 };
@@ -540,7 +539,7 @@ const getters = {
      */
     isPoolMemberACandidate: (state, getters) => (motion, poolMember) => {
         let officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id);
-        window.console.log('ispac', officesMemberIsCandidate);
+       // window.console.log('ispac', officesMemberIsCandidate);
         if(!isReadyToRock(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false;
 
         //Now we check to see if it is the same office. This shouldn't be needed

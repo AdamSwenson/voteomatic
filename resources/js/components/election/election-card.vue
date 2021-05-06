@@ -26,20 +26,20 @@
                                :candidate="candidate"
                 ></candidate-row>
 
-                <writein-row v-if="writeInCandidates.length > 0"
-                             v-for="candidate in writeInCandidates"
-                             :candidate="candidate"
-                             :key="candidate.id"
-                ></writein-row>
+<!--                Enable after VOT-60 is complete-->
+<!--                <candidate-row v-if="writeInCandidates.length > 0"-->
+<!--                             v-for="candidate in writeInCandidates"-->
+<!--                             :candidate="candidate"-->
+<!--                             :key="candidate.id"-->
+<!--                ></candidate-row>-->
 
             </div>
 
+<!--            Enable after VOT-60 is complete-->
+<!--            <div class="card-body">-->
+<!--                <write-in-controls></write-in-controls>-->
+<!--            </div>-->
 
-            <div class="card-body">
-                <write-in-controls></write-in-controls>
-            </div>
-
-<!--            <election-results-card></election-results-card>-->
 
             <div class="card-footer">
                 <cast-ballot-button></cast-ballot-button>
@@ -68,8 +68,8 @@ import {isReadyToRock} from '../../utilities/readiness.utilities'
 import CastBallotButton from "./cast-ballot-button";
 import OverselectionWarning from "./overselection-warning";
 import MaxWinnersInstruction from "./max-winners-instruction";
-import WriteinRow from "./writein-row";
-import WriteInControls from "./write-in-controls";
+import WriteinRow from "../deprecated/writein-row";
+import WriteInControls from "./write-in/write-in-controls";
 import ElectionResultsCard from "./results/election-results-card";
 import ModeMixin from "../../mixins/modeMixin";
 

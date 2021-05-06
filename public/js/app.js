@@ -3042,6 +3042,142 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "writein-input",
+  props: ['candidate'],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {},
+  computed: {
+    name: {
+      get: function get() {
+        if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.candidate)) return this.candidate.name;
+      },
+      set: function set(v) {
+        var payload = _models_Payload__WEBPACK_IMPORTED_MODULE_1__["default"].factory({
+          id: this.candidate.id,
+          updateProp: 'name',
+          updateVal: v
+        });
+        this.$store.dispatch('updateCandidate', payload);
+      }
+    }
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _election_candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../election/candidate-button */ "./resources/js/components/election/candidate-button.vue");
+/* harmony import */ var _writein_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-input */ "./resources/js/components/deprecated/writein-input.vue");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "writein-row",
+  components: {
+    WriteinInput: _writein_input__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CandidateButton: _election_candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['candidate'],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {// handleNewWriteIn : function(){
+    //     window.console.log('add writein');
+    //
+    //     let d = {
+    //         name : '',
+    //         info : '',
+    //         motionId : this.motion.id
+    //     };
+    //
+    //     this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(() => {
+    //
+    //
+    //     });
+    //
+    //
+    //
+    //
+    //
+    // },
+    //
+    // handleClear : function(){
+    //     window.console.log('clear writein');
+    // }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js& ***!
@@ -3138,6 +3274,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button */ "./resources/js/components/election/candidate-button.vue");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./write-in/write-in-badge */ "./resources/js/components/election/write-in/write-in-badge.vue");
 //
 //
 //
@@ -3176,11 +3313,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "candidate-row",
   components: {
+    WriteInBadge: _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__["default"],
     CandidateButton: _candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ['candidate'],
@@ -3196,6 +3337,9 @@ __webpack_require__.r(__webpack_exports__);
     candidateInfo: function candidateInfo() {
       if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__["isReadyToRock"])(this.candidate)) return this.candidate.info;
       return '';
+    },
+    isWriteIn: function isWriteIn() {
+      return Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__["isReadyToRock"])(this.candidate) && this.candidate.is_write_in === true;
     }
   },
   computed: {},
@@ -3276,8 +3420,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cast-ballot-button */ "./resources/js/components/election/cast-ballot-button.vue");
 /* harmony import */ var _overselection_warning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overselection-warning */ "./resources/js/components/election/overselection-warning.vue");
 /* harmony import */ var _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./max-winners-instruction */ "./resources/js/components/election/max-winners-instruction.vue");
-/* harmony import */ var _writein_row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./writein-row */ "./resources/js/components/election/writein-row.vue");
-/* harmony import */ var _write_in_controls__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./write-in-controls */ "./resources/js/components/election/write-in-controls.vue");
+/* harmony import */ var _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../deprecated/writein-row */ "./resources/js/components/deprecated/writein-row.vue");
+/* harmony import */ var _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./write-in/write-in-controls */ "./resources/js/components/election/write-in/write-in-controls.vue");
 /* harmony import */ var _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__);
@@ -3358,8 +3502,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "election-card",
   components: {
     ElectionResultsCard: _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__["default"],
-    WriteInControls: _write_in_controls__WEBPACK_IMPORTED_MODULE_8__["default"],
-    WriteinRow: _writein_row__WEBPACK_IMPORTED_MODULE_7__["default"],
+    WriteInControls: _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__["default"],
+    WriteinRow: _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__["default"],
     MaxWinnersInstruction: _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__["default"],
     OverselectionWarning: _overselection_warning__WEBPACK_IMPORTED_MODULE_5__["default"],
     CastBallotButton: _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -3668,6 +3812,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _office_results_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./office-results-card */ "./resources/js/components/election/results/office-results-card.vue");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -3705,6 +3853,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
+
 
 
 
@@ -3714,7 +3865,7 @@ __webpack_require__.r(__webpack_exports__);
     OfficeResultsCard: _office_results_card__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: [],
-  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
+  mixins: [_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default.a, _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default.a],
   data: function data() {
     return {};
   },
@@ -3912,8 +4063,11 @@ __webpack_require__.r(__webpack_exports__);
   asyncComputed: {
     candidatePool: {
       get: function get() {
+        var me = this;
         if (!Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__["isReadyToRock"])(this.motion)) return [];
-        return this.$store.getters.getCandidatePoolForOffice(this.motion);
+        return this.$store.dispatch('loadCandidatePool', this.motion.id).then(function () {
+          return me.$store.getters.getCandidatePoolForOffice(me.motion);
+        });
       },
       "default": [],
       watch: ['motion']
@@ -4023,6 +4177,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleClick: function handleClick() {
+      var me = this;
+
       if (!this.selected) {
         //Make them into a candidate
         // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
@@ -4031,7 +4187,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         //remove them as a candidate
         window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);
-        this.$store.dispatch('removeCandidate', this.candidate);
+        this.$store.dispatch('removeCandidate', this.candidate).then(function () {
+          me.events += 1;
+        });
       }
 
       this.events += 1;
@@ -4432,8 +4590,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _writein_row__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../writein-row */ "./resources/js/components/election/writein-row.vue");
-/* harmony import */ var _write_in_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../write-in-controls */ "./resources/js/components/election/write-in-controls.vue");
+/* harmony import */ var _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../deprecated/writein-row */ "./resources/js/components/deprecated/writein-row.vue");
+/* harmony import */ var _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../write-in/write-in-controls */ "./resources/js/components/election/write-in/write-in-controls.vue");
 /* harmony import */ var _controls_create_election_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./controls/create-election-button */ "./resources/js/components/election/setup/controls/create-election-button.vue");
 /* harmony import */ var _controls_create_office_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./controls/create-office-button */ "./resources/js/components/election/setup/controls/create-office-button.vue");
 /* harmony import */ var _deprecated_meeting_setup_card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../deprecated/meeting-setup-card */ "./resources/js/components/deprecated/meeting-setup-card.vue");
@@ -4448,7 +4606,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_event_display_card__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../common/event-display-card */ "./resources/js/components/common/event-display-card.vue");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_17__);
-//
 //
 //
 //
@@ -4887,6 +5044,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4913,17 +5072,104 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "write-in-badge",
+  props: [],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "write-in-button",
+  props: [],
+  data: function data() {
+    return {
+      styling: "btn btn-warning "
+    };
+  },
+  computed: {
+    modalId: function modalId() {
+      return "writeInModal";
+    },
+    target: function target() {
+      return '#' + this.modalId;
+    },
+    label: function label() {
+      return 'Add write in candidate';
+    } // typeCapitalized : function(){
+    //     return this.type.toUpperCase();
+    // },
+    //
+
+  },
+  methods: {
+    /**
+     * While the button just toggles the modal we may
+     * also want to add other things that are triggered when
+     * the modal is shown
+     */
+    handleClick: function handleClick() {}
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _write_in_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-modal */ "./resources/js/components/election/write-in/write-in-modal.vue");
+/* harmony import */ var _write_in_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-button */ "./resources/js/components/election/write-in/write-in-button.vue");
+//
+//
 //
 //
 //
@@ -4933,24 +5179,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "write-in-controls",
+  components: {
+    WriteInButton: _write_in_button__WEBPACK_IMPORTED_MODULE_1__["default"],
+    WriteInModal: _write_in_modal__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: [],
-  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
     return {};
   },
   asyncComputed: {},
   computed: {},
   methods: {
-    handleNewWriteIn: function handleNewWriteIn() {
-      window.console.log('add writein');
-      var d = {
-        name: '',
-        info: '',
-        motionId: this.motion.id
-      };
-      this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(function () {});
+    handleNewWriteIn: function handleNewWriteIn() {// window.console.log('add writein');
+      //
+      // let d = {
+      //     name: '',
+      //     info: '',
+      //     motionId: this.motion.id
+      // };
+      //
+      // this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(() => {
+      //
+      // });
     },
     handleClear: function handleClear() {
       window.console.log('clear writein');
@@ -4960,17 +5213,68 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-input.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/writein-input.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4987,110 +5291,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+/**
+ * Note, this will require that the delete-meeting-button is
+ * included elsewhere on the page. They are linked via  bootstrap
+ * using the data-dismiss=modal attribute. They are not linked
+ * by vue or vuex events.
+ */
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "writein-input",
-  props: ['candidate'],
-  mixins: [],
+  name: "write-in-modal",
+  props: [],
+  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default.a],
   data: function data() {
-    return {};
+    return {
+      _firstName: '',
+      _lastName: ''
+    };
   },
-  asyncComputed: {},
   computed: {
-    name: {
+    modalId: function modalId() {
+      return "writeInModal";
+    },
+    labelId: function labelId() {
+      return "writeInModalLabel";
+    },
+    firstName: {
       get: function get() {
-        if (Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__["isReadyToRock"])(this.candidate)) return this.candidate.name;
+        return this._firstName;
       },
       set: function set(v) {
-        var payload = _models_Payload__WEBPACK_IMPORTED_MODULE_1__["default"].factory({
-          id: this.candidate.id,
-          updateProp: 'name',
-          updateVal: v
-        });
-        this.$store.dispatch('updateCandidate', payload);
+        this._firstName = v;
+      }
+    },
+    lastName: {
+      get: function get() {
+        return this._lastName;
+      },
+      set: function set(v) {
+        this._lastName = v;
       }
     }
   },
-  methods: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-row.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/writein-row.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button */ "./resources/js/components/election/candidate-button.vue");
-/* harmony import */ var _writein_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-input */ "./resources/js/components/election/writein-input.vue");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "writein-row",
-  components: {
-    WriteinInput: _writein_input__WEBPACK_IMPORTED_MODULE_1__["default"],
-    CandidateButton: _candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ['candidate'],
-  mixins: [_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default.a],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {},
-  computed: {},
-  methods: {// handleNewWriteIn : function(){
-    //     window.console.log('add writein');
-    //
-    //     let d = {
-    //         name : '',
-    //         info : '',
-    //         motionId : this.motion.id
-    //     };
-    //
-    //     this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(() => {
-    //
-    //
-    //     });
-    //
-    //
-    //
-    //
-    //
-    // },
-    //
-    // handleClear : function(){
-    //     window.console.log('clear writein');
-    // }
+  methods: {
+    clearFields: function clearFields() {
+      this._firstName = '';
+      this._lastName = '';
+    },
+    handleClick: function handleClick() {
+      var d = {
+        first_name: this._firstName,
+        last_name: this._lastName,
+        info: '',
+        motionId: this.motion.id
+      };
+      this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(function () {}); //
+      //     let me = this;
+      //
+      //     //First we create and store a new meeting from the
+      //     //provided template
+      //     let p = this.$store.dispatch('deleteMeeting', me.meeting)
+      //         .then(function () {
+      //         });
+      // }
+    }
   }
 });
 
@@ -49599,6 +49862,115 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "form-group" }, [
+    _c("label", { attrs: { for: "writeIn" } }, [
+      _vm._v("Write-in candidate name")
+    ]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.name,
+          expression: "name"
+        }
+      ],
+      staticClass: "form-control",
+      attrs: { type: "text", id: "writeIn", "aria-describedby": "writeInHelp" },
+      domProps: { value: _vm.name },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.name = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "small",
+      { staticClass: "form-text text-muted", attrs: { id: "writeInHelp" } },
+      [
+        _vm._v(
+          "Enter the person's name here. If you change your mind, de-select them using the button to the left "
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "candidate-row card mb-3",
+      staticStyle: { "max-width": "540px" }
+    },
+    [
+      _c("div", { staticClass: "row no-gutters" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-4" },
+          [_c("candidate-button", { attrs: { candidate: _vm.candidate } })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [_c("writein-input", { attrs: { candidate: _vm.candidate } })],
+            1
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true& ***!
@@ -49669,7 +50041,9 @@ var render = function() {
                   _vm._s(_vm.candidateInfo) +
                   "\n                    "
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.isWriteIn ? _c("p", [_c("write-in-badge")], 1) : _vm._e()
           ])
         ])
       ])
@@ -49747,30 +50121,12 @@ var render = function() {
             _c(
               "div",
               { staticClass: "card-body" },
-              [
-                _vm._l(_vm.candidates, function(candidate) {
-                  return _c("candidate-row", {
-                    key: candidate.id,
-                    attrs: { candidate: candidate }
-                  })
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.writeInCandidates, function(candidate) {
-                  return _vm.writeInCandidates.length > 0
-                    ? _c("writein-row", {
-                        key: candidate.id,
-                        attrs: { candidate: candidate }
-                      })
-                    : _vm._e()
+              _vm._l(_vm.candidates, function(candidate) {
+                return _c("candidate-row", {
+                  key: candidate.id,
+                  attrs: { candidate: candidate }
                 })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [_c("write-in-controls")],
+              }),
               1
             ),
             _vm._v(" "),
@@ -49956,12 +50312,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "card-body" },
-      _vm._l(_vm.motions, function(motion) {
-        return _c("office-results-card", {
-          key: motion.id,
-          attrs: { motion: motion }
-        })
-      }),
+      [_c("office-results-card", { attrs: { motion: _vm.motion } })],
       1
     )
   ])
@@ -50002,10 +50353,6 @@ var render = function() {
       _c("h2", { staticClass: "card-title" }, [
         _vm._v(_vm._s(_vm.officeName) + " results")
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("p", [_vm._v("Total votes cast for office: " + _vm._s(_vm.totalCast))])
     ]),
     _vm._v(" "),
     _c(
@@ -50228,23 +50575,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "election-setup-card card" },
-    [
-      _vm.isChair
-        ? _c(
-            "div",
-            { staticClass: "chair" },
-            [_vm.isInEventEditingMode ? _c("event-edit-card") : _vm._e()],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("event-display-card")
-    ],
-    1
-  )
+  return _c("div", { staticClass: "election-setup-card card" }, [
+    _vm.isChair
+      ? _c(
+          "div",
+          { staticClass: "chair" },
+          [_vm.isInEventEditingMode ? _c("event-edit-card") : _vm._e()],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50412,6 +50752,8 @@ var render = function() {
   return _c("div", { staticClass: "card office-setup" }, [
     _c("div", { staticClass: "card-header" }, [_c("create-office-button")], 1),
     _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [_c("office-list-card")], 1),
+    _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [_c("office-edit-card")], 1),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -50431,9 +50773,7 @@ var render = function() {
           1
         )
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [_c("office-list-card")], 1)
+    ])
   ])
 }
 var staticRenderFns = []
@@ -50443,10 +50783,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true&":
-/*!*****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true& ***!
-  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50458,12 +50798,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "write-in-controls" }, [
-    _c(
-      "button",
-      { staticClass: "btn btn-info", on: { click: _vm.handleNewWriteIn } },
-      [_vm._v("Add write in candidate")]
-    )
+  return _c("span", { staticClass: "badge badge-warning" }, [
+    _vm._v("Write-in")
   ])
 }
 var staticRenderFns = []
@@ -50473,10 +50809,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50488,43 +50824,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "form-group" }, [
-    _c("label", { attrs: { for: "writeIn" } }, [
-      _vm._v("Write-in candidate name")
-    ]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.name,
-          expression: "name"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text", id: "writeIn", "aria-describedby": "writeInHelp" },
-      domProps: { value: _vm.name },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.name = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "small",
-      { staticClass: "form-text text-muted", attrs: { id: "writeInHelp" } },
-      [
-        _vm._v(
-          "Enter the person's name here. If you change your mind, de-select it using the button to the left "
-        )
-      ]
-    )
-  ])
+  return _c(
+    "button",
+    {
+      class: _vm.styling,
+      attrs: { "data-toggle": "modal", "data-target": _vm.target },
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v(_vm._s(_vm.label) + "\n")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50533,10 +50841,39 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "write-in-controls" },
+    [_c("write-in-modal"), _vm._v(" "), _c("write-in-button")],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50551,31 +50888,144 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "candidate-row card mb-3",
-      staticStyle: { "max-width": "540px" }
+      staticClass: "modal fade",
+      attrs: {
+        id: _vm.modalId,
+        tabindex: "-1",
+        "aria-labelledby": _vm.labelId,
+        "aria-hidden": "true"
+      }
     },
     [
-      _c("div", { staticClass: "row no-gutters" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-4" },
-          [_c("candidate-button", { attrs: { candidate: _vm.candidate } })],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [_c("writein-input", { attrs: { candidate: _vm.candidate } })],
-            1
-          )
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "h5",
+              { staticClass: "modal-title", attrs: { id: _vm.labelId } },
+              [_vm._v("Add write-in candidate")]
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "writeInFirst" } }, [
+                _vm._v("First name")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.firstName,
+                    expression: "firstName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "writeInFirst",
+                  "aria-describedby": "writeInHelp"
+                },
+                domProps: { value: _vm.firstName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.firstName = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "writeInLast" } }, [
+                _vm._v("Last name")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.lastName,
+                    expression: "lastName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "writeInLast" },
+                domProps: { value: _vm.lastName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.lastName = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "writeInHelp" }
+                },
+                [
+                  _vm._v(
+                    "Enter the person's name here. If you change your mind or notice a mistake after clicking done, simply de-select them like any other candidate"
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Cancel\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: { click: _vm.handleClick }
+              },
+              [_vm._v("Done\n                ")]
+            )
+          ])
         ])
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -71577,6 +72027,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/deprecated/writein-input.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-input.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./writein-input.vue?vue&type=template&id=333d3120&scoped=true& */ "./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true&");
+/* harmony import */ var _writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-input.vue?vue&type=script&lang=js& */ "./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "333d3120",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/deprecated/writein-input.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-input.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-input.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-input.vue?vue&type=template&id=333d3120&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-input.vue?vue&type=template&id=333d3120&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_333d3120_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/deprecated/writein-row.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-row.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./writein-row.vue?vue&type=template&id=369d2600&scoped=true& */ "./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true&");
+/* harmony import */ var _writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-row.vue?vue&type=script&lang=js& */ "./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "369d2600",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/deprecated/writein-row.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-row.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-row.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-row.vue?vue&type=template&id=369d2600&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deprecated/writein-row.vue?vue&type=template&id=369d2600&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_369d2600_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/election/candidate-button.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/election/candidate-button.vue ***!
@@ -72072,8 +72660,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _election_results_card_vue_vue_type_template_id_e9797a12_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./election-results-card.vue?vue&type=template&id=e9797a12&scoped=true& */ "./resources/js/components/election/results/election-results-card.vue?vue&type=template&id=e9797a12&scoped=true&");
 /* harmony import */ var _election_results_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./election-results-card.vue?vue&type=script&lang=js& */ "./resources/js/components/election/results/election-results-card.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-/* harmony import */ var _election_results_card_vue_vue_type_custom_index_0_blockType_div_class_election_results_card_20card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./election-results-card.vue?vue&type=custom&index=0&blockType=div&class=election-results-card%20card */ "./resources/js/components/election/results/election-results-card.vue?vue&type=custom&index=0&blockType=div&class=election-results-card%20card");
-/* harmony import */ var _election_results_card_vue_vue_type_custom_index_0_blockType_div_class_election_results_card_20card__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_election_results_card_vue_vue_type_custom_index_0_blockType_div_class_election_results_card_20card__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -72092,25 +72678,10 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
-/* custom blocks */
-
-if (typeof _election_results_card_vue_vue_type_custom_index_0_blockType_div_class_election_results_card_20card__WEBPACK_IMPORTED_MODULE_3___default.a === 'function') _election_results_card_vue_vue_type_custom_index_0_blockType_div_class_election_results_card_20card__WEBPACK_IMPORTED_MODULE_3___default()(component)
-
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/election/results/election-results-card.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/results/election-results-card.vue?vue&type=custom&index=0&blockType=div&class=election-results-card%20card":
-/*!*****************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/election/results/election-results-card.vue?vue&type=custom&index=0&blockType=div&class=election-results-card%20card ***!
-  \*****************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
 
 /***/ }),
 
@@ -73067,18 +73638,156 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/election/write-in-controls.vue":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/election/write-in-controls.vue ***!
-  \****************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-badge.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-badge.vue ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true& */ "./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true&");
-/* harmony import */ var _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-badge.vue?vue&type=template&id=487463ba&scoped=true& */ "./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true&");
+/* harmony import */ var _write_in_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-badge.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _write_in_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "487463ba",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/write-in/write-in-badge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-badge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_badge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-badge.vue?vue&type=template&id=487463ba&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-badge.vue?vue&type=template&id=487463ba&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_badge_vue_vue_type_template_id_487463ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-button.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-button.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true& */ "./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true&");
+/* harmony import */ var _write_in_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _write_in_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "c4ab9caa",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/write-in/write-in-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-button.vue?vue&type=template&id=c4ab9caa&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_button_vue_vue_type_template_id_c4ab9caa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/write-in/write-in-controls.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-controls.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true& */ "./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true&");
+/* harmony import */ var _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-controls.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -73088,66 +73797,66 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "00eb0af6",
+  "fae58a22",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/election/write-in-controls.vue"
+component.options.__file = "resources/js/components/election/write-in/write-in-controls.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-controls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in-controls.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-controls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true&":
-/*!***********************************************************************************************************!*\
-  !*** ./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true& ***!
-  \***********************************************************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true& ***!
+  \********************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in-controls.vue?vue&type=template&id=00eb0af6&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-controls.vue?vue&type=template&id=fae58a22&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_00eb0af6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_controls_vue_vue_type_template_id_fae58a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/election/writein-input.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/election/writein-input.vue ***!
-  \************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-modal.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-modal.vue ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true& */ "./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true&");
-/* harmony import */ var _writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-input.vue?vue&type=script&lang=js& */ "./resources/js/components/election/writein-input.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true& */ "./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true&");
+/* harmony import */ var _write_in_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./write-in-modal.vue?vue&type=script&lang=js& */ "./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -73156,119 +73865,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _write_in_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "65a8cdd4",
+  "4bdb2dc4",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/election/writein-input.vue"
+component.options.__file = "resources/js/components/election/write-in/write-in-modal.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/election/writein-input.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/election/writein-input.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-input.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-input.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true& ***!
-  \*******************************************************************************************************/
+/***/ "./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true& ***!
+  \*****************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-input.vue?vue&type=template&id=65a8cdd4&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/write-in/write-in-modal.vue?vue&type=template&id=4bdb2dc4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_input_vue_vue_type_template_id_65a8cdd4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/writein-row.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/election/writein-row.vue ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./writein-row.vue?vue&type=template&id=2787d026&scoped=true& */ "./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true&");
-/* harmony import */ var _writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-row.vue?vue&type=script&lang=js& */ "./resources/js/components/election/writein-row.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "2787d026",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/writein-row.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/writein-row.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/election/writein-row.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-row.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-row.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true& ***!
-  \*****************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./writein-row.vue?vue&type=template&id=2787d026&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/election/writein-row.vue?vue&type=template&id=2787d026&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_writein_row_vue_vue_type_template_id_2787d026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_write_in_modal_vue_vue_type_template_id_4bdb2dc4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -78787,14 +79427,17 @@ var Office = /*#__PURE__*/function (_Motion) {
         _ref$content = _ref.content,
         content = _ref$content === void 0 ? null : _ref$content,
         _ref$description = _ref.description,
-        description = _ref$description === void 0 ? null : _ref$description;
+        description = _ref$description === void 0 ? null : _ref$description,
+        _ref$max_winners = _ref.max_winners,
+        max_winners = _ref$max_winners === void 0 ? null : _ref$max_winners;
 
     _classCallCheck(this, Office);
 
     _this = _super.call(this, {
       id: id,
       content: content,
-      description: description
+      description: description,
+      max_winners: max_winners
     });
     _this.type = 'office'; // this.id = id;
     // this.content = content;
@@ -79541,16 +80184,13 @@ module.exports = {
   },
   election: {
     resource: {
-      candidate: function candidate() {
-        var candidateId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var r = normalizedRouteRoot() + '/election/candidates';
-
-        if (!_.isNull(candidateId)) {
-          r = r + '/' + candidateId;
-        }
-
-        return r;
-      },
+      // candidate: (candidateId) => {
+      //     let r = normalizedRouteRoot() + '/election/candidate';
+      //     if (!_.isNull(candidateId)) {
+      //         r = r + '/' + candidateId;
+      //     }
+      //     return r;
+      // },
       election: function election() {
         var meetingId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
         var r = normalizedRouteRoot() + 'elections/';
@@ -79582,6 +80222,12 @@ module.exports = {
         return r;
       }
     },
+    addToPool: function addToPool(motionId, personId) {
+      return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
+    },
+    addWriteIn: function addWriteIn(motionId) {
+      return normalizedRouteRoot() + 'election/write-in/' + motionId;
+    },
     // createOffice: (meetingId) => {
     //     return normalizedRouteRoot() + 'election/office/' + meetingId;
     // },
@@ -79609,9 +80255,6 @@ module.exports = {
     getPool: function getPool(motionId) {
       return normalizedRouteRoot() + 'election/pool/' + motionId;
     },
-    addToPool: function addToPool(motionId, personId) {
-      return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
-    },
     getResults: function getResults(motionId) {
       return normalizedRouteRoot() + 'election/' + motionId + '/results';
     },
@@ -79620,6 +80263,13 @@ module.exports = {
     },
     recordVote: function recordVote(motionId) {
       return normalizedRouteRoot() + 'election/vote/' + motionId;
+    },
+    removeCandidate: function removeCandidate(candidateId) {
+      return normalizedRouteRoot() + 'election/candidate/' + candidateId; //     if (!_.isNull(candidateId)) {
+      //         r = r + '/' + candidateId;
+      //     }
+      //     return r;
+      // },
     }
   },
   results: {
@@ -79957,15 +80607,17 @@ var actions = {
     var dispatch = _ref3.dispatch,
         commit = _ref3.commit,
         getters = _ref3.getters;
-    var name = _ref4.name,
+    var first_name = _ref4.first_name,
+        last_name = _ref4.last_name,
         info = _ref4.info,
         motionId = _ref4.motionId;
     var data = {
-      name: name,
+      first_name: first_name,
+      last_name: last_name,
       info: info,
       is_write_in: true
     };
-    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].candidates(motionId);
+    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].addWriteIn(motionId);
     return new Promise(function (resolve, reject) {
       return Vue.axios.post(url, data).then(function (response) {
         var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__["default"](response.data);
@@ -80198,32 +80850,32 @@ var actions = {
     var dispatch = _ref12.dispatch,
         commit = _ref12.commit,
         getters = _ref12.getters;
-    var motionId = getters.getActiveMotion.id; // let url = routes.election.candidates(motionId, payload.id);
-
-    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].resource.candidate(candidate.id);
+    // let url = routes.election.candidates(motionId, payload.id);
+    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].removeCandidate(candidate.id);
     return new Promise(function (resolve, reject) {
       return Vue.axios["delete"](url).then(function (response) {
         commit('removeCandidate', candidate);
         resolve();
       });
     });
-  },
-  updateCandidate: function updateCandidate(_ref13, payload) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
-    var motionId = getters.getActiveMotion.id; // let url = routes.election.candidates(motionId, payload.id);
+  } // updateCandidate({dispatch, commit, getters}, payload) {
+  //     let motionId = getters.getActiveMotion.id;
+  //     // let url = routes.election.candidates(motionId, payload.id);
+  //     let url = routes.election.resource.candidate(payload.id);
+  //
+  //     let data = {};
+  //     data[payload.updateProp] = payload.updateVal;
+  //
+  //     return new Promise(((resolve, reject) => {
+  //             return Vue.axios.patch(url, data).then((response) => {
+  //                 commit('setCandidateProp', payload);
+  //                 resolve();
+  //             });
+  //         })
+  //     );
+  //
+  // },
 
-    var url = _routes__WEBPACK_IMPORTED_MODULE_0__["election"].resource.candidate(payload.id);
-    var data = {};
-    data[payload.updateProp] = payload.updateVal;
-    return new Promise(function (resolve, reject) {
-      return Vue.axios.patch(url, data).then(function (response) {
-        commit('setCandidateProp', payload);
-        resolve();
-      });
-    });
-  }
 };
 var getters = {
   getCandidateByPersonId: function getCandidateByPersonId(state) {
@@ -80343,8 +80995,8 @@ var getters = {
    */
   isPoolMemberACandidate: function isPoolMemberACandidate(state, getters) {
     return function (motion, poolMember) {
-      var officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id);
-      window.console.log('ispac', officesMemberIsCandidate);
+      var officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id); // window.console.log('ispac', officesMemberIsCandidate);
+
       if (!Object(_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__["isReadyToRock"])(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false; //Now we check to see if it is the same office. This shouldn't be needed
       //unless the candidates/pool don't get cleared. Thus keeping
 

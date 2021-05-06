@@ -46,7 +46,8 @@ class ElectionVoteController extends Controller
     {
 
         try {
-            $this->getUser();
+            $this->setLoggedInUser();
+
             $candidates = [];
             foreach ($request->candidateIds as $candidateId) {
 
@@ -58,12 +59,12 @@ class ElectionVoteController extends Controller
 
             }
 
-            foreach ($request->writeIns as $name) {
-                $candidates[] = Candidate::create(['name' => $name,
-                    'motion_id' => $motion->id,
-                    'is_write_in' => true,
-                ]);
-            }
+//            foreach ($request->writeIns as $name) {
+//                $candidates[] = Candidate::create(['name' => $name,
+//                    'motion_id' => $motion->id,
+//                    'is_write_in' => true,
+//                ]);
+//            }
 
             //Now that we have a list of all the candidates,
             //we can double check that there's not too many

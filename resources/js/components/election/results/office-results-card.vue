@@ -5,10 +5,10 @@
             <h2 class="card-title">{{ officeName }} results</h2>
         </div>
 
-        <div class="card-body">
-            <p>Total votes cast for office: {{ totalCast }}</p>
+<!--        <div class="card-body">-->
+<!--            <p>Total votes cast for office: {{ totalCast }}</p>-->
 
-        </div>
+<!--        </div>-->
 
         <div class="card-body">
 

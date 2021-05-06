@@ -7,7 +7,6 @@
 
         </div>
 
-        <event-display-card ></event-display-card>
 
     </div>
 
@@ -19,8 +18,8 @@ import CandidateRow from "../candidate-row";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from '../../../utilities/readiness.utilities';
-import WriteinRow from "../writein-row";
-import WriteInControls from "../write-in-controls";
+import WriteinRow from "../../deprecated/writein-row";
+import WriteInControls from "../write-in/write-in-controls";
 import CreateElectionButton from "./controls/create-election-button";
 import CreateOfficeButton from "./controls/create-office-button";
 import MeetingEditCard from "../../deprecated/meeting-setup-card";
