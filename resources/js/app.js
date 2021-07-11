@@ -3,10 +3,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Vue from "vue";
+window.Vue = Vue;
+// window.Vue = require('vue');
 
 require('./bootstrap');
 
-window.Vue = require('vue');
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ API ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import axios from 'axios'
