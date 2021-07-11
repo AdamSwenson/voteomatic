@@ -70,6 +70,8 @@ class CandidatePoolController extends Controller
 
     public function addPersonToPool(Motion $motion, Person $person)
     {
+        $this->setLoggedInUser();
+        $this->authorize('create', PoolMember::class);
         $poolMember = $this->candidateRepo->addPersonToPool($motion, $person);
         return response()->json($this->makePoolMemberResponse($poolMember));
     }
@@ -86,7 +88,8 @@ class CandidatePoolController extends Controller
 //dev this is all dev stuff
         //todo Returns all members of the meeting or somehow gets from canvas
 
-
+$this->setLoggedInUser();
+$this->authorize('viewIndex', PoolMember::class);
         $pool = PoolMember::factory()->count(10)->create(['motion_id' => $motion->id]);
 
         $out = [];

@@ -32,6 +32,7 @@
 <!--                             :candidate="candidate"-->
 <!--                             :key="candidate.id"-->
 <!--                ></candidate-row>-->
+                <overselection-warning></overselection-warning>
 
             </div>
 

@@ -37,6 +37,8 @@ class ElectionResultsController extends Controller
 
         $this->setLoggedInUser();
 
+        $this->authorize('viewMotionResults', [Motion::class, $motion]);
+
         $out = $this->electionResultsRepo->getResultsForClient($motion);
 
         return response()->json($out);

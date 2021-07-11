@@ -28,8 +28,10 @@ class ElectionVoteController extends Controller
         $this->middleware('auth');
 //        $this->middleware('vote-eligibility');
 
-        //   $this->middleware('previously-voted');
-//        $this->middleware('motion-closed');
+           $this->middleware('previously-voted');
+        $this->middleware('motion-closed');
+        $this->middleware('excess-candidates-selected');
+
 
     }
 
@@ -47,6 +49,7 @@ class ElectionVoteController extends Controller
 
         try {
             $this->setLoggedInUser();
+            $this->authorize('castVoteOnMotion', [Motion::class, $motion]);
 
             $candidates = [];
             foreach ($request->candidateIds as $candidateId) {
@@ -72,7 +75,7 @@ class ElectionVoteController extends Controller
             //And now record votes
             $hash = Vote::makeReceiptHash();
 
-            foreach($candidates as $candidate){
+            foreach ($candidates as $candidate) {
                 Vote::create([
                     'motion_id' => $motion->id,
                     'candidate_id' => $candidate->id,

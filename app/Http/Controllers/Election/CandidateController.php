@@ -52,35 +52,35 @@ class CandidateController extends Controller
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Motion $motion
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CandidateRequest $request)
-    {
-        $motion = Motion::find($request->motion_id);
-
-        $candidate = $this->electionRepo->addCandidate($motion, $request);
+//    /**
+//     * Store a newly created resource in storage.
+//     *
+//     * @param \Illuminate\Http\Request $request
+//     * @param Motion $motion
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function store(CandidateRequest $request)
+//    {
+//        $motion = Motion::find($request->motion_id);
 //
-////        $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
+//        $candidate = $this->electionRepo->addCandidate($motion, $request);
+////
+//////        $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
+////
+////        //NB, id here is the pool member's id
+////        if($request->has('id')){
+////            //Check if the pool member has been added as a candidate yet
+////            $candidate = Candidate::where('pool_member_id', $request->id)
+////                ->where('motion_id', $motion->id)
+////                ->first();
+////        }else{
+////            $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
+////        }
 //
-//        //NB, id here is the pool member's id
-//        if($request->has('id')){
-//            //Check if the pool member has been added as a candidate yet
-//            $candidate = Candidate::where('pool_member_id', $request->id)
-//                ->where('motion_id', $motion->id)
-//                ->first();
-//        }else{
-//            $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
-//        }
-
-
-        return response()->json($this->makeCandidateResponse($candidate));
-
-    }
+//
+//        return response()->json($this->makeCandidateResponse($candidate));
+//
+//    }
 
 
     /**
@@ -90,6 +90,11 @@ class CandidateController extends Controller
      */
     public function addCandidateToBallot(PoolMember $poolMember, Request $request)
     {
+        $this->setLoggedInUser();
+
+        //todo should check that user owns meeting
+        $this->authorize('addToBallot', Candidate::class);
+
         $motion = $poolMember->motion;
         $person = $poolMember->person;
 
@@ -99,7 +104,10 @@ class CandidateController extends Controller
     }
 
     public function addWriteInCandidate(Motion $motion, WriteInCandidateRequest $request){
+        $this->setLoggedInUser();
+
         //authorize regular user!
+$this->authorize('create');
 
         //Check whether the write in candidate duplicates an existing candidate
         $possibleDuplicates = Person::where('first_name', $request->first_name)
@@ -139,6 +147,10 @@ class CandidateController extends Controller
      */
     public function getOfficialCandidatesForOffice(Motion $motion)
     {
+        $this->setLoggedInUser();
+
+        $this->authorize('view', [Motion::class, $motion]);
+
         $candidates = $this->candidateRepo->getOfficialCandidatesForOffice($motion);
 
         $out = [];
@@ -150,7 +162,6 @@ class CandidateController extends Controller
         return response()->json($out);
 
 
-//        return response()->json($motion->candidates()->official()->get());
     }
 
 
@@ -165,35 +176,13 @@ class CandidateController extends Controller
      */
     public function show(Candidate $candidate)
     {
+        $this->setLoggedInUser();
+
+        $this->authorize('view', [Candidate::class, $candidate]);
+
         return response()->json($this->makeCandidateResponse($candidate));
 
     }
-
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit($id)
-//    {
-//        //
-//    }
-
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param \Illuminate\Http\Request $request
-//     * @param Candidate $candidate
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function update(Candidate $candidate, CandidateRequest $request)
-//    {
-//        $d = $request->all();
-//        $candidate->update($d);
-//        return response()->json($this->makeCandidateResponse($candidate));
-//
-//    }
 
     /**
      *
@@ -204,6 +193,8 @@ class CandidateController extends Controller
      */
     public function removeCandidate(Candidate $candidate)
     {
+        $this->setLoggedInUser();
+        $this->authorize('delete', [Candidate::class, $candidate]);
         $candidate->delete();
         return response()->json(200);
     }

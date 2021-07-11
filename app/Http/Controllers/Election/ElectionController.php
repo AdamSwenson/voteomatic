@@ -36,7 +36,6 @@ class ElectionController extends Controller
     }
 
 
-
     public function __construct()
     {
         $this->meetingRepo = app()->make(IMeetingRepository::class);
@@ -51,7 +50,8 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        //todo authentication for accessing list of meetings
+        $this->setLoggedInUser();
+        $this->authorize('view', Meeting::class);
         return Meeting::where('is_election', true)->all();
     }
 
@@ -74,8 +74,7 @@ class ElectionController extends Controller
     public function store(Request $request)
     {
         $this->setLoggedInUser();
-
-        //todo authorization
+        $this->authorize('create', Meeting::class);
 
         //Since we are creating the meeting without
         //the fields filled in, we may have blank meetings
@@ -119,6 +118,8 @@ class ElectionController extends Controller
      */
     public function show(Meeting $election)
     {
+        $this->setLoggedInUser();
+        $this->authorize('view', Meeting::class);
 
         return response()->json($election);
         //
@@ -144,6 +145,8 @@ class ElectionController extends Controller
      */
     public function update(Request $request, Meeting $election)
     {
+        $this->setLoggedInUser();
+        $this->authorize('update', Meeting::class);
         $d = $request->all();
         $d = $d['data'];
         $election->update($d);
@@ -159,7 +162,8 @@ class ElectionController extends Controller
      */
     public function destroy(Meeting $election)
     {
-
+        $this->setLoggedInUser();
+        $this->authorize('delete', Meeting::class);
         $election->delete();
         return response()->json(200);
     }

@@ -3368,6 +3368,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "cast-ballot-button",
   props: [],
@@ -3376,11 +3377,15 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   asyncComputed: {
+    showOverSelectionWarning: function showOverSelectionWarning() {
+      return this.$store.getters.showOverSelectionWarning;
+    },
+    ariaDisabled: function ariaDisabled() {
+      if (this.showOverSelectionWarning) return true;
+    },
     styling: function styling() {
-      return "btn-warning"; //
-      // if(this.selected) return "btn-warning";
-      //
-      // return "btn-outline-warning";
+      if (this.showOverSelectionWarning) return 'btn-warning disabled';
+      return "btn-warning";
     }
   },
   computed: {},
@@ -3388,14 +3393,17 @@ __webpack_require__.r(__webpack_exports__);
     handleClick: function handleClick() {
       window.console.log('Record Vote button clicked');
       var me = this;
-      this.$store.dispatch('castElectionVote').then(function () {
-        me.$store.dispatch('nextOffice').then(function () {})["catch"](function () {
-          //If there are no further offices to vote
-          //upon, it will reject.
-          me.$emit('election-complete');
-          window.console.log('election complete');
+
+      if (!this.showOverSelectionWarning) {
+        this.$store.dispatch('castElectionVote').then(function () {
+          me.$store.dispatch('nextOffice').then(function () {})["catch"](function () {
+            //If there are no further offices to vote
+            //upon, it will reject.
+            me.$emit('election-complete');
+            window.console.log('election complete');
+          });
         });
-      });
+      }
     }
   }
 });
@@ -3425,6 +3433,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__);
+//
 //
 //
 //
@@ -3816,6 +3825,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
 //
 //
 //
@@ -50074,7 +50086,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "button",
-    { staticClass: "btn", class: _vm.styling, on: { click: _vm.handleClick } },
+    {
+      staticClass: "btn",
+      class: _vm.styling,
+      attrs: { "aria-disabled": _vm.ariaDisabled },
+      on: { click: _vm.handleClick }
+    },
     [_vm._v("Record selections\n")]
   )
 }
@@ -50121,13 +50138,17 @@ var render = function() {
             _c(
               "div",
               { staticClass: "card-body" },
-              _vm._l(_vm.candidates, function(candidate) {
-                return _c("candidate-row", {
-                  key: candidate.id,
-                  attrs: { candidate: candidate }
-                })
-              }),
-              1
+              [
+                _vm._l(_vm.candidates, function(candidate) {
+                  return _c("candidate-row", {
+                    key: candidate.id,
+                    attrs: { candidate: candidate }
+                  })
+                }),
+                _vm._v(" "),
+                _c("overselection-warning")
+              ],
+              2
             ),
             _vm._v(" "),
             _c(
@@ -50309,12 +50330,24 @@ var render = function() {
   return _c("div", { staticClass: "election-results-card card" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-body" },
-      [_c("office-results-card", { attrs: { motion: _vm.motion } })],
-      1
-    )
+    _vm.isMotionComplete
+      ? _c(
+          "div",
+          { staticClass: "card-body" },
+          [_c("office-results-card", { attrs: { motion: _vm.motion } })],
+          1
+        )
+      : _c("div", { staticClass: "card-body" }, [
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v("Results will be available once the Chair has closed voting")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(
+              "If you should be seeing the results, try refreshing your browser"
+            )
+          ])
+        ])
   ])
 }
 var staticRenderFns = [

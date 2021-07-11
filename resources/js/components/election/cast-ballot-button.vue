@@ -4,6 +4,7 @@
         class="btn"
         v-bind:class="styling"
         v-on:click="handleClick"
+        v-bind:aria-disabled="ariaDisabled"
     >Record selections
     </button>
 
@@ -23,13 +24,17 @@ export default {
 
     asyncComputed: {
 
-        styling: function () {
-            return "btn-warning";
+        showOverSelectionWarning: function () {
+            return this.$store.getters.showOverSelectionWarning;
+        },
 
-            //
-            // if(this.selected) return "btn-warning";
-            //
-            // return "btn-outline-warning";
+        ariaDisabled: function () {
+            if (this.showOverSelectionWarning) return true
+        },
+
+        styling: function () {
+            if (this.showOverSelectionWarning) return 'btn-warning disabled'
+            return "btn-warning";
         }
     },
 
@@ -39,20 +44,20 @@ export default {
         handleClick: function () {
             window.console.log('Record Vote button clicked');
             let me = this;
-
-            this.$store.dispatch('castElectionVote')
-                .then(() => {
-                    me.$store.dispatch('nextOffice')
-                        .then(() => {
-                    })
-                        .catch(() => {
-                            //If there are no further offices to vote
-                            //upon, it will reject.
-                            me.$emit('election-complete');
-                            window.console.log('election complete');
+            if (!this.showOverSelectionWarning) {
+                this.$store.dispatch('castElectionVote')
+                    .then(() => {
+                        me.$store.dispatch('nextOffice')
+                            .then(() => {
+                            })
+                            .catch(() => {
+                                //If there are no further offices to vote
+                                //upon, it will reject.
+                                me.$emit('election-complete');
+                                window.console.log('election complete');
+                            });
                     });
-                });
-
+            }
         }
     }
 

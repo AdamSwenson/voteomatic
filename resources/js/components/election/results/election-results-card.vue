@@ -6,12 +6,15 @@
             <h1 class="card-title">Results </h1>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="isMotionComplete">
 
             <office-results-card :motion="motion"></office-results-card>
 <!--            <office-results-card v-for="motion in motions" :key="motion.id" :motion="motion"></office-results-card>-->
+        </div>
 
-
+        <div class="card-body" v-else>
+            <p class="card-text">Results will be available once the Chair has closed voting</p>
+            <p class="card-text">If you should be seeing the results, try refreshing your browser</p>
         </div>
 
     </div>

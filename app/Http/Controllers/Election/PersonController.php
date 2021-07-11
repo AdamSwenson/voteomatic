@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class PersonController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 //    /**
 //     * Display a listing of the resource.
 //     *
@@ -36,6 +42,9 @@ class PersonController extends Controller
      */
     public function store(PersonRequest $request)
     {
+        $this->setLoggedInUser();
+        $this->authorize('create');
+
         $person = Person::create($request->all());
         return response()->json($person);
     }
@@ -48,6 +57,8 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
+        $this->setLoggedInUser();
+        return $this->authorize('view');
         return response()->json($person);
     }
 
@@ -61,6 +72,8 @@ class PersonController extends Controller
      */
     public function update(Person $person, PersonRequest $request)
     {
+        $this->setLoggedInUser();
+        $this->authorize('update');
         $person->update($request->all());
         return response()->json($person);
     }
@@ -73,6 +86,8 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
+        $this->setLoggedInUser();
+        $this->authorize('delete');
         $person->delete();
     }
 }
