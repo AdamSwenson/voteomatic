@@ -63,6 +63,12 @@ class MotionPolicy
 
     // ========================== ELECTION SPECIFIC
 
+    public function createOffice(User $user, Meeting $meeting){
+
+        return $meeting->isOwner($user);
+
+    }
+
 
     public function castVoteForOffice(User $user, Motion $office)
     {
@@ -70,6 +76,18 @@ class MotionPolicy
         return $election->isPartOfMeeting($user);
     }
 
+    public function deleteOffice(User $user, Motion $office)
+    {
+        $election = $office->meeting;
+        return $election->isOwner($user);
+    }
+
+
+
+    public function viewOffice(User $user, Motion $office){
+        $meeting = $office->meeting;
+        return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+    }
 
     /**
      * Different from regular motion in case we need
@@ -92,6 +110,10 @@ class MotionPolicy
         return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
+    public function updateOffice(User $user, Motion $office){
+        $meeting = $office->meeting;
+        return $meeting->isOwner($user);
+    }
 
 
 //=========================== CRUD

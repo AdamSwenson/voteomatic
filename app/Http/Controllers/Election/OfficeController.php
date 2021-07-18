@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MotionRequest;
 use App\Http\Requests\OfficeCreationRequest;
 use App\Models\Meeting;
+use App\Models\Motion;
 use App\Repositories\Election\IElectionRepository;
 use Illuminate\Http\Request;
 
@@ -26,14 +27,30 @@ class OfficeController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * Remove the specified resource from storage.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function destroy(Motion $office)
     {
-        //
+        $this->authorize('deleteOffice', [Motion::class, $office]);
+
+        $office->delete();
+
+        return response()->json(200);
+
     }
+
+//    /**
+//     * Display a listing of the resource.
+//     *
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function index()
+//    {
+//        //
+//    }
 
 //    /**
 //     * Show the form for creating a new resource.
@@ -46,6 +63,22 @@ class OfficeController extends Controller
 //    }
 
     /**
+     * Display the specified resource.
+     *
+     * @param Motion $office
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Motion $office)
+    {
+        $this->authorize('viewOffice', [Motion::class, $office]);
+
+        return response()->json($office);
+    }
+
+
+
+    /**
      * Create an office and associate it with the election
      * provided in the request.
      *
@@ -56,8 +89,12 @@ class OfficeController extends Controller
      */
     public function store(OfficeCreationRequest $request)
     {
+        $this->setLoggedInUser();
 
         $election = Meeting::find($request->meetingId);
+
+        $this->authorize('createOffice', [Motion::class, $election]);
+
 
 //        dd($request);
 //        $election = $request->getElection();
@@ -66,29 +103,6 @@ class OfficeController extends Controller
         return response()->json($office);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Motion $office)
-    {
-
-        return response()->json($office);
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -97,19 +111,14 @@ class OfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Motion $office)
     {
-        //
+        $this->setLoggedInUser();
+        $this->authorize('updateOffice', [Motion::class, $office]);
+//        $d = $request->all();
+//        $d = $d['data'];
+        $office->update($request->all());
+        return response()->json($office);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
