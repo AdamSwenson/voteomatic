@@ -63,6 +63,14 @@ class MotionPolicy
 
     // ========================== ELECTION SPECIFIC
 
+
+    public function castVoteForOffice(User $user, Motion $office)
+    {
+        $election = $office->meeting;
+        return $election->isPartOfMeeting($user);
+    }
+
+
     /**
      * Different from regular motion in case we need
      * different sets of permissions.

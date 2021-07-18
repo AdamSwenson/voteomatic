@@ -49,7 +49,7 @@ class ElectionVoteController extends Controller
 
         try {
             $this->setLoggedInUser();
-            $this->authorize('castVoteOnMotion', [Motion::class, $motion]);
+            $this->authorize('castVoteForOffice', [Motion::class, $motion]);
 
             $candidates = [];
             foreach ($request->candidateIds as $candidateId) {
@@ -69,8 +69,6 @@ class ElectionVoteController extends Controller
 //                ]);
 //            }
 
-            //Now that we have a list of all the candidates,
-            //we can double check that there's not too many
 
             //And now record votes
             $hash = Vote::makeReceiptHash();

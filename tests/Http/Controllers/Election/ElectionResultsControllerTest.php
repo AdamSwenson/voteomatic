@@ -37,7 +37,7 @@ class ElectionResultsControllerTest extends TestCase
         ]);
         $this->url = "election/{$this->office->id}/results";
 
-        $this->regularUserMember = User::factory()->administrator()->create();
+        $this->regularUserMember = User::factory()->create();
         $this->election->addUserToMeeting($this->regularUserMember);
     }
 
