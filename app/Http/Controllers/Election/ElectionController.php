@@ -51,8 +51,8 @@ class ElectionController extends Controller
     public function index()
     {
         $this->setLoggedInUser();
-        $this->authorize('view', Meeting::class);
-        return Meeting::where('is_election', true)->all();
+        $this->authorize('viewIndex', Meeting::class);
+        return Meeting::where('is_election', true)->get();
     }
 
 //    /**
@@ -119,7 +119,7 @@ class ElectionController extends Controller
     public function show(Meeting $election)
     {
         $this->setLoggedInUser();
-        $this->authorize('view', Meeting::class);
+        $this->authorize('view', [Meeting::class, $election]);
 
         return response()->json($election);
         //
@@ -146,7 +146,7 @@ class ElectionController extends Controller
     public function update(Request $request, Meeting $election)
     {
         $this->setLoggedInUser();
-        $this->authorize('update', Meeting::class);
+        $this->authorize('update', [Meeting::class, $election]);
         $d = $request->all();
         $d = $d['data'];
         $election->update($d);
@@ -163,7 +163,7 @@ class ElectionController extends Controller
     public function destroy(Meeting $election)
     {
         $this->setLoggedInUser();
-        $this->authorize('delete', Meeting::class);
+        $this->authorize('delete', [Meeting::class, $election]);
         $election->delete();
         return response()->json(200);
     }
