@@ -117,7 +117,7 @@ class ElectionControllerTest extends TestCase
     public function destroyAllowsOwner()
     {
         $url = $this->url . '/' . $this->election->id;
-        $response = $this->actingAs($this->owner)->delete($url );
+        $response = $this->actingAs($this->owner)->delete($url);
 
         //check
         $response->assertSuccessful();
@@ -127,7 +127,7 @@ class ElectionControllerTest extends TestCase
     public function destroyDeniesNonOwner()
     {
         $url = $this->url . '/' . $this->election->id;
-        $response = $this->actingAs($this->regularUser)->delete($url );
+        $response = $this->actingAs($this->regularUser)->delete($url);
 
         //check
         $response->assertStatus(403);
@@ -138,9 +138,10 @@ class ElectionControllerTest extends TestCase
     {
         $url = $this->url . '/' . $this->election->id;
         $election = Meeting::factory()->election()->create();
-$data = ['data' => ['name' => $election->name,
-    'date' => $election->date,
-]];
+        $data = ['data' => ['name' => $election->name,
+            'date' => $election->date,
+        ]];
+
         $response = $this->actingAs($this->owner)->patch($url, $data);
 
         //check

@@ -60,6 +60,32 @@ class MotionPolicy
         return $meeting->isPartOfMeeting($user);
     }
 
+
+    // ========================== ELECTION SPECIFIC
+
+    /**
+     * Different from regular motion in case we need
+     * different sets of permissions.
+     *
+     * Allows when:
+     *     Election is complete
+     *  AND
+     *     A member
+     *    OR
+     *     Owner
+     *
+     * @param User $user
+     * @param Motion $motion
+     * @return bool
+     */
+    public function viewOfficeResults(User $user, Motion $office)
+    {
+        $meeting = $office->meeting;
+        return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+    }
+
+
+
 //=========================== CRUD
 
     /**

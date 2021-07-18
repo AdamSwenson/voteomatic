@@ -20,24 +20,16 @@ class ElectionResultsController extends Controller
     {
 
         $this->middleware('auth');
-//        $this->middleware('vote-eligibility');
-
-        //   $this->middleware('previously-voted');
-//        $this->middleware('motion-closed');
-
-        //todo Add restriction to chair
-
         $this->electionResultsRepo = app()->make(IElectionResultsRepository::class);
+
     }
 
 
     public function getResults(Motion $motion)
     {
-        //todo check that election has closed
-
         $this->setLoggedInUser();
 
-        $this->authorize('viewMotionResults', [Motion::class, $motion]);
+        $this->authorize('viewOfficeResults', [Motion::class, $motion]);
 
         $out = $this->electionResultsRepo->getResultsForClient($motion);
 
