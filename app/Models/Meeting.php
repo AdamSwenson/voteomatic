@@ -40,6 +40,15 @@ class Meeting extends Model
         $this->save();
     }
 
+    /**
+     * Returns true if the user is the meeting's owner. False otherwise
+     * @param User $user
+     * @return bool
+     */
+    public function isOwner(User $user){
+        return $user->is($this->getOwner());
+    }
+
 
     /**
      * Checks whether the user is on the meeting roster.

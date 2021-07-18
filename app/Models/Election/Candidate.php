@@ -91,6 +91,7 @@ class Candidate extends Model
      *  Relationships
      */
 
+
     /**
      * The motion representing the office
      * they are a candidate for.

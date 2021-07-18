@@ -33,7 +33,6 @@ class CandidateController extends Controller
     }
 
 
-
     /**
      * Handles providing the client with the data it expects
      * when it asks for a candidate
@@ -84,37 +83,44 @@ class CandidateController extends Controller
 
 
     /**
-     * @param Motion $motion
-     * @param Person $person
-     * @param $request
+     * Adds an official candidate to the ballot. This can only be done
+     * by the owner
+     *
+     * @param PoolMember $poolMember
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function addCandidateToBallot(PoolMember $poolMember, Request $request)
     {
         $this->setLoggedInUser();
 
-        //todo should check that user owns meeting
-        $this->authorize('addToBallot', Candidate::class);
-
         $motion = $poolMember->motion;
         $person = $poolMember->person;
+
+        //checks that user owns meeting
+        $this->authorize('addToBallot', [Candidate::class,  $motion]);
 
         $candidate = $this->candidateRepo->addCandidateToBallot($motion, $person);
 
         return response()->json($this->makeCandidateResponse($candidate));
     }
 
-    public function addWriteInCandidate(Motion $motion, WriteInCandidateRequest $request){
+    public function addWriteInCandidate(Motion $motion, WriteInCandidateRequest $request)
+    {
         $this->setLoggedInUser();
 
+        //authorizes regular users!
+//        $this->authorize('addWriteInCandidate', [Candidate::class,  $motion]);
+
         //authorize regular user!
-$this->authorize('create');
+//        $this->authorize('create');
 
         //Check whether the write in candidate duplicates an existing candidate
         $possibleDuplicates = Person::where('first_name', $request->first_name)
             ->where('last_name', $request->last_name)
             ->get();
 
-        if(sizeof($possibleDuplicates) > 0){
+        if (sizeof($possibleDuplicates) > 0) {
             $currentCandidates = [];
         }
 
@@ -149,40 +155,38 @@ $this->authorize('create');
     {
         $this->setLoggedInUser();
 
-        $this->authorize('view', [Motion::class, $motion]);
+        $this->authorize('viewOfficialCandidates', [Candidate::class, $motion]);
 
         $candidates = $this->candidateRepo->getOfficialCandidatesForOffice($motion);
 
         $out = [];
 
-        foreach($candidates as $candidate){
+        foreach ($candidates as $candidate) {
             $out[] = $this->makeCandidateResponse($candidate);
         }
 
         return response()->json($out);
-
-
     }
 
 
 //    public function removeCandidateFromBallot(Candidate $candidate)
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Candidate $candidate
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Candidate $candidate)
-    {
-        $this->setLoggedInUser();
-
-        $this->authorize('view', [Candidate::class, $candidate]);
-
-        return response()->json($this->makeCandidateResponse($candidate));
-
-    }
+//    /**
+//     * Display the specified resource.
+//     *
+//     * @param Candidate $candidate
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function show(Candidate $candidate)
+//    {
+//        $this->setLoggedInUser();
+//
+//        $this->authorize('view', [Candidate::class, $candidate]);
+//
+//        return response()->json($this->makeCandidateResponse($candidate));
+//
+//    }
 
     /**
      *

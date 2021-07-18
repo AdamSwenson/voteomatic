@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Election\Candidate;
+use App\Models\Election\Person;
 use App\Models\Election\PoolMember;
 use App\Models\Meeting;
 use App\Models\Motion;
@@ -68,16 +69,29 @@ class CandidatePoolController extends Controller
 //    }
 
 
+    /**
+     * Adds a person to the candidate pool for a given office
+     * The user must be the meeting's owner to do this.
+     *
+     * @param Motion $motion
+     * @param Person $person
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function addPersonToPool(Motion $motion, Person $person)
     {
         $this->setLoggedInUser();
-        $this->authorize('create', PoolMember::class);
+        $this->authorize('createPoolMember', [PoolMember::class, $motion]);
         $poolMember = $this->candidateRepo->addPersonToPool($motion, $person);
         return response()->json($this->makePoolMemberResponse($poolMember));
     }
 
     /**
      * Returns everyone who could be a candidate for the office.
+     *
+     * This can be used by an owner who is not a member of the meeting, since
+     * members of meetings are voters. E.g., if the office admin person is the owner
+     * of the meeting, they can set up the pool.
      *
      * NB, eligibility is sorted out at the office level, not the election
      * level. This allows finer grained distinctions, even if we normally just
@@ -89,8 +103,10 @@ class CandidatePoolController extends Controller
         //todo Returns all members of the meeting or somehow gets from canvas
 
 $this->setLoggedInUser();
-$this->authorize('viewIndex', PoolMember::class);
-        $pool = PoolMember::factory()->count(10)->create(['motion_id' => $motion->id]);
+$this->authorize('viewCandidatePool', [PoolMember::class, $motion]);
+//        $pool = PoolMember::factory()->count(10)->create(['motion_id' => $motion->id]);
+
+        $pool = $motion->poolMembers()->get();
 
         $out = [];
         foreach($pool as $m){

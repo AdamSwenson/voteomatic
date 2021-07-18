@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Models\Election\PoolMember;
+use App\Models\Motion;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -19,18 +21,35 @@ class PoolMemberPolicy
         //
     }
 
-
     /**
-     * Determine whether the user can view all
-     * poolMembers associated with them.
+     * Determine whether the user can create poolMembers.
+     * To do so, they must be the owner of the meeting
      *
      * @param \App\Models\User $user
      * @return mixed
      */
-    public function viewIndex(User $user)
+    public function createPoolMember(User $user, Motion $motion)
     {
-        return $user->isChair();
+        $meeting = $motion->meeting;
+        return $meeting->isOwner($user);
     }
+
+    /**
+     * Determine whether the user can view all
+     * poolMembers for the office.
+     *
+     * This allows either the owner or a member of the meeting
+     *
+     * @param \App\Models\User $user
+     * @return mixed
+     */
+    public function viewCandidatePool(User $user, Motion $motion)
+    {
+        $meeting = $motion->meeting;
+        return $meeting->isPartOfMeeting($user) || $meeting->isOwner($user);
+//        return $user->isChair();
+    }
+
 
     /**
      * Determine whether the user can view the model.
@@ -43,21 +62,9 @@ class PoolMemberPolicy
     {
         return $user->isChair();
 
-
     }
 
-    /**
-     * Determine whether the user can create poolMembers.
-     *
-     * @param \App\Models\User $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
 
-        return $user->isChair();
-
-    }
 
     /**
      * Determine whether the user can update the model.

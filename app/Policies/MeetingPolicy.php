@@ -26,6 +26,16 @@ class MeetingPolicy
 //    }
 
     /**
+     * Used to restrict access to a meeting's owner
+     *
+     * @param User $user
+     * @param Meeting $meeting
+     */
+public function ownerOnly(User $user, Meeting $meeting){
+    return $meeting->isOwner($user);
+}
+
+    /**
      * Determine whether the user can view all
      * meetings associated with them.
      *
@@ -73,6 +83,7 @@ class MeetingPolicy
      */
     public function update(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //dd($user->is_admin);
@@ -90,6 +101,7 @@ class MeetingPolicy
      */
     public function delete(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
@@ -105,6 +117,7 @@ class MeetingPolicy
      */
     public function restore(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
@@ -120,6 +133,7 @@ class MeetingPolicy
      */
     public function forceDelete(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
