@@ -66,8 +66,6 @@ class ElectionControllerTest extends TestCase
     /** @test */
     public function index()
     {
-
-//$elections[] = $this->election;
         $response = $this->actingAs($this->owner)->get($this->url);
 
         //check

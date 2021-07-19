@@ -28,11 +28,9 @@ class ElectionVoteController extends Controller
         $this->middleware('auth');
 //        $this->middleware('vote-eligibility');
 
-           $this->middleware('previously-voted');
+        $this->middleware('previously-voted');
         $this->middleware('motion-closed');
         $this->middleware('excess-candidates-selected');
-
-
     }
 
 
@@ -43,6 +41,7 @@ class ElectionVoteController extends Controller
      * @param Motion $motion
      * @param ElectionVoteRequest $request
      * @return Vote|string[]
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function recordVote(Motion $motion, ElectionVoteRequest $request)
     {

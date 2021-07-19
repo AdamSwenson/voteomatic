@@ -37,6 +37,7 @@ class CandidateController extends Controller
      * Handles providing the client with the data it expects
      * when it asks for a candidate
      * @param Candidate $candidate
+     * @return array
      */
     public function makeCandidateResponse(Candidate $candidate)
     {
@@ -51,36 +52,6 @@ class CandidateController extends Controller
         ];
     }
 
-//    /**
-//     * Store a newly created resource in storage.
-//     *
-//     * @param \Illuminate\Http\Request $request
-//     * @param Motion $motion
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function store(CandidateRequest $request)
-//    {
-//        $motion = Motion::find($request->motion_id);
-//
-//        $candidate = $this->electionRepo->addCandidate($motion, $request);
-////
-//////        $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
-////
-////        //NB, id here is the pool member's id
-////        if($request->has('id')){
-////            //Check if the pool member has been added as a candidate yet
-////            $candidate = Candidate::where('pool_member_id', $request->id)
-////                ->where('motion_id', $motion->id)
-////                ->first();
-////        }else{
-////            $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
-////        }
-//
-//
-//        return response()->json($this->makeCandidateResponse($candidate));
-//
-//    }
-
 
     /**
      * Adds an official candidate to the ballot. This can only be done
@@ -89,6 +60,7 @@ class CandidateController extends Controller
      * @param PoolMember $poolMember
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function addCandidateToBallot(PoolMember $poolMember, Request $request)
     {
@@ -132,6 +104,7 @@ class CandidateController extends Controller
      *
      * @param Motion $motion
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function getOfficialCandidatesForOffice(Motion $motion)
     {
@@ -148,6 +121,23 @@ class CandidateController extends Controller
         }
 
         return response()->json($out);
+    }
+
+
+    /**
+     *
+     * This makes the person no longer a candidate for an office
+     *
+     * @param Candidate $candidate
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function removeCandidate(Candidate $candidate)
+    {
+        $this->setLoggedInUser();
+        $this->authorize('delete', [Candidate::class, $candidate]);
+        $candidate->delete();
+        return response()->json(200);
     }
 
 
@@ -170,18 +160,36 @@ class CandidateController extends Controller
 //
 //    }
 
-    /**
-     *
-     * This makes the person no longer a candidate for an office
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function removeCandidate(Candidate $candidate)
-    {
-        $this->setLoggedInUser();
-        $this->authorize('delete', [Candidate::class, $candidate]);
-        $candidate->delete();
-        return response()->json(200);
-    }
+
+    //    /**
+//     * Store a newly created resource in storage.
+//     *
+//     * @param \Illuminate\Http\Request $request
+//     * @param Motion $motion
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function store(CandidateRequest $request)
+//    {
+//        $motion = Motion::find($request->motion_id);
+//
+//        $candidate = $this->electionRepo->addCandidate($motion, $request);
+////
+//////        $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
+////
+////        //NB, id here is the pool member's id
+////        if($request->has('id')){
+////            //Check if the pool member has been added as a candidate yet
+////            $candidate = Candidate::where('pool_member_id', $request->id)
+////                ->where('motion_id', $motion->id)
+////                ->first();
+////        }else{
+////            $candidate = $this->electionRepo->addCandidate($motion, $request->first_name, $request->last_name, $request->info, $request->is_write_in);
+////        }
+//
+//
+//        return response()->json($this->makeCandidateResponse($candidate));
+//
+//    }
+
+
 }

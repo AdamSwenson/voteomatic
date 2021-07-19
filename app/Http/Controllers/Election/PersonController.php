@@ -15,25 +15,7 @@ class PersonController extends Controller
     {
         $this->middleware('auth');
     }
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        //
-//    }
 
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
     /**
      * Remove the specified resource from storage.
      *
@@ -47,17 +29,18 @@ class PersonController extends Controller
         $this->authorize('delete', [Person::class, $person]);
         $person->delete();
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param PersonRequest $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(PersonRequest $request)
     {
         $this->setLoggedInUser();
         $this->authorize('create',[Person::class]);
-
         $person = Person::create($request->all());
         return response()->json($person);
     }
@@ -65,8 +48,9 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Person $person
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Person $person)
     {
@@ -79,9 +63,10 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Person $person
+     * @param PersonRequest $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Person $person, PersonRequest $request)
     {

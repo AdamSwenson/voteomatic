@@ -54,18 +54,20 @@ class CandidatePolicy
         return $meeting->isPartOfMeeting($user);
     }
 
-//    /**
-//     * Determine whether the user can create candidates.
-//     *
-//     * @param \App\Models\User $user
-//     * @return mixed
-//     */
-//    public function create(User $user)
-//    {
-//  //regular users need to be able to do this for write in
-//        return true;
-////        return $user->isChair();
-//    }
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param \App\Models\User $user
+     * @param Candidate $candidate
+     * @return mixed
+     */
+    public function delete(User $user, Candidate $candidate)
+    {
+        $motion = $candidate->motion;
+        $meeting = $motion->meeting;
+        return $meeting->isOwner($user);
+    }
+
 
     /**
      * Determine whether the user can permanently delete the model.
@@ -81,39 +83,6 @@ class CandidatePolicy
     }
 
     /**
-     * Determine whether the user can update the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Candidate $candidate
-     * @return mixed
-     */
-    public function update(User $user, Candidate $candidate)
-    {
-        return $user->isChair();
-
-//        return $user->is($candidate->getOwner());
-
-        //dd($user->is_admin);
-
-        //Only administrators should be able to mess with candidates
-//        return $user->is_admin;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param \App\Models\User $user
-     * @param Candidate $candidate
-     * @return mixed
-     */
-    public function delete(User $user, Candidate $candidate)
-    {
-        $motion = $candidate->motion;
-        $meeting = $motion->meeting;
-        return $meeting->isOwner($user);
-    }
-
-    /**
      * Determine whether the user can restore the model.
      *
      * @param \App\Models\User $user
@@ -125,6 +94,20 @@ class CandidatePolicy
         $meeting = $motion->meeting;
         return $meeting->isOwner($user);
     }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param \App\Models\User $user
+     * @param \App\Models\Candidate $candidate
+     * @return mixed
+     */
+    public function update(User $user, Candidate $candidate)
+    {
+        return $user->isChair();
+    }
+
+
 
 
     /**

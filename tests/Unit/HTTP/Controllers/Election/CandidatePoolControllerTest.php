@@ -50,7 +50,6 @@ class CandidatePoolControllerTest extends TestCase
         $this->owner = User::factory()->create();
         $this->meeting->setOwner($this->owner);
 
-
     }
 //
 //    /** @test */

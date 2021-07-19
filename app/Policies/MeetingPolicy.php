@@ -71,7 +71,6 @@ public function ownerOnly(User $user, Meeting $meeting){
     public function create(User $user)
     {
         return $user->isChair();
-
     }
 
     /**
@@ -138,5 +137,42 @@ public function ownerOnly(User $user, Meeting $meeting){
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;
+    }
+
+    // ELECTION SPECIFIC =========================================
+    /**
+     * Determine whether the user can create meetings.
+     *
+     * @param \App\Models\User $user
+     * @return mixed
+     */
+    public function createElection(User $user)
+    {
+        return $user->isAdministrator();
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param \App\Models\User $user
+     * @param Meeting $election
+     * @return mixed
+     */
+    public function deleteElection(User $user, Meeting $election)
+    {
+        return $election->isOwner($user);
+    }
+
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param \App\Models\User $user
+     * @param \App\Models\Meeting $election
+     * @return mixed
+     */
+    public function updateElection(User $user, Meeting $election)
+    {
+        return $election->isOwner($user);
     }
 }

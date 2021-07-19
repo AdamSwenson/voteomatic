@@ -18,23 +18,19 @@ class ElectionResultsController extends Controller
 
     public function __construct()
     {
-
         $this->middleware('auth');
         $this->electionResultsRepo = app()->make(IElectionResultsRepository::class);
-
     }
 
 
     public function getResults(Motion $motion)
     {
         $this->setLoggedInUser();
-
         $this->authorize('viewOfficeResults', [Motion::class, $motion]);
 
         $out = $this->electionResultsRepo->getResultsForClient($motion);
 
         return response()->json($out);
-
     }
 
 }
