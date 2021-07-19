@@ -92,46 +92,83 @@ class CandidateControllerTest extends TestCase
 //    }
 
     /** @test */
-    public function addWriteInCandidate()
+    public function addWriteInCandidateAllowsMemberOwner()
     {
         $url = 'election/write-in/' . $this->motion->id;
         $this->meeting->addUserToMeeting($this->owner);
-
         $person = Person::factory()->create();
-        $candidate = Candidate::factory()->writeIn()->create(['person_id' => $person->id, 'motion_id' => $this->motion->id]);
-
-        $data = ['first_name' => $person->first_name, 'last_name' => $person->last_name,
+        $data = ['first_name' => $person->first_name,
+            'last_name' => $person->last_name,
             'info' => $person->info];
+
+        //call
         $response = $this->actingAs($this->owner)->post($url, $data);
 
         //check
         $response->assertSuccessful();
-
-//        $expected = $this->object->makeCandidateResponse($candidate);
-//        $response->assertJson($expected);
-
+        $data['is_write_in'] = true;
+        $response->assertJsonFragment($data);
     }
 
     /** @test */
-    public function addWriteInCandidateAllowsNonOwner()
+    public function addWriteInCandidateAllowsNonOwnerMember()
     {
         $url = 'election/write-in/' . $this->motion->id;
         $nonOwner = User::factory()->create();
         $this->meeting->addUserToMeeting($nonOwner);
-
         $person = Person::factory()->create();
-        $candidate = Candidate::factory()->writeIn()->create(['person_id' => $person->id, 'motion_id' => $this->motion->id]);
-
         $data = ['first_name' => $person->first_name, 'last_name' => $person->last_name,
             'info' => $person->info];
+
         $response = $this->actingAs($nonOwner)->post($url, $data);
 
         //check
         $response->assertSuccessful();
+        $data['is_write_in'] = true;
+        $response->assertJsonFragment($data);
+    }
+
+    /** @test */
+    public function addWriteInCandidateDeniesNonMemberOwner()
+    {
+        $url = 'election/write-in/' . $this->motion->id;
+        $person = Person::factory()->create();
+        $data = ['first_name' => $person->first_name, 'last_name' => $person->last_name,
+            'info' => $person->info];
+
+        $response = $this->actingAs($this->owner)->post($url, $data);
+
+        //check
+        $response->assertStatus(403);
+
+    }
+
+    /** @test */
+    public function addWriteInCandidateDeniesRando()
+    {
+        $url = 'election/write-in/' . $this->motion->id;
+        $rando = User::factory()->create();
+
+        $person = Person::factory()->create();
+//        $candidate = Candidate::factory()->writeIn()->create(['person_id' => $person->id, 'motion_id' => $this->motion->id]);
+
+        $data = ['first_name' => $person->first_name, 'last_name' => $person->last_name,
+            'info' => $person->info];
+        $response = $this->actingAs($rando)->post($url, $data);
+
+        //check
+        $response->assertStatus(403);
+
+//        $response->assertSuccessful();
 
 //        $expected = $this->object->makeCandidateResponse($candidate);
 //        $response->assertJson($expected);
     }
+
+
+
+
+
 
     /** @test */
     public function getOfficialCandidatesForOfficeAllowsOwnerWhenOwnerPartOfMeeting()

@@ -105,43 +105,25 @@ class CandidateController extends Controller
         return response()->json($this->makeCandidateResponse($candidate));
     }
 
+    /**
+     * Creates a candidate when a voter writes someone in.
+     *
+     * @param Motion $motion
+     * @param WriteInCandidateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function addWriteInCandidate(Motion $motion, WriteInCandidateRequest $request)
     {
         $this->setLoggedInUser();
 
-        //authorizes regular users!
-//        $this->authorize('addWriteInCandidate', [Candidate::class,  $motion]);
+        //authorizes regular users and owner as long as part of meeting!
+        $this->authorize('addWriteInCandidate', [Candidate::class,  $motion]);
 
-        //authorize regular user!
-//        $this->authorize('create');
-
-        //Check whether the write in candidate duplicates an existing candidate
-        $possibleDuplicates = Person::where('first_name', $request->first_name)
-            ->where('last_name', $request->last_name)
-            ->get();
-
-        if (sizeof($possibleDuplicates) > 0) {
-            $currentCandidates = [];
-        }
-
-
-        //First create a person
-        $person = Person::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'info' => $request->info,
-        ]);
-
-        //Now make them a candidate
-        $candidate = Candidate::create([
-            'motion_id' => $motion->id,
-            'person_id' => $person->id,
-            'is_write_in' => true
-        ]);
+        $candidate = $this->candidateRepo->addWriteInCandidate($motion, $request->first_name, $request->last_name, $request->info);
 
         //Send the candidate to the client
         return response()->json($this->makeCandidateResponse($candidate));
-
     }
 
 

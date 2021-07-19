@@ -5,6 +5,7 @@ namespace App\Repositories\Election;
 
 
 use App\Http\Requests\CandidateRequest;
+use App\Http\Requests\Election\WriteInCandidateRequest;
 use App\Models\Election\Candidate;
 use App\Models\Election\Person;
 use App\Models\Election\PoolMember;
@@ -110,6 +111,57 @@ class CandidateRepository implements ICandidateRepository
 //        return $candidate;
     }
 
+    /**
+     * Creates a write-in candidate
+     *
+     * @param Motion $motion
+     * @param string $first_name
+     * @param string $last_name
+     * @param null $info
+     * @return mixed
+     */
+    public function addWriteInCandidate(Motion $motion, $first_name='', $last_name='', $info=null ){
+
+        //Check for duplicates
+//        $existingPerson = $this->checkForDuplication($first_name, $last_name, $info);
+
+        //First create a person
+        $person = Person::create([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'info' => $info,
+        ]);
+
+        //Now make them a candidate
+        return Candidate::create([
+            'motion_id' => $motion->id,
+            'person_id' => $person->id,
+            'is_write_in' => true
+        ]);
+
+    }
+
+    /**
+     * Used when creating write in candidates to see if there already
+     * is a candidate in the database who matches exactly.
+     *
+     * dev
+     * Not using this yet, because need to understand all sorts of potential issue
+     * e.g., what if the person has the same name as an official candidate
+     *
+     * @param $first_name
+     * @param $last_name
+     * @param $info
+     */
+    public function checkForDuplication( $first_name, $last_name, $info){
+        //Check whether the write in candidate duplicates an existing candidate
+        $possibleDuplicates = Person::where('first_name', $first_name)
+            ->where('last_name', $last_name)
+            ->where('info', $info)
+            ->first();
+
+        return $possibleDuplicates;
+    }
 
     /**
      * Get all official candidates for the office

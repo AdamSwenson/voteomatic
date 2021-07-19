@@ -38,7 +38,11 @@ class CandidatePolicy
 
 
     /**
-     * Determine whether the user can create a write in candidate
+     * Determine whether the user can create a write in candidate.
+     * This allows all members of the meeting (i.e., election) to
+     * create a candidate.
+     *
+     * It denies all non-members, including the owner.
      *
      * @param \App\Models\User $user
      * @param Motion $motion
