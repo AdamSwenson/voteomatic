@@ -35,7 +35,11 @@ const actions = {
 
                                 dispatch('loadMotionTypesAndTemplates').then(function(){
 
-                                    return resolve();
+                                    // dispatch('loadAllMeetings').then(function(){
+                                    //
+                                    //     return resolve();
+                                    // });
+                                    //
 
                                 });
 

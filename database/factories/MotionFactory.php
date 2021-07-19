@@ -134,4 +134,46 @@ class MotionFactory extends Factory
     }
 
 
+    /**
+     * A motion used in an election
+     */
+    public function electedOfficeSingleChoice()
+    {
+
+        return $this->state(function (array $attributes) {
+            return [
+                /** The office being voted upon */
+                'content' => "Election for {$this->faker->jobTitle}",
+
+                'description' => "Please vote for one of the following candidates",
+
+                'requires' => 1.0,
+                'type' => 'election',
+                'max_winners' => 1,
+                'seconded' => true,
+            ];
+        });
+    }
+
+
+    /**
+     * A motion used in an election which does not specify number of winners
+     */
+    public function electedOffice()
+    {
+
+        return $this->state(function (array $attributes) {
+            return [
+                /** The office being voted upon */
+                'content' => "Election for {$this->faker->jobTitle}",
+
+                'description' => "Please vote for one of the following candidates",
+
+                'requires' => 1.0,
+                'type' => 'election',
+//                'max_winners' => 1,
+                'seconded' => true,
+            ];
+        });
+    }
 }

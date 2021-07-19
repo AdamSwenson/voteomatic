@@ -22,6 +22,19 @@ class MeetingTest extends TestCase
     }
 
     /** @test */
+    public function isMeetingOwner(){
+        //prep
+        $owner = User::factory()->create();
+        $nonOwner = User::factory()->create();
+        $this->obj->setOwner($owner);
+
+
+        $this->assertTrue($this->obj->isOwner($owner), "Returns true for owner");
+        $this->assertFalse($this->obj->isOwner($nonOwner), "Returns false for non-owner");
+
+    }
+
+    /** @test */
     public function isPartOfMeeting()
     {
         $num = 5;

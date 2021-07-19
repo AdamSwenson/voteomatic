@@ -5,6 +5,13 @@ use App\Http\Controllers\Demo\LTIDemoController;
 use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
+use App\Http\Controllers\Election\CandidateController;
+use App\Http\Controllers\Election\ElectionController;
+use App\Http\Controllers\Election\ElectionResultsController;
+use App\Http\Controllers\Election\CandidatePoolController;
+use App\Http\Controllers\Election\ElectionVoteController;
+use App\Http\Controllers\Election\OfficeController;
+use App\Http\Controllers\Election\PersonController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -54,6 +61,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
 //Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
+Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
 
 /* =============================
         Login, LTI authentication, and other admin
@@ -92,6 +100,42 @@ Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
+
+
+/* =============================
+        Election
+   ============================= */
+//Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
+//Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
+
+Route::get('election/{motion}/candidates', [CandidateController::class, 'getOfficialCandidatesForOffice']);
+Route::get('election/{motion}/results', [ElectionResultsController::class, 'getResults']);
+//Route::resource('election/candidate/{motion}', CandidateController::class);
+//Route::resource('election/{meeting}', )
+Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
+
+//setup office/position
+Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
+
+Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
+Route::resource('elections', ElectionController::class);
+Route::resource('offices', OfficeController::class);
+
+//pool of eligible nominees for office
+Route::get('election/pool/{motion}', [CandidatePoolController::class, 'getCandidatePool']);
+Route::post('election/pool/{motion}/{person}', [CandidatePoolController::class, 'addPersonToPool']);
+
+Route::post('election/nominate/{poolMember}', [CandidateController::class, 'addCandidateToBallot']);
+
+Route::resource('election/people', PersonController::class);
+
+Route::post('election/write-in/{motion}', [CandidateController::class, 'addWriteInCandidate']);
+
+//Handles update and destroy
+Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
+
+
+
 
 
 

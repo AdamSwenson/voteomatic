@@ -89,7 +89,7 @@ class RecordVoteController extends Controller
 
             //Create a hash stored on vote which only the user
             //will have access to.
-            $vote->makeReceiptHash();
+            $vote->addReceiptHash();
 
             $motion->votes()->save($vote);
             $motion->save();

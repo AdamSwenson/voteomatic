@@ -44,7 +44,12 @@ class MainController extends Controller
     }
 
 
-
+    /**
+     * dev Is this still needed? See VOT-55 which worked around a problem this caused.
+     * @param Motion $motion
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function getVotePage(Motion $motion)
     {
 

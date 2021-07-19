@@ -29,10 +29,110 @@ module.exports = {
             return normalizedRouteRoot() + 'login';
         },
 
-        waitlist : () => {
-        return normalizedRouteRoot() + 'waitlist';
+        waitlist: () => {
+            return normalizedRouteRoot() + 'waitlist';
         }
 
+    },
+
+    election: {
+
+        resource: {
+            // candidate: (candidateId) => {
+            //     let r = normalizedRouteRoot() + '/election/candidate';
+            //     if (!_.isNull(candidateId)) {
+            //         r = r + '/' + candidateId;
+            //     }
+            //     return r;
+            // },
+
+
+            election: (meetingId = null) => {
+                let r = normalizedRouteRoot() + 'elections/';
+
+                if (!_.isNull(meetingId)) {
+                    r += meetingId;
+                }
+                return r;
+            },
+
+            office: (motionId = null) => {
+                let r = normalizedRouteRoot() + 'offices/';
+
+                if (!_.isNull(motionId)) {
+                    r += motionId;
+                }
+                return r;
+            },
+
+            people: (personId = null) => {
+                let r = normalizedRouteRoot() + '/election/people';
+                if (!_.isNull(personId)) {
+                    r = r + '/' + personId;
+                }
+                return r;
+            }
+
+
+        },
+
+        addToPool: (motionId, personId) => {
+            return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
+        },
+
+        addWriteIn: (motionId) => {
+            return normalizedRouteRoot() + 'election/write-in/' + motionId;
+        },
+
+
+        // createOffice: (meetingId) => {
+        //     return normalizedRouteRoot() + 'election/office/' + meetingId;
+        // },
+
+        candidates: (motionId, candidateId = null) => {
+            let r = normalizedRouteRoot() + 'election/' + motionId + '/candidates';
+            if (!_.isNull(candidateId)) {
+                r = r + '/' + candidateId;
+            }
+            return r;
+        },
+
+        electionDetails: (meetingId) => {
+            return normalizedRouteRoot() + 'election/' + meetingId;
+        },
+
+        getOffices: (meetingId) => {
+            return normalizedRouteRoot() + 'election/office/' + meetingId;
+        },
+
+        /**
+         * Everyone who could be a candidate in the election
+         * @param motionId
+         */
+        getPool: (motionId) => {
+            return normalizedRouteRoot() + 'election/pool/' + motionId;
+        },
+        getResults: (motionId) => {
+            return normalizedRouteRoot() + 'election/' + motionId + '/results';
+        },
+
+        nominatePoolMember: (poolMemberId) => {
+            return normalizedRouteRoot() + 'election/nominate/' + poolMemberId;
+        },
+
+        recordVote: (motionId) => {
+            return normalizedRouteRoot() + 'election/vote/' + motionId;
+        },
+
+        removeCandidate: (candidateId) => {
+            return normalizedRouteRoot() + 'election/candidate/' + candidateId;
+            //     if (!_.isNull(candidateId)) {
+            //         r = r + '/' + candidateId;
+            //     }
+            //     return r;
+            // },
+
+        }
     },
 
     results: {
@@ -130,15 +230,15 @@ module.exports = {
             return normalizedRouteRoot() + 'motions/meeting/' + meetingId;
         },
 
-        secondMotion : (motionId) => {
-        return normalizedRouteRoot() + 'motions/second/' + motionId;
+        secondMotion: (motionId) => {
+            return normalizedRouteRoot() + 'motions/second/' + motionId;
         },
 
-        templates : () => {
-        return normalizedRouteRoot() + 'motions/templates';
+        templates: () => {
+            return normalizedRouteRoot() + 'motions/templates';
         },
 
-        types : () => {
+        types: () => {
             return normalizedRouteRoot() + 'motions/types';
         },
 

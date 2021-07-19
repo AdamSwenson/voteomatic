@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Assignment;
+use App\Models\Election\Candidate;
+use App\Models\Election\PoolMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +19,8 @@ class Motion extends Model
         'debatable',
         'is_complete',
         'is_current',
+        /** For elections, this defines how many people can be elected to the office */
+        'max_winners',
         'meeting_id',
         'requires',
         'superseded_by',
@@ -28,10 +32,11 @@ class Motion extends Model
      * @var string[]
      */
     protected $motionTypes = [
-        'main',
-        'privileged',
         'amendment',
         'amendment-secondary',
+        'election',
+        'main',
+        'privileged',
         'procedural-main',
         'procedural-subsidiary',
         'incidental'
@@ -70,7 +75,9 @@ class Motion extends Model
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'debatable' => 'boolean',
-        'seconded' => 'boolean'
+        'seconded' => 'boolean',
+        //election
+        'max_winners' => 'integer'
     ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
@@ -268,5 +275,12 @@ class Motion extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function candidates(){
+        return $this->hasMany(Candidate::class);
+    }
+
+    public function poolMembers(){
+        return $this->hasMany(PoolMember::class);
+    }
 
 }

@@ -1,5 +1,9 @@
 import Meeting from "../../models/Meeting";
 import * as routes from "../../routes";
+import Election from "../../models/Election";
+import EventObjectFactory from "../../models/EventObjectFactory";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+import {getById} from "../../utilities/object.utilities";
 
 
 /**
@@ -24,13 +28,13 @@ const mutations = {
     addMeetingToStore: (state, meetingObject) => {
         //todo double check that there is no reason to have duplicates or raise an error
         let mi = -1;
-        _.forEach(state.meetings, function(m) {
-            if(m.id === meetingObject.id){
+        _.forEach(state.meetings, function (m) {
+            if (m.id === meetingObject.id) {
                 mi = 1;
             }
         });
 
-        if(mi === -1) {
+        if (mi === -1) {
             state.meetings.push(meetingObject);
         }
     },
@@ -93,9 +97,13 @@ const actions = {
                     if (activeMeeting.id === meeting.id) {
                         //we need to remove it and set another in its place
                         let newActive = getters.getStoredMeetings[0];
-                        commit('setMeeting', newActive);
+                        // commit('setMeeting', newActive);
+
+                        dispatch('setActiveMeeting', newActive).then(() => {
+                            return resolve()
+                        });
                     }
-                    return resolve()
+
                 });
         }));
 
@@ -111,18 +119,34 @@ const actions = {
             let url = routes.meetings.resource(meetingId);
             return Vue.axios.get(url)
                 .then((response) => {
-                    let d = response.data;
-                    let meeting = new Meeting(d.id, d.name, d.date);
+                    //Will create either a Meeting or an Election object
+                    let meeting = EventObjectFactory.make(response.data);
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
                     resolve()
+                }).catch((response) => {
+                    window.console.log("Error in loadMeeting ", response);
                 });
         }));
     },
 
+
+    /**
+     * A more descriptively named alias for the actions
+     * which loads both meetings and elections
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    loadAllEvents({dispatch, commit, getters}) {
+        dispatch('loadAllMeetings');
+    },
+
     /**
      * Loads all meetings which the user has
-     * access to.
+     * access to. This includes both regular meetings
+     * and elections.
+     * dev Should this be renamed loadAllEvents? That would be more descriptive....
      * @param dispatch
      * @param commit
      * @param getters
@@ -139,15 +163,52 @@ const actions = {
             return Vue.axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
-                        // window.console.log('loadAllMeetings', d);
-                        let meeting = new Meeting(d.id, d.name, d.date);
-                        commit('addMeetingToStore', meeting);
-                        resolve()
+
+                        //Will create either a Meeting or an Election object
+                        let e = EventObjectFactory.make(d);
+                        commit('addMeetingToStore', e);
+
+                        // if(isReadyToRock(d.is_election) && d.is_election){
+                        //     let election = new Election(d);
+                        //     commit('addMeetingToStore', election);
+                        // }
+                        // else{
+                        //     // window.console.log('loadAllMeetings', d);
+                        //     let meeting = new Meeting(d.id, d.name, d.date);
+                        //     commit('addMeetingToStore', meeting);
+                        // }
                     });
-
-
+                    resolve();
+                }).catch((response) => {
+                    window.console.log('bad load', response);
                 });
         }));
+    },
+
+    /**
+     * Sets the meeting or election as the current one,
+     * clears out the motion stack, and loads motions / offices
+     * for the meeting.
+     *
+     * Used mainly by chair for selecting and switching between meetings
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
+    setActiveMeeting({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+
+            commit('setMeeting', meeting);
+
+            dispatch('loadMotionsForMeeting', meeting).then(() => {
+                resolve();
+            });
+
+        }));
+
     },
 
 
@@ -186,9 +247,14 @@ const getters = {
         return state.meeting;
     },
 
-    getStoredMeetings : (state) => {
-    return state.meetings;
+    getStoredMeetings: (state) => {
+        return state.meetings;
+    },
+
+    getMeetingById: (state) => (id) => {
+        return getById(state.meetings, id);
     }
+
 };
 
 

@@ -1,8 +1,8 @@
 <template>
 
     <div class="home-page ">
-
-        <meetings-card></meetings-card>
+<event-list-card></event-list-card>
+<!--        <meetings-card></meetings-card>-->
 <!--        <div class="card-header">-->
         <!--            <div class="h3 card-title">Meetings</div>-->
         <!--        </div>-->
@@ -21,9 +21,9 @@
 <script>
 
 import {isReadyToRock} from "../utilities/readiness.utilities";
-import MeetingsCard from "./meetings/meetings-card";
 import meetingMixin from "../mixins/meetingMixin";
 import urlMixin from "../mixins/urlMixin";
+import EventListCard from "./common/event-list-card";
 
 /**
  * This is the internal home page. Only will be accessed if logging in directly
@@ -31,7 +31,7 @@ import urlMixin from "../mixins/urlMixin";
  */
 export default {
     name: "home-page",
-    components: {MeetingsCard},
+    components: {EventListCard,},
     props: [],
 
     mixins: [meetingMixin, urlMixin],

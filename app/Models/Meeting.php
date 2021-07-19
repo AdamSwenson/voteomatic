@@ -16,8 +16,9 @@ class Meeting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'name'];
+    protected $fillable= ['date','name', 'is_election'];
 
+    protected $casts = ['is_election' => 'boolean'];
 
     /**
      * @return User
@@ -37,6 +38,15 @@ class Meeting extends Model
     {
         $this->owner_id = $user->id;
         $this->save();
+    }
+
+    /**
+     * Returns true if the user is the meeting's owner. False otherwise
+     * @param User $user
+     * @return bool
+     */
+    public function isOwner(User $user){
+        return $user->is($this->getOwner());
     }
 
 
