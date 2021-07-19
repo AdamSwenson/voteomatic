@@ -3419,7 +3419,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -3445,7 +3444,9 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default())],
   data: function data() {
-    return {};
+    return {
+      randomizeCandidates: true
+    };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
@@ -3471,7 +3472,13 @@ __webpack_require__.r(__webpack_exports__);
         var me = this;
 
         if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.meeting) && (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) {
-          return me.$store.getters.getCandidatesForOffice(me.motion);
+          var c = me.$store.getters.getCandidatesForOffice(me.motion);
+
+          if (me.randomizeCandidates) {
+            c = _.shuffle(c);
+          }
+
+          return c;
         }
 
         return []; // //dev hackery

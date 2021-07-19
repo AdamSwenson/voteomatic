@@ -26,20 +26,20 @@
                                :candidate="candidate"
                 ></candidate-row>
 
-<!--                Enable after VOT-60 is complete-->
-<!--                <candidate-row v-if="writeInCandidates.length > 0"-->
-<!--                             v-for="candidate in writeInCandidates"-->
-<!--                             :candidate="candidate"-->
-<!--                             :key="candidate.id"-->
-<!--                ></candidate-row>-->
+                <!--                Enable after VOT-60 is complete-->
+                <!--                <candidate-row v-if="writeInCandidates.length > 0"-->
+                <!--                             v-for="candidate in writeInCandidates"-->
+                <!--                             :candidate="candidate"-->
+                <!--                             :key="candidate.id"-->
+                <!--                ></candidate-row>-->
                 <overselection-warning></overselection-warning>
 
             </div>
 
-<!--            Enable after VOT-60 is complete-->
-<!--            <div class="card-body">-->
-<!--                <write-in-controls></write-in-controls>-->
-<!--            </div>-->
+            <!--            Enable after VOT-60 is complete-->
+            <!--            <div class="card-body">-->
+            <!--                <write-in-controls></write-in-controls>-->
+            <!--            </div>-->
 
 
             <div class="card-footer">
@@ -47,7 +47,6 @@
             </div>
 
         </div>
-
 
 
         <div class="wrong-mode-message card" v-else>
@@ -86,10 +85,12 @@ export default {
     mixins: [MeetingMixin, MotionStoreMixin, ModeMixin],
 
     data: function () {
-        return {}
+        return {
+            randomizeCandidates: true
+        }
     },
 
-    beforeRouteEnter (to, from, next) {
+    beforeRouteEnter(to, from, next) {
         next(vm => {
             // vm.setElection();
 
@@ -98,7 +99,6 @@ export default {
             // access to component instance via `vm`
         })
     },
-
 
 
     asyncComputed: {
@@ -124,8 +124,12 @@ export default {
                 let me = this;
                 if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
 
-                    return me.$store.getters.getCandidatesForOffice(me.motion);
+                    let c = me.$store.getters.getCandidatesForOffice(me.motion);
+                    if (me.randomizeCandidates) {
+                        c = _.shuffle(c);
+                    }
 
+                    return c;
                 }
                 return []
 
@@ -171,8 +175,8 @@ export default {
 
         },
 
-        isComplete : function(){
-          return this.$store.getters.isElectionComplete;
+        isComplete: function () {
+            return this.$store.getters.isElectionComplete;
         },
 
         maxWinners: {
@@ -237,7 +241,7 @@ export default {
 //             })
 
 
-            // }
+        // }
 
         // });
 
