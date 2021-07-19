@@ -27,19 +27,19 @@
                 ></candidate-row>
 
                 <!--                Enable after VOT-60 is complete-->
-                <!--                <candidate-row v-if="writeInCandidates.length > 0"-->
-                <!--                             v-for="candidate in writeInCandidates"-->
-                <!--                             :candidate="candidate"-->
-                <!--                             :key="candidate.id"-->
-                <!--                ></candidate-row>-->
+                                <candidate-row v-if="writeInCandidates.length > 0"
+                                             v-for="candidate in writeInCandidates"
+                                             :candidate="candidate"
+                                             :key="candidate.id"
+                                ></candidate-row>
                 <overselection-warning></overselection-warning>
 
             </div>
 
             <!--            Enable after VOT-60 is complete-->
-            <!--            <div class="card-body">-->
-            <!--                <write-in-controls></write-in-controls>-->
-            <!--            </div>-->
+                        <div class="card-body">
+                            <write-in-controls></write-in-controls>
+                        </div>
 
 
             <div class="card-footer">

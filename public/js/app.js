@@ -63087,9 +63087,25 @@ var render = function() {
                   })
                 }),
                 _vm._v(" "),
+                _vm._l(_vm.writeInCandidates, function(candidate) {
+                  return _vm.writeInCandidates.length > 0
+                    ? _c("candidate-row", {
+                        key: candidate.id,
+                        attrs: { candidate: candidate }
+                      })
+                    : _vm._e()
+                }),
+                _vm._v(" "),
                 _c("overselection-warning")
               ],
               2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [_c("write-in-controls")],
+              1
             ),
             _vm._v(" "),
             _c(
