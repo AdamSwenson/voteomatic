@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Election;
 
 use App\Exceptions\DoubleVoteAttempt;
+use App\Exceptions\ExcessCandidatesSelected;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ElectionVoteRequest;
@@ -10,11 +11,20 @@ use App\Http\Requests\VoteRequest;
 use App\Models\Election\Candidate;
 use App\Models\Motion;
 use App\Models\Vote;
+use App\Repositories\Election\IElectionVoteRepository;
 use App\Repositories\IVoterEligibilityRepository;
 use Illuminate\Http\Request;
 
 class ElectionVoteController extends Controller
 {
+    /**
+     * @var IVoterEligibilityRepository|mixed
+     */
+    public $voterEligibilityRepo;
+    /**
+     * @var IElectionVoteRepository|mixed
+     */
+    public $electionVoteRepo;
 
 
     /**
@@ -27,10 +37,12 @@ class ElectionVoteController extends Controller
 
         $this->middleware('auth');
 //        $this->middleware('vote-eligibility');
-
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');
         $this->middleware('excess-candidates-selected');
+
+        $this->voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
+        $this->electionVoteRepo = app()->make(IElectionVoteRepository::class);
     }
 
 
@@ -38,49 +50,61 @@ class ElectionVoteController extends Controller
      * Saves the vote to the database and creates a record
      * that the user has voted.
      *
-     * @param Motion $motion
+     * @param Motion $office
      * @param ElectionVoteRequest $request
      * @return Vote|string[]
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function recordVote(Motion $motion, ElectionVoteRequest $request)
+    public function recordVote(Motion $office, ElectionVoteRequest $request)
     {
 
         try {
             $this->setLoggedInUser();
-            $this->authorize('castVoteForOffice', [Motion::class, $motion]);
+            $this->authorize('castVoteForOffice', [Motion::class, $office]);
 
-            $candidates = [];
-            foreach ($request->candidateIds as $candidateId) {
+            //Record the votes and return a single receipt hash
+            $hash = $this->electionVoteRepo->recordOfficeVotes($office, $request->candidateIds);
 
-                //Look up the object to make sure it exists
-                //We don't just look at the id to avoid id spraying mischief
-                $candidates[] = Candidate::where('motion_id', $motion->id)
-                    ->where('id', $candidateId)
-                    ->firstOrFail();
+            if (isset($hash)) {
+
+                //At this point, the vote itself has been saved.
+                //Now we need to separately record that user has voted
+                $this->voterEligibilityRepo->recordVoted($office, $this->user);
+
+                return response()->json(['receipt' => $hash]);
 
             }
-
-//            foreach ($request->writeIns as $name) {
-//                $candidates[] = Candidate::create(['name' => $name,
-//                    'motion_id' => $motion->id,
-//                    'is_write_in' => true,
+//
+//            $candidates = [];
+//            foreach ($request->candidateIds as $candidateId) {
+//
+//                //Look up the object to make sure it exists
+//                //We don't just look at the id to avoid id spraying mischief
+//                $candidates[] = Candidate::where('motion_id', $office->id)
+//                    ->where('id', $candidateId)
+//                    ->firstOrFail();
+//
+//            }
+//
+////            foreach ($request->writeIns as $name) {
+////                $candidates[] = Candidate::create(['name' => $name,
+////                    'motion_id' => $motion->id,
+////                    'is_write_in' => true,
+////                ]);
+////            }
+//
+//
+//            //And now record votes
+//            $hash = Vote::makeReceiptHash();
+//
+//            foreach ($candidates as $candidate) {
+//                Vote::create([
+//                    'motion_id' => $office->id,
+//                    'candidate_id' => $candidate->id,
+//                    'receipt' => $hash
 //                ]);
 //            }
 
-
-            //And now record votes
-            $hash = Vote::makeReceiptHash();
-
-            foreach ($candidates as $candidate) {
-                Vote::create([
-                    'motion_id' => $motion->id,
-                    'candidate_id' => $candidate->id,
-                    'receipt' => $hash
-                ]);
-            }
-
-            return response()->json(['receipt' => $hash]);
 
             //Create a hash stored on vote which only the user
             //will have access to.
@@ -134,6 +158,8 @@ class ElectionVoteController extends Controller
             abort($e::ERROR_CODE);
         } catch (VoteSubmittedAfterMotionClosed $e2) {
             abort($e2::ERROR_CODE);
+        } catch (ExcessCandidatesSelected $e3) {
+            abort($e3::ERROR_CODE);
         }
     }
 
