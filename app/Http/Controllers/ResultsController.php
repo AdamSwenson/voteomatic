@@ -70,7 +70,7 @@ class ResultsController extends Controller
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
 
-        $this->authorize('viewMotionResults', $motion);
+        $this->authorize('viewMotionResults', [Motion::class, $motion]);
 
         /*
          * We aren't going to just send the motion object
