@@ -18,19 +18,18 @@ class HandleMotionClosed
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(MotionClosed $event)
     {
-        //
+        $this->motion = $event->motion;
     }
 
     /**
      * Handle the event.
      *
-     * @param  MotionClosed  $event
      * @return void
      */
-    public function handle(MotionClosed $event)
+    public function handle()
     {
-        $this->motion = $event->motion;
+
     }
 }

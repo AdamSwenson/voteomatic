@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Events\MotionClosed;
 use App\Http\Controllers\Motion\MotionStackController;
 
 //use PHPUnit\Framework\TestCase;
@@ -10,6 +11,7 @@ use App\Models\Motion;
 use App\Models\User;
 use App\Repositories\IMotionStackRepository;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 class MotionStackControllerTest extends TestCase
 {
@@ -30,6 +32,10 @@ class MotionStackControllerTest extends TestCase
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     private $nonMember;
+    /**
+     * @var string
+     */
+    public $url;
 
 
     public function setUp(): void
@@ -70,6 +76,16 @@ $this->url = 'motions/close/' . $this->motion->id;
         $response->assertStatus(403);
     }
 
+
+    /** @test  */
+    public function markMotionCompleteDispatchesBroadcastEvent(){
+        $this->url = 'motions/close/' . $this->motion->id;
+
+        $response = $this->actingAs($this->user)
+            ->post($this->url);
+
+        Event::assertDispatched(MotionClosed::class);
+    }
 
     /** @test */
     public function getCurrentMotion()

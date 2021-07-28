@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
+Broadcast::channel('motions.{motionId}', function ($user, $motionId) {
+    $motion = Motion::find($motionId);
+    $meeting = $motion->meeting;
+    return $meeting->isPartOfMeeting($user);
+});
 //Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //    return (int) $user->id === (int) $id;
 //});

@@ -18,7 +18,7 @@ use Illuminate\Queue\SerializesModels;
  *
  * @package App\Events
  */
-class MotionClosed
+class MotionClosed implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -45,6 +45,13 @@ class MotionClosed
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('motions.'.$this->motion->id);
+    }
+
+    public function broadcastWith(){
+        return [
+            'id' => $this->motion->id
+        ];
+
     }
 }

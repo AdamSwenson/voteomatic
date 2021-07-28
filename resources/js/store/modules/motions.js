@@ -454,6 +454,14 @@ const actions = {
                     let motion = getters.getMotionById(motionId);
                     commit('setMotion', motion)
                     window.console.log('currentMotion set', motion);
+
+                    let channel = `motions.${motion.id}`;
+
+                    Echo.private(channel)
+                        .listen(MotionClosed, (e) => {
+                            window.console.log('Received broadcast event ', e);
+                        });
+
                     return resolve()
                 });
         }));
