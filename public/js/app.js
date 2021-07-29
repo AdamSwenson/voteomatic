@@ -10984,8 +10984,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "3de72f79b114233536dc",
+  cluster: "us3",
   forceTLS: true
 });
 
@@ -11364,7 +11364,7 @@ module.exports = {
         return this.$store.getters.getActiveMotion;
       },
       set: function set(v) {
-        this.$store.commit('setMotion', v);
+        this.$store.dispatch('setMotion', v);
       }
     }
   },
@@ -13406,7 +13406,7 @@ var actions = {
       return Vue.axios.post(url, data).then(function (response) {
         var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_6__.default(response.data);
         commit('addMotionToStore', motion);
-        commit('setMotion', motion);
+        dispatch('setMotion', motion);
         dispatch('loadCandidatePool', motion).then(function (response) {
           resolve();
         });
@@ -14329,6 +14329,8 @@ var mutations = {
    * Sets the provided motion object as
    * the currently active motion
    *
+   * This should not be called directly by anything except the setMotion action
+   *
    * @param state
    * @param motionObject
    */
@@ -14449,7 +14451,7 @@ var actions = {
         if (activeMotino.id === motion.id) {
           //we need to remove it and set another in its place
           var newActive = getters.getStoredMeetings[0];
-          commit('setMotion', newActive);
+          dispatch('setMotion', newActive);
         }
 
         return resolve();
@@ -14471,7 +14473,7 @@ var actions = {
 
         var superseding = response.data.superseding; //todo this means that the motion must be selected in order to end voting. That probably makes sense...
 
-        commit('setMotion', motion);
+        dispatch('setMotion', motion);
         var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
           object: motion,
           updateProp: 'isComplete',
@@ -14525,7 +14527,7 @@ var actions = {
         var d = response.data;
         var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
 
-        commit('setMotion', motion);
+        dispatch('setMotion', motion);
         resolve();
       });
     });
@@ -14590,7 +14592,7 @@ var actions = {
           commit('addMotionToStore', m);
 
           if (d.is_current) {
-            commit('setMotion', m);
+            dispatch('setMotion', m);
           }
         });
 
@@ -14664,14 +14666,54 @@ var actions = {
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.setCurrentMotion(meetingId, motionId);
       return Vue.axios.post(url).then(function (response) {
         var motion = getters.getMotionById(motionId);
-        commit('setMotion', motion);
-        window.console.log('currentMotion set', motion);
-        var channel = "motions.".concat(motion.id);
-        Echo["private"](channel).listen(MotionClosed, function (e) {
-          window.console.log('Received broadcast event ', e);
-        });
-        return resolve();
+        dispatch('setMotion', motion).then(function () {
+          return resolve();
+        }); //
+        // commit('setMotion', motion)
+        // window.console.log('currentMotion set', motion);
+        // let channel = `motions.${motion.id}`;
+        //     .listen("App\\Events\\MotionClosed", (e) => {
+        //         window.console.log('Received broadcast event 1', e);
+        //     })
+        //     .listen("MotionClosed", (e) => {
+        // //         window.console.log('Received broadcast event 2', e);
+        //     });
+        //
+        //
+        // let channel = `private-motions`;
+        //
+        // Echo.private(channel)
+        //     .listen("App\\Events\\MotionClosed", (e) => {
+        //         window.console.log('Received broadcast event ', e);
+        //     }).listen("MotionClosed", (e) => {
+        //     window.console.log('Received broadcast event 2', e);
+        // });
       });
+    });
+  },
+
+  /**
+   * Wraps the commit which sets a particular motion as the
+   * one being voted on so that other listeners can be attached
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param payload
+   */
+  setMotion: function setMotion(_ref14, motion) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
+    return new Promise(function (resolve, reject) {
+      commit('setMotion', motion);
+      window.console.log('currentMotion set', motion); //Todo Handler
+
+      Echo.channel('motions').listen("MotionClosed", function (e) {
+        window.console.log('Received broadcast event motions', e);
+      });
+      window.console.log('Websocket listener set for current motion');
+      return resolve();
     });
   },
 
@@ -14685,10 +14727,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref14, payload) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  updateMotion: function updateMotion(_ref15, payload) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -15094,8 +15136,9 @@ var actions = {
 
       console.log("Reading motion from page data", data.motion);
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(data.motion);
-      commit('setMotion', motion);
-      resolve();
+      dispatch('setMotion', motion).then(function () {
+        resolve();
+      });
     });
   },
 

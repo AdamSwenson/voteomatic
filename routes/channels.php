@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Motion;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -12,8 +13,11 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
+Broadcast::channel('motions', function ($user, $motionId) {
 
-Broadcast::channel('motions.{motionId}', function ($user, $motionId) {
+//Broadcast::channel('motions.{motionId}', function ($user, $motionId) {
+//    dd('stopped');
+    return true;
     $motion = Motion::find($motionId);
     $meeting = $motion->meeting;
     return $meeting->isPartOfMeeting($user);

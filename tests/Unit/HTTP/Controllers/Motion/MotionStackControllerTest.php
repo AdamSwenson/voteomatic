@@ -10,8 +10,8 @@ use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use App\Repositories\IMotionStackRepository;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Event;
+use Tests\TestCase;
 
 class MotionStackControllerTest extends TestCase
 {
@@ -79,12 +79,14 @@ $this->url = 'motions/close/' . $this->motion->id;
 
     /** @test  */
     public function markMotionCompleteDispatchesBroadcastEvent(){
+Event::fake();
         $this->url = 'motions/close/' . $this->motion->id;
 
         $response = $this->actingAs($this->user)
             ->post($this->url);
 
         Event::assertDispatched(MotionClosed::class);
+
     }
 
     /** @test */

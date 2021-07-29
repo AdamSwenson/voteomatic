@@ -78,7 +78,7 @@ const mutations = {
      * meetings / elections
      * @param state
      */
-    clearMotions : (state) => {
+    clearMotions: (state) => {
         state.motions = [];
     },
 
@@ -95,6 +95,8 @@ const mutations = {
     /**
      * Sets the provided motion object as
      * the currently active motion
+     *
+     * This should not be called directly by anything except the setMotion action
      *
      * @param state
      * @param motionObject
@@ -230,7 +232,7 @@ const actions = {
                     if (activeMotino.id === motion.id) {
                         //we need to remove it and set another in its place
                         let newActive = getters.getStoredMeetings[0];
-                        commit('setMotion', newActive);
+                        dispatch('setMotion', newActive);
 
                     }
                     return resolve()
@@ -255,7 +257,7 @@ const actions = {
                     let superseding = response.data.superseding;
 
                     //todo this means that the motion must be selected in order to end voting. That probably makes sense...
-                    commit('setMotion', motion);
+                    dispatch('setMotion', motion);
 
                     let pl = Payload.factory({
                         object: motion,
@@ -314,7 +316,7 @@ const actions = {
                     let d = response.data;
                     let motion = new Motion(d);
                     // let motion = new Motion(d.id, d.name, d.date);
-                    commit('setMotion', motion);
+                    dispatch('setMotion', motion);
                     resolve()
                 });
         }));
@@ -378,7 +380,7 @@ const actions = {
                         // let motion = new Motion(d.id, d.name, d.date);
                         commit('addMotionToStore', m);
                         if (d.is_current) {
-                            commit('setMotion', m)
+                            dispatch('setMotion', m)
                         }
                     });
 
@@ -452,18 +454,64 @@ const actions = {
             return Vue.axios.post(url)
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
-                    commit('setMotion', motion)
-                    window.console.log('currentMotion set', motion);
 
-                    let channel = `motions.${motion.id}`;
+                    dispatch('setMotion', motion).then(() => {
+                        return resolve()
+                    });
 
-                    Echo.private(channel)
-                        .listen(MotionClosed, (e) => {
-                            window.console.log('Received broadcast event ', e);
-                        });
+                    //
+                    // commit('setMotion', motion)
+                    // window.console.log('currentMotion set', motion);
 
-                    return resolve()
+                    // let channel = `motions.${motion.id}`;
+
+
+                    //     .listen("App\\Events\\MotionClosed", (e) => {
+                    //         window.console.log('Received broadcast event 1', e);
+                    //     })
+                    //     .listen("MotionClosed", (e) => {
+                    // //         window.console.log('Received broadcast event 2', e);
+                    //     });
+                    //
+                    //
+                    // let channel = `private-motions`;
+                    //
+                    // Echo.private(channel)
+                    //     .listen("App\\Events\\MotionClosed", (e) => {
+                    //         window.console.log('Received broadcast event ', e);
+                    //     }).listen("MotionClosed", (e) => {
+                    //     window.console.log('Received broadcast event 2', e);
+                    // });
+
+
                 });
+        }));
+    },
+
+    /**
+     * Wraps the commit which sets a particular motion as the
+     * one being voted on so that other listeners can be attached
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     */
+    setMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+
+            commit('setMotion', motion)
+            window.console.log('currentMotion set', motion);
+
+            //Todo Handler
+
+            Echo.channel('motions')
+                .listen("MotionClosed", (e) => {
+                    window.console.log('Received broadcast event motions', e);
+                });
+
+            window.console.log('Websocket listener set for current motion');
+            return resolve();
         }));
     },
 

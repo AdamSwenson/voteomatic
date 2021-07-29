@@ -6,6 +6,7 @@ use App\Events\MotionClosed;
 
 //use PHPUnit\Framework\TestCase;
 use App\Models\Motion;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class MotionClosedTest extends TestCase
@@ -22,6 +23,9 @@ class MotionClosedTest extends TestCase
         $motion = Motion::factory()->create();
 
         MotionClosed::dispatch($motion);
+
+
+
     }
 
 }

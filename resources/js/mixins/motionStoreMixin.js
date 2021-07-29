@@ -19,7 +19,7 @@ module.exports = {
             },
 
             set: function (v) {
-                this.$store.commit('setMotion', v);
+                this.$store.dispatch('setMotion', v);
 
             }
         },

@@ -101,9 +101,9 @@ const actions = {
 
             console.log("Reading motion from page data", data.motion);
             let motion = new Motion(data.motion);
-            commit('setMotion', motion);
-
-            resolve();
+            dispatch('setMotion', motion).then(() => {
+                resolve();
+            });
 
         });
     },

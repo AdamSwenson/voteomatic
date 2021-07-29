@@ -45,13 +45,15 @@ class MotionClosed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('motions.'.$this->motion->id);
+
+        return new PrivateChannel('motions');
+//        return new PrivateChannel('motions.'.$this->motion->id);
     }
 
-    public function broadcastWith(){
-        return [
-            'id' => $this->motion->id
-        ];
-
-    }
+//    public function broadcastWith(){
+//        return [
+//            'id' => $this->motion->id
+//        ];
+//
+//    }
 }

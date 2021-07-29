@@ -177,7 +177,7 @@ const actions = {
                 let motion = new Motion(response.data);
 
                 commit('addMotionToStore', motion);
-                commit('setMotion', motion);
+                dispatch('setMotion', motion);
 
                 dispatch('loadCandidatePool', motion).then((response) => {
                     resolve();
