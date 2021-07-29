@@ -2,7 +2,7 @@ import * as routes from "../../routes";
 import Meeting from "../../models/Meeting";
 import Candidate from "../../models/Candidate";
 import {getById} from "../../utilities/object.utilities";
-import Result from "../../models/Result";
+import CandidateResult from "../../models/CandidateResult";
 import Election from "../../models/Election";
 import {idify} from "../../utilities/object.utilities";
 import Motion from "../../models/Motion";
@@ -208,7 +208,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             return Vue.axios.get(url).then((response) => {
                 _.forEach(response.data, (d) => {
-                    let r = new Result(d);
+                    let r = new CandidateResult(d);
                     commit('addResults', r);
                 });
 

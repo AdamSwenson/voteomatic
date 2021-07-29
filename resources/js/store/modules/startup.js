@@ -33,15 +33,9 @@ const actions = {
                             //get motions which have already been handled
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
-                                dispatch('loadMotionTypesAndTemplates').then(function(){
+                                dispatch('loadResultsForAllMeetingMotions').then(function(){});
 
-                                    // dispatch('loadAllMeetings').then(function(){
-                                    //
-                                    //     return resolve();
-                                    // });
-                                    //
-
-                                });
+                                dispatch('loadMotionTypesAndTemplates').then(function(){});
 
                             });
 

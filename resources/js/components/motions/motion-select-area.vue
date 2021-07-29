@@ -32,7 +32,8 @@
 
                     <br/>
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
+                                         :motion="motion"></required-vote-badge>
                     <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
 
                     <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>
@@ -50,7 +51,8 @@
 
                     <br/>
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
+                                         :motion="motion"></required-vote-badge>
                     <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
 
                     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
@@ -67,7 +69,8 @@
 
                     <br/>
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()" :motion="motion"></required-vote-badge>
+                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
+                                         :motion="motion"></required-vote-badge>
                     <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
 
                     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
@@ -110,6 +113,7 @@ import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
 import AmendmentTextDisplay from "./amendment-text-display";
 import AmendmentMixin from "../../mixins/amendmentMixin";
+import MotionResultsMixin from '../../mixins/motionResultsMixin';
 import ProceduralMixin from "../../mixins/proceduralMixin";
 // import AmendmentBadge from "./badges/amendment-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
@@ -127,7 +131,7 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin],
     data: function () {
         return {
             amendmentTags: {
@@ -161,31 +165,35 @@ export default {
         },
 
 
-        /**
-         * Whether the motion has passed (after voting has been closed)
-         */
-        isPassed: {
-            get: function () {
-                //must return undefined until actually loaded
-                //otherwise the badge will be sad
-                if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-
-                    let me = this;
-                    if (this.motion.isComplete) {
-                        return new Promise(((resolve, reject) => {
-
-                            let url = routes.results.getResults(me.motion.id);
-
-                            return Vue.axios.get(url)
-                                .then((response) => {
-                                    return resolve(response.data.passed);
-                                });
-                        }));
-                    }
-                }
-
-            },
-        },
+        // /**
+        //  * Whether the motion has passed (after voting has been closed)
+        //  */
+        // isPassed: {
+        //     get: function () {
+        //         //must return undefined until actually loaded
+        //         //otherwise the badge will be sad
+        //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        //
+        //             let me = this;
+        //             if (this.motion.isComplete) {
+        //                 // return this.$store.dispatch('getResults', {motion: this.motion, setfalse)
+        //                 //     .then(({passed, totalVotes}) => {
+        //                 //         return passed;
+        //                 //     });
+        //                 return new Promise(((resolve, reject) => {
+        //
+        //                     let url = routes.results.getResults(me.motion.id);
+        //
+        //                     return Vue.axios.get(url)
+        //                         .then((response) => {
+        //                             return resolve(response.data.passed);
+        //                         });
+        //                 }));
+        //             }
+        //         }
+        //
+        //     },
+        // },
 
         /**
          * Whether the motion that has been handed to this

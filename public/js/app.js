@@ -5915,9 +5915,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
-/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
-/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/motionResultsMixin */ "./resources/js/mixins/motionResultsMixin.js");
+/* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 //
 //
 //
@@ -6013,6 +6016,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 
@@ -6023,11 +6028,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-results-page",
   components: {
-    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_6__.default,
-    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_5__.default,
-    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_4__.default
+    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_7__.default,
+    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_6__.default,
+    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_5__.default
   },
-  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default())],
+  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_4___default())],
   data: function data() {
     return {
       showCounts: false
@@ -6040,41 +6045,58 @@ __webpack_require__.r(__webpack_exports__);
   },
   asyncComputed: {
     passed: function passed() {
-      // let results = this.$store.getters.getPassed;
-      if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- ';
-      return this.results ? 'PASSED' : 'FAILED';
+      if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ' ----- ';
+      return this.isPassed ? 'PASSED' : 'FAILED'; // let results = this.$store.getters.getPassed;
+      // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
+      //
+      // return this.results ? 'PASSED' : 'FAILED';
     },
-    yayCount: function yayCount() {
-      return this.$store.getters.getYayCount;
-    },
-    nayCount: function nayCount() {
-      return this.$store.getters.getNayCount;
-    },
-    results: function results() {
-      return this.$store.getters.getPassed;
-    },
+    // yayCount: function () {
+    //     return this.$store.getters.getYayCount
+    // },
+    //
+    // nayCount: function () {
+    //     return this.$store.getters.getNayCount
+    // },
+    //
+    // results : function(){
+    //     return this.$store.getters.getPassed;
+    // },
     resultStyle: function resultStyle() {
       //nb results will be a boolean
-      if (_.isUndefined(this.results) || _.isNull(this.results)) return '';
-      if (this.results) return "bg-success";
-      return "bg-danger";
-    },
-    totalVotes: function totalVotes() {
-      return this.$store.getters.getTotalVoteCount;
-    }
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_8__.isReadyToRock)(this.isPassed)) return '';
+      if (this.isPassed) return "bg-success";
+      return "bg-danger"; // if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
+      //
+      // if (this.results) return "bg-success"
+      //
+      // return "bg-danger";
+    } // totalVotes: function () {
+    //     return this.$store.getters.getTotalVoteCount;
+    // }
+
   },
   methods: {
     loadResults: function loadResults() {
       var me = this;
       if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
       console.log('Loading vote results', this.motion);
-      me.$store.dispatch('loadResults', me.motion).then(function () {
+      me.$store.dispatch('loadMotionResults', me.motion).then(function () {
         //todo if want to block from getting vote totals put the break here
         window.console.log('Loading vote counts', me.motion);
-        me.$store.dispatch('loadCounts', me.motion).then(function () {
+        me.$store.dispatch('loadMotionCounts', me.motion).then(function () {
           window.console.log('Results page ready', 189, me.motion);
         });
-      });
+      }); // me.$store.dispatch('loadResults', me.motion).then(function () {
+      //
+      //     //todo if want to block from getting vote totals put the break here
+      //
+      //     window.console.log('Loading vote counts', me.motion);
+      //
+      //     me.$store.dispatch('loadCounts', me.motion).then(function () {
+      //         window.console.log('Results page ready', 189, me.motion);
+      //     });
+      // });
     }
   },
   watch: {
@@ -6087,8 +6109,7 @@ __webpack_require__.r(__webpack_exports__);
     // already being observed
     this.loadResults();
   },
-  mounted: function mounted() {
-    this.loadResults();
+  mounted: function mounted() {// this.loadResults();
   }
 });
 
@@ -8067,11 +8088,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
 /* harmony import */ var _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../mixins/amendmentMixin */ "./resources/js/mixins/amendmentMixin.js");
 /* harmony import */ var _mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
-/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
-/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
-/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../mixins/motionResultsMixin */ "./resources/js/mixins/motionResultsMixin.js");
+/* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
+/* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
 //
 //
 //
@@ -8174,6 +8197,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -8191,9 +8218,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-select-area",
   components: {
-    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_12__.default,
-    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__.default,
-    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__.default,
+    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__.default,
+    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__.default,
+    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__.default,
     // AmendmentBadge,
     AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__.default,
     ResultsNavButton: _navigation_results_nav_button__WEBPACK_IMPORTED_MODULE_5__.default,
@@ -8203,7 +8230,7 @@ __webpack_require__.r(__webpack_exports__);
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: ['motion'],
-  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_9___default())],
+  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9___default())],
   data: function data() {
     return {
       amendmentTags: {
@@ -8231,28 +8258,35 @@ __webpack_require__.r(__webpack_exports__);
     isComplete: function isComplete() {
       return this.motion.isComplete;
     },
-
-    /**
-     * Whether the motion has passed (after voting has been closed)
-     */
-    isPassed: {
-      get: function get() {
-        //must return undefined until actually loaded
-        //otherwise the badge will be sad
-        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-          var me = this;
-
-          if (this.motion.isComplete) {
-            return new Promise(function (resolve, reject) {
-              var url = _routes__WEBPACK_IMPORTED_MODULE_2__.results.getResults(me.motion.id);
-              return Vue.axios.get(url).then(function (response) {
-                return resolve(response.data.passed);
-              });
-            });
-          }
-        }
-      }
-    },
+    // /**
+    //  * Whether the motion has passed (after voting has been closed)
+    //  */
+    // isPassed: {
+    //     get: function () {
+    //         //must return undefined until actually loaded
+    //         //otherwise the badge will be sad
+    //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+    //
+    //             let me = this;
+    //             if (this.motion.isComplete) {
+    //                 // return this.$store.dispatch('getResults', {motion: this.motion, setfalse)
+    //                 //     .then(({passed, totalVotes}) => {
+    //                 //         return passed;
+    //                 //     });
+    //                 return new Promise(((resolve, reject) => {
+    //
+    //                     let url = routes.results.getResults(me.motion.id);
+    //
+    //                     return Vue.axios.get(url)
+    //                         .then((response) => {
+    //                             return resolve(response.data.passed);
+    //                         });
+    //                 }));
+    //             }
+    //         }
+    //
+    //     },
+    // },
 
     /**
      * Whether the motion that has been handed to this
@@ -11339,6 +11373,73 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/mixins/motionResultsMixin.js":
+/*!***************************************************!*\
+  !*** ./resources/js/mixins/motionResultsMixin.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+/**
+ * For any component that needs access to the results of
+ * a voted upon motion.
+ *
+ * Assumes that the component has a motion set at this.motion
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  asyncComputed: {
+    motionResult: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.$store.getters.getMotionResultObject(this.motion);
+        }
+      },
+      "default": null
+    },
+
+    /**
+     * Whether the motion passed.
+     * NB, this is set by the server separately from vote counts
+     */
+    isPassed: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.$store.getters.getMotionPassed(this.motion);
+        }
+      },
+      "default": null
+    },
+    totalVotes: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.$store.getters.getMotionTotalVoteCount(this.motion);
+        }
+      },
+      "default": null
+    },
+    nayCount: {
+      get: function get() {
+        if (!_.isUndefined(this.motionResult) && !_.isNull(this.motionResult)) {
+          return this.$store.getters.getMotionNayCount(this.motion);
+        }
+      },
+      "default": '',
+      watch: ['motionResult']
+    },
+    yayCount: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.$store.getters.getMotionYayCount(this.motion);
+        }
+      },
+      "default": null
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/mixins/motionStoreMixin.js":
 /*!*************************************************!*\
   !*** ./resources/js/mixins/motionStoreMixin.js ***!
@@ -11653,6 +11754,115 @@ var Candidate = /*#__PURE__*/function (_IModel) {
   }]);
 
   return Candidate;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/models/CandidateResult.js":
+/*!************************************************!*\
+  !*** ./resources/js/models/CandidateResult.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CandidateResult)
+/* harmony export */ });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * The results for one person running for one office.
+ *
+ */
+
+var CandidateResult = /*#__PURE__*/function (_IModel) {
+  _inherits(CandidateResult, _IModel);
+
+  var _super = _createSuper(CandidateResult);
+
+  function CandidateResult(_ref) {
+    var _this;
+
+    var _ref$motionId = _ref.motionId,
+        motionId = _ref$motionId === void 0 ? null : _ref$motionId,
+        _ref$candidateId = _ref.candidateId,
+        candidateId = _ref$candidateId === void 0 ? null : _ref$candidateId,
+        _ref$candidateName = _ref.candidateName,
+        candidateName = _ref$candidateName === void 0 ? null : _ref$candidateName,
+        _ref$voteCount = _ref.voteCount,
+        voteCount = _ref$voteCount === void 0 ? null : _ref$voteCount,
+        _ref$pctOfTotal = _ref.pctOfTotal,
+        pctOfTotal = _ref$pctOfTotal === void 0 ? null : _ref$pctOfTotal,
+        _ref$isWinner = _ref.isWinner,
+        isWinner = _ref$isWinner === void 0 ? null : _ref$isWinner,
+        _ref$isRunoffParticip = _ref.isRunoffParticipant,
+        isRunoffParticipant = _ref$isRunoffParticip === void 0 ? null : _ref$isRunoffParticip;
+
+    _classCallCheck(this, CandidateResult);
+
+    _this = _super.call(this);
+    _this.motionId = motionId;
+    _this.candidateId = candidateId;
+    _this.candidateName = candidateName;
+    _this.voteCount = voteCount;
+    _this.pctOfTotal = pctOfTotal;
+    _this.isWinner = isWinner;
+    _this.isRunoffParticipant = isRunoffParticipant;
+    return _this;
+  }
+
+  _createClass(CandidateResult, [{
+    key: "motion_id",
+    get: function get() {
+      return this.motionId;
+    }
+    /**
+     * Returns the vote share as a 2 digit integer
+     * @returns {number}
+     */
+
+  }, {
+    key: "voteShareAsPercentage",
+    get: function get() {
+      var s = this.pctOfTotal;
+      s = s * 100;
+      s = s.toFixed(2); // return s;
+
+      s = Number(s);
+      return s;
+    } //
+    // get isMajorityWinner(){
+    //     return this.pctOfTotal > 0.5;
+    // }
+
+  }]);
+
+  return CandidateResult;
 }(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
 
 
@@ -12111,6 +12321,99 @@ var Motion = /*#__PURE__*/function (_IModel) {
 
 /***/ }),
 
+/***/ "./resources/js/models/MotionResult.js":
+/*!*********************************************!*\
+  !*** ./resources/js/models/MotionResult.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MotionResult)
+/* harmony export */ });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * The results for one motion
+ *
+ * NB, the passed property is set by the server. It is not computed from the yays and nays.
+ * This is because we do not always want to expose the breakdown.
+ *
+ * Props:
+ *      motionId;
+ *      passed;
+ *      totalVotes;
+ *      nayCount;
+ *      yayCount;
+ */
+
+var MotionResult = /*#__PURE__*/function (_IModel) {
+  _inherits(MotionResult, _IModel);
+
+  var _super = _createSuper(MotionResult);
+
+  function MotionResult(_ref) {
+    var _this;
+
+    var _ref$motionId = _ref.motionId,
+        motionId = _ref$motionId === void 0 ? null : _ref$motionId,
+        _ref$passed = _ref.passed,
+        passed = _ref$passed === void 0 ? null : _ref$passed,
+        _ref$totalVotes = _ref.totalVotes,
+        totalVotes = _ref$totalVotes === void 0 ? null : _ref$totalVotes,
+        _ref$nayCount = _ref.nayCount,
+        nayCount = _ref$nayCount === void 0 ? null : _ref$nayCount,
+        _ref$yayCount = _ref.yayCount,
+        yayCount = _ref$yayCount === void 0 ? null : _ref$yayCount;
+
+    _classCallCheck(this, MotionResult);
+
+    _this = _super.call(this);
+    _this.motionId = motionId;
+    _this.passed = passed;
+    _this.totalVotes = totalVotes;
+    _this.nayCount = nayCount;
+    _this.yayCount = yayCount;
+    return _this;
+  }
+
+  _createClass(MotionResult, [{
+    key: "motion_id",
+    get: function get() {
+      return this.motionId;
+    }
+  }]);
+
+  return MotionResult;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Office.js":
 /*!***************************************!*\
   !*** ./resources/js/models/Office.js ***!
@@ -12544,115 +12847,6 @@ var PoolMember = /*#__PURE__*/function (_IModel) {
   }]);
 
   return PoolMember;
-}(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/models/Result.js":
-/*!***************************************!*\
-  !*** ./resources/js/models/Result.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Result)
-/* harmony export */ });
-/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-/**
- * The results for one person running for one office.
- *
- */
-
-var Result = /*#__PURE__*/function (_IModel) {
-  _inherits(Result, _IModel);
-
-  var _super = _createSuper(Result);
-
-  function Result(_ref) {
-    var _this;
-
-    var _ref$motionId = _ref.motionId,
-        motionId = _ref$motionId === void 0 ? null : _ref$motionId,
-        _ref$candidateId = _ref.candidateId,
-        candidateId = _ref$candidateId === void 0 ? null : _ref$candidateId,
-        _ref$candidateName = _ref.candidateName,
-        candidateName = _ref$candidateName === void 0 ? null : _ref$candidateName,
-        _ref$voteCount = _ref.voteCount,
-        voteCount = _ref$voteCount === void 0 ? null : _ref$voteCount,
-        _ref$pctOfTotal = _ref.pctOfTotal,
-        pctOfTotal = _ref$pctOfTotal === void 0 ? null : _ref$pctOfTotal,
-        _ref$isWinner = _ref.isWinner,
-        isWinner = _ref$isWinner === void 0 ? null : _ref$isWinner,
-        _ref$isRunoffParticip = _ref.isRunoffParticipant,
-        isRunoffParticipant = _ref$isRunoffParticip === void 0 ? null : _ref$isRunoffParticip;
-
-    _classCallCheck(this, Result);
-
-    _this = _super.call(this);
-    _this.motionId = motionId;
-    _this.candidateId = candidateId;
-    _this.candidateName = candidateName;
-    _this.voteCount = voteCount;
-    _this.pctOfTotal = pctOfTotal;
-    _this.isWinner = isWinner;
-    _this.isRunoffParticipant = isRunoffParticipant;
-    return _this;
-  }
-
-  _createClass(Result, [{
-    key: "motion_id",
-    get: function get() {
-      return this.motionId;
-    }
-    /**
-     * Returns the vote share as a 2 digit integer
-     * @returns {number}
-     */
-
-  }, {
-    key: "voteShareAsPercentage",
-    get: function get() {
-      var s = this.pctOfTotal;
-      s = s * 100;
-      s = s.toFixed(2); // return s;
-
-      s = Number(s);
-      return s;
-    } //
-    // get isMajorityWinner(){
-    //     return this.pctOfTotal > 0.5;
-    // }
-
-  }]);
-
-  return Result;
 }(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
 
 
@@ -13242,7 +13436,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Meeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Meeting */ "./resources/js/models/Meeting.js");
 /* harmony import */ var _models_Candidate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Candidate */ "./resources/js/models/Candidate.js");
 /* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
-/* harmony import */ var _models_Result__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/Result */ "./resources/js/models/Result.js");
+/* harmony import */ var _models_CandidateResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/CandidateResult */ "./resources/js/models/CandidateResult.js");
 /* harmony import */ var _models_Election__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/Election */ "./resources/js/models/Election.js");
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
@@ -13436,7 +13630,7 @@ var actions = {
     return new Promise(function (resolve, reject) {
       return Vue.axios.get(url).then(function (response) {
         _.forEach(response.data, function (d) {
-          var r = new _models_Result__WEBPACK_IMPORTED_MODULE_4__.default(d);
+          var r = new _models_CandidateResult__WEBPACK_IMPORTED_MODULE_4__.default(d);
           commit('addResults', r);
         });
 
@@ -14458,6 +14652,16 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Used by the chair to close the vote and prevent further casting of
+   * ballots
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
   endVotingOnMotion: function endVotingOnMotion(_ref5, motion) {
     var dispatch = _ref5.dispatch,
         commit = _ref5.commit,
@@ -14471,8 +14675,7 @@ var actions = {
         //also return a new version of the motion which was amended.
         //Otherwise, this will just be false
 
-        var superseding = response.data.superseding; //todo this means that the motion must be selected in order to end voting. That probably makes sense...
-
+        var superseding = response.data.superseding;
         dispatch('setMotion', motion);
         var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
           object: motion,
@@ -14485,6 +14688,7 @@ var actions = {
         //motion
 
         commit('setMotionProp', pl); //Handle swapping in the new motion if there was an amendment.
+        //todo This will be fixed in VOT-72
 
         if (superseding) {
           var original = getters.getMotionById(superseding.superseded_by); //remove that from the store (but don't delete from server!)
@@ -14494,15 +14698,79 @@ var actions = {
           var _motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
 
           commit('addMotionToStore', _motion);
-        } // let motion = new Motion(d);
-        // // let motion = new Motion(d.id, d.name, d.date);
-        // commit('addMotionToStore', motion);
-        // commit('setMotion', motion);
-
+        }
 
         resolve();
       });
     });
+  },
+
+  /**
+   * When the client is notified by the server that voting on the currently active
+   * motion has been ended, this removes the option to try to vote and
+   * initiates the loading of results.
+   *
+   */
+  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref6, endedMotion) {
+    var dispatch = _ref6.dispatch,
+        commit = _ref6.commit,
+        getters = _ref6.getters;
+    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    //This will be the updated motion we just sent to the server
+    //If the motion was an amendment, the server will
+    //also return a new version of the motion which was amended.
+    //Otherwise, this will just be false
+    return new Promise(function (resolve, reject) {
+      /* ----------------- Set the current motion as closed ------------ */
+      dispatch('markMotionComplete', endedMotion).then(function () {
+        /* ----------------- Load results and navigate to results card ------------ */
+
+        /* ----------------- Quietly create the revised main motion  ------------ */
+        //todo Check if successful and if amendment
+        //todo This will be fixed in VOT-72
+        dispatch('createNewMotionAfterSuccessfulAmendment', endedMotion); // //Handle swapping in the new motion if there was an amendment.
+        // if (supersedingMotion) {
+        //     let original = getters.getMotionById(supersedingMotion.superseded_by);
+        //     //remove that from the store (but don't delete from server!)
+        //     commit('deleteMotion', original);
+        //     //make a new motion and add it to the store (but not to the server)
+        //     let motion = new Motion(d);
+        //     commit('addMotionToStore', motion);
+        // }
+
+        resolve();
+      });
+    });
+  },
+
+  /**
+   * If an amendment passes, we need to quietly create a new main motion with the
+   * updated text.
+   *
+   * We do not set the new motion as active. That is the job of other actions.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param amendmentMotion
+   * @param supersedingMotion
+   */
+  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref7, amendmentMotion) {
+    var dispatch = _ref7.dispatch,
+        commit = _ref7.commit,
+        getters = _ref7.getters;
+    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    //todo This will be fixed in VOT-72
+    //Handle swapping in the new motion if there was an amendment.
+    if (supersedingMotion) {
+      var original = getters.getMotionById(supersedingMotion.superseded_by); //remove that from the store (but don't delete from server!)
+
+      commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
+
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
+      commit('addMotionToStore', motion);
+    }
   },
 
   /**
@@ -14516,10 +14784,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref6, motion) {
-    var dispatch = _ref6.dispatch,
-        commit = _ref6.commit,
-        getters = _ref6.getters;
+  loadMotion: function loadMotion(_ref8, motion) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit,
+        getters = _ref8.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource(motion.id);
@@ -14543,10 +14811,10 @@ var actions = {
    * @param meetingId
    * @returns {Promise<unknown>}
    */
-  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref7, meetingId) {
-    var dispatch = _ref7.dispatch,
-        commit = _ref7.commit,
-        getters = _ref7.getters;
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref9, meetingId) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
     window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -14564,10 +14832,10 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref8, meeting) {
-    var dispatch = _ref8.dispatch,
-        commit = _ref8.commit,
-        getters = _ref8.getters;
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref10, meeting) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     //we need this to determine whether election or regular
     // let meeting = getters.getMeetingById(meetingId);
     window.console.log('Loading motions for meeting ', meeting);
@@ -14600,10 +14868,10 @@ var actions = {
       });
     });
   },
-  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref9) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref11) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     window.console.log("Loading motion types and templates");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -14620,12 +14888,44 @@ var actions = {
       });
     });
   },
-  secondMotion: function secondMotion(_ref10, _ref11) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
-    var meetingId = _ref11.meetingId,
-        motionId = _ref11.motionId;
+
+  /**
+   * Sets the is_complete property on the provided motion
+   * to true and performs any other actions which are needed when
+   * we learn that voting has ended on a currently active motion
+   *
+   * This does not change the motion's status as the currently active motion.
+   * That, inter alia, the results tab to show results for the motion.
+   * It is up to other actions to change the now completed motion's status and
+   * set another as active.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param endedMotion
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
+  markMotionComplete: function markMotionComplete(_ref12, endedMotion) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
+    return new Promise(function (resolve, reject) {
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
+        object: endedMotion,
+        updateProp: 'isComplete',
+        updateVal: true
+      });
+      commit('setMotionProp', pl);
+      resolve();
+    });
+  },
+  secondMotion: function secondMotion(_ref13, _ref14) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
+    var meetingId = _ref14.meetingId,
+        motionId = _ref14.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.secondMotion(motionId);
@@ -14655,39 +14955,21 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref12, _ref13) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
-    var meetingId = _ref13.meetingId,
-        motionId = _ref13.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref15, _ref16) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
+    var meetingId = _ref16.meetingId,
+        motionId = _ref16.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.setCurrentMotion(meetingId, motionId);
       return Vue.axios.post(url).then(function (response) {
-        var motion = getters.getMotionById(motionId);
+        var motion = getters.getMotionById(motionId); //Commit is wrapped in another action to set the websocket handler
+
         dispatch('setMotion', motion).then(function () {
           return resolve();
-        }); //
-        // commit('setMotion', motion)
-        // window.console.log('currentMotion set', motion);
-        // let channel = `motions.${motion.id}`;
-        //     .listen("App\\Events\\MotionClosed", (e) => {
-        //         window.console.log('Received broadcast event 1', e);
-        //     })
-        //     .listen("MotionClosed", (e) => {
-        // //         window.console.log('Received broadcast event 2', e);
-        //     });
-        //
-        //
-        // let channel = `private-motions`;
-        //
-        // Echo.private(channel)
-        //     .listen("App\\Events\\MotionClosed", (e) => {
-        //         window.console.log('Received broadcast event ', e);
-        //     }).listen("MotionClosed", (e) => {
-        //     window.console.log('Received broadcast event 2', e);
-        // });
+        });
       });
     });
   },
@@ -14701,10 +14983,10 @@ var actions = {
    * @param getters
    * @param payload
    */
-  setMotion: function setMotion(_ref14, motion) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  setMotion: function setMotion(_ref17, motion) {
+    var dispatch = _ref17.dispatch,
+        commit = _ref17.commit,
+        getters = _ref17.getters;
     return new Promise(function (resolve, reject) {
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion); //Todo Handler
@@ -14727,10 +15009,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref15, payload) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
+  updateMotion: function updateMotion(_ref18, payload) {
+    var dispatch = _ref18.dispatch,
+        commit = _ref18.commit,
+        getters = _ref18.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -14946,34 +15228,120 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_1__);
-
-
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _models_MotionResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/MotionResult */ "./resources/js/models/MotionResult.js");
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 /**
  * Created by adam on 2020-07-30.
  */
 
+
+
+
+
+
+/**
+ * Utility. Can't use the object.utilities.getById since
+ * we need to look up by motion id
+ * @param storageArray
+ * @param motionId
+ * @returns {*}
+ */
+
+function getById(storageArray, motionId) {
+  // return function ( state, id ) {
+  var r = storageArray.filter(function (i) {
+    if (i.motionId === motionId) {
+      return i;
+    }
+  });
+  return r[0];
+}
+
+function createUpdatePayloadsFromResponse(resultObj, response) {
+  var out = [];
+
+  _.forEach(response.data, function (v, k) {
+    if (k !== 'motionId') {
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_5__.default.factory({
+        object: resultObj,
+        updateProp: k,
+        updateVal: v
+      });
+      out.push(pl);
+    }
+  });
+
+  return out;
+}
+
 var state = {
-  yayCount: null,
-  nayCount: null,
-  //this is separate since
-  //for some uses will not send vote
-  //totals to the client
-  totalVotes: null,
-  passed: null
+  motionResults: [] // yayCount: null,
+  // nayCount: null,
+  // //this is separate since
+  // //for some uses will not send vote
+  // //totals to the client
+  // totalVotes: null,
+  // passed: null
+
 };
 var mutations = {
-  setNayCount: function setNayCount(state, payload) {
-    Vue.set(state, 'nayCount', payload);
+  /**
+   * Stores a new motion result
+   * @param state
+   * @param resultObject
+   */
+  addMotionResultToStore: function addMotionResultToStore(state, resultObject) {
+    // window.console.log(resultObject);
+    var preExisting = getById(state.motionResults, resultObject.motionId);
+
+    if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(preExisting)) {
+      state.motionResults.push(resultObject);
+    }
   },
-  setYayCount: function setYayCount(state, payload) {
-    Vue.set(state, 'yayCount', payload);
+
+  /**
+   * Empties the list of results. Used when changing
+   * meetings / elections
+   * @param state
+   */
+  clearMotionResults: function clearMotionResults(state) {
+    state.motionResults = [];
   },
-  setPassed: function setPassed(state, payload) {
-    Vue.set(state, 'passed', payload);
+  deleteMotionResult: function deleteMotionResult(state, resultObject) {
+    _.remove(state.motionResults, function (result) {
+      return result.motionId === resultObject.motionId;
+    });
   },
-  setTotalVotes: function setTotalVotes(state, payload) {
-    Vue.set(state, 'totalVotes', payload);
-  }
+
+  /**
+   * Updates a property on the result object
+   * @param state
+   * @param prop
+   * @param val
+   */
+  setMotionResultProp: function setMotionResultProp(state, _ref) {
+    var object = _ref.object,
+        updateProp = _ref.updateProp,
+        updateVal = _ref.updateVal;
+    Vue.set(object, updateProp, updateVal);
+  } //
+  // setNayCount: (state, payload) => {
+  //     Vue.set(state, 'nayCount', payload);
+  // },
+  //
+  //
+  // setYayCount: (state, payload) => {
+  //     Vue.set(state, 'yayCount', payload);
+  // },
+  // setPassed: (state, payload) => {
+  //     Vue.set(state, 'passed', payload);
+  // },
+  // setTotalVotes: (state, payload) => {
+  //     Vue.set(state, 'totalVotes', payload);
+  // },
+
 };
 var actions = {
   /**
@@ -14984,48 +15352,161 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadCounts: function loadCounts(_ref, motion) {
-    var dispatch = _ref.dispatch,
-        commit = _ref.commit,
-        getters = _ref.getters;
-    return new Promise(function (resolve, reject) {
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.results.getCounts(motion.id);
-      return Vue.axios.get(url).then(function (response) {
-        var results = response.data;
-        commit('setYayCount', results.yayCount);
-        commit('setNayCount', results.nayCount);
-        resolve();
-      });
-    });
-  },
-  loadResults: function loadResults(_ref2, motion) {
+  loadMotionCounts: function loadMotionCounts(_ref2, motion) {
     var dispatch = _ref2.dispatch,
         commit = _ref2.commit,
         getters = _ref2.getters;
     return new Promise(function (resolve, reject) {
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.results.getResults(motion.id);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.results.getCounts(motion.id);
       return Vue.axios.get(url).then(function (response) {
-        var results = response.data;
-        commit('setPassed', results.passed);
-        commit('setTotalVotes', results.totalVotes);
+        var existing = getters.getMotionResultObject(motion);
+
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(existing)) {
+          //we update
+          _.forEach(createUpdatePayloadsFromResponse(existing, response), function (payload) {
+            commit('setMotionResultProp', payload);
+          });
+        } else {
+          var result = new _models_MotionResult__WEBPACK_IMPORTED_MODULE_4__.default(response.data);
+          commit('addMotionResultToStore', result);
+        } // let results = response.data;
+        // commit('setYayCount', results.yayCount);
+        // commit('setNayCount', results.nayCount);
+
+
         resolve();
       });
+    });
+  },
+
+  /**
+   * Loads whether the motion passed and it's total vote count from the server.
+   *
+   * Pass false to setGlobalState when loading the results for past motions.
+   *
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @param setGlobalState
+   * @returns {Promise<unknown>}
+   */
+  loadMotionResults: function loadMotionResults(_ref3, motion) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
+    return new Promise(function (resolve, reject) {
+      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.results.getResults(motion.id);
+      return Vue.axios.get(url).then(function (response) {
+        var existing = getters.getMotionResultObject(motion);
+
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(existing)) {
+          //we update
+          _.forEach(createUpdatePayloadsFromResponse(existing, response), function (payload) {
+            commit('setMotionResultProp', payload);
+          });
+        } else {
+          var result = new _models_MotionResult__WEBPACK_IMPORTED_MODULE_4__.default(response.data);
+          commit('addMotionResultToStore', result);
+        } // let results = response.data;
+        // commit('setPassed', results.passed);
+        // commit('setTotalVotes', results.totalVotes);
+
+
+        return resolve();
+      });
+    });
+  },
+
+  /**
+   * Used at start up to load results for all completed motions in the meeting.
+   *
+   * NB, only loads results. Does not load vote counts
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
+  loadResultsForAllMeetingMotions: function loadResultsForAllMeetingMotions(_ref4) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    return new Promise(function (resolve, reject) {
+      _.forEach(getters.getStoredMotions, function (motion) {
+        if (motion.isComplete) {
+          dispatch('loadMotionResults', motion);
+        }
+      }); //NB, not checking that all requests complete
+
+
+      resolve();
     });
   }
 };
 var getters = {
-  getNayCount: function getNayCount(state) {
-    return state.nayCount;
+  getMotionNayCount: function getMotionNayCount(state, getters) {
+    return function (motion) {
+      var obj = getters.getMotionResultObject(motion);
+
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(obj)) {
+        return obj.nayCount;
+      }
+    };
   },
-  getYayCount: function getYayCount(state) {
-    return state.yayCount;
+  getMotionYayCount: function getMotionYayCount(state, getters) {
+    return function (motion) {
+      var obj = getters.getMotionResultObject(motion);
+
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(obj)) {
+        return obj.yayCount;
+      }
+    };
   },
-  getPassed: function getPassed(state) {
-    return state.passed;
+  getMotionPassed: function getMotionPassed(state, getters) {
+    return function (motion) {
+      var obj = getters.getMotionResultObject(motion);
+
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(obj)) {
+        return obj.passed;
+      }
+    };
   },
-  getTotalVoteCount: function getTotalVoteCount(state) {
-    return state.totalVotes; // return state.yayCount + state.nayCount;
-  }
+  getMotionResultObject: function getMotionResultObject(state) {
+    return function (motion) {
+      var motionId = (0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_2__.idify)(motion);
+      return getById(state.motionResults, motionId);
+    };
+  },
+  getMotionTotalVoteCount: function getMotionTotalVoteCount(state, getters) {
+    return function (motion) {
+      var obj = getters.getMotionResultObject(motion);
+
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(obj)) {
+        return obj.totalVotes;
+      } //        return state.totalVotes;
+      // return state.yayCount + state.nayCount;
+
+    };
+  } // //--------------------- deprecated
+  // getNayCount: (state) => {
+  //     return state.nayCount;
+  // },
+  //
+  // getYayCount: (state) => {
+  //     return state.yayCount;
+  // },
+  //
+  // getPassed: (state) => {
+  //     return state.passed;
+  // },
+  // getTotalVoteCount: (state) => {
+  //     return state.totalVotes;
+  //     // return state.yayCount + state.nayCount;
+  // }
+
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   actions: actions,
@@ -15074,12 +15555,8 @@ var actions = {
             dispatch('loadMotionsForMeeting', meeting.id).then(function () {
               //get motions which have already been handled
               dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
-                dispatch('loadMotionTypesAndTemplates').then(function () {// dispatch('loadAllMeetings').then(function(){
-                  //
-                  //     return resolve();
-                  // });
-                  //
-                });
+                dispatch('loadResultsForAllMeetingMotions').then(function () {});
+                dispatch('loadMotionTypesAndTemplates').then(function () {});
               });
             });
           });

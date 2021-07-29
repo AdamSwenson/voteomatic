@@ -20,6 +20,30 @@ class ResultsController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Creates an array with the keys and values
+     * expected by the client.
+     *
+     * @param Motion $motion
+     */
+    public function makeResultsResponse(Motion $motion, $passed, $totalVotes){
+        return [
+          'motionId' => $motion->id,
+          'passed' => $passed,
+          'totalVotes' => $totalVotes
+        ];
+    }
+
+    public function makeCountsResponse(Motion $motion, $yayCount, $nayCount)
+    {
+        return [
+          'motionId' => $motion->id,
+          'yayCount' => $yayCount,
+          'nayCount' => $nayCount
+        ];
+
+    }
+
 
     public function devView(Motion $motion){
         return view('dev.dev-results', ['data' => ['motion' => $motion]]);
@@ -46,15 +70,16 @@ class ResultsController extends Controller
          * which defines the content, requirement, et cetera so
          * we don't need to send it again.
          */
-        $data = [
-//            'passed' => $motion->passed,
-//            /*
-//             */
-//            'totalVotes' => $motion->totalVotesCast
-        ];
-
-            $data['yayCount'] = count($motion->affirmativeVotes);
-            $data['nayCount'] = count($motion->negativeVotes);
+        $data = $this->makeCountsResponse($motion, count($motion->affirmativeVotes), count($motion->negativeVotes));
+//        $data = [
+////            'passed' => $motion->passed,
+////            /*
+////             */
+////            'totalVotes' => $motion->totalVotesCast
+//        ];
+//
+//            $data['yayCount'] = count($motion->affirmativeVotes);
+//            $data['nayCount'] = count($motion->negativeVotes);
 
         return Response::json($data);
 
@@ -82,12 +107,13 @@ class ResultsController extends Controller
          * which defines the content, requirement, et cetera so
          * we don't need to send it again.
          */
-        $data = [
-            'passed' => $motion->passed,
-            /*
-             */
-            'totalVotes' => $motion->totalVotesCast
-        ];
+        $data = $this->makeResultsResponse($motion, $motion->passed, $motion->totalVotes);
+//        $data = [
+//            'passed' => $motion->passed,
+//            /*
+//             */
+//            'totalVotes' => $motion->totalVotesCast
+//        ];
 
         return Response::json($data);
 

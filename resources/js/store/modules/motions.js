@@ -242,6 +242,15 @@ const actions = {
     },
 
 
+    /**
+     * Used by the chair to close the vote and prevent further casting of
+     * ballots
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
     endVotingOnMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             //send to server
@@ -256,7 +265,6 @@ const actions = {
                     //Otherwise, this will just be false
                     let superseding = response.data.superseding;
 
-                    //todo this means that the motion must be selected in order to end voting. That probably makes sense...
                     dispatch('setMotion', motion);
 
                     let pl = Payload.factory({
@@ -274,6 +282,7 @@ const actions = {
 
 
                     //Handle swapping in the new motion if there was an amendment.
+                    //todo This will be fixed in VOT-72
                     if (superseding) {
                         let original = getters.getMotionById(superseding.superseded_by);
                         //remove that from the store (but don't delete from server!)
@@ -284,17 +293,77 @@ const actions = {
 
                     }
 
-
-                    // let motion = new Motion(d);
-                    // // let motion = new Motion(d.id, d.name, d.date);
-                    // commit('addMotionToStore', motion);
-                    // commit('setMotion', motion);
                     resolve()
                 });
         }));
 
     },
 
+    /**
+     * When the client is notified by the server that voting on the currently active
+     * motion has been ended, this removes the option to try to vote and
+     * initiates the loading of results.
+     *
+     */
+    handleVotingEndedOnCurrentMotion({dispatch, commit, getters}, endedMotion, supersedingMotion = false) {
+        //This will be the updated motion we just sent to the server
+
+        //If the motion was an amendment, the server will
+        //also return a new version of the motion which was amended.
+        //Otherwise, this will just be false
+        return new Promise(((resolve, reject) => {
+            /* ----------------- Set the current motion as closed ------------ */
+            dispatch('markMotionComplete', endedMotion).then(() => {
+
+                /* ----------------- Load results and navigate to results card ------------ */
+
+
+                /* ----------------- Quietly create the revised main motion  ------------ */
+                //todo Check if successful and if amendment
+//todo This will be fixed in VOT-72
+                dispatch('createNewMotionAfterSuccessfulAmendment', endedMotion)
+                // //Handle swapping in the new motion if there was an amendment.
+                // if (supersedingMotion) {
+                //     let original = getters.getMotionById(supersedingMotion.superseded_by);
+                //     //remove that from the store (but don't delete from server!)
+                //     commit('deleteMotion', original);
+                //     //make a new motion and add it to the store (but not to the server)
+                //     let motion = new Motion(d);
+                //     commit('addMotionToStore', motion);
+                // }
+
+                resolve()
+            });
+
+        }));
+    },
+
+    /**
+     * If an amendment passes, we need to quietly create a new main motion with the
+     * updated text.
+     *
+     * We do not set the new motion as active. That is the job of other actions.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param amendmentMotion
+     * @param supersedingMotion
+     */
+    createNewMotionAfterSuccessfulAmendment({dispatch, commit, getters}, amendmentMotion, supersedingMotion = false) {
+        //todo This will be fixed in VOT-72
+
+        //Handle swapping in the new motion if there was an amendment.
+        if (supersedingMotion) {
+            let original = getters.getMotionById(supersedingMotion.superseded_by);
+            //remove that from the store (but don't delete from server!)
+            commit('deleteMotion', original);
+            //make a new motion and add it to the store (but not to the server)
+            let motion = new Motion(d);
+            commit('addMotionToStore', motion);
+        }
+
+    },
 
     /**
      * Gets the motion from the server
@@ -412,6 +481,37 @@ const actions = {
         }));
     },
 
+    /**
+     * Sets the is_complete property on the provided motion
+     * to true and performs any other actions which are needed when
+     * we learn that voting has ended on a currently active motion
+     *
+     * This does not change the motion's status as the currently active motion.
+     * That, inter alia, the results tab to show results for the motion.
+     * It is up to other actions to change the now completed motion's status and
+     * set another as active.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param endedMotion
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
+    markMotionComplete({dispatch, commit, getters}, endedMotion) {
+        return new Promise(((resolve, reject) => {
+            let pl = Payload.factory({
+                object: endedMotion,
+                updateProp: 'isComplete',
+                updateVal: true
+            });
+
+            commit('setMotionProp', pl);
+
+            resolve();
+        }));
+    },
+
     secondMotion({dispatch, commit, getters}, {meetingId, motionId}) {
         return new Promise(((resolve, reject) => {
             //send to server
@@ -455,34 +555,10 @@ const actions = {
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
 
+                    //Commit is wrapped in another action to set the websocket handler
                     dispatch('setMotion', motion).then(() => {
                         return resolve()
                     });
-
-                    //
-                    // commit('setMotion', motion)
-                    // window.console.log('currentMotion set', motion);
-
-                    // let channel = `motions.${motion.id}`;
-
-
-                    //     .listen("App\\Events\\MotionClosed", (e) => {
-                    //         window.console.log('Received broadcast event 1', e);
-                    //     })
-                    //     .listen("MotionClosed", (e) => {
-                    // //         window.console.log('Received broadcast event 2', e);
-                    //     });
-                    //
-                    //
-                    // let channel = `private-motions`;
-                    //
-                    // Echo.private(channel)
-                    //     .listen("App\\Events\\MotionClosed", (e) => {
-                    //         window.console.log('Received broadcast event ', e);
-                    //     }).listen("MotionClosed", (e) => {
-                    //     window.console.log('Received broadcast event 2', e);
-                    // });
-
 
                 });
         }));
