@@ -177,7 +177,6 @@ export default {
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
             console.log('Loading vote results', this.motion);
 
-
             me.$store.dispatch('loadMotionResults', me.motion).then(function () {
 
                 //todo if want to block from getting vote totals put the break here

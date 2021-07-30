@@ -36,12 +36,13 @@ import MeetingMixin from '../mixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
 import RefreshButton from "./navigation/refresh-button";
 import ChairIndicator from "./text-display/chair-indicator";
+import NavigationMixin from '../mixins/NavigationMixin';
 
 export default {
     name: "voteomatic",
     components: {ChairIndicator, RefreshButton, RouterTabs, VotePage},
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, NavigationMixin],
 
     data: function () {
         return {

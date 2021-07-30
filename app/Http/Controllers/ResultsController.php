@@ -107,7 +107,7 @@ class ResultsController extends Controller
          * which defines the content, requirement, et cetera so
          * we don't need to send it again.
          */
-        $data = $this->makeResultsResponse($motion, $motion->passed, $motion->totalVotes);
+        $data = $this->makeResultsResponse($motion, $motion->passed, $motion->totalVotesCast);
 //        $data = [
 //            'passed' => $motion->passed,
 //            /*

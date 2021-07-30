@@ -18,6 +18,7 @@ import elections from "./modules/elections";
 import meetings from './modules/meetings';
 import modes from "./modules/modes";
 import motions from './modules/motions';
+import navigation from "./modules/navigation";
 import startup from "./modules/startup";
 import results from "./modules/results";
 import votes from "./modules/votes";
@@ -56,6 +57,7 @@ export default new Vuex.Store({
         meetings,
         modes,
         motions,
+        navigation,
         results,
         startup,
         votes

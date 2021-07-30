@@ -316,10 +316,7 @@ const actions = {
             dispatch('markMotionComplete', endedMotion).then(() => {
 
                 /* ----------------- Load results and navigate to results card ------------ */
-// dispatch('loadMotionResults', endedMotion).then(() => {
-//
-// });
-                commit('setNavTrigger', true);
+                commit('setResultsNavTrigger', true);
 
                 /* ----------------- Quietly create the revised main motion  ------------ */
                 //todo Check if successful and if amendment

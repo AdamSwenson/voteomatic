@@ -41,23 +41,23 @@ module.exports = {
             },
             default: null
         },
-
-        /**
-         * Not actually used by a component.
-         * This watches the navTrigger value. When
-         * an incoming websocket message tells us that the vote is complete,
-         * this switches to the results tab. It then resets the navTrigger value
-         * so that the user can navigate away from results.
-         */
-        navTrigger: {
-          get : function(){
-            if(this.$store.getters.getNavTrigger === true){
-                this.$router.push('results');
-                this.$store.commit('setNavTrigger', false);
-            }
-          },
-          // watch :
-        },
+        //
+        // /**
+        //  * Not actually used by a component.
+        //  * This watches the navTrigger value. When
+        //  * an incoming websocket message tells us that the vote is complete,
+        //  * this switches to the results tab. It then resets the navTrigger value
+        //  * so that the user can navigate away from results.
+        //  */
+        // navTrigger: {
+        //   get : function(){
+        //     if(this.$store.getters.getNavTrigger === true){
+        //         this.$router.push('results');
+        //         this.$store.commit('setNavTrigger', false);
+        //     }
+        //   },
+        //   // watch :
+        // },
 
         nayCount: {
 

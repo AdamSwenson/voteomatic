@@ -51,8 +51,9 @@ const state = {
     // //totals to the client
     // totalVotes: null,
     // passed: null
-
-    navTrigger : false
+    //
+    // /** When set to true, a watcher will open the results tab*/
+    // navTrigger : false
 };
 
 const mutations = {
@@ -96,10 +97,10 @@ const mutations = {
         Vue.set(object, updateProp, updateVal);
     },
 
-
-    setNavTrigger : (state, value) => {
-    Vue.set(state, 'navTrigger', value);
-    },
+    //
+    // setNavTrigger : (state, value) => {
+    // Vue.set(state, 'navTrigger', value);
+    // },
 
     //
     // setNayCount: (state, payload) => {
@@ -262,9 +263,9 @@ const getters = {
         // return state.yayCount + state.nayCount;
     },
 
-    getNavTrigger : (state) => {
-    return state.navTrigger;
-    }
+    // getNavTrigger : (state) => {
+    // return state.navTrigger;
+    // }
     // //--------------------- deprecated
     // getNayCount: (state) => {
     //     return state.nayCount;

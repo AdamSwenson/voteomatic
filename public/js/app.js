@@ -10689,6 +10689,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navigation/router-tabs */ "./resources/js/components/navigation/router-tabs.vue");
 /* harmony import */ var _navigation_refresh_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./navigation/refresh-button */ "./resources/js/components/navigation/refresh-button.vue");
 /* harmony import */ var _text_display_chair_indicator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./text-display/chair-indicator */ "./resources/js/components/text-display/chair-indicator.vue");
+/* harmony import */ var _mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../mixins/NavigationMixin */ "./resources/js/mixins/NavigationMixin.js");
+/* harmony import */ var _mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -10725,6 +10727,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "voteomatic",
   components: {
@@ -10733,7 +10736,7 @@ __webpack_require__.r(__webpack_exports__);
     RouterTabs: _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__.default,
     VotePage: _main_vote_page__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default())],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6___default())],
   data: function data() {
     return {
       isReady: false,
@@ -11037,6 +11040,63 @@ module.exports = {
     openHomeTab: function openHomeTab() {
       this.$router.push('meeting-home');
     }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/NavigationMixin.js":
+/*!************************************************!*\
+  !*** ./resources/js/mixins/NavigationMixin.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/**
+ * For any component that needs access to the results of
+ * a voted upon motion.
+ *
+ * Assumes that the component has a motion set at this.motion
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  asyncComputed: {
+    /**
+     * Not actually used by a component.
+     * This watches the navTrigger value. When
+     * an incoming websocket message tells us that the vote is complete,
+     * this switches to the results tab. It then resets the navTrigger value
+     * so that the user can navigate away from results.
+     */
+    resultsNavTrigger: {
+      get: function get() {
+        if (this.$store.getters.getResultsNavTrigger === true) {
+          this.$router.push('results');
+          this.$store.commit('setResultsNavTrigger', false);
+        }
+      }
+    },
+
+    /**
+     * Not actually used by a component.
+     * This watches the navTrigger value. When
+     * an incoming websocket message tells us that a motion needs to be voted upon
+     * this switches to the vote tab. It then resets the navTrigger value
+     * so that the user can navigate away.
+     */
+    voteNavTrigger: {
+      get: function get() {
+        if (this.$store.getters.getVoteNavTrigger === true) {
+          this.$router.push('vote');
+          this.$store.commit('setVoteNavTrigger', false);
+        }
+      }
+    }
+  },
+  methods: {
+    forceNavigationToResultsTab: function forceNavigationToResultsTab() {// this.$store.commit()
+    },
+    forceNavigationToVoteTab: function forceNavigationToVoteTab() {}
   }
 };
 
@@ -11419,23 +11479,23 @@ module.exports = {
       },
       "default": null
     },
-
-    /**
-     * Not actually used by a component.
-     * This watches the navTrigger value. When
-     * an incoming websocket message tells us that the vote is complete,
-     * this switches to the results tab. It then resets the navTrigger value
-     * so that the user can navigate away from results.
-     */
-    navTrigger: {
-      get: function get() {
-        if (this.$store.getters.getNavTrigger === true) {
-          this.$router.push('results');
-          this.$store.commit('setNavTrigger', false);
-        }
-      } // watch :
-
-    },
+    //
+    // /**
+    //  * Not actually used by a component.
+    //  * This watches the navTrigger value. When
+    //  * an incoming websocket message tells us that the vote is complete,
+    //  * this switches to the results tab. It then resets the navTrigger value
+    //  * so that the user can navigate away from results.
+    //  */
+    // navTrigger: {
+    //   get : function(){
+    //     if(this.$store.getters.getNavTrigger === true){
+    //         this.$router.push('results');
+    //         this.$store.commit('setNavTrigger', false);
+    //     }
+    //   },
+    //   // watch :
+    // },
     nayCount: {
       get: function get() {
         if (!_.isUndefined(this.motionResult) && !_.isNull(this.motionResult)) {
@@ -13362,8 +13422,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
@@ -13376,9 +13436,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_meetings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/meetings */ "./resources/js/store/modules/meetings.js");
 /* harmony import */ var _modules_modes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/modes */ "./resources/js/store/modules/modes.js");
 /* harmony import */ var _modules_motions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/motions */ "./resources/js/store/modules/motions.js");
-/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
-/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
-/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
+/* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
+/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
+/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
+/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
 /**
  * Created by adam on 2020-07-13.
  */
@@ -13398,7 +13459,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_11__.default.use(vuex__WEBPACK_IMPORTED_MODULE_12__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_12__.default.use(vuex__WEBPACK_IMPORTED_MODULE_13__.default);
 /**
  * This subscribes the api package which
  * handles data exchange with the server
@@ -13408,7 +13470,7 @@ vue__WEBPACK_IMPORTED_MODULE_11__.default.use(vuex__WEBPACK_IMPORTED_MODULE_12__
 // import websocketPlugin from '../api/websocketPlugin';
 
 var debug = "development" !== 'production';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_12__.default.Store({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_13__.default.Store({
   strict: debug,
   //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
@@ -13428,9 +13490,10 @@ var debug = "development" !== 'production';
     meetings: _modules_meetings__WEBPACK_IMPORTED_MODULE_5__.default,
     modes: _modules_modes__WEBPACK_IMPORTED_MODULE_6__.default,
     motions: _modules_motions__WEBPACK_IMPORTED_MODULE_7__.default,
-    results: _modules_results__WEBPACK_IMPORTED_MODULE_9__.default,
-    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_8__.default,
-    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_10__.default
+    navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_8__.default,
+    results: _modules_results__WEBPACK_IMPORTED_MODULE_10__.default,
+    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_9__.default,
+    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_11__.default
   } // }
   // plugins: debug ? [createLogger()] : []
 
@@ -14742,10 +14805,7 @@ var actions = {
       /* ----------------- Set the current motion as closed ------------ */
       dispatch('markMotionComplete', endedMotion).then(function () {
         /* ----------------- Load results and navigate to results card ------------ */
-        // dispatch('loadMotionResults', endedMotion).then(() => {
-        //
-        // });
-        commit('setNavTrigger', true);
+        commit('setResultsNavTrigger', true);
         /* ----------------- Quietly create the revised main motion  ------------ */
         //todo Check if successful and if amendment
         //todo This will be fixed in VOT-72
@@ -15236,6 +15296,60 @@ var getters = {
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/navigation.js":
+/*!**************************************************!*\
+  !*** ./resources/js/store/modules/navigation.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var state = {
+  /** When set to true, a watcher will open the results tab*/
+  resultsNavTrigger: false,
+
+  /** When set to true, a watcher will open the vote tab*/
+  voteNavTrigger: false
+};
+var mutations = {
+  setResultsNavTrigger: function setResultsNavTrigger(state, value) {
+    Vue.set(state, 'resultsNavTrigger', value);
+  },
+  setVoteNavTrigger: function setVoteNavTrigger(state, value) {
+    Vue.set(state, 'voteNavTrigger', value);
+  }
+};
+var actions = {// forceNavigationToResults({dispatch, commit, getters}) {
+  //     return new Promise(((resolve, reject) => {
+  //
+  //     }));
+  // },
+  // forceNavigationVote({dispatch, commit, getters}) {
+  //     return new Promise(((resolve, reject) => {
+  //
+  //     }));
+  // },
+};
+var getters = {
+  getResultsNavTrigger: function getResultsNavTrigger(state) {
+    return state.resultsNavTrigger;
+  },
+  getVoteNavTrigger: function getVoteNavTrigger(state) {
+    return state.voteNavTrigger;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: actions,
+  getters: getters,
+  mutations: mutations,
+  state: state
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/results.js":
 /*!***********************************************!*\
   !*** ./resources/js/store/modules/results.js ***!
@@ -15299,15 +15413,17 @@ function createUpdatePayloadsFromResponse(resultObj, response) {
 }
 
 var state = {
-  motionResults: [],
-  // yayCount: null,
+  motionResults: [] // yayCount: null,
   // nayCount: null,
   // //this is separate since
   // //for some uses will not send vote
   // //totals to the client
   // totalVotes: null,
   // passed: null
-  navTrigger: false
+  //
+  // /** When set to true, a watcher will open the results tab*/
+  // navTrigger : false
+
 };
 var mutations = {
   /**
@@ -15349,10 +15465,11 @@ var mutations = {
         updateProp = _ref.updateProp,
         updateVal = _ref.updateVal;
     Vue.set(object, updateProp, updateVal);
-  },
-  setNavTrigger: function setNavTrigger(state, value) {
-    Vue.set(state, 'navTrigger', value);
   } //
+  // setNavTrigger : (state, value) => {
+  // Vue.set(state, 'navTrigger', value);
+  // },
+  //
   // setNayCount: (state, payload) => {
   //     Vue.set(state, 'nayCount', payload);
   // },
@@ -15516,10 +15633,10 @@ var getters = {
       // return state.yayCount + state.nayCount;
 
     };
-  },
-  getNavTrigger: function getNavTrigger(state) {
-    return state.navTrigger;
-  } // //--------------------- deprecated
+  } // getNavTrigger : (state) => {
+  // return state.navTrigger;
+  // }
+  // //--------------------- deprecated
   // getNayCount: (state) => {
   //     return state.nayCount;
   // },
