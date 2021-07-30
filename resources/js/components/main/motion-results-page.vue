@@ -221,6 +221,7 @@ export default {
 
     mounted: function () {
         // this.loadResults();
+        // this.$store.commit('setNavTrigger', false);
     }
 
 

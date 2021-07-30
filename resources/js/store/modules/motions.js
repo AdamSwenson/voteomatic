@@ -316,7 +316,10 @@ const actions = {
             dispatch('markMotionComplete', endedMotion).then(() => {
 
                 /* ----------------- Load results and navigate to results card ------------ */
-
+// dispatch('loadMotionResults', endedMotion).then(() => {
+//
+// });
+                commit('setNavTrigger', true);
 
                 /* ----------------- Quietly create the revised main motion  ------------ */
                 //todo Check if successful and if amendment
@@ -579,11 +582,10 @@ const actions = {
             commit('setMotion', motion)
             window.console.log('currentMotion set', motion);
 
-            //Todo Handler
-
             Echo.channel('motions')
                 .listen("MotionClosed", (e) => {
                     window.console.log('Received broadcast event motions', e);
+                    dispatch('handleVotingEndedOnCurrentMotion', motion);
                 });
 
             window.console.log('Websocket listener set for current motion');

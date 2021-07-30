@@ -51,6 +51,8 @@ const state = {
     // //totals to the client
     // totalVotes: null,
     // passed: null
+
+    navTrigger : false
 };
 
 const mutations = {
@@ -92,6 +94,11 @@ const mutations = {
      */
     setMotionResultProp: (state, {object, updateProp, updateVal}) => {
         Vue.set(object, updateProp, updateVal);
+    },
+
+
+    setNavTrigger : (state, value) => {
+    Vue.set(state, 'navTrigger', value);
     },
 
     //
@@ -255,6 +262,9 @@ const getters = {
         // return state.yayCount + state.nayCount;
     },
 
+    getNavTrigger : (state) => {
+    return state.navTrigger;
+    }
     // //--------------------- deprecated
     // getNayCount: (state) => {
     //     return state.nayCount;

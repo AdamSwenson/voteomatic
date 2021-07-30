@@ -6110,6 +6110,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loadResults();
   },
   mounted: function mounted() {// this.loadResults();
+    // this.$store.commit('setNavTrigger', false);
   }
 });
 
@@ -11418,6 +11419,23 @@ module.exports = {
       },
       "default": null
     },
+
+    /**
+     * Not actually used by a component.
+     * This watches the navTrigger value. When
+     * an incoming websocket message tells us that the vote is complete,
+     * this switches to the results tab. It then resets the navTrigger value
+     * so that the user can navigate away from results.
+     */
+    navTrigger: {
+      get: function get() {
+        if (this.$store.getters.getNavTrigger === true) {
+          this.$router.push('results');
+          this.$store.commit('setNavTrigger', false);
+        }
+      } // watch :
+
+    },
     nayCount: {
       get: function get() {
         if (!_.isUndefined(this.motionResult) && !_.isNull(this.motionResult)) {
@@ -14724,10 +14742,14 @@ var actions = {
       /* ----------------- Set the current motion as closed ------------ */
       dispatch('markMotionComplete', endedMotion).then(function () {
         /* ----------------- Load results and navigate to results card ------------ */
-
+        // dispatch('loadMotionResults', endedMotion).then(() => {
+        //
+        // });
+        commit('setNavTrigger', true);
         /* ----------------- Quietly create the revised main motion  ------------ */
         //todo Check if successful and if amendment
         //todo This will be fixed in VOT-72
+
         dispatch('createNewMotionAfterSuccessfulAmendment', endedMotion); // //Handle swapping in the new motion if there was an amendment.
         // if (supersedingMotion) {
         //     let original = getters.getMotionById(supersedingMotion.superseded_by);
@@ -14989,10 +15011,10 @@ var actions = {
         getters = _ref17.getters;
     return new Promise(function (resolve, reject) {
       commit('setMotion', motion);
-      window.console.log('currentMotion set', motion); //Todo Handler
-
+      window.console.log('currentMotion set', motion);
       Echo.channel('motions').listen("MotionClosed", function (e) {
         window.console.log('Received broadcast event motions', e);
+        dispatch('handleVotingEndedOnCurrentMotion', motion);
       });
       window.console.log('Websocket listener set for current motion');
       return resolve();
@@ -15277,14 +15299,15 @@ function createUpdatePayloadsFromResponse(resultObj, response) {
 }
 
 var state = {
-  motionResults: [] // yayCount: null,
+  motionResults: [],
+  // yayCount: null,
   // nayCount: null,
   // //this is separate since
   // //for some uses will not send vote
   // //totals to the client
   // totalVotes: null,
   // passed: null
-
+  navTrigger: false
 };
 var mutations = {
   /**
@@ -15326,6 +15349,9 @@ var mutations = {
         updateProp = _ref.updateProp,
         updateVal = _ref.updateVal;
     Vue.set(object, updateProp, updateVal);
+  },
+  setNavTrigger: function setNavTrigger(state, value) {
+    Vue.set(state, 'navTrigger', value);
   } //
   // setNayCount: (state, payload) => {
   //     Vue.set(state, 'nayCount', payload);
@@ -15490,6 +15516,9 @@ var getters = {
       // return state.yayCount + state.nayCount;
 
     };
+  },
+  getNavTrigger: function getNavTrigger(state) {
+    return state.navTrigger;
   } // //--------------------- deprecated
   // getNayCount: (state) => {
   //     return state.nayCount;
