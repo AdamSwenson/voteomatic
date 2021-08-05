@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-Broadcast::channel('motions', function ($user, $motionId) {
 
-//Broadcast::channel('motions.{motionId}', function ($user, $motionId) {
-//    dd('stopped');
-    return true;
+Broadcast::channel('motions.{motionId}', function ($user, $motionId) {
+
     $motion = Motion::find($motionId);
     $meeting = $motion->meeting;
     return $meeting->isPartOfMeeting($user);
 });
+
+
 //Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //    return (int) $user->id === (int) $id;
 //});

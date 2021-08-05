@@ -15072,11 +15072,12 @@ var actions = {
     return new Promise(function (resolve, reject) {
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion);
-      Echo.channel('motions').listen("MotionClosed", function (e) {
+      var channel = "motions.".concat(motion.id);
+      Echo["private"](channel).listen("MotionClosed", function (e) {
         window.console.log('Received broadcast event motions', e);
         dispatch('handleVotingEndedOnCurrentMotion', motion);
       });
-      window.console.log('Websocket listener set for current motion');
+      window.console.log('Websocket listener set for current motion on channel ', channel);
       return resolve();
     });
   },

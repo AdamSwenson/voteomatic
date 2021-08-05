@@ -578,14 +578,14 @@ const actions = {
 
             commit('setMotion', motion)
             window.console.log('currentMotion set', motion);
-
-            Echo.channel('motions')
+let channel = `motions.${motion.id}`;
+            Echo.private(channel)
                 .listen("MotionClosed", (e) => {
                     window.console.log('Received broadcast event motions', e);
                     dispatch('handleVotingEndedOnCurrentMotion', motion);
                 });
 
-            window.console.log('Websocket listener set for current motion');
+            window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
         }));
     },
