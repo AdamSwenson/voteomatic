@@ -17,20 +17,33 @@ const mutations = {
         Vue.set(state, 'voteNavTrigger', value);
     },
 
+    /**
+     * Sets all nav triggers to false.
+     * This is used to avoid conflicts in where the user is forced to
+     * @param state
+     */
+    resetNavTriggers: (state) => {
+        state.resultsNavTrigger = false;
+        state.voteNavTrigger = false;
+    }
 
 };
 
 const actions = {
-    // forceNavigationToResults({dispatch, commit, getters}) {
-    //     return new Promise(((resolve, reject) => {
-    //
-    //     }));
-    // },
-    // forceNavigationVote({dispatch, commit, getters}) {
-    //     return new Promise(((resolve, reject) => {
-    //
-    //     }));
-    // },
+    forceNavigationToResults({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            commit('resetNavTriggers');
+            commit('setResultsNavTrigger', true);
+            resolve();
+        }));
+    },
+    forceNavigationToVote({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            commit('resetNavTriggers');
+            commit('setVoteNavTrigger', true);
+            resolve();
+        }));
+    },
 
 };
 

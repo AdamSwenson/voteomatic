@@ -7308,6 +7308,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _status_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./status-alert */ "./resources/js/components/messaging/status-alert.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "message-area",
+  components: {
+    StatusAlert: _status_alert__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  props: [],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    m: function m() {
+      return this.$store.getters.getMessages;
+    },
+    messages: {
+      get: function get() {
+        return this.$store.getters.getMessages;
+      },
+      watch: ['m']
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "status-alert",
+  props: ['message'],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    show: function show() {
+      //This is utterly ridiculous. But I can't figure
+      //out why vue won't remove this component when
+      //the message is removed from the list
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.message)) return false;
+      if (_.isNull(this.message)) return false;
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.messages)) return false;
+      var idx = this.messages.indexOf(this.message);
+      return idx > -1;
+    },
+    alertId: function alertId() {
+      return 'statusAlert' + this.message.id;
+    },
+    displayTime: function displayTime() {
+      return this.message.displayTime;
+    },
+    styling: function styling() {
+      return "alert-" + this.message.messageStyle;
+    },
+    messageText: function messageText() {
+      return this.message.messageText;
+    },
+    motionText: function motionText() {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.message.motion)) {
+        return this.message.motion.content;
+      }
+    },
+    messages: function messages() {
+      return this.$store.getters.getMessages;
+    }
+  },
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      this.$store.commit('removeFromMessageQueue', this.message);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js& ***!
@@ -7863,6 +8001,83 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _parents_js_controlled_modal_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parents/js-controlled-modal-parent */ "./resources/js/components/parents/js-controlled-modal-parent.vue");
+/* harmony import */ var _mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/motionSecondMixin */ "./resources/js/mixins/motionSecondMixin.js");
+/* harmony import */ var _mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "chair-motion-second-modal",
+  "extends": _parents_js_controlled_modal_parent__WEBPACK_IMPORTED_MODULE_0__.default,
+  mixins: [(_mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1___default())],
+  data: function data() {
+    return {
+      leftButtonStyling: "btn-danger",
+      rightButtonStyling: "btn-success",
+      modalId: "chairMotionSecondModal",
+      headerText: "It has been moved that",
+      rightButtonLabel: "Mark motion seconded",
+      leftButtonLabel: "Mark motion as dead"
+    };
+  },
+  asyncComputed: {
+    /**
+     * Controls whether the modal displays
+     * @returns {boolean}
+     */
+    showModal: {
+      get: function get() {
+        //Make sure it has loaded and has the value true
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.isMotionPendingSecond) && this.isMotionPendingSecond === true) {
+          // window.console.log('show');
+          this.openModal();
+          return true;
+        } else {
+          return false;
+        }
+      },
+      watch: ['isMotionPendingSecond']
+    },
+    bodyText: function bodyText() {
+      return "<p class=\"blockquote\">".concat(this.motionText, "</p>\n\n            <p class=\"second-instruction text-muted\">If the motion has been seconded outside of the app (e.g., verbally),\n            mark it as seconded. </p>\n            <p class=\"second-instruction text-muted\">If sufficient time has passed with no second, mark\n            the motion as dead.</p> ");
+    },
+    motionText: function motionText() {
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.motionPendingSecond) || !this.showModal) return '';
+      return this.motionPendingSecond.content;
+    }
+  },
+  computed: {},
+  methods: {
+    handleLeftClick: function handleLeftClick() {
+      //They have indicated the motion is dead
+      this.$store.dispatch('markNoSecondObtained', this.motionPendingSecond);
+      this.$store.dispatch('resetMotionPendingSecond');
+      this.closeModal();
+    },
+    handleRightClick: function handleRightClick() {
+      //They have clicked second
+      this.$store.dispatch('secondMotion', this.motionPendingSecond);
+      this.closeModal();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js& ***!
@@ -8060,6 +8275,245 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     endVoting: function endVoting() {
       this.$store.dispatch('endVotingOnMotion', this.motion);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "motion-in-order-modal",
+  props: [],
+  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    modalId: function modalId() {
+      return 'motionInOrderModal';
+    },
+    motion: function motion() {
+      return this.$store.getters.nextMotionNeedingApproval;
+    },
+    motionText: function motionText() {
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.motion)) return '';
+      return this.motion.content;
+    },
+    showModal: function showModal() {
+      if (this.isOrderAuthority && (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.motion)) {
+        $('#' + this.modalId).modal();
+        return true;
+      }
+    }
+  },
+  computed: {},
+  methods: {
+    handleApprove: function handleApprove() {
+      this.$store.dispatch('markMotionInOrder', this.motion);
+      $('#' + this.modalId).modal('hide');
+    },
+    handleReject: function handleReject() {
+      this.$store.dispatch('markMotionOutOfOrder', this.motion);
+      $('#' + this.modalId).modal('hide');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _parents_js_controlled_modal_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parents/js-controlled-modal-parent */ "./resources/js/components/parents/js-controlled-modal-parent.vue");
+/* harmony import */ var _mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/motionSecondMixin */ "./resources/js/mixins/motionSecondMixin.js");
+/* harmony import */ var _mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "motion-second-modal",
+  props: [],
+  "extends": _parents_js_controlled_modal_parent__WEBPACK_IMPORTED_MODULE_0__.default,
+  mixins: [(_mixins_motionSecondMixin__WEBPACK_IMPORTED_MODULE_1___default())],
+  data: function data() {
+    return {
+      leftButtonStyling: "btn-danger",
+      rightButtonStyling: "btn-success",
+      modalId: "motionSecondModal",
+      headerText: "It has been moved that",
+      rightButtonLabel: "I second this motion",
+      leftButtonLabel: "Dismiss"
+    };
+  },
+  asyncComputed: {
+    /**
+     * Controls whether the modal displays
+     * @returns {boolean}
+     */
+    showModal: {
+      get: function get() {
+        //Make sure it has loaded and has the value true
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.isMotionPendingSecond) && this.isMotionPendingSecond === true) {
+          // window.console.log('show');
+          this.openModal();
+          return true;
+        } else {
+          return false;
+        }
+      },
+      watch: ['isMotionPendingSecond']
+    },
+    bodyText: function bodyText() {
+      return "<p class=\"blockquote\">".concat(this.motionText, "</p>\n\n            <p class=\"second-instruction text-muted\">Seconding a motion implies that you\n                believe the motion to be worth discussing. It does not imply endorsement.</p>\n            ");
+    },
+    motionText: function motionText() {
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.motionPendingSecond) || !this.showModal) return '';
+      return this.motionPendingSecond.content;
+    }
+  },
+  computed: {},
+  methods: {
+    handleDismiss: function handleDismiss() {
+      this.$store.dispatch('resetMotionPendingSecond');
+    },
+    handleSecond: function handleSecond() {
+      this.$store.dispatch('secondMotion', this.motionPendingSecond);
+    },
+    handleLeftClick: function handleLeftClick() {
+      //They have clicked dismiss
+      this.handleDismiss();
+      this.closeModal();
+    },
+    handleRightClick: function handleRightClick() {
+      //They have clicked second
+      this.handleSecond();
+      this.closeModal();
     }
   }
 });
@@ -9201,6 +9655,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../routingMixin */ "./resources/js/components/routingMixin.js");
 /* harmony import */ var _routingMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_routingMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -9212,6 +9668,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -9233,26 +9690,53 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     makeMain: function makeMain() {
-      var me = this; //First we create and store a new motion from the
-      //provided template
-
-      var p = this.$store.dispatch('createMotion', me.meeting.id).then(function () {
-        // return new Promise(((resolve, reject) => {
-        _.forEach(me.template, function (v, k) {
-          // window.console.log('new notion', k, v);
-          var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_0__.default.factory({
-            updateProp: k,
-            updateVal: v
-          });
-          me.$store.dispatch('updateMotion', pl).then(function () {
-            //Finally we emit an event so the parent can
-            //change what fields are displayed if needed
-            me.$emit('motion-created');
-          });
-        });
-
-        me.openHomeTab(); // });
-      });
+      this.$store.dispatch('createMotionFromTemplate', this.template); // let me = this;
+      // // return new Promise(((resolve, reject) => {
+      //     //send to server
+      //     let url = routes.motions.resource();
+      //     let d = me.template;
+      //     d['meetingId'] = me.meeting.id;
+      //     // let p = {'meetingId': meetingId};
+      //     window.console.log('sending', d);
+      //
+      //     // let p = {'meetingId': meetingId};
+      // // window.console.log('sending', p);
+      // return Vue.axios.post(url, d)
+      //     .then((response) => {
+      //         let d = response.data;
+      //         //let them know the chair will need to approve
+      //         // alert('d');
+      //     });
+      //
+      //
+      //             //First we create and store a new motion from the
+      // //provided template
+      // let p = this.$store.dispatch('createMotion', me.meeting.id)
+      //     .then(function () {
+      //             // return new Promise(((resolve, reject) => {
+      //
+      //                 _.forEach(me.template, (v, k) => {
+      //                     // window.console.log('new notion', k, v);
+      //
+      //                     let pl = Payload.factory({
+      //                         updateProp: k,
+      //                         updateVal: v
+      //                     });
+      //
+      //                     me.$store.dispatch('updateMotion', pl)
+      //                         .then(function () {
+      //                             //Finally we emit an event so the parent can
+      //                             //change what fields are displayed if needed
+      //                             me.$emit('motion-created');
+      //
+      //                         });
+      //
+      //                 });
+      //
+      //
+      //         me.openHomeTab();
+      //             // });
+      //     });
     },
     makeSubsidiary: function makeSubsidiary() {
       var payload = {
@@ -10162,6 +10646,110 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "js-controlled-modal-parent",
+  props: [],
+  mixins: [],
+  data: function data() {
+    return {// leftButtonStyling: "",
+      // rightButtonStyling : "",
+      // modalId : '',
+      // headerText : "",
+      // rightButtonLabel : "",
+      // leftButtonLabel : ""
+    };
+  },
+  asyncComputed: {
+    bodyText: function bodyText() {}
+  },
+  computed: {
+    modalLabelId: function modalLabelId() {
+      return this.modalId + 'Label';
+    }
+  },
+  methods: {
+    closeModal: function closeModal() {
+      $('#' + this.modalId).modal('hide');
+    },
+    openModal: function openModal() {
+      window.console.log('showing ', this.modalId);
+      $('#' + this.modalId).modal();
+      $('#' + this.modalId).modal('show');
+    },
+    handleLeftClick: function handleLeftClick() {},
+    handleRightClick: function handleRightClick() {}
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=script&lang=js& ***!
@@ -10691,6 +11279,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _text_display_chair_indicator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./text-display/chair-indicator */ "./resources/js/components/text-display/chair-indicator.vue");
 /* harmony import */ var _mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../mixins/NavigationMixin */ "./resources/js/mixins/NavigationMixin.js");
 /* harmony import */ var _mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _motions_motion_second_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./motions/motion-second-modal */ "./resources/js/components/motions/motion-second-modal.vue");
+/* harmony import */ var _motions_motion_in_order_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./motions/motion-in-order-modal */ "./resources/js/components/motions/motion-in-order-modal.vue");
+/* harmony import */ var _motions_chair_motion_second_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./motions/chair-motion-second-modal */ "./resources/js/components/motions/chair-motion-second-modal.vue");
+/* harmony import */ var _messaging_message_area__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./messaging/message-area */ "./resources/js/components/messaging/message-area.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10728,15 +11327,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "voteomatic",
   components: {
+    MessageArea: _messaging_message_area__WEBPACK_IMPORTED_MODULE_11__.default,
+    ChairMotionSecondModal: _motions_chair_motion_second_modal__WEBPACK_IMPORTED_MODULE_10__.default,
+    MotionInOrderModal: _motions_motion_in_order_modal__WEBPACK_IMPORTED_MODULE_9__.default,
+    MotionSecondModal: _motions_motion_second_modal__WEBPACK_IMPORTED_MODULE_8__.default,
     ChairIndicator: _text_display_chair_indicator__WEBPACK_IMPORTED_MODULE_5__.default,
     RefreshButton: _navigation_refresh_button__WEBPACK_IMPORTED_MODULE_4__.default,
     RouterTabs: _navigation_router_tabs__WEBPACK_IMPORTED_MODULE_3__.default,
     VotePage: _main_vote_page__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6___default())],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_NavigationMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_7___default())],
   data: function data() {
     return {
       isReady: false,
@@ -11162,6 +11770,10 @@ module.exports = {
   asyncComputed: {
     isChair: function isChair() {
       return this.$store.getters.getIsAdmin;
+    },
+    isOrderAuthority: function isOrderAuthority() {
+      //this is distinct in case we want to authorize a parlimentarian
+      return this.isChair;
     }
   }
 };
@@ -11514,6 +12126,46 @@ module.exports = {
       "default": null
     }
   }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/motionSecondMixin.js":
+/*!**************************************************!*\
+  !*** ./resources/js/mixins/motionSecondMixin.js ***!
+  \**************************************************/
+/***/ ((module) => {
+
+/**
+ * For any component that needs access to the results of
+ * a voted upon motion.
+ *
+ * Assumes that the component has a motion set at this.motion
+ *
+ * @type {{computed: {}}}
+ */
+module.exports = {
+  asyncComputed: {
+    motionPendingSecond: {
+      get: function get() {
+        return this.$store.getters.getMotionPendingSecond;
+      },
+      watch: []
+    },
+
+    /**
+     * Returns true if a motion is awaiting someone to second it
+     * @returns {boolean}
+     */
+    isMotionPendingSecond: function isMotionPendingSecond() {
+      return !_.isUndefined(this.motionPendingSecond) && !_.isNull(this.motionPendingSecond);
+    }
+  } // methods : {
+  //     secondMotion : function(){
+  //
+  //     }
+  // }
+
 };
 
 /***/ }),
@@ -12215,6 +12867,117 @@ var Meeting = /*#__PURE__*/function (_IModel) {
 
 
 ;
+
+/***/ }),
+
+/***/ "./resources/js/models/Message.js":
+/*!****************************************!*\
+  !*** ./resources/js/models/Message.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Message)
+/* harmony export */ });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Message = /*#__PURE__*/function (_IModel) {
+  _inherits(Message, _IModel);
+
+  var _super = _createSuper(Message);
+
+  function Message(_ref) {
+    var _this;
+
+    var _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id,
+        _ref$messageText = _ref.messageText,
+        messageText = _ref$messageText === void 0 ? null : _ref$messageText,
+        _ref$messageStyle = _ref.messageStyle,
+        messageStyle = _ref$messageStyle === void 0 ? null : _ref$messageStyle,
+        _ref$displayTime = _ref.displayTime,
+        displayTime = _ref$displayTime === void 0 ? 0 : _ref$displayTime,
+        _ref$motion = _ref.motion,
+        motion = _ref$motion === void 0 ? null : _ref$motion;
+
+    _classCallCheck(this, Message);
+
+    _this = _super.call(this);
+    _this.id = id;
+    _this.messageText = messageText;
+    _this.messageStyle = messageStyle;
+    _this.displayTime = displayTime;
+    _this.motion = motion;
+    return _this;
+  }
+
+  _createClass(Message, null, [{
+    key: "templates",
+    get: function get() {
+      return [{
+        id: 1,
+        name: 'pendingApproval',
+        messageText: "The Chair has been asked to verify that your motion is in order.",
+        messageStyle: 'primary',
+        displayTime: 2000
+      }, {
+        id: 2,
+        name: 'notApproved',
+        messageText: "The Chair has ruled that this motion is out of order.",
+        messageStyle: 'danger',
+        displayTime: 20000
+      }, {
+        id: 3,
+        name: 'noSecond',
+        messageText: "The proposed motion did not receive a second.",
+        messageStyle: 'warning',
+        displayTime: 0
+      }];
+    }
+  }, {
+    key: "makeFromTemplate",
+    value: function makeFromTemplate(name) {
+      var motion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      var m = _.filter(Message.templates, function (t) {
+        return t.name === name;
+      });
+
+      m = m[0];
+      m['motion'] = motion;
+      return new Message(m);
+    }
+  }]);
+
+  return Message;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
+
+
 
 /***/ }),
 
@@ -13105,7 +13868,8 @@ var routes = [{
     main: _components_main_ballot_setup_card__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: true,
-  adminOnly: true
+  // adminOnly: true,
+  adminOnly: false
 }, {
   name: 'setup',
   path: '/setup',
@@ -13367,6 +14131,12 @@ module.exports = {
     secondMotion: function secondMotion(motionId) {
       return normalizedRouteRoot() + 'motions/second/' + motionId;
     },
+    inOrder: function inOrder(motionId) {
+      return normalizedRouteRoot() + 'motions/order/good/' + motionId;
+    },
+    outOfOrder: function outOfOrder(motionId) {
+      return normalizedRouteRoot() + 'motions/order/bad/' + motionId;
+    },
     templates: function templates() {
       return normalizedRouteRoot() + 'motions/templates';
     },
@@ -13422,8 +14192,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
@@ -13436,10 +14206,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_meetings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/meetings */ "./resources/js/store/modules/meetings.js");
 /* harmony import */ var _modules_modes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/modes */ "./resources/js/store/modules/modes.js");
 /* harmony import */ var _modules_motions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/motions */ "./resources/js/store/modules/motions.js");
-/* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
-/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
-/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
-/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
+/* harmony import */ var _modules_messages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/messages */ "./resources/js/store/modules/messages.js");
+/* harmony import */ var _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/provisionalMotions */ "./resources/js/store/modules/provisionalMotions.js");
+/* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
+/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
+/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
+/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
 /**
  * Created by adam on 2020-07-13.
  */
@@ -13460,7 +14232,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_12__.default.use(vuex__WEBPACK_IMPORTED_MODULE_13__.default);
+
+
+vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__.default);
 /**
  * This subscribes the api package which
  * handles data exchange with the server
@@ -13470,7 +14244,7 @@ vue__WEBPACK_IMPORTED_MODULE_12__.default.use(vuex__WEBPACK_IMPORTED_MODULE_13__
 // import websocketPlugin from '../api/websocketPlugin';
 
 var debug = "development" !== 'production';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_13__.default.Store({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
   strict: debug,
   //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
@@ -13488,12 +14262,14 @@ var debug = "development" !== 'production';
   modules: {
     elections: _modules_elections__WEBPACK_IMPORTED_MODULE_4__.default,
     meetings: _modules_meetings__WEBPACK_IMPORTED_MODULE_5__.default,
+    messages: _modules_messages__WEBPACK_IMPORTED_MODULE_8__.default,
     modes: _modules_modes__WEBPACK_IMPORTED_MODULE_6__.default,
     motions: _modules_motions__WEBPACK_IMPORTED_MODULE_7__.default,
-    navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_8__.default,
-    results: _modules_results__WEBPACK_IMPORTED_MODULE_10__.default,
-    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_9__.default,
-    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_11__.default
+    navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_10__.default,
+    provisionalMotions: _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_9__.default,
+    results: _modules_results__WEBPACK_IMPORTED_MODULE_12__.default,
+    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_11__.default,
+    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_13__.default
   } // }
   // plugins: debug ? [createLogger()] : []
 
@@ -14294,6 +15070,139 @@ var getters = {
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/messages.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/modules/messages.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var state = {
+  //
+  // messageText: '',
+  //
+  // messageStyle: '',
+  //
+  // displayTime: 0,
+  //
+  // showMessage: false,
+  messageQueue: [] //things: []
+
+};
+var mutations = {
+  // setMessageText: (state, text) => {
+  //     state.messageText = text;
+  // },
+  //
+  // resetMessage: (state) => {
+  //     state.messageText = '';
+  //     state.messageStyle = '';
+  //     state.displayTime = 0;
+  //     state.showMessage = false;
+  // },
+  //
+  // setMessageStyle: (state, style) => {
+  //     state.messageStyle = style;
+  // },
+  addToMessageQueue: function addToMessageQueue(state, messageObject) {
+    state.messageQueue.push(messageObject);
+  },
+  removeFromMessageQueue: function removeFromMessageQueue(state, messageObject) {
+    window.console.log('removing', messageObject);
+    state.messageQueue.splice(state.messageQueue.indexOf(messageObject));
+
+    _.remove(state.messageQueue, function (obj) {
+      return obj.id === messageObject.id;
+    });
+  },
+  clearMessageQueue: function clearMessageQueue(state) {
+    state.messageQueue = [];
+  }
+  /*
+  *   addThing: (state, thing) => {
+  *        state.things.push(thing);
+  *    }
+  */
+
+};
+var actions = {
+  showMessage: function showMessage(_ref, messageObject) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      commit('addToMessageQueue', messageObject);
+
+      if (messageObject.displayTime > 0) {
+        //set a timer and automatically remove
+        window.console.log('setting timed message for ', messageObject.displayTime);
+        setTimeout(function () {
+          window.console.log('message complete', messageObject);
+          commit('removeFromMessageQueue', messageObject);
+        }, messageObject.displayTime);
+      }
+    });
+  } // showMessage({dispatch, commit, getters}, {messageText, messageStyle, displayTime}) {
+  //     return new Promise(((resolve, reject) => {
+  //         commit('setMessageText', messageText);
+  //         commit('setMessageStyle', messageStyle);
+  //         commit('setDisplayTime', displayTime);
+  //
+  //         if(getters.getDisplayTime)
+  //
+  //     }));
+  // },
+
+  /*
+  *    doThing({dispatch, commit, getters}, thingParam) {
+  *        return new Promise(((resolve, reject) => {
+  *        }));
+  *    },
+  */
+
+};
+/**
+ *
+ *    getThingViaId: (state) => (thingId) => {
+ *        return state.things.filter(function (c) {
+ *            return c.thing_id === thingId;
+ *        })
+ *    },
+ *
+ *
+ *    getThing: (state, getters) => {}
+ */
+
+var getters = {
+  // getMessageText: (state) => {
+  //     return state.messageText;
+  // },
+  // getMessageStyle: (state) => {
+  //     return state.messageStyle;
+  // },
+  // getDisplayTime: (state) => {
+  //     return state.displayTime;
+  // },
+  // getShowMessage: (state) => {
+  //     state.showMessage;
+  // },
+  getMessages: function getMessages(state) {
+    return state.messageQueue;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: actions,
+  getters: getters,
+  mutations: mutations,
+  state: state
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/modes.js":
 /*!*********************************************!*\
   !*** ./resources/js/store/modules/modes.js ***!
@@ -14508,13 +15417,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _models_Office__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/Office */ "./resources/js/models/Office.js");
-/* harmony import */ var _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/BallotObjectFactory */ "./resources/js/models/BallotObjectFactory.js");
-/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+/* harmony import */ var _models_Message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Message */ "./resources/js/models/Message.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _models_Office__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/Office */ "./resources/js/models/Office.js");
+/* harmony import */ var _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/BallotObjectFactory */ "./resources/js/models/BallotObjectFactory.js");
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+
 
 
 
@@ -14649,27 +15560,101 @@ var mutations = {
   }
 };
 var actions = {
+  createMotionFromTemplate: function createMotionFromTemplate(_ref2, template) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      var meeting = getters.getActiveMeeting; //send to server
+
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
+      var d = template;
+      d['meetingId'] = meeting.id; // let p = {'meetingId': meetingId};
+      // window.console.log('sending', d);
+
+      return Vue.axios.post(url, d).then(function (response) {
+        var d = response.data;
+        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); // window.console.log(statusMessage);
+
+        dispatch('showMessage', statusMessage); // commit('addToMessageQueue', statusMessage);
+
+        resolve(); //let them know the chair will need to approve
+        // alert('d');
+      });
+    });
+  },
+  //
+
   /**
    * Create a new motion on the server and set
-   * it as the current motion
+   * it as the current motion.
+   *
+   * This is used by the regular member. It does not set the current motion
+   * since a member making a motion will need it to be approved and seconded.
    *
    * @param dispatch
    * @param commit
    * @param getters
    * @returns {Promise<unknown>}
    */
-  createMotion: function createMotion(_ref2, meetingId) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  createMotion: function createMotion(_ref3, meetingId) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
+    var me = this;
+    return new Promise(function (resolve, reject) {
+      window.console.log('creating');
+      var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval');
+      window.console.log(statusMessage);
+      commit('addToMessageQueue', statusMessage); //send to server
+
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
+      var p = {
+        'meetingId': meetingId
+      }; // window.console.log('sending', p);
+
+      return Vue.axios.post(url, p).then(function (response) {
+        resolve(); // let d = response.data;
+        //
+        // let motion = new Motion(d);
+        // // let motion = new Motion(d.id, d.name, d.date);
+        // commit('addMotionToStore', motion);
+        //
+        // let pl = {meetingId: meetingId, motionId: motion.id};
+        //
+        // return dispatch('setCurrentMotion', pl)
+        //     .then(() => {
+        //         return resolve(motion);
+        //     });
+        //
+        // // commit('setMotion', motion);
+      });
+    });
+  },
+
+  /**
+   * Create a new motion on the server and set
+   * it as the current motion
+   *
+   * dev This probably won't end up being used. Keeping the set current motion logic for now
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
+  createMotionByChair: function createMotionByChair(_ref4, meetingId) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
     var me = this;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource();
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
       var p = {
         'meetingId': meetingId
-      };
-      window.console.log('sending', p);
+      }; // window.console.log('sending', p);
+
       return Vue.axios.post(url, p).then(function (response) {
         var d = response.data;
         var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
@@ -14685,14 +15670,14 @@ var actions = {
       });
     });
   },
-  createSubsidiaryMotion: function createSubsidiaryMotion(_ref3, payload) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
+  createSubsidiaryMotion: function createSubsidiaryMotion(_ref5, payload) {
+    var dispatch = _ref5.dispatch,
+        commit = _ref5.commit,
+        getters = _ref5.getters;
     var me = this;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource();
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
       window.console.log('sending', payload);
       return Vue.axios.post(url, payload).then(function (response) {
         var d = response.data;
@@ -14709,13 +15694,13 @@ var actions = {
       });
     });
   },
-  deleteMotion: function deleteMotion(_ref4, motion) {
-    var dispatch = _ref4.dispatch,
-        commit = _ref4.commit,
-        getters = _ref4.getters;
+  deleteMotion: function deleteMotion(_ref6, motion) {
+    var dispatch = _ref6.dispatch,
+        commit = _ref6.commit,
+        getters = _ref6.getters;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource(motion.id);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
       return Vue.axios["delete"](url).then(function (response) {
         var d = response.data; //remove it from the list of motions
 
@@ -14743,13 +15728,13 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  endVotingOnMotion: function endVotingOnMotion(_ref5, motion) {
-    var dispatch = _ref5.dispatch,
-        commit = _ref5.commit,
-        getters = _ref5.getters;
+  endVotingOnMotion: function endVotingOnMotion(_ref7, motion) {
+    var dispatch = _ref7.dispatch,
+        commit = _ref7.commit,
+        getters = _ref7.getters;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.endVoting(motion.id);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.endVoting(motion.id);
       return Vue.axios.post(url).then(function (response) {
         //This will be the updated motion we just sent to the server
         var endedMotion = response.data.ended; //If the motion was an amendment, the server will
@@ -14758,7 +15743,7 @@ var actions = {
 
         var superseding = response.data.superseding;
         dispatch('setMotion', motion);
-        var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
+        var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
           object: motion,
           updateProp: 'isComplete',
           updateVal: endedMotion.is_complete
@@ -14786,16 +15771,36 @@ var actions = {
     });
   },
 
+  /** When a new motion has been created and seconded,
+   * this sets the motion as the current motion and navigates to the
+   * voting tab
+   * */
+  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref8, pusherEvent) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit,
+        getters = _ref8.getters;
+    return new Promise(function (resolve, reject) {
+      dispatch('resetMotionPendingSecond');
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
+      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
+
+      return dispatch('setMotion', motion).then(function () {
+        dispatch('forceNavigationToVote');
+        return resolve(motion);
+      });
+    });
+  },
+
   /**
    * When the client is notified by the server that voting on the currently active
    * motion has been ended, this removes the option to try to vote and
    * initiates the loading of results.
    *
    */
-  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref6, endedMotion) {
-    var dispatch = _ref6.dispatch,
-        commit = _ref6.commit,
-        getters = _ref6.getters;
+  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref9, endedMotion) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     //This will be the updated motion we just sent to the server
     //If the motion was an amendment, the server will
@@ -14805,7 +15810,8 @@ var actions = {
       /* ----------------- Set the current motion as closed ------------ */
       dispatch('markMotionComplete', endedMotion).then(function () {
         /* ----------------- Load results and navigate to results card ------------ */
-        commit('setResultsNavTrigger', true);
+        // commit('setResultsNavTrigger', true);
+        dispatch('forceNavigationToResults');
         /* ----------------- Quietly create the revised main motion  ------------ */
         //todo Check if successful and if amendment
         //todo This will be fixed in VOT-72
@@ -14837,10 +15843,10 @@ var actions = {
    * @param amendmentMotion
    * @param supersedingMotion
    */
-  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref7, amendmentMotion) {
-    var dispatch = _ref7.dispatch,
-        commit = _ref7.commit,
-        getters = _ref7.getters;
+  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref10, amendmentMotion) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     //todo This will be fixed in VOT-72
@@ -14866,13 +15872,13 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref8, motion) {
-    var dispatch = _ref8.dispatch,
-        commit = _ref8.commit,
-        getters = _ref8.getters;
+  loadMotion: function loadMotion(_ref11, motion) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource(motion.id);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
       return Vue.axios.get(url).then(function (response) {
         var d = response.data;
         var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
@@ -14893,14 +15899,14 @@ var actions = {
    * @param meetingId
    * @returns {Promise<unknown>}
    */
-  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref9, meetingId) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref12, meetingId) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
     window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.castVotes.getVotedMotions(meetingId);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.castVotes.getVotedMotions(meetingId);
       return Vue.axios.get(url).then(function (response) {
         _.forEach(response.data, function (d) {
           // todo or should we be storing ids? need to decide how best to do comparisons
@@ -14914,16 +15920,16 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref10, meeting) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref13, meeting) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
     //we need this to determine whether election or regular
     // let meeting = getters.getMeetingById(meetingId);
     window.console.log('Loading motions for meeting ', meeting);
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.getAllMotionsForMeeting((0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_6__.idify)(meeting));
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.getAllMotionsForMeeting((0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_7__.idify)(meeting));
       return Vue.axios.get(url).then(function (response) {
         //Need to do this so that we don't have to
         //check motions for their meetings every time
@@ -14931,7 +15937,7 @@ var actions = {
         commit('clearMotions');
 
         _.forEach(response.data, function (d) {
-          var m = _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_5__.default.make(d, meeting); // let m = null;
+          var m = _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_6__.default.make(d, meeting); // let m = null;
           // if(isReadyToRock(meeting.is_election) && meeting.is_election){
           //      m= new Office(d);
           // }else{
@@ -14950,17 +15956,17 @@ var actions = {
       });
     });
   },
-  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref11) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref14) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     window.console.log("Loading motion types and templates");
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.templates();
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.templates();
       return Vue.axios.get(url).then(function (response) {
         commit('setMotionTemplates', response.data);
-        var url2 = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.types();
+        var url2 = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.types();
         return Vue.axios.get(url2).then(function (response) {
           //todo Figure out easiest way to use loaded types. If not easy, then ignore. The point is to make it easier to keep definitions on client and server in sync.
           // Motion.prototype.amendmentNames = response.data.amendment;
@@ -14988,12 +15994,12 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  markMotionComplete: function markMotionComplete(_ref12, endedMotion) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
+  markMotionComplete: function markMotionComplete(_ref15, endedMotion) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     return new Promise(function (resolve, reject) {
-      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         object: endedMotion,
         updateProp: 'isComplete',
         updateVal: true
@@ -15002,30 +16008,74 @@ var actions = {
       resolve();
     });
   },
-  secondMotion: function secondMotion(_ref13, _ref14) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
-    var meetingId = _ref14.meetingId,
-        motionId = _ref14.motionId;
-    return new Promise(function (resolve, reject) {
-      //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.secondMotion(motionId);
-      return Vue.axios.post(url).then(function (response) {
-        //this assumes the motion being seconded is the current motion.
-        //that should be normally the case except for high
-        //precedence motions which can be made while something
-        //else is waiting for a second. Those will be very
-        //rare cases.
-        var pl = (0,_models_Payload__WEBPACK_IMPORTED_MODULE_2__.default)({
-          updateProp: 'seconded',
-          updateVal: response.data.seconded
-        });
-        commit('setMotionProp', pl);
-        return resolve();
-      });
-    });
-  },
+  // markMotionInOrder({dispatch, commit, getters}, motion) {
+  //     return new Promise(((resolve, reject) => {
+  //         let url = routes.motions.inOrder(motion.id);
+  //         return Vue.axios.post(url)
+  //             .then((response) => {
+  //                 resolve();
+  //             });
+  //     }));
+  // },
+  //
+  //
+  // markMotionOutOfOrder({dispatch, commit, getters}, motion) {
+  //     return new Promise(((resolve, reject) => {
+  //         let url = routes.motions.outOfOrder(motion.id);
+  //         return Vue.axios.post(url)
+  //             .then((response) => {
+  //                 resolve();
+  //             });
+  //     }));
+  // },
+  //
+  //
+  // /**
+  //  * Removes a motion seeking a second and resets to null
+  //  * @param dispatch
+  //  * @param commit
+  //  * @param getters
+  //  * @returns {Promise<unknown>}
+  //  */
+  // resetMotionPendingSecond({dispatch, commit, getters}) {
+  //     return new Promise(((resolve, reject) => {
+  //         commit('setMotionPendingSecond', null);
+  //         resolve();
+  //     }));
+  // },
+  //
+  // /**
+  //  * Tells server that motion has been seconded
+  //  * @param dispatch
+  //  * @param commit
+  //  * @param getters
+  //  * @param meetingId
+  //  * @param motionId
+  //  * @returns {Promise<unknown>}
+  //  */
+  // secondMotion({dispatch, commit, getters}, motion) {
+  //     return new Promise(((resolve, reject) => {
+  //         //send to server
+  //         let url = routes.motions.secondMotion(motion.id);
+  //         return Vue.axios.post(url)
+  //             .then((response) => {
+  //                 // //this assumes the motion being seconded is the current motion.
+  //                 // //that should be normally the case except for high
+  //                 // //precedence motions which can be made while something
+  //                 // //else is waiting for a second. Those will be very
+  //                 // //rare cases.
+  //                 // let pl = Payload(
+  //                 //     {
+  //                 //         updateProp: 'seconded',
+  //                 //         updateVal: response.data.seconded
+  //                 //     });
+  //                 // commit('setMotionProp', pl);
+  //
+  //                 return resolve();
+  //
+  //             });
+  //     }));
+  // },
 
   /**
    * Sets the motion as the current one on the server
@@ -15037,15 +16087,15 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref15, _ref16) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
-    var meetingId = _ref16.meetingId,
-        motionId = _ref16.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref16, _ref17) {
+    var dispatch = _ref16.dispatch,
+        commit = _ref16.commit,
+        getters = _ref16.getters;
+    var meetingId = _ref17.meetingId,
+        motionId = _ref17.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.setCurrentMotion(meetingId, motionId);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.setCurrentMotion(meetingId, motionId);
       return Vue.axios.post(url).then(function (response) {
         var motion = getters.getMotionById(motionId); //Commit is wrapped in another action to set the websocket handler
 
@@ -15065,10 +16115,10 @@ var actions = {
    * @param getters
    * @param payload
    */
-  setMotion: function setMotion(_ref17, motion) {
-    var dispatch = _ref17.dispatch,
-        commit = _ref17.commit,
-        getters = _ref17.getters;
+  setMotion: function setMotion(_ref18, motion) {
+    var dispatch = _ref18.dispatch,
+        commit = _ref18.commit,
+        getters = _ref18.getters;
     return new Promise(function (resolve, reject) {
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion);
@@ -15076,11 +16126,44 @@ var actions = {
       Echo["private"](channel).listen("MotionClosed", function (e) {
         window.console.log('Received broadcast event motions', e);
         dispatch('handleVotingEndedOnCurrentMotion', motion);
-      });
+      }); // .listen("NewMotionCreated", (e) => {
+      //
+      //     window.console.log('Received broadcast event motions', e);
+      //     dispatch('handleNewMotionCreated', motion);
+      // })
+      //     .listen("MotionSeekingSecond", (e) => {
+      //         window.console.log('Received broadcast event motions', e);
+      //         dispatch('handleMotionSeekingSecond', motion);
+      //     })
+      //     .listen("MotionSeconded", (e) => {
+      //         window.console.log('Received broadcast event motions', e);
+      //         //Switches to the motion which has now been approved and seconded
+      //         dispatch('handleMotionSeconded', motion);
+      //     });
+      //
+      // if(getters.getIsAdmin){
+      //     let chairChannel = `chair.${motion.id}`;
+      //     Echo.private(chairChannel)
+      //         .listen('MotionNeedingApproval', (e) => {
+      //             window.console.log('Received chair broadcast', e);
+      //
+      //             dispatch('handleNewMotionCreated', motion);
+      //
+      //         });
+      //
+      // }
+
       window.console.log('Websocket listener set for current motion on channel ', channel);
       return resolve();
     });
   },
+  //
+  // setMotionPendingSecond({dispatch, commit, getters}, motion) {
+  //     return new Promise(((resolve, reject) => {
+  //         commit('setMotionPendingSecond', motion);
+  //         resolve();
+  //     }));
+  // },
 
   /**
    * Sends new field entries to server and
@@ -15092,10 +16175,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref18, payload) {
-    var dispatch = _ref18.dispatch,
-        commit = _ref18.commit,
-        getters = _ref18.getters;
+  updateMotion: function updateMotion(_ref19, payload) {
+    var dispatch = _ref19.dispatch,
+        commit = _ref19.commit,
+        getters = _ref19.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -15103,7 +16186,7 @@ var actions = {
       var motion = getters.getActiveMotion;
       window.console.log('updateMotion', payload, motion); //send to server
 
-      var url = _routes__WEBPACK_IMPORTED_MODULE_1__.motions.resource(motion.id);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
       return Vue.axios.post(url, {
         data: motion,
         _method: 'put'
@@ -15157,6 +16240,9 @@ var getters = {
   getMotions: function getMotions(state) {
     return state.motions;
   },
+  // getMotionPendingSecond: (state) => {
+  //     return state.motionPendingSecond;
+  // },
   getMotionsUserVotedUpon: function getMotionsUserVotedUpon(state) {
     var out = [];
 
@@ -15321,18 +16407,39 @@ var mutations = {
   },
   setVoteNavTrigger: function setVoteNavTrigger(state, value) {
     Vue.set(state, 'voteNavTrigger', value);
+  },
+
+  /**
+   * Sets all nav triggers to false.
+   * This is used to avoid conflicts in where the user is forced to
+   * @param state
+   */
+  resetNavTriggers: function resetNavTriggers(state) {
+    state.resultsNavTrigger = false;
+    state.voteNavTrigger = false;
   }
 };
-var actions = {// forceNavigationToResults({dispatch, commit, getters}) {
-  //     return new Promise(((resolve, reject) => {
-  //
-  //     }));
-  // },
-  // forceNavigationVote({dispatch, commit, getters}) {
-  //     return new Promise(((resolve, reject) => {
-  //
-  //     }));
-  // },
+var actions = {
+  forceNavigationToResults: function forceNavigationToResults(_ref) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      commit('resetNavTriggers');
+      commit('setResultsNavTrigger', true);
+      resolve();
+    });
+  },
+  forceNavigationToVote: function forceNavigationToVote(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      commit('resetNavTriggers');
+      commit('setVoteNavTrigger', true);
+      resolve();
+    });
+  }
 };
 var getters = {
   getResultsNavTrigger: function getResultsNavTrigger(state) {
@@ -15340,6 +16447,245 @@ var getters = {
   },
   getVoteNavTrigger: function getVoteNavTrigger(state) {
     return state.voteNavTrigger;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: actions,
+  getters: getters,
+  mutations: mutations,
+  state: state
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/provisionalMotions.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/store/modules/provisionalMotions.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+/* harmony import */ var _models_Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Message */ "./resources/js/models/Message.js");
+
+
+
+
+var state = {
+  /** If a motion has been made and is awaiting a second, it is stored here*/
+  motionPendingSecond: null,
+  motionsPendingApproval: []
+};
+var mutations = {
+  setMotionPendingSecond: function setMotionPendingSecond(state, motion) {
+    state.motionPendingSecond = motion;
+  },
+  addMotionPendingApproval: function addMotionPendingApproval(state, motion) {
+    state.motionsPendingApproval.push(motion);
+  },
+  removeMotionPendingApproval: function removeMotionPendingApproval(state, motion) {
+    _.remove(state.motionsPendingApproval, function (m) {
+      return motion.id === m.id;
+    });
+  }
+  /*
+  *   addThing: (state, thing) => {
+  *        state.things.push(thing);
+  *    }
+  */
+
+};
+var actions = {
+  /** When a new motion has been created by a member, this asks the chair to approve
+   * it as in order.
+   * */
+  handleMotionNeedingApprovalMessage: function handleMotionNeedingApprovalMessage(_ref, pusherEvent) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__.default(pusherEvent.motion);
+      commit('addMotionPendingApproval', motion);
+      resolve();
+    });
+  },
+  handleMotionSeekingSecondMessage: function handleMotionSeekingSecondMessage(_ref2, pusherEvent) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__.default(pusherEvent.motion);
+      window.console.log('motion seeking second', motion);
+      commit('setMotionPendingSecond', motion);
+      resolve();
+    });
+  },
+  handleMotionMarkedOutOfOrderMessage: function handleMotionMarkedOutOfOrderMessage(_ref3, pusherEvent) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
+    return new Promise(function (resolve, reject) {
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__.default(pusherEvent.motion);
+      var m = _models_Message__WEBPACK_IMPORTED_MODULE_3__.default.makeFromTemplate('notApproved', motion);
+      window.console.log('motion out of order', m);
+      dispatch('showMessage', m);
+      resolve();
+    });
+  },
+
+  /**
+   * If no one seconds a motion, it dies
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param pusherEvent
+   * @returns {Promise<unknown>}
+   */
+  handleNoSecondObtainedMessage: function handleNoSecondObtainedMessage(_ref4, pusherEvent) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    return new Promise(function (resolve, reject) {
+      //todo Will there ever be a case where need to check which motion it is?
+      dispatch('resetMotionPendingSecond').then(function () {
+        var m = _models_Message__WEBPACK_IMPORTED_MODULE_3__.default.makeFromTemplate('noSecond'); // window.console.log(m);
+
+        dispatch('showMessage', m);
+        resolve();
+      });
+    });
+  },
+  markMotionInOrder: function markMotionInOrder(_ref5, motion) {
+    var dispatch = _ref5.dispatch,
+        commit = _ref5.commit,
+        getters = _ref5.getters;
+    return new Promise(function (resolve, reject) {
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.motions.inOrder(motion.id);
+      return Vue.axios.post(url).then(function (response) {
+        commit('removeMotionPendingApproval', motion);
+        resolve();
+      });
+    });
+  },
+  markMotionOutOfOrder: function markMotionOutOfOrder(_ref6, motion) {
+    var dispatch = _ref6.dispatch,
+        commit = _ref6.commit,
+        getters = _ref6.getters;
+    return new Promise(function (resolve, reject) {
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.motions.outOfOrder(motion.id);
+      return Vue.axios.post(url).then(function (response) {
+        commit('removeMotionPendingApproval', motion);
+        resolve();
+      });
+    });
+  },
+  markNoSecondObtained: function markNoSecondObtained(_ref7, motion) {
+    var dispatch = _ref7.dispatch,
+        commit = _ref7.commit,
+        getters = _ref7.getters;
+    return new Promise(function (resolve, reject) {
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.motions.secondMotion(motion.id);
+      Vue.axios["delete"](url).then(function (response) {
+        dispatch('resetMotionPendingSecond').then(function () {
+          resolve();
+        });
+      });
+    });
+  },
+
+  /**
+   * Removes a motion seeking a second and resets to null
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
+  resetMotionPendingSecond: function resetMotionPendingSecond(_ref8) {
+    var dispatch = _ref8.dispatch,
+        commit = _ref8.commit,
+        getters = _ref8.getters;
+    return new Promise(function (resolve, reject) {
+      commit('setMotionPendingSecond', null);
+      resolve();
+    });
+  },
+
+  /**
+   * Tells server that motion has been seconded
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param meetingId
+   * @param motionId
+   * @returns {Promise<unknown>}
+   */
+  secondMotion: function secondMotion(_ref9, motion) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
+    return new Promise(function (resolve, reject) {
+      //send to server
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.motions.secondMotion(motion.id);
+      return Vue.axios.post(url).then(function (response) {
+        dispatch('resetMotionPendingSecond').then(function () {
+          return resolve();
+        }); // //this assumes the motion being seconded is the current motion.
+        // //that should be normally the case except for high
+        // //precedence motions which can be made while something
+        // //else is waiting for a second. Those will be very
+        // //rare cases.
+        // let pl = Payload(
+        //     {
+        //         updateProp: 'seconded',
+        //         updateVal: response.data.seconded
+        //     });
+        // commit('setMotionProp', pl);
+        // return resolve();
+      });
+    });
+  },
+  setMotionPendingSecond: function setMotionPendingSecond(_ref10, motion) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
+    return new Promise(function (resolve, reject) {
+      commit('setMotionPendingSecond', motion);
+      resolve();
+    });
+  }
+  /*
+  *    doThing({dispatch, commit, getters}, thingParam) {
+  *        return new Promise(((resolve, reject) => {
+  *        }));
+  *    },
+  */
+
+};
+/**
+ *
+ *    getThingViaId: (state) => (thingId) => {
+ *        return state.things.filter(function (c) {
+ *            return c.thing_id === thingId;
+ *        })
+ *    },
+ *
+ *
+ *    getThing: (state, getters) => {}
+ */
+
+var getters = {
+  getMotionPendingSecond: function getMotionPendingSecond(state) {
+    return state.motionPendingSecond;
+  },
+  nextMotionNeedingApproval: function nextMotionNeedingApproval(state) {
+    return state.motionsPendingApproval[0];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -15697,7 +17043,8 @@ var actions = {
       dispatch('loadIsAdminFromPageData').then(function () {
         dispatch('loadMeetingFromPageData').then(function () {
           dispatch('loadMotionFromPageData').then(function () {
-            var meeting = getters.getActiveMeeting; //get existing motions for meeting
+            var meeting = getters.getActiveMeeting;
+            dispatch('initializeMeetingListeners'); //get existing motions for meeting
 
             dispatch('loadMotionsForMeeting', meeting.id).then(function () {
               //get motions which have already been handled
@@ -15711,6 +17058,37 @@ var actions = {
       });
     });
   },
+  initializeMeetingListeners: function initializeMeetingListeners(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    var meeting = getters.getActiveMeeting;
+    var channel = "meeting.".concat(meeting.id);
+    Echo["private"](channel).listen("MotionSeekingSecond", function (e) {
+      window.console.log('Received broadcast event meeting', e);
+      dispatch('handleMotionSeekingSecondMessage', e);
+    }).listen("MotionSeconded", function (e) {
+      window.console.log('Received broadcast event meeting', e); //Switches to the motion which has now been approved and seconded
+
+      dispatch('handleMotionSecondedMessage', e);
+    }).listen("NoSecondObtained", function (e) {
+      window.console.log('Received broadcast event meeting', e);
+      dispatch('handleNoSecondObtainedMessage', e);
+    }).listen('MotionMarkedOutOfOrder', function (e) {
+      window.console.log('Received broadcast event meeting', e);
+      dispatch('handleMotionMarkedOutOfOrderMessage', e);
+    });
+    window.console.log('Meeting listeners initialized for ', channel);
+
+    if (getters.getIsAdmin) {
+      var chairChannel = "chair.".concat(meeting.id);
+      Echo["private"](chairChannel).listen('MotionNeedingApproval', function (e) {
+        window.console.log('Received chair broadcast', chairChannel, e);
+        dispatch('handleMotionNeedingApprovalMessage', e);
+      });
+      window.console.log('Chair listeners initialized for ', chairChannel);
+    }
+  },
 
   /**
    * Sets whether the user is a meeting administrator
@@ -15720,10 +17098,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  loadIsAdminFromPageData: function loadIsAdminFromPageData(_ref2) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  loadIsAdminFromPageData: function loadIsAdminFromPageData(_ref3) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       var data = window.startData;
 
@@ -15746,10 +17124,10 @@ var actions = {
    * Parses the things set in window.startData
    * and sets them in store
    */
-  loadMotionFromPageData: function loadMotionFromPageData(_ref3) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
+  loadMotionFromPageData: function loadMotionFromPageData(_ref4) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
     return new Promise(function (resolve, reject) {
       var data = window.startData;
 
@@ -15770,10 +17148,10 @@ var actions = {
    * Parses the things set in window.startData
    * and sets them in store
    */
-  loadMeetingFromPageData: function loadMeetingFromPageData(_ref4) {
-    var dispatch = _ref4.dispatch,
-        commit = _ref4.commit,
-        getters = _ref4.getters;
+  loadMeetingFromPageData: function loadMeetingFromPageData(_ref5) {
+    var dispatch = _ref5.dispatch,
+        commit = _ref5.commit,
+        getters = _ref5.getters;
     return new Promise(function (resolve, reject) {
       var data = window.startData;
       window.console.log('startup', 'start data', 25, data);
@@ -20857,6 +22235,54 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.altered-text {\n    font-weight: bold;\n}\n.struck {\n    text-decoration: line-through;\n}\n\n\n\n/*\nClasses added to the primary amendment text when\ndisplaying a secondary amendment.\n*/\n.primary-insert {\n}\n.primary-strike {\n}\n.primary-strike-insert {\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.leftButton[data-v-fcfe3714] {\n    margin-right: 4em;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.second-instruction[data-v-c5148084] {\n    margin-top: 2em;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -60965,6 +62391,66 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_style_index_0_id_fcfe3714_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_style_index_0_id_fcfe3714_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_style_index_0_id_fcfe3714_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_style_index_0_id_c5148084_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_style_index_0_id_c5148084_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_style_index_0_id_c5148084_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-select-area.vue?vue&type=style&index=0&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-select-area.vue?vue&type=style&index=0&lang=css& ***!
@@ -64005,6 +65491,84 @@ component.options.__file = "resources/js/components/meetings/meeting-setup-card.
 
 /***/ }),
 
+/***/ "./resources/js/components/messaging/message-area.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/messaging/message-area.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message-area.vue?vue&type=template&id=384edcc9&scoped=true& */ "./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true&");
+/* harmony import */ var _message_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message-area.vue?vue&type=script&lang=js& */ "./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _message_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "384edcc9",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/messaging/message-area.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/messaging/status-alert.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/messaging/status-alert.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./status-alert.vue?vue&type=template&id=19b43212&scoped=true& */ "./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true&");
+/* harmony import */ var _status_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./status-alert.vue?vue&type=script&lang=js& */ "./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _status_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "19b43212",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/messaging/status-alert.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/amendment-setup-area.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/motions/amendment-setup-area.vue ***!
@@ -64241,6 +65805,46 @@ component.options.__file = "resources/js/components/motions/badges/required-vote
 
 /***/ }),
 
+/***/ "./resources/js/components/motions/chair-motion-second-modal.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/motions/chair-motion-second-modal.vue ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _chair_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chair-motion-second-modal.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _chair_motion_second_modal_vue_vue_type_style_index_0_id_fcfe3714_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& */ "./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _chair_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "fcfe3714",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/chair-motion-second-modal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/create-motion-button.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/motions/create-motion-button.vue ***!
@@ -64354,6 +65958,85 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/motions/end-voting-modal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-in-order-modal.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/motions/motion-in-order-modal.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true& */ "./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true&");
+/* harmony import */ var _motion_in_order_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-in-order-modal.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _motion_in_order_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "624260f0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/motion-in-order-modal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-second-modal.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/motions/motion-second-modal.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motion-second-modal.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _motion_second_modal_vue_vue_type_style_index_0_id_c5148084_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& */ "./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "c5148084",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/motion-second-modal.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -65257,6 +66940,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/parents/card-list-item-parent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/parents/js-controlled-modal-parent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/parents/js-controlled-modal-parent.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true& */ "./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true&");
+/* harmony import */ var _js_controlled_modal_parent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js-controlled-modal-parent.vue?vue&type=script&lang=js& */ "./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _js_controlled_modal_parent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "fdb15414",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/parents/js-controlled-modal-parent.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -66654,6 +68376,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_message_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./message-area.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_message_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_status_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./status-alert.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_status_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/motions/amendment-setup-area.vue?vue&type=script&lang=js& ***!
@@ -66750,6 +68504,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./chair-motion-second-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/motions/create-motion-button.vue?vue&type=script&lang=js& ***!
@@ -66795,6 +68565,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_end_voting_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./end-voting-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/end-voting-modal.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_end_voting_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_in_order_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-in-order-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_in_order_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-second-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -67166,6 +68968,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_js_controlled_modal_parent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./js-controlled-modal-parent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_js_controlled_modal_parent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/setup-page.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/setup-page.vue?vue&type=script&lang=js& ***!
@@ -67390,6 +69208,32 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_amendment_text_display_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./amendment-text-display.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/amendment-text-display.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&":
+/*!********************************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_chair_motion_second_modal_vue_vue_type_style_index_0_id_fcfe3714_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/chair-motion-second-modal.vue?vue&type=style&index=0&id=fcfe3714&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_second_modal_vue_vue_type_style_index_0_id_c5148084_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-second-modal.vue?vue&type=style&index=0&id=c5148084&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -68296,6 +70140,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_area_vue_vue_type_template_id_384edcc9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./message-area.vue?vue&type=template&id=384edcc9&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_status_alert_vue_vue_type_template_id_19b43212_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./status-alert.vue?vue&type=template&id=19b43212&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/motions/amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true&":
 /*!*************************************************************************************************************!*\
   !*** ./resources/js/components/motions/amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true& ***!
@@ -68445,6 +70323,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_end_voting_modal_vue_vue_type_template_id_09fd5c56_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_end_voting_modal_vue_vue_type_template_id_09fd5c56_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./end-voting-modal.vue?vue&type=template&id=09fd5c56&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/end-voting-modal.vue?vue&type=template&id=09fd5c56&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_in_order_modal_vue_vue_type_template_id_624260f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true&");
 
 
 /***/ }),
@@ -68836,6 +70731,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_card_list_item_parent_vue_vue_type_template_id_7a596e51_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_card_list_item_parent_vue_vue_type_template_id_7a596e51_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./card-list-item-parent.vue?vue&type=template&id=7a596e51&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/card-list-item-parent.vue?vue&type=template&id=7a596e51&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_js_controlled_modal_parent_vue_vue_type_template_id_fdb15414_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true&");
 
 
 /***/ }),
@@ -71766,6 +73678,95 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "message-area" },
+    _vm._l(_vm.messages, function(m) {
+      return _c("status-alert", { key: m.id, attrs: { message: m } })
+    }),
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/status-alert.vue?vue&type=template&id=19b43212&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.show
+    ? _c(
+        "div",
+        {
+          staticClass: "alert alert-dismissible fade show ",
+          class: _vm.styling,
+          attrs: { id: _vm.alertId, role: "alert" }
+        },
+        [
+          _c("p", [_vm._v("\n        " + _vm._s(_vm.messageText) + "\n    ")]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("p", { staticClass: "blockquote" }, [
+            _vm._v("\n        " + _vm._s(_vm.motionText) + "\n    ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: {
+                type: "button",
+                "data-dismiss": "alert",
+                "aria-label": "Close"
+              },
+              on: { click: _vm.handleClick }
+            },
+            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+          )
+        ]
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/amendment-setup-area.vue?vue&type=template&id=5e13023a&scoped=true& ***!
@@ -72166,6 +74167,94 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("p", [_vm._v("Are you sure?")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motion-in-order-modal.vue?vue&type=template&id=624260f0&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: _vm.modalId,
+        tabindex: "-1",
+        "aria-hidden": "true",
+        "aria-labelledby": "motionInOrderModalLabel"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("p", {
+              staticClass: "blockquote",
+              domProps: { innerHTML: _vm._s(_vm.motionText) }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.handleReject }
+              },
+              [_vm._v("Reject\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.handleApprove }
+              },
+              [_vm._v("Approve\n                ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title",
+          attrs: { id: "motionInOrderModalLabel" }
+        },
+        [_vm._v("It has been moved that")]
+      )
     ])
   }
 ]
@@ -73721,6 +75810,96 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/parents/js-controlled-modal-parent.vue?vue&type=template&id=fdb15414&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: _vm.modalId,
+        tabindex: "-1",
+        "aria-hidden": "true",
+        "aria-labelledby": "modalLabelId"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "h5",
+              { staticClass: "modal-title", attrs: { id: _vm.modalLabelId } },
+              [_vm._v(_vm._s(_vm.headerText))]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "aria-label": "Close" },
+                on: { click: _vm.closeModal }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", {
+              staticClass: "body-text",
+              domProps: { innerHTML: _vm._s(_vm.bodyText) }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn leftButton",
+                class: _vm.leftButtonStyling,
+                attrs: { type: "button" },
+                on: { click: _vm.handleLeftClick }
+              },
+              [_vm._v(_vm._s(_vm.leftButtonLabel) + "\n                    ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn rightButton",
+                class: _vm.rightButtonStyling,
+                attrs: { type: "button" },
+                on: { click: _vm.handleRightClick }
+              },
+              [_vm._v(_vm._s(_vm.rightButtonLabel))]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/setup-page.vue?vue&type=template&id=041628ea&scoped=true& ***!
@@ -74171,6 +76350,8 @@ var render = function() {
     [
       _c("router-tabs"),
       _vm._v(" "),
+      _c("message-area"),
+      _vm._v(" "),
       _c("router-view", { attrs: { name: "main" } }),
       _vm._v(" "),
       _c(
@@ -74180,7 +76361,13 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("chair-indicator")
+      _c("chair-indicator"),
+      _vm._v(" "),
+      _vm.isChair ? _c("motion-in-order-modal") : _vm._e(),
+      _vm._v(" "),
+      _vm.isChair ? _c("chair-motion-second-modal") : _vm._e(),
+      _vm._v(" "),
+      !_vm.isChair ? _c("motion-second-modal") : _vm._e()
     ],
     1
   )

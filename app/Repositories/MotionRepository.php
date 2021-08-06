@@ -4,7 +4,12 @@
 namespace App\Repositories;
 
 
+use App\Exceptions\IneligibleSecondAttempt;
+use App\Http\Requests\MotionRequest;
+use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
+use http\Env\Request;
 
 class MotionRepository implements IMotionRepository
 {
@@ -26,6 +31,47 @@ class MotionRepository implements IMotionRepository
         $this->stackRepo = app()->make(IMotionStackRepository::class);
 
     }
+
+    public function createMotion(User $user, Meeting $meeting, MotionRequest $request)
+    {
+
+        //Since we are creating the motion without
+        //the fields filled in, we may have blank motions
+        //in the database. Thus we will try to reuse an existing empty
+        //motion object before actually creating a new one
+        $motion = Motion::where('meeting_id', $meeting->id)
+            ->where('content', null)
+            ->where('description', null)
+//                ->where('requires', null)
+            ->where('type', null)
+            ->where('is_complete', false)
+            ->first();
+
+        if (!is_null($motion)) {
+            //if we found a motion that was empty,
+            //take whatever data we've been sent and set it
+            //on the motion
+            $motion->update($request->all());
+            $motion->save();
+        } else {
+            //No preexisting empty motion associated with the meeting
+            //has been found
+            $motion = Motion::create($request->all());
+        }
+
+        //Add it to the meeting
+        //Note this will be harmlessly redundant if we
+        //are using the preexisting object
+        $meeting->motions()->save($motion);
+
+        //Add the user creating the request's id
+        //This is only needed to determine if the second is eligible
+        $motion->setAuthor($user);
+
+        return $motion;
+
+    }
+
 
     /**
      * Called when a motion has been altered by a subsidary action
@@ -106,4 +152,43 @@ class MotionRepository implements IMotionRepository
 
     }
 
+    /**
+     * Handles checking that the user is not identical to the author and
+     * marking the motion seconded.
+     * Does not check that the user is a member of the meeting. That should be
+     * handled elsewhere.
+     *
+     * @param Motion $motion
+     * @param User $second
+     * @throws IneligibleSecondAttempt
+     */
+    public function secondMotion(Motion $motion, User $second)
+    {
+        if (!$motion->isEligibleToSecond($second)) {
+            throw new IneligibleSecondAttempt();
+        }
+
+        $motion->seconded = true;
+        $motion->setSecond($second);
+        $motion->save();
+        return $motion;
+    }
+
+
+    public function markInOrder(Motion $motion, User $user)
+    {
+        $motion->approver_id = $user->id;
+        $motion->is_in_order = true;
+        $motion->save();
+
+        return $motion;
+    }
+
+    public function markOutOfOrder(Motion $motion, User $user)
+    {
+        $motion->approver_id = $user->id;
+        $motion->is_in_order = false;
+        $motion->save();
+        return $motion;
+    }
 }

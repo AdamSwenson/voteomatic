@@ -2,14 +2,17 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\IneligibleSecondAttempt;
+use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
 use App\Repositories\MotionRepository;
 use Tests\TestCase;
 
 class MotionRepositoryTest extends TestCase
 {
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
         $this->object = new MotionRepository();
@@ -36,4 +39,59 @@ class MotionRepositoryTest extends TestCase
         $this->assertEquals($original->superseded_by, $superseding->id, "Superseded by set on the original");
 
     }
+
+    /** @test */
+    public function secondMotionRegularUser()
+    {
+        $maker = User::factory()->create();
+        $second = User::factory()->create();
+        $meeting = Meeting::factory()->create();
+//        $meeting->setOwner($m)
+        $motion = Motion::factory()->create([
+            'author_id' => $maker->id,
+            'meeting_id' => $meeting->id
+        ]);
+
+        $motion = $this->object->secondMotion($motion, $second);
+
+        $this->assertTrue($motion->seconded);
+        $this->assertEquals($second->id, $motion->seconder_id);
+    }
+
+    /** @test */
+    public function secondMotionChair()
+    {
+        $maker = User::factory()->create();
+//        $second = User::factory()->create();
+        $meeting = Meeting::factory()->create();
+        $meeting->setOwner($maker);
+        $motion = Motion::factory()->create([
+            'author_id' => $maker->id,
+            'meeting_id' => $meeting->id
+        ]);
+
+        $motion = $this->object->secondMotion($motion, $maker);
+
+        $this->assertTrue($motion->seconded);
+        $this->assertEquals($maker->id, $motion->seconder_id);
+    }
+
+
+    /** @test */
+    public function secondMotionRejectsSelfSeconding()
+    {
+        $this->expectException(IneligibleSecondAttempt::class);
+        $maker = User::factory()->create();
+        $second = User::factory()->create();
+        $meeting = Meeting::factory()->create();
+        $motion = Motion::factory()->create([
+            'author_id' => $maker->id,
+            'meeting_id' => $meeting->id
+        ]);
+
+        $motion = $this->object->secondMotion($motion, $maker);
+
+    }
+
+
 }

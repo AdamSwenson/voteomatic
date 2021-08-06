@@ -87,8 +87,9 @@ export const routes = [
         },
         components: {main: ballotSetupCard},
         props: true,
-        adminOnly: true,
+        // adminOnly: true,
 
+        adminOnly: false
     },
 
     {

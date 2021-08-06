@@ -1,4 +1,5 @@
 import Motion from "../../models/Motion";
+import Message from "../../models/Message";
 import * as routes from "../../routes";
 import Payload from "../../models/Payload";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
@@ -43,13 +44,14 @@ const state = {
      */
     motions: [],
 
+
     /**
      * Motions from this meeting which the user has already
      * cast a vote on and should be locked out of voting again
      */
     motionIdsUserHasVotedUpon: [],
 
-    standardMotionDefinitions: []
+    standardMotionDefinitions: [],
 };
 
 const mutations = {
@@ -147,9 +149,39 @@ const mutations = {
 
 const actions = {
 
+    createMotionFromTemplate({dispatch, commit, getters}, template) {
+        return new Promise(((resolve, reject) => {
+            let meeting = getters.getActiveMeeting;
+
+            //send to server
+            let url = routes.motions.resource();
+            let d = template;
+            d['meetingId'] = meeting.id;
+            // let p = {'meetingId': meetingId};
+            // window.console.log('sending', d);
+
+            return Vue.axios.post(url, d)
+                .then((response) => {
+                    let d = response.data;
+
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    // window.console.log(statusMessage);
+                    dispatch('showMessage', statusMessage);
+                    // commit('addToMessageQueue', statusMessage);
+
+                    resolve();
+                    //let them know the chair will need to approve
+                    // alert('d');
+                });
+        }));
+    },        //
+
     /**
      * Create a new motion on the server and set
-     * it as the current motion
+     * it as the current motion.
+     *
+     * This is used by the regular member. It does not set the current motion
+     * since a member making a motion will need it to be approved and seconded.
      *
      * @param dispatch
      * @param commit
@@ -159,10 +191,55 @@ const actions = {
     createMotion({dispatch, commit, getters}, meetingId) {
         let me = this;
         return new Promise(((resolve, reject) => {
+            window.console.log('creating');
+            let statusMessage = Message.makeFromTemplate('pendingApproval');
+            window.console.log(statusMessage);
+            commit('addToMessageQueue', statusMessage);
             //send to server
             let url = routes.motions.resource();
             let p = {'meetingId': meetingId};
-            window.console.log('sending', p);
+            // window.console.log('sending', p);
+            return Vue.axios.post(url, p)
+                .then((response) => {
+                    resolve();
+                    // let d = response.data;
+                    //
+                    // let motion = new Motion(d);
+                    // // let motion = new Motion(d.id, d.name, d.date);
+                    // commit('addMotionToStore', motion);
+                    //
+                    // let pl = {meetingId: meetingId, motionId: motion.id};
+                    //
+                    // return dispatch('setCurrentMotion', pl)
+                    //     .then(() => {
+                    //         return resolve(motion);
+                    //     });
+                    //
+                    // // commit('setMotion', motion);
+
+                });
+        }));
+
+    },
+
+    /**
+     * Create a new motion on the server and set
+     * it as the current motion
+     *
+     * dev This probably won't end up being used. Keeping the set current motion logic for now
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    createMotionByChair({dispatch, commit, getters}, meetingId) {
+        let me = this;
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.resource();
+            let p = {'meetingId': meetingId};
+            // window.console.log('sending', p);
             return Vue.axios.post(url, p)
                 .then((response) => {
                     let d = response.data;
@@ -299,6 +376,25 @@ const actions = {
 
     },
 
+    /** When a new motion has been created and seconded,
+     * this sets the motion as the current motion and navigates to the
+     * voting tab
+     * */
+    handleMotionSecondedMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            dispatch('resetMotionPendingSecond');
+            let motion = new Motion(pusherEvent.motion);
+            commit('addMotionToStore', motion);
+            //Make it the current motion and attach relevant listeners
+            return dispatch('setMotion', motion)
+                .then(() => {
+                    dispatch('forceNavigationToVote');
+                    return resolve(motion);
+                });
+        }));
+    },
+
+
     /**
      * When the client is notified by the server that voting on the currently active
      * motion has been ended, this removes the option to try to vote and
@@ -316,7 +412,8 @@ const actions = {
             dispatch('markMotionComplete', endedMotion).then(() => {
 
                 /* ----------------- Load results and navigate to results card ------------ */
-                commit('setResultsNavTrigger', true);
+                // commit('setResultsNavTrigger', true);
+                dispatch('forceNavigationToResults');
 
                 /* ----------------- Quietly create the revised main motion  ------------ */
                 //todo Check if successful and if amendment
@@ -512,29 +609,75 @@ const actions = {
         }));
     },
 
-    secondMotion({dispatch, commit, getters}, {meetingId, motionId}) {
-        return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.secondMotion(motionId);
-            return Vue.axios.post(url)
-                .then((response) => {
-                    //this assumes the motion being seconded is the current motion.
-                    //that should be normally the case except for high
-                    //precedence motions which can be made while something
-                    //else is waiting for a second. Those will be very
-                    //rare cases.
-                    let pl = Payload(
-                        {
-                            updateProp: 'seconded',
-                            updateVal: response.data.seconded
-                        });
-                    commit('setMotionProp', pl);
 
-                    return resolve();
-
-                });
-        }));
-    },
+    // markMotionInOrder({dispatch, commit, getters}, motion) {
+    //     return new Promise(((resolve, reject) => {
+    //         let url = routes.motions.inOrder(motion.id);
+    //         return Vue.axios.post(url)
+    //             .then((response) => {
+    //                 resolve();
+    //             });
+    //     }));
+    // },
+    //
+    //
+    // markMotionOutOfOrder({dispatch, commit, getters}, motion) {
+    //     return new Promise(((resolve, reject) => {
+    //         let url = routes.motions.outOfOrder(motion.id);
+    //         return Vue.axios.post(url)
+    //             .then((response) => {
+    //                 resolve();
+    //             });
+    //     }));
+    // },
+    //
+    //
+    // /**
+    //  * Removes a motion seeking a second and resets to null
+    //  * @param dispatch
+    //  * @param commit
+    //  * @param getters
+    //  * @returns {Promise<unknown>}
+    //  */
+    // resetMotionPendingSecond({dispatch, commit, getters}) {
+    //     return new Promise(((resolve, reject) => {
+    //         commit('setMotionPendingSecond', null);
+    //         resolve();
+    //     }));
+    // },
+    //
+    // /**
+    //  * Tells server that motion has been seconded
+    //  * @param dispatch
+    //  * @param commit
+    //  * @param getters
+    //  * @param meetingId
+    //  * @param motionId
+    //  * @returns {Promise<unknown>}
+    //  */
+    // secondMotion({dispatch, commit, getters}, motion) {
+    //     return new Promise(((resolve, reject) => {
+    //         //send to server
+    //         let url = routes.motions.secondMotion(motion.id);
+    //         return Vue.axios.post(url)
+    //             .then((response) => {
+    //                 // //this assumes the motion being seconded is the current motion.
+    //                 // //that should be normally the case except for high
+    //                 // //precedence motions which can be made while something
+    //                 // //else is waiting for a second. Those will be very
+    //                 // //rare cases.
+    //                 // let pl = Payload(
+    //                 //     {
+    //                 //         updateProp: 'seconded',
+    //                 //         updateVal: response.data.seconded
+    //                 //     });
+    //                 // commit('setMotionProp', pl);
+    //
+    //                 return resolve();
+    //
+    //             });
+    //     }));
+    // },
 
 
     /**
@@ -578,17 +721,52 @@ const actions = {
 
             commit('setMotion', motion)
             window.console.log('currentMotion set', motion);
-let channel = `motions.${motion.id}`;
+            let channel = `motions.${motion.id}`;
             Echo.private(channel)
                 .listen("MotionClosed", (e) => {
                     window.console.log('Received broadcast event motions', e);
                     dispatch('handleVotingEndedOnCurrentMotion', motion);
-                });
+                })
+            // .listen("NewMotionCreated", (e) => {
+            //
+            //     window.console.log('Received broadcast event motions', e);
+            //     dispatch('handleNewMotionCreated', motion);
+            // })
+            //     .listen("MotionSeekingSecond", (e) => {
+            //         window.console.log('Received broadcast event motions', e);
+            //         dispatch('handleMotionSeekingSecond', motion);
+            //     })
+            //     .listen("MotionSeconded", (e) => {
+            //         window.console.log('Received broadcast event motions', e);
+            //         //Switches to the motion which has now been approved and seconded
+            //         dispatch('handleMotionSeconded', motion);
+            //     });
+            //
+            // if(getters.getIsAdmin){
+            //     let chairChannel = `chair.${motion.id}`;
+            //     Echo.private(chairChannel)
+            //         .listen('MotionNeedingApproval', (e) => {
+            //             window.console.log('Received chair broadcast', e);
+            //
+            //             dispatch('handleNewMotionCreated', motion);
+            //
+            //         });
+            //
+            // }
+
 
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
         }));
     },
+
+    //
+    // setMotionPendingSecond({dispatch, commit, getters}, motion) {
+    //     return new Promise(((resolve, reject) => {
+    //         commit('setMotionPendingSecond', motion);
+    //         resolve();
+    //     }));
+    // },
 
     /**
      * Sends new field entries to server and
@@ -666,6 +844,10 @@ const getters = {
     getMotions: (state) => {
         return state.motions;
     },
+
+    // getMotionPendingSecond: (state) => {
+    //     return state.motionPendingSecond;
+    // },
 
     getMotionsUserVotedUpon: (state) => {
         let out = [];

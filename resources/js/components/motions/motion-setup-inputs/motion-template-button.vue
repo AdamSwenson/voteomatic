@@ -16,6 +16,7 @@ import MotionMixin from "../../../mixins/motionStoreMixin";
 
 import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import RoutingMixin from "../../routingMixin";
+import * as routes from "../../../routes";
 
 export default {
     name: "motion-template-button",
@@ -40,36 +41,56 @@ export default {
     methods: {
 
         makeMain : function(){
-            let me = this;
+            this.$store.dispatch('createMotionFromTemplate', this.template);
 
-            //First we create and store a new motion from the
-            //provided template
-            let p = this.$store.dispatch('createMotion', me.meeting.id)
-                .then(function () {
-                        // return new Promise(((resolve, reject) => {
+            // let me = this;
+            // // return new Promise(((resolve, reject) => {
+            //     //send to server
+            //     let url = routes.motions.resource();
+            //     let d = me.template;
+            //     d['meetingId'] = me.meeting.id;
+            //     // let p = {'meetingId': meetingId};
+            //     window.console.log('sending', d);
+            //
+            //     // let p = {'meetingId': meetingId};
+            // // window.console.log('sending', p);
+            // return Vue.axios.post(url, d)
+            //     .then((response) => {
+            //         let d = response.data;
+            //         //let them know the chair will need to approve
+            //         // alert('d');
+            //     });
 
-                            _.forEach(me.template, (v, k) => {
-                                // window.console.log('new notion', k, v);
-
-                                let pl = Payload.factory({
-                                    updateProp: k,
-                                    updateVal: v
-                                });
-
-                                me.$store.dispatch('updateMotion', pl)
-                                    .then(function () {
-                                        //Finally we emit an event so the parent can
-                                        //change what fields are displayed if needed
-                                        me.$emit('motion-created');
-
-                                    });
-
-                            });
-
-
-                    me.openHomeTab();
-                        // });
-                });
+            //
+            //
+            //             //First we create and store a new motion from the
+            // //provided template
+            // let p = this.$store.dispatch('createMotion', me.meeting.id)
+            //     .then(function () {
+            //             // return new Promise(((resolve, reject) => {
+            //
+            //                 _.forEach(me.template, (v, k) => {
+            //                     // window.console.log('new notion', k, v);
+            //
+            //                     let pl = Payload.factory({
+            //                         updateProp: k,
+            //                         updateVal: v
+            //                     });
+            //
+            //                     me.$store.dispatch('updateMotion', pl)
+            //                         .then(function () {
+            //                             //Finally we emit an event so the parent can
+            //                             //change what fields are displayed if needed
+            //                             me.$emit('motion-created');
+            //
+            //                         });
+            //
+            //                 });
+            //
+            //
+            //         me.openHomeTab();
+            //             // });
+            //     });
         },
 
         makeSubsidiary : function(){

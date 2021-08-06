@@ -11,6 +11,12 @@ class MotionPolicy
 {
     use HandlesAuthorization;
 
+    public function canRuleOnOrderliness(User $user, Motion $motion)
+    {
+//todo
+        return true;
+    }
+
     public function setAsCurrent(User $user, Motion $motion)
     {
 //todo should this be chair only?
@@ -27,6 +33,19 @@ class MotionPolicy
 
     }
 
+    public function markNoSecondObtained(User $user, Motion $motion)
+    {
+        $meeting = $motion->meeting;
+        return $meeting->isOwner($user);
+
+    }
+
+    /**
+     * Determines if the user is part of the meeting
+     * @param User $user
+     * @param Motion $motion
+     * @return bool
+     */
     public function secondMotion(User $user, Motion $motion)
     {
         $meeting = $motion->meeting;
@@ -63,7 +82,8 @@ class MotionPolicy
 
     // ========================== ELECTION SPECIFIC
 
-    public function createOffice(User $user, Meeting $meeting){
+    public function createOffice(User $user, Meeting $meeting)
+    {
 
         return $meeting->isOwner($user);
 
@@ -83,8 +103,8 @@ class MotionPolicy
     }
 
 
-
-    public function viewOffice(User $user, Motion $office){
+    public function viewOffice(User $user, Motion $office)
+    {
         $meeting = $office->meeting;
         return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
@@ -110,7 +130,8 @@ class MotionPolicy
         return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
-    public function updateOffice(User $user, Motion $office){
+    public function updateOffice(User $user, Motion $office)
+    {
         $meeting = $office->meeting;
         return $meeting->isOwner($user);
     }
@@ -160,14 +181,15 @@ class MotionPolicy
      */
     public function create(User $user)
     {
-        return $user->isChair();
+//        return $user->isChair();
 
-        //todo Eventually for VOT-6
+        //todo update for VOT-73
         return true;
     }
 
     /**
      * Determine whether the user can update the model.
+     * They must be the author and the motion must not yet be seconded
      *
      * @param \App\Models\User $user
      * @param \App\Models\Motion $motion
@@ -175,7 +197,8 @@ class MotionPolicy
      */
     public function update(User $user, Motion $motion)
     {
-        return $user->isChair();
+        return $motion->seconded !== true && $user->is($motion->author());
+//        return $user->isChair();
 
         //todo Eventually for VOT-6
         return true;

@@ -12,6 +12,11 @@ module.exports = {
         isChair: function () {
             return this.$store.getters.getIsAdmin;
         },
+
+        isOrderAuthority : function(){
+            //this is distinct in case we want to authorize a parlimentarian
+            return this.isChair;
+        }
     }
 
 };

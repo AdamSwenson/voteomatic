@@ -19,6 +19,7 @@ use App\Http\Controllers\LTI\LTILaunchController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
+use App\Http\Controllers\Motion\MotionOrderlinessController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\Motion\MotionTemplateController;
@@ -168,11 +169,15 @@ Route::get('roster/{meeting}', [RosterController::class, 'getRoster']);
         Motions
    ============================= */
 Route::get('motions/meeting/{meeting}', [MotionController::class, 'getAllForMeeting']);
+Route::post('motions/order/bad/{motion}', [MotionOrderlinessController::class, 'markMotionOutOfOrder']);
+Route::post('motions/order/good/{motion}', [MotionOrderlinessController::class, 'markMotionInOrder']);
 //Route::post('motions/meeting/{meeting}', [MotionController::class, 'createMotion']);
 Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
 Route::post('motions/second/{motion}', [MotionSecondController::class, 'markMotionSeconded']);
+Route::delete('motions/second/{motion}', [MotionSecondController::class, 'markNoSecondObtained']);
+
 Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates']);
 Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
 Route::resource('motions', MotionController::class);

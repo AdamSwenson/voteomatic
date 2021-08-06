@@ -10,18 +10,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 
-/**
- * Class MotionClosed
- * Thrown when the chair marks the vote on
- * a motion closed.
- *
- * @package App\Events
- */
-class MotionClosed implements ShouldBroadcast
+class MotionMarkedInOrder implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
 
     /**
      * @var Motion
@@ -31,7 +24,7 @@ class MotionClosed implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Motion $motion
      */
     public function __construct(Motion $motion)
     {
@@ -45,14 +38,7 @@ class MotionClosed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-
         return new PrivateChannel('motions.'.$this->motion->id);
     }
 
-//    public function broadcastWith(){
-//        return [
-//            'id' => $this->motion->id
-//        ];
-//
-//    }
 }

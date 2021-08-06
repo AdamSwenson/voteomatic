@@ -10,32 +10,35 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 
 /**
- * Class MotionClosed
- * Thrown when the chair marks the vote on
- * a motion closed.
+ * Class MotionNeedingApproval
+ *
+ * Raised when a new motion has been created and it's text updated.
+ * Tells the client to ask the chair to approve it as in order
  *
  * @package App\Events
  */
-class MotionClosed implements ShouldBroadcast
+class MotionNeedingApproval implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
 
     /**
      * @var Motion
      */
     public $motion;
 
+    public $meeting;
+
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Motion $motion
      */
     public function __construct(Motion $motion)
     {
         $this->motion = $motion;
+        $this->meeting = $motion->meeting;
     }
 
     /**
@@ -45,14 +48,8 @@ class MotionClosed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        return new PrivateChannel($this->chairChannelName());
 
-        return new PrivateChannel('motions.'.$this->motion->id);
+//        return new PrivateChannel('chair.'.$this->meeting->id);
     }
-
-//    public function broadcastWith(){
-//        return [
-//            'id' => $this->motion->id
-//        ];
-//
-//    }
 }

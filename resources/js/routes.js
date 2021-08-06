@@ -234,6 +234,14 @@ module.exports = {
             return normalizedRouteRoot() + 'motions/second/' + motionId;
         },
 
+        inOrder: (motionId) => {
+            return normalizedRouteRoot() + 'motions/order/good/' + motionId;
+        },
+
+        outOfOrder: (motionId) => {
+            return normalizedRouteRoot() + 'motions/order/bad/' + motionId;
+        },
+
         templates: () => {
             return normalizedRouteRoot() + 'motions/templates';
         },

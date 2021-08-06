@@ -1,0 +1,125 @@
+const state = {
+    //
+    // messageText: '',
+    //
+    // messageStyle: '',
+    //
+    // displayTime: 0,
+    //
+    // showMessage: false,
+    messageQueue: []
+    //things: []
+};
+
+const mutations = {
+    // setMessageText: (state, text) => {
+    //     state.messageText = text;
+    // },
+    //
+    // resetMessage: (state) => {
+    //     state.messageText = '';
+    //     state.messageStyle = '';
+    //     state.displayTime = 0;
+    //     state.showMessage = false;
+    // },
+    //
+    // setMessageStyle: (state, style) => {
+    //     state.messageStyle = style;
+    // },
+
+    addToMessageQueue: (state, messageObject) => {
+        state.messageQueue.push(messageObject);
+    },
+
+    removeFromMessageQueue: (state, messageObject) => {
+        window.console.log('removing', messageObject);
+        state.messageQueue.splice(state.messageQueue.indexOf(messageObject), )
+        _.remove(state.messageQueue, function (obj) {
+            return obj.id === messageObject.id;
+        });
+
+    },
+
+    clearMessageQueue: (state) => {
+    state.messageQueue = [];
+    }
+
+
+    /*
+    *   addThing: (state, thing) => {
+    *        state.things.push(thing);
+    *    }
+    */
+
+};
+
+
+const actions = {
+    showMessage({dispatch, commit, getters}, messageObject) {
+        return new Promise(((resolve, reject) => {
+            commit('addToMessageQueue', messageObject);
+
+            if (messageObject.displayTime > 0) {
+                //set a timer and automatically remove
+                window.console.log('setting timed message for ', messageObject.displayTime);
+                setTimeout(function(){
+                    window.console.log('message complete', messageObject);
+                    commit('removeFromMessageQueue', messageObject)
+                }, messageObject.displayTime)
+
+            }
+        }));
+    },
+    // showMessage({dispatch, commit, getters}, {messageText, messageStyle, displayTime}) {
+    //     return new Promise(((resolve, reject) => {
+    //         commit('setMessageText', messageText);
+    //         commit('setMessageStyle', messageStyle);
+    //         commit('setDisplayTime', displayTime);
+    //
+    //         if(getters.getDisplayTime)
+    //
+    //     }));
+    // },
+    /*
+    *    doThing({dispatch, commit, getters}, thingParam) {
+    *        return new Promise(((resolve, reject) => {
+    *        }));
+    *    },
+    */
+};
+
+/**
+ *
+ *    getThingViaId: (state) => (thingId) => {
+ *        return state.things.filter(function (c) {
+ *            return c.thing_id === thingId;
+ *        })
+ *    },
+ *
+ *
+ *    getThing: (state, getters) => {}
+ */
+const getters = {
+    // getMessageText: (state) => {
+    //     return state.messageText;
+    // },
+    // getMessageStyle: (state) => {
+    //     return state.messageStyle;
+    // },
+    // getDisplayTime: (state) => {
+    //     return state.displayTime;
+    // },
+    // getShowMessage: (state) => {
+    //     state.showMessage;
+    // },
+    getMessages : (state) => {
+    return state.messageQueue;
+    }
+};
+
+export default {
+    actions,
+    getters,
+    mutations,
+    state,
+}
