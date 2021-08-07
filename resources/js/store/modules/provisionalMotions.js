@@ -7,6 +7,7 @@ const state = {
     /** If a motion has been made and is awaiting a second, it is stored here*/
     motionPendingSecond: null,
 
+    //todo This needs to be a stack so pending motions aren't lost if top one is rejected
     motionsPendingApproval: []
 };
 
@@ -79,7 +80,8 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //todo Will there ever be a case where need to check which motion it is?
             dispatch('resetMotionPendingSecond').then(() => {
-                let m = Message.makeFromTemplate('noSecond');
+                let motion = new Motion(pusherEvent.motion);
+                let m = Message.makeFromTemplate('noSecond', motion);
                 // window.console.log(m);
                 dispatch('showMessage', m);
                 resolve();

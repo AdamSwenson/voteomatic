@@ -60,7 +60,7 @@ class MotionSecondController extends Controller
     public function markNoSecondObtained(Motion $motion)
     {
         NoSecondObtained::dispatch($motion);
-        return response()->json();
+        return response()->json($motion);
     }
 
 }

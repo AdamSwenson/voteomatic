@@ -88,6 +88,7 @@ export default {
                     this.openModal();
                     return true;
                 }else {
+                    this.closeModal();
                     return false;
                 }
             },

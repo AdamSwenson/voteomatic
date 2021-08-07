@@ -5,12 +5,13 @@ export default class Message extends IModel {
 
     constructor({id = null, messageText = null, messageStyle = null, displayTime = 0, motion = null}) {
         super();
-        this.id = id;
+        //We add a bit of entropy so vue won't get confused by multiple
+        //instances of same message
+        this.id = 'message-' + id + '-' + _.random(3,9999);
         this.messageText = messageText;
         this.messageStyle = messageStyle;
         this.displayTime = displayTime;
         this.motion = motion;
-
 
     }
 
@@ -28,17 +29,17 @@ export default class Message extends IModel {
             {
                 id: 2,
                 name: 'notApproved',
-                messageText: `The Chair has ruled that this motion is out of order.`,
+                messageText: `The Chair has ruled that this motion is not in order:`,
                 messageStyle: 'danger',
-                displayTime: 20000
+                displayTime: 2000
             },
 
             {
                 id: 3,
                 name: 'noSecond',
-                messageText: "The proposed motion did not receive a second.",
+                messageText: "This proposed motion did not receive a second:",
                 messageStyle: 'warning',
-                displayTime: 0
+                displayTime: 2000
             },
 
         ]

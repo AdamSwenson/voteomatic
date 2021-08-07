@@ -7396,6 +7396,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "status-alert",
@@ -7434,6 +7435,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     messages: function messages() {
       return this.$store.getters.getMessages;
+    },
+    showMotionText: function showMotionText() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.motionText) && this.motionText.length > 0;
     }
   },
   computed: {},
@@ -8484,6 +8488,7 @@ __webpack_require__.r(__webpack_exports__);
           this.openModal();
           return true;
         } else {
+          this.closeModal();
           return false;
         }
       },
@@ -12927,8 +12932,10 @@ var Message = /*#__PURE__*/function (_IModel) {
 
     _classCallCheck(this, Message);
 
-    _this = _super.call(this);
-    _this.id = id;
+    _this = _super.call(this); //We add a bit of entropy so vue won't get confused by multiple
+    //instances of same message
+
+    _this.id = 'message-' + id + '-' + _.random(3, 9999);
     _this.messageText = messageText;
     _this.messageStyle = messageStyle;
     _this.displayTime = displayTime;
@@ -12948,15 +12955,15 @@ var Message = /*#__PURE__*/function (_IModel) {
       }, {
         id: 2,
         name: 'notApproved',
-        messageText: "The Chair has ruled that this motion is out of order.",
+        messageText: "The Chair has ruled that this motion is not in order:",
         messageStyle: 'danger',
-        displayTime: 20000
+        displayTime: 2000
       }, {
         id: 3,
         name: 'noSecond',
-        messageText: "The proposed motion did not receive a second.",
+        messageText: "This proposed motion did not receive a second:",
         messageStyle: 'warning',
-        displayTime: 0
+        displayTime: 2000
       }];
     }
   }, {
@@ -16481,6 +16488,7 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   /** If a motion has been made and is awaiting a second, it is stored here*/
   motionPendingSecond: null,
+  //todo This needs to be a stack so pending motions aren't lost if top one is rejected
   motionsPendingApproval: []
 };
 var mutations = {
@@ -16555,7 +16563,8 @@ var actions = {
     return new Promise(function (resolve, reject) {
       //todo Will there ever be a case where need to check which motion it is?
       dispatch('resetMotionPendingSecond').then(function () {
-        var m = _models_Message__WEBPACK_IMPORTED_MODULE_3__.default.makeFromTemplate('noSecond'); // window.console.log(m);
+        var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_1__.default(pusherEvent.motion);
+        var m = _models_Message__WEBPACK_IMPORTED_MODULE_3__.default.makeFromTemplate('noSecond', motion); // window.console.log(m);
 
         dispatch('showMessage', m);
         resolve();
@@ -73737,11 +73746,11 @@ var render = function() {
         [
           _c("p", [_vm._v("\n        " + _vm._s(_vm.messageText) + "\n    ")]),
           _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("p", { staticClass: "blockquote" }, [
-            _vm._v("\n        " + _vm._s(_vm.motionText) + "\n    ")
-          ]),
+          _vm.showMotionText
+            ? _c("p", { staticClass: "ml-5" }, [
+                _vm._v("\n        " + _vm._s(_vm.motionText) + "\n    ")
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "button",
