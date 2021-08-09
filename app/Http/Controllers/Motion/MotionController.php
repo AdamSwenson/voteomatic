@@ -9,6 +9,7 @@ use App\Http\Requests\MotionRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Repositories\IMotionRepository;
+use App\Repositories\IMotionStackRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -24,6 +25,8 @@ class MotionController extends Controller
     {
         $this->middleware('auth');
         $this->motionRepo = app()->make(IMotionRepository::class);
+        $this->motionStackRepo = app()->make(IMotionStackRepository::class);
+
     }
 
     /**
@@ -56,8 +59,10 @@ class MotionController extends Controller
 
         $this->authorize('viewAllMeetingMotions', [Motion::class, $meeting]);
 
-
-        return response()->json($meeting->motions()->get());
+        //We only want the motions that received a second.
+        //If there's ever a need to see what wasn't seconded, that can be done elsewhere
+        $motions = $meeting->motions()->where('seconded', true)->get();
+        return response()->json($motions);
     }
 
 
@@ -96,6 +101,9 @@ class MotionController extends Controller
                 $this->motionRepo->markInOrder($motion, $this->user);
                 //Tell the client to switch to this motion
                 MotionSeconded::dispatch($motion);
+                //Update it as the current motion on server
+                $motion = $this->motionStackRepo->setAsCurrentMotion($this->meeting, $motion);
+//                return redirect()->action([MotionStackController::class, 'setAsCurrentMotion', ['meeting' => $this->meeting, 'motion'=> $motion]]);
             } else {
                 // A regular user created it so we will need to
                 //seek authorization and (later) a second

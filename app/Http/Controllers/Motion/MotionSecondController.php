@@ -8,6 +8,7 @@ use App\Exceptions\IneligibleSecondAttempt;
 use App\Http\Controllers\Controller;
 use App\Models\Motion;
 use App\Repositories\IMotionRepository;
+use App\Repositories\IMotionStackRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -23,11 +24,13 @@ class MotionSecondController extends Controller
      * @var IMotionRepository|mixed
      */
     public $motionRepo;
+    public $motionStackRepo;
 
     public function __construct()
     {
         $this->middleware('auth');
         $this->motionRepo = app()->make(IMotionRepository::class);
+$this->motionStackRepo = app()->make(IMotionStackRepository::class);
     }
 
 
@@ -47,6 +50,11 @@ class MotionSecondController extends Controller
 
             //Broadcast the event
             MotionSeconded::dispatch($motion);
+
+            //Set it as the currently pending motion
+            $meeting = $motion->meeting;
+            $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+
 
             return response()->json($motion);
         } catch (IneligibleSecondAttempt $e) {

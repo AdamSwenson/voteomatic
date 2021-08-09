@@ -94,6 +94,8 @@ export default {
         },
 
         makeSubsidiary : function(){
+
+
             let payload = {
                 meetingId: this.meeting.id,
                 applies_to: this.motion.id,
@@ -102,27 +104,59 @@ export default {
                 requires: this.template.requires
             };
 
+            payload = _.merge(payload, this.template);
+
             let p = this.$store.dispatch('createSubsidiaryMotion', payload);
             let me = this;
             p.then(() => {
-                _.forEach(me.template, (v, k) => {
-                    // window.console.log('new notion', k, v);
+                    // _.forEach(me.template, (v, k) => {
+                    //     // window.console.log('new notion', k, v);
+                    //
+                    //     let pl = Payload.factory({
+                    //         updateProp: k,
+                    //         updateVal: v
+                    //     });
+                    //
+                    //     me.$store.dispatch('updateMotion', pl)
+                    //         .then(function () {
+                    //             //Finally we emit an event so the parent can
+                    //             //change what fields are displayed if needed
+                    //             me.$emit('motion-created');
+                    //
+                    //         });
+                    // });
 
-                    let pl = Payload.factory({
-                        updateProp: k,
-                        updateVal: v
-                    });
+                    // me.openHomeTab();
 
-                    me.$store.dispatch('updateMotion', pl)
-                        .then(function () {
-                            //Finally we emit an event so the parent can
-                            //change what fields are displayed if needed
-                            me.$emit('motion-created');
-
-                        });
-                });
-
-                me.openHomeTab();
+            // let payload = {
+            //     meetingId: this.meeting.id,
+            //     applies_to: this.motion.id,
+            //     content: this.localText,
+            //     type: this.template.type,
+            //     requires: this.template.requires
+            // };
+            //
+            // let p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            // let me = this;
+            // p.then(() => {
+            //     _.forEach(me.template, (v, k) => {
+            //         // window.console.log('new notion', k, v);
+            //
+            //         let pl = Payload.factory({
+            //             updateProp: k,
+            //             updateVal: v
+            //         });
+            //
+            //         me.$store.dispatch('updateMotion', pl)
+            //             .then(function () {
+            //                 //Finally we emit an event so the parent can
+            //                 //change what fields are displayed if needed
+            //                 me.$emit('motion-created');
+            //
+            //             });
+            //     });
+            //
+            //     me.openHomeTab();
             });
         },
 

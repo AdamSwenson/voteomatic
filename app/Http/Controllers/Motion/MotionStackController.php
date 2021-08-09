@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Motion;
 
 use App\Events\MotionClosed;
+use App\Events\NewCurrentMotionSet;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
@@ -110,6 +111,8 @@ class MotionStackController extends Controller
         $this->authorize('setAsCurrent', $motion);
 
         $result = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+
+        NewCurrentMotionSet::dispatch($motion);
         return response()->json($result);
     }
 

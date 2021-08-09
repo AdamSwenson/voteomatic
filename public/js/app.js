@@ -9751,23 +9751,55 @@ __webpack_require__.r(__webpack_exports__);
         type: this.template.type,
         requires: this.template.requires
       };
+      payload = _.merge(payload, this.template);
       var p = this.$store.dispatch('createSubsidiaryMotion', payload);
       var me = this;
-      p.then(function () {
-        _.forEach(me.template, function (v, k) {
-          // window.console.log('new notion', k, v);
-          var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_0__.default.factory({
-            updateProp: k,
-            updateVal: v
-          });
-          me.$store.dispatch('updateMotion', pl).then(function () {
-            //Finally we emit an event so the parent can
-            //change what fields are displayed if needed
-            me.$emit('motion-created');
-          });
-        });
-
-        me.openHomeTab();
+      p.then(function () {// _.forEach(me.template, (v, k) => {
+        //     // window.console.log('new notion', k, v);
+        //
+        //     let pl = Payload.factory({
+        //         updateProp: k,
+        //         updateVal: v
+        //     });
+        //
+        //     me.$store.dispatch('updateMotion', pl)
+        //         .then(function () {
+        //             //Finally we emit an event so the parent can
+        //             //change what fields are displayed if needed
+        //             me.$emit('motion-created');
+        //
+        //         });
+        // });
+        // me.openHomeTab();
+        // let payload = {
+        //     meetingId: this.meeting.id,
+        //     applies_to: this.motion.id,
+        //     content: this.localText,
+        //     type: this.template.type,
+        //     requires: this.template.requires
+        // };
+        //
+        // let p = this.$store.dispatch('createSubsidiaryMotion', payload);
+        // let me = this;
+        // p.then(() => {
+        //     _.forEach(me.template, (v, k) => {
+        //         // window.console.log('new notion', k, v);
+        //
+        //         let pl = Payload.factory({
+        //             updateProp: k,
+        //             updateVal: v
+        //         });
+        //
+        //         me.$store.dispatch('updateMotion', pl)
+        //             .then(function () {
+        //                 //Finally we emit an event so the parent can
+        //                 //change what fields are displayed if needed
+        //                 me.$emit('motion-created');
+        //
+        //             });
+        //     });
+        //
+        //     me.openHomeTab();
       });
     },
     handleClick: function handleClick() {
@@ -15683,23 +15715,51 @@ var actions = {
         getters = _ref5.getters;
     var me = this;
     return new Promise(function (resolve, reject) {
-      //send to server
-      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
-      window.console.log('sending', payload);
-      return Vue.axios.post(url, payload).then(function (response) {
-        var d = response.data;
-        var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
+      window.console.log('creating');
+      var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval');
+      window.console.log(statusMessage);
+      commit('addToMessageQueue', statusMessage); //send to server
 
-        commit('addMotionToStore', motion);
-        var pl = {
-          meetingId: payload.meetingId,
-          motionId: motion.id
-        };
-        return dispatch('setCurrentMotion', pl).then(function () {
-          return resolve(motion);
-        }); // commit('setMotion', motion);
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(); // window.console.log('sending', p);
+
+      return Vue.axios.post(url, payload).then(function (response) {
+        resolve(); // let d = response.data;
+        //
+        // let motion = new Motion(d);
+        // // let motion = new Motion(d.id, d.name, d.date);
+        // commit('addMotionToStore', motion);
+        //
+        // let pl = {meetingId: meetingId, motionId: motion.id};
+        //
+        // return dispatch('setCurrentMotion', pl)
+        //     .then(() => {
+        //         return resolve(motion);
+        //     });
+        //
+        // // commit('setMotion', motion);
       });
-    });
+    }); // //send to server
+    //     let url = routes.motions.resource();
+    //     window.console.log('sending', payload);
+    //     return Vue.axios.post(url, payload)
+    //         .then((response) => {
+    //             let d = response.data;
+    //
+    //             let motion = new Motion(d);
+    //             // let motion = new Motion(d.id, d.name, d.date);
+    //             commit('addMotionToStore', motion);
+    //
+    //             let pl = {meetingId: payload.meetingId, motionId: motion.id};
+    //
+    //             return dispatch('setCurrentMotion', pl)
+    //                 .then(() => {
+    //                     return resolve(motion);
+    //                 });
+    //
+    //             // commit('setMotion', motion);
+    //
+    //         });
+    // }));
   },
   deleteMotion: function deleteMotion(_ref6, motion) {
     var dispatch = _ref6.dispatch,
@@ -15797,6 +15857,21 @@ var actions = {
       });
     });
   },
+  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref9, pusherEvent) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
+    return new Promise(function (resolve, reject) {
+      // dispatch('resetMotionPendingSecond');
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
+      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
+
+      return dispatch('setMotion', motion).then(function () {
+        dispatch('forceNavigationToVote');
+        return resolve(motion);
+      });
+    });
+  },
 
   /**
    * When the client is notified by the server that voting on the currently active
@@ -15804,10 +15879,10 @@ var actions = {
    * initiates the loading of results.
    *
    */
-  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref9, endedMotion) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref10, endedMotion) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     //This will be the updated motion we just sent to the server
     //If the motion was an amendment, the server will
@@ -15850,10 +15925,10 @@ var actions = {
    * @param amendmentMotion
    * @param supersedingMotion
    */
-  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref10, amendmentMotion) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
+  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref11, amendmentMotion) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     //todo This will be fixed in VOT-72
@@ -15879,10 +15954,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref11, motion) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  loadMotion: function loadMotion(_ref12, motion) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -15906,10 +15981,10 @@ var actions = {
    * @param meetingId
    * @returns {Promise<unknown>}
    */
-  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref12, meetingId) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref13, meetingId) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
     window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -15927,10 +16002,10 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref13, meeting) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref14, meeting) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     //we need this to determine whether election or regular
     // let meeting = getters.getMeetingById(meetingId);
     window.console.log('Loading motions for meeting ', meeting);
@@ -15963,10 +16038,10 @@ var actions = {
       });
     });
   },
-  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref14) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref15) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     window.console.log("Loading motion types and templates");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -16001,10 +16076,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  markMotionComplete: function markMotionComplete(_ref15, endedMotion) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
+  markMotionComplete: function markMotionComplete(_ref16, endedMotion) {
+    var dispatch = _ref16.dispatch,
+        commit = _ref16.commit,
+        getters = _ref16.getters;
     return new Promise(function (resolve, reject) {
       var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         object: endedMotion,
@@ -16094,12 +16169,12 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref16, _ref17) {
-    var dispatch = _ref16.dispatch,
-        commit = _ref16.commit,
-        getters = _ref16.getters;
-    var meetingId = _ref17.meetingId,
-        motionId = _ref17.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref17, _ref18) {
+    var dispatch = _ref17.dispatch,
+        commit = _ref17.commit,
+        getters = _ref17.getters;
+    var meetingId = _ref18.meetingId,
+        motionId = _ref18.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.setCurrentMotion(meetingId, motionId);
@@ -16122,10 +16197,10 @@ var actions = {
    * @param getters
    * @param payload
    */
-  setMotion: function setMotion(_ref18, motion) {
-    var dispatch = _ref18.dispatch,
-        commit = _ref18.commit,
-        getters = _ref18.getters;
+  setMotion: function setMotion(_ref19, motion) {
+    var dispatch = _ref19.dispatch,
+        commit = _ref19.commit,
+        getters = _ref19.getters;
     return new Promise(function (resolve, reject) {
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion);
@@ -16182,10 +16257,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref19, payload) {
-    var dispatch = _ref19.dispatch,
-        commit = _ref19.commit,
-        getters = _ref19.getters;
+  updateMotion: function updateMotion(_ref20, payload) {
+    var dispatch = _ref20.dispatch,
+        commit = _ref20.commit,
+        getters = _ref20.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -17086,6 +17161,11 @@ var actions = {
     }).listen('MotionMarkedOutOfOrder', function (e) {
       window.console.log('Received broadcast event meeting', e);
       dispatch('handleMotionMarkedOutOfOrderMessage', e);
+    }).listen('NewCurrentMotionSet', function (e) {
+      //In some cases the chair may select a motion from the
+      //home page. When that heppens we need to force everyone onto
+      //a new motion
+      dispatch('handleNewCurrentMotionSetMessage', e);
     });
     window.console.log('Meeting listeners initialized for ', channel);
 

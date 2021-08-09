@@ -72,8 +72,13 @@ const actions = {
             })
             .listen('MotionMarkedOutOfOrder', (e) => {
                 window.console.log('Received broadcast event meeting', e);
-
                 dispatch('handleMotionMarkedOutOfOrderMessage', e);
+            })
+            .listen('NewCurrentMotionSet', (e) => {
+                //In some cases the chair may select a motion from the
+                //home page. When that heppens we need to force everyone onto
+                //a new motion
+               dispatch('handleNewCurrentMotionSetMessage', e);
             });
 
         window.console.log('Meeting listeners initialized for ', channel);

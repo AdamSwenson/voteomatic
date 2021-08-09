@@ -267,28 +267,56 @@ const actions = {
         let me = this;
 
         return new Promise(((resolve, reject) => {
+            window.console.log('creating');
+            let statusMessage = Message.makeFromTemplate('pendingApproval');
+            window.console.log(statusMessage);
+            commit('addToMessageQueue', statusMessage);
             //send to server
             let url = routes.motions.resource();
-            window.console.log('sending', payload);
+            // window.console.log('sending', p);
             return Vue.axios.post(url, payload)
                 .then((response) => {
-                    let d = response.data;
-
-                    let motion = new Motion(d);
-                    // let motion = new Motion(d.id, d.name, d.date);
-                    commit('addMotionToStore', motion);
-
-                    let pl = {meetingId: payload.meetingId, motionId: motion.id};
-
-                    return dispatch('setCurrentMotion', pl)
-                        .then(() => {
-                            return resolve(motion);
-                        });
-
-                    // commit('setMotion', motion);
+                    resolve();
+                    // let d = response.data;
+                    //
+                    // let motion = new Motion(d);
+                    // // let motion = new Motion(d.id, d.name, d.date);
+                    // commit('addMotionToStore', motion);
+                    //
+                    // let pl = {meetingId: meetingId, motionId: motion.id};
+                    //
+                    // return dispatch('setCurrentMotion', pl)
+                    //     .then(() => {
+                    //         return resolve(motion);
+                    //     });
+                    //
+                    // // commit('setMotion', motion);
 
                 });
         }));
+
+        // //send to server
+        //     let url = routes.motions.resource();
+        //     window.console.log('sending', payload);
+        //     return Vue.axios.post(url, payload)
+        //         .then((response) => {
+        //             let d = response.data;
+        //
+        //             let motion = new Motion(d);
+        //             // let motion = new Motion(d.id, d.name, d.date);
+        //             commit('addMotionToStore', motion);
+        //
+        //             let pl = {meetingId: payload.meetingId, motionId: motion.id};
+        //
+        //             return dispatch('setCurrentMotion', pl)
+        //                 .then(() => {
+        //                     return resolve(motion);
+        //                 });
+        //
+        //             // commit('setMotion', motion);
+        //
+        //         });
+        // }));
 
     },
 
@@ -394,6 +422,19 @@ const actions = {
         }));
     },
 
+    handleNewCurrentMotionSetMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            // dispatch('resetMotionPendingSecond');
+            let motion = new Motion(pusherEvent.motion);
+            commit('addMotionToStore', motion);
+            //Make it the current motion and attach relevant listeners
+            return dispatch('setMotion', motion)
+                .then(() => {
+                    dispatch('forceNavigationToVote');
+                    return resolve(motion);
+                });
+        }));
+    },
 
     /**
      * When the client is notified by the server that voting on the currently active
