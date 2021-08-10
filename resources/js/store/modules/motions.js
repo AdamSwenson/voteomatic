@@ -347,15 +347,16 @@ const actions = {
         let me = this;
 
         return new Promise(((resolve, reject) => {
-            window.console.log('creating');
-            let statusMessage = Message.makeFromTemplate('pendingApproval');
-            window.console.log(statusMessage);
-            commit('addToMessageQueue', statusMessage);
             //send to server
             let url = routes.motions.resource();
             // window.console.log('sending', p);
             return Vue.axios.post(url, payload)
                 .then((response) => {
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+
                     resolve();
                     // let d = response.data;
                     //

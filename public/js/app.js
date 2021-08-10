@@ -15940,14 +15940,14 @@ var actions = {
         getters = _ref7.getters;
     var me = this;
     return new Promise(function (resolve, reject) {
-      window.console.log('creating');
-      var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval');
-      window.console.log(statusMessage);
-      commit('addToMessageQueue', statusMessage); //send to server
-
+      //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(); // window.console.log('sending', p);
 
       return Vue.axios.post(url, payload).then(function (response) {
+        //Set a message for the user telling them what's going to happen
+        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //set it on a timer
+
+        dispatch('showMessage', statusMessage);
         resolve(); // let d = response.data;
         //
         // let motion = new Motion(d);
