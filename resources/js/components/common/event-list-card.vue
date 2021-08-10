@@ -44,7 +44,7 @@ export default {
     // mixins : [MeetingMixin],
     data: function () {
         return {
-            isReady: false
+            _isReady: false
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -56,6 +56,9 @@ export default {
     },
 
     asyncComputed: {
+        isReady : function(){
+            return this._isReady;
+        },
         events: function () {
             let m = this.$store.getters.getStoredMeetings;
             if (!isReadyToRock(m)) return [];
@@ -98,7 +101,7 @@ export default {
             let me = this;
             this.$store.dispatch('loadAllEvents').then(() => {
                 // me.$store.dispatch('loadAllElections').then(() => {
-                me.isReady = true;
+                me._isReady = true;
                 // });
 
             });

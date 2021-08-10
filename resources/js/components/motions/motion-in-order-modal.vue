@@ -25,6 +25,9 @@
 
                     <p class="blockquote" v-html="motionText"></p>
 
+                    <p><required-vote-badge :motion="motion"></required-vote-badge>   <motion-type-badge :motion="motion"></motion-type-badge>    <debatable-badge :motion="motion"></debatable-badge></p>
+<!--                    <p><strong>Requires:</strong> {{motion.requires}}</p>-->
+<!--                    <p><strong>Type: </strong>{{motion.type}}</p>-->
                 </div>
 
                 <div class="modal-footer">
@@ -51,10 +54,13 @@
 <script>
 import chairMixin from "../../mixins/chairMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import RequiredVoteBadge from "./badges/required-vote-badge";
+import MotionTypeBadge from "./badges/motion-type-badge";
+import DebatableBadge from "./badges/debatable-badge";
 
 export default {
     name: "motion-in-order-modal",
-
+    components: {DebatableBadge, MotionTypeBadge, RequiredVoteBadge},
     props: [],
 
     mixins: [chairMixin],

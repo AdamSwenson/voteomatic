@@ -59,6 +59,8 @@ class MotionRepository implements IMotionRepository
             $motion = Motion::create($request->all());
         }
 
+        //dev Perhaps we should make sure that is_complete and seconded are not yet set
+
         //Add it to the meeting
         //Note this will be harmlessly redundant if we
         //are using the preexisting object

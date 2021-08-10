@@ -59,6 +59,10 @@ $this->motionStackRepo = app()->make(IMotionStackRepository::class);
             return response()->json($motion);
         } catch (IneligibleSecondAttempt $e) {
             //todo
+            $d = [
+                'message' => $e::MESSAGE
+            ];
+            return response()->json($d, $e::ERROR_CODE);
             //Tell them that they can't second their own motion
         }
 

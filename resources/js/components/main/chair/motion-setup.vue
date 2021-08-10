@@ -8,19 +8,19 @@
         </div>
 
         <div class="card-header make-button-area">
-            <h5 class="card-subtitle">Amendments</h5>
+<!--            <h5 class="card-subtitle">Amendments</h5>-->
             <amendment-button
                 v-on:new-amendment="handleAmendmentButtonClick"
             ></amendment-button>
-        </div>
+<!--        </div>-->
 
-        <div class="card-header make-button-area">
-            <h5 class="card-subtitle">Substantive main motions</h5>
+<!--        <div class="card-header make-button-area">-->
+<!--            <h5 class="card-subtitle">Substantive main motions</h5>-->
 
             <create-motion-button
                 :meeting="meeting"
                 v-on:create-motion-clicked="handleNewMainButtonClick"
-            ></create-motion-button>
+             ></create-motion-button>
 
             <button class="btn btn-outline-danger"
                     v-if="isChair"
@@ -28,13 +28,16 @@
             >Edit pending motion</button>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="showBody">
 
-            <main-motion-setup-area v-if="showCard == 'main'"></main-motion-setup-area>
+            <main-motion-setup-area v-if="showCard === 'main'"
+                                    v-on:hide-editing-card="resetCard"
 
-            <amendment-setup-area v-else-if="showCard == 'amendment'"></amendment-setup-area>
+            ></main-motion-setup-area>
 
-            <main-motion-edit-area v-else-if="showCard == 'edit' && isChair"></main-motion-edit-area>
+            <amendment-setup-area v-else-if="showCard === 'amendment'"></amendment-setup-area>
+
+            <main-motion-edit-area v-else-if="showCard === 'edit' && isChair"></main-motion-edit-area>
         </div>
 
 
@@ -105,7 +108,7 @@
 
 <script>
 
-
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import * as routes from "../../../routes";
 import Meeting from '../../../models/Meeting';
 import MeetingMixin from '../../../mixins/meetingMixin';
@@ -154,6 +157,12 @@ export default {
     },
 
     computed: {
+        /**
+         * Computed property so will update
+         */
+        showBody : function(){
+          return isReadyToRock(this.showCard);
+        },
 
 
         title: function () {
@@ -187,7 +196,15 @@ export default {
 
         handleEditMainButtonClick: function(){
             this.showCard = 'edit';
+        },
+
+        /**
+         * Hides whatever card is showing
+         */
+        resetCard : function(){
+            this.showCard = null;
         }
+
 
     },
 

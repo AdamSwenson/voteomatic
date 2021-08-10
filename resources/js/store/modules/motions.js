@@ -44,6 +44,8 @@ const state = {
      */
     motions: [],
 
+    draftMotion: null,
+
 
     /**
      * Motions from this meeting which the user has already
@@ -84,6 +86,10 @@ const mutations = {
         state.motions = [];
     },
 
+    clearDraftMotion: (state) => {
+        state.draftMotion = null;
+    },
+
 
     deleteMotion: (state, motionObject) => {
         // let idx = state.motions.indexOf(motionObject);
@@ -93,6 +99,15 @@ const mutations = {
         });
 
     },
+
+    setDraftMotion: (state, motionObject) => {
+        state.draftMotion = motionObject;
+    },
+
+    setDraftMotionProp: (state, {updateProp, updateVal}) => {
+        Vue.set(state.draftMotion, updateProp, updateVal);
+    },
+
 
     /**
      * Sets the provided motion object as
@@ -191,16 +206,24 @@ const actions = {
     createMotion({dispatch, commit, getters}, meetingId) {
         let me = this;
         return new Promise(((resolve, reject) => {
-            window.console.log('creating');
-            let statusMessage = Message.makeFromTemplate('pendingApproval');
-            window.console.log(statusMessage);
-            commit('addToMessageQueue', statusMessage);
+            // window.console.log('creating');
+            // let statusMessage = Message.makeFromTemplate('pendingApproval');
+            // window.console.log(statusMessage);
+            // commit('addToMessageQueue', statusMessage);
+
             //send to server
             let url = routes.motions.resource();
             let p = {'meetingId': meetingId};
             // window.console.log('sending', p);
             return Vue.axios.post(url, p)
                 .then((response) => {
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+
+                    resolve();
+
                     resolve();
                     // let d = response.data;
                     //
@@ -221,6 +244,63 @@ const actions = {
         }));
 
     },
+
+    /**
+     * Uses the current state of the draft motion to
+     * create a new motion on the server
+     *
+     * The server will handle setting it as current, if the user is the chair or
+     * soliciting the chair's approval if they are a regular member.
+     *
+     * NB, nothing needs to be passed in since everything relevant is stored in
+     * state
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    createMotionFromDraft({dispatch, commit, getters}) {
+        let meeting = getters.getActiveMeeting;
+        let motion = getters.getDraftMotion;
+        let me = this;
+        return new Promise(((resolve, reject) => {
+
+            //send to server
+            let url = routes.motions.resource();
+            // let p = {'meetingId': meetingId};
+            motion['meetingId'] = meeting.id;
+            // window.console.log('sending', p);
+            return Vue.axios.post(url, motion)
+                .then((response) => {
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+
+                    resolve();
+                    // let d = response.data;
+                    //
+                    // let motion = new Motion(d);
+                    // // let motion = new Motion(d.id, d.name, d.date);
+                    // commit('addMotionToStore', motion);
+                    //
+                    // let pl = {meetingId: meetingId, motionId: motion.id};
+                    //
+                    // return dispatch('setCurrentMotion', pl)
+                    //     .then(() => {
+                    //         return resolve(motion);
+                    //     });
+                    //
+                    // // commit('setMotion', motion);
+
+                });
+        }));
+
+    },
+
+
+
 
     /**
      * Create a new motion on the server and set
@@ -475,6 +555,32 @@ const actions = {
 
         }));
     },
+
+    /**
+     * Create a draft motion on the client. This is what the user
+     * edits before they click 'make motion'. After that, editing would
+     * be done on the main motion.
+     *
+     * This may help with the problem of the user getting pulled away while
+     * working on their motion (VOT-75)
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    initializeDraftMainMotion({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            let motion = new Motion({
+                type: 'main',
+                requires: 0.5,
+                debatable: true
+            });
+            commit('setDraftMotion', motion);
+            resolve();
+        }));
+
+    },
+
 
     /**
      * If an amendment passes, we need to quietly create a new main motion with the
@@ -836,6 +942,25 @@ const actions = {
                     resolve()
                 });
         }));
+    },
+
+
+    /**
+     * Updates properties of the draft motion the user
+     * is working on. Does not tell the server anything.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     * @returns {Promise<unknown>}
+     */
+    updateDraftMotion({dispatch, commit, getters}, payload) {
+        return new Promise(((resolve, reject) => {
+            //make local change only
+            commit('setDraftMotionProp', payload)
+            resolve();
+        }));
     }
 };
 
@@ -852,6 +977,10 @@ const getters = {
     getActiveMotion: (state) => {
         return getById(state.motions, state.currentMotion)
         // return state.currentMotion;
+    },
+
+    getDraftMotion: (state) => {
+        return state.draftMotion;
     },
 
     getMotionById: (state) => (id) => {
