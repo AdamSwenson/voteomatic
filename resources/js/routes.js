@@ -238,6 +238,10 @@ module.exports = {
             return normalizedRouteRoot() + 'motions/order/good/' + motionId;
         },
 
+        openVoting: (motionId) => {
+            return normalizedRouteRoot() + 'motions/open/' + motionId;
+        },
+
         outOfOrder: (motionId) => {
             return normalizedRouteRoot() + 'motions/order/bad/' + motionId;
         },

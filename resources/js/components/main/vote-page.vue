@@ -51,7 +51,8 @@
             </div>
         </div>
 
-        <div class="card-footer">
+
+        <div class="card-footer" v-if="isVotingAllowed">
             <vote-buttons
                 v-if="showButtons"
                 :motion="motion"
@@ -65,6 +66,10 @@
             >
                 <p>You have already voted</p>
             </div>
+        </div>
+
+        <div class="card-footer" v-else>
+            <p>The Chair has not yet opened voting for this motion</p>
         </div>
 
         <!--        </div>-->
@@ -205,10 +210,14 @@ export default {
     asyncComputed: {
         cardTitle: {
             get: function () {
-                if (this.hasVoted) {
-                    return this.titleText.voted
+                if(! this.isVotingAllowed){
+                    return 'The current motion is ';
+                }else{
+                    if (this.hasVoted) {
+                        return this.titleText.voted
+                    }
+                    return this.titleText.unVoted
                 }
-                return this.titleText.unVoted
             },
             default: ''
         },
@@ -251,6 +260,10 @@ export default {
                 }
             },
             watch: ['motion']
+        },
+
+        isVotingAllowed: function(){
+          return this.isReady && this.motion.isVotingAllowed;
         },
 
         motionContent: function () {

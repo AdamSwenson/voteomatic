@@ -83,12 +83,18 @@
 
                 <vote-nav-button
                     :motion="motion"
-                    v-if="isSelected && ! isComplete "
+                    v-if="isSelected && ! isComplete && isVotingAllowed"
                 ></vote-nav-button>
+
+                <open-voting-button
+                    v-if="isChair && isSelected && ! isComplete && ! isVotingAllowed"
+                    :motion="motion"
+                ></open-voting-button>
+
 
                 <!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
                 <end-voting-button
-                    v-if="isSelected && ! isComplete && isChair"
+                    v-if="isChair && isSelected && ! isComplete && isVotingAllowed "
                     :motion="motion"
                 ></end-voting-button>
 
@@ -119,10 +125,12 @@ import ProceduralMixin from "../../mixins/proceduralMixin";
 import MotionTypeBadge from "./badges/motion-type-badge";
 import RequiredVoteBadge from "./badges/required-vote-badge";
 import DebatableBadge from "./badges/debatable-badge";
+import OpenVotingButton from "./open-voting-button";
 
 export default {
     name: "motion-select-area",
     components: {
+        OpenVotingButton,
         DebatableBadge,
         RequiredVoteBadge,
         MotionTypeBadge,
@@ -204,6 +212,11 @@ export default {
             if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
 
             return this.motion.id === this.selectedMotion.id
+        },
+
+
+        isVotingAllowed: function () {
+            return this.motion.isVotingAllowed;
         },
 
 

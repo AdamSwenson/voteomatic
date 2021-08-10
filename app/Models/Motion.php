@@ -24,6 +24,8 @@ class Motion extends Model
         'is_complete',
         'is_current',
         'is_in_order',
+        /** Whether users are allowed at this time to cast votes on the motion */
+        'is_voting_allowed',
         /** For elections, this defines how many people can be elected to the office */
         'max_winners',
         'meeting_id',
@@ -83,6 +85,7 @@ class Motion extends Model
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',
+        'is_voting_allowed' => 'boolean',
         'debatable' => 'boolean',
         'seconded' => 'boolean',
         //election

@@ -1,7 +1,7 @@
 <template>
 
     <button
-        class="btn"
+        class="btn "
         v-bind:class="styling"
         v-on:click="handleClick"
     >{{label}}</button>
@@ -17,12 +17,14 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 export default {
     name: "button-parent",
 
-    props: [],
 
     mixins: [],
 
     data: function () {
-        return {}
+        return {
+            // label:
+            // styling:
+        }
     },
 
     asyncComputed: {

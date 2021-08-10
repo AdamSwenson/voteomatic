@@ -9,7 +9,7 @@
         <!--            <div class="text-right refresh-area">-->
         <!--                <refresh-button></refresh-button>-->
         <!--        </div>-->
-<message-area></message-area>
+        <message-area></message-area>
 
         <router-view name="main"></router-view>
 
@@ -88,7 +88,8 @@ export default {
         //something open (and not a blank card) and
         //don't send them back to the home tab if they've
         //clicked another tab while things were loading.
-        me.$router.push('meeting-home');
+        // me.$router.push('meeting-home');
+        me.$store.dispatch('forceNavigationToHome');
 
 
         //parse data from page and store stuff

@@ -78,7 +78,10 @@ const actions = {
                 //In some cases the chair may select a motion from the
                 //home page. When that heppens we need to force everyone onto
                 //a new motion
-               dispatch('handleNewCurrentMotionSetMessage', e);
+                dispatch('handleNewCurrentMotionSetMessage', e);
+            })
+            .listen('VotingOnMotionOpened', (e) => {
+                dispatch('handleVotingOnMotionOpenedMessage', e);
             });
 
         window.console.log('Meeting listeners initialized for ', channel);
@@ -87,7 +90,7 @@ const actions = {
             let chairChannel = `chair.${meeting.id}`;
             Echo.private(chairChannel)
                 .listen('MotionNeedingApproval', (e) => {
-                    window.console.log('Received chair broadcast', chairChannel,  e);
+                    window.console.log('Received chair broadcast', chairChannel, e);
 
                     dispatch('handleMotionNeedingApprovalMessage', e);
 

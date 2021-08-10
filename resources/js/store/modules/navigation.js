@@ -1,14 +1,20 @@
 const state = {
+    /** When set to true, a watcher will open the home tab */
+    homeNavTrigger: false,
 
     /** When set to true, a watcher will open the results tab*/
     resultsNavTrigger: false,
 
     /** When set to true, a watcher will open the vote tab*/
-    voteNavTrigger: false
+    voteNavTrigger: false,
 };
 
 
 const mutations = {
+    setHomeNavTrigger: (state, value) => {
+    Vue.set(state, 'homeNavTrigger', value);
+        },
+
     setResultsNavTrigger: (state, value) => {
         Vue.set(state, 'resultsNavTrigger', value);
     },
@@ -25,11 +31,20 @@ const mutations = {
     resetNavTriggers: (state) => {
         state.resultsNavTrigger = false;
         state.voteNavTrigger = false;
+        state.homeNavTrigger = false;
     }
 
 };
 
 const actions = {
+    forceNavigationToHome({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            commit('resetNavTriggers');
+            commit('setHomeNavTrigger', true);
+            resolve();
+        }));
+    },
+
     forceNavigationToResults({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             commit('resetNavTriggers');
@@ -37,6 +52,7 @@ const actions = {
             resolve();
         }));
     },
+
     forceNavigationToVote({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             commit('resetNavTriggers');
@@ -48,6 +64,9 @@ const actions = {
 };
 
 const getters = {
+    getHomeNavTrigger: (state) => {
+        return state.homeNavTrigger;
+    },
 
     getResultsNavTrigger: (state) => {
         return state.resultsNavTrigger;

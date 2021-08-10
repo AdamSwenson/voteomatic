@@ -300,8 +300,6 @@ const actions = {
     },
 
 
-
-
     /**
      * Create a new motion on the server and set
      * it as the current motion
@@ -497,7 +495,7 @@ const actions = {
             //Make it the current motion and attach relevant listeners
             return dispatch('setMotion', motion)
                 .then(() => {
-                    dispatch('forceNavigationToVote');
+                    dispatch('forceNavigationToHome');
                     return resolve(motion);
                 });
         }));
@@ -511,7 +509,7 @@ const actions = {
             //Make it the current motion and attach relevant listeners
             return dispatch('setMotion', motion)
                 .then(() => {
-                    dispatch('forceNavigationToVote');
+                    dispatch('forceNavigationToHome');
                     return resolve(motion);
                 });
         }));
@@ -555,6 +553,29 @@ const actions = {
             });
 
         }));
+    },
+
+    /**
+     * When the client is notified by the server that voting on a motion is now open
+     * this handles everything.
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    handleVotingOnMotionOpenedMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            let motion = new Motion(pusherEvent.motion);
+            //commit('addMotionToStore', motion);
+            return dispatch('markMotionVotingOpen', motion)
+                .then(() => {
+                    //If it somehow wasn't the current motion
+                    //make it the current motion and attach relevant listeners
+                    dispatch('setMotion', motion);
+                    dispatch('forceNavigationToVote');
+                    return resolve(motion);
+                });
+        }));
+
     },
 
     /**
@@ -757,6 +778,28 @@ const actions = {
         }));
     },
 
+    /**
+     * Sets the is_voting_allowed property on the provided motion
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param endedMotion
+     * @returns {Promise<unknown>}
+     */
+    markMotionVotingOpen({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            let pl = Payload.factory({
+                object: motion,
+                updateProp: 'isVotingAllowed',
+                updateVal: true
+            });
+
+            commit('setMotionProp', pl);
+
+            resolve();
+        }));
+    },
+
 
     // markMotionInOrder({dispatch, commit, getters}, motion) {
     //     return new Promise(((resolve, reject) => {
@@ -857,7 +900,8 @@ const actions = {
 
     /**
      * Wraps the commit which sets a particular motion as the
-     * one being voted on so that other listeners can be attached
+     * one being voted on so that other listeners can be attached.
+     *
      *
      * @param dispatch
      * @param commit
@@ -866,7 +910,9 @@ const actions = {
      */
     setMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
-
+            //first reset the nav triggers since we may not
+            //want selecting the motion to automatically force everyone somewhere
+            commit('resetNavTriggers');
             commit('setMotion', motion)
             window.console.log('currentMotion set', motion);
             let channel = `motions.${motion.id}`;
@@ -905,6 +951,29 @@ const actions = {
 
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
+        }));
+    },
+
+
+    /**
+     * Used by the chair to open voting for all users on the
+     * provided motion
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     */
+    startVotingOnMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.openVoting(motion.id);
+            return Vue.axios.post(url, motion)
+                .then((response) => {
+                    let d = response.data;
+                    resolve();
+                    //we don't do anything here since the push message will trigger
+                    //everything
+                });
         }));
     },
 

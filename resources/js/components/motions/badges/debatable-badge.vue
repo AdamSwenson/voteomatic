@@ -8,6 +8,8 @@
 
 <script>
 import MotionObjectMixin from "../../../mixins/motionObjectMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+
 export default {
 name: "debatable-badge",
 
@@ -27,7 +29,7 @@ asyncComputed : {
     },
 
     debatable : function(){
-        return this.motion.debatable;
+        if(isReadyToRock(this.motion)) return this.motion.debatable;
     },
 
     labelText : function(){

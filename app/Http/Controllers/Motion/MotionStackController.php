@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Motion;
 
 use App\Events\MotionClosed;
 use App\Events\NewCurrentMotionSet;
+use App\Events\VotingOnMotionOpened;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
@@ -116,6 +117,32 @@ class MotionStackController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Allows the motion to be voted upon
+     * and tells all listening clients to start voting
+     * @param Motion $motion
+     */
+    public function startVotingOnMotion(Motion $motion){
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('markComplete', $motion);
+
+        $motion->is_voting_allowed = true;
+        $motion->save();
+
+        //The motion was probably the current one, but just in case
+        $meeting = $motion->meeting;
+        $motion = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+
+        //Send the push message to all clients
+        VotingOnMotionOpened::dispatch($motion);
+
+        //return the success message
+        response()->json($motion);
+
+    }
+
 
     /**
      * Creates or updates the stored map from a map
@@ -172,4 +199,6 @@ class MotionStackController extends Controller
 //        }
         //
     }
+
+
 }

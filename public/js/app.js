@@ -6353,6 +6353,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6458,11 +6463,15 @@ __webpack_require__.r(__webpack_exports__);
   asyncComputed: {
     cardTitle: {
       get: function get() {
-        if (this.hasVoted) {
-          return this.titleText.voted;
-        }
+        if (!this.isVotingAllowed) {
+          return 'The current motion is ';
+        } else {
+          if (this.hasVoted) {
+            return this.titleText.voted;
+          }
 
-        return this.titleText.unVoted;
+          return this.titleText.unVoted;
+        }
       },
       "default": ''
     },
@@ -6495,6 +6504,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       watch: ['motion']
+    },
+    isVotingAllowed: function isVotingAllowed() {
+      return this.isReady && this.motion.isVotingAllowed;
     },
     motionContent: function motionContent() {
       if (this.isReady) {
@@ -7802,6 +7814,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
 /* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 //
 //
 //
@@ -7810,6 +7823,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "debatable-badge",
@@ -7824,7 +7838,7 @@ __webpack_require__.r(__webpack_exports__);
       return !_.isNull(this.debatable) && !_.isUndefined(this.debatable);
     },
     debatable: function debatable() {
-      return this.motion.debatable;
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.motion)) return this.motion.debatable;
     },
     labelText: function labelText() {
       if (_.isNull(this.debatable)) return '';
@@ -8596,6 +8610,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 /* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
 /* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _open_voting_button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./open-voting-button */ "./resources/js/components/motions/open-voting-button.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8716,9 +8737,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-select-area",
   components: {
+    OpenVotingButton: _open_voting_button__WEBPACK_IMPORTED_MODULE_14__.default,
     DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__.default,
     RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__.default,
     MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__.default,
@@ -8797,6 +8820,9 @@ __webpack_require__.r(__webpack_exports__);
     isSelected: function isSelected() {
       if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false;
       return this.motion.id === this.selectedMotion.id;
+    },
+    isVotingAllowed: function isVotingAllowed() {
+      return this.motion.isVotingAllowed;
     },
 
     /**
@@ -10343,6 +10369,41 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _parents_button_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parents/button-parent */ "./resources/js/components/parents/button-parent.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "open-voting-button",
+  "extends": _parents_button_parent__WEBPACK_IMPORTED_MODULE_0__.default,
+  props: ['motion'],
+  mixins: [],
+  data: function data() {
+    return {
+      label: "Start Voting",
+      styling: "btn-success btn-lg btn-block"
+    };
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      this.$store.dispatch('startVotingOnMotion', this.motion);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/navigation/page-navbar.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/navigation/page-navbar.vue?vue&type=script&lang=js& ***!
@@ -10785,10 +10846,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "button-parent",
-  props: [],
   mixins: [],
   data: function data() {
-    return {};
+    return {// label:
+      // styling:
+    };
   },
   asyncComputed: {},
   computed: {},
@@ -11562,8 +11624,9 @@ __webpack_require__.r(__webpack_exports__);
     //something open (and not a blank card) and
     //don't send them back to the home tab if they've
     //clicked another tab while things were loading.
+    // me.$router.push('meeting-home');
 
-    me.$router.push('meeting-home'); //parse data from page and store stuff
+    me.$store.dispatch('forceNavigationToHome'); //parse data from page and store stuff
 
     var p = this.$store.dispatch('initialize');
     p.then(function () {
@@ -11867,13 +11930,35 @@ module.exports = {
      * Not actually used by a component.
      * This watches the navTrigger value. When
      * an incoming websocket message tells us that the vote is complete,
+     * this switches to the home tab. It then resets the navTrigger value
+     * so that the user can navigate away from home.
+     */
+    homeNavTrigger: {
+      get: function get() {
+        if (this.$store.getters.getHomeNavTrigger === true) {
+          if (this.$router.currentRoute.name !== 'home') {
+            this.$router.push('meeting-home');
+          }
+
+          this.$store.commit('setHomeNavTrigger', false);
+        }
+      }
+    },
+
+    /**
+     * Not actually used by a component.
+     * This watches the navTrigger value. When
+     * an incoming websocket message tells us that the vote is complete,
      * this switches to the results tab. It then resets the navTrigger value
      * so that the user can navigate away from results.
      */
     resultsNavTrigger: {
       get: function get() {
         if (this.$store.getters.getResultsNavTrigger === true) {
-          this.$router.push('results');
+          if (this.$router.currentRoute.name !== 'results') {
+            this.$router.push('results');
+          }
+
           this.$store.commit('setResultsNavTrigger', false);
         }
       }
@@ -11889,7 +11974,10 @@ module.exports = {
     voteNavTrigger: {
       get: function get() {
         if (this.$store.getters.getVoteNavTrigger === true) {
-          this.$router.push('vote');
+          if (this.$router.currentRoute.name !== 'vote') {
+            this.$router.push('vote');
+          }
+
           this.$store.commit('setVoteNavTrigger', false);
         }
       }
@@ -13189,6 +13277,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Motion)
 /* harmony export */ });
 /* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13210,6 +13299,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -13238,6 +13328,8 @@ var Motion = /*#__PURE__*/function (_IModel) {
         type = _ref$type === void 0 ? null : _ref$type,
         _ref$is_complete = _ref.is_complete,
         is_complete = _ref$is_complete === void 0 ? null : _ref$is_complete,
+        _ref$is_voting_allowe = _ref.is_voting_allowed,
+        is_voting_allowed = _ref$is_voting_allowe === void 0 ? null : _ref$is_voting_allowe,
         _ref$applies_to = _ref.applies_to,
         applies_to = _ref$applies_to === void 0 ? null : _ref$applies_to,
         _ref$seconded = _ref.seconded,
@@ -13265,6 +13357,7 @@ var Motion = /*#__PURE__*/function (_IModel) {
     _this.requires = _.toNumber(requires);
     _this.type = type;
     _this.isComplete = is_complete;
+    _this.is_voting_allowed = is_voting_allowed;
     /** If the motion is an amendment, this will
      * hold the html marked up text  */
 
@@ -13333,6 +13426,19 @@ var Motion = /*#__PURE__*/function (_IModel) {
     key: "isProceduralSubsidiary",
     value: function isProceduralSubsidiary() {
       return this.type === 'procedural-subsidiary';
+    }
+    /**
+     * Whether users are currently allowed to vote
+     * @returns {boolean}
+     */
+
+  }, {
+    key: "isVotingAllowed",
+    get: function get() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.is_voting_allowed) && this.is_voting_allowed === true;
+    },
+    set: function set(v) {
+      return this.is_voting_allowed = v;
     }
   }, {
     key: "getEnglishRequiresForNumeric",
@@ -14329,6 +14435,9 @@ module.exports = {
     },
     inOrder: function inOrder(motionId) {
       return normalizedRouteRoot() + 'motions/order/good/' + motionId;
+    },
+    openVoting: function openVoting(motionId) {
+      return normalizedRouteRoot() + 'motions/open/' + motionId;
     },
     outOfOrder: function outOfOrder(motionId) {
       return normalizedRouteRoot() + 'motions/order/bad/' + motionId;
@@ -16077,7 +16186,7 @@ var actions = {
       commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
 
       return dispatch('setMotion', motion).then(function () {
-        dispatch('forceNavigationToVote');
+        dispatch('forceNavigationToHome');
         return resolve(motion);
       });
     });
@@ -16092,7 +16201,7 @@ var actions = {
       commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
 
       return dispatch('setMotion', motion).then(function () {
-        dispatch('forceNavigationToVote');
+        dispatch('forceNavigationToHome');
         return resolve(motion);
       });
     });
@@ -16139,6 +16248,30 @@ var actions = {
   },
 
   /**
+   * When the client is notified by the server that voting on a motion is now open
+   * this handles everything.
+   * @param dispatch
+   * @param commit
+   * @param getters
+   */
+  handleVotingOnMotionOpenedMessage: function handleVotingOnMotionOpenedMessage(_ref13, pusherEvent) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
+    return new Promise(function (resolve, reject) {
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion); //commit('addMotionToStore', motion);
+
+      return dispatch('markMotionVotingOpen', motion).then(function () {
+        //If it somehow wasn't the current motion
+        //make it the current motion and attach relevant listeners
+        dispatch('setMotion', motion);
+        dispatch('forceNavigationToVote');
+        return resolve(motion);
+      });
+    });
+  },
+
+  /**
    * Create a draft motion on the client. This is what the user
    * edits before they click 'make motion'. After that, editing would
    * be done on the main motion.
@@ -16150,10 +16283,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  initializeDraftMainMotion: function initializeDraftMainMotion(_ref13) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
+  initializeDraftMainMotion: function initializeDraftMainMotion(_ref14) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     return new Promise(function (resolve, reject) {
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default({
         type: 'main',
@@ -16177,10 +16310,10 @@ var actions = {
    * @param amendmentMotion
    * @param supersedingMotion
    */
-  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref14, amendmentMotion) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref15, amendmentMotion) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     //todo This will be fixed in VOT-72
@@ -16206,10 +16339,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref15, motion) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
+  loadMotion: function loadMotion(_ref16, motion) {
+    var dispatch = _ref16.dispatch,
+        commit = _ref16.commit,
+        getters = _ref16.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -16233,10 +16366,10 @@ var actions = {
    * @param meetingId
    * @returns {Promise<unknown>}
    */
-  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref16, meetingId) {
-    var dispatch = _ref16.dispatch,
-        commit = _ref16.commit,
-        getters = _ref16.getters;
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref17, meetingId) {
+    var dispatch = _ref17.dispatch,
+        commit = _ref17.commit,
+        getters = _ref17.getters;
     window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -16254,10 +16387,10 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref17, meeting) {
-    var dispatch = _ref17.dispatch,
-        commit = _ref17.commit,
-        getters = _ref17.getters;
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref18, meeting) {
+    var dispatch = _ref18.dispatch,
+        commit = _ref18.commit,
+        getters = _ref18.getters;
     //we need this to determine whether election or regular
     // let meeting = getters.getMeetingById(meetingId);
     window.console.log('Loading motions for meeting ', meeting);
@@ -16290,10 +16423,10 @@ var actions = {
       });
     });
   },
-  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref18) {
-    var dispatch = _ref18.dispatch,
-        commit = _ref18.commit,
-        getters = _ref18.getters;
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref19) {
+    var dispatch = _ref19.dispatch,
+        commit = _ref19.commit,
+        getters = _ref19.getters;
     window.console.log("Loading motion types and templates");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -16328,14 +16461,37 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  markMotionComplete: function markMotionComplete(_ref19, endedMotion) {
-    var dispatch = _ref19.dispatch,
-        commit = _ref19.commit,
-        getters = _ref19.getters;
+  markMotionComplete: function markMotionComplete(_ref20, endedMotion) {
+    var dispatch = _ref20.dispatch,
+        commit = _ref20.commit,
+        getters = _ref20.getters;
     return new Promise(function (resolve, reject) {
       var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         object: endedMotion,
         updateProp: 'isComplete',
+        updateVal: true
+      });
+      commit('setMotionProp', pl);
+      resolve();
+    });
+  },
+
+  /**
+   * Sets the is_voting_allowed property on the provided motion
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param endedMotion
+   * @returns {Promise<unknown>}
+   */
+  markMotionVotingOpen: function markMotionVotingOpen(_ref21, motion) {
+    var dispatch = _ref21.dispatch,
+        commit = _ref21.commit,
+        getters = _ref21.getters;
+    return new Promise(function (resolve, reject) {
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
+        object: motion,
+        updateProp: 'isVotingAllowed',
         updateVal: true
       });
       commit('setMotionProp', pl);
@@ -16421,12 +16577,12 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref20, _ref21) {
-    var dispatch = _ref20.dispatch,
-        commit = _ref20.commit,
-        getters = _ref20.getters;
-    var meetingId = _ref21.meetingId,
-        motionId = _ref21.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref22, _ref23) {
+    var dispatch = _ref22.dispatch,
+        commit = _ref22.commit,
+        getters = _ref22.getters;
+    var meetingId = _ref23.meetingId,
+        motionId = _ref23.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.setCurrentMotion(meetingId, motionId);
@@ -16442,18 +16598,22 @@ var actions = {
 
   /**
    * Wraps the commit which sets a particular motion as the
-   * one being voted on so that other listeners can be attached
+   * one being voted on so that other listeners can be attached.
+   *
    *
    * @param dispatch
    * @param commit
    * @param getters
    * @param payload
    */
-  setMotion: function setMotion(_ref22, motion) {
-    var dispatch = _ref22.dispatch,
-        commit = _ref22.commit,
-        getters = _ref22.getters;
+  setMotion: function setMotion(_ref24, motion) {
+    var dispatch = _ref24.dispatch,
+        commit = _ref24.commit,
+        getters = _ref24.getters;
     return new Promise(function (resolve, reject) {
+      //first reset the nav triggers since we may not
+      //want selecting the motion to automatically force everyone somewhere
+      commit('resetNavTriggers');
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion);
       var channel = "motions.".concat(motion.id);
@@ -16491,6 +16651,29 @@ var actions = {
       return resolve();
     });
   },
+
+  /**
+   * Used by the chair to open voting for all users on the
+   * provided motion
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   */
+  startVotingOnMotion: function startVotingOnMotion(_ref25, motion) {
+    var dispatch = _ref25.dispatch,
+        commit = _ref25.commit,
+        getters = _ref25.getters;
+    return new Promise(function (resolve, reject) {
+      //send to server
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.openVoting(motion.id);
+      return Vue.axios.post(url, motion).then(function (response) {
+        var d = response.data;
+        resolve(); //we don't do anything here since the push message will trigger
+        //everything
+      });
+    });
+  },
   //
   // setMotionPendingSecond({dispatch, commit, getters}, motion) {
   //     return new Promise(((resolve, reject) => {
@@ -16509,10 +16692,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref23, payload) {
-    var dispatch = _ref23.dispatch,
-        commit = _ref23.commit,
-        getters = _ref23.getters;
+  updateMotion: function updateMotion(_ref26, payload) {
+    var dispatch = _ref26.dispatch,
+        commit = _ref26.commit,
+        getters = _ref26.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -16541,10 +16724,10 @@ var actions = {
    * @param payload
    * @returns {Promise<unknown>}
    */
-  updateDraftMotion: function updateDraftMotion(_ref24, payload) {
-    var dispatch = _ref24.dispatch,
-        commit = _ref24.commit,
-        getters = _ref24.getters;
+  updateDraftMotion: function updateDraftMotion(_ref27, payload) {
+    var dispatch = _ref27.dispatch,
+        commit = _ref27.commit,
+        getters = _ref27.getters;
     return new Promise(function (resolve, reject) {
       //make local change only
       commit('setDraftMotionProp', payload);
@@ -16753,6 +16936,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var state = {
+  /** When set to true, a watcher will open the home tab */
+  homeNavTrigger: false,
+
   /** When set to true, a watcher will open the results tab*/
   resultsNavTrigger: false,
 
@@ -16760,6 +16946,9 @@ var state = {
   voteNavTrigger: false
 };
 var mutations = {
+  setHomeNavTrigger: function setHomeNavTrigger(state, value) {
+    Vue.set(state, 'homeNavTrigger', value);
+  },
   setResultsNavTrigger: function setResultsNavTrigger(state, value) {
     Vue.set(state, 'resultsNavTrigger', value);
   },
@@ -16775,23 +16964,34 @@ var mutations = {
   resetNavTriggers: function resetNavTriggers(state) {
     state.resultsNavTrigger = false;
     state.voteNavTrigger = false;
+    state.homeNavTrigger = false;
   }
 };
 var actions = {
-  forceNavigationToResults: function forceNavigationToResults(_ref) {
+  forceNavigationToHome: function forceNavigationToHome(_ref) {
     var dispatch = _ref.dispatch,
         commit = _ref.commit,
         getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      commit('resetNavTriggers');
+      commit('setHomeNavTrigger', true);
+      resolve();
+    });
+  },
+  forceNavigationToResults: function forceNavigationToResults(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
     return new Promise(function (resolve, reject) {
       commit('resetNavTriggers');
       commit('setResultsNavTrigger', true);
       resolve();
     });
   },
-  forceNavigationToVote: function forceNavigationToVote(_ref2) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  forceNavigationToVote: function forceNavigationToVote(_ref3) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       commit('resetNavTriggers');
       commit('setVoteNavTrigger', true);
@@ -16800,6 +17000,9 @@ var actions = {
   }
 };
 var getters = {
+  getHomeNavTrigger: function getHomeNavTrigger(state) {
+    return state.homeNavTrigger;
+  },
   getResultsNavTrigger: function getResultsNavTrigger(state) {
     return state.resultsNavTrigger;
   },
@@ -17442,6 +17645,8 @@ var actions = {
       //home page. When that heppens we need to force everyone onto
       //a new motion
       dispatch('handleNewCurrentMotionSetMessage', e);
+    }).listen('VotingOnMotionOpened', function (e) {
+      dispatch('handleVotingOnMotionOpenedMessage', e);
     });
     window.console.log('Meeting listeners initialized for ', channel);
 
@@ -67032,6 +67237,44 @@ component.options.__file = "resources/js/components/motions/motions-card.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/motions/open-voting-button.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/motions/open-voting-button.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _open_voting_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./open-voting-button.vue?vue&type=script&lang=js& */ "./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  _open_voting_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "736d6f32",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/motions/open-voting-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/navigation/page-navbar.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/navigation/page-navbar.vue ***!
@@ -69255,6 +69498,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motions_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motions-card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/motions-card.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motions_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_open_voting_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./open-voting-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/motions/open-voting-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_open_voting_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -73693,21 +73952,30 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-footer" },
-      [
-        _vm.showButtons
-          ? _c("vote-buttons", {
-              attrs: { motion: _vm.motion },
-              on: { "yay-clicked": _vm.handleYay, "nay-clicked": _vm.handleNay }
-            })
-          : _c("div", { staticClass: "text-center" }, [
-              _c("p", [_vm._v("You have already voted")])
-            ])
-      ],
-      1
-    )
+    _vm.isVotingAllowed
+      ? _c(
+          "div",
+          { staticClass: "card-footer" },
+          [
+            _vm.showButtons
+              ? _c("vote-buttons", {
+                  attrs: { motion: _vm.motion },
+                  on: {
+                    "yay-clicked": _vm.handleYay,
+                    "nay-clicked": _vm.handleNay
+                  }
+                })
+              : _c("div", { staticClass: "text-center" }, [
+                  _c("p", [_vm._v("You have already voted")])
+                ])
+          ],
+          1
+        )
+      : _c("div", { staticClass: "card-footer" }, [
+          _c("p", [
+            _vm._v("The Chair has not yet opened voting for this motion")
+          ])
+        ])
   ])
 }
 var staticRenderFns = []
@@ -74768,11 +75036,21 @@ var render = function() {
         "div",
         { staticClass: "col-sm" },
         [
-          _vm.isSelected && !_vm.isComplete
+          _vm.isSelected && !_vm.isComplete && _vm.isVotingAllowed
             ? _c("vote-nav-button", { attrs: { motion: _vm.motion } })
             : _vm._e(),
           _vm._v(" "),
-          _vm.isSelected && !_vm.isComplete && _vm.isChair
+          _vm.isChair &&
+          _vm.isSelected &&
+          !_vm.isComplete &&
+          !_vm.isVotingAllowed
+            ? _c("open-voting-button", { attrs: { motion: _vm.motion } })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isChair &&
+          _vm.isSelected &&
+          !_vm.isComplete &&
+          _vm.isVotingAllowed
             ? _c("end-voting-button", { attrs: { motion: _vm.motion } })
             : _vm._e(),
           _vm._v(" "),
@@ -76147,7 +76425,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "button",
-    { staticClass: "btn", class: _vm.styling, on: { click: _vm.handleClick } },
+    { staticClass: "btn ", class: _vm.styling, on: { click: _vm.handleClick } },
     [_vm._v(_vm._s(_vm.label))]
   )
 }

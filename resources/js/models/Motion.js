@@ -1,4 +1,5 @@
 import IModel from "./IModel";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Motion extends IModel {
 
@@ -8,11 +9,12 @@ export default class Motion extends IModel {
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
+    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, is_voting_allowed=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
         super();
         this.id = id;
         this.content = content;
         this.description = description;
+
         this.superseded_by = superseded_by;
         this.debatable = debatable;
         this.max_winners = max_winners;
@@ -24,6 +26,7 @@ export default class Motion extends IModel {
 
         this.type = type;
         this.isComplete = is_complete;
+        this.is_voting_allowed = is_voting_allowed;
 
         /** If the motion is an amendment, this will
          * hold the html marked up text  */
@@ -93,6 +96,19 @@ export default class Motion extends IModel {
 
     isProceduralSubsidiary(){
         return this.type === 'procedural-subsidiary';
+    }
+
+    /**
+     * Whether users are currently allowed to vote
+     * @returns {boolean}
+     */
+    get isVotingAllowed(){
+        return isReadyToRock(this.is_voting_allowed) && this.is_voting_allowed === true;
+    }
+
+
+    set isVotingAllowed(v){
+        return this.is_voting_allowed = v;
     }
 
     getEnglishRequiresForNumeric(num){
