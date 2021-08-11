@@ -68,8 +68,12 @@
             </div>
         </div>
 
-        <div class="card-footer" v-else>
+        <div class="card-footer" v-else-if="! isVotingAllowed && ! isComplete">
             <p>The Chair has not yet opened voting for this motion</p>
+        </div>
+
+        <div class="card-footer" v-else-if="! isVotingAllowed &&  isComplete">
+            <p>Voting has ended on this motion. You may view the results in the results tab</p>
         </div>
 
         <!--        </div>-->

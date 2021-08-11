@@ -41,6 +41,8 @@ class MotionStackController extends Controller
 
 
     /**
+     * Ends voting on motion
+     *
      * @param Motion $motion
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -53,6 +55,10 @@ class MotionStackController extends Controller
         $this->authorize('markComplete', $motion);
 
         $motion->is_complete = true;
+        $motion->save();
+
+        //This will keep the client from spuriously allowing voting
+        $motion->is_voting_allowed = false;
         $motion->save();
 
         //this will return false if not an amendment

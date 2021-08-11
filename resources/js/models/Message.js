@@ -23,7 +23,7 @@ export default class Message extends IModel {
                 name: 'pendingApproval',
                 messageText: "The Chair has been asked to verify that your motion is in order.",
                 messageStyle: 'primary',
-                displayTime: 2000
+                displayTime: 5000
             },
 
             {
@@ -31,7 +31,7 @@ export default class Message extends IModel {
                 name: 'notApproved',
                 messageText: `The Chair has ruled that this motion is not in order:`,
                 messageStyle: 'danger',
-                displayTime: 2000
+                displayTime: 5000
             },
 
             {
@@ -39,7 +39,7 @@ export default class Message extends IModel {
                 name: 'noSecond',
                 messageText: "This proposed motion did not receive a second:",
                 messageStyle: 'warning',
-                displayTime: 2000
+                displayTime: 5000
             },
 
         ]

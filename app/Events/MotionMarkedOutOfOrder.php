@@ -13,13 +13,17 @@ use Illuminate\Queue\SerializesModels;
 
 class MotionMarkedOutOfOrder implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
 
 
     /**
      * @var Motion
      */
     public $motion;
+    /**
+     * @var mixed
+     */
+    public $meeting;
 
     /**
      * Create a new event instance.
@@ -29,6 +33,7 @@ class MotionMarkedOutOfOrder implements ShouldBroadcast
     public function __construct(Motion $motion)
     {
         $this->motion = $motion;
+        $this->meeting = $motion->meeting;
     }
 
     /**
@@ -38,6 +43,6 @@ class MotionMarkedOutOfOrder implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('motions.'.$this->motion->id);
+        return new PrivateChannel($this->meetingChannelName());
     }
 }

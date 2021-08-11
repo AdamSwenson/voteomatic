@@ -6430,6 +6430,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -13304,19 +13308,19 @@ var Message = /*#__PURE__*/function (_IModel) {
         name: 'pendingApproval',
         messageText: "The Chair has been asked to verify that your motion is in order.",
         messageStyle: 'primary',
-        displayTime: 2000
+        displayTime: 5000
       }, {
         id: 2,
         name: 'notApproved',
         messageText: "The Chair has ruled that this motion is not in order:",
         messageStyle: 'danger',
-        displayTime: 2000
+        displayTime: 5000
       }, {
         id: 3,
         name: 'noSecond',
         messageText: "This proposed motion did not receive a second:",
         messageStyle: 'warning',
-        displayTime: 2000
+        displayTime: 5000
       }];
     }
   }, {
@@ -16089,31 +16093,6 @@ var mutations = {
   }
 };
 var actions = {
-  createMotionFromTemplate: function createMotionFromTemplate(_ref3, template) {
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
-    return new Promise(function (resolve, reject) {
-      var meeting = getters.getActiveMeeting; //send to server
-
-      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
-      var d = template;
-      d['meetingId'] = meeting.id; // let p = {'meetingId': meetingId};
-      // window.console.log('sending', d);
-
-      return Vue.axios.post(url, d).then(function (response) {
-        var d = response.data;
-        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); // window.console.log(statusMessage);
-
-        dispatch('showMessage', statusMessage); // commit('addToMessageQueue', statusMessage);
-
-        resolve(); //let them know the chair will need to approve
-        // alert('d');
-      });
-    });
-  },
-  //
-
   /**
    * Create a new motion on the server and set
    * it as the current motion.
@@ -16126,10 +16105,10 @@ var actions = {
    * @param getters
    * @returns {Promise<unknown>}
    */
-  createMotion: function createMotion(_ref4, meetingId) {
-    var dispatch = _ref4.dispatch,
-        commit = _ref4.commit,
-        getters = _ref4.getters;
+  createMotion: function createMotion(_ref3, meetingId) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     var me = this;
     return new Promise(function (resolve, reject) {
       // window.console.log('creating');
@@ -16162,6 +16141,45 @@ var actions = {
         //     });
         //
         // // commit('setMotion', motion);
+      });
+    });
+  },
+
+  /**
+   * Create a new motion on the server and set
+   * it as the current motion
+   *
+   * dev This probably won't end up being used. Keeping the set current motion logic for now
+   * @deprecated
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
+  createMotionByChair: function createMotionByChair(_ref4, meetingId) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    var me = this;
+    return new Promise(function (resolve, reject) {
+      //send to server
+      var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
+      var p = {
+        'meetingId': meetingId
+      }; // window.console.log('sending', p);
+
+      return Vue.axios.post(url, p).then(function (response) {
+        var d = response.data;
+        var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
+
+        commit('addMotionToStore', motion);
+        var pl = {
+          meetingId: meetingId,
+          motionId: motion.id
+        };
+        return dispatch('setCurrentMotion', pl).then(function () {
+          return resolve(motion);
+        }); // commit('setMotion', motion);
       });
     });
   },
@@ -16218,43 +16236,47 @@ var actions = {
   },
 
   /**
-   * Create a new motion on the server and set
-   * it as the current motion
-   *
-   * dev This probably won't end up being used. Keeping the set current motion logic for now
-   *
+   * Uses a motion template to create the motion.
    * @param dispatch
    * @param commit
    * @param getters
+   * @param template
    * @returns {Promise<unknown>}
    */
-  createMotionByChair: function createMotionByChair(_ref6, meetingId) {
+  createMotionFromTemplate: function createMotionFromTemplate(_ref6, template) {
     var dispatch = _ref6.dispatch,
         commit = _ref6.commit,
         getters = _ref6.getters;
-    var me = this;
     return new Promise(function (resolve, reject) {
-      //send to server
+      var meeting = getters.getActiveMeeting; //send to server
+
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource();
-      var p = {
-        'meetingId': meetingId
-      }; // window.console.log('sending', p);
+      var d = template;
+      d['meetingId'] = meeting.id; // let p = {'meetingId': meetingId};
+      // window.console.log('sending', d);
 
-      return Vue.axios.post(url, p).then(function (response) {
+      return Vue.axios.post(url, d).then(function (response) {
         var d = response.data;
-        var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d); // let motion = new Motion(d.id, d.name, d.date);
+        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); // window.console.log(statusMessage);
 
-        commit('addMotionToStore', motion);
-        var pl = {
-          meetingId: meetingId,
-          motionId: motion.id
-        };
-        return dispatch('setCurrentMotion', pl).then(function () {
-          return resolve(motion);
-        }); // commit('setMotion', motion);
+        dispatch('showMessage', statusMessage); // commit('addToMessageQueue', statusMessage);
+
+        resolve(); //let them know the chair will need to approve
+        // alert('d');
       });
     });
   },
+  //
+
+  /**
+   * Creates a motion which depends on another motion, e.g., an amendment
+   * or tabling
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param payload
+   * @returns {Promise<unknown>}
+   */
   createSubsidiaryMotion: function createSubsidiaryMotion(_ref7, payload) {
     var dispatch = _ref7.dispatch,
         commit = _ref7.commit,
@@ -16307,10 +16329,40 @@ var actions = {
     //         });
     // }));
   },
-  deleteMotion: function deleteMotion(_ref8, motion) {
+
+  /**
+   * If an amendment passes, we need to quietly create a new main motion with the
+   * updated text.
+   *
+   * We do not set the new motion as active. That is the job of other actions.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param amendmentMotion
+   * @param supersedingMotion
+   */
+  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref8, amendmentMotion) {
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
+    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    //todo This will be fixed in VOT-72
+    //Handle swapping in the new motion if there was an amendment.
+    if (supersedingMotion) {
+      var original = getters.getMotionById(supersedingMotion.superseded_by); //remove that from the store (but don't delete from server!)
+
+      commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
+
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
+      commit('addMotionToStore', motion);
+    }
+  },
+  deleteMotion: function deleteMotion(_ref9, motion) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -16341,10 +16393,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  endVotingOnMotion: function endVotingOnMotion(_ref9, motion) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  endVotingOnMotion: function endVotingOnMotion(_ref10, motion) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.endVoting(motion.id);
@@ -16388,10 +16440,10 @@ var actions = {
    * this sets the motion as the current motion and navigates to the
    * voting tab
    * */
-  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref10, pusherEvent) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
+  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref11, pusherEvent) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     return new Promise(function (resolve, reject) {
       dispatch('resetMotionPendingSecond');
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
@@ -16403,10 +16455,10 @@ var actions = {
       });
     });
   },
-  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref11, pusherEvent) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref12, pusherEvent) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
     return new Promise(function (resolve, reject) {
       // dispatch('resetMotionPendingSecond');
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
@@ -16425,10 +16477,10 @@ var actions = {
    * initiates the loading of results.
    *
    */
-  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref12, endedMotion) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
+  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref13, endedMotion) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
     var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     //This will be the updated motion we just sent to the server
     //If the motion was an amendment, the server will
@@ -16466,10 +16518,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  handleVotingOnMotionOpenedMessage: function handleVotingOnMotionOpenedMessage(_ref13, pusherEvent) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
+  handleVotingOnMotionOpenedMessage: function handleVotingOnMotionOpenedMessage(_ref14, pusherEvent) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     return new Promise(function (resolve, reject) {
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion); //commit('addMotionToStore', motion);
 
@@ -16495,10 +16547,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  initializeDraftMainMotion: function initializeDraftMainMotion(_ref14) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  initializeDraftMainMotion: function initializeDraftMainMotion(_ref15) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     return new Promise(function (resolve, reject) {
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default({
         type: 'main',
@@ -16508,36 +16560,6 @@ var actions = {
       commit('setDraftMotion', motion);
       resolve();
     });
-  },
-
-  /**
-   * If an amendment passes, we need to quietly create a new main motion with the
-   * updated text.
-   *
-   * We do not set the new motion as active. That is the job of other actions.
-   *
-   * @param dispatch
-   * @param commit
-   * @param getters
-   * @param amendmentMotion
-   * @param supersedingMotion
-   */
-  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref15, amendmentMotion) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
-    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-    //todo This will be fixed in VOT-72
-    //Handle swapping in the new motion if there was an amendment.
-    if (supersedingMotion) {
-      var original = getters.getMotionById(supersedingMotion.superseded_by); //remove that from the store (but don't delete from server!)
-
-      commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
-
-      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
-      commit('addMotionToStore', motion);
-    }
   },
 
   /**
@@ -16658,8 +16680,7 @@ var actions = {
 
   /**
    * Sets the is_complete property on the provided motion
-   * to true and performs any other actions which are needed when
-   * we learn that voting has ended on a currently active motion
+   * to true. Also sets is_voting_allowed to false.
    *
    * This does not change the motion's status as the currently active motion.
    * That, inter alia, the results tab to show results for the motion.
@@ -16683,7 +16704,16 @@ var actions = {
         updateProp: 'isComplete',
         updateVal: true
       });
-      commit('setMotionProp', pl);
+      commit('setMotionProp', pl); //This will keep the voting page from appearing
+      //to allow someone who hasn't voted the opportunity to vote
+      //(they will be blocked by the server)
+
+      var pl2 = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
+        object: endedMotion,
+        updateProp: 'isVotingAllowed',
+        updateVal: false
+      });
+      commit('setMotionProp', pl2);
       resolve();
     });
   },
@@ -16812,6 +16842,7 @@ var actions = {
    * Wraps the commit which sets a particular motion as the
    * one being voted on so that other listeners can be attached.
    *
+   * ALMOST EVERYTHING WHICH AFFECTS WHICH MOTION IS CURRENT SHOULD DISPATCH THIS ACTION
    *
    * @param dispatch
    * @param commit
@@ -74325,11 +74356,21 @@ var render = function() {
           ],
           1
         )
-      : _c("div", { staticClass: "card-footer" }, [
+      : !_vm.isVotingAllowed && !_vm.isComplete
+      ? _c("div", { staticClass: "card-footer" }, [
           _c("p", [
             _vm._v("The Chair has not yet opened voting for this motion")
           ])
         ])
+      : !_vm.isVotingAllowed && _vm.isComplete
+      ? _c("div", { staticClass: "card-footer" }, [
+          _c("p", [
+            _vm._v(
+              "Voting has ended on this motion. You may view the results in the results tab"
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
