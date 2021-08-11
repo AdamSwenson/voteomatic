@@ -417,30 +417,73 @@ const actions = {
     },
 
     /**
-     * If an amendment passes, we need to quietly create a new main motion with the
-     * updated text.
+     * This will be run on everything when the motion closes. Thus this checks for:
+     * - whether it was an amendment
+     * - whether it passed
+     *
+     * If it was a successful amendment, this quietly creates a new motion with the
+     * updated text
      *
      * We do not set the new motion as active. That is the job of other actions.
+     *
+     * This can be passed either a json (from the pusher event / response.data) or
+     * an array of motion objects with the same keys
      *
      * @param dispatch
      * @param commit
      * @param getters
-     * @param amendmentMotion
-     * @param supersedingMotion
      */
-    createNewMotionAfterSuccessfulAmendment({dispatch, commit, getters}, amendmentMotion, supersedingMotion = false) {
-        //todo This will be fixed in VOT-72
+    handlePotentialAmendmentAfterVotingClosed({dispatch, commit, getters}, {ended, superseding, original = null}) {
+        return new Promise(((resolve, reject) => {
+            //The server will return a new motion under the key superseding
+            //if the motion was an amendment and was successful.
+            //It returns false otherwise.
+            if (!isReadyToRock(superseding) || superseding === false) {
+                return resolve();
+            }
 
-        //Handle swapping in the new motion if there was an amendment.
-        if (supersedingMotion) {
-            let original = getters.getMotionById(supersedingMotion.superseded_by);
+            //Since superseding was not false, we know that the motion which
+            //ended was an amendment and that it was successful
+            //So we make a new motion out of the response and add it to the store
+            //(we don't send it to the server, since we're handling the server's response)
+            superseding = new Motion(superseding);
+            commit('addMotionToStore', superseding);
+
+            //We now need to swap the superseding motion in for the original
+            original = getters.getMotionById(ended.applies_to);
+
+            //Prevent the original from being voted upon
+            dispatch('markMotionComplete', original);
+
+            //Set the fact that it was superseded so that the display
+            //can prevent it from being selected.
+             let pl = Payload.factory({
+                object: original,
+                updateProp: 'superseded_by',
+                updateVal: superseding.id
+            });
+            commit('setMotionProp', pl);
+
+
+
             //remove that from the store (but don't delete from server!)
-            commit('deleteMotion', original);
-            //make a new motion and add it to the store (but not to the server)
-            let motion = new Motion(d);
-            commit('addMotionToStore', motion);
-        }
+            //dev or should it just be marked complete?
+            // commit('deleteMotion', original);
 
+
+            //make a new motion and add it to the store (but not to the server)
+            //    let motion = new Motion(d);
+            //     commit('addMotionToStore', superseding);
+
+            // let original = getters.getMotionById(supersedingMotion.superseded_by);
+            // //remove that from the store (but don't delete from server!)
+            // commit('deleteMotion', original);
+            // //make a new motion and add it to the store (but not to the server)
+            // let motion = new Motion(d);
+            // commit('addMotionToStore', motion);
+            // }
+            resolve();
+        }));
     },
 
     deleteMotion({dispatch, commit, getters}, motion) {
@@ -484,43 +527,54 @@ const actions = {
             let url = routes.motions.endVoting(motion.id);
             return Vue.axios.post(url)
                 .then((response) => {
-
-                    //This will be the updated motion we just sent to the server
-                    let endedMotion = response.data.ended;
-                    //If the motion was an amendment, the server will
-                    //also return a new version of the motion which was amended.
-                    //Otherwise, this will just be false
-                    let superseding = response.data.superseding;
-
-                    dispatch('setMotion', motion);
-
-                    let pl = Payload.factory({
-                        object: motion,
-                        updateProp: 'isComplete',
-                        updateVal: endedMotion.is_complete
-                    });
-
-                    //we leave it as the currently set motion so that
-                    //the results tab will provide results for the
-                    //immediate past motion.
-                    //Instead, we just update the completed property on the
-                    //motion
-                    commit('setMotionProp', pl);
+                    //The server will return a response containing motions with the
+                    //keys:
+                    //      ended
+                    //      superseding
+                    //However, we're just going to wait for the pusher notification
+                    //and handle all the updating from there.
+                    resolve();
 
 
-                    //Handle swapping in the new motion if there was an amendment.
-                    //todo This will be fixed in VOT-72
-                    if (superseding) {
-                        let original = getters.getMotionById(superseding.superseded_by);
-                        //remove that from the store (but don't delete from server!)
-                        commit('deleteMotion', original);
-                        //make a new motion and add it to the store (but not to the server)
-                        let motion = new Motion(d);
-                        commit('addMotionToStore', motion);
-
-                    }
-
-                    resolve()
+                    // //This will be the updated motion we just sent to the server
+                    // let endedMotion = response.data.ended;
+                    // //If the motion was an amendment, the server will
+                    // //also return a new version of the motion which was amended.
+                    // //Otherwise, this will just be false
+                    // let superseding = response.data.superseding;
+                    //
+                    // dispatch('setMotion', motion);
+                    //
+                    // let pl = Payload.factory({
+                    //     object: motion,
+                    //     updateProp: 'isComplete',
+                    //     updateVal: endedMotion.is_complete
+                    // });
+                    // //dev why are we not also setting isVotingAllowed?
+                    //
+                    // //we leave it as the currently set motion so that
+                    // //the results tab will provide results for the
+                    // //immediate past motion.
+                    // //Instead, we just update the completed property on the
+                    // //motion
+                    // commit('setMotionProp', pl);
+                    //
+                    //
+                    // //Handle swapping in the new motion if there was an amendment.
+                    // //todo This will be fixed in VOT-72
+                    // if (superseding) {
+                    //
+                    //
+                    //     let original = getters.getMotionById(superseding.superseded_by);
+                    //     //remove that from the store (but don't delete from server!)
+                    //     commit('deleteMotion', original);
+                    //     //make a new motion and add it to the store (but not to the server)
+                    //     let motion = new Motion(d);
+                    //     commit('addMotionToStore', motion);
+                    //
+                    // }
+                    //
+                    // resolve()
                 });
         }));
 
@@ -564,24 +618,27 @@ const actions = {
      * initiates the loading of results.
      *
      */
-    handleVotingEndedOnCurrentMotion({dispatch, commit, getters}, endedMotion, supersedingMotion = false) {
-        //This will be the updated motion we just sent to the server
+    handleMotionClosedMessage({dispatch, commit, getters}, pusherEvent) {
 
-        //If the motion was an amendment, the server will
-        //also return a new version of the motion which was amended.
-        //Otherwise, this will just be false
         return new Promise(((resolve, reject) => {
-            /* ----------------- Set the current motion as closed ------------ */
-            dispatch('markMotionComplete', endedMotion).then(() => {
+            let ended = new Motion(pusherEvent.ended);
+            // let superseding = new Motion(pusherEvent.superseding);
+            // let original = new Motion(pusherEvent.original);
 
-                /* ----------------- Load results and navigate to results card ------------ */
-                // commit('setResultsNavTrigger', true);
+            /* Set the current motion as closed and update isVotingAllowed */
+            dispatch('markMotionComplete', ended).then(() => {
+
+                /* Navigate to results card. It will load results on mount  */
                 dispatch('forceNavigationToResults');
 
-                /* ----------------- Quietly create the revised main motion  ------------ */
-                //todo Check if successful and if amendment
-//todo This will be fixed in VOT-72
-                dispatch('createNewMotionAfterSuccessfulAmendment', endedMotion)
+                /* Quietly create a revised  motion if the motion which passed was an amendment */
+                //This checks whether the motion was an amendment and if it was successful
+                dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent);
+
+                //We don't need to wait for it to finish.
+                resolve();
+
+                // dispatch('createNewMotionAfterSuccessfulAmendment', {ended, superseding, original});
                 // //Handle swapping in the new motion if there was an amendment.
                 // if (supersedingMotion) {
                 //     let original = getters.getMotionById(supersedingMotion.superseded_by);
@@ -592,7 +649,6 @@ const actions = {
                 //     commit('addMotionToStore', motion);
                 // }
 
-                resolve()
             });
 
         }));
@@ -792,7 +848,7 @@ const actions = {
             //This will keep the voting page from appearing
             //to allow someone who hasn't voted the opportunity to vote
             //(they will be blocked by the server)
-            let pl2 =Payload.factory({
+            let pl2 = Payload.factory({
                 object: endedMotion,
                 updateProp: 'isVotingAllowed',
                 updateVal: false
@@ -948,7 +1004,7 @@ const actions = {
             Echo.private(channel)
                 .listen("MotionClosed", (e) => {
                     window.console.log('Received broadcast event motions', e);
-                    dispatch('handleVotingEndedOnCurrentMotion', motion);
+                    dispatch('handleMotionClosedMessage', e);
                 })
             // .listen("NewMotionCreated", (e) => {
             //

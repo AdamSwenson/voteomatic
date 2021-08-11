@@ -78,7 +78,7 @@ class MotionStackController extends Controller
 
 
         //Broadcast to non-chair members
-        MotionClosed::dispatch($motion);
+        MotionClosed::dispatch($motion, $superseding);
 
         return response()->json($out);
 

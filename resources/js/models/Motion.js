@@ -12,25 +12,28 @@ export default class Motion extends IModel {
     constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, is_voting_allowed=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
         super();
         this.id = id;
-        this.content = content;
-        this.description = description;
 
-        this.superseded_by = superseded_by;
-        this.debatable = debatable;
-        this.max_winners = max_winners;
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
         this.applies_to = applies_to;
-        this.seconded = seconded;
-        this.requires = _.toNumber(requires);
-
-        this.type = type;
+        /** The text of the motion */
+        this.content = content;
+        /** Optional information about it*/
+        this.description = description;
+        this.debatable = debatable;
+        /** Whether voting is complete */
         this.isComplete = is_complete;
+        /** Whether members may vote on it at the current time*/
         this.is_voting_allowed = is_voting_allowed;
-
+        /** Only used in elections */
+        this.max_winners = max_winners;
+        this.requires = _.toNumber(requires);
+        this.seconded = seconded;
+        this.superseded_by = superseded_by;
         /** If the motion is an amendment, this will
          * hold the html marked up text  */
         this.taggedAmendmentText = null;
+        this.type = type;
 
         this.types = ['main', 'amendment'];
 

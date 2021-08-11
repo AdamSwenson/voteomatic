@@ -8979,10 +8979,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _end_voting_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./end-voting-button */ "./resources/js/components/motions/end-voting-button.vue");
-/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _end_voting_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./end-voting-button */ "./resources/js/components/motions/end-voting-button.vue");
+/* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/Payload */ "./resources/js/models/Payload.js");
 //
 //
 //
@@ -8991,26 +8993,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-select-button",
   components: {
-    EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__.default
+    EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_2__.default
   },
-  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default())],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_0___default())],
   data: function data() {
-    return {};
+    return {
+      classBase: 'btn btn-lg btn-block '
+    };
   },
   props: ['motion'],
-  computed: {
-    styling: function styling() {
-      if (this.isSelected) return 'btn btn-primary btn-lg btn-block';
-      return 'btn btn-outline-primary btn-lg  btn-block';
-    }
-  },
+  computed: {},
   asyncComputed: {
+    styling: function styling() {
+      if (this.isDisabled) return this.classBase + ' btn-outline-primary disabled';
+      if (this.isSelected) return this.classBase + ' btn-primary active';
+      return this.classBase + ' btn-outline-primary'; // return 'btn btn-outline-primary btn-lg  btn-block'
+    },
+    ariaDisabled: function ariaDisabled() {
+      if (this.isDisabled) return true;
+      return false;
+    },
+    tabIndex: function tabIndex() {
+      if (this.isDisabled) return '-1';
+      return 1;
+    },
+    isDisabled: function isDisabled() {
+      return this.isSuperseded;
+    },
     buttonText: {
       get: function get() {
         if (this.isSelected) return "Selected";
@@ -9028,7 +9052,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     setMotion: function setMotion() {
-      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_2__.default.factory({
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         'motionId': this.motion.id,
         'meetingId': this.meeting.id
       });
@@ -12417,6 +12441,11 @@ module.exports = {
     },
     isMotionReady: function isMotionReady() {
       return !_.isUndefined(this.motion) && !_.isNull(this.motion);
+    },
+    isSuperseded: function isSuperseded() {
+      if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        return this.motion.isSuperseded();
+      }
     } // isDebatable: function(){
     //     if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
     //         return this.motion.isDebatable();
@@ -13470,24 +13499,34 @@ var Motion = /*#__PURE__*/function (_IModel) {
     _classCallCheck(this, Motion);
 
     _this = _super.call(this);
-    _this.id = id;
-    _this.content = content;
-    _this.description = description;
-    _this.superseded_by = superseded_by;
-    _this.debatable = debatable;
-    _this.max_winners = max_winners; //if it is subsidiary, this is the motion
+    _this.id = id; //if it is subsidiary, this is the motion
 
     _this.appliesTo = applies_to;
     _this.applies_to = applies_to;
-    _this.seconded = seconded;
-    _this.requires = _.toNumber(requires);
-    _this.type = type;
+    /** The text of the motion */
+
+    _this.content = content;
+    /** Optional information about it*/
+
+    _this.description = description;
+    _this.debatable = debatable;
+    /** Whether voting is complete */
+
     _this.isComplete = is_complete;
+    /** Whether members may vote on it at the current time*/
+
     _this.is_voting_allowed = is_voting_allowed;
+    /** Only used in elections */
+
+    _this.max_winners = max_winners;
+    _this.requires = _.toNumber(requires);
+    _this.seconded = seconded;
+    _this.superseded_by = superseded_by;
     /** If the motion is an amendment, this will
      * hold the html marked up text  */
 
     _this.taggedAmendmentText = null;
+    _this.type = type;
     _this.types = ['main', 'amendment'];
     /**
      * Motions with these types will be labeled as amendments
@@ -16378,38 +16417,76 @@ var actions = {
   },
 
   /**
-   * If an amendment passes, we need to quietly create a new main motion with the
-   * updated text.
+   * This will be run on everything when the motion closes. Thus this checks for:
+   * - whether it was an amendment
+   * - whether it passed
+   *
+   * If it was a successful amendment, this quietly creates a new motion with the
+   * updated text
    *
    * We do not set the new motion as active. That is the job of other actions.
+   *
+   * This can be passed either a json (from the pusher event / response.data) or
+   * an array of motion objects with the same keys
    *
    * @param dispatch
    * @param commit
    * @param getters
-   * @param amendmentMotion
-   * @param supersedingMotion
    */
-  createNewMotionAfterSuccessfulAmendment: function createNewMotionAfterSuccessfulAmendment(_ref8, amendmentMotion) {
+  handlePotentialAmendmentAfterVotingClosed: function handlePotentialAmendmentAfterVotingClosed(_ref8, _ref9) {
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
-    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var ended = _ref9.ended,
+        superseding = _ref9.superseding,
+        _ref9$original = _ref9.original,
+        original = _ref9$original === void 0 ? null : _ref9$original;
+    return new Promise(function (resolve, reject) {
+      //The server will return a new motion under the key superseding
+      //if the motion was an amendment and was successful.
+      //It returns false otherwise.
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(superseding) || superseding === false) {
+        return resolve();
+      } //Since superseding was not false, we know that the motion which
+      //ended was an amendment and that it was successful
+      //So we make a new motion out of the response and add it to the store
+      //(we don't send it to the server, since we're handling the server's response)
 
-    //todo This will be fixed in VOT-72
-    //Handle swapping in the new motion if there was an amendment.
-    if (supersedingMotion) {
-      var original = getters.getMotionById(supersedingMotion.superseded_by); //remove that from the store (but don't delete from server!)
 
-      commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
+      superseding = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(superseding);
+      commit('addMotionToStore', superseding); //We now need to swap the superseding motion in for the original
 
-      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
-      commit('addMotionToStore', motion);
-    }
+      original = getters.getMotionById(ended.applies_to); //Prevent the original from being voted upon
+
+      dispatch('markMotionComplete', original); //Set the fact that it was superseded so that the display
+      //can prevent it from being selected.
+
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
+        object: original,
+        updateProp: 'superseded_by',
+        updateVal: superseding.id
+      });
+      commit('setMotionProp', pl); //remove that from the store (but don't delete from server!)
+      //dev or should it just be marked complete?
+      // commit('deleteMotion', original);
+      //make a new motion and add it to the store (but not to the server)
+      //    let motion = new Motion(d);
+      //     commit('addMotionToStore', superseding);
+      // let original = getters.getMotionById(supersedingMotion.superseded_by);
+      // //remove that from the store (but don't delete from server!)
+      // commit('deleteMotion', original);
+      // //make a new motion and add it to the store (but not to the server)
+      // let motion = new Motion(d);
+      // commit('addMotionToStore', motion);
+      // }
+
+      resolve();
+    });
   },
-  deleteMotion: function deleteMotion(_ref9, motion) {
-    var dispatch = _ref9.dispatch,
-        commit = _ref9.commit,
-        getters = _ref9.getters;
+  deleteMotion: function deleteMotion(_ref10, motion) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -16440,45 +16517,59 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  endVotingOnMotion: function endVotingOnMotion(_ref10, motion) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
+  endVotingOnMotion: function endVotingOnMotion(_ref11, motion) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.endVoting(motion.id);
       return Vue.axios.post(url).then(function (response) {
-        //This will be the updated motion we just sent to the server
-        var endedMotion = response.data.ended; //If the motion was an amendment, the server will
-        //also return a new version of the motion which was amended.
-        //Otherwise, this will just be false
-
-        var superseding = response.data.superseding;
-        dispatch('setMotion', motion);
-        var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
-          object: motion,
-          updateProp: 'isComplete',
-          updateVal: endedMotion.is_complete
-        }); //we leave it as the currently set motion so that
-        //the results tab will provide results for the
-        //immediate past motion.
-        //Instead, we just update the completed property on the
-        //motion
-
-        commit('setMotionProp', pl); //Handle swapping in the new motion if there was an amendment.
-        //todo This will be fixed in VOT-72
-
-        if (superseding) {
-          var original = getters.getMotionById(superseding.superseded_by); //remove that from the store (but don't delete from server!)
-
-          commit('deleteMotion', original); //make a new motion and add it to the store (but not to the server)
-
-          var _motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(d);
-
-          commit('addMotionToStore', _motion);
-        }
-
-        resolve();
+        //The server will return a response containing motions with the
+        //keys:
+        //      ended
+        //      superseding
+        //However, we're just going to wait for the pusher notification
+        //and handle all the updating from there.
+        resolve(); // //This will be the updated motion we just sent to the server
+        // let endedMotion = response.data.ended;
+        // //If the motion was an amendment, the server will
+        // //also return a new version of the motion which was amended.
+        // //Otherwise, this will just be false
+        // let superseding = response.data.superseding;
+        //
+        // dispatch('setMotion', motion);
+        //
+        // let pl = Payload.factory({
+        //     object: motion,
+        //     updateProp: 'isComplete',
+        //     updateVal: endedMotion.is_complete
+        // });
+        // //dev why are we not also setting isVotingAllowed?
+        //
+        // //we leave it as the currently set motion so that
+        // //the results tab will provide results for the
+        // //immediate past motion.
+        // //Instead, we just update the completed property on the
+        // //motion
+        // commit('setMotionProp', pl);
+        //
+        //
+        // //Handle swapping in the new motion if there was an amendment.
+        // //todo This will be fixed in VOT-72
+        // if (superseding) {
+        //
+        //
+        //     let original = getters.getMotionById(superseding.superseded_by);
+        //     //remove that from the store (but don't delete from server!)
+        //     commit('deleteMotion', original);
+        //     //make a new motion and add it to the store (but not to the server)
+        //     let motion = new Motion(d);
+        //     commit('addMotionToStore', motion);
+        //
+        // }
+        //
+        // resolve()
       });
     });
   },
@@ -16487,10 +16578,10 @@ var actions = {
    * this sets the motion as the current motion and navigates to the
    * voting tab
    * */
-  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref11, pusherEvent) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref12, pusherEvent) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
     return new Promise(function (resolve, reject) {
       dispatch('resetMotionPendingSecond');
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
@@ -16502,10 +16593,10 @@ var actions = {
       });
     });
   },
-  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref12, pusherEvent) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
+  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref13, pusherEvent) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
     return new Promise(function (resolve, reject) {
       // dispatch('resetMotionPendingSecond');
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
@@ -16524,26 +16615,26 @@ var actions = {
    * initiates the loading of results.
    *
    */
-  handleVotingEndedOnCurrentMotion: function handleVotingEndedOnCurrentMotion(_ref13, endedMotion) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
-    var supersedingMotion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    //This will be the updated motion we just sent to the server
-    //If the motion was an amendment, the server will
-    //also return a new version of the motion which was amended.
-    //Otherwise, this will just be false
+  handleMotionClosedMessage: function handleMotionClosedMessage(_ref14, pusherEvent) {
+    var dispatch = _ref14.dispatch,
+        commit = _ref14.commit,
+        getters = _ref14.getters;
     return new Promise(function (resolve, reject) {
-      /* ----------------- Set the current motion as closed ------------ */
-      dispatch('markMotionComplete', endedMotion).then(function () {
-        /* ----------------- Load results and navigate to results card ------------ */
-        // commit('setResultsNavTrigger', true);
-        dispatch('forceNavigationToResults');
-        /* ----------------- Quietly create the revised main motion  ------------ */
-        //todo Check if successful and if amendment
-        //todo This will be fixed in VOT-72
+      var ended = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.ended); // let superseding = new Motion(pusherEvent.superseding);
+      // let original = new Motion(pusherEvent.original);
 
-        dispatch('createNewMotionAfterSuccessfulAmendment', endedMotion); // //Handle swapping in the new motion if there was an amendment.
+      /* Set the current motion as closed and update isVotingAllowed */
+
+      dispatch('markMotionComplete', ended).then(function () {
+        /* Navigate to results card. It will load results on mount  */
+        dispatch('forceNavigationToResults');
+        /* Quietly create a revised  motion if the motion which passed was an amendment */
+        //This checks whether the motion was an amendment and if it was successful
+
+        dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent); //We don't need to wait for it to finish.
+
+        resolve(); // dispatch('createNewMotionAfterSuccessfulAmendment', {ended, superseding, original});
+        // //Handle swapping in the new motion if there was an amendment.
         // if (supersedingMotion) {
         //     let original = getters.getMotionById(supersedingMotion.superseded_by);
         //     //remove that from the store (but don't delete from server!)
@@ -16552,8 +16643,6 @@ var actions = {
         //     let motion = new Motion(d);
         //     commit('addMotionToStore', motion);
         // }
-
-        resolve();
       });
     });
   },
@@ -16565,10 +16654,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  handleVotingOnMotionOpenedMessage: function handleVotingOnMotionOpenedMessage(_ref14, pusherEvent) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  handleVotingOnMotionOpenedMessage: function handleVotingOnMotionOpenedMessage(_ref15, pusherEvent) {
+    var dispatch = _ref15.dispatch,
+        commit = _ref15.commit,
+        getters = _ref15.getters;
     return new Promise(function (resolve, reject) {
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion); //commit('addMotionToStore', motion);
 
@@ -16594,10 +16683,10 @@ var actions = {
    * @param commit
    * @param getters
    */
-  initializeDraftMainMotion: function initializeDraftMainMotion(_ref15) {
-    var dispatch = _ref15.dispatch,
-        commit = _ref15.commit,
-        getters = _ref15.getters;
+  initializeDraftMainMotion: function initializeDraftMainMotion(_ref16) {
+    var dispatch = _ref16.dispatch,
+        commit = _ref16.commit,
+        getters = _ref16.getters;
     return new Promise(function (resolve, reject) {
       var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default({
         type: 'main',
@@ -16620,10 +16709,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  loadMotion: function loadMotion(_ref16, motion) {
-    var dispatch = _ref16.dispatch,
-        commit = _ref16.commit,
-        getters = _ref16.getters;
+  loadMotion: function loadMotion(_ref17, motion) {
+    var dispatch = _ref17.dispatch,
+        commit = _ref17.commit,
+        getters = _ref17.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -16647,10 +16736,10 @@ var actions = {
    * @param meetingId
    * @returns {Promise<unknown>}
    */
-  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref17, meetingId) {
-    var dispatch = _ref17.dispatch,
-        commit = _ref17.commit,
-        getters = _ref17.getters;
+  loadMotionsUserHasVotedUpon: function loadMotionsUserHasVotedUpon(_ref18, meetingId) {
+    var dispatch = _ref18.dispatch,
+        commit = _ref18.commit,
+        getters = _ref18.getters;
     window.console.log("Loading voted upon motions");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -16668,10 +16757,10 @@ var actions = {
       });
     });
   },
-  loadMotionsForMeeting: function loadMotionsForMeeting(_ref18, meeting) {
-    var dispatch = _ref18.dispatch,
-        commit = _ref18.commit,
-        getters = _ref18.getters;
+  loadMotionsForMeeting: function loadMotionsForMeeting(_ref19, meeting) {
+    var dispatch = _ref19.dispatch,
+        commit = _ref19.commit,
+        getters = _ref19.getters;
     //we need this to determine whether election or regular
     // let meeting = getters.getMeetingById(meetingId);
     window.console.log('Loading motions for meeting ', meeting);
@@ -16704,10 +16793,10 @@ var actions = {
       });
     });
   },
-  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref19) {
-    var dispatch = _ref19.dispatch,
-        commit = _ref19.commit,
-        getters = _ref19.getters;
+  loadMotionTypesAndTemplates: function loadMotionTypesAndTemplates(_ref20) {
+    var dispatch = _ref20.dispatch,
+        commit = _ref20.commit,
+        getters = _ref20.getters;
     window.console.log("Loading motion types and templates");
     return new Promise(function (resolve, reject) {
       //send to server
@@ -16741,10 +16830,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  markMotionComplete: function markMotionComplete(_ref20, endedMotion) {
-    var dispatch = _ref20.dispatch,
-        commit = _ref20.commit,
-        getters = _ref20.getters;
+  markMotionComplete: function markMotionComplete(_ref21, endedMotion) {
+    var dispatch = _ref21.dispatch,
+        commit = _ref21.commit,
+        getters = _ref21.getters;
     return new Promise(function (resolve, reject) {
       var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         object: endedMotion,
@@ -16773,10 +16862,10 @@ var actions = {
    * @param endedMotion
    * @returns {Promise<unknown>}
    */
-  markMotionVotingOpen: function markMotionVotingOpen(_ref21, motion) {
-    var dispatch = _ref21.dispatch,
-        commit = _ref21.commit,
-        getters = _ref21.getters;
+  markMotionVotingOpen: function markMotionVotingOpen(_ref22, motion) {
+    var dispatch = _ref22.dispatch,
+        commit = _ref22.commit,
+        getters = _ref22.getters;
     return new Promise(function (resolve, reject) {
       var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__.default.factory({
         object: motion,
@@ -16866,12 +16955,12 @@ var actions = {
    * @param motionId
    * @returns {Promise<unknown>}
    */
-  setCurrentMotion: function setCurrentMotion(_ref22, _ref23) {
-    var dispatch = _ref22.dispatch,
-        commit = _ref22.commit,
-        getters = _ref22.getters;
-    var meetingId = _ref23.meetingId,
-        motionId = _ref23.motionId;
+  setCurrentMotion: function setCurrentMotion(_ref23, _ref24) {
+    var dispatch = _ref23.dispatch,
+        commit = _ref23.commit,
+        getters = _ref23.getters;
+    var meetingId = _ref24.meetingId,
+        motionId = _ref24.motionId;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.setCurrentMotion(meetingId, motionId);
@@ -16896,10 +16985,10 @@ var actions = {
    * @param getters
    * @param payload
    */
-  setMotion: function setMotion(_ref24, motion) {
-    var dispatch = _ref24.dispatch,
-        commit = _ref24.commit,
-        getters = _ref24.getters;
+  setMotion: function setMotion(_ref25, motion) {
+    var dispatch = _ref25.dispatch,
+        commit = _ref25.commit,
+        getters = _ref25.getters;
     return new Promise(function (resolve, reject) {
       //first reset the nav triggers since we may not
       //want selecting the motion to automatically force everyone somewhere
@@ -16912,7 +17001,7 @@ var actions = {
       var channel = "motions.".concat(motion.id);
       Echo["private"](channel).listen("MotionClosed", function (e) {
         window.console.log('Received broadcast event motions', e);
-        dispatch('handleVotingEndedOnCurrentMotion', motion);
+        dispatch('handleMotionClosedMessage', e);
       }); // .listen("NewMotionCreated", (e) => {
       //
       //     window.console.log('Received broadcast event motions', e);
@@ -16953,10 +17042,10 @@ var actions = {
    * @param getters
    * @param motion
    */
-  startVotingOnMotion: function startVotingOnMotion(_ref25, motion) {
-    var dispatch = _ref25.dispatch,
-        commit = _ref25.commit,
-        getters = _ref25.getters;
+  startVotingOnMotion: function startVotingOnMotion(_ref26, motion) {
+    var dispatch = _ref26.dispatch,
+        commit = _ref26.commit,
+        getters = _ref26.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.openVoting(motion.id);
@@ -16985,10 +17074,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  updateMotion: function updateMotion(_ref26, payload) {
-    var dispatch = _ref26.dispatch,
-        commit = _ref26.commit,
-        getters = _ref26.getters;
+  updateMotion: function updateMotion(_ref27, payload) {
+    var dispatch = _ref27.dispatch,
+        commit = _ref27.commit,
+        getters = _ref27.getters;
     return new Promise(function (resolve, reject) {
       //make local change first
       //todo consider whether worth rolling back
@@ -17017,10 +17106,10 @@ var actions = {
    * @param payload
    * @returns {Promise<unknown>}
    */
-  updateDraftMotion: function updateDraftMotion(_ref27, payload) {
-    var dispatch = _ref27.dispatch,
-        commit = _ref27.commit,
-        getters = _ref27.getters;
+  updateDraftMotion: function updateDraftMotion(_ref28, payload) {
+    var dispatch = _ref28.dispatch,
+        commit = _ref28.commit,
+        getters = _ref28.getters;
     return new Promise(function (resolve, reject) {
       //make local change only
       commit('setDraftMotionProp', payload);
@@ -75528,9 +75617,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("button", { class: _vm.styling, on: { click: _vm.setMotion } }, [
-    _vm._v(_vm._s(_vm.buttonText))
-  ])
+  return _c(
+    "a",
+    {
+      class: _vm.styling,
+      attrs: {
+        href: "#",
+        tabindex: _vm.tabIndex,
+        role: "button",
+        "aria-disabled": _vm.ariaDisabled
+      },
+      on: { click: _vm.setMotion }
+    },
+    [_vm._v(_vm._s(_vm.buttonText))]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

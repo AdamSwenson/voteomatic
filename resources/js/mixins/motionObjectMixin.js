@@ -35,6 +35,13 @@ module.exports = {
 
         isMotionReady: function () {
             return ! _.isUndefined(this.motion) && ! _.isNull(this.motion);
+        },
+
+        isSuperseded: function(){
+            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                return this.motion.isSuperseded();
+            }
+
         }
 
         // isDebatable: function(){

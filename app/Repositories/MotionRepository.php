@@ -20,6 +20,7 @@ class MotionRepository implements IMotionRepository
      * create 2 current motions. That is the purview of the MotionStackRepository
      */
     public $nonCopiedFields = ['updated_at', 'created_at', 'id', 'is_current'];
+
     /**
      * @var IMotionStackRepository|mixed
      */
@@ -90,6 +91,7 @@ class MotionRepository implements IMotionRepository
      *
      * @param Motion $original
      * @param Motion $amendment
+     * @return mixed
      */
     public function handleApprovedAmendment(Motion $original, Motion $amendment)
     {
@@ -123,10 +125,11 @@ class MotionRepository implements IMotionRepository
      * and creating a superseding motion.
      *
      * @param Motion $amendment
-     * @return false
+     * @return false|Motion
      */
     public function handleAmendment(Motion $amendment)
     {
+        //Non subsidiary motions need not apply
         if (!$amendment->isAmendment()) {
             return false;
         }

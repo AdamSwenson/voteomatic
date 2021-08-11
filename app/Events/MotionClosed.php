@@ -27,15 +27,27 @@ class MotionClosed implements ShouldBroadcast
      * @var Motion
      */
     public $motion;
+    /**
+     * @var Motion
+     */
+    public $ended;
+    /**
+     * @var Motion
+     */
+    public $superseding;
+    public $original;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Motion $ended
+     * @param $superseding Motion|false
      */
-    public function __construct(Motion $motion)
+    public function __construct(Motion $ended,  $superseding=false)
     {
-        $this->motion = $motion;
+        $this->ended = $ended;
+        $this->superseding = $superseding;
+//    $this->original = Motion::find($this->ended->applies_to);
     }
 
     /**
@@ -46,7 +58,7 @@ class MotionClosed implements ShouldBroadcast
     public function broadcastOn()
     {
 
-        return new PrivateChannel('motions.'.$this->motion->id);
+        return new PrivateChannel('motions.'.$this->ended->id);
     }
 
 //    public function broadcastWith(){

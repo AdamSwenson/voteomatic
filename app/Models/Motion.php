@@ -142,6 +142,11 @@ class Motion extends Model
     }
 
 
+    /**
+     * Returns the motion which replaced this motion
+     * after an amendment
+     * @return mixed
+     */
     public function getSupersedingMotion()
     {
         if (!is_null($this->superseded_by)) {
