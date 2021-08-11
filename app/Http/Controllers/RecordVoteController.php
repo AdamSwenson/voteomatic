@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MotionVoteCast;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Requests\VoteRequest;
@@ -97,6 +98,9 @@ class RecordVoteController extends Controller
             //At this point, the vote itself has been saved.
             //Now we need to separately record that user has voted
             $this->voterEligibilityRepo->recordVoted($motion, $this->user);
+
+            //Notify the chair that a vote has been cast
+            MotionVoteCast::dispatch($motion);
 
             return $vote;
 

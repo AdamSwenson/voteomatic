@@ -913,6 +913,9 @@ const actions = {
             //first reset the nav triggers since we may not
             //want selecting the motion to automatically force everyone somewhere
             commit('resetNavTriggers');
+            //reset any votes cast count
+            dispatch('resetCounts');
+            //Actually set as current
             commit('setMotion', motion)
             window.console.log('currentMotion set', motion);
             let channel = `motions.${motion.id}`;

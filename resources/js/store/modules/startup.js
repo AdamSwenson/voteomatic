@@ -91,9 +91,11 @@ const actions = {
             Echo.private(chairChannel)
                 .listen('MotionNeedingApproval', (e) => {
                     window.console.log('Received chair broadcast', chairChannel, e);
-
                     dispatch('handleMotionNeedingApprovalMessage', e);
-
+                })
+                .listen('MotionVoteCast', (e) => {
+                    window.console.log('Received chair broadcast', chairChannel, e);
+                    dispatch('handleCastVoteMessage', e);
                 });
 
             window.console.log('Chair listeners initialized for ', chairChannel);

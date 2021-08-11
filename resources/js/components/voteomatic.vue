@@ -10,6 +10,7 @@
         <!--                <refresh-button></refresh-button>-->
         <!--        </div>-->
         <message-area></message-area>
+        <vote-count-alert></vote-count-alert>
 
         <router-view name="main"></router-view>
 
@@ -47,10 +48,12 @@ import MotionSecondModal from "./motions/motion-second-modal";
 import MotionInOrderModal from "./motions/motion-in-order-modal";
 import ChairMotionSecondModal from "./motions/chair-motion-second-modal";
 import MessageArea from "./messaging/message-area";
+import VoteCountAlert from "./main/chair/vote-count-alert";
 
 export default {
     name: "voteomatic",
     components: {
+        VoteCountAlert,
         MessageArea,
         ChairMotionSecondModal,
         MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage

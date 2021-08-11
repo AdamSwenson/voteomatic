@@ -5858,6 +5858,78 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "vote-count-alert",
+  props: [],
+  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    isVotingAllowed: function isVotingAllowed() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.motion) && this.motion.isVotingAllowed;
+    },
+    show: function show() {
+      return this.isChair && !this.isComplete && this.isVotingAllowed;
+    },
+    votesCast: function votesCast() {
+      var cnt = this.$store.getters.getCastVotesCount;
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(cnt)) return cnt;
+      return '-';
+    },
+    votesOutstanding: function votesOutstanding() {
+      var cnt = this.$store.getters.getMemberCount;
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(cnt)) return cnt;
+      return '-';
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/meeting-home.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/meeting-home.vue?vue&type=script&lang=js& ***!
@@ -11541,6 +11613,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motions_motion_in_order_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./motions/motion-in-order-modal */ "./resources/js/components/motions/motion-in-order-modal.vue");
 /* harmony import */ var _motions_chair_motion_second_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./motions/chair-motion-second-modal */ "./resources/js/components/motions/chair-motion-second-modal.vue");
 /* harmony import */ var _messaging_message_area__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./messaging/message-area */ "./resources/js/components/messaging/message-area.vue");
+/* harmony import */ var _main_chair_vote_count_alert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./main/chair/vote-count-alert */ "./resources/js/components/main/chair/vote-count-alert.vue");
+//
 //
 //
 //
@@ -11588,9 +11662,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "voteomatic",
   components: {
+    VoteCountAlert: _main_chair_vote_count_alert__WEBPACK_IMPORTED_MODULE_12__.default,
     MessageArea: _messaging_message_area__WEBPACK_IMPORTED_MODULE_11__.default,
     ChairMotionSecondModal: _motions_chair_motion_second_modal__WEBPACK_IMPORTED_MODULE_10__.default,
     MotionInOrderModal: _motions_motion_in_order_modal__WEBPACK_IMPORTED_MODULE_9__.default,
@@ -14497,8 +14573,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
@@ -14507,16 +14583,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mutations__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./state */ "./resources/js/store/state.js");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_state__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _modules_elections__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/elections */ "./resources/js/store/modules/elections.js");
-/* harmony import */ var _modules_meetings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/meetings */ "./resources/js/store/modules/meetings.js");
-/* harmony import */ var _modules_modes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/modes */ "./resources/js/store/modules/modes.js");
-/* harmony import */ var _modules_motions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/motions */ "./resources/js/store/modules/motions.js");
-/* harmony import */ var _modules_messages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/messages */ "./resources/js/store/modules/messages.js");
-/* harmony import */ var _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/provisionalMotions */ "./resources/js/store/modules/provisionalMotions.js");
-/* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
-/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
-/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
-/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
+/* harmony import */ var _modules_chairUtilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/chairUtilities */ "./resources/js/store/modules/chairUtilities.js");
+/* harmony import */ var _modules_elections__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/elections */ "./resources/js/store/modules/elections.js");
+/* harmony import */ var _modules_meetings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/meetings */ "./resources/js/store/modules/meetings.js");
+/* harmony import */ var _modules_modes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/modes */ "./resources/js/store/modules/modes.js");
+/* harmony import */ var _modules_motions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/motions */ "./resources/js/store/modules/motions.js");
+/* harmony import */ var _modules_messages__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/messages */ "./resources/js/store/modules/messages.js");
+/* harmony import */ var _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/provisionalMotions */ "./resources/js/store/modules/provisionalMotions.js");
+/* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
+/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
+/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
+/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
 /**
  * Created by adam on 2020-07-13.
  */
@@ -14539,7 +14616,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_15__.default.use(vuex__WEBPACK_IMPORTED_MODULE_16__.default);
 /**
  * This subscribes the api package which
  * handles data exchange with the server
@@ -14549,7 +14627,7 @@ vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__
 // import websocketPlugin from '../api/websocketPlugin';
 
 var debug = "development" !== 'production';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_16__.default.Store({
   strict: debug,
   //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
@@ -14565,20 +14643,154 @@ var debug = "development" !== 'production';
   plugins: [],
   //[ apiPlugin, websocketPlugin ],
   modules: {
-    elections: _modules_elections__WEBPACK_IMPORTED_MODULE_4__.default,
-    meetings: _modules_meetings__WEBPACK_IMPORTED_MODULE_5__.default,
-    messages: _modules_messages__WEBPACK_IMPORTED_MODULE_8__.default,
-    modes: _modules_modes__WEBPACK_IMPORTED_MODULE_6__.default,
-    motions: _modules_motions__WEBPACK_IMPORTED_MODULE_7__.default,
-    navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_10__.default,
-    provisionalMotions: _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_9__.default,
-    results: _modules_results__WEBPACK_IMPORTED_MODULE_12__.default,
-    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_11__.default,
-    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_13__.default
+    chairUtilities: _modules_chairUtilities__WEBPACK_IMPORTED_MODULE_4__.default,
+    elections: _modules_elections__WEBPACK_IMPORTED_MODULE_5__.default,
+    meetings: _modules_meetings__WEBPACK_IMPORTED_MODULE_6__.default,
+    messages: _modules_messages__WEBPACK_IMPORTED_MODULE_9__.default,
+    modes: _modules_modes__WEBPACK_IMPORTED_MODULE_7__.default,
+    motions: _modules_motions__WEBPACK_IMPORTED_MODULE_8__.default,
+    navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_11__.default,
+    provisionalMotions: _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_10__.default,
+    results: _modules_results__WEBPACK_IMPORTED_MODULE_13__.default,
+    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_12__.default,
+    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_14__.default
   } // }
   // plugins: debug ? [createLogger()] : []
 
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/chairUtilities.js":
+/*!******************************************************!*\
+  !*** ./resources/js/store/modules/chairUtilities.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _models_Motion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Motion */ "./resources/js/models/Motion.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+
+
+var state = {
+  currentVotesCast: null,
+  numberOfMembers: null
+};
+var mutations = {
+  setCurrentVotesCast: function setCurrentVotesCast(state, newCount) {
+    state.currentVotesCast = newCount;
+  },
+  setNumberOfMembers: function setNumberOfMembers(state, memberCount) {
+    state.numberOfMembers = memberCount;
+  },
+  resetCastVotesCount: function resetCastVotesCount(state) {
+    state.currentVotesCast = null;
+  }
+  /*
+  *   addThing: (state, thing) => {
+  *        state.things.push(thing);
+  *    }
+  */
+
+};
+var actions = {
+  handleCastVoteMessage: function handleCastVoteMessage(_ref, pusherEvent) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__.default(pusherEvent.motion);
+      var currentMotion = getters.getActiveMotion;
+
+      if (motion.id === currentMotion.id) {
+        //Since we can't assume we're going to get the
+        //pusher notices in the order votes are cast
+        //we only update if the new value is bigger.
+        var count = pusherEvent.count;
+        var currentCount = getters.getCastVotesCount;
+
+        if (count > currentCount) {
+          commit('setCurrentVotesCast', count);
+        }
+
+        var members = getters.getMemberCount;
+
+        if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(members) || pusherEvent.totalMembers > members) {
+          //We probably will only hit this the first time we get a vote
+          //though it is possible someone joins and votes right away
+          commit('setNumberOfMembers', pusherEvent.totalMembers);
+        }
+      }
+
+      resolve();
+    });
+  },
+
+  /**
+   * Resets the stored number of votes cast.
+   * Should be called whenever we switch motions
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
+  resetCounts: function resetCounts(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      commit('resetCastVotesCount'); //probably don't need to update the number of
+      //people present
+    });
+  } // loadMemberCount({dispatch, commit, getters}, meeting) {
+  //     return new Promise(((resolve, reject) => {
+  //     }));
+  // },
+
+  /*
+  *    doThing({dispatch, commit, getters}, thingParam) {
+  *        return new Promise(((resolve, reject) => {
+  *        }));
+  *    },
+  */
+
+};
+/**
+ *
+ *    getThingViaId: (state) => (thingId) => {
+ *        return state.things.filter(function (c) {
+ *            return c.thing_id === thingId;
+ *        })
+ *    },
+ *
+ *
+ *    getThing: (state, getters) => {}
+ */
+
+var getters = {
+  getCastVotesCount: function getCastVotesCount(state) {
+    return state.currentVotesCast;
+  },
+  getOutstandingVotesCount: function getOutstandingVotesCount(state, getters) {
+    var votes = getters.getCastVotesCount;
+    var members = getters.getMemberCount;
+    if (_.isNull(votes) || _.isNull(members)) return null;
+    return members - votes;
+  },
+  getMemberCount: function getMemberCount(state) {
+    return state.numberOfMembers;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: actions,
+  getters: getters,
+  mutations: mutations,
+  state: state
+});
 
 /***/ }),
 
@@ -16613,7 +16825,10 @@ var actions = {
     return new Promise(function (resolve, reject) {
       //first reset the nav triggers since we may not
       //want selecting the motion to automatically force everyone somewhere
-      commit('resetNavTriggers');
+      commit('resetNavTriggers'); //reset any votes cast count
+
+      dispatch('resetCounts'); //Actually set as current
+
       commit('setMotion', motion);
       window.console.log('currentMotion set', motion);
       var channel = "motions.".concat(motion.id);
@@ -17655,6 +17870,9 @@ var actions = {
       Echo["private"](chairChannel).listen('MotionNeedingApproval', function (e) {
         window.console.log('Received chair broadcast', chairChannel, e);
         dispatch('handleMotionNeedingApprovalMessage', e);
+      }).listen('MotionVoteCast', function (e) {
+        window.console.log('Received chair broadcast', chairChannel, e);
+        dispatch('handleCastVoteMessage', e);
       });
       window.console.log('Chair listeners initialized for ', chairChannel);
     }
@@ -65517,6 +65735,45 @@ component.options.__file = "resources/js/components/main/chair/motion-setup.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/main/chair/vote-count-alert.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/main/chair/vote-count-alert.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true& */ "./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true&");
+/* harmony import */ var _vote_count_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vote-count-alert.vue?vue&type=script&lang=js& */ "./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _vote_count_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "235e6940",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/main/chair/vote-count-alert.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/main/meeting-home.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/main/meeting-home.vue ***!
@@ -68797,6 +69054,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_count_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vote-count-alert.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_count_alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/main/meeting-home.vue?vue&type=script&lang=js&":
 /*!********************************************************************************!*\
   !*** ./resources/js/components/main/meeting-home.vue?vue&type=script&lang=js& ***!
@@ -70643,6 +70916,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_template_id_a999c56a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motion_setup_vue_vue_type_template_id_a999c56a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motion-setup.vue?vue&type=template&id=a999c56a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/motion-setup.vue?vue&type=template&id=a999c56a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_vote_count_alert_vue_vue_type_template_id_235e6940_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true&");
 
 
 /***/ }),
@@ -73643,6 +73933,70 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/main/chair/vote-count-alert.vue?vue&type=template&id=235e6940&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.show
+    ? _c(
+        "div",
+        {
+          staticClass: "alert alert-dismissible fade show alert-primary",
+          attrs: { id: "vote-count-alert", role: "alert" }
+        },
+        [
+          _c("p", [
+            _c("strong", [_vm._v("Votes cast:")]),
+            _vm._v("  " + _vm._s(_vm.votesCast) + "\n    ")
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _c("strong", [_vm._v("Outstanding: ")]),
+            _vm._v(" " + _vm._s(_vm.votesOutstanding))
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -77017,6 +77371,8 @@ var render = function() {
       _c("router-tabs"),
       _vm._v(" "),
       _c("message-area"),
+      _vm._v(" "),
+      _c("vote-count-alert"),
       _vm._v(" "),
       _c("router-view", { attrs: { name: "main" } }),
       _vm._v(" "),
