@@ -134,6 +134,8 @@ class MotionStackController extends Controller
         //The motion was probably the current one, but just in case
         $meeting = $motion->meeting;
         $motion = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+//        $motion->is_current = true;
+//        $motion->save();
 
         //Send the push message to all clients
         VotingOnMotionOpened::dispatch($motion);
