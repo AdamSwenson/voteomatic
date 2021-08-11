@@ -10678,6 +10678,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -10713,16 +10715,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "router-tab",
   props: ['route'],
+  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default())],
   data: function data() {
     return {
       activeClass: 'active'
     };
   },
+  asyncComputed: {
+    showTab: function showTab() {
+      if (this.name === 'vote') {
+        return this.isVotingAllowed && !this.isComplete;
+      }
+
+      if (this.name === 'results') {
+        return this.isComplete;
+      }
+
+      return true;
+    }
+  },
   computed: {
-    name: function name() {},
+    name: function name() {
+      return this.route.name;
+    },
     label: function label() {
       return this.route.label;
     },
@@ -12581,6 +12601,14 @@ module.exports = {
      */
     isComplete: function isComplete() {
       return this.isMotionComplete;
+    },
+    isVotingAllowed: {
+      get: function get() {
+        if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+          return this.motion.isVotingAllowed;
+        }
+      },
+      "default": false
     } // selectedMotion: function () {
     //     return this.$store.getters.getActiveMotion;
     // },
@@ -76687,48 +76715,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("router-link", {
-    attrs: { to: _vm.path },
-    scopedSlots: _vm._u([
-      {
-        key: "default",
-        fn: function(ref) {
-          var href = ref.href
-          var route = ref.route
-          var navigate = ref.navigate
-          var isActive = ref.isActive
-          var isExactActive = ref.isExactActive
-          return [
-            _c(
-              "li",
-              {
-                staticClass: "nav-item",
-                class: [
-                  isActive && "router-link-active",
-                  isExactActive && "router-link-exact-active"
+  return _vm.showTab
+    ? _c("router-link", {
+        attrs: { to: _vm.path },
+        scopedSlots: _vm._u(
+          [
+            {
+              key: "default",
+              fn: function(ref) {
+                var href = ref.href
+                var route = ref.route
+                var navigate = ref.navigate
+                var isActive = ref.isActive
+                var isExactActive = ref.isExactActive
+                return [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "nav-item",
+                      class: [
+                        isActive && "router-link-active",
+                        isExactActive && "router-link-exact-active"
+                      ]
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          class: [
+                            isActive && _vm.activeClass,
+                            isExactActive && _vm.activeClass
+                          ],
+                          attrs: { href: href },
+                          on: { click: navigate }
+                        },
+                        [_vm._v(_vm._s(_vm.label))]
+                      )
+                    ]
+                  )
                 ]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: [
-                      isActive && _vm.activeClass,
-                      isExactActive && _vm.activeClass
-                    ],
-                    attrs: { href: href },
-                    on: { click: navigate }
-                  },
-                  [_vm._v(_vm._s(_vm.label))]
-                )
-              ]
-            )
-          ]
-        }
-      }
-    ])
-  })
+              }
+            }
+          ],
+          null,
+          false,
+          2598319108
+        )
+      })
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

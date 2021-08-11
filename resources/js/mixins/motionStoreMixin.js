@@ -48,6 +48,16 @@ module.exports = {
             return this.isMotionComplete;
         },
 
+        isVotingAllowed: {
+            get: function () {
+                if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                    return this.motion.isVotingAllowed;
+                }
+            },
+            default: false
+        },
+
+
 
         // selectedMotion: function () {
         //     return this.$store.getters.getActiveMotion;
