@@ -1,10 +1,13 @@
 import IModel from "./IModel";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Message extends IModel {
 
 
-    constructor({id = null, messageText = null, messageStyle = null, displayTime = 0, motion = null}) {
+    constructor({id = null, messageText = null, messageStyle = null, displayTime = 0, motion = null, showToChair=null}) {
         super();
+        /** Whether to display the message to the chair */
+        this._showToChair = showToChair;
         //We add a bit of entropy so vue won't get confused by multiple
         //instances of same message
         this.id = 'message-' + id + '-' + _.random(3,9999);
@@ -23,7 +26,8 @@ export default class Message extends IModel {
                 name: 'pendingApproval',
                 messageText: "The Chair has been asked to verify that your motion is in order.",
                 messageStyle: 'primary',
-                displayTime: 5000
+                displayTime: 5000,
+                showToChair: false
             },
 
             {
@@ -43,6 +47,17 @@ export default class Message extends IModel {
             },
 
         ]
+    }
+
+    get showToChair(){
+        //Shows to chair by default
+        if(! isReadyToRock(this._showToChair)) return true;
+
+        return this._showToChair;
+    }
+
+    set showToChair(v){
+        this._showToChair = v;
     }
 
     static makeFromTemplate(name, motion = null) {

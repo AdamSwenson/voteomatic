@@ -57,6 +57,8 @@ const mutations = {
 const actions = {
     showMessage({dispatch, commit, getters}, messageObject) {
         return new Promise(((resolve, reject) => {
+            if(getters.getIsAdmin && messageObject.showToChair === false) return resolve();
+
             commit('addToMessageQueue', messageObject);
 
             if (messageObject.displayTime > 0) {

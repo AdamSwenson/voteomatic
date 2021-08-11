@@ -13272,6 +13272,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Message)
 /* harmony export */ });
 /* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13296,6 +13297,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Message = /*#__PURE__*/function (_IModel) {
   _inherits(Message, _IModel);
 
@@ -13313,11 +13315,16 @@ var Message = /*#__PURE__*/function (_IModel) {
         _ref$displayTime = _ref.displayTime,
         displayTime = _ref$displayTime === void 0 ? 0 : _ref$displayTime,
         _ref$motion = _ref.motion,
-        motion = _ref$motion === void 0 ? null : _ref$motion;
+        motion = _ref$motion === void 0 ? null : _ref$motion,
+        _ref$showToChair = _ref.showToChair,
+        showToChair = _ref$showToChair === void 0 ? null : _ref$showToChair;
 
     _classCallCheck(this, Message);
 
-    _this = _super.call(this); //We add a bit of entropy so vue won't get confused by multiple
+    _this = _super.call(this);
+    /** Whether to display the message to the chair */
+
+    _this._showToChair = showToChair; //We add a bit of entropy so vue won't get confused by multiple
     //instances of same message
 
     _this.id = 'message-' + id + '-' + _.random(3, 9999);
@@ -13328,7 +13335,17 @@ var Message = /*#__PURE__*/function (_IModel) {
     return _this;
   }
 
-  _createClass(Message, null, [{
+  _createClass(Message, [{
+    key: "showToChair",
+    get: function get() {
+      //Shows to chair by default
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this._showToChair)) return true;
+      return this._showToChair;
+    },
+    set: function set(v) {
+      this._showToChair = v;
+    }
+  }], [{
     key: "templates",
     get: function get() {
       return [{
@@ -13336,7 +13353,8 @@ var Message = /*#__PURE__*/function (_IModel) {
         name: 'pendingApproval',
         messageText: "The Chair has been asked to verify that your motion is in order.",
         messageStyle: 'primary',
-        displayTime: 5000
+        displayTime: 5000,
+        showToChair: false
       }, {
         id: 2,
         name: 'notApproved',
@@ -15684,6 +15702,7 @@ var actions = {
         commit = _ref.commit,
         getters = _ref.getters;
     return new Promise(function (resolve, reject) {
+      if (getters.getIsAdmin && messageObject.showToChair === false) return resolve();
       commit('addToMessageQueue', messageObject);
 
       if (messageObject.displayTime > 0) {
