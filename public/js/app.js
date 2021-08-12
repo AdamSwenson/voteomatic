@@ -6339,6 +6339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
 /* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
 /* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 //
 //
 //
@@ -6447,6 +6448,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-page",
   components: {
@@ -6465,7 +6467,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       voteRecorded: false,
-      vote: null,
+      // vote: null,
       showButtons: false,
       titleText: {
         unVoted: 'Please vote on this motion',
@@ -6473,68 +6475,6 @@ __webpack_require__.r(__webpack_exports__);
       } // isReady: true
 
     };
-  },
-  methods: {
-    /**
-     * Fires when receives notification that the
-     * nay button has been pressed. Sends result
-     * to server.
-     */
-    handleNay: function handleNay() {
-      var voteType = 'nay';
-      this.recordVote(voteType);
-    },
-
-    /**
-     * Fires when receives notification that the
-     * yay button has been pressed. Sends result
-     * to server.
-     */
-    handleYay: function handleYay() {
-      var voteType = 'yay';
-      this.recordVote(voteType);
-    },
-
-    /**
-     * Sends vote to server
-     *
-     * @param voteType
-     */
-    recordVote: function recordVote(voteType) {
-      var _this = this;
-
-      var url = _routes__WEBPACK_IMPORTED_MODULE_4__.votes.recordVote(this.motion.id);
-      var data = {
-        motionId: this.motion.id,
-        vote: voteType
-      };
-      return new Promise(function (resolve, reject) {
-        var me = _this;
-        return Vue.axios.post(url, data).then(function (response) {
-          console.log(response.data);
-          me.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__.default(response.data.isYay, response.data.receipt, response.data.id);
-          me.voteRecorded = true;
-          me.showButtons = false; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
-
-          me.$store.commit('addVotedUponMotion', me.motion.id);
-          resolve();
-        })["catch"](function (error) {
-          // error handling
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-
-            if (error.response.status === 501) {
-              me.voteRecorded = true;
-              me.showButtons = false;
-            }
-          } // reject();
-
-        });
-      });
-    }
   },
   asyncComputed: {
     cardTitle: {
@@ -6625,11 +6565,14 @@ __webpack_require__.r(__webpack_exports__);
       if (!_.isUndefined(this.originalMotion) && !_.isNull(this.originalMotion)) {
         return this.originalMotion.content;
       }
+    },
+    vote: function vote() {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__.isReadyToRock)(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
     }
   },
   computed: {
     receipt: function receipt() {
-      if (this.vote) {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__.isReadyToRock)(this.vote)) {
         return this.vote.receipt;
       }
     },
@@ -6642,6 +6585,96 @@ __webpack_require__.r(__webpack_exports__);
     // },
     instructions: function instructions() {
       return "Some generic instructions....";
+    }
+  },
+  methods: {
+    /**
+     * Fires when receives notification that the
+     * nay button has been pressed. Sends result
+     * to server.
+     */
+    handleNay: function handleNay() {
+      var voteType = 'nay';
+      this.recordVote(voteType);
+    },
+
+    /**
+     * Fires when receives notification that the
+     * yay button has been pressed. Sends result
+     * to server.
+     */
+    handleYay: function handleYay() {
+      var voteType = 'yay';
+      this.recordVote(voteType);
+    },
+
+    /**
+     * Sends vote to server
+     *
+     * @param voteType
+     */
+    recordVote: function recordVote(voteType) {
+      var me = this;
+      var vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_0__.default({
+        motionId: this.motion.id,
+        //NB, the setter will translate whatever we are passing into a boolean
+        isYay: voteType
+      });
+      this.$store.dispatch('castMotionVote', vote).then(function (v) {
+        if (v.receipt.length > 0) {
+          //Successfully recorded
+          me.voteRecorded = true;
+          me.showButtons = false;
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+
+          if (error.response.status === 501) {
+            me.voteRecorded = true;
+            me.showButtons = false;
+          }
+        }
+      }); //
+      // let url = routes.votes.recordVote(this.motion.id);
+      // let data = {
+      //     motionId: this.motion.id,
+      //     vote: voteType,
+      // };
+      //
+      // return new Promise((resolve, reject) => {
+      //     let me = this;
+      //     return Vue.axios.post(url, data)
+      //         .then((response) => {
+      //             console.log(response.data);
+      //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
+      //             me.voteRecorded = true;
+      //             me.showButtons = false;
+      //             //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+      //
+      //             me.$store.commit('addVotedUponMotion', me.motion.id);
+      //             resolve();
+      //         })
+      //         .catch(function (error) {
+      //             // error handling
+      //             if (error.response) {
+      //                 // The request was made and the server responded with a status code
+      //                 // that falls out of the range of 2xx
+      //                 console.log(error.response.data);
+      //                 console.log(error.response.status);
+      //                 if (error.response.status === 501) {
+      //                     me.voteRecorded = true;
+      //                     me.showButtons = false;
+      //                 }
+      //
+      //             }
+      //             // reject();
+      //         });
+      //
+      // });
     }
   }
 });
@@ -14173,6 +14206,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Vote)
 /* harmony export */ });
 /* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14195,6 +14229,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 var Vote = /*#__PURE__*/function (_IModel) {
@@ -14206,25 +14243,60 @@ var Vote = /*#__PURE__*/function (_IModel) {
    * Create a new motion
    * @param params
    */
-  function Vote(isYay, receipt) {
+  function Vote(_ref) {
     var _this;
 
-    var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var _ref$isYay = _ref.isYay,
+        isYay = _ref$isYay === void 0 ? null : _ref$isYay,
+        _ref$receipt = _ref.receipt,
+        receipt = _ref$receipt === void 0 ? null : _ref$receipt,
+        _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id,
+        _ref$motionId = _ref.motionId,
+        motionId = _ref$motionId === void 0 ? null : _ref$motionId;
 
     _classCallCheck(this, Vote);
 
     _this = _super.call(this);
-    _this.isYay = isYay;
+
+    _defineProperty(_assertThisInitialized(_this), "motionId", void 0);
+
+    _this._isYay = isYay;
     _this.receipt = receipt;
     _this.id = id;
+    _this.motionId = motionId;
     return _this;
   }
 
   _createClass(Vote, [{
-    key: "voteEnglish",
-    value: function voteEnglish() {
-      if (this.isYay) return 'Yay';
-      if (!this.isYay) return 'Nay'; //no abstentions!
+    key: "isYay",
+    get: function get() {
+      return this._isYay;
+    },
+    set: function set(v) {
+      if (v === true) this._isYay = true;
+      if (v === false) this._isYay = false;
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(v)) this._isYay = null;
+      if (_.lowerCase(v) === 'yay') this._isYay = true;
+      if (_.lowerCase(v) === 'nay') this._isYay = false;
+    }
+  }, {
+    key: "voteDisplayEnglish",
+    value: function voteDisplayEnglish() {
+      if (this._isYay) return 'Yay';
+      if (!this._isYay) return 'Nay';
+    }
+    /**
+     * For some reason I'm sticking with sending a string to the
+     * server. This sets it.
+     * @returns {string}
+     */
+
+  }, {
+    key: "voteServerString",
+    get: function get() {
+      if (this._isYay) return 'yay';
+      if (!this._isYay) return 'nay';
     }
   }]);
 
@@ -16343,12 +16415,10 @@ var actions = {
 
       return Vue.axios.post(url, d).then(function (response) {
         var d = response.data;
-        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); // window.console.log(statusMessage);
+        var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //let them know the chair will need to approve
 
-        dispatch('showMessage', statusMessage); // commit('addToMessageQueue', statusMessage);
-
-        resolve(); //let them know the chair will need to approve
-        // alert('d');
+        dispatch('showMessage', statusMessage);
+        resolve();
       });
     });
   },
@@ -16377,43 +16447,9 @@ var actions = {
         var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //set it on a timer
 
         dispatch('showMessage', statusMessage);
-        resolve(); // let d = response.data;
-        //
-        // let motion = new Motion(d);
-        // // let motion = new Motion(d.id, d.name, d.date);
-        // commit('addMotionToStore', motion);
-        //
-        // let pl = {meetingId: meetingId, motionId: motion.id};
-        //
-        // return dispatch('setCurrentMotion', pl)
-        //     .then(() => {
-        //         return resolve(motion);
-        //     });
-        //
-        // // commit('setMotion', motion);
+        resolve();
       });
-    }); // //send to server
-    //     let url = routes.motions.resource();
-    //     window.console.log('sending', payload);
-    //     return Vue.axios.post(url, payload)
-    //         .then((response) => {
-    //             let d = response.data;
-    //
-    //             let motion = new Motion(d);
-    //             // let motion = new Motion(d.id, d.name, d.date);
-    //             commit('addMotionToStore', motion);
-    //
-    //             let pl = {meetingId: payload.meetingId, motionId: motion.id};
-    //
-    //             return dispatch('setCurrentMotion', pl)
-    //                 .then(() => {
-    //                     return resolve(motion);
-    //                 });
-    //
-    //             // commit('setMotion', motion);
-    //
-    //         });
-    // }));
+    });
   },
 
   /**
@@ -16466,20 +16502,7 @@ var actions = {
         updateProp: 'superseded_by',
         updateVal: superseding.id
       });
-      commit('setMotionProp', pl); //remove that from the store (but don't delete from server!)
-      //dev or should it just be marked complete?
-      // commit('deleteMotion', original);
-      //make a new motion and add it to the store (but not to the server)
-      //    let motion = new Motion(d);
-      //     commit('addMotionToStore', superseding);
-      // let original = getters.getMotionById(supersedingMotion.superseded_by);
-      // //remove that from the store (but don't delete from server!)
-      // commit('deleteMotion', original);
-      // //make a new motion and add it to the store (but not to the server)
-      // let motion = new Motion(d);
-      // commit('addMotionToStore', motion);
-      // }
-
+      commit('setMotionProp', pl);
       resolve();
     });
   },
@@ -18156,6 +18179,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Vote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Vote */ "./resources/js/models/Vote.js");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+
 
 
 
@@ -18163,7 +18188,7 @@ var state = {
   selectedCandidates: [],
   // showOverSelectionWarning: false,
   writeInCandidates: [],
-  receipts: {}
+  castVotes: []
 };
 var mutations = {
   addCandidateToSelected: function addCandidateToSelected(state, candidateObject) {
@@ -18188,10 +18213,8 @@ var mutations = {
     var numberSelected = state.selectedCandidates.length;
     state.showOverSelectionWarning = numberSelected < motion.max_winners;
   },
-  addReceipt: function addReceipt(state, _ref) {
-    var motionId = _ref.motionId,
-        receipt = _ref.receipt;
-    Vue.set(state.receipts, motionId, receipt);
+  addCastVote: function addCastVote(state, voteObject) {
+    state.castVotes.push(voteObject);
   },
   addWriteIn: function addWriteIn(state, candidateObject) {
     state.writeInCandidates.push(candidateObject);
@@ -18205,28 +18228,41 @@ var mutations = {
 };
 var actions = {
   /**
-   * DEV NOT READY FOR USE
+   * For regular votes on motions (i.e., not election votes), this
+   * sends the vote to the server. It then updates the vote object
+   * and stores it locally so the user can verify the receipt oif they choose.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @param vote yay|nay
+   * @returns {Promise<unknown>}
    */
-  castRegularMotionVote: function castRegularMotionVote(_ref2, motion) {
-    var _this = this;
-
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
-    var url = _routes__WEBPACK_IMPORTED_MODULE_0__.votes.recordVote(motion.id);
-    var data = {
-      motionId: motion.id,
-      vote: voteType
-    };
+  castMotionVote: function castMotionVote(_ref, voteObject) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
     return new Promise(function (resolve, reject) {
-      var me = _this;
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.votes.recordVote(voteObject.motionId);
+      var data = {
+        motionId: voteObject.motionId,
+        vote: voteObject.voteServerString
+      };
       return Vue.axios.post(url, data).then(function (response) {
-        console.log(response.data);
-        me.vote = new _models_Vote__WEBPACK_IMPORTED_MODULE_1__.default(response.data.isYay, response.data.receipt, response.data.id);
-        me.voteRecorded = true;
-        me.showButtons = false; //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+        console.log(response.data); //NB, this is kosher since we haven't saved the object to state yet.
+        // if (voteObject.isYay !== response.data.isYay) throw new Error("Something has gone terribly wrong");
 
-        me.$store.commit('addVotedUponMotion', me.motion.id);
+        voteObject.receipt = response.data.receipt;
+        voteObject.id = response.data.id; //Add the motion to the list of motions the user has voted upon
+
+        commit('addVotedUponMotion', voteObject.motionId); //Store the receipt for the user. These are done separately since
+        //the voted upon list is used to restrict what a user may do and
+        //is populated every time the page loads.
+        //The castVote is used to store receipts in a store which
+        // will empty every time the page loads
+
+        commit('addCastVote', voteObject);
         resolve();
       })["catch"](function (error) {
         // error handling
@@ -18243,7 +18279,43 @@ var actions = {
         } // reject();
 
       });
-    });
+    }); // }
+    // let url = routes.votes.recordVote(motion.id);
+    // let data = {
+    //     motionId: motion.id,
+    //     vote: voteType,
+    // };
+    //
+    // return new Promise((resolve, reject) => {
+    //     let me = this;
+    //     return Vue.axios.post(url, data)
+    //         .then((response) => {
+    //             console.log(response.data);
+    //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
+    //             me.voteRecorded = true;
+    //             me.showButtons = false;
+    //             //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+    //
+    //             me.$store.commit('addVotedUponMotion', me.motion.id);
+    //             resolve();
+    //         })
+    //         .catch(function (error) {
+    //             // error handling
+    //             if (error.response) {
+    //                 // The request was made and the server responded with a status code
+    //                 // that falls out of the range of 2xx
+    //                 console.log(error.response.data);
+    //                 console.log(error.response.status);
+    //                 if (error.response.status === 501) {
+    //                     me.voteRecorded = true;
+    //                     me.showButtons = false;
+    //                 }
+    //
+    //             }
+    //             // reject();
+    //         });
+    //
+    // });
   },
 
   /**
@@ -18256,12 +18328,12 @@ var actions = {
    * @param candidateId
    * @returns {Promise<unknown>}
    */
-  castElectionVote: function castElectionVote(_ref3) {
-    var _this2 = this;
+  castElectionVote: function castElectionVote(_ref2) {
+    var _this = this;
 
-    var dispatch = _ref3.dispatch,
-        commit = _ref3.commit,
-        getters = _ref3.getters;
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
     var motionId = getters.getActiveMotion.id;
     var url = _routes__WEBPACK_IMPORTED_MODULE_0__.election.recordVote(motionId); //These are required by the route
 
@@ -18274,7 +18346,7 @@ var actions = {
         data.candidateIds.push(candidate.id);
       });
 
-      var me = _this2;
+      var me = _this;
       return Vue.axios.post(url, data).then(function (response) {
         console.log(response.data);
         commit('addReceipt', {
@@ -18287,19 +18359,19 @@ var actions = {
       });
     });
   },
-  unselectCandidate: function unselectCandidate(_ref4, candidateObject) {
-    var dispatch = _ref4.dispatch,
-        commit = _ref4.commit,
-        getters = _ref4.getters;
+  unselectCandidate: function unselectCandidate(_ref3, candidateObject) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       commit('removeCandidateFromSelected', candidateObject);
       resolve(); // commit('setOverSelectionWarning');
     });
   },
-  selectCandidate: function selectCandidate(_ref5, candidateObject) {
-    var dispatch = _ref5.dispatch,
-        commit = _ref5.commit,
-        getters = _ref5.getters;
+  selectCandidate: function selectCandidate(_ref4, candidateObject) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
     return new Promise(function (resolve, reject) {
       commit('addCandidateToSelected', candidateObject);
       resolve(); // commit('setOverSelectionWarning');
@@ -18316,6 +18388,27 @@ var getters = {
   //     }
   //     //todo What if not set? Could we end up here?
   // },
+
+  /**
+   * Returns all stored votes the user has cast
+   * @param state
+   * @param getters
+   * @returns {[]|{getVotedMotions: function(*): string}|{getVotedMotions: function(*): string}|*}
+   */
+  getUsersCastVotes: function getUsersCastVotes(state, getters) {
+    return state.castVotes;
+  },
+  getCastVoteForMotion: function getCastVoteForMotion(state, getters) {
+    return function (motion) {
+      var motionId = (0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__.idify)(motion);
+
+      var v = _.filter(getters.getUsersCastVotes, function (vote) {
+        return vote.motionId === motionId;
+      });
+
+      return v[0];
+    };
+  },
   getMaxWinners: function getMaxWinners(state, getters) {
     var motion = getters.getActiveMotion; // window.console.log('gmw', motion);
 
@@ -18327,7 +18420,7 @@ var getters = {
     return state.selectedCandidates;
   },
   getSelectedCandidatesForMotion: function getSelectedCandidatesForMotion(state, getters) {
-    var motion = getters.getActiveMotion; // window.co3nsole.log('taco');
+    var motion = getters.getActiveMotion; // window.console.log('taco');
 
     return _.filter(getters.getAllSelectedCandidates, function (candidate) {
       return candidate.motion_id === motion.id;

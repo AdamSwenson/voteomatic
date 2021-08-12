@@ -337,13 +337,10 @@ const actions = {
                     let d = response.data;
 
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
-                    // window.console.log(statusMessage);
+                    //let them know the chair will need to approve
                     dispatch('showMessage', statusMessage);
-                    // commit('addToMessageQueue', statusMessage);
 
                     resolve();
-                    //let them know the chair will need to approve
-                    // alert('d');
                 });
         }));
     },        //
@@ -373,46 +370,10 @@ const actions = {
                     dispatch('showMessage', statusMessage);
 
                     resolve();
-                    // let d = response.data;
-                    //
-                    // let motion = new Motion(d);
-                    // // let motion = new Motion(d.id, d.name, d.date);
-                    // commit('addMotionToStore', motion);
-                    //
-                    // let pl = {meetingId: meetingId, motionId: motion.id};
-                    //
-                    // return dispatch('setCurrentMotion', pl)
-                    //     .then(() => {
-                    //         return resolve(motion);
-                    //     });
-                    //
-                    // // commit('setMotion', motion);
 
                 });
         }));
 
-        // //send to server
-        //     let url = routes.motions.resource();
-        //     window.console.log('sending', payload);
-        //     return Vue.axios.post(url, payload)
-        //         .then((response) => {
-        //             let d = response.data;
-        //
-        //             let motion = new Motion(d);
-        //             // let motion = new Motion(d.id, d.name, d.date);
-        //             commit('addMotionToStore', motion);
-        //
-        //             let pl = {meetingId: payload.meetingId, motionId: motion.id};
-        //
-        //             return dispatch('setCurrentMotion', pl)
-        //                 .then(() => {
-        //                     return resolve(motion);
-        //                 });
-        //
-        //             // commit('setMotion', motion);
-        //
-        //         });
-        // }));
 
     },
 
@@ -465,23 +426,6 @@ const actions = {
             commit('setMotionProp', pl);
 
 
-
-            //remove that from the store (but don't delete from server!)
-            //dev or should it just be marked complete?
-            // commit('deleteMotion', original);
-
-
-            //make a new motion and add it to the store (but not to the server)
-            //    let motion = new Motion(d);
-            //     commit('addMotionToStore', superseding);
-
-            // let original = getters.getMotionById(supersedingMotion.superseded_by);
-            // //remove that from the store (but don't delete from server!)
-            // commit('deleteMotion', original);
-            // //make a new motion and add it to the store (but not to the server)
-            // let motion = new Motion(d);
-            // commit('addMotionToStore', motion);
-            // }
             resolve();
         }));
     },

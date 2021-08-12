@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="col">
-                    <p class="motionDescription text-muted">{{motionDescription}}</p>
+                    <p class="motionDescription text-muted">{{ motionDescription }}</p>
 
                 </div>
             </div>
@@ -109,6 +109,7 @@ import AmendmentTextDisplay from "../motions/amendment-text-display";
 import RequiredVoteBadge from "../motions/badges/required-vote-badge";
 import DebatableBadge from "../motions/badges/debatable-badge";
 import MotionTypeBadge from "../motions/badges/motion-type-badge";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "vote-page",
@@ -130,7 +131,7 @@ export default {
     data: function () {
         return {
             voteRecorded: false,
-            vote: null,
+            // vote: null,
 
             showButtons: false,
 
@@ -143,80 +144,13 @@ export default {
         }
     },
 
-    methods: {
-        /**
-         * Fires when receives notification that the
-         * nay button has been pressed. Sends result
-         * to server.
-         */
-        handleNay: function () {
-            let voteType = 'nay';
-            this.recordVote(voteType);
-        },
-
-        /**
-         * Fires when receives notification that the
-         * yay button has been pressed. Sends result
-         * to server.
-         */
-        handleYay: function () {
-            let voteType = 'yay';
-            this.recordVote(voteType);
-        },
-
-        /**
-         * Sends vote to server
-         *
-         * @param voteType
-         */
-        recordVote: function (voteType) {
-            let url = routes.votes.recordVote(this.motion.id);
-            let data = {
-                motionId: this.motion.id,
-                vote: voteType,
-
-            };
-
-            return new Promise((resolve, reject) => {
-                let me = this;
-                return Vue.axios.post(url, data)
-                    .then((response) => {
-                        console.log(response.data);
-                        me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
-                        me.voteRecorded = true;
-                        me.showButtons = false;
-                        //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
-
-                        me.$store.commit('addVotedUponMotion', me.motion.id);
-                        resolve();
-                    })
-                    .catch(function (error) {
-                        // error handling
-                        if (error.response) {
-                            // The request was made and the server responded with a status code
-                            // that falls out of the range of 2xx
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            if (error.response.status === 501) {
-                                me.voteRecorded = true;
-                                me.showButtons = false;
-                            }
-
-                        }
-                        // reject();
-                    });
-
-            });
-
-        }
-    },
 
     asyncComputed: {
         cardTitle: {
             get: function () {
-                if(! this.isVotingAllowed){
+                if (!this.isVotingAllowed) {
                     return 'The current motion is ';
-                }else{
+                } else {
                     if (this.hasVoted) {
                         return this.titleText.voted
                     }
@@ -266,8 +200,8 @@ export default {
             watch: ['motion']
         },
 
-        isVotingAllowed: function(){
-          return this.isReady && this.motion.isVotingAllowed;
+        isVotingAllowed: function () {
+            return this.isReady && this.motion.isVotingAllowed;
         },
 
         motionContent: function () {
@@ -314,6 +248,10 @@ export default {
             if (!_.isUndefined(this.originalMotion) && !_.isNull(this.originalMotion)) {
                 return this.originalMotion.content
             }
+        },
+
+        vote : function(){
+            if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
         }
 
     }
@@ -321,7 +259,7 @@ export default {
 
     computed: {
         receipt: function () {
-            if (this.vote) {
+            if (isReadyToRock(this.vote)) {
                 return this.vote.receipt;
             }
         }
@@ -338,7 +276,106 @@ export default {
         instructions: function () {
             return "Some generic instructions...."
         }
-    }
+    },
+
+    methods: {
+        /**
+         * Fires when receives notification that the
+         * nay button has been pressed. Sends result
+         * to server.
+         */
+        handleNay: function () {
+            let voteType = 'nay';
+            this.recordVote(voteType);
+        },
+
+        /**
+         * Fires when receives notification that the
+         * yay button has been pressed. Sends result
+         * to server.
+         */
+        handleYay: function () {
+            let voteType = 'yay';
+            this.recordVote(voteType);
+        },
+
+        /**
+         * Sends vote to server
+         *
+         * @param voteType
+         */
+        recordVote: function (voteType) {
+            let me = this;
+
+            let vote = new Vote(
+                {
+                    motionId: this.motion.id,
+
+                    //NB, the setter will translate whatever we are passing into a boolean
+                    isYay: voteType
+                });
+
+            this.$store.dispatch('castMotionVote', vote).then((v) => {
+                if(v.receipt.length >0){
+                    //Successfully recorded
+                    me.voteRecorded = true;
+                    me.showButtons = false;
+                }
+            }).catch((error) => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    if (error.response.status === 501) {
+                        me.voteRecorded = true;
+                        me.showButtons = false;
+                    }
+                }
+
+            });
+
+            //
+            // let url = routes.votes.recordVote(this.motion.id);
+            // let data = {
+            //     motionId: this.motion.id,
+            //     vote: voteType,
+            // };
+            //
+            // return new Promise((resolve, reject) => {
+            //     let me = this;
+            //     return Vue.axios.post(url, data)
+            //         .then((response) => {
+            //             console.log(response.data);
+            //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
+            //             me.voteRecorded = true;
+            //             me.showButtons = false;
+            //             //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+            //
+            //             me.$store.commit('addVotedUponMotion', me.motion.id);
+            //             resolve();
+            //         })
+            //         .catch(function (error) {
+            //             // error handling
+            //             if (error.response) {
+            //                 // The request was made and the server responded with a status code
+            //                 // that falls out of the range of 2xx
+            //                 console.log(error.response.data);
+            //                 console.log(error.response.status);
+            //                 if (error.response.status === 501) {
+            //                     me.voteRecorded = true;
+            //                     me.showButtons = false;
+            //                 }
+            //
+            //             }
+            //             // reject();
+            //         });
+            //
+            // });
+
+        }
+    },
+
 }
 </script>
 
