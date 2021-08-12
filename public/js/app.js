@@ -14551,16 +14551,6 @@ var routes = [{
   props: true,
   adminOnly: false
 }, {
-  name: 'verify',
-  path: '/verify',
-  icon: "fa fa-check",
-  label: "Verify your vote",
-  components: {
-    main: _components_main_vote_verification_page__WEBPACK_IMPORTED_MODULE_3__.default
-  },
-  props: true,
-  adminOnly: false
-}, {
   name: 'results',
   path: '/results',
   icon: "fa fa-comments-o",
@@ -14600,6 +14590,16 @@ var routes = [{
   },
   props: true,
   adminOnly: true
+}, {
+  name: 'verify',
+  path: '/verify',
+  icon: "fa fa-check",
+  label: "Verify votes",
+  components: {
+    main: _components_main_vote_verification_page__WEBPACK_IMPORTED_MODULE_3__.default
+  },
+  props: true,
+  adminOnly: false
 } // {
 //     name: 'meeting',
 //     path: '/meeting',
