@@ -55,9 +55,22 @@ const mutations = {
 
 
 const actions = {
+    /**
+     * Shows the message for the amount of time set on the object.
+     *
+     * THIS SHOULD ALMOST ALWAYS BE USED INSTEAD OF COMMITTING DIRECTLY
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param messageObject
+     * @returns {Promise<unknown>}
+     */
     showMessage({dispatch, commit, getters}, messageObject) {
         return new Promise(((resolve, reject) => {
             if(getters.getIsAdmin && messageObject.showToChair === false) return resolve();
+
+            if(!getters.getIsAdmin && messageObject.chairOnly === true) return resolve();
 
             commit('addToMessageQueue', messageObject);
 

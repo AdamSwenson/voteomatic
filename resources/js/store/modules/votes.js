@@ -90,7 +90,6 @@ const actions = {
                 .then((response) => {
                     console.log(response.data);
                     //NB, this is kosher since we haven't saved the object to state yet.
-                    // if (voteObject.isYay !== response.data.isYay) throw new Error("Something has gone terribly wrong");
                     voteObject.receipt = response.data.receipt;
                     voteObject.id = response.data.id;
 
@@ -108,16 +107,23 @@ const actions = {
                 .catch(function (error) {
                     // error handling
                     if (error.response) {
+                        //todo Error messaging
+                        let message = Message.makeFromTemplate('voteRecordingError');
+                        //todo Add server generated message
+                        // message.messageText = message.messageText += error.response.message;
+                        dispatch('showMessage', message);
+
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
                         console.log(error.response.data);
                         console.log(error.response.status);
                         if (error.response.status === 501) {
-                            me.voteRecorded = true;
-                            me.showButtons = false;
+                         //   me.voteRecorded = true;
+                           // me.showButtons = false;
                         }
 
                     }
+                    throw error;
                     // reject();
                 });
 

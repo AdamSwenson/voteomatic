@@ -6333,13 +6333,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../text-display/vote-receipt */ "./resources/js/components/text-display/vote-receipt.vue");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
-/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
-/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
-/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
-/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../mixins/receiptMixin */ "./resources/js/mixins/receiptMixin.js");
+/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motions/amendment-text-display */ "./resources/js/components/motions/amendment-text-display.vue");
+/* harmony import */ var _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../motions/badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 //
 //
 //
@@ -6449,13 +6451,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-page",
   components: {
-    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__.default,
-    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__.default,
-    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_9__.default,
-    AmendmentTextDisplay: _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__.default,
+    MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__.default,
+    DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_11__.default,
+    RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_10__.default,
+    AmendmentTextDisplay: _motions_amendment_text_display__WEBPACK_IMPORTED_MODULE_9__.default,
     VoteReceipt: _text_display_vote_receipt__WEBPACK_IMPORTED_MODULE_5__.default,
     // MotionDescription,
     MotionContent: _text_display_motion_content__WEBPACK_IMPORTED_MODULE_3__.default,
@@ -6463,7 +6466,7 @@ __webpack_require__.r(__webpack_exports__);
     VoteButtons: _vote_casting_vote_buttons__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: [],
-  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_7___default())],
+  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_7___default())],
   data: function data() {
     return {
       voteRecorded: false,
@@ -6565,17 +6568,18 @@ __webpack_require__.r(__webpack_exports__);
       if (!_.isUndefined(this.originalMotion) && !_.isNull(this.originalMotion)) {
         return this.originalMotion.content;
       }
-    },
-    vote: function vote() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__.isReadyToRock)(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
-    }
+    } // vote : function(){
+    //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
+    // }
+
   },
   computed: {
-    receipt: function receipt() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_12__.isReadyToRock)(this.vote)) {
-        return this.vote.receipt;
-      }
-    },
+    // receipt: function () {
+    //     if (isReadyToRock(this.vote)) {
+    //         return this.vote.receipt;
+    //     }
+    // }
+    // ,
     // content: function () {
     //     return this.motion.content;
     // },
@@ -7440,6 +7444,39 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['existingMeeting'],
   mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_3___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_9___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "info-tooltip",
+  props: ['content'],
+  mixins: [],
   data: function data() {
     return {};
   },
@@ -8716,10 +8753,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/proceduralMixin */ "./resources/js/mixins/proceduralMixin.js");
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
-/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
-/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
-/* harmony import */ var _open_voting_button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./open-voting-button */ "./resources/js/components/motions/open-voting-button.vue");
+/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../mixins/receiptMixin */ "./resources/js/mixins/receiptMixin.js");
+/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _open_voting_button__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./open-voting-button */ "./resources/js/components/motions/open-voting-button.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _messaging_info_tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../messaging/info-tooltip */ "./resources/js/components/messaging/info-tooltip.vue");
 //
 //
 //
@@ -8831,6 +8872,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -8847,13 +8894,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-select-area",
   components: {
-    OpenVotingButton: _open_voting_button__WEBPACK_IMPORTED_MODULE_14__.default,
-    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_13__.default,
-    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_12__.default,
-    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_11__.default,
+    InfoTooltip: _messaging_info_tooltip__WEBPACK_IMPORTED_MODULE_17__.default,
+    OpenVotingButton: _open_voting_button__WEBPACK_IMPORTED_MODULE_15__.default,
+    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_14__.default,
+    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_13__.default,
+    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__.default,
     // AmendmentBadge,
     AmendmentTextDisplay: _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__.default,
     ResultsNavButton: _navigation_results_nav_button__WEBPACK_IMPORTED_MODULE_5__.default,
@@ -8863,13 +8913,14 @@ __webpack_require__.r(__webpack_exports__);
     EndVotingButton: _end_voting_button__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: ['motion'],
-  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9___default())],
+  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_6___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_10___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_9___default()), (_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_11___default())],
   data: function data() {
     return {
       amendmentTags: {
         inserted: 'amendment-added',
         struck: 'struck'
-      }
+      },
+      infoReceipt: "This receipt will only remain visible if you do not refresh the page in your browser. Since " + "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
     };
   },
   asyncComputed: {
@@ -8976,6 +9027,9 @@ __webpack_require__.r(__webpack_exports__);
     showStatusBadge: function showStatusBadge() {
       if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false;
       return true;
+    },
+    showReceipt: function showReceipt() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_16__.isReadyToRock)(this.vote);
     },
     styledResult: function styledResult() {
       if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return '';
@@ -12756,6 +12810,37 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/mixins/receiptMixin.js":
+/*!*********************************************!*\
+  !*** ./resources/js/mixins/receiptMixin.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * For anything that needs access to the receipts for voting.
+ *
+ * Assumes something is defining this.motion
+ *
+ * @type {{vote: ((function(): (*|undefined))|*)}}
+ */
+module.exports = {
+  asyncComputed: {
+    /**
+     * A vote object if one exists for the given motion
+     * @returns {*}
+     */
+    vote: function vote() {
+      if (!_.isNull(this.motion) && !_.isUndefined(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
+    },
+    receipt: function receipt() {
+      if (!_.isNull(this.vote) && !_.isUndefined(this.vote)) return this.vote.receipt;
+      return '';
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/mixins/urlMixin.js":
 /*!*****************************************!*\
   !*** ./resources/js/mixins/urlMixin.js ***!
@@ -13379,14 +13464,19 @@ var Message = /*#__PURE__*/function (_IModel) {
         _ref$motion = _ref.motion,
         motion = _ref$motion === void 0 ? null : _ref$motion,
         _ref$showToChair = _ref.showToChair,
-        showToChair = _ref$showToChair === void 0 ? null : _ref$showToChair;
+        showToChair = _ref$showToChair === void 0 ? null : _ref$showToChair,
+        _ref$chairOnly = _ref.chairOnly,
+        chairOnly = _ref$chairOnly === void 0 ? null : _ref$chairOnly;
 
     _classCallCheck(this, Message);
 
     _this = _super.call(this);
-    /** Whether to display the message to the chair */
+    /** Whether to display the message to the chair (to avoid annoying them)*/
 
-    _this._showToChair = showToChair; //We add a bit of entropy so vue won't get confused by multiple
+    _this._showToChair = showToChair;
+    /** Whether to only show the message to the chair */
+
+    _this._chairOnly = chairOnly; //We add a bit of entropy so vue won't get confused by multiple
     //instances of same message
 
     _this.id = 'message-' + id + '-' + _.random(3, 9999);
@@ -13405,7 +13495,13 @@ var Message = /*#__PURE__*/function (_IModel) {
       return this._showToChair;
     },
     set: function set(v) {
-      this._showToChair = v;
+      this._chairOnly = v;
+    }
+  }, {
+    key: "chairOnly",
+    get: function get() {
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this._chairOnly)) return false;
+      return this._chairOnly;
     }
   }], [{
     key: "templates",
@@ -13429,6 +13525,20 @@ var Message = /*#__PURE__*/function (_IModel) {
         messageText: "This proposed motion did not receive a second:",
         messageStyle: 'warning',
         displayTime: 5000
+      }, {
+        id: 4,
+        name: 'voteRecordingError',
+        //This may be replaced with server generated message
+        messageText: "Your vote could not be recorded: ",
+        messageStyle: 'danger',
+        displayTime: 7000
+      }, {
+        id: 5,
+        name: 'settingUpMotion',
+        messageText: "Preparing the motion:  ",
+        messageStyle: 'primary',
+        displayTime: 5000,
+        chairOnly: true
       }];
     }
   }, {
@@ -15808,12 +15918,24 @@ var mutations = {
 
 };
 var actions = {
+  /**
+   * Shows the message for the amount of time set on the object.
+   *
+   * THIS SHOULD ALMOST ALWAYS BE USED INSTEAD OF COMMITTING DIRECTLY
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param messageObject
+   * @returns {Promise<unknown>}
+   */
   showMessage: function showMessage(_ref, messageObject) {
     var dispatch = _ref.dispatch,
         commit = _ref.commit,
         getters = _ref.getters;
     return new Promise(function (resolve, reject) {
       if (getters.getIsAdmin && messageObject.showToChair === false) return resolve();
+      if (!getters.getIsAdmin && messageObject.chairOnly === true) return resolve();
       commit('addToMessageQueue', messageObject);
 
       if (messageObject.displayTime > 0) {
@@ -16417,7 +16539,10 @@ var actions = {
         var d = response.data;
         var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //let them know the chair will need to approve
 
-        dispatch('showMessage', statusMessage);
+        dispatch('showMessage', statusMessage); //The chair won't see the above message. The user won't see this one
+
+        var statusMessage2 = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('settingUpMotion');
+        dispatch('showMessage', statusMessage2);
         resolve();
       });
     });
@@ -16446,7 +16571,10 @@ var actions = {
         //Set a message for the user telling them what's going to happen
         var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //set it on a timer
 
-        dispatch('showMessage', statusMessage);
+        dispatch('showMessage', statusMessage); //The chair won't see the above message. The user won't see this one
+
+        var statusMessage2 = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('settingUpMotion');
+        dispatch('showMessage', statusMessage2);
         resolve();
       });
     });
@@ -18251,7 +18379,6 @@ var actions = {
       };
       return Vue.axios.post(url, data).then(function (response) {
         console.log(response.data); //NB, this is kosher since we haven't saved the object to state yet.
-        // if (voteObject.isYay !== response.data.isYay) throw new Error("Something has gone terribly wrong");
 
         voteObject.receipt = response.data.receipt;
         voteObject.id = response.data.id; //Add the motion to the list of motions the user has voted upon
@@ -18267,17 +18394,22 @@ var actions = {
       })["catch"](function (error) {
         // error handling
         if (error.response) {
-          // The request was made and the server responded with a status code
+          //todo Error messaging
+          var message = Message.makeFromTemplate('voteRecordingError'); //todo Add server generated message
+          // message.messageText = message.messageText += error.response.message;
+
+          dispatch('showMessage', message); // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
+
           console.log(error.response.data);
           console.log(error.response.status);
 
-          if (error.response.status === 501) {
-            me.voteRecorded = true;
-            me.showButtons = false;
+          if (error.response.status === 501) {//   me.voteRecorded = true;
+            // me.showButtons = false;
           }
-        } // reject();
+        }
 
+        throw error; // reject();
       });
     }); // }
     // let url = routes.votes.recordVote(motion.id);
@@ -66578,6 +66710,45 @@ component.options.__file = "resources/js/components/meetings/meeting-setup-card.
 
 /***/ }),
 
+/***/ "./resources/js/components/messaging/info-tooltip.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/messaging/info-tooltip.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./info-tooltip.vue?vue&type=template&id=5499779a&scoped=true& */ "./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true&");
+/* harmony import */ var _info_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./info-tooltip.vue?vue&type=script&lang=js& */ "./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _info_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "5499779a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/messaging/info-tooltip.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/messaging/message-area.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/messaging/message-area.vue ***!
@@ -69554,6 +69725,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_info_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./info-tooltip.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_info_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/messaging/message-area.vue?vue&type=script&lang=js& ***!
@@ -71363,6 +71550,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_card_vue_vue_type_template_id_5303a18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_meeting_setup_card_vue_vue_type_template_id_5303a18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./meeting-setup-card.vue?vue&type=template&id=5303a18e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/meetings/meeting-setup-card.vue?vue&type=template&id=5303a18e&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_info_tooltip_vue_vue_type_template_id_5499779a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./info-tooltip.vue?vue&type=template&id=5499779a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true&");
 
 
 /***/ }),
@@ -74962,6 +75166,47 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/info-tooltip.vue?vue&type=template&id=5499779a&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "a",
+    {
+      attrs: {
+        href: "#",
+        "data-placement": "top",
+        "data-toggle": "tooltip",
+        title: _vm.content
+      }
+    },
+    [
+      _c("i", {
+        staticClass: "bi-info-circle",
+        attrs: { role: "img", "aria-label": "Info" }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/messaging/message-area.vue?vue&type=template&id=384edcc9&scoped=true& ***!
@@ -75684,7 +75929,23 @@ var render = function() {
         ],
         1
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.showReceipt
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c(
+              "p",
+              [
+                _c("strong", [_vm._v("Receipt: ")]),
+                _vm._v(" " + _vm._s(_vm.receipt) + "  "),
+                _c("info-tooltip", { attrs: { content: _vm.infoReceipt } })
+              ],
+              1
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

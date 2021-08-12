@@ -340,6 +340,11 @@ const actions = {
                     //let them know the chair will need to approve
                     dispatch('showMessage', statusMessage);
 
+                    //The chair won't see the above message. The user won't see this one
+                    let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    dispatch('showMessage', statusMessage2)
+
+
                     resolve();
                 });
         }));
@@ -368,6 +373,11 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
+
+                    //The chair won't see the above message. The user won't see this one
+                    let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    dispatch('showMessage', statusMessage2)
+
 
                     resolve();
 

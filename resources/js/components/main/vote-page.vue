@@ -103,6 +103,7 @@ import MotionContent from "../text-display/motion-content";
 import * as routes from "../../routes";
 import VoteReceipt from "../text-display/vote-receipt";
 import motionMixin from '../../mixins/motionStoreMixin';
+import receiptMixin from "../../mixins/receiptMixin";
 
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 import AmendmentTextDisplay from "../motions/amendment-text-display";
@@ -126,7 +127,7 @@ export default {
 
     props: [],
 
-    mixins: [motionMixin, motionObjectMixin],
+    mixins: [motionMixin, motionObjectMixin, receiptMixin],
 
     data: function () {
         return {
@@ -250,20 +251,20 @@ export default {
             }
         },
 
-        vote : function(){
-            if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
-        }
+        // vote : function(){
+        //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
+        // }
 
     }
     ,
 
     computed: {
-        receipt: function () {
-            if (isReadyToRock(this.vote)) {
-                return this.vote.receipt;
-            }
-        }
-        ,
+        // receipt: function () {
+        //     if (isReadyToRock(this.vote)) {
+        //         return this.vote.receipt;
+        //     }
+        // }
+        // ,
 
         // content: function () {
         //     return this.motion.content;

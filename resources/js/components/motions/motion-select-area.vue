@@ -106,6 +106,11 @@
 
             </div>
         </div>
+        <div class="row" v-if="showReceipt">
+            <div class="col">
+                <p><strong>Receipt: </strong> {{receipt}}  <info-tooltip :content="infoReceipt"></info-tooltip></p>
+            </div>
+        </div>
     </li>
 </template>
 
@@ -121,15 +126,20 @@ import AmendmentTextDisplay from "./amendment-text-display";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import MotionResultsMixin from '../../mixins/motionResultsMixin';
 import ProceduralMixin from "../../mixins/proceduralMixin";
+import receiptMixin from "../../mixins/receiptMixin";
+
 // import AmendmentBadge from "./badges/amendment-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
 import RequiredVoteBadge from "./badges/required-vote-badge";
 import DebatableBadge from "./badges/debatable-badge";
 import OpenVotingButton from "./open-voting-button";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+import InfoTooltip from "../messaging/info-tooltip";
 
 export default {
     name: "motion-select-area",
     components: {
+        InfoTooltip,
         OpenVotingButton,
         DebatableBadge,
         RequiredVoteBadge,
@@ -139,14 +149,17 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, receiptMixin],
     data: function () {
         return {
             amendmentTags: {
                 inserted: 'amendment-added',
                 struck: 'struck',
 
-            }
+            },
+            infoReceipt : "This receipt will only remain visible if you do not refresh the page in your browser. Since " +
+                    "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
+
         }
     },
     asyncComputed: {
@@ -261,6 +274,10 @@ export default {
             if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return false
 
             return true
+        },
+
+        showReceipt: function(){
+          return isReadyToRock(this.vote);
         },
 
         styledResult: function () {
