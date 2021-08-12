@@ -83,6 +83,9 @@ class MotionRepository implements IMotionRepository
      * When a motion is superseded, it essentially disappears from anything
      * the user sees.
      *
+     * This does NOT check that the amendment passed. That must
+     * be done elsewhere before calling this.
+     *
      * This does not set the superseding motion as current. There may need to
      * be additional instructions from the client before that happens.
      * Thus that should be done elsewhere by
@@ -99,7 +102,6 @@ class MotionRepository implements IMotionRepository
          * Create a  new motion with the amended text which supersedes the pending
          * motion.
          */
-
         $atrs = collect($original->attributesToArray())->except($this->nonCopiedFields);
         //add the new content from the approved amendment
         $atrs['content'] = $amendment->content;
@@ -109,25 +111,20 @@ class MotionRepository implements IMotionRepository
          * Mark the original superseded.
          */
         $original->markSuperseded($supersedingMotion);
-//
-//        /*
-//         * Mark the superseding motion as current
-//         */
-//        $this->stackRepo->setAsCurrentMotion($meeting, $supersedingMotion);
-//
+
         return $supersedingMotion;
     }
 
     /**
      * This will be called by the controller.
-     * It handles determining whether it is an amendment,
+     * It handles determining whether the motion is an amendment,
      * looking up the original motion, checking whether the amendment passed
-     * and creating a superseding motion.
+     * and creating a superseding motion if needed.
      *
      * @param Motion $amendment
      * @return false|Motion
      */
-    public function handleAmendment(Motion $amendment)
+    public function handlePotentialAmendment(Motion $amendment)
     {
         //Non subsidiary motions need not apply
         if (!$amendment->isAmendment()) {
@@ -148,7 +145,6 @@ class MotionRepository implements IMotionRepository
         $superseding = $this->handleApprovedAmendment($original, $amendment);
 
         return $superseding;
-
     }
 
 

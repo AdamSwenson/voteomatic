@@ -64,12 +64,11 @@ class MotionStackController extends Controller
         //this will return false if not an amendment
         //otherwise it will return a new motion which has been amended with
         //the motion passed in
-        $superseding = $this->motionRepo->handleAmendment($motion);
+        $superseding = $this->motionRepo->handlePotentialAmendment($motion);
 
         //We would set the superseding motion as current here
         //Not doing so that people on the client can view the results
         //and then manually select the superseding.
-        //todo That means the client needs to know about the superseding motion
 
         $out = [
             'ended' => $motion,

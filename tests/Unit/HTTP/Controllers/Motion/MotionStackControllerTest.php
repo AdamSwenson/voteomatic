@@ -51,13 +51,13 @@ class MotionStackControllerTest extends TestCase
     /** @test */
     public function markMotionComplete()
     {
-$this->url = 'motions/close/' . $this->motion->id;
+        $this->url = 'motions/close/' . $this->motion->id;
 
- $response = $this->actingAs($this->user)
-    ->post($this->url);
+        $response = $this->actingAs($this->user)
+            ->post($this->url);
 
 
- //check
+        //check
         $response->assertSuccessful();
 
     }
@@ -77,15 +77,21 @@ $this->url = 'motions/close/' . $this->motion->id;
     }
 
 
-    /** @test  */
-    public function markMotionCompleteDispatchesBroadcastEvent(){
-Event::fake();
+    /** @test */
+    public function markMotionCompleteDispatchesBroadcastEvent()
+    {
+        Event::fake();
         $this->url = 'motions/close/' . $this->motion->id;
 
         $response = $this->actingAs($this->user)
             ->post($this->url);
 
+        $motion = $this->motion;
+
         Event::assertDispatched(MotionClosed::class);
+        Event::assertDispatched(function (MotionClosed $event) use ($motion) {
+            return $event->ended->is($motion) && $event->ended->is_complete === true && $event->ended->is_voting_allowed === false;
+        });
 
     }
 
@@ -120,7 +126,7 @@ Event::fake();
     /** @test */
     public function setAsCurrentMotion()
     {
-        $this->url = "motions/stack/" . $this->meeting->id . '/'. $this->motion->id;
+        $this->url = "motions/stack/" . $this->meeting->id . '/' . $this->motion->id;
         $response = $this->actingAs($this->user)
             ->post($this->url);
 
@@ -134,7 +140,7 @@ Event::fake();
     /** @test */
     public function setAsCurrentMotionDeniesNonMembers()
     {
-        $this->url = "motions/stack/" . $this->meeting->id . '/'. $this->motion->id;
+        $this->url = "motions/stack/" . $this->meeting->id . '/' . $this->motion->id;
 
 
         $response = $this->actingAs($this->nonMember)
