@@ -1,8 +1,5 @@
 /**
- * For any component that needs access to the results of
- * a voted upon motion.
- *
- * Assumes that the component has a motion set at this.motion
+ * Allows navigation to be handled by actions
  *
  * @type {{computed: {}}}
  */
@@ -75,11 +72,11 @@ module.exports = {
 
     methods : {
 
-        forceNavigationToResultsTab : function (){
-            // this.$store.commit()
-        },
-
-        forceNavigationToVoteTab : function (){},
-
+    //     forceNavigationToResultsTab : function (){
+    //         // this.$store.commit()
+    //     },
+    //
+    //     forceNavigationToVoteTab : function (){},
+    //
     }
 };

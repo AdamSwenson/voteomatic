@@ -1,14 +1,7 @@
-<!--<template>-->
-<!--    <button class="btn btn-outline-primary"-->
-<!--            v-on:click="handleClick"-->
-<!--    >Create main motion-->
-<!--    </button>-->
-
-<!--</template>-->
 
 <script>
-import MeetingMixin from "../../mixins/meetingMixin";
-import ButtonParent from "../parents/button-parent";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import ButtonParent from "../../parents/button-parent";
 
 export default {
     name: "create-motion-button",

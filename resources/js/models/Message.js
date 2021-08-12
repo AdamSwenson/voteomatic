@@ -58,9 +58,10 @@ export default class Message extends IModel {
                 displayTime: 7000
             },
             {
+                //dev Probably won't use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
                 id: 5,
                 name: 'settingUpMotion',
-                messageText: "Preparing the motion:  ",
+                messageText: "Preparing the motion  ",
                 messageStyle: 'primary',
                 displayTime: 5000,
                 chairOnly: true

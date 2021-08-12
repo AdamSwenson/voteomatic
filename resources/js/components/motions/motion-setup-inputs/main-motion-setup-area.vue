@@ -4,9 +4,6 @@
             <h4 class="card-title">{{ title }}</h4>
         </div>
 
-<!--        <div class="closed-notice card-body" v-if="isMotionComplete">-->
-<!--            <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>-->
-<!--        </div>-->
 
         <div class="card-body v-else">
             <div class="required">
@@ -25,10 +22,7 @@
 
                 </form>
 
-                <!--                <p class="text-muted">A blank motion has been created. Your entries are automatically saved on the-->
-                <!--                    server.</p>-->
-                <!--                <p class="text-muted">If you do not type anything, the pending motion will be blank. Use the delete-->
-                <!--                    button to fix this.</p>-->
+
             </div>
 
             <div class="optional"
@@ -62,7 +56,7 @@
                 </div>
 
                 <div class="col text-center">
-                    <clear-draft-motion-button v-on:
+                    <clear-draft-motion-button
                                                v-on:hide-editing-card="requestResetEditingCard"
                     ></clear-draft-motion-button>
                 </div>
@@ -83,14 +77,14 @@
 
         </div>
 
-        <div class="card-footer make-button-area"
-             v-if="isChair"
-        >
-            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not
-                use
-                it for formal amendments.</strong></p>
+<!--        <div class="card-footer make-button-area"-->
+<!--             v-if="isChair"-->
+<!--        >-->
+<!--            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not-->
+<!--                use-->
+<!--                it for formal amendments.</strong></p>-->
 
-        </div>
+<!--        </div>-->
     </div>
 
 </template>
@@ -134,13 +128,6 @@ export default {
     computed: {
         title: function () {
             return "Create motion";
-
-            //todo Maybe re-enable editing for the chair?
-            // if (this.isMotionComplete) {
-            //     return "Create motion";
-            // }
-            // return "Edit motion";
-
         },
 
         draftMotion: function () {

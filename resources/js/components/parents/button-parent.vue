@@ -2,9 +2,12 @@
 
     <button
         class="btn "
+        type="button"
         v-bind:class="styling"
         v-on:click="handleClick"
-    >{{label}}</button>
+    >
+        <span v-if="isWorking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span v-if="isWorking" class="sr-only">Working...</span> {{label}}</button>
 
 </template>
 
@@ -24,6 +27,7 @@ export default {
         return {
             // label:
             // styling:
+            //isWorking : false
         }
     },
 
@@ -31,7 +35,11 @@ export default {
 
     },
 
-    computed: {},
+    computed: {
+        isWorking : function (){
+            return false;
+        }
+    },
 
     methods: {
 

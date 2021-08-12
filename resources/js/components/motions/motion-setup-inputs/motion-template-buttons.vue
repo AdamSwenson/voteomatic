@@ -3,6 +3,14 @@
     <div class="motion-template-buttons">
 <!--        <h5 class="card-subtitle">Create motion from template</h5>-->
 
+        <div
+            v-if="showSpinner"
+            class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <motion-template-button v-for="t in templates"
                                 :template="t"
                                 :key="t.name"
@@ -17,6 +25,7 @@
 
 <script>
 import MotionTemplateButton from "./motion-template-button";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "motion-template-buttons",
@@ -30,6 +39,10 @@ export default {
     },
 
     computed: {
+        showSpinner : function(){
+        return ! isReadyToRock(this.templates) || this.templates.length === 0;
+        },
+
         templates: function () {
             let d = this.$store.getters.getStandardMotionDefinitions;
             return _.sortBy(d, ['name']);

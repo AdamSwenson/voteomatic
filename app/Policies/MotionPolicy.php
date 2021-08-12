@@ -189,7 +189,8 @@ class MotionPolicy
 
     /**
      * Determine whether the user can update the model.
-     * They must be the author and the motion must not yet be seconded
+     * Only the chair should be able to do this, since it is only
+     * for minor adjustments
      *
      * @param \App\Models\User $user
      * @param \App\Models\Motion $motion
@@ -197,8 +198,8 @@ class MotionPolicy
      */
     public function update(User $user, Motion $motion)
     {
-        return $motion->seconded !== true && $user->is($motion->author());
-//        return $user->isChair();
+//        return $motion->seconded !== true && $user->is($motion->author());
+        return $user->isChair();
 
         //todo Eventually for VOT-6
         return true;

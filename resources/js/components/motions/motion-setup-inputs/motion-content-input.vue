@@ -55,7 +55,7 @@ computed : {
             );
 
             if(isReadyToRock(this.editMode) && this.editMode===true){
-                //dev If we decide to re-enable editing by chair
+                this.$emit('update:content', p.updateVal);
             }else{
                 this.$store.dispatch('updateDraftMotion', p);
             }

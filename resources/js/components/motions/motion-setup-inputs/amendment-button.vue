@@ -1,29 +1,33 @@
-<template>
-    <button type="button"
-            v-bind:class="styling"
-            v-on:click="handleClick"
-    >Create amendment</button>
+<!--<template>-->
+<!--    <button type="button"-->
+<!--            v-bind:class="styling"-->
+<!--            v-on:click="handleClick"-->
+<!--    >Create amendment</button>-->
 
-</template>
+<!--</template>-->
 
 <script>
+import ButtonParent from "../../parents/button-parent";
+
 export default {
-name: "amendment-button",
+    name: "amendment-button",
+    components: {},
+    extends: ButtonParent,
+    props: [],
 
-props : [],
+    mixins: [],
 
-mixins : [],
+    data: function () {
+        return {
+            label: 'Create amendment',
+            styling: 'btn btn-outline-primary amendment-button'
+        }
+    },
 
-data : function(){
-    return {
-        styling : 'btn btn-outline-primary'
-    }
-},
-
-computed : {},
-    methods : {
-        handleClick : function(){
-this.$emit('new-amendment');
+    computed: {},
+    methods: {
+        handleClick: function () {
+            this.$emit('new-amendment');
         }
     }
 

@@ -340,9 +340,11 @@ const actions = {
                     //let them know the chair will need to approve
                     dispatch('showMessage', statusMessage);
 
+                    //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
+
                     //The chair won't see the above message. The user won't see this one
-                    let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
-                    dispatch('showMessage', statusMessage2)
+                    // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    // dispatch('showMessage', statusMessage2)
 
 
                     resolve();
@@ -374,9 +376,11 @@ const actions = {
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
 
+                    //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
+
                     //The chair won't see the above message. The user won't see this one
-                    let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
-                    dispatch('showMessage', statusMessage2)
+                    // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    // dispatch('showMessage', statusMessage2)
 
 
                     resolve();
@@ -1037,7 +1041,7 @@ const actions = {
     updateMotion({dispatch, commit, getters}, payload) {
         return new Promise(((resolve, reject) => {
             //make local change first
-            //todo consider whether worth rolling back
+            //todo consider whether worth rolling back on failure
             commit('setMotionProp', payload)
 
             let motion = getters.getActiveMotion;

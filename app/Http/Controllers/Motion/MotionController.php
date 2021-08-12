@@ -70,8 +70,8 @@ class MotionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param MotionRequest $request
-     * @return Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException|\App\Exceptions\IneligibleSecondAttempt
      */
     public function store(MotionRequest $request)
     {
