@@ -5874,6 +5874,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _motions_end_voting_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../motions/end-voting-button */ "./resources/js/components/motions/end-voting-button.vue");
+/* harmony import */ var _motions_end_voting_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../motions/end-voting-modal */ "./resources/js/components/motions/end-voting-modal.vue");
 //
 //
 //
@@ -5896,11 +5898,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-count-alert",
+  components: {
+    EndVotingModal: _motions_end_voting_modal__WEBPACK_IMPORTED_MODULE_4__.default,
+    EndVotingButton: _motions_end_voting_button__WEBPACK_IMPORTED_MODULE_3__.default
+  },
   props: [],
   mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default())],
   data: function data() {
@@ -74427,14 +74442,29 @@ var render = function() {
           attrs: { id: "vote-count-alert", role: "alert" }
         },
         [
-          _c("p", [
-            _c("strong", [_vm._v("Votes cast:")]),
-            _vm._v("  " + _vm._s(_vm.votesCast) + "\n    ")
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _c("strong", [_vm._v("Outstanding: ")]),
-            _vm._v(" " + _vm._s(_vm.votesOutstanding))
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("p", [
+                _c("strong", [_vm._v("Votes cast:")]),
+                _vm._v("  " + _vm._s(_vm.votesCast) + "\n    ")
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _c("strong", [_vm._v("Outstanding: ")]),
+                _vm._v(" " + _vm._s(_vm.votesOutstanding))
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col" },
+              [
+                _c("end-voting-button", { attrs: { motion: _vm.motion } }),
+                _vm._v(" "),
+                _c("end-voting-modal")
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _vm._m(0)

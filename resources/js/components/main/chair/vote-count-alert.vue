@@ -4,12 +4,19 @@
          id="vote-count-alert"
          role="alert"
     >
-        <p>
+        <div class="row">
+        <div class="col">
+            <p>
             <strong>Votes cast:</strong>  {{votesCast}}
         </p>
 
         <p><strong>Outstanding: </strong> {{votesOutstanding}}</p>
-
+        </div>
+            <div class="col">
+                <end-voting-button :motion="motion"></end-voting-button>
+                <end-voting-modal></end-voting-modal>
+            </div>
+        </div>
         <button type="button"
                 class="close"
                 data-dismiss="alert"
@@ -24,9 +31,11 @@
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import ChairMixin from "../../../mixins/chairMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
+import EndVotingButton from "../../motions/end-voting-button";
+import EndVotingModal from "../../motions/end-voting-modal";
 export default {
     name: "vote-count-alert",
-
+    components: {EndVotingModal, EndVotingButton},
     props: [],
 
     mixins: [ChairMixin, MotionMixin],
