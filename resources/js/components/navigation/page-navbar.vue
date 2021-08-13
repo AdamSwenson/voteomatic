@@ -23,11 +23,11 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <form class="form-inline">
-                            <refresh-button></refresh-button>
-                        </form>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <form class="form-inline">-->
+<!--                            <refresh-button></refresh-button>-->
+<!--                        </form>-->
+<!--                    </li>-->
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

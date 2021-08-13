@@ -3,6 +3,7 @@
     <div class="motion-setup card">
 
         <div class="card-header make-button-area">
+            <p class="card-text"><i>Please wait until the Chair has recognized you before making a motion</i></p>
             <h5 class="card-subtitle">Procedural motions</h5>
             <motion-template-buttons></motion-template-buttons>
         </div>

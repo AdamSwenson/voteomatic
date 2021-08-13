@@ -19,7 +19,7 @@ module.exports = {
         receipt: function () {
             if (!_.isNull(this.vote) && !_.isUndefined(this.vote)) return this.vote.receipt;
             return '';
-        }
+        },
 
     }
 };

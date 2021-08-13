@@ -71,7 +71,7 @@ export const routes = [
         icon: "fa fa-bar-chart",
         get label() {
             if (store.getters.isElection) return "Create office";
-            return "Create motion";
+            return "Make motion";
         },
         components: {main: ballotSetupCard},
         props: true,

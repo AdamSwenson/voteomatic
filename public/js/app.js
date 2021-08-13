@@ -5764,6 +5764,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -6717,6 +6718,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _models_Vote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Vote */ "./resources/js/models/Vote.js");
+/* harmony import */ var _vote_verification_receipt_list_area__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vote-verification/receipt-list-area */ "./resources/js/components/vote-verification/receipt-list-area.vue");
+/* harmony import */ var _vote_verification_copy_receipts_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../vote-verification/copy-receipts-button */ "./resources/js/components/vote-verification/copy-receipts-button.vue");
+/* harmony import */ var _vote_verification_download_receipts_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../vote-verification/download-receipts-button */ "./resources/js/components/vote-verification/download-receipts-button.vue");
 //
 //
 //
@@ -6792,10 +6796,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-verification-page",
+  components: {
+    DownloadReceiptsButton: _vote_verification_download_receipts_button__WEBPACK_IMPORTED_MODULE_4__.default,
+    CopyButton: _vote_verification_copy_receipts_button__WEBPACK_IMPORTED_MODULE_3__.default,
+    ReceiptListArea: _vote_verification_receipt_list_area__WEBPACK_IMPORTED_MODULE_2__.default
+  },
   data: function data() {
     return {
       showBad: false,
@@ -6811,7 +6836,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     voteDisplay: function voteDisplay() {
       if (_.isNull(this.vote) || _.isUndefined(this.vote)) return '';
-      return this.vote.voteEnglish();
+      return this.vote.voteDisplayEnglish();
     }
   },
   methods: {
@@ -6829,6 +6854,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var me = this;
+      this.closeAlert();
       return new Promise(function (resolve, reject) {
         var url = _routes__WEBPACK_IMPORTED_MODULE_0___default().receipts.validateReceipt();
         var payload = {
@@ -11462,6 +11488,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _vote_verification_download_receipts_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vote-verification/download-receipts-button */ "./resources/js/components/vote-verification/download-receipts-button.vue");
+/* harmony import */ var _vote_verification_copy_receipts_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../vote-verification/copy-receipts-button */ "./resources/js/components/vote-verification/copy-receipts-button.vue");
 //
 //
 //
@@ -11485,8 +11513,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-receipt",
+  components: {
+    CopyReceiptsButton: _vote_verification_copy_receipts_button__WEBPACK_IMPORTED_MODULE_1__.default,
+    DownloadReceiptsButton: _vote_verification_download_receipts_button__WEBPACK_IMPORTED_MODULE_0__.default
+  },
   props: ['receipt']
 });
 
@@ -11785,6 +11821,246 @@ __webpack_require__.r(__webpack_exports__);
     handleClick: function handleClick() {// this.$emit('yay-clicked');
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _parents_button_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parents/button-parent */ "./resources/js/components/parents/button-parent.vue");
+/* harmony import */ var _mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/allReceiptsMixin */ "./resources/js/mixins/allReceiptsMixin.js");
+/* harmony import */ var _mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "copy-receipts-button",
+  components: {},
+  props: [],
+  "extends": _parents_button_parent__WEBPACK_IMPORTED_MODULE_0__.default,
+  mixins: [(_mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default())],
+  data: function data() {
+    return {
+      label: 'Copy all receipts to clipboard',
+      styling: ' btn-primary '
+    };
+  },
+  asyncComputed: {},
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      this.copyToClipboard();
+    },
+    copyToClipboard: function copyToClipboard() {
+      // if (!navigator.clipboard) {
+      //     //fallbackCopyTextToClipboard(text);
+      //     return;
+      // }
+      navigator.clipboard.writeText(this.text).then(function () {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function (err) {
+        console.error('Async: Could not copy text: ', err);
+      }); // function fallbackCopyTextToClipboard(text) {
+      //     var textArea = document.createElement("textarea");
+      //     textArea.value = text;
+      //
+      //     // Avoid scrolling to bottom
+      //     textArea.style.top = "0";
+      //     textArea.style.left = "0";
+      //     textArea.style.position = "fixed";
+      //
+      //     document.body.appendChild(textArea);
+      //     textArea.focus();
+      //     textArea.select();
+      //
+      //     try {
+      //         var successful = document.execCommand('copy');
+      //         var msg = successful ? 'successful' : 'unsuccessful';
+      //         console.log('Fallback: Copying text command was ' + msg);
+      //     } catch (err) {
+      //         console.error('Fallback: Oops, unable to copy', err);
+      //     }
+      //
+      //     document.body.removeChild(textArea);
+      // }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/allReceiptsMixin */ "./resources/js/mixins/allReceiptsMixin.js");
+/* harmony import */ var _mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _parents_button_parent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../parents/button-parent */ "./resources/js/components/parents/button-parent.vue");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "download-receipts-button",
+  "extends": _parents_button_parent__WEBPACK_IMPORTED_MODULE_2__.default,
+  props: [],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default()), (_mixins_allReceiptsMixin__WEBPACK_IMPORTED_MODULE_1___default())],
+  data: function data() {
+    return {
+      label: 'Download all receipts',
+      styling: ' btn-primary '
+    };
+  },
+  asyncComputed: {
+    filename: function filename() {
+      return "".concat(this.meetingDate, " ").concat(this.meetingName, " vote receipts.txt");
+    }
+  },
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      this.downloadFile();
+    },
+    downloadFile: function downloadFile() {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.text));
+      element.setAttribute('download', this.filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element); // download("hello.txt","This is the content of my file :)");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _receipt_list_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./receipt-list-item */ "./resources/js/components/vote-verification/receipt-list-item.vue");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "receipt-list-area",
+  components: {
+    ReceiptListItem: _receipt_list_item__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  props: [],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    allVotes: function allVotes() {
+      return this.$store.getters.getUsersCastVotes;
+    },
+    showArea: function showArea() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.allVotes) && this.allVotes.length > 0;
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "receipt-list-item",
+  props: ['voteObject'],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    motion: function motion() {
+      return this.$store.getters.getMotionById(this.voteObject.motionId);
+    },
+    motionText: function motionText() {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.motion)) return this.motion.content;
+      return '';
+    },
+    receipt: function receipt() {
+      return this.voteObject.receipt;
+    }
+  },
+  computed: {},
+  methods: {}
 });
 
 /***/ }),
@@ -12265,6 +12541,52 @@ module.exports = {
     //     forceNavigationToVoteTab : function (){},
     //
   }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/allReceiptsMixin.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/allReceiptsMixin.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ * This is used by utilities which format and do something
+ * with all the receipts stored on the client
+ */
+module.exports = {
+  asyncComputed: {
+    allVotes: function allVotes() {
+      return this.$store.getters.getUsersCastVotes;
+    },
+    heading: function heading() {
+      return "".concat(this.meetingName, "\n").concat(this.meetingDate, "\n\n");
+    },
+    currentTime: function currentTime() {
+      var date = new Date();
+      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    },
+    footer: function footer() {
+      return "\n\n\nReceipts as of: ".concat(this.currentTime, "\nReceipts will be missing if the browser was refreshed.\nSince your user id is not stored with the receipt, missing receipts cannot be recovered.");
+    },
+    text: function text() {
+      var me = this;
+      var t = '';
+      t += this.heading;
+
+      _.forEach(this.allVotes, function (vote) {
+        var motion = me.$store.getters.getMotionById(vote.motionId);
+        var e = "\n".concat(motion.content, "\n").concat(vote.receipt, "\n");
+        t += e;
+      });
+
+      t += this.footer;
+      return t;
+    }
+  },
+  computed: {},
+  methods: {}
 };
 
 /***/ }),
@@ -14567,7 +14889,7 @@ var routes = [{
 
   get label() {
     if (_store_index__WEBPACK_IMPORTED_MODULE_0__.default.getters.isElection) return "Create office";
-    return "Create motion";
+    return "Make motion";
   },
 
   components: {
@@ -68812,6 +69134,160 @@ component.options.__file = "resources/js/components/vote-casting/yay-button.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/vote-verification/copy-receipts-button.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/copy-receipts-button.vue ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _copy_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./copy-receipts-button.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  _copy_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "a3cb52f0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/vote-verification/copy-receipts-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/download-receipts-button.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/download-receipts-button.vue ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _download_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./download-receipts-button.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  _download_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "6ab8661b",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/vote-verification/download-receipts-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-area.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-area.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true& */ "./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true&");
+/* harmony import */ var _receipt_list_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./receipt-list-area.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _receipt_list_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "211b805b",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/vote-verification/receipt-list-area.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-item.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-item.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true& */ "./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true&");
+/* harmony import */ var _receipt_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./receipt-list-item.vue?vue&type=script&lang=js& */ "./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _receipt_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "6acb103e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/vote-verification/receipt-list-item.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/voteomatic.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/voteomatic.vue ***!
@@ -70700,6 +71176,70 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_copy_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./copy-receipts-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/copy-receipts-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_copy_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_download_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./download-receipts-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/download-receipts-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_download_receipts_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./receipt-list-area.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_area_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./receipt-list-item.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/voteomatic.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/voteomatic.vue?vue&type=script&lang=js& ***!
@@ -72456,6 +72996,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_template_id_3a2e4822_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_yay_button_vue_vue_type_template_id_3a2e4822_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./yay-button.vue?vue&type=template&id=3a2e4822&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-casting/yay-button.vue?vue&type=template&id=3a2e4822&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true& ***!
+  \********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_area_vue_vue_type_template_id_211b805b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true& ***!
+  \********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receipt_list_item_vue_vue_type_template_id_6acb103e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true&");
 
 
 /***/ }),
@@ -74481,6 +75055,8 @@ var render = function() {
       "div",
       { staticClass: "card-header make-button-area" },
       [
+        _vm._m(0),
+        _vm._v(" "),
         _c("h5", { staticClass: "card-subtitle" }, [
           _vm._v("Procedural motions")
         ]),
@@ -74532,7 +75108,20 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "card-text" }, [
+      _c("i", [
+        _vm._v(
+          "Please wait until the Chair has recognized you before making a motion"
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -74986,7 +75575,7 @@ var render = function() {
     _c("div", { staticClass: "card-body" }, [
       _c("h5", { attrs: { "card-title": "" } }, [
         _vm._v(
-          " Please enter your receipt in the box and click the 'Verify vote' button."
+          " To check that your vote was counted, enter a receipt in the box and click the 'Verify vote' button."
         )
       ]),
       _vm._v(" "),
@@ -75028,22 +75617,22 @@ var render = function() {
                 attrs: { type: "button", id: "button-addon2" },
                 on: { click: _vm.handleClick }
               },
-              [_vm._v("Verify vote\n                    ")]
+              [_vm._v("Verify vote\n                        ")]
             )
           ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "card-text" }, [
-        _vm.verificationResult ? _c("p") : _vm._e(),
+        ]),
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "Feel free to enter fake receipts to check the legitimacy of your receipt"
+            "Feel free to enter fake receipts to demonstrate that this is actually checking your receipts"
           )
         ]),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-text" }, [
+        _vm.verificationResult ? _c("p") : _vm._e(),
         _vm._v(" "),
         _vm.showGood
           ? _c(
@@ -75051,7 +75640,7 @@ var render = function() {
               { staticClass: "alert alert-success", attrs: { role: "alert" } },
               [
                 _c("h4", { staticClass: "alert-heading" }, [
-                  _vm._v("Your receipt is valid")
+                  _vm._v("This receipt is valid")
                 ]),
                 _vm._v(" "),
                 _c("p", [
@@ -75079,7 +75668,7 @@ var render = function() {
         _vm.showBad
           ? _c(
               "div",
-              { staticClass: "alert alert-error", attrs: { role: "alert" } },
+              { staticClass: "alert alert-danger", attrs: { role: "alert" } },
               [
                 _c("h4", { staticClass: "alert-heading" }, [
                   _vm._v("This is not a valid receipt")
@@ -75087,20 +75676,44 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [_vm._v(" Receipt : " + _vm._s(_vm.receipt) + " ")]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-info",
-                    attrs: { type: "button" },
-                    on: { click: _vm.closeAlert }
-                  },
-                  [_vm._v("Close")]
-                )
+                _c("p", { staticClass: "text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info",
+                      attrs: { type: "button" },
+                      on: { click: _vm.closeAlert }
+                    },
+                    [_vm._v("Close")]
+                  )
+                ])
               ]
             )
           : _vm._e()
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      [
+        _c("p", [
+          _vm._v(
+            "The receipts below are temporarily stored on your browser. If you refresh the page,\n                it will no longer be possible to retrieve your receipts since your user id is not\n                linked to them in the database. Use the buttons below to download a list of your\n                receipts for safekeeping"
+          )
+        ]),
+        _vm._v(" "),
+        _c("receipt-list-area")
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-footer" },
+      [_c("copy-button"), _vm._v(" "), _c("download-receipts-button")],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -75112,6 +75725,23 @@ var staticRenderFns = [
       _c("h4", { attrs: { "card-title": "" } }, [
         _vm._v("Confirm that your vote was counted")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v(
+        "For more information about how the voteomatic keeps your vote\n                anonymous, please see "
+      ),
+      _c(
+        "a",
+        {
+          attrs: { href: "https://github.com/AdamSwenson/voteomatic#anonymity" }
+        },
+        [_vm._v("https://github.com/AdamSwenson/voteomatic#anonymity")]
+      )
     ])
   }
 ]
@@ -77134,15 +77764,6 @@ var render = function() {
             _c("ul", { staticClass: "navbar-nav mr-auto " }),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "form",
-                  { staticClass: "form-inline" },
-                  [_c("refresh-button")],
-                  1
-                )
-              ]),
-              _vm._v(" "),
               _c("li", { staticClass: "nav-item dropdown" }, [
                 _c(
                   "a",
@@ -77756,19 +78377,23 @@ var render = function() {
         _c("strong", [_vm._v(" " + _vm._s(_vm.receipt))])
       ]),
       _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Please record this receipt. Once you leave this screen, it will not be possible to\n        retrieve it. "
-        )
-      ]),
-      _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
       _c("p", [
         _vm._v(
           "The receipt is not linked to you in the database.\n        You are the only one who knows it belongs to you. If you lose it, it will be\n        impossible to retrieve."
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _c("copy-receipts-button"),
+          _vm._v(" "),
+          _c("download-receipts-button")
+        ],
+        1
+      )
     ]
   )
 }
@@ -78010,6 +78635,80 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-area.vue?vue&type=template&id=211b805b&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.showArea
+    ? _c("div", { staticClass: "receipt-list-area" }, [
+        _c("h3", [_vm._v(_vm._s(_vm.meetingName))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.meetingDate))]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { attrs: { ul: "list-group" } },
+          _vm._l(_vm.allVotes, function(vote) {
+            return _c("receipt-list-item", {
+              key: vote.id,
+              attrs: { "vote-object": vote }
+            })
+          }),
+          1
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vote-verification/receipt-list-item.vue?vue&type=template&id=6acb103e&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "list-group-item " }, [
+    _c("p", { staticClass: "motion-text " }, [_vm._v(_vm._s(_vm.motionText))]),
+    _vm._v(" "),
+    _c("p", { staticClass: "receipt user-select-all" }, [
+      _vm._v(_vm._s(_vm.receipt))
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/voteomatic.vue?vue&type=template&id=b8f19e40&scoped=true& ***!
@@ -78037,13 +78736,6 @@ var render = function() {
       _c("vote-count-alert"),
       _vm._v(" "),
       _c("router-view", { attrs: { name: "main" } }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "text-center refresh-area" },
-        [_c("refresh-button")],
-        1
-      ),
       _vm._v(" "),
       _c("chair-indicator"),
       _vm._v(" "),

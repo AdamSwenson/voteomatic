@@ -14,10 +14,10 @@
 
         <router-view name="main"></router-view>
 
-        <div class="text-center refresh-area">
+<!--        <div class="text-center refresh-area">-->
 
-            <refresh-button></refresh-button>
-        </div>
+<!--            <refresh-button></refresh-button>-->
+<!--        </div>-->
 
         <chair-indicator></chair-indicator>
 
