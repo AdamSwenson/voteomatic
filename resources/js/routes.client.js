@@ -81,6 +81,17 @@ export const routes = [
     },
 
     {
+        name: 'verify',
+        path: '/verify',
+        icon: "fa fa-check",
+        label: "Verify votes",
+        components: {main: voteVerify},
+        props: true,
+        adminOnly: false
+    },
+
+
+    {
         name: 'setup',
         path: '/setup',
         get label() {
@@ -91,17 +102,6 @@ export const routes = [
         props: true,
         adminOnly: true
     },
-
-    {
-        name: 'verify',
-        path: '/verify',
-        icon: "fa fa-check",
-        label: "Verify votes",
-        components: {main: voteVerify},
-        props: true,
-        adminOnly: false
-    },
-
 
 
 

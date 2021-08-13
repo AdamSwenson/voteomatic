@@ -139,7 +139,12 @@ const actions = {
      * @param getters
      */
     loadAllEvents({dispatch, commit, getters}) {
-        dispatch('loadAllMeetings');
+        return new Promise(((resolve, reject) => {
+
+            return dispatch('loadAllMeetings').then(() => {
+                resolve();
+            });
+        }));
     },
 
     /**

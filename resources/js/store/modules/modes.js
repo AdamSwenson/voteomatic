@@ -105,10 +105,10 @@ const actions = {
             dispatch('createMeeting').then(() => {
                 //This will clear the currently set motion,
                 //which was probably an election office.
-                dispatch('createOffice', getters.getActiveMeeting).then(() => {
+                // dispatch('createOffice', getters.getActiveMeeting).then(() => {
                     commit('setShowArea', 'edit');
                     resolve();
-                });
+                // });
             });
         }));
     },

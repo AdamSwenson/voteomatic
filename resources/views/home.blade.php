@@ -2,44 +2,47 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
-
-                    </div>
-
-
-                    <div class="card-body">
-
-                        <a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();  document.getElementById('logout-form').submit();"
-                        >
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-
-                    </div>
-
-
-                </div>
+{{--        <div class="row justify-content-center">--}}
+{{--            <div class="col-md-8">--}}
 
                 <home-page></home-page>
 
-            </div>
-        </div>
+{{--            </div>--}}
+{{--        </div>--}}
+
+
+        {{--                <div class="card">--}}
+        {{--                    <div class="card-header">{{ __('Dashboard') }}</div>--}}
+
+        {{--                    <div class="card-body">--}}
+
+        {{--                        {{ __('You are logged in!') }}--}}
+
+        {{--                    </div>--}}
+
+
+        {{--                    <div class="card-body">--}}
+
+        {{--                        <a href="{{ route('logout') }}"--}}
+        {{--                           onclick="event.preventDefault();  document.getElementById('logout-form').submit();"--}}
+        {{--                        >--}}
+        {{--                            {{ __('Logout') }}--}}
+        {{--                        </a>--}}
+
+        {{--                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
+        {{--                            @csrf--}}
+        {{--                        </form>--}}
+
+        {{--                    </div>--}}
+
+        {{--                </div>--}}
+
 
 
         {{ method_field('PUT') }}

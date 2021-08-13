@@ -45,7 +45,13 @@ class MeetingPolicy
      */
     public function viewIndex(User $user)
     {
-        return $user->isChair();
+        //dev Probably should figure something better out here.
+        // but the problem is there is no particular meeting they are trying to see.
+        // Fortunately, the query will grab only meetings associated with the user
+        return true;
+//        return $meeting->isOwner($user);
+
+//        return $user->isChair();
     }
 
     /**

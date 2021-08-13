@@ -14,6 +14,7 @@ import * as mutations from './mutations'
 import * as state from './state'
 
 //modules
+import auth from "./modules/auth";
 import chairUtilities from "./modules/chairUtilities";
 import elections from "./modules/elections";
 import meetings from './modules/meetings';
@@ -56,6 +57,7 @@ export default new Vuex.Store({
     plugins: [], //[ apiPlugin, websocketPlugin ],
 
     modules: {
+        auth,
         chairUtilities,
         elections,
         meetings,

@@ -71,6 +71,7 @@ Vue.component('voteomatic', require('./components/voteomatic').default);
 Vue.component('page-navbar', require('./components/navigation/page-navbar').default);
 Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
+Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
 
 //todo DEV TOP LEVEL
