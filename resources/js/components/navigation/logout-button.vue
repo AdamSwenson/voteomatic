@@ -11,7 +11,7 @@ export default {
     data: function () {
         return {
             label: 'Logout',
-            styling: ' btn-danger btn-lg btn-block'
+            styling: ' btn-danger btn-lg'
         }
     },
 

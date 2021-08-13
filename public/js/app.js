@@ -1955,6 +1955,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2038,10 +2039,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadEvents: function loadEvents() {
       var me = this;
-      this.$store.dispatch('loadAllEvents').then(function () {// me.$store.dispatch('loadAllElections').then(() => {
-        // me._isReady = true;
-        // });
-      });
+      this.$store.dispatch('loadAllEvents').then(function () {});
     }
   },
   mounted: function mounted() {
@@ -5385,13 +5383,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_urlMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/urlMixin */ "./resources/js/mixins/urlMixin.js");
 /* harmony import */ var _common_event_list_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./common/event-list-card */ "./resources/js/components/common/event-list-card.vue");
 /* harmony import */ var _navigation_logout_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./navigation/logout-button */ "./resources/js/components/navigation/logout-button.vue");
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10733,7 +10724,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       label: 'Logout',
-      styling: ' btn-danger btn-lg btn-block'
+      styling: ' btn-danger btn-lg'
     };
   },
   asyncComputed: {},
@@ -10763,15 +10754,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _refresh_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./refresh-button */ "./resources/js/components/navigation/refresh-button.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10861,7 +10843,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      Vue.axios.post(this.logoutUrl);
+      this.$store.dispatch('logout');
     }
   }
 });
@@ -75111,12 +75093,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "home-page card" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col" }, [_c("logout-button")], 1)
-      ])
+    _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "header-text" }, [
+        _vm._v("Welcome to the Voteomatic ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-right" }, [_c("logout-button")], 1)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -75138,18 +75120,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "header-text" }, [
-        _vm._v("Welcome to the Voteomatic ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

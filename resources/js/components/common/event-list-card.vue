@@ -11,9 +11,10 @@
             <ul class="list-group list-group-flush"
                 v-if="isReady">
 
-                <meeting-select-button v-for="m in displayedEvents"
-                                       :meeting="m"
-                                       :key="m.id">
+                <meeting-select-button
+                    v-for="m in displayedEvents"
+                    :meeting="m"
+                    :key="m.id">
                 </meeting-select-button>
 
             </ul>
@@ -64,7 +65,7 @@ export default {
          * so that can have a list of meetings and a list of meetings in
          * the same place. (VOT-30)
          */
-        isElection : function(){
+        isElection: function () {
             return this.eventType === 'election';
         },
 
@@ -74,11 +75,11 @@ export default {
          * so that can have a list of meetings and a list of meetings in
          * the same place. (VOT-30)
          */
-        isMeeting : function(){
+        isMeeting: function () {
             return this.eventType === 'meeting';
         },
 
-        isReady : function(){
+        isReady: function () {
             return isReadyToRock(this.events) && this.events.length > 0;
             // return this._isReady;
         },
@@ -123,10 +124,6 @@ export default {
         loadEvents: function () {
             let me = this;
             this.$store.dispatch('loadAllEvents').then(() => {
-                // me.$store.dispatch('loadAllElections').then(() => {
-                // me._isReady = true;
-                // });
-
             });
 
 

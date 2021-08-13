@@ -8,41 +8,8 @@
             </div>
         @endif
 
-{{--        <div class="row justify-content-center">--}}
-{{--            <div class="col-md-8">--}}
 
-                <home-page></home-page>
-
-{{--            </div>--}}
-{{--        </div>--}}
-
-
-        {{--                <div class="card">--}}
-        {{--                    <div class="card-header">{{ __('Dashboard') }}</div>--}}
-
-        {{--                    <div class="card-body">--}}
-
-        {{--                        {{ __('You are logged in!') }}--}}
-
-        {{--                    </div>--}}
-
-
-        {{--                    <div class="card-body">--}}
-
-        {{--                        <a href="{{ route('logout') }}"--}}
-        {{--                           onclick="event.preventDefault();  document.getElementById('logout-form').submit();"--}}
-        {{--                        >--}}
-        {{--                            {{ __('Logout') }}--}}
-        {{--                        </a>--}}
-
-        {{--                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
-        {{--                            @csrf--}}
-        {{--                        </form>--}}
-
-        {{--                    </div>--}}
-
-        {{--                </div>--}}
-
+        <home-page></home-page>
 
 
         {{ method_field('PUT') }}
