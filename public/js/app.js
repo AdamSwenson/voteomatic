@@ -15144,6 +15144,9 @@ module.exports = {
       // },
     }
   },
+  home: function home() {
+    return normalizedRouteRoot() + 'home';
+  },
   results: {
     getCounts: function getCounts(motionId) {
       return normalizedRouteRoot() + 'results/' + motionId + '/counts';
@@ -15168,6 +15171,10 @@ module.exports = {
     }
   },
   meetings: {
+    main: function main(meetingId) {
+      return normalizedRouteRoot() + 'main/' + meetingId;
+    },
+
     /**
      * Path for the resource controller for meetings.
      * For create requests, leave the id empty
@@ -15436,6 +15443,16 @@ var actions = {
           dispatch('showServerProvidedMessage', error.response.data);
         }
       });
+    });
+  },
+  openHomePage: function openHomePage(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      var url = _routes__WEBPACK_IMPORTED_MODULE_0__.home();
+      window.open(url, '_self');
+      resolve();
     });
   }
 };
@@ -16264,18 +16281,21 @@ var actions = {
       return Vue.axios["delete"](url).then(function (response) {
         var d = response.data; //remove it from the list of meetings
 
-        commit('deleteMeeting', meeting); //check whether it is the currently set meeting
+        commit('deleteMeeting', meeting); //actually, we're just going to go to the
+        //meeting index page. That way the store
+        //gets completely cleaned up
 
-        var activeMeeting = getters.getActiveMeeting;
-
-        if (activeMeeting.id === meeting.id) {
-          //we need to remove it and set another in its place
-          var newActive = getters.getStoredMeetings[0]; // commit('setMeeting', newActive);
-
-          dispatch('setActiveMeeting', newActive).then(function () {
-            return resolve();
-          });
-        }
+        dispatch('openHomePage'); // //check whether it is the currently set meeting
+        // let activeMeeting = getters.getActiveMeeting;
+        // if (activeMeeting.id === meeting.id) {
+        //     //we need to remove it and set another in its place
+        //     let newActive = getters.getStoredMeetings[0];
+        //     // commit('setMeeting', newActive);
+        //
+        //     dispatch('setActiveMeeting', newActive).then(() => {
+        //         return resolve()
+        //     });
+        // }
       })["catch"](function (error) {
         // error handling
         if (error.response) {

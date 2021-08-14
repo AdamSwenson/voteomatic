@@ -135,6 +135,10 @@ module.exports = {
         }
     },
 
+    home: () => {
+        return normalizedRouteRoot() + 'home';
+    },
+
     results: {
         getCounts: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId + '/counts'
@@ -166,6 +170,11 @@ module.exports = {
     },
 
     meetings: {
+
+        main: (meetingId) => {
+            return normalizedRouteRoot() + 'main/' + meetingId;
+        },
+
         /**
          * Path for the resource controller for meetings.
          * For create requests, leave the id empty

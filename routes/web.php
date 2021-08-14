@@ -152,11 +152,13 @@ Route::get('main', [HomeController::class, 'index'] );
 //Internal landing page after lti login
 Route::get('/home/{meeting}', [MainController::class, 'meetingHome'])
     ->name('meetingHome');
-
-
-//main page where votes get cast
-Route::get('main/{motion}', [MainController::class, 'getVotePage'])
+//dev Get this set up in place of /home/meeting (unless there was a good reason for keeping getVotePage)
+// see VOT-56. Began moving toward this in VOT-30
+Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
     ->name('main');
+//main page where votes get cast
+//Route::get('main/{motion}', [MainController::class, 'getVotePage'])
+//    ->name('main');
 
 
 /* =============================

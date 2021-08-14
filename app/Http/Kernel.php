@@ -6,6 +6,7 @@ use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Middleware\CheckIfAlreadyVoted;
 use App\Http\Middleware\CheckIfEligibleToSecond;
 use App\Http\Middleware\CheckIfMaxElectionWinnersExceeded;
+use App\Http\Middleware\CheckIfMeetingExists;
 use App\Http\Middleware\CheckIfMotionClosed;
 use App\Http\Middleware\CheckVoterEligibility;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -73,6 +74,7 @@ class Kernel extends HttpKernel
         'motion-closed' => CheckIfMotionClosed::class,
         'previously-voted' => CheckIfAlreadyVoted::class,
         'second-eligibility' => CheckIfEligibleToSecond::class,
+        'meeting-exists' => CheckIfMeetingExists::class,
 
         //election specific
         'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class

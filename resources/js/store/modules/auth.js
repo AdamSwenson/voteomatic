@@ -40,6 +40,14 @@ const actions = {
         }));
     },
 
+    openHomePage({dispatch, commit, getters},) {
+        return new Promise(((resolve, reject) => {
+            let url = routes.home();
+            window.open(url, '_self');
+            resolve();
+        }));
+    },
+
 };
 
 /**

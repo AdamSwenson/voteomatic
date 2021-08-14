@@ -97,17 +97,22 @@ const actions = {
                     //remove it from the list of meetings
                     commit('deleteMeeting', meeting);
 
-                    //check whether it is the currently set meeting
-                    let activeMeeting = getters.getActiveMeeting;
-                    if (activeMeeting.id === meeting.id) {
-                        //we need to remove it and set another in its place
-                        let newActive = getters.getStoredMeetings[0];
-                        // commit('setMeeting', newActive);
+                    //actually, we're just going to go to the
+                    //meeting index page. That way the store
+                    //gets completely cleaned up
+                    dispatch('openHomePage');
 
-                        dispatch('setActiveMeeting', newActive).then(() => {
-                            return resolve()
-                        });
-                    }
+                    // //check whether it is the currently set meeting
+                    // let activeMeeting = getters.getActiveMeeting;
+                    // if (activeMeeting.id === meeting.id) {
+                    //     //we need to remove it and set another in its place
+                    //     let newActive = getters.getStoredMeetings[0];
+                    //     // commit('setMeeting', newActive);
+                    //
+                    //     dispatch('setActiveMeeting', newActive).then(() => {
+                    //         return resolve()
+                    //     });
+                    // }
 
                 }).catch(function (error) {
                     // error handling

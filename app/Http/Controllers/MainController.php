@@ -19,6 +19,7 @@ class MainController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('meeting-exists');
     }
 
 
@@ -40,30 +41,30 @@ class MainController extends Controller
 
     }
 
-
-    /**
-     * dev Is this still needed? I think this is deprecated. See VOT-55 which worked around a problem this caused.
-     * @deprecated
-     * @param Motion $motion
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function getVotePage(Motion $motion)
-    {
-
-        //Don't understand why this can't be in the constructor. But it can't
-        $this->setLoggedInUser();
-
-        $this->authorize('view', $motion);
-
-        $data = [
-
-            'data' => [
-                'isAdmin' => $this->user->is_admin,
-                'motion' => $motion
-            ]
-        ];
-
-        return view('main', $data);
-    }
+//
+//    /**
+//     * dev Is this still needed? I think this is deprecated. See VOT-55 which worked around a problem this caused.
+//     * @deprecated
+//     * @param Motion $motion
+//     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+//     * @throws \Illuminate\Auth\Access\AuthorizationException
+//     */
+//    public function getVotePage(Motion $motion)
+//    {
+//
+//        //Don't understand why this can't be in the constructor. But it can't
+//        $this->setLoggedInUser();
+//
+//        $this->authorize('view', $motion);
+//
+//        $data = [
+//
+//            'data' => [
+//                'isAdmin' => $this->user->is_admin,
+//                'motion' => $motion
+//            ]
+//        ];
+//
+//        return view('main', $data);
+//    }
 }
