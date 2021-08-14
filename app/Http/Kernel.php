@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use App\Http\Middleware\CheckIfAlreadyVoted;
+use App\Http\Middleware\CheckIfEligibleToSecond;
 use App\Http\Middleware\CheckIfMaxElectionWinnersExceeded;
 use App\Http\Middleware\CheckIfMotionClosed;
 use App\Http\Middleware\CheckVoterEligibility;
@@ -71,6 +72,7 @@ class Kernel extends HttpKernel
         'vote-eligibility' => CheckVoterEligibility::class,
         'motion-closed' => CheckIfMotionClosed::class,
         'previously-voted' => CheckIfAlreadyVoted::class,
+        'second-eligibility' => CheckIfEligibleToSecond::class,
 
         //election specific
         'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class

@@ -31,6 +31,11 @@ const actions = {
                 .then((response) => {
                     let url2 = normalizedRouteRoot();
                     window.open(url2, '_self');
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },

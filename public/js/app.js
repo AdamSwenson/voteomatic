@@ -10714,7 +10714,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _parents_button_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parents/button-parent */ "./resources/js/components/parents/button-parent.vue");
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "logout-button",
@@ -13928,6 +13927,11 @@ var Message = /*#__PURE__*/function (_IModel) {
     _this.motion = motion;
     return _this;
   }
+  /**
+   * Returns message templates stored on the client side
+   * @returns {[{messageText: string, displayTime: number, messageStyle: string, name: string, id: number, showToChair: boolean}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, chairOnly: boolean, name: string, id: number}]}
+   */
+
 
   _createClass(Message, [{
     key: "showToChair",
@@ -13996,6 +14000,11 @@ var Message = /*#__PURE__*/function (_IModel) {
       m = m[0];
       m['motion'] = motion;
       return new Message(m);
+    }
+  }, {
+    key: "makeFromServerResponse",
+    value: function makeFromServerResponse(serverResponse) {
+      return new Message(serverResponse);
     }
   }]);
 
@@ -15421,6 +15430,11 @@ var actions = {
       return Vue.axios.post(url).then(function (response) {
         var url2 = (0,_utilities_url_utilities__WEBPACK_IMPORTED_MODULE_1__.normalizedRouteRoot)();
         window.open(url2, '_self');
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   }
@@ -15689,6 +15703,11 @@ var actions = {
         var candidate = new _models_Candidate__WEBPACK_IMPORTED_MODULE_2__.default(response.data);
         commit('addCandidateToStore', candidate);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15714,6 +15733,11 @@ var actions = {
 
         commit('addCandidateToSelected', candidate);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15731,6 +15755,11 @@ var actions = {
 
         window.console.log('election created id: ', meeting.id);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15764,6 +15793,11 @@ var actions = {
         dispatch('loadCandidatePool', motion).then(function (response) {
           resolve();
         });
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15795,6 +15829,11 @@ var actions = {
         });
 
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15853,6 +15892,11 @@ var actions = {
         });
 
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15886,6 +15930,11 @@ var actions = {
         });
 
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -15945,6 +15994,11 @@ var actions = {
       return Vue.axios["delete"](url).then(function (response) {
         commit('removeCandidate', candidate);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   } // updateCandidate({dispatch, commit, getters}, payload) {
@@ -16192,6 +16246,11 @@ var actions = {
         commit('addMeetingToStore', meeting);
         commit('setMeeting', meeting);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -16217,6 +16276,11 @@ var actions = {
             return resolve();
           });
         }
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -16234,8 +16298,11 @@ var actions = {
         commit('addMeetingToStore', meeting);
         commit('setMeeting', meeting);
         resolve();
-      })["catch"](function (response) {
-        window.console.log("Error in loadMeeting ", response);
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -16293,8 +16360,11 @@ var actions = {
         });
 
         resolve();
-      })["catch"](function (response) {
-        window.console.log('bad load', response);
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -16351,6 +16421,11 @@ var actions = {
       }).then(function (response) {
         var d = response.data;
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   }
@@ -16388,6 +16463,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _models_Message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Message */ "./resources/js/models/Message.js");
+
 var state = {
   //
   // messageText: '',
@@ -16465,6 +16542,28 @@ var actions = {
           commit('removeFromMessageQueue', messageObject);
         }, messageObject.displayTime);
       }
+    });
+  },
+
+  /**
+   * When the server has responded with an error that defines
+   * a message to show to the user, this handles showing them the message.
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param serverResponse
+   * @returns {Promise<unknown>}
+   */
+  showServerProvidedMessage: function showServerProvidedMessage(_ref2, serverResponse) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    return new Promise(function (resolve, reject) {
+      var m = _models_Message__WEBPACK_IMPORTED_MODULE_0__.default.makeFromServerResponse(serverResponse);
+      dispatch('showMessage', m).then(function () {
+        resolve();
+      });
     });
   } // showMessage({dispatch, commit, getters}, {messageText, messageStyle, displayTime}) {
   //     return new Promise(((resolve, reject) => {
@@ -16925,20 +17024,11 @@ var actions = {
 
         dispatch('showMessage', statusMessage);
         resolve();
-        resolve(); // let d = response.data;
-        //
-        // let motion = new Motion(d);
-        // // let motion = new Motion(d.id, d.name, d.date);
-        // commit('addMotionToStore', motion);
-        //
-        // let pl = {meetingId: meetingId, motionId: motion.id};
-        //
-        // return dispatch('setCurrentMotion', pl)
-        //     .then(() => {
-        //         return resolve(motion);
-        //     });
-        //
-        // // commit('setMotion', motion);
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17015,20 +17105,12 @@ var actions = {
         var statusMessage = _models_Message__WEBPACK_IMPORTED_MODULE_1__.default.makeFromTemplate('pendingApproval'); //set it on a timer
 
         dispatch('showMessage', statusMessage);
-        resolve(); // let d = response.data;
-        //
-        // let motion = new Motion(d);
-        // // let motion = new Motion(d.id, d.name, d.date);
-        // commit('addMotionToStore', motion);
-        //
-        // let pl = {meetingId: meetingId, motionId: motion.id};
-        //
-        // return dispatch('setCurrentMotion', pl)
-        //     .then(() => {
-        //         return resolve(motion);
-        //     });
-        //
-        // // commit('setMotion', motion);
+        resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17063,10 +17145,14 @@ var actions = {
         // dispatch('showMessage', statusMessage2)
 
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
-  //
 
   /**
    * Creates a motion which depends on another motion, e.g., an amendment
@@ -17096,6 +17182,11 @@ var actions = {
         // dispatch('showMessage', statusMessage2)
 
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17175,6 +17266,11 @@ var actions = {
         }
 
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17202,45 +17298,12 @@ var actions = {
         //      superseding
         //However, we're just going to wait for the pusher notification
         //and handle all the updating from there.
-        resolve(); // //This will be the updated motion we just sent to the server
-        // let endedMotion = response.data.ended;
-        // //If the motion was an amendment, the server will
-        // //also return a new version of the motion which was amended.
-        // //Otherwise, this will just be false
-        // let superseding = response.data.superseding;
-        //
-        // dispatch('setMotion', motion);
-        //
-        // let pl = Payload.factory({
-        //     object: motion,
-        //     updateProp: 'isComplete',
-        //     updateVal: endedMotion.is_complete
-        // });
-        // //dev why are we not also setting isVotingAllowed?
-        //
-        // //we leave it as the currently set motion so that
-        // //the results tab will provide results for the
-        // //immediate past motion.
-        // //Instead, we just update the completed property on the
-        // //motion
-        // commit('setMotionProp', pl);
-        //
-        //
-        // //Handle swapping in the new motion if there was an amendment.
-        // //todo This will be fixed in VOT-72
-        // if (superseding) {
-        //
-        //
-        //     let original = getters.getMotionById(superseding.superseded_by);
-        //     //remove that from the store (but don't delete from server!)
-        //     commit('deleteMotion', original);
-        //     //make a new motion and add it to the store (but not to the server)
-        //     let motion = new Motion(d);
-        //     commit('addMotionToStore', motion);
-        //
-        // }
-        //
-        // resolve()
+        resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17304,16 +17367,7 @@ var actions = {
 
         dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent); //We don't need to wait for it to finish.
 
-        resolve(); // dispatch('createNewMotionAfterSuccessfulAmendment', {ended, superseding, original});
-        // //Handle swapping in the new motion if there was an amendment.
-        // if (supersedingMotion) {
-        //     let original = getters.getMotionById(supersedingMotion.superseded_by);
-        //     //remove that from the store (but don't delete from server!)
-        //     commit('deleteMotion', original);
-        //     //make a new motion and add it to the store (but not to the server)
-        //     let motion = new Motion(d);
-        //     commit('addMotionToStore', motion);
-        // }
+        resolve();
       });
     });
   },
@@ -17393,6 +17447,11 @@ var actions = {
 
         dispatch('setMotion', motion);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17425,6 +17484,11 @@ var actions = {
         });
 
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17445,14 +17509,7 @@ var actions = {
         commit('clearMotions');
 
         _.forEach(response.data, function (d) {
-          var m = _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_6__.default.make(d, meeting); // let m = null;
-          // if(isReadyToRock(meeting.is_election) && meeting.is_election){
-          //      m= new Office(d);
-          // }else{
-          //     m = new Motion(d);
-          // }
-          // let motion = new Motion(d.id, d.name, d.date);
-
+          var m = _models_BallotObjectFactory__WEBPACK_IMPORTED_MODULE_6__.default.make(d, meeting);
           commit('addMotionToStore', m);
 
           if (d.is_current) {
@@ -17461,6 +17518,11 @@ var actions = {
         });
 
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17547,74 +17609,6 @@ var actions = {
       resolve();
     });
   },
-  // markMotionInOrder({dispatch, commit, getters}, motion) {
-  //     return new Promise(((resolve, reject) => {
-  //         let url = routes.motions.inOrder(motion.id);
-  //         return Vue.axios.post(url)
-  //             .then((response) => {
-  //                 resolve();
-  //             });
-  //     }));
-  // },
-  //
-  //
-  // markMotionOutOfOrder({dispatch, commit, getters}, motion) {
-  //     return new Promise(((resolve, reject) => {
-  //         let url = routes.motions.outOfOrder(motion.id);
-  //         return Vue.axios.post(url)
-  //             .then((response) => {
-  //                 resolve();
-  //             });
-  //     }));
-  // },
-  //
-  //
-  // /**
-  //  * Removes a motion seeking a second and resets to null
-  //  * @param dispatch
-  //  * @param commit
-  //  * @param getters
-  //  * @returns {Promise<unknown>}
-  //  */
-  // resetMotionPendingSecond({dispatch, commit, getters}) {
-  //     return new Promise(((resolve, reject) => {
-  //         commit('setMotionPendingSecond', null);
-  //         resolve();
-  //     }));
-  // },
-  //
-  // /**
-  //  * Tells server that motion has been seconded
-  //  * @param dispatch
-  //  * @param commit
-  //  * @param getters
-  //  * @param meetingId
-  //  * @param motionId
-  //  * @returns {Promise<unknown>}
-  //  */
-  // secondMotion({dispatch, commit, getters}, motion) {
-  //     return new Promise(((resolve, reject) => {
-  //         //send to server
-  //         let url = routes.motions.secondMotion(motion.id);
-  //         return Vue.axios.post(url)
-  //             .then((response) => {
-  //                 // //this assumes the motion being seconded is the current motion.
-  //                 // //that should be normally the case except for high
-  //                 // //precedence motions which can be made while something
-  //                 // //else is waiting for a second. Those will be very
-  //                 // //rare cases.
-  //                 // let pl = Payload(
-  //                 //     {
-  //                 //         updateProp: 'seconded',
-  //                 //         updateVal: response.data.seconded
-  //                 //     });
-  //                 // commit('setMotionProp', pl);
-  //
-  //                 return resolve();
-  //
-  //             });
-  //     }));
-  // },
 
   /**
    * Sets the motion as the current one on the server
@@ -17641,6 +17635,11 @@ var actions = {
         dispatch('setMotion', motion).then(function () {
           return resolve();
         });
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -17673,33 +17672,7 @@ var actions = {
       Echo["private"](channel).listen("MotionClosed", function (e) {
         window.console.log('Received broadcast event motions', e);
         dispatch('handleMotionClosedMessage', e);
-      }); // .listen("NewMotionCreated", (e) => {
-      //
-      //     window.console.log('Received broadcast event motions', e);
-      //     dispatch('handleNewMotionCreated', motion);
-      // })
-      //     .listen("MotionSeekingSecond", (e) => {
-      //         window.console.log('Received broadcast event motions', e);
-      //         dispatch('handleMotionSeekingSecond', motion);
-      //     })
-      //     .listen("MotionSeconded", (e) => {
-      //         window.console.log('Received broadcast event motions', e);
-      //         //Switches to the motion which has now been approved and seconded
-      //         dispatch('handleMotionSeconded', motion);
-      //     });
-      //
-      // if(getters.getIsAdmin){
-      //     let chairChannel = `chair.${motion.id}`;
-      //     Echo.private(chairChannel)
-      //         .listen('MotionNeedingApproval', (e) => {
-      //             window.console.log('Received chair broadcast', e);
-      //
-      //             dispatch('handleNewMotionCreated', motion);
-      //
-      //         });
-      //
-      // }
-
+      });
       window.console.log('Websocket listener set for current motion on channel ', channel);
       return resolve();
     });
@@ -17724,16 +17697,14 @@ var actions = {
         var d = response.data;
         resolve(); //we don't do anything here since the push message will trigger
         //everything
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
-  //
-  // setMotionPendingSecond({dispatch, commit, getters}, motion) {
-  //     return new Promise(((resolve, reject) => {
-  //         commit('setMotionPendingSecond', motion);
-  //         resolve();
-  //     }));
-  // },
 
   /**
    * Sends new field entries to server and
@@ -17763,6 +17734,11 @@ var actions = {
       }).then(function (response) {
         var d = response.data;
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18187,6 +18163,11 @@ var actions = {
       return Vue.axios.post(url).then(function (response) {
         commit('removeMotionPendingApproval', motion);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18199,6 +18180,11 @@ var actions = {
       return Vue.axios.post(url).then(function (response) {
         commit('removeMotionPendingApproval', motion);
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18211,6 +18197,11 @@ var actions = {
       Vue.axios["delete"](url).then(function (response) {
         dispatch('resetMotionPendingSecond').then(function () {
           resolve();
+        })["catch"](function (error) {
+          // error handling
+          if (error.response) {
+            dispatch('showServerProvidedMessage', error.response.data);
+          }
         });
       });
     });
@@ -18252,18 +18243,12 @@ var actions = {
       return Vue.axios.post(url).then(function (response) {
         dispatch('resetMotionPendingSecond').then(function () {
           return resolve();
-        }); // //this assumes the motion being seconded is the current motion.
-        // //that should be normally the case except for high
-        // //precedence motions which can be made while something
-        // //else is waiting for a second. Those will be very
-        // //rare cases.
-        // let pl = Payload(
-        //     {
-        //         updateProp: 'seconded',
-        //         updateVal: response.data.seconded
-        //     });
-        // commit('setMotionProp', pl);
-        // return resolve();
+        });
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18276,26 +18261,7 @@ var actions = {
       resolve();
     });
   }
-  /*
-  *    doThing({dispatch, commit, getters}, thingParam) {
-  *        return new Promise(((resolve, reject) => {
-  *        }));
-  *    },
-  */
-
 };
-/**
- *
- *    getThingViaId: (state) => (thingId) => {
- *        return state.things.filter(function (c) {
- *            return c.thing_id === thingId;
- *        })
- *    },
- *
- *
- *    getThing: (state, getters) => {}
- */
-
 var getters = {
   getMotionPendingSecond: function getMotionPendingSecond(state) {
     return state.motionPendingSecond;
@@ -18481,6 +18447,11 @@ var actions = {
 
 
         resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18515,12 +18486,14 @@ var actions = {
         } else {
           var result = new _models_MotionResult__WEBPACK_IMPORTED_MODULE_4__.default(response.data);
           commit('addMotionResultToStore', result);
-        } // let results = response.data;
-        // commit('setPassed', results.passed);
-        // commit('setTotalVotes', results.totalVotes);
-
+        }
 
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+        }
       });
     });
   },
@@ -18828,6 +18801,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Vote__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Vote */ "./resources/js/models/Vote.js");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 /* harmony import */ var _utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/object.utilities */ "./resources/js/utilities/object.utilities.js");
+/* harmony import */ var _models_Message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/Message */ "./resources/js/models/Message.js");
+
 
 
 
@@ -18914,19 +18889,22 @@ var actions = {
       })["catch"](function (error) {
         // error handling
         if (error.response) {
-          //todo Error messaging
-          var message = Message.makeFromTemplate('voteRecordingError'); //todo Add server generated message
-          // message.messageText = message.messageText += error.response.message;
-
-          dispatch('showMessage', message); // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-
-          console.log(error.response.data);
-          console.log(error.response.status);
-
-          if (error.response.status === 501) {//   me.voteRecorded = true;
-            // me.showButtons = false;
-          }
+          dispatch('showServerProvidedMessage', error.response.data);
+          window.console.log(error); //
+          // //todo Error messaging
+          // let message = Message.makeFromTemplate('voteRecordingError');
+          // //todo Add server generated message
+          // // message.messageText = message.messageText += error.response.message;
+          // dispatch('showMessage', message);
+          //
+          // // The request was made and the server responded with a status code
+          // // that falls out of the range of 2xx
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+          // if (error.response.status === 501) {
+          //  //   me.voteRecorded = true;
+          //    // me.showButtons = false;
+          // }
         }
 
         throw error; // reject();

@@ -76,6 +76,11 @@ const actions = {
 
                     commit('setMeeting', meeting);
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -104,6 +109,11 @@ const actions = {
                         });
                     }
 
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -124,9 +134,14 @@ const actions = {
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
                     resolve()
-                }).catch((response) => {
-                    window.console.log("Error in loadMeeting ", response);
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
+
         }));
     },
 
@@ -184,8 +199,11 @@ const actions = {
                         // }
                     });
                     resolve();
-                }).catch((response) => {
-                    window.console.log('bad load', response);
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -241,6 +259,11 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     }

@@ -194,25 +194,14 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
-
                     resolve();
 
-                    resolve();
-                    // let d = response.data;
-                    //
-                    // let motion = new Motion(d);
-                    // // let motion = new Motion(d.id, d.name, d.date);
-                    // commit('addMotionToStore', motion);
-                    //
-                    // let pl = {meetingId: meetingId, motionId: motion.id};
-                    //
-                    // return dispatch('setCurrentMotion', pl)
-                    //     .then(() => {
-                    //         return resolve(motion);
-                    //     });
-                    //
-                    // // commit('setMotion', motion);
-
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -290,23 +279,13 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
-
                     resolve();
-                    // let d = response.data;
-                    //
-                    // let motion = new Motion(d);
-                    // // let motion = new Motion(d.id, d.name, d.date);
-                    // commit('addMotionToStore', motion);
-                    //
-                    // let pl = {meetingId: meetingId, motionId: motion.id};
-                    //
-                    // return dispatch('setCurrentMotion', pl)
-                    //     .then(() => {
-                    //         return resolve(motion);
-                    //     });
-                    //
-                    // // commit('setMotion', motion);
-
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -341,16 +320,19 @@ const actions = {
                     dispatch('showMessage', statusMessage);
 
                     //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
-
                     //The chair won't see the above message. The user won't see this one
                     // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
                     // dispatch('showMessage', statusMessage2)
-
-
                     resolve();
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
-    },        //
+    },
 
 
     /**
@@ -375,16 +357,17 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
-
                     //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
-
                     //The chair won't see the above message. The user won't see this one
                     // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
                     // dispatch('showMessage', statusMessage2)
-
-
                     resolve();
-
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -432,13 +415,12 @@ const actions = {
 
             //Set the fact that it was superseded so that the display
             //can prevent it from being selected.
-             let pl = Payload.factory({
+            let pl = Payload.factory({
                 object: original,
                 updateProp: 'superseded_by',
                 updateVal: superseding.id
             });
             commit('setMotionProp', pl);
-
 
             resolve();
         }));
@@ -464,6 +446,12 @@ const actions = {
 
                     }
                     return resolve()
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -493,46 +481,11 @@ const actions = {
                     //and handle all the updating from there.
                     resolve();
 
-
-                    // //This will be the updated motion we just sent to the server
-                    // let endedMotion = response.data.ended;
-                    // //If the motion was an amendment, the server will
-                    // //also return a new version of the motion which was amended.
-                    // //Otherwise, this will just be false
-                    // let superseding = response.data.superseding;
-                    //
-                    // dispatch('setMotion', motion);
-                    //
-                    // let pl = Payload.factory({
-                    //     object: motion,
-                    //     updateProp: 'isComplete',
-                    //     updateVal: endedMotion.is_complete
-                    // });
-                    // //dev why are we not also setting isVotingAllowed?
-                    //
-                    // //we leave it as the currently set motion so that
-                    // //the results tab will provide results for the
-                    // //immediate past motion.
-                    // //Instead, we just update the completed property on the
-                    // //motion
-                    // commit('setMotionProp', pl);
-                    //
-                    //
-                    // //Handle swapping in the new motion if there was an amendment.
-                    // //todo This will be fixed in VOT-72
-                    // if (superseding) {
-                    //
-                    //
-                    //     let original = getters.getMotionById(superseding.superseded_by);
-                    //     //remove that from the store (but don't delete from server!)
-                    //     commit('deleteMotion', original);
-                    //     //make a new motion and add it to the store (but not to the server)
-                    //     let motion = new Motion(d);
-                    //     commit('addMotionToStore', motion);
-                    //
-                    // }
-                    //
-                    // resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
@@ -577,7 +530,6 @@ const actions = {
      *
      */
     handleMotionClosedMessage({dispatch, commit, getters}, pusherEvent) {
-
         return new Promise(((resolve, reject) => {
             let ended = new Motion(pusherEvent.ended);
             // let superseding = new Motion(pusherEvent.superseding);
@@ -595,17 +547,6 @@ const actions = {
 
                 //We don't need to wait for it to finish.
                 resolve();
-
-                // dispatch('createNewMotionAfterSuccessfulAmendment', {ended, superseding, original});
-                // //Handle swapping in the new motion if there was an amendment.
-                // if (supersedingMotion) {
-                //     let original = getters.getMotionById(supersedingMotion.superseded_by);
-                //     //remove that from the store (but don't delete from server!)
-                //     commit('deleteMotion', original);
-                //     //make a new motion and add it to the store (but not to the server)
-                //     let motion = new Motion(d);
-                //     commit('addMotionToStore', motion);
-                // }
 
             });
 
@@ -683,6 +624,12 @@ const actions = {
                     // let motion = new Motion(d.id, d.name, d.date);
                     dispatch('setMotion', motion);
                     resolve()
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -702,18 +649,24 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.castVotes.getVotedMotions(meetingId);
-            return Vue.axios.get(url).then((response) => {
-                _.forEach(response.data, (d) => {
+            return Vue.axios.get(url)
+                .then((response) => {
+                    _.forEach(response.data, (d) => {
 
-                    // todo or should we be storing ids? need to decide how best to do comparisons
+                        // todo or should we be storing ids? need to decide how best to do comparisons
 
-                    // todo should we clear the store first? Can the list contain motions with duplicate ids?
-                    // todo
-                    // let motion = new Motion(d);
-                    commit('addVotedUponMotion', d.id);
+                        // todo should we clear the store first? Can the list contain motions with duplicate ids?
+                        // todo
+                        // let motion = new Motion(d);
+                        commit('addVotedUponMotion', d.id);
+                    });
+                    return resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
-                return resolve();
-            });
         }));
     },
 
@@ -735,14 +688,7 @@ const actions = {
 
                     _.forEach(response.data, (d) => {
                         let m = BallotObjectFactory.make(d, meeting);
-                        // let m = null;
-                        // if(isReadyToRock(meeting.is_election) && meeting.is_election){
-                        //      m= new Office(d);
-                        // }else{
-                        //     m = new Motion(d);
-                        // }
 
-                        // let motion = new Motion(d.id, d.name, d.date);
                         commit('addMotionToStore', m);
                         if (d.is_current) {
                             dispatch('setMotion', m)
@@ -751,6 +697,12 @@ const actions = {
 
                     resolve()
 
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -840,76 +792,6 @@ const actions = {
     },
 
 
-    // markMotionInOrder({dispatch, commit, getters}, motion) {
-    //     return new Promise(((resolve, reject) => {
-    //         let url = routes.motions.inOrder(motion.id);
-    //         return Vue.axios.post(url)
-    //             .then((response) => {
-    //                 resolve();
-    //             });
-    //     }));
-    // },
-    //
-    //
-    // markMotionOutOfOrder({dispatch, commit, getters}, motion) {
-    //     return new Promise(((resolve, reject) => {
-    //         let url = routes.motions.outOfOrder(motion.id);
-    //         return Vue.axios.post(url)
-    //             .then((response) => {
-    //                 resolve();
-    //             });
-    //     }));
-    // },
-    //
-    //
-    // /**
-    //  * Removes a motion seeking a second and resets to null
-    //  * @param dispatch
-    //  * @param commit
-    //  * @param getters
-    //  * @returns {Promise<unknown>}
-    //  */
-    // resetMotionPendingSecond({dispatch, commit, getters}) {
-    //     return new Promise(((resolve, reject) => {
-    //         commit('setMotionPendingSecond', null);
-    //         resolve();
-    //     }));
-    // },
-    //
-    // /**
-    //  * Tells server that motion has been seconded
-    //  * @param dispatch
-    //  * @param commit
-    //  * @param getters
-    //  * @param meetingId
-    //  * @param motionId
-    //  * @returns {Promise<unknown>}
-    //  */
-    // secondMotion({dispatch, commit, getters}, motion) {
-    //     return new Promise(((resolve, reject) => {
-    //         //send to server
-    //         let url = routes.motions.secondMotion(motion.id);
-    //         return Vue.axios.post(url)
-    //             .then((response) => {
-    //                 // //this assumes the motion being seconded is the current motion.
-    //                 // //that should be normally the case except for high
-    //                 // //precedence motions which can be made while something
-    //                 // //else is waiting for a second. Those will be very
-    //                 // //rare cases.
-    //                 // let pl = Payload(
-    //                 //     {
-    //                 //         updateProp: 'seconded',
-    //                 //         updateVal: response.data.seconded
-    //                 //     });
-    //                 // commit('setMotionProp', pl);
-    //
-    //                 return resolve();
-    //
-    //             });
-    //     }));
-    // },
-
-
     /**
      * Sets the motion as the current one on the server
      * and updates the local store
@@ -933,6 +815,12 @@ const actions = {
                         return resolve()
                     });
 
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -964,33 +852,6 @@ const actions = {
                     window.console.log('Received broadcast event motions', e);
                     dispatch('handleMotionClosedMessage', e);
                 })
-            // .listen("NewMotionCreated", (e) => {
-            //
-            //     window.console.log('Received broadcast event motions', e);
-            //     dispatch('handleNewMotionCreated', motion);
-            // })
-            //     .listen("MotionSeekingSecond", (e) => {
-            //         window.console.log('Received broadcast event motions', e);
-            //         dispatch('handleMotionSeekingSecond', motion);
-            //     })
-            //     .listen("MotionSeconded", (e) => {
-            //         window.console.log('Received broadcast event motions', e);
-            //         //Switches to the motion which has now been approved and seconded
-            //         dispatch('handleMotionSeconded', motion);
-            //     });
-            //
-            // if(getters.getIsAdmin){
-            //     let chairChannel = `chair.${motion.id}`;
-            //     Echo.private(chairChannel)
-            //         .listen('MotionNeedingApproval', (e) => {
-            //             window.console.log('Received chair broadcast', e);
-            //
-            //             dispatch('handleNewMotionCreated', motion);
-            //
-            //         });
-            //
-            // }
-
 
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
@@ -1016,17 +877,14 @@ const actions = {
                     resolve();
                     //we don't do anything here since the push message will trigger
                     //everything
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
-
-    //
-    // setMotionPendingSecond({dispatch, commit, getters}, motion) {
-    //     return new Promise(((resolve, reject) => {
-    //         commit('setMotionPendingSecond', motion);
-    //         resolve();
-    //     }));
-    // },
 
     /**
      * Sends new field entries to server and
@@ -1053,6 +911,11 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },

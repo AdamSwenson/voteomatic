@@ -97,6 +97,11 @@ const actions = {
                 .then((response) => {
                     commit('removeMotionPendingApproval', motion);
                     resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -109,6 +114,11 @@ const actions = {
                 .then((response) => {
                     commit('removeMotionPendingApproval', motion);
                     resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -119,6 +129,11 @@ const actions = {
             Vue.axios.delete(url).then((response) => {
                 dispatch('resetMotionPendingSecond').then(() => {
                     resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
             });
 
@@ -157,20 +172,12 @@ const actions = {
                     dispatch('resetMotionPendingSecond').then(() => {
                         return resolve();
                     });
-                    // //this assumes the motion being seconded is the current motion.
-                    // //that should be normally the case except for high
-                    // //precedence motions which can be made while something
-                    // //else is waiting for a second. Those will be very
-                    // //rare cases.
-                    // let pl = Payload(
-                    //     {
-                    //         updateProp: 'seconded',
-                    //         updateVal: response.data.seconded
-                    //     });
-                    // commit('setMotionProp', pl);
-
-                    // return resolve();
-
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -182,25 +189,9 @@ const actions = {
         }));
     },
 
-    /*
-    *    doThing({dispatch, commit, getters}, thingParam) {
-    *        return new Promise(((resolve, reject) => {
-    *        }));
-    *    },
-    */
 };
 
-/**
- *
- *    getThingViaId: (state) => (thingId) => {
- *        return state.things.filter(function (c) {
- *            return c.thing_id === thingId;
- *        })
- *    },
- *
- *
- *    getThing: (state, getters) => {}
- */
+
 const getters = {
     getMotionPendingSecond: (state) => {
         return state.motionPendingSecond;

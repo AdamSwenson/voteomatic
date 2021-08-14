@@ -2,7 +2,7 @@ import * as routes from "../../routes";
 import Vote from "../../models/Vote";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import {idify, getById} from "../../utilities/object.utilities";
-
+import Message from "../../models/Message";
 const state = {
     selectedCandidates: [],
 
@@ -105,22 +105,28 @@ const actions = {
                     resolve();
                 })
                 .catch(function (error) {
+
                     // error handling
                     if (error.response) {
-                        //todo Error messaging
-                        let message = Message.makeFromTemplate('voteRecordingError');
-                        //todo Add server generated message
-                        // message.messageText = message.messageText += error.response.message;
-                        dispatch('showMessage', message);
 
-                        // The request was made and the server responded with a status code
-                        // that falls out of the range of 2xx
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        if (error.response.status === 501) {
-                         //   me.voteRecorded = true;
-                           // me.showButtons = false;
-                        }
+                        dispatch('showServerProvidedMessage', error.response.data);
+
+                        window.console.log(error);
+                        //
+                        // //todo Error messaging
+                        // let message = Message.makeFromTemplate('voteRecordingError');
+                        // //todo Add server generated message
+                        // // message.messageText = message.messageText += error.response.message;
+                        // dispatch('showMessage', message);
+                        //
+                        // // The request was made and the server responded with a status code
+                        // // that falls out of the range of 2xx
+                        // console.log(error.response.data);
+                        // console.log(error.response.status);
+                        // if (error.response.status === 501) {
+                        //  //   me.voteRecorded = true;
+                        //    // me.showButtons = false;
+                        // }
 
                     }
                     throw error;

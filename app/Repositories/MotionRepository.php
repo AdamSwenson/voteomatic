@@ -165,6 +165,8 @@ class MotionRepository implements IMotionRepository
      */
     public function secondMotion(Motion $motion, User $second)
     {
+        //This is now handled by middleware,
+        //but just in case...
         if (!$motion->isEligibleToSecond($second)) {
             throw new IneligibleSecondAttempt();
         }

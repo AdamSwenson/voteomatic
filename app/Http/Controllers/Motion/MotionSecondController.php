@@ -29,6 +29,7 @@ class MotionSecondController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('second-eligibility');
         $this->motionRepo = app()->make(IMotionRepository::class);
 $this->motionStackRepo = app()->make(IMotionStackRepository::class);
     }
@@ -45,7 +46,7 @@ $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->setLoggedInUser();
 
         $this->authorize('secondMotion', $motion);
-        try {
+//        try {
             $this->motionRepo->secondMotion($motion, $this->user);
 
             //Broadcast the event
@@ -57,14 +58,6 @@ $this->motionStackRepo = app()->make(IMotionStackRepository::class);
 
 
             return response()->json($motion);
-        } catch (IneligibleSecondAttempt $e) {
-            //todo
-            $d = [
-                'message' => $e::MESSAGE
-            ];
-            return response()->json($d, $e::ERROR_CODE);
-            //Tell them that they can't second their own motion
-        }
 
     }
 

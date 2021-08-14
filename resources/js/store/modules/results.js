@@ -152,6 +152,11 @@ const actions = {
                     // commit('setNayCount', results.nayCount);
 
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -187,11 +192,13 @@ const actions = {
                         commit('addMotionResultToStore', result);
                     }
 
-                    // let results = response.data;
-                    // commit('setPassed', results.passed);
-                    // commit('setTotalVotes', results.totalVotes);
-
                     return resolve();
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },

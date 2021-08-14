@@ -21,6 +21,10 @@ export default class Message extends IModel {
     }
 
 
+    /**
+     * Returns message templates stored on the client side
+     * @returns {[{messageText: string, displayTime: number, messageStyle: string, name: string, id: number, showToChair: boolean}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, name: string, id: number}, {messageText: string, displayTime: number, messageStyle: string, chairOnly: boolean, name: string, id: number}]}
+     */
     static get templates() {
         return [
             {
@@ -98,6 +102,10 @@ export default class Message extends IModel {
         m = m[0];
         m['motion'] = motion;
         return new Message(m);
+    }
+
+    static makeFromServerResponse(serverResponse){
+        return new Message(serverResponse);
     }
 
 }

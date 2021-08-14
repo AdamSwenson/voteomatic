@@ -4,9 +4,18 @@ namespace App\Exceptions;
 
 use Exception;
 
-class IneligibleMotionCreator extends Exception
+class IneligibleMotionCreator extends ClientVisibleException
 {
-    //
 
     const ERROR_CODE = 503;
+
+    const MESSAGE = "You are not allowed to make a motion";
+
+    const MESSAGE_STYLE = 'danger';
+
+    const DISPLAY_TIME = 5000;
+
+    /** @var bool Whether the user must dismiss the message */
+    const BLOCKING_MESSAGE = true;
+
 }

@@ -1,6 +1,6 @@
-
 <script>
 import ButtonParent from "../parents/button-parent";
+
 export default {
     name: "logout-button",
     extends: ButtonParent,
@@ -20,8 +20,8 @@ export default {
     computed: {},
 
     methods: {
-        handleClick: function(){
-this.$store.dispatch('logout');
+        handleClick: function () {
+            this.$store.dispatch('logout');
 
         }
     }
