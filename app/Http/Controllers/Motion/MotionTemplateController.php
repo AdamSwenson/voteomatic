@@ -12,6 +12,11 @@ class MotionTemplateController extends Controller
 
 
     public function getTemplates(){
+//        if(env('IS_DEMO') !== null && env('IS_DEMO') === true){
+        $d = array_merge(MotionTemplateRepository::$templates , MotionTemplateRepository::$introTemplates);
+//        $d = MotionTemplateRepository::$templates + MotionTemplateRepository::$introTemplates;
+            return response()->json($d);
+//        }
         return response()->json(MotionTemplateRepository::$templates);
     }
 
