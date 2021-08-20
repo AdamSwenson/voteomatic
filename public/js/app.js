@@ -78771,7 +78771,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-secondary",
+                staticClass: "btn btn-secondary no",
                 attrs: { type: "button", "data-dismiss": "modal" }
               },
               [_vm._v("No\n                ")]
@@ -78780,7 +78780,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary yes",
                 attrs: { type: "button", "data-dismiss": "modal" },
                 on: { click: _vm.handleClick }
               },
