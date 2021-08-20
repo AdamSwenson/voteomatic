@@ -10,7 +10,9 @@ const state = {
 
     writeInCandidates: [],
 
-    castVotes: []
+    castVotes: [],
+
+
 };
 
 const mutations = {
@@ -95,6 +97,7 @@ const actions = {
 
                     //Add the motion to the list of motions the user has voted upon
                     commit('addVotedUponMotion', voteObject.motionId);
+
                     //Store the receipt for the user. These are done separately since
                     //the voted upon list is used to restrict what a user may do and
                     //is populated every time the page loads.

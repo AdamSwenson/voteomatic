@@ -134,7 +134,7 @@ export default {
             voteRecorded: false,
             // vote: null,
 
-            showButtons: false,
+            // showButtons: false,
 
             titleText: {
                 unVoted: 'Please vote on this motion',
@@ -176,15 +176,9 @@ export default {
                     // if (!_.isUndefined(this.votedUponMotionIds) && !_.isNull(this.votedUponMotionIds)) {
                     //wait to make sure we have the present motion id ready to go.
                     // let ids = this.$store.getters.getMotionIdsUserVotedUpon;
-                    let hasVoted = this.votedUponMotionIds.includes(this.motion.id);
-
-                    //todo dev set the display for now
-                    this.showButtons = !hasVoted;
-
-                    return hasVoted
+                    return this.votedUponMotionIds.includes(this.motion.id);
                 }
-            }
-            ,
+            },
             // default: null
         },
 
@@ -251,6 +245,15 @@ export default {
             }
         },
 
+
+        /**
+         * Whether to display the aye and nay buttons
+         */
+        showButtons: function () {
+            if (!isReadyToRock(this.hasVoted)) return false;
+            return !this.hasVoted;
+        }
+
         // vote : function(){
         //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
         // }
@@ -286,8 +289,11 @@ export default {
          * to server.
          */
         handleNay: function () {
-            let voteType = 'nay';
-            this.recordVote(voteType);
+
+            this.voteRecorded = true;
+            // me.showButtons = false;
+            // let voteType = 'nay';
+            // this.recordVote(voteType);
         },
 
         /**
@@ -296,45 +302,47 @@ export default {
          * to server.
          */
         handleYay: function () {
-            let voteType = 'yay';
-            this.recordVote(voteType);
+            this.voteRecorded = true;
+            // me.showButtons = false;
+            // let voteType = 'yay';
+            // this.recordVote(voteType);
         },
 
-        /**
-         * Sends vote to server
-         *
-         * @param voteType
-         */
-        recordVote: function (voteType) {
-            let me = this;
-
-            let vote = new Vote(
-                {
-                    motionId: this.motion.id,
-
-                    //NB, the setter will translate whatever we are passing into a boolean
-                    isYay: voteType
-                });
-
-            this.$store.dispatch('castMotionVote', vote).then((v) => {
-                if(v.receipt.length >0){
-                    //Successfully recorded
-                    me.voteRecorded = true;
-                    me.showButtons = false;
-                }
-            }).catch((error) => {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    if (error.response.status === 501) {
-                        me.voteRecorded = true;
-                        me.showButtons = false;
-                    }
-                }
-
-            });
+        // /**
+        //  * Sends vote to server
+        //  *
+        //  * @param voteType
+        //  */
+        // recordVote: function (voteType) {
+        //     let me = this;
+        //
+        //     let vote = new Vote(
+        //         {
+        //             motionId: this.motion.id,
+        //
+        //             //NB, the setter will translate whatever we are passing into a boolean
+        //             isYay: voteType
+        //         });
+        //
+        //     this.$store.dispatch('castMotionVote', vote).then((v) => {
+        //         if (v.receipt.length > 0) {
+        //             //Successfully recorded
+        //             me.voteRecorded = true;
+        //             me.showButtons = false;
+        //         }
+        //     }).catch((error) => {
+        //         if (error.response) {
+        //             // The request was made and the server responded with a status code
+        //             // that falls out of the range of 2xx
+        //             console.log(error.response.data);
+        //             console.log(error.response.status);
+        //             if (error.response.status === 501) {
+        //                 me.voteRecorded = true;
+        //                 me.showButtons = false;
+        //             }
+        //         }
+        //
+        //     });
 
             //
             // let url = routes.votes.recordVote(this.motion.id);
@@ -374,7 +382,7 @@ export default {
             //
             // });
 
-        }
+        // }
     },
 
 }

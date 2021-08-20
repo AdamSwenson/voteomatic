@@ -2,7 +2,7 @@ import IModel from "./IModel";
 import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Vote extends IModel {
-    motionId;
+
 
     /**
      * Create a new motion
