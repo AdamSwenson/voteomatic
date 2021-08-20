@@ -25,7 +25,10 @@ class CheckIfAlreadyVoted
 
 //        try {
         if ($voterEligibilityRepo->hasAlreadyVoted($motion, $user)) {
-            abort(DoubleVoteAttempt::ERROR_CODE, DoubleVoteAttempt::MESSAGE);
+
+            throw new DoubleVoteAttempt($motion);
+
+//            abort(DoubleVoteAttempt::ERROR_CODE, DoubleVoteAttempt::MESSAGE);
         }
 
         return $next($request);

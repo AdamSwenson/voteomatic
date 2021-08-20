@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Assignment;
+use App\Models\Election\Candidate;
+use App\Models\Election\PoolMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,15 +13,27 @@ class Motion extends Model
     use HasFactory;
 
     protected $fillable = [
+        /** The user who ruled on whether the motion is in order */
+        'approver_id',
+        /** The user who made the motion */
+        'author_id',
         'applies_to',
         'content',
         'description',
         'debatable',
         'is_complete',
         'is_current',
+        'is_in_order',
+        /** Whether users are allowed at this time to cast votes on the motion */
+        'is_voting_allowed',
+        /** For elections, this defines how many people can be elected to the office */
+        'max_winners',
         'meeting_id',
         'requires',
         'superseded_by',
+        /** The user who seconded the motion */
+        'seconder_id',
+
         'seconded',
         'type'];
 
@@ -28,10 +42,11 @@ class Motion extends Model
      * @var string[]
      */
     protected $motionTypes = [
-        'main',
-        'privileged',
         'amendment',
         'amendment-secondary',
+        'election',
+        'main',
+        'privileged',
         'procedural-main',
         'procedural-subsidiary',
         'incidental'
@@ -69,8 +84,12 @@ class Motion extends Model
     protected $casts = [
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
+        'is_in_order' => 'boolean',
+        'is_voting_allowed' => 'boolean',
         'debatable' => 'boolean',
-        'seconded' => 'boolean'
+        'seconded' => 'boolean',
+        //election
+        'max_winners' => 'integer'
     ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
@@ -123,6 +142,11 @@ class Motion extends Model
     }
 
 
+    /**
+     * Returns the motion which replaced this motion
+     * after an amendment
+     * @return mixed
+     */
     public function getSupersedingMotion()
     {
         if (!is_null($this->superseded_by)) {
@@ -146,7 +170,8 @@ class Motion extends Model
         return $types->contains($this->type);
     }
 
-    public function isProcedural(){
+    public function isProcedural()
+    {
         $types = collect(self::$proceduralTypes);
         return $types->contains($this->type);
     }
@@ -221,6 +246,73 @@ class Motion extends Model
 //        return $this->attributes['totalVotesCast'] * $this->requires;
     }
 
+    public function author()
+    {
+        return User::find($this->author_id);
+    }
+
+    public function setAuthor(User $user)
+    {
+        $this->author_id = $user->id;
+        $this->save();
+    }
+
+    /**
+     * If the chair creates the motion, it is automatically seconded
+     * with them as the seconder.
+     * @return mixed
+     */
+    public function seconder()
+    {
+        return User::find($this->seconder_id);
+    }
+
+
+    public function setSecond(User $user)
+    {
+        $this->seconder_id = $user->id;
+        $this->save();
+    }
+
+//    public function markInOrder(User $user)
+//    {
+//        $this->approver_id = $user->id;
+//        $this->is_in_order = true;
+//        $this->save();
+//    }
+
+    /**
+     * Returns the person who ruled on the orderliness of the motion
+     *
+     * @return mixed
+     */
+    public function approver()
+    {
+        return User::find($this->approver_id);
+    }
+
+    /**
+     * Determines whether someone other than the author
+     * is seconding.
+     *
+     * IF THE USER IS THE CHAIR, THEY WILL BE ALLOWED TO DO SO
+     * SINCE PRESUMABLY THEY ARE RECORDING WHAT HAS HAPPENED VERBALLY
+     *
+     * @param User $potentialSecond
+     * @return bool
+     */
+    public function isEligibleToSecond(User $potentialSecond)
+    {
+        //check if they are the chair
+        if ($this->meeting->isOwner($potentialSecond)) {
+            return true;
+        }
+
+        //if not, they must not be identical to the author
+        $author = $this->author();
+        return !$author->is($potentialSecond);
+    }
+
 
     // ------------------ relationships
 
@@ -268,5 +360,14 @@ class Motion extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
+
+    public function poolMembers()
+    {
+        return $this->hasMany(PoolMember::class);
+    }
 
 }

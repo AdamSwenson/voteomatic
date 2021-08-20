@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Events\MotionClosed;
 use App\Http\Controllers\Motion\MotionStackController;
 
 //use PHPUnit\Framework\TestCase;
@@ -9,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use App\Repositories\IMotionStackRepository;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class MotionStackControllerTest extends TestCase
@@ -30,6 +32,10 @@ class MotionStackControllerTest extends TestCase
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     private $nonMember;
+    /**
+     * @var string
+     */
+    public $url;
 
 
     public function setUp(): void
@@ -45,13 +51,13 @@ class MotionStackControllerTest extends TestCase
     /** @test */
     public function markMotionComplete()
     {
-$this->url = 'motions/close/' . $this->motion->id;
+        $this->url = 'motions/close/' . $this->motion->id;
 
- $response = $this->actingAs($this->user)
-    ->post($this->url);
+        $response = $this->actingAs($this->user)
+            ->post($this->url);
 
 
- //check
+        //check
         $response->assertSuccessful();
 
     }
@@ -70,6 +76,24 @@ $this->url = 'motions/close/' . $this->motion->id;
         $response->assertStatus(403);
     }
 
+
+    /** @test */
+    public function markMotionCompleteDispatchesBroadcastEvent()
+    {
+        Event::fake();
+        $this->url = 'motions/close/' . $this->motion->id;
+
+        $response = $this->actingAs($this->user)
+            ->post($this->url);
+
+        $motion = $this->motion;
+
+        Event::assertDispatched(MotionClosed::class);
+        Event::assertDispatched(function (MotionClosed $event) use ($motion) {
+            return $event->ended->is($motion) && $event->ended->is_complete === true && $event->ended->is_voting_allowed === false;
+        });
+
+    }
 
     /** @test */
     public function getCurrentMotion()
@@ -102,7 +126,7 @@ $this->url = 'motions/close/' . $this->motion->id;
     /** @test */
     public function setAsCurrentMotion()
     {
-        $this->url = "motions/stack/" . $this->meeting->id . '/'. $this->motion->id;
+        $this->url = "motions/stack/" . $this->meeting->id . '/' . $this->motion->id;
         $response = $this->actingAs($this->user)
             ->post($this->url);
 
@@ -116,7 +140,7 @@ $this->url = 'motions/close/' . $this->motion->id;
     /** @test */
     public function setAsCurrentMotionDeniesNonMembers()
     {
-        $this->url = "motions/stack/" . $this->meeting->id . '/'. $this->motion->id;
+        $this->url = "motions/stack/" . $this->meeting->id . '/' . $this->motion->id;
 
 
         $response = $this->actingAs($this->nonMember)

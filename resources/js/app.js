@@ -71,12 +71,15 @@ Vue.component('voteomatic', require('./components/voteomatic').default);
 Vue.component('page-navbar', require('./components/navigation/page-navbar').default);
 Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
+Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
 
 //todo DEV TOP LEVEL
-Vue.component('results', require('./components/main/results-page').default);
+Vue.component('results', require('./components/main/motion-results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
 Vue.component('amendment-page', require('./components/main/amendment-page').default);
+Vue.component('election-card', require('./components/election/election-card').default);
+Vue.component('election-setup-card', require('./components/election/setup/election-setup-card').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

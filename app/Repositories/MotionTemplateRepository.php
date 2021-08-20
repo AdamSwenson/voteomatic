@@ -110,6 +110,30 @@ class MotionTemplateRepository
     ];
 
 
+    static public $introTemplates = [
 
+        ['name' => 'z1 RolePlayMain',
+            'content' => "That tacos be declared the official food of the CSUN Faculty.",
+            'requires' => 0.5,
+            'amendable' => true
+        ],
+//        ['name' => 'z2 RolePlayAmendment1',
+//            'content' => "That burritos be declared the official food of the CSUN Faculty.",
+//            'requires' => 0.5,
+//            'amendable' => true],
+//
+//        ['name' => 'z3 RolePlayAmendment2',
+//            'content' => "That burritos and hamburgers be declared the official food of the CSUN Faculty.",
+//            'requires' => .5,
+//            'amendable' => false],
+
+
+        ['name' => 'z4 RolePlayBadAmendment',
+            'content' => "That burritos, hamburgers, and French fries be declared the official food of the CSUN Faculty.",
+            'requires' => 0.5,
+            'amendable' => true],
+
+
+    ];
 
 }

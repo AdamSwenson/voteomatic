@@ -1,31 +1,39 @@
 import IModel from "./IModel";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Motion extends IModel {
+
 
     /**
      * Create a new motion
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, applies_to=null, seconded=null, superseded_by=null, debatable=null}) {
+    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, is_voting_allowed=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
         super();
         this.id = id;
-        this.content = content;
-        this.description = description;
-        this.superseded_by = superseded_by;
-        this.debatable = debatable;
+
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
         this.applies_to = applies_to;
-        this.seconded = seconded;
-        this.requires = _.toNumber(requires);
-
-        this.type = type;
+        /** The text of the motion */
+        this.content = content;
+        /** Optional information about it*/
+        this.description = description;
+        this.debatable = debatable;
+        /** Whether voting is complete */
         this.isComplete = is_complete;
-
+        /** Whether members may vote on it at the current time*/
+        this.is_voting_allowed = is_voting_allowed;
+        /** Only used in elections */
+        this.max_winners = max_winners;
+        this.requires = _.toNumber(requires);
+        this.seconded = seconded;
+        this.superseded_by = superseded_by;
         /** If the motion is an amendment, this will
          * hold the html marked up text  */
         this.taggedAmendmentText = null;
+        this.type = type;
 
         this.types = ['main', 'amendment'];
 
@@ -91,6 +99,19 @@ export default class Motion extends IModel {
 
     isProceduralSubsidiary(){
         return this.type === 'procedural-subsidiary';
+    }
+
+    /**
+     * Whether users are currently allowed to vote
+     * @returns {boolean}
+     */
+    get isVotingAllowed(){
+        return isReadyToRock(this.is_voting_allowed) && this.is_voting_allowed === true;
+    }
+
+
+    set isVotingAllowed(v){
+        return this.is_voting_allowed = v;
     }
 
     getEnglishRequiresForNumeric(num){

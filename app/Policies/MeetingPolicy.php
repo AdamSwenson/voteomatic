@@ -26,6 +26,17 @@ class MeetingPolicy
 //    }
 
     /**
+     * Used to restrict access to a meeting's owner
+     *
+     * @param User $user
+     * @param Meeting $meeting
+     */
+    public function ownerOnly(User $user, Meeting $meeting)
+    {
+        return $meeting->isOwner($user);
+    }
+
+    /**
      * Determine whether the user can view all
      * meetings associated with them.
      *
@@ -34,7 +45,13 @@ class MeetingPolicy
      */
     public function viewIndex(User $user)
     {
-        return $user->isChair();
+        //dev Probably should figure something better out here.
+        // but the problem is there is no particular meeting they are trying to see.
+        // Fortunately, the query will grab only meetings associated with the user
+        return true;
+//        return $meeting->isOwner($user);
+
+//        return $user->isChair();
     }
 
     /**
@@ -46,10 +63,7 @@ class MeetingPolicy
      */
     public function view(User $user, Meeting $meeting)
     {
-        // todo this may eventually get a check for whether the user is associated with the meeting. Depends on how the order of adding folks to the meeting happens after LTI launch
-        return true;
-
-        return $user->isChair() || sizeof($meeting->users()->where('id', $user->id)->first()) > 0;
+        return $meeting->isPartOfMeeting($user);
     }
 
     /**
@@ -61,7 +75,6 @@ class MeetingPolicy
     public function create(User $user)
     {
         return $user->isChair();
-
     }
 
     /**
@@ -73,6 +86,7 @@ class MeetingPolicy
      */
     public function update(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //dd($user->is_admin);
@@ -90,6 +104,7 @@ class MeetingPolicy
      */
     public function delete(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
@@ -105,6 +120,7 @@ class MeetingPolicy
      */
     public function restore(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
@@ -120,9 +136,48 @@ class MeetingPolicy
      */
     public function forceDelete(User $user, Meeting $meeting)
     {
+        return $meeting->isOwner($user);
         return $user->is($meeting->getOwner());
 
         //Only administrators should be able to mess with meetings
         return $user->is_admin;
+    }
+
+    // ELECTION SPECIFIC =========================================
+
+    /**
+     * Determine whether the user can create meetings.
+     *
+     * @param \App\Models\User $user
+     * @return mixed
+     */
+    public function createElection(User $user)
+    {
+        return $user->isAdministrator();
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param \App\Models\User $user
+     * @param Meeting $election
+     * @return mixed
+     */
+    public function deleteElection(User $user, Meeting $election)
+    {
+        return $election->isOwner($user);
+    }
+
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param \App\Models\User $user
+     * @param \App\Models\Meeting $election
+     * @return mixed
+     */
+    public function updateElection(User $user, Meeting $election)
+    {
+        return $election->isOwner($user);
     }
 }

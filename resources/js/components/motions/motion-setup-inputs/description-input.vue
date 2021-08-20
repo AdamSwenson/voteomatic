@@ -20,12 +20,12 @@
 import Payload from "../../../models/Payload";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "description-input",
 
-    props: [],
-
+    props : ['motion', 'editMode'],
 
     mixins: [MeetingMixin], //MotionMixin],
 
@@ -33,8 +33,8 @@ export default {
         return {
 
             placeholders: {
-                content: "that tacos be declared the official food of this body.",
-                description: "(This is currently unused)"
+                description: "A brief description or explanation pertaining to the motion which will be" +
+                    "displayed with the motion on the voting page"
             }
         }
     },
@@ -56,8 +56,11 @@ export default {
                     }
                 );
 
-//                this.$store.dispatch('updateMotion', p);
-                this.$emit('update:description', p.updateVal);
+                if(isReadyToRock(this.editMode) && this.editMode===true){
+                    this.$emit('update:content', p.updateVal);
+                }else{
+                    this.$store.dispatch('updateDraftMotion', p);
+                }
 
             }
         },

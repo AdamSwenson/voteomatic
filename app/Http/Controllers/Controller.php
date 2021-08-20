@@ -22,7 +22,6 @@ class Controller extends BaseController
 
     public function __construct(){
         $this->middleware('auth');
-
     }
 
     /**
@@ -56,5 +55,7 @@ class Controller extends BaseController
 //
 //        $this->user = Auth::user();
 //    }
+
+
 
 }

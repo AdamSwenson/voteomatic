@@ -1,6 +1,11 @@
 import Motion from "../../models/Motion";
+import Message from "../../models/Message";
 import * as routes from "../../routes";
 import Payload from "../../models/Payload";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+import Office from "../../models/Office";
+import BallotObjectFactory from "../../models/BallotObjectFactory";
+import {idify} from "../../utilities/object.utilities";
 
 /**
  * Created by adam on 2020-07-30.
@@ -39,13 +44,16 @@ const state = {
      */
     motions: [],
 
+    draftMotion: null,
+
+
     /**
      * Motions from this meeting which the user has already
      * cast a vote on and should be locked out of voting again
      */
     motionIdsUserHasVotedUpon: [],
 
-    standardMotionDefinitions: []
+    standardMotionDefinitions: [],
 };
 
 const mutations = {
@@ -69,6 +77,20 @@ const mutations = {
 
     },
 
+    /**
+     * Empties the list of motions. Used when changing
+     * meetings / elections
+     * @param state
+     */
+    clearMotions: (state) => {
+        state.motions = [];
+    },
+
+    clearDraftMotion: (state) => {
+        state.draftMotion = null;
+    },
+
+
     deleteMotion: (state, motionObject) => {
         // let idx = state.motions.indexOf(motionObject);
         // state.motions.pop(idx);
@@ -78,9 +100,20 @@ const mutations = {
 
     },
 
+    setDraftMotion: (state, motionObject) => {
+        state.draftMotion = motionObject;
+    },
+
+    setDraftMotionProp: (state, {updateProp, updateVal}) => {
+        Vue.set(state.draftMotion, updateProp, updateVal);
+    },
+
+
     /**
      * Sets the provided motion object as
      * the currently active motion
+     *
+     * This should not be called directly by anything except the setMotion action
      *
      * @param state
      * @param motionObject
@@ -133,7 +166,10 @@ const actions = {
 
     /**
      * Create a new motion on the server and set
-     * it as the current motion
+     * it as the current motion.
+     *
+     * This is used by the regular member. It does not set the current motion
+     * since a member making a motion will need it to be approved and seconded.
      *
      * @param dispatch
      * @param commit
@@ -143,10 +179,52 @@ const actions = {
     createMotion({dispatch, commit, getters}, meetingId) {
         let me = this;
         return new Promise(((resolve, reject) => {
+            // window.console.log('creating');
+            // let statusMessage = Message.makeFromTemplate('pendingApproval');
+            // window.console.log(statusMessage);
+            // commit('addToMessageQueue', statusMessage);
+
             //send to server
             let url = routes.motions.resource();
             let p = {'meetingId': meetingId};
-            window.console.log('sending', p);
+            // window.console.log('sending', p);
+            return Vue.axios.post(url, p)
+                .then((response) => {
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+                    resolve();
+
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+
+    },
+
+    /**
+     * Create a new motion on the server and set
+     * it as the current motion
+     *
+     * dev This probably won't end up being used. Keeping the set current motion logic for now
+     * @deprecated
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    createMotionByChair({dispatch, commit, getters}, meetingId) {
+        let me = this;
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.resource();
+            let p = {'meetingId': meetingId};
+            // window.console.log('sending', p);
             return Vue.axios.post(url, p)
                 .then((response) => {
                     let d = response.data;
@@ -169,36 +247,184 @@ const actions = {
 
     },
 
+    /**
+     * Uses the current state of the draft motion to
+     * create a new motion on the server
+     *
+     * The server will handle setting it as current, if the user is the chair or
+     * soliciting the chair's approval if they are a regular member.
+     *
+     * NB, nothing needs to be passed in since everything relevant is stored in
+     * state
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    createMotionFromDraft({dispatch, commit, getters}) {
+        let meeting = getters.getActiveMeeting;
+        let motion = getters.getDraftMotion;
+        let me = this;
+        return new Promise(((resolve, reject) => {
 
+            //send to server
+            let url = routes.motions.resource();
+            // let p = {'meetingId': meetingId};
+            motion['meetingId'] = meeting.id;
+            // window.console.log('sending', p);
+            return Vue.axios.post(url, motion)
+                .then((response) => {
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+                    resolve();
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+
+    },
+
+
+    /**
+     * Uses a motion template to create the motion.
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param template
+     * @returns {Promise<unknown>}
+     */
+    createMotionFromTemplate({dispatch, commit, getters}, template) {
+        return new Promise(((resolve, reject) => {
+            let meeting = getters.getActiveMeeting;
+
+            //send to server
+            let url = routes.motions.resource();
+            let d = template;
+            d['meetingId'] = meeting.id;
+            // let p = {'meetingId': meetingId};
+            // window.console.log('sending', d);
+
+            return Vue.axios.post(url, d)
+                .then((response) => {
+                    let d = response.data;
+
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //let them know the chair will need to approve
+                    dispatch('showMessage', statusMessage);
+
+                    //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
+                    //The chair won't see the above message. The user won't see this one
+                    // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    // dispatch('showMessage', statusMessage2)
+                    resolve();
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+    },
+
+
+    /**
+     * Creates a motion which depends on another motion, e.g., an amendment
+     * or tabling
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     * @returns {Promise<unknown>}
+     */
     createSubsidiaryMotion({dispatch, commit, getters}, payload) {
         let me = this;
 
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource();
-            window.console.log('sending', payload);
+            // window.console.log('sending', p);
             return Vue.axios.post(url, payload)
                 .then((response) => {
-                    let d = response.data;
-
-                    let motion = new Motion(d);
-                    // let motion = new Motion(d.id, d.name, d.date);
-                    commit('addMotionToStore', motion);
-
-                    let pl = {meetingId: payload.meetingId, motionId: motion.id};
-
-                    return dispatch('setCurrentMotion', pl)
-                        .then(() => {
-                            return resolve(motion);
-                        });
-
-                    // commit('setMotion', motion);
-
+                    //Set a message for the user telling them what's going to happen
+                    let statusMessage = Message.makeFromTemplate('pendingApproval');
+                    //set it on a timer
+                    dispatch('showMessage', statusMessage);
+                    //dev Not going to use this since the spinner (VOT-85) works better and doesn't hang around after the motion has loaded
+                    //The chair won't see the above message. The user won't see this one
+                    // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
+                    // dispatch('showMessage', statusMessage2)
+                    resolve();
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
 
+
     },
 
+    /**
+     * This will be run on everything when the motion closes. Thus this checks for:
+     * - whether it was an amendment
+     * - whether it passed
+     *
+     * If it was a successful amendment, this quietly creates a new motion with the
+     * updated text
+     *
+     * We do not set the new motion as active. That is the job of other actions.
+     *
+     * This can be passed either a json (from the pusher event / response.data) or
+     * an array of motion objects with the same keys
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    handlePotentialAmendmentAfterVotingClosed({dispatch, commit, getters}, {ended, superseding, original = null}) {
+        return new Promise(((resolve, reject) => {
+            //The server will return a new motion under the key superseding
+            //if the motion was an amendment and was successful.
+            //It returns false otherwise.
+            if (!isReadyToRock(superseding) || superseding === false) {
+                return resolve();
+            }
+
+            //Since superseding was not false, we know that the motion which
+            //ended was an amendment and that it was successful
+            //So we make a new motion out of the response and add it to the store
+            //(we don't send it to the server, since we're handling the server's response)
+            superseding = new Motion(superseding);
+            commit('addMotionToStore', superseding);
+
+            //We now need to swap the superseding motion in for the original
+            original = getters.getMotionById(ended.applies_to);
+
+            //Prevent the original from being voted upon
+            dispatch('markMotionComplete', original);
+
+            //Set the fact that it was superseded so that the display
+            //can prevent it from being selected.
+            let pl = Payload.factory({
+                object: original,
+                updateProp: 'superseded_by',
+                updateVal: superseding.id
+            });
+            commit('setMotionProp', pl);
+
+            resolve();
+        }));
+    },
 
     deleteMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
@@ -216,64 +442,16 @@ const actions = {
                     if (activeMotino.id === motion.id) {
                         //we need to remove it and set another in its place
                         let newActive = getters.getStoredMeetings[0];
-                        commit('setMotion', newActive);
+                        dispatch('setMotion', newActive);
 
                     }
                     return resolve()
-                });
-        }));
-
-    },
-
-
-    endVotingOnMotion({dispatch, commit, getters}, motion) {
-        return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.endVoting(motion.id);
-            return Vue.axios.post(url)
-                .then((response) => {
-
-                    //This will be the updated motion we just sent to the server
-                    let endedMotion = response.data.ended;
-                    //If the motion was an amendment, the server will
-                    //also return a new version of the motion which was amended.
-                    //Otherwise, this will just be false
-                    let superseding = response.data.superseding;
-
-                    //todo this means that the motion must be selected in order to end voting. That probably makes sense...
-                    commit('setMotion', motion);
-
-                    let pl = Payload.factory({
-                        object: motion,
-                        updateProp: 'isComplete',
-                        updateVal: endedMotion.is_complete
-                    });
-
-                    //we leave it as the currently set motion so that
-                    //the results tab will provide results for the
-                    //immediate past motion.
-                    //Instead, we just update the completed property on the
-                    //motion
-                    commit('setMotionProp', pl);
-
-
-                    //Handle swapping in the new motion if there was an amendment.
-                    if (superseding) {
-                        let original = getters.getMotionById(superseding.superseded_by);
-                        //remove that from the store (but don't delete from server!)
-                        commit('deleteMotion', original);
-                        //make a new motion and add it to the store (but not to the server)
-                        let motion = new Motion(d);
-                        commit('addMotionToStore', motion);
-
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
                     }
-
-
-                    // let motion = new Motion(d);
-                    // // let motion = new Motion(d.id, d.name, d.date);
-                    // commit('addMotionToStore', motion);
-                    // commit('setMotion', motion);
-                    resolve()
                 });
         }));
 
@@ -281,7 +459,154 @@ const actions = {
 
 
     /**
+     * Used by the chair to close the vote and prevent further casting of
+     * ballots
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
+    endVotingOnMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.endVoting(motion.id);
+            return Vue.axios.post(url)
+                .then((response) => {
+                    //The server will return a response containing motions with the
+                    //keys:
+                    //      ended
+                    //      superseding
+                    //However, we're just going to wait for the pusher notification
+                    //and handle all the updating from there.
+                    resolve();
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+
+    },
+
+    /** When a new motion has been created and seconded,
+     * this sets the motion as the current motion and navigates to the
+     * voting tab
+     * */
+    handleMotionSecondedMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            dispatch('resetMotionPendingSecond');
+            let motion = new Motion(pusherEvent.motion);
+            commit('addMotionToStore', motion);
+            //Make it the current motion and attach relevant listeners
+            return dispatch('setMotion', motion)
+                .then(() => {
+                    dispatch('forceNavigationToHome');
+                    return resolve(motion);
+                });
+        }));
+    },
+
+    handleNewCurrentMotionSetMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            // dispatch('resetMotionPendingSecond');
+            let motion = new Motion(pusherEvent.motion);
+            commit('addMotionToStore', motion);
+            //Make it the current motion and attach relevant listeners
+            return dispatch('setMotion', motion)
+                .then(() => {
+                    dispatch('forceNavigationToHome');
+                    return resolve(motion);
+                });
+        }));
+    },
+
+    /**
+     * When the client is notified by the server that voting on the currently active
+     * motion has been ended, this removes the option to try to vote and
+     * initiates the loading of results.
+     *
+     */
+    handleMotionClosedMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            let ended = new Motion(pusherEvent.ended);
+            // let superseding = new Motion(pusherEvent.superseding);
+            // let original = new Motion(pusherEvent.original);
+
+            /* Set the current motion as closed and update isVotingAllowed */
+            dispatch('markMotionComplete', ended).then(() => {
+
+                /* Navigate to results card. It will load results on mount  */
+                dispatch('forceNavigationToResults');
+
+                /* Quietly create a revised  motion if the motion which passed was an amendment */
+                //This checks whether the motion was an amendment and if it was successful
+                dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent);
+
+                //We don't need to wait for it to finish.
+                resolve();
+
+            });
+
+        }));
+    },
+
+    /**
+     * When the client is notified by the server that voting on a motion is now open
+     * this handles everything.
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    handleVotingOnMotionOpenedMessage({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            let motion = new Motion(pusherEvent.motion);
+            //commit('addMotionToStore', motion);
+            return dispatch('markMotionVotingOpen', motion)
+                .then(() => {
+                    //If it somehow wasn't the current motion
+                    //make it the current motion and attach relevant listeners
+                    dispatch('setMotion', motion);
+                    dispatch('forceNavigationToVote');
+                    return resolve(motion);
+                });
+        }));
+
+    },
+
+    /**
+     * Create a draft motion on the client. This is what the user
+     * edits before they click 'make motion'. After that, editing would
+     * be done on the main motion.
+     *
+     * This may help with the problem of the user getting pulled away while
+     * working on their motion (VOT-75)
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     */
+    initializeDraftMainMotion({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            let motion = new Motion({
+                type: 'main',
+                requires: 0.5,
+                debatable: true
+            });
+            commit('setDraftMotion', motion);
+            resolve();
+        }));
+
+    },
+
+
+    /**
      * Gets the motion from the server
+     *
+     * //dev Does this actually work? Shouldn't it add to store too?
+     *
      * @param dispatch
      * @param commit
      * @param getters
@@ -297,8 +622,14 @@ const actions = {
                     let d = response.data;
                     let motion = new Motion(d);
                     // let motion = new Motion(d.id, d.name, d.date);
-                    commit('setMotion', motion);
+                    dispatch('setMotion', motion);
                     resolve()
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -318,38 +649,60 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.castVotes.getVotedMotions(meetingId);
-            return Vue.axios.get(url).then((response) => {
-                _.forEach(response.data, (d) => {
-
-                    // todo or should we be storing ids? need to decide how best to do comparisons
-
-                    // todo should we clear the store first? Can the list contain motions with duplicate ids?
-                    // todo
-                    // let motion = new Motion(d);
-                    commit('addVotedUponMotion', d.id);
-                });
-                return resolve();
-            });
-        }));
-    },
-
-    loadMotionsForMeeting({dispatch, commit, getters}, meetingId) {
-        window.console.log('Loading motions for meeting');
-        return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.getAllMotionsForMeeting(meetingId);
             return Vue.axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
-                        let motion = new Motion(d);
-                        // let motion = new Motion(d.id, d.name, d.date);
-                        commit('addMotionToStore', motion);
+
+                        // todo or should we be storing ids? need to decide how best to do comparisons
+
+                        // todo should we clear the store first? Can the list contain motions with duplicate ids?
+                        // todo
+                        // let motion = new Motion(d);
+                        commit('addVotedUponMotion', d.id);
+                    });
+                    return resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+    },
+
+    loadMotionsForMeeting({dispatch, commit, getters}, meeting) {
+        //we need this to determine whether election or regular
+        // let meeting = getters.getMeetingById(meetingId);
+
+        window.console.log('Loading motions for meeting ', meeting);
+        return new Promise(((resolve, reject) => {
+
+            //send to server
+            let url = routes.motions.getAllMotionsForMeeting(idify(meeting));
+            return Vue.axios.get(url)
+                .then((response) => {
+                    //Need to do this so that we don't have to
+                    //check motions for their meetings every time
+                    //we access the stack.
+                    commit('clearMotions');
+
+                    _.forEach(response.data, (d) => {
+                        let m = BallotObjectFactory.make(d, meeting);
+
+                        commit('addMotionToStore', m);
                         if (d.is_current) {
-                            commit('setMotion', motion)
+                            dispatch('setMotion', m)
                         }
                     });
+
                     resolve()
 
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -376,27 +729,65 @@ const actions = {
         }));
     },
 
-    secondMotion({dispatch, commit, getters}, {meetingId, motionId}) {
+    /**
+     * Sets the is_complete property on the provided motion
+     * to true. Also sets is_voting_allowed to false.
+     *
+     * This does not change the motion's status as the currently active motion.
+     * That, inter alia, the results tab to show results for the motion.
+     * It is up to other actions to change the now completed motion's status and
+     * set another as active.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param endedMotion
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
+    markMotionComplete({dispatch, commit, getters}, endedMotion) {
         return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.secondMotion(motionId);
-            return Vue.axios.post(url)
-                .then((response) => {
-                    //this assumes the motion being seconded is the current motion.
-                    //that should be normally the case except for high
-                    //precedence motions which can be made while something
-                    //else is waiting for a second. Those will be very
-                    //rare cases.
-                    let pl = Payload(
-                        {
-                            updateProp: 'seconded',
-                            updateVal: response.data.seconded
-                        });
-                    commit('setMotionProp', pl);
+            let pl = Payload.factory({
+                object: endedMotion,
+                updateProp: 'isComplete',
+                updateVal: true
+            });
 
-                    return resolve();
+            commit('setMotionProp', pl);
 
-                });
+            //This will keep the voting page from appearing
+            //to allow someone who hasn't voted the opportunity to vote
+            //(they will be blocked by the server)
+            let pl2 = Payload.factory({
+                object: endedMotion,
+                updateProp: 'isVotingAllowed',
+                updateVal: false
+            });
+            commit('setMotionProp', pl2);
+
+            resolve();
+        }));
+    },
+
+    /**
+     * Sets the is_voting_allowed property on the provided motion
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param endedMotion
+     * @returns {Promise<unknown>}
+     */
+    markMotionVotingOpen({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            let pl = Payload.factory({
+                object: motion,
+                updateProp: 'isVotingAllowed',
+                updateVal: true
+            });
+
+            commit('setMotionProp', pl);
+
+            resolve();
         }));
     },
 
@@ -418,8 +809,79 @@ const actions = {
             return Vue.axios.post(url)
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
-                    commit('setMotion', motion)
-                    resolve()
+
+                    //Commit is wrapped in another action to set the websocket handler
+                    dispatch('setMotion', motion).then(() => {
+                        return resolve()
+                    });
+
+                })
+                .catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+    },
+
+    /**
+     * Wraps the commit which sets a particular motion as the
+     * one being voted on so that other listeners can be attached.
+     *
+     * ALMOST EVERYTHING WHICH AFFECTS WHICH MOTION IS CURRENT SHOULD DISPATCH THIS ACTION
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     */
+    setMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //first reset the nav triggers since we may not
+            //want selecting the motion to automatically force everyone somewhere
+            commit('resetNavTriggers');
+            //reset any votes cast count
+            dispatch('resetCounts');
+            //Actually set as current
+            commit('setMotion', motion)
+            window.console.log('currentMotion set', motion);
+            let channel = `motions.${motion.id}`;
+            Echo.private(channel)
+                .listen("MotionClosed", (e) => {
+                    window.console.log('Received broadcast event motions', e);
+                    dispatch('handleMotionClosedMessage', e);
+                })
+
+            window.console.log('Websocket listener set for current motion on channel ', channel);
+            return resolve();
+        }));
+    },
+
+
+    /**
+     * Used by the chair to open voting for all users on the
+     * provided motion
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     */
+    startVotingOnMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.openVoting(motion.id);
+            return Vue.axios.post(url, motion)
+                .then((response) => {
+                    let d = response.data;
+                    resolve();
+                    //we don't do anything here since the push message will trigger
+                    //everything
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -437,7 +899,7 @@ const actions = {
     updateMotion({dispatch, commit, getters}, payload) {
         return new Promise(((resolve, reject) => {
             //make local change first
-            //todo consider whether worth rolling back
+            //todo consider whether worth rolling back on failure
             commit('setMotionProp', payload)
 
             let motion = getters.getActiveMotion;
@@ -449,7 +911,31 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
+        }));
+    },
+
+
+    /**
+     * Updates properties of the draft motion the user
+     * is working on. Does not tell the server anything.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     * @returns {Promise<unknown>}
+     */
+    updateDraftMotion({dispatch, commit, getters}, payload) {
+        return new Promise(((resolve, reject) => {
+            //make local change only
+            commit('setDraftMotionProp', payload)
+            resolve();
         }));
     }
 };
@@ -469,6 +955,10 @@ const getters = {
         // return state.currentMotion;
     },
 
+    getDraftMotion: (state) => {
+        return state.draftMotion;
+    },
+
     getMotionById: (state) => (id) => {
         // return function ( state, id ) {
         // window.console.log(id, state, id);
@@ -481,6 +971,11 @@ const getters = {
     },
     // }( state, id )
 
+    getMotionByIndex: (state) => (index) => {
+        return state.motions[index];
+    },
+
+
     /**
      * Returns all motion objects which have
      * been loaded from the server. May include motions
@@ -491,6 +986,14 @@ const getters = {
     getStoredMotions: (state) => {
         return state.motions;
     },
+
+    getMotions: (state) => {
+        return state.motions;
+    },
+
+    // getMotionPendingSecond: (state) => {
+    //     return state.motionPendingSecond;
+    // },
 
     getMotionsUserVotedUpon: (state) => {
         let out = [];

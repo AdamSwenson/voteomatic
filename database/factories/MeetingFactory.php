@@ -36,4 +36,14 @@ class MeetingFactory extends Factory
             'date' => Carbon::now() //$this->faker->dateTimeThisCentury
         ];
     }
+
+    public function election()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => $this->faker->randomElement($this->names) . " ELECTION!",
+                'is_election' => true];
+        });
+    }
+
 }

@@ -32,6 +32,12 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        //
+        $this->renderable(function (ClientVisibleException $e, $request) {
+            return response()->json($e, $e->status);
+        });
+
+//        $this->renderable(function (DoubleVoteAttempt $e, $request) {
+//            return response()->json($e, DoubleVoteAttempt::ERROR_CODE);
+//        });
     }
 }

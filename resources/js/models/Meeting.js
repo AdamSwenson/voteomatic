@@ -1,5 +1,10 @@
 import IModel from "./IModel";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
+/**
+ * A meeting is either a, ahem, meeting where votes
+ * take place or an election for multiple offices
+ */
 export default class Meeting extends IModel {
 
     /**
@@ -8,16 +13,28 @@ export default class Meeting extends IModel {
      * @param name
      * @param date
      */
-    constructor(id, name, date ) {
+    constructor(id, name, date) {
         super();
         this.name = name;
         this.id = id;
         this.date = date;
 
+        /** The string used on buttons etc */
+        this.type = 'meeting';
+
+        /**
+         * What the basic things we operate on are called.
+         * Again used for buttons etc
+         */
+        this.subsidiaryType = 'motion';
+
     }
 
-    readableDate(){
+
+    readableDate() {
         try {
+            if(!isReadyToRock(this.date)) return '';
+
             const d = Date.parse(this.date);
             const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
             const mo = new Intl.DateTimeFormat('en', {month: 'long'}).format(d);
@@ -30,12 +47,9 @@ export default class Meeting extends IModel {
             // let out = m_date.year + '-' + m_date.month + '-' + m_date.day ;
             // window.console.log(out);
             return out
-        }catch (e) {
+        } catch (e) {
             window.console.log('Error from VOT-39');
             window.console.log(e);
-
         }
-
-
     }
 };
