@@ -8,12 +8,10 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "test": "jest NODE_OPTIONS=--experimental-vm-modules npx jest ",
-        "vt": "vue-cli-service test:unit"
+        "test": "jest NODE_OPTIONS=--experimental-vm-modules npx jest "
     },
     "devDependencies": {
         "@babel/preset-env": "^7.15.0",
-        "@testing-library/vue": "^5.8.2",
         "@vue/cli": "^4.5.13",
         "@vue/test-utils": "^1.2.2",
         "axios": "^0.21.1",
