@@ -18801,8 +18801,8 @@ var actions = {
         meetingId = data.meeting_id;
       } //prefer the id if it is set directly on page
       else if (!_.isUndefined(data.motion.meeting_id)) {
-          meetingId = data.motion.meeting_id;
-        }
+        meetingId = data.motion.meeting_id;
+      }
 
       if (_.isNull(meetingId)) {
         console.log('No meeting id in page data');
@@ -78772,7 +78772,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-secondary",
+                staticClass: "btn btn-secondary no",
                 attrs: { type: "button", "data-dismiss": "modal" }
               },
               [_vm._v("No\n                ")]
@@ -78781,7 +78781,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary yes",
                 attrs: { type: "button", "data-dismiss": "modal" },
                 on: { click: _vm.handleClick }
               },

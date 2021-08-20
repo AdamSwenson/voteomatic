@@ -27,13 +27,13 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-secondary no"
                             data-dismiss="modal"
                     >No
                     </button>
 
                     <button type="button"
-                            class="btn btn-primary"
+                            class="btn btn-primary yes"
                             data-dismiss="modal"
                             v-on:click="handleClick"
                     >Yes. Record my vote.

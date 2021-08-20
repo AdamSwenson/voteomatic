@@ -1,6 +1,7 @@
 
 let _ = require('lodash');
 const { Message } = require("../../../resources/js/models/Message");
+// import Message from "../../../resources/js/models/Message";
 
 test('Make from template', () => {
 
