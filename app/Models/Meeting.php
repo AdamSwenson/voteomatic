@@ -134,6 +134,13 @@ class Meeting extends Model
 //            ->first();
     }
 
+    public function getMasterSettingStore(){
+        return  SettingStore::where('meeting_id', $this->id)
+            ->where('is_meeting_master', true)
+            ->first();
+
+    }
+
     /**
      * Creates an entry in the assignments table
      * with this meeting's id as motion_id and meeting_id
@@ -190,6 +197,10 @@ class Meeting extends Model
     public function resourceLink()
     {
         return $this->hasOne(ResourceLink::class);
+    }
+
+    public function settingStore(){
+        return $this->hasMany(SettingStore::class);
     }
 
     public function users()

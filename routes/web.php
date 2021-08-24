@@ -27,6 +27,7 @@ use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\Dev\SetupController;
+use App\Http\Controllers\SettingStoreController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
 use App\Http\Controllers\MainController;
@@ -186,6 +187,11 @@ Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates'
 Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
 Route::resource('motions', MotionController::class);
 
+
+/* =============================
+        Settings
+   ============================= */
+Route::resource('settingStores', SettingStoreController::class);
 
 /* =============================
         Individual votes and vote history controllers

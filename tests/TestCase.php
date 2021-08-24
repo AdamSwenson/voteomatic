@@ -30,6 +30,17 @@ abstract class TestCase extends BaseTestCase
      */
     public $faker;
 
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public $user;
+
+    /**
+     * @var string
+     */
+    public $url;
+
+
     public function setUp():void
     {
         parent::setUp();

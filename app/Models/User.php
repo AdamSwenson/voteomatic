@@ -94,6 +94,10 @@ class User extends Authenticatable
         return $this->hasMany(RecordedVoteRecord::class);
     }
 
+    public function settings(){
+        return $this->hasMany(SettingStore::class);
+    }
+
     public function votes(){
         //todo remove this
         return $this->hasMany(Vote::class);
