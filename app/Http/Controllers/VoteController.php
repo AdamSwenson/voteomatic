@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+/**
+ * Class VoteController
+ * @deprecated
+ * @package App\Http\Controllers
+ */
 class VoteController extends Controller
 {
 

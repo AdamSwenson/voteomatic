@@ -2,7 +2,7 @@ import * as routes from "../../routes";
 import Meeting from "../../models/Meeting";
 import Candidate from "../../models/Candidate";
 import {getById} from "../../utilities/object.utilities";
-import Result from "../../models/Result";
+import CandidateResult from "../../models/CandidateResult";
 import Election from "../../models/Election";
 import {idify} from "../../utilities/object.utilities";
 import Motion from "../../models/Motion";
@@ -104,30 +104,42 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url).then((response) => {
-                let candidate = new Candidate(response.data);
-                commit('addCandidateToStore', candidate);
-                resolve();
-            });
+            return Vue.axios.post(url)
+                .then((response) => {
+                    let candidate = new Candidate(response.data);
+                    commit('addCandidateToStore', candidate);
+                    resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
         }));
     },
 
     addWriteInCandidateToOfficeElection({dispatch, commit, getters}, {first_name, last_name, info, motionId}) {
-        let data = {first_name: first_name, last_name : last_name, info: info, is_write_in: true};
+        let data = {first_name: first_name, last_name: last_name, info: info, is_write_in: true};
 
         let url = routes.election.addWriteIn(motionId);
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, data).then((response) => {
-                let candidate = new Candidate(response.data);
-                commit('addCandidateToStore', candidate);
+            return Vue.axios.post(url, data)
+                .then((response) => {
+                    let candidate = new Candidate(response.data);
+                    commit('addCandidateToStore', candidate);
 
-                //No reason to make the user separately select a write in
-                commit('addCandidateToSelected', candidate);
+                    //No reason to make the user separately select a write in
+                    commit('addCandidateToSelected', candidate);
 
-                resolve();
-            });
+                    resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
         }));
 
 
@@ -146,6 +158,11 @@ const actions = {
 
                     window.console.log('election created id: ', meeting.id);
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -173,17 +190,23 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, data).then((response) => {
-                let motion = new Motion(response.data);
+            return Vue.axios.post(url, data)
+                .then((response) => {
+                    let motion = new Motion(response.data);
 
-                commit('addMotionToStore', motion);
-                commit('setMotion', motion);
+                    commit('addMotionToStore', motion);
+                    dispatch('setMotion', motion);
 
-                dispatch('loadCandidatePool', motion).then((response) => {
-                    resolve();
+                    dispatch('loadCandidatePool', motion).then((response) => {
+                        resolve();
+                    });
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
-
-            });
         }));
 
 
@@ -206,14 +229,20 @@ const actions = {
         let url = routes.election.getResults(motionId);
 
         return new Promise(((resolve, reject) => {
-            return Vue.axios.get(url).then((response) => {
-                _.forEach(response.data, (d) => {
-                    let r = new Result(d);
-                    commit('addResults', r);
-                });
+            return Vue.axios.get(url)
+                .then((response) => {
+                    _.forEach(response.data, (d) => {
+                        let r = new CandidateResult(d);
+                        commit('addResults', r);
+                    });
 
-                resolve();
-            });
+                    resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
         }));
     },
 
@@ -264,16 +293,22 @@ const actions = {
         return new Promise(((resolve, reject) => {
             // window.console.log(url);
 
-            return Vue.axios.get(url).then((response) => {
-                commit('clearPool');
-                _.forEach(response.data, (d) => {
-                    let candidate = new PoolMember(d);
-                    commit('addCandidateToPool', candidate);
+            return Vue.axios.get(url)
+                .then((response) => {
+                    commit('clearPool');
+                    _.forEach(response.data, (d) => {
+                        let candidate = new PoolMember(d);
+                        commit('addCandidateToPool', candidate);
+                    });
+
+                    return resolve();
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
-
-                return resolve();
-
-            });
 
         }));
 
@@ -297,22 +332,28 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.get(url).then((response) => {
-                commit('clearCandidates');
-                _.forEach(response.data, (d) => {
+            return Vue.axios.get(url)
+                .then((response) => {
+                    commit('clearCandidates');
+                    _.forEach(response.data, (d) => {
 
-                    window.console.log('loadElectionCandidates', d);
+                        window.console.log('loadElectionCandidates', d);
 
-                    let candidate = new Candidate(d);
+                        let candidate = new Candidate(d);
 
-                    // window.console.log('obj', candidate);
-                    commit('addCandidateToStore', candidate);
+                        // window.console.log('obj', candidate);
+                        commit('addCandidateToStore', candidate);
 
+                    });
+
+                    return resolve();
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
-
-                return resolve();
-
-            });
 
         }));
 
@@ -347,10 +388,7 @@ const actions = {
                 }).then(() => {
                     dispatch('loadElectionCandidates', toSet.id).then(() => {
                         return resolve();
-
                     });
-
-
                 });
             } else {
                 // reject();
@@ -376,16 +414,20 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-                return Vue.axios.delete(url).then((response) => {
+                return Vue.axios.delete(url)
+                    .then((response) => {
 
-                    commit('removeCandidate', candidate);
-                    resolve();
+                        commit('removeCandidate', candidate);
+                        resolve();
 
-                });
+                    }).catch(function (error) {
+                        // error handling
+                        if (error.response) {
+                            dispatch('showServerProvidedMessage', error.response.data);
+                        }
+                    });
 
-
-            })
-        );
+            }));
 
     },
 
@@ -539,8 +581,8 @@ const getters = {
      */
     isPoolMemberACandidate: (state, getters) => (motion, poolMember) => {
         let officesMemberIsCandidate = getters.getCandidateByPersonId(poolMember.person_id);
-       // window.console.log('ispac', officesMemberIsCandidate);
-        if(!isReadyToRock(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false;
+        // window.console.log('ispac', officesMemberIsCandidate);
+        if (!isReadyToRock(officesMemberIsCandidate) || officesMemberIsCandidate.length === 0) return false;
 
         //Now we check to see if it is the same office. This shouldn't be needed
         //unless the candidates/pool don't get cleared. Thus keeping

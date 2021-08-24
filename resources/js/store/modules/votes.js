@@ -1,15 +1,18 @@
 import * as routes from "../../routes";
 import Vote from "../../models/Vote";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
-
+import {idify, getById} from "../../utilities/object.utilities";
+import Message from "../../models/Message";
 const state = {
     selectedCandidates: [],
 
     // showOverSelectionWarning: false,
 
-    writeInCandidates : [],
+    writeInCandidates: [],
 
-    receipts: {}
+    castVotes: [],
+
+
 };
 
 const mutations = {
@@ -41,12 +44,13 @@ const mutations = {
 
     },
 
-    addReceipt: (state, {motionId, receipt}) => {
-        Vue.set(state.receipts, motionId, receipt);
+    addCastVote: (state, voteObject) => {
+
+        state.castVotes.push(voteObject);
 
     },
 
-    addWriteIn : (state, candidateObject) => {
+    addWriteIn: (state, candidateObject) => {
         state.writeInCandidates.push(candidateObject);
     },
 
@@ -63,47 +67,115 @@ const mutations = {
 
 const actions = {
 
+
     /**
-     * DEV NOT READY FOR USE
+     * For regular votes on motions (i.e., not election votes), this
+     * sends the vote to the server. It then updates the vote object
+     * and stores it locally so the user can verify the receipt oif they choose.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @param vote yay|nay
+     * @returns {Promise<unknown>}
      */
-    castRegularMotionVote({dispatch, commit, getters}, motion) {
-
-        let url = routes.votes.recordVote(motion.id);
-        let data = {
-            motionId: motion.id,
-            vote: voteType,
-        };
-
+    castMotionVote({dispatch, commit, getters}, voteObject) {
         return new Promise((resolve, reject) => {
-            let me = this;
+            let url = routes.votes.recordVote(voteObject.motionId);
+            let data = {
+                motionId: voteObject.motionId,
+                vote: voteObject.voteServerString,
+            };
+
             return Vue.axios.post(url, data)
                 .then((response) => {
                     console.log(response.data);
-                    me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
-                    me.voteRecorded = true;
-                    me.showButtons = false;
-                    //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+                    //NB, this is kosher since we haven't saved the object to state yet.
+                    voteObject.receipt = response.data.receipt;
+                    voteObject.id = response.data.id;
 
-                    me.$store.commit('addVotedUponMotion', me.motion.id);
+                    //Add the motion to the list of motions the user has voted upon
+                    commit('addVotedUponMotion', voteObject.motionId);
+
+                    //Store the receipt for the user. These are done separately since
+                    //the voted upon list is used to restrict what a user may do and
+                    //is populated every time the page loads.
+                    //The castVote is used to store receipts in a store which
+                    // will empty every time the page loads
+                    commit('addCastVote', voteObject);
+
                     resolve();
                 })
                 .catch(function (error) {
+
                     // error handling
                     if (error.response) {
-                        // The request was made and the server responded with a status code
-                        // that falls out of the range of 2xx
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        if (error.response.status === 501) {
-                            me.voteRecorded = true;
-                            me.showButtons = false;
-                        }
+
+                        dispatch('showServerProvidedMessage', error.response.data);
+
+                        window.console.log(error);
+                        //
+                        // //todo Error messaging
+                        // let message = Message.makeFromTemplate('voteRecordingError');
+                        // //todo Add server generated message
+                        // // message.messageText = message.messageText += error.response.message;
+                        // dispatch('showMessage', message);
+                        //
+                        // // The request was made and the server responded with a status code
+                        // // that falls out of the range of 2xx
+                        // console.log(error.response.data);
+                        // console.log(error.response.status);
+                        // if (error.response.status === 501) {
+                        //  //   me.voteRecorded = true;
+                        //    // me.showButtons = false;
+                        // }
 
                     }
+                    throw error;
                     // reject();
                 });
 
         });
+
+        // }
+
+        // let url = routes.votes.recordVote(motion.id);
+        // let data = {
+        //     motionId: motion.id,
+        //     vote: voteType,
+        // };
+        //
+        // return new Promise((resolve, reject) => {
+        //     let me = this;
+        //     return Vue.axios.post(url, data)
+        //         .then((response) => {
+        //             console.log(response.data);
+        //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
+        //             me.voteRecorded = true;
+        //             me.showButtons = false;
+        //             //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
+        //
+        //             me.$store.commit('addVotedUponMotion', me.motion.id);
+        //             resolve();
+        //         })
+        //         .catch(function (error) {
+        //             // error handling
+        //             if (error.response) {
+        //                 // The request was made and the server responded with a status code
+        //                 // that falls out of the range of 2xx
+        //                 console.log(error.response.data);
+        //                 console.log(error.response.status);
+        //                 if (error.response.status === 501) {
+        //                     me.voteRecorded = true;
+        //                     me.showButtons = false;
+        //                 }
+        //
+        //             }
+        //             // reject();
+        //         });
+        //
+        // });
     },
 
 
@@ -192,6 +264,25 @@ const getters = {
     //     //todo What if not set? Could we end up here?
     // },
 
+    /**
+     * Returns all stored votes the user has cast
+     * @param state
+     * @param getters
+     * @returns {[]|{getVotedMotions: function(*): string}|{getVotedMotions: function(*): string}|*}
+     */
+    getUsersCastVotes: (state, getters) => {
+        return state.castVotes;
+    },
+
+    getCastVoteForMotion: (state, getters) => (motion) => {
+        let motionId = idify(motion);
+        let v = _.filter(getters.getUsersCastVotes, (vote) => {
+            return vote.motionId === motionId;
+        });
+        return v[0];
+
+    },
+
     getMaxWinners: (state, getters) => {
         let motion = getters.getActiveMotion;
         // window.console.log('gmw', motion);
@@ -207,7 +298,7 @@ const getters = {
 
     getSelectedCandidatesForMotion: (state, getters) => {
         let motion = getters.getActiveMotion;
-        // window.co3nsole.log('taco');
+        // window.console.log('taco');
         return _.filter(getters.getAllSelectedCandidates, (candidate) => {
             return candidate.motion_id === motion.id;
         });
@@ -230,7 +321,7 @@ const getters = {
     },
 
     getWriteInIndex: (state) => (name) => {
-    return state.writeIns.indexOf(name);
+        return state.writeIns.indexOf(name);
     }
 
 

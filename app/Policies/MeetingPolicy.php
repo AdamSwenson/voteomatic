@@ -31,9 +31,10 @@ class MeetingPolicy
      * @param User $user
      * @param Meeting $meeting
      */
-public function ownerOnly(User $user, Meeting $meeting){
-    return $meeting->isOwner($user);
-}
+    public function ownerOnly(User $user, Meeting $meeting)
+    {
+        return $meeting->isOwner($user);
+    }
 
     /**
      * Determine whether the user can view all
@@ -44,7 +45,13 @@ public function ownerOnly(User $user, Meeting $meeting){
      */
     public function viewIndex(User $user)
     {
-        return $user->isChair();
+        //dev Probably should figure something better out here.
+        // but the problem is there is no particular meeting they are trying to see.
+        // Fortunately, the query will grab only meetings associated with the user
+        return true;
+//        return $meeting->isOwner($user);
+
+//        return $user->isChair();
     }
 
     /**
@@ -56,10 +63,7 @@ public function ownerOnly(User $user, Meeting $meeting){
      */
     public function view(User $user, Meeting $meeting)
     {
-        // todo this may eventually get a check for whether the user is associated with the meeting. Depends on how the order of adding folks to the meeting happens after LTI launch
-        return true;
-
-        return $user->isChair() || sizeof($meeting->users()->where('id', $user->id)->first()) > 0;
+        return $meeting->isPartOfMeeting($user);
     }
 
     /**
@@ -140,6 +144,7 @@ public function ownerOnly(User $user, Meeting $meeting){
     }
 
     // ELECTION SPECIFIC =========================================
+
     /**
      * Determine whether the user can create meetings.
      *

@@ -4,10 +4,6 @@
 <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
         <div class="container">
 
-<!--            <a class="navbar-brand"-->
-<!--               v-bind:href="baseUrl">-->
-<!--                {{ appName }}-->
-<!--            </a>-->
 
             <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
 
@@ -16,18 +12,13 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto "></ul>
 
-<!--                <span class="navbar-text text-dark text-lg-center">{{meetingName}}</span>-->
-
-<!--                <span class="navbar-text text-muted ">{{meetingDate}}</span>-->
-
-
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <form class="form-inline">
-                            <refresh-button></refresh-button>
-                        </form>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <form class="form-inline">-->
+<!--                            <refresh-button></refresh-button>-->
+<!--                        </form>-->
+<!--                    </li>-->
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -107,7 +98,7 @@ export default {
     methods: {
 
         logout: function () {
-            Vue.axios.post(this.logoutUrl);
+            this.$store.dispatch('logout');
         }
     }
 

@@ -55,18 +55,6 @@ export const routes = [
         adminOnly: false
     },
 
-
-    {
-        name: 'verify',
-        path: '/verify',
-        icon: "fa fa-check",
-        label: "Verify your vote",
-        components: {main: voteVerify},
-        props: true,
-        adminOnly: false
-    },
-
-
     {
         name: 'results',
         path: '/results',
@@ -83,13 +71,25 @@ export const routes = [
         icon: "fa fa-bar-chart",
         get label() {
             if (store.getters.isElection) return "Create office";
-            return "Create motion";
+            return "Make motion";
         },
         components: {main: ballotSetupCard},
         props: true,
-        adminOnly: true,
+        // adminOnly: true,
 
+        adminOnly: false
     },
+
+    {
+        name: 'verify',
+        path: '/verify',
+        icon: "fa fa-check",
+        label: "Verify votes",
+        components: {main: voteVerify},
+        props: true,
+        adminOnly: false
+    },
+
 
     {
         name: 'setup',
@@ -102,6 +102,7 @@ export const routes = [
         props: true,
         adminOnly: true
     },
+
 
 
     // {

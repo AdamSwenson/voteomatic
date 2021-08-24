@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Motion;
 use App\Repositories\MotionTemplateRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 class MotionFactory extends Factory
 {
@@ -75,6 +76,17 @@ class MotionFactory extends Factory
         ];
     }
 
+    public function amendment(){
+
+        return $this->state(function (array $attributes) {
+            $main = new Motion();
+            return [
+                'applies_to' => $main->id,
+                'type' => 'amendment'
+            ];
+        });
+    }
+
 
     /**
      * Returns a motion which requires a majority
@@ -87,6 +99,15 @@ class MotionFactory extends Factory
             ];
         });
     }
+
+//    public function passedMajority(){
+//        Vote::factory()->create(['motion_id'])
+//        return $this->state(function (array $attributes) {
+//            return [
+//                'requires' => 0.5,
+//            ];
+//        });
+//    }
 
 
     /**

@@ -1,5 +1,6 @@
 <template>
     <router-link
+        v-if="showTab"
         v-bind:to="path"
         v-slot="{ href, route, navigate, isActive, isExactActive }"
     >
@@ -34,18 +35,37 @@
 </template>
 
 <script>
+import MotionStoreMixin from "../../mixins/motionStoreMixin";
+
 export default {
     name: "router-tab",
     props: ['route'],
 
+    mixins: [MotionStoreMixin],
+
     data: function () {
         return {
-
             activeClass: 'active',
         }
     },
+
+    asyncComputed : {
+        showTab: function(){
+            if(this.name === 'vote'){
+                return this.isVotingAllowed && !this.isComplete;
+            }
+
+            if(this.name === 'results'){
+                return this.isComplete;
+            }
+
+            return true;
+        }
+    },
+
     computed: {
         name: function () {
+            return this.route.name;
         },
         label: function () {
             return this.route.label;

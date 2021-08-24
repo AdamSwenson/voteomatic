@@ -4,7 +4,7 @@ import IModel from "./IModel";
  * The results for one person running for one office.
  *
  */
-export default class Result extends IModel {
+export default class CandidateResult extends IModel {
 
     constructor({motionId = null, candidateId = null, candidateName = null, voteCount = null, pctOfTotal = null, isWinner=null, isRunoffParticipant=null}) {
         super();

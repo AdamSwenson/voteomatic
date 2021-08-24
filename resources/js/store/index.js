@@ -14,10 +14,15 @@ import * as mutations from './mutations'
 import * as state from './state'
 
 //modules
+import auth from "./modules/auth";
+import chairUtilities from "./modules/chairUtilities";
 import elections from "./modules/elections";
 import meetings from './modules/meetings';
 import modes from "./modules/modes";
 import motions from './modules/motions';
+import messages from "./modules/messages";
+import provisionalMotions from "./modules/provisionalMotions";
+import navigation from "./modules/navigation";
 import startup from "./modules/startup";
 import results from "./modules/results";
 import votes from "./modules/votes";
@@ -52,10 +57,15 @@ export default new Vuex.Store({
     plugins: [], //[ apiPlugin, websocketPlugin ],
 
     modules: {
+        auth,
+        chairUtilities,
         elections,
         meetings,
+        messages,
         modes,
         motions,
+        navigation,
+        provisionalMotions,
         results,
         startup,
         votes

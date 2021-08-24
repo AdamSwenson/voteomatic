@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
 use Closure;
 use Illuminate\Http\Request;
@@ -20,7 +21,8 @@ class CheckIfMotionClosed
         $motion = $request->route()->parameter('motion');
 
         if ($motion->is_complete) {
-            abort(VoteSubmittedAfterMotionClosed::ERROR_CODE, VoteSubmittedAfterMotionClosed::MESSAGE);
+            throw new VoteSubmittedAfterMotionClosed($motion);
+//            abort(VoteSubmittedAfterMotionClosed::ERROR_CODE, VoteSubmittedAfterMotionClosed::MESSAGE);
         }
 
 

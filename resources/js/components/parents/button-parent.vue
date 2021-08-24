@@ -1,10 +1,13 @@
 <template>
 
     <button
-        class="btn"
+        class="btn "
+        type="button"
         v-bind:class="styling"
         v-on:click="handleClick"
-    >{{label}}</button>
+    >
+        <span v-if="isWorking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span v-if="isWorking" class="sr-only">Working...</span> {{label}}</button>
 
 </template>
 
@@ -17,19 +20,26 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 export default {
     name: "button-parent",
 
-    props: [],
 
     mixins: [],
 
     data: function () {
-        return {}
+        return {
+            // label:
+            // styling:
+            //isWorking : false
+        }
     },
 
     asyncComputed: {
 
     },
 
-    computed: {},
+    computed: {
+        isWorking : function (){
+            return false;
+        }
+    },
 
     methods: {
 

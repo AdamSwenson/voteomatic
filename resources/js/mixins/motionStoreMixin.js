@@ -19,7 +19,7 @@ module.exports = {
             },
 
             set: function (v) {
-                this.$store.commit('setMotion', v);
+                this.$store.dispatch('setMotion', v);
 
             }
         },
@@ -47,6 +47,16 @@ module.exports = {
         isComplete: function () {
             return this.isMotionComplete;
         },
+
+        isVotingAllowed: {
+            get: function () {
+                if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                    return this.motion.isVotingAllowed;
+                }
+            },
+            default: false
+        },
+
 
 
         // selectedMotion: function () {

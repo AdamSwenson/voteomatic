@@ -11,16 +11,17 @@
 import MeetingMixin from "../../mixins/meetingMixin";
 import ChairMixin from "../../mixins/chairMixin";
 import ModeMixin from "../../mixins/modeMixin";
+
 import ElectionResultsCard from "../election/results/election-results-card";
 import MotionResultsPage from "./motion-results-page";
 
 export default {
     name: "results-card",
-    components: {MotionResultsPage, ElectionResultsCard},
+    components: {MotionResultsPage, ElectionResultsCard, },
     props: [],
 
 
-    mixins: [MeetingMixin, ChairMixin, ModeMixin],
+    mixins: [MeetingMixin, ChairMixin, ModeMixin, ],
 
     data: function () {
         return {}

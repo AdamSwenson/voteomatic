@@ -27,13 +27,13 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-secondary no"
                             data-dismiss="modal"
                     >No
                     </button>
 
                     <button type="button"
-                            class="btn btn-primary"
+                            class="btn btn-primary yes"
                             data-dismiss="modal"
                             v-on:click="handleClick"
                     >Yes. Record my vote.
@@ -49,6 +49,7 @@
 <script>
 
 import MotionMixin from '../../mixins/motionStoreMixin'
+import Vote from "../../models/Vote";
 
 /**
  * Note, this will require that the delete-motion-button is
@@ -95,11 +96,74 @@ export default {
 
     methods: {
         handleClick: function () {
+            if (this.type === 'nay') {
+                this.handleNay();
+            } else if (this.type === 'yay') {
+                this.handleYay();
+            }
+
+
             let voteEvent = this.type + '-clicked';
-
             this.$emit(voteEvent);
-        }
+        },
 
+
+        /**
+         * Fires when receives notification that the
+         * nay button has been pressed. Sends result
+         * to server.
+         */
+        handleNay: function () {
+
+            let vote = new Vote(
+                {
+                    motionId: this.motion.id,
+                    isYay: false
+                });
+            this.recordVote(vote);
+        },
+
+        /**
+         * Fires when receives notification that the
+         * yay button has been pressed. Sends result
+         * to server.
+         */
+        handleYay: function () {
+            let vote = new Vote(
+                {
+                    motionId: this.motion.id,
+                    isYay: true
+                });
+
+            this.recordVote(vote);
+        },
+
+        /**
+         * Handles sending the result to the server
+         * @param vote Vote object
+         */
+        recordVote: function (vote) {
+
+            this.$store.dispatch('castMotionVote', vote).then((v) => {
+                if (v.receipt.length > 0) {
+                    //Successfully recorded
+
+                }
+            }).catch((error) => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    if (error.response.status === 501) {
+
+                    }
+                }
+
+            });
+
+
+        }
     }
 
 

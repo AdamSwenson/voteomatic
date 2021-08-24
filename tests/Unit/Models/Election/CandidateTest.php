@@ -62,7 +62,7 @@ class CandidateTest extends TestCase
         $this->assertEquals($this->num, sizeof($results), "Correct number of non write ins");
 
         foreach ($results as $r){
-            $this->assertNotTrue($r->is_write_in, "boolean set properly");
+            $this->assertTrue($r->is_write_in, "boolean set properly");
         }
 
     }

@@ -41,10 +41,11 @@
                 </div>
 
                 <div class="col">
-                    <button class="btn btn-danger"
-                            v-on:click="handleClick"
-                    >Propose Amendment
-                    </button>
+
+                    <propose-amendment-button
+                        v-on:propose-amendment="handleClick"
+                    ></propose-amendment-button>
+
                 </div>
 
             </div>
@@ -62,10 +63,11 @@ import MeetingMixin from "../../mixins/meetingMixin";
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 import Payload from "../../models/Payload";
 import AmendmentTextDisplay from "./amendment-text-display";
+import ProposeAmendmentButton from "./motion-setup-inputs/propose-amendment-button";
 
 export default {
     name: "amendment-setup-area",
-    components: {AmendmentTextDisplay},
+    components: {ProposeAmendmentButton, AmendmentTextDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

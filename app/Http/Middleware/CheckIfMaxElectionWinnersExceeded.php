@@ -30,7 +30,8 @@ class CheckIfMaxElectionWinnersExceeded
         $totalSelected = sizeof($request->candidateIds) + sizeof($request->writeIns);
 
         if($totalSelected > $motion->max_winners){
-            abort(ExcessCandidatesSelected::ERROR_CODE, ExcessCandidatesSelected::MESSAGE);
+            throw new ExcessCandidatesSelected();
+//            abort(ExcessCandidatesSelected::ERROR_CODE, ExcessCandidatesSelected::MESSAGE);
         }
 
         return $next($request);

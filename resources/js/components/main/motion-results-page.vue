@@ -98,14 +98,17 @@ import * as routes from "../../routes";
 import Motion from '../../models/Motion';
 import motionMixin from '../../mixins/motionStoreMixin';
 import motionObjectMixin from "../../mixins/motionObjectMixin";
+import MotionResultsMixin from '../../mixins/motionResultsMixin';
+
 import RequiredVoteBadge from "../motions/badges/required-vote-badge";
 import DebatableBadge from "../motions/badges/debatable-badge";
 import MotionTypeBadge from "../motions/badges/motion-type-badge";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "motion-results-page",
     components: {MotionTypeBadge, DebatableBadge, RequiredVoteBadge},
-    mixins: [motionMixin, motionObjectMixin],
+    mixins: [motionMixin, motionObjectMixin, MotionResultsMixin],
 
     data: function () {
         return {
@@ -124,38 +127,46 @@ export default {
     asyncComputed: {
 
         passed: function () {
+            if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ' ----- '
+
+            return this.isPassed ? 'PASSED' : 'FAILED';
+
             // let results = this.$store.getters.getPassed;
-            if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
-
-            return this.results ? 'PASSED' : 'FAILED';
+            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
+            //
+            // return this.results ? 'PASSED' : 'FAILED';
 
         },
 
 
-        yayCount: function () {
-            return this.$store.getters.getYayCount
-        },
-
-        nayCount: function () {
-            return this.$store.getters.getNayCount
-        },
-
-        results : function(){
-            return this.$store.getters.getPassed;
-        },
+        // yayCount: function () {
+        //     return this.$store.getters.getYayCount
+        // },
+        //
+        // nayCount: function () {
+        //     return this.$store.getters.getNayCount
+        // },
+        //
+        // results : function(){
+        //     return this.$store.getters.getPassed;
+        // },
 
         resultStyle: function () {
             //nb results will be a boolean
-            if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
-
-            if (this.results) return "bg-success"
-
+            if(! isReadyToRock(this.isPassed)) return '';
+            if (this.isPassed) return "bg-success"
             return "bg-danger";
+
+            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
+            //
+            // if (this.results) return "bg-success"
+            //
+            // return "bg-danger";
         },
 
-        totalVotes: function () {
-            return this.$store.getters.getTotalVoteCount;
-        }
+        // totalVotes: function () {
+        //     return this.$store.getters.getTotalVoteCount;
+        // }
     },
 
     methods: {
@@ -166,16 +177,28 @@ export default {
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
             console.log('Loading vote results', this.motion);
 
-            me.$store.dispatch('loadResults', me.motion).then(function () {
+            me.$store.dispatch('loadMotionResults', me.motion).then(function () {
 
                 //todo if want to block from getting vote totals put the break here
 
                 window.console.log('Loading vote counts', me.motion);
 
-                me.$store.dispatch('loadCounts', me.motion).then(function () {
+                me.$store.dispatch('loadMotionCounts', me.motion).then(function () {
                     window.console.log('Results page ready', 189, me.motion);
                 });
             });
+
+
+            // me.$store.dispatch('loadResults', me.motion).then(function () {
+            //
+            //     //todo if want to block from getting vote totals put the break here
+            //
+            //     window.console.log('Loading vote counts', me.motion);
+            //
+            //     me.$store.dispatch('loadCounts', me.motion).then(function () {
+            //         window.console.log('Results page ready', 189, me.motion);
+            //     });
+            // });
 
         }
 
@@ -196,7 +219,8 @@ export default {
     },
 
     mounted: function () {
-        this.loadResults();
+        // this.loadResults();
+        // this.$store.commit('setNavTrigger', false);
     }
 
 
