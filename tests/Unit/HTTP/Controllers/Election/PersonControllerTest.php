@@ -15,13 +15,13 @@ class PersonControllerTest extends TestCase
     /**
      * @var string
      */
-    private $url;
-    private $person;
+    public $url;
+    public $person;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $rando;
-    private $admin;
+    public $rando;
+    public $admin;
 
     public function setUp(): void
     {

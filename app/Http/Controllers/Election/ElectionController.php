@@ -83,15 +83,15 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Meeting $election
+     * @param Meeting $meeting
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Meeting $election)
+    public function show(Meeting $meeting)
     {
         $this->setLoggedInUser();
-        $this->authorize('view', [Meeting::class, $election]);
-        return response()->json($election);
+        $this->authorize('view', [Meeting::class, $meeting]);
+        return response()->json($meeting);
     }
 
 

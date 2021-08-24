@@ -13,15 +13,15 @@ use Tests\TestCase;
 class ElectionControllerTest extends TestCase
 {
 
-    private $owner;
-    private $election;
-    private $adminUser;
-    private $regularUser;
+    public $owner;
+    public $election;
+    public $adminUser;
+    public $regularUser;
     /**
      * @var string
      */
-    private $url;
-    private $elections;
+    public $url;
+    public $elections;
 
     public function setUp(): void
     {

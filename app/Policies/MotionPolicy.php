@@ -90,22 +90,22 @@ class MotionPolicy
     }
 
 
-    public function castVoteForOffice(User $user, Motion $office)
+    public function castVoteForOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        $election = $motion->meeting;
         return $election->isPartOfMeeting($user);
     }
 
-    public function deleteOffice(User $user, Motion $office)
+    public function deleteOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        $election = $motion->meeting;
         return $election->isOwner($user);
     }
 
 
-    public function viewOffice(User $user, Motion $office)
+    public function viewOffice(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
+        $meeting = $motion->meeting;
         return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
@@ -124,15 +124,15 @@ class MotionPolicy
      * @param Motion $motion
      * @return bool
      */
-    public function viewOfficeResults(User $user, Motion $office)
+    public function viewOfficeResults(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
-        return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+        $meeting = $motion->meeting;
+        return $motion->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
-    public function updateOffice(User $user, Motion $office)
+    public function updateOffice(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
+        $meeting = $motion->meeting;
         return $meeting->isOwner($user);
     }
 

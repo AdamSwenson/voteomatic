@@ -18,23 +18,23 @@ class ElectionRepositoryTest extends TestCase
     /**
      * @var int
      */
-    private $loserTotal;
+    public $loserTotal;
     /**
      * @var int
      */
-    private $winnerTotal;
+    public $winnerTotal;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $candidates;
+    public $candidates;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $motion;
+    public $motion;
     /**
      * @var mixed
      */
-    private $winner;
+    public $winner;
 
     public $tiedCandidates = [];
 

@@ -23,7 +23,6 @@ class RecordVoteControllerTest extends TestCase
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     public $motion;
-    public string $url;
 
     public function setUp():void
     {

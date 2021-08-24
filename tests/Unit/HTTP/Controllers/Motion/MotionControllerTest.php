@@ -24,7 +24,7 @@ class MotionControllerTest extends TestCase
     /**
      * @var string
      */
-    private $url;
+    public $url;
 
     public function setUp(): void
     {

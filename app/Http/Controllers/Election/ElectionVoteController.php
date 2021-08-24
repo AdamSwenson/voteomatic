@@ -21,6 +21,7 @@ class ElectionVoteController extends Controller
      * @var IVoterEligibilityRepository|mixed
      */
     public $voterEligibilityRepo;
+
     /**
      * @var IElectionVoteRepository|mixed
      */
@@ -31,6 +32,7 @@ class ElectionVoteController extends Controller
      * Create a new controller instance.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct()
     {
@@ -50,26 +52,26 @@ class ElectionVoteController extends Controller
      * Saves the vote to the database and creates a record
      * that the user has voted.
      *
-     * @param Motion $office
+     * @param Motion $motion
      * @param ElectionVoteRequest $request
      * @return Vote|string[]
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function recordVote(Motion $office, ElectionVoteRequest $request)
+    public function recordVote(ElectionVoteRequest $request, Motion $motion)
     {
 
         try {
             $this->setLoggedInUser();
-            $this->authorize('castVoteForOffice', [Motion::class, $office]);
+            $this->authorize('castVoteForOffice', [Motion::class, $motion]);
 
             //Record the votes and return a single receipt hash
-            $hash = $this->electionVoteRepo->recordOfficeVotes($office, $request->candidateIds);
+            $hash = $this->electionVoteRepo->recordOfficeVotes($motion, $request->candidateIds);
 
             if (isset($hash)) {
 
                 //At this point, the vote itself has been saved.
                 //Now we need to separately record that user has voted
-                $this->voterEligibilityRepo->recordVoted($office, $this->user);
+                $this->voterEligibilityRepo->recordVoted($motion, $this->user);
 
                 return response()->json(['receipt' => $hash]);
 
