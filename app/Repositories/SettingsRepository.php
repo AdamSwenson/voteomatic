@@ -4,10 +4,39 @@ namespace App\Repositories;
 
 use App\Models\Meeting;
 use App\Models\SettingStore;
+use App\Models\User;
 
-class SettingsRepository
+class SettingsRepository implements ISettingsRepository
 {
 
+
+    /**
+     * Loads the user's personalized settings (if any), then
+     * copies in the meeting master settings to yield an object
+     * which can be returned to the client.
+     * NB, it doesn't save the updated model to the database
+     * @param Meeting $meeting
+     * @param User $user
+     * @return SettingStore
+     */
+    public function getConsolidatedSettings(Meeting $meeting, User $user)
+    {
+        $userSettings = SettingStore::where('meeting_id', $meeting->id)
+            ->where('user_id', $user->id)
+            ->firstOrCreate();
+
+        $meetingMaster = $meeting->getMasterSettingStore();
+
+        if (!is_null($meetingMaster) && ! is_null($meetingMaster->settings)) {
+
+            //overwrite any values
+            foreach ($meetingMaster->settings as $k => $v) {
+                $userSettings->setSetting($k, $v);
+            }
+        }
+        return $userSettings;
+
+    }
 
     /**
      * There should be only one meeting master object
@@ -29,7 +58,8 @@ class SettingsRepository
         return $settings;
     }
 
-    public function updateMeetingMaster(Meeting $meeting, $settingName, $value){
+    public function updateMeetingMaster(Meeting $meeting, $settingName, $value)
+    {
         $ss = $meeting->getMasterSettingStore();
         $ss->setSetting($settingName, $value);
         $ss->save();
@@ -47,8 +77,8 @@ class SettingsRepository
     {
 
         $mm = $meeting->getMasterSettingStore();
-        if(! is_null($mm)){
-            foreach($meeting->settingStore()->get() as $settingStore){
+        if (!is_null($mm)) {
+            foreach ($meeting->settingStore()->get() as $settingStore) {
                 $settingStore->settings = $mm->settings;
                 $settingStore->save();
             }

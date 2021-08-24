@@ -127,4 +127,79 @@ class SettingsRepositoryTest extends TestCase
 
     }
 
+    /** @test */
+    public function getConsolidatedSettingsWhereUserSettingsExist(){
+
+        $mm = SettingStore::factory()->meetingMaster()->create([
+            'meeting_id' => $this->meeting->id,
+            'settings' => [
+                'show_vote_counts' => true
+            ]
+        ]);
+
+        $us = SettingStore::factory()->create([
+            'meeting_id' => $this->meeting->id,
+            'user_id' => $this->user->id,
+            'settings' => [
+                'show_vote_counts' => false,
+                'dog' => 'wag'
+            ]
+        ]);
+
+        $result = $this->object->getConsolidatedSettings($this->meeting, $this->user);
+
+        $this->assertInstanceOf(SettingStore::class, $result);
+
+//        $this->assertEquals($this->user->id, $result->user_id);
+        $this->assertTrue(is_null($result->is_meeting_master) || $result->is_meeting_master === false, "meeting master props outside of settings not merged in");
+        foreach($mm->settings as $name => $v){
+            $this->assertEquals($v, $result->settings[$name], 'meeting master settings merged in');
+        }
+
+        foreach($us->settings as $name => $v){
+            if(! in_array($name, $mm->getSettingNames())){
+                $this->assertEquals($v, $result->settings[$name], 'non conflicting user settings untouched');
+            }
+        }
+
+    }
+
+
+    /** @test */
+    public function getConsolidatedSettingsWhereUserSettingsDoNotExist(){
+        $mm = SettingStore::factory()->meetingMaster()->create([
+            'meeting_id' => $this->meeting->id,
+            'settings' => [
+                'show_vote_counts' => false
+            ]
+        ]);
+
+        $result = $this->object->getConsolidatedSettings($this->meeting, $this->user);
+
+        $this->assertInstanceOf(SettingStore::class, $result);
+
+//        $this->assertEquals($this->user->id, $result->user_id);
+        $this->assertEmpty($result->is_meeting_master, "meeting master props outside of settings not merged in");
+
+        $this->assertEquals($mm->settings, $result->settings, 'meeting master settings merged');
+    }
+
+
+    /** @test */
+    public function getConsolidatedSettingsWhereMeetingMasterSettingsAreNull(){
+        $mm = SettingStore::factory()->meetingMaster()->create([
+            'meeting_id' => $this->meeting->id,
+        ]);
+
+        $result = $this->object->getConsolidatedSettings($this->meeting, $this->user);
+
+        $this->assertInstanceOf(SettingStore::class, $result);
+
+//        $this->assertEquals($this->user->id, $result->user_id);
+        $this->assertEmpty($result->is_meeting_master, "meeting master props outside of settings not merged in");
+
+        $this->assertEquals($mm->settings, $result->settings, 'meeting master settings merged');
+    }
+
+
 }

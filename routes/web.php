@@ -191,6 +191,8 @@ Route::resource('motions', MotionController::class);
 /* =============================
         Settings
    ============================= */
+//Route::get('settings/{meeting}/master', [SettingStoreController::class, 'getMasterSettings']);
+Route::get('settings/{meeting}', [SettingStoreController::class, 'getUserSettings']);
 Route::resource('settingStores', SettingStoreController::class);
 
 /* =============================

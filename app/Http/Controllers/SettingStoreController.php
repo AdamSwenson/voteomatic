@@ -5,27 +5,50 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SettingsRequest;
 use App\Models\Meeting;
 use App\Models\SettingStore;
+use App\Repositories\ISettingsRepository;
 use Illuminate\Http\Request;
 
 class SettingStoreController extends Controller
 {
+    public $settingsRepo;
 
     public function __construct()
     {
 
         $this->middleware('auth');
-
+        $this->settingsRepo = app()->make(ISettingsRepository::class);
     }
 
 
     /**
-     * Returns a blank settings object .
+     * This will have had the meetingId as a parameter,
+     * so it returns the user's settings for the meeting (overwritten
+     * with any master settings).
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getUserSettings(Meeting $meeting)
     {
-        //
+        $this->setLoggedInUser();
+//        $meeting = Meeting::find($request->meetingId);
+
+        //prevents someone not part of the meeting from having settings created for them
+        $this->authorize('view', [SettingStore::class, $meeting]);
+
+
+        $settings = $this->settingsRepo->getConsolidatedSettings($meeting, $this->user);
+
+        return response()->json($settings);
+    }
+
+    public function getMasterSettings(Meeting $meeting)
+    {
+        $this->setLoggedInUser();
+        $this->authorize('viewMaster', SettingStore::class);
+
+        $settings = $meeting->getMasterSettingStore();
+
+        return response()->json($settings);
     }
 
 //    /**
@@ -41,7 +64,7 @@ class SettingStoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(SettingsRequest $request)
@@ -63,13 +86,13 @@ class SettingStoreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SettingStore  $settings
+     * @param \App\Models\SettingStore $settings
      * @return \Illuminate\Http\Response
      */
     public function show(SettingStore $settings)
     {
-$this->setLoggedInUser();
-$this->authorize('view', $settings);
+        $this->setLoggedInUser();
+        $this->authorize('view', $settings);
         return response()->json($settings);
 
     }
@@ -80,14 +103,14 @@ $this->authorize('view', $settings);
      * NB, the SettingsRequest will check if the user is
      * authorized to access the settings being sent
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SettingStore  $settings
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\SettingStore $settings
      * @return \Illuminate\Http\Response
      */
     public function update(SettingsRequest $request, SettingStore $settings)
     {
         $this->setLoggedInUser();
-        $this->authorize('update',  [SettingStore::class, $settings]);
+        $this->authorize('update', [SettingStore::class, $settings]);
 
         $settings->update($request->all());
 
@@ -99,7 +122,7 @@ $this->authorize('view', $settings);
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SettingStore  $settings
+     * @param \App\Models\SettingStore $settings
      * @return \Illuminate\Http\Response
      */
     public function destroy(SettingStore $settings)

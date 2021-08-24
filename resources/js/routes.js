@@ -264,6 +264,16 @@ module.exports = {
         },
 
 
+    },
+
+    settings: {
+        load: (meetingId) => {
+            return normalizedRouteRoot() + 'settings/' + meetingId;
+        },
+
+        resource: (settingId) => {
+            return normalizedRouteRoot() + 'settingStore/' + settingId;
+        }
     }
 
 }

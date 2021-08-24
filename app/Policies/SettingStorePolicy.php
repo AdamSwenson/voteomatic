@@ -33,11 +33,35 @@ class SettingStorePolicy
         return $meeting->isPartOfMeeting($user);
     }
 
-    public function view(User $user, SettingStore $settings)
+    public function view(User $user, Meeting $meeting)
     {
-return $settings->user->is($user);
+  return $meeting->isPartOfMeeting($user);
+
     }
 
+//    /**
+//     * Whether someone can view the settings associated with a
+//     * person for a given meeting
+//     *
+//     * @param User $user
+//     * @param SettingStore $settings
+//     * @return mixed
+//     */
+//    public function viewUser(User $user, Meeting $meeting)
+//    {
+//        return
+//    }
+//
+    /**
+     * ONly the chair or person setting up the meeting
+     * will need to access the meeting master settings directly
+     *
+     * @param User $user
+     * @param Meeting $meeting
+     */
+    public function viewMaster(User $user, Meeting $meeting){
+       return $meeting->isOwner($user);
+    }
 
     /**
      * This just checks the user's permissions.

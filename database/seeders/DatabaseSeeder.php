@@ -37,7 +37,9 @@ class DatabaseSeeder extends Seeder
             LTIDevCredsSeeder::class,
             FakeFullMeetingSeeder::class,
             FullElectionWithoutVotesSeeder::class,
-            FullElectionWithVotesSeeder::class
+            FullElectionWithVotesSeeder::class,
+
+            MasterSettingsSeeder::class
 
         ]);
 
@@ -55,6 +57,8 @@ class DatabaseSeeder extends Seeder
             }
             $meeting->setOwner($adminUser);
         }
+
+
 
     }
 

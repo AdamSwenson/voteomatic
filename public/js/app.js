@@ -14782,6 +14782,90 @@ var PoolMember = /*#__PURE__*/function (_IModel) {
 
 /***/ }),
 
+/***/ "./resources/js/models/Settings.js":
+/*!*****************************************!*\
+  !*** ./resources/js/models/Settings.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Settings)
+/* harmony export */ });
+/* harmony import */ var _IModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IModel */ "./resources/js/models/IModel.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * Holds all settings loaded from server.
+ *
+ * NB, settings are aliased via dynamically created
+ * getters and setters
+ */
+
+var Settings = /*#__PURE__*/function (_IModel) {
+  _inherits(Settings, _IModel);
+
+  var _super = _createSuper(Settings);
+
+  function Settings(_ref) {
+    var _this;
+
+    var _ref$id = _ref.id,
+        id = _ref$id === void 0 ? null : _ref$id,
+        _ref$settings = _ref.settings,
+        settings = _ref$settings === void 0 ? null : _ref$settings;
+
+    _classCallCheck(this, Settings);
+
+    _this = _super.call(this);
+    _this.id = id;
+    _this.settings = settings;
+
+    var me = _assertThisInitialized(_this);
+
+    _.forEach(_this.settings, function (v, k) {
+      /**
+       * We alias all of the contents in _settings
+       * via getters and setters
+       */
+      Object.defineProperty(me, k, {
+        set: function set(v) {
+          me.settings[k] = v;
+        },
+        get: function get() {
+          return me.settings[k];
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  return Settings;
+}(_IModel__WEBPACK_IMPORTED_MODULE_0__.default);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Vote.js":
 /*!*************************************!*\
   !*** ./resources/js/models/Vote.js ***!
@@ -15275,6 +15359,14 @@ module.exports = {
     types: function types() {
       return normalizedRouteRoot() + 'motions/types';
     }
+  },
+  settings: {
+    load: function load(meetingId) {
+      return normalizedRouteRoot() + 'settings/' + meetingId;
+    },
+    resource: function resource(settingId) {
+      return normalizedRouteRoot() + 'settingStore/' + settingId;
+    }
   }
 };
 
@@ -15324,8 +15416,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
@@ -15343,9 +15435,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_messages__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/messages */ "./resources/js/store/modules/messages.js");
 /* harmony import */ var _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/provisionalMotions */ "./resources/js/store/modules/provisionalMotions.js");
 /* harmony import */ var _modules_navigation__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/navigation */ "./resources/js/store/modules/navigation.js");
-/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
-/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
-/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
+/* harmony import */ var _modules_settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/settings */ "./resources/js/store/modules/settings.js");
+/* harmony import */ var _modules_startup__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/startup */ "./resources/js/store/modules/startup.js");
+/* harmony import */ var _modules_results__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/results */ "./resources/js/store/modules/results.js");
+/* harmony import */ var _modules_votes__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/votes */ "./resources/js/store/modules/votes.js");
 /**
  * Created by adam on 2020-07-13.
  */
@@ -15370,7 +15463,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_16__.default.use(vuex__WEBPACK_IMPORTED_MODULE_17__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_17__.default.use(vuex__WEBPACK_IMPORTED_MODULE_18__.default);
 /**
  * This subscribes the api package which
  * handles data exchange with the server
@@ -15380,7 +15474,7 @@ vue__WEBPACK_IMPORTED_MODULE_16__.default.use(vuex__WEBPACK_IMPORTED_MODULE_17__
 // import websocketPlugin from '../api/websocketPlugin';
 
 var debug = "development" !== 'production';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_17__.default.Store({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_18__.default.Store({
   strict: debug,
   //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
@@ -15405,9 +15499,10 @@ var debug = "development" !== 'production';
     motions: _modules_motions__WEBPACK_IMPORTED_MODULE_9__.default,
     navigation: _modules_navigation__WEBPACK_IMPORTED_MODULE_12__.default,
     provisionalMotions: _modules_provisionalMotions__WEBPACK_IMPORTED_MODULE_11__.default,
-    results: _modules_results__WEBPACK_IMPORTED_MODULE_14__.default,
-    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_13__.default,
-    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_15__.default
+    results: _modules_results__WEBPACK_IMPORTED_MODULE_15__.default,
+    settings: _modules_settings__WEBPACK_IMPORTED_MODULE_13__.default,
+    startup: _modules_startup__WEBPACK_IMPORTED_MODULE_14__.default,
+    votes: _modules_votes__WEBPACK_IMPORTED_MODULE_16__.default
   } // }
   // plugins: debug ? [createLogger()] : []
 
@@ -18640,6 +18735,109 @@ var getters = {
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/settings.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/modules/settings.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Settings */ "./resources/js/models/Settings.js");
+
+
+var state = {
+  settings: null //things: []
+
+};
+var mutations = {
+  setSettings: function setSettings(state, settingsObj) {
+    state.settings = settingsObj;
+  },
+  setSettingsProp: function setSettingsProp(state, _ref) {
+    var updateProp = _ref.updateProp,
+        updateVal = _ref.updateVal;
+    Vue.set(state.settings, updateProp, updateVal);
+  }
+  /*
+  *   addThing: (state, thing) => {
+  *        state.things.push(thing);
+  *    }
+  */
+
+};
+var actions = {
+  loadSettings: function loadSettings(_ref2, meetingId) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
+    var data = {
+      meetingId: meetingId
+    };
+    var url = _routes__WEBPACK_IMPORTED_MODULE_0__.settings.load(meetingId);
+    return new Promise(function (resolve, reject) {
+      return Vue.axios.get(url).then(function (response) {
+        var settings = new _models_Settings__WEBPACK_IMPORTED_MODULE_1__.default(response.data);
+        commit.setSettings(settings);
+        resolve();
+      });
+    });
+  },
+
+  /**
+   * Updates a settings value locally and on server
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param payload
+   * @returns {Promise<unknown>}
+   */
+  updateSettings: function updateSettings(_ref3, payload) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
+    //change the value locally
+    commit(payload);
+    var settingsObj = getters.getSettings;
+    var url = _routes__WEBPACK_IMPORTED_MODULE_0__.settings.resource(settingsObj.id);
+    return new Promise(function (resolve, reject) {
+      return Vue.axios.put(url, settingsObj).then(function (response) {//todo consider rollback on error
+      });
+    });
+  }
+};
+/**
+ *
+ *    getThingViaId: (state) => (thingId) => {
+ *        return state.things.filter(function (c) {
+ *            return c.thing_id === thingId;
+ *        })
+ *    },
+ *
+ *
+ *    getThing: (state, getters) => {}
+ */
+
+var getters = {
+  getSettings: function getSettings(state) {
+    return state.settings;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: actions,
+  getters: getters,
+  mutations: mutations,
+  state: state
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/startup.js":
 /*!***********************************************!*\
   !*** ./resources/js/store/modules/startup.js ***!
@@ -18679,6 +18877,8 @@ var actions = {
             dispatch('loadMotionsForMeeting', meeting.id).then(function () {
               //get motions which have already been handled
               dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
+                //These can happen in parallel
+                dispatch('loadSettings', meeting.id).then(function () {});
                 dispatch('loadResultsForAllMeetingMotions').then(function () {});
                 dispatch('loadMotionTypesAndTemplates').then(function () {});
               });
