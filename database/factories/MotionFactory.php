@@ -73,6 +73,8 @@ class MotionFactory extends Factory
             'type' => $m['type'],
             'seconded' => false,
 
+            'author_id' => null,
+
         ];
     }
 
