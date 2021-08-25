@@ -32,6 +32,8 @@ class ElectionControllerTest extends TestCase
         $this->adminUser = User::factory()->administrator()->create();
 
         $this->regularUser = User::factory()->create();
+        $this->election->addUserToMeeting($this->regularUser);
+
 
         $this->owner = User::factory()->administrator()->create();
         $this->election->setOwner($this->owner);
@@ -76,6 +78,8 @@ class ElectionControllerTest extends TestCase
     /** @test */
     public function indexDeniesNonAdmin()
     {
+        //todo this needs to be fixed once figure out all the permissions
+
         $response = $this->actingAs($this->regularUser)->get($this->url);
 
         //check

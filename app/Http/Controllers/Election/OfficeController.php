@@ -28,14 +28,14 @@ class OfficeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Motion $office
+     * @param Motion $motion
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Motion $office)
+    public function destroy(Motion $motion)
     {
-        $this->authorize('deleteOffice', [Motion::class, $office]);
-        $office->delete();
+        $this->authorize('deleteOffice', [Motion::class, $motion]);
+        $motion->delete();
         return response()->json(200);
     }
 
@@ -43,15 +43,15 @@ class OfficeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Motion $office
+     * @param Motion $motion
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Motion $office)
+    public function show(Motion $motion)
     {
-        $this->authorize('viewOffice', [Motion::class, $office]);
+        $this->authorize('viewOffice', [Motion::class, $motion]);
 
-        return response()->json($office);
+        return response()->json($motion);
     }
 
 
@@ -79,16 +79,16 @@ class OfficeController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Motion $office
+     * @param Motion $motion
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Motion $office)
+    public function update(Request $request, Motion $motion)
     {
         $this->setLoggedInUser();
-        $this->authorize('updateOffice', [Motion::class, $office]);
-        $office->update($request->all());
-        return response()->json($office);
+        $this->authorize('updateOffice', [Motion::class, $motion]);
+        $motion->update($request->all());
+        return response()->json($motion);
     }
 
 }

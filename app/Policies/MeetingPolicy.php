@@ -66,6 +66,9 @@ class MeetingPolicy
         return $meeting->isPartOfMeeting($user);
     }
 
+
+
+
     /**
      * Determine whether the user can create meetings.
      *
@@ -144,6 +147,19 @@ class MeetingPolicy
     }
 
     // ELECTION SPECIFIC =========================================
+    /**
+     * The owner of an election may be office staff and
+     * therefore not an eligible voter, thus this needs to be
+     * different from regular view.
+     *
+     * @param User $user
+     * @param Meeting $meeting
+     * @return bool
+     */
+    public function viewElection(User $user, Meeting $meeting)
+    {
+        return $meeting->isPartOfMeeting($user) || $meeting->isOwner($user);
+    }
 
     /**
      * Determine whether the user can create meetings.

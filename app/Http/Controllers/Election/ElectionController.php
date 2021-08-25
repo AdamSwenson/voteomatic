@@ -90,7 +90,7 @@ class ElectionController extends Controller
     public function show(Meeting $meeting)
     {
         $this->setLoggedInUser();
-        $this->authorize('view', [Meeting::class, $meeting]);
+        $this->authorize('viewElection', [Meeting::class, $meeting]);
         return response()->json($meeting);
     }
 
@@ -99,32 +99,32 @@ class ElectionController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Meeting $election
+     * @param Meeting $meeting
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Meeting $election)
+    public function update(Request $request, Meeting $meeting)
     {
         $this->setLoggedInUser();
-        $this->authorize('updateElection', [Meeting::class, $election]);
+        $this->authorize('updateElection', [Meeting::class, $meeting]);
         $d = $request->all();
         $d = $d['data'];
-        $election->update($d);
-        return response()->json($election);
+        $meeting->update($d);
+        return response()->json($meeting);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Meeting $election
+     * @param Meeting $meeting
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Meeting $election)
+    public function destroy(Meeting $meeting)
     {
         $this->setLoggedInUser();
-        $this->authorize('deleteElection', [Meeting::class, $election]);
-        $election->delete();
+        $this->authorize('deleteElection', [Meeting::class, $meeting]);
+        $meeting->delete();
         return response()->json(200);
     }
 }

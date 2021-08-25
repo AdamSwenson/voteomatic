@@ -30,8 +30,9 @@ class MotionSecondController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('second-eligibility');
+
         $this->motionRepo = app()->make(IMotionRepository::class);
-$this->motionStackRepo = app()->make(IMotionStackRepository::class);
+        $this->motionStackRepo = app()->make(IMotionStackRepository::class);
     }
 
 
@@ -47,17 +48,17 @@ $this->motionStackRepo = app()->make(IMotionStackRepository::class);
 
         $this->authorize('secondMotion', $motion);
 //        try {
-            $this->motionRepo->secondMotion($motion, $this->user);
+        $this->motionRepo->secondMotion($motion, $this->user);
 
-            //Broadcast the event
-            MotionSeconded::dispatch($motion);
+        //Broadcast the event
+        MotionSeconded::dispatch($motion);
 
-            //Set it as the currently pending motion
-            $meeting = $motion->meeting;
-            $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+        //Set it as the currently pending motion
+        $meeting = $motion->meeting;
+        $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
 
 
-            return response()->json($motion);
+        return response()->json($motion);
 
     }
 
