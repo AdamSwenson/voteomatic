@@ -119,8 +119,12 @@ Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVot
 Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
 
 Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
-Route::resource('elections', ElectionController::class);
-Route::resource('offices', OfficeController::class);
+Route::resource('elections', ElectionController::class)->parameters([
+    'elections' => 'meeting'
+]);
+Route::resource('offices', OfficeController::class)->parameters([
+    'offices' => 'motion'
+]);
 
 //pool of eligible nominees for office
 Route::get('election/pool/{motion}', [CandidatePoolController::class, 'getCandidatePool']);

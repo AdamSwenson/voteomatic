@@ -19,22 +19,22 @@ use Tests\TestCase;
 class ElectionVoteControllerTest extends TestCase
 {
 
-    private $owner;
-    private $election;
-    private $office;
-    private $regularUserMember;
+    public $owner;
+    public $election;
+    public $office;
+    public $regularUserMember;
     /**
      * @var string
      */
-    private $url;
+    public $url;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $candidates;
+    public $candidates;
     /**
      * @var array
      */
-    private $requestData;
+    public $requestData;
 
     public function setUp(): void
     {

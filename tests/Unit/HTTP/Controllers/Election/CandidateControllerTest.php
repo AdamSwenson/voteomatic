@@ -24,19 +24,19 @@ class CandidateControllerTest extends TestCase
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $poolMember;
+    public $poolMember;
     /**
      * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
      */
-    private $motion;
+    public $motion;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $owner;
+    public $owner;
     /**
      * @var string
      */
-    private $url;
+    public $url;
 
     public function setUp(): void
     {

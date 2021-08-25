@@ -7,6 +7,7 @@ use App\Repositories\IVoterEligibilityRepository;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Motion;
 
 class CheckIfAlreadyVoted
 {
@@ -21,6 +22,17 @@ class CheckIfAlreadyVoted
     {
         $user = Auth::user();
         $motion = $request->route()->parameter('motion');
+
+        //dev This was added in VOT-69 due to some very strange behavior
+        // namely, the motion object would be retrieved when doing a regular meeting but
+        // this was just the string id for an election.
+        // ...turns out it was due to naming the motion variable $office when it was injected
+        // into the controller. WTF laravel?
+//        if(! $motion instanceof Motion){
+//            $motion = Motion::find($motion);
+//        }
+
+
         $voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
 
 //        try {
