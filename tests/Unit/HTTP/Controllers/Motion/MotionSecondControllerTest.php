@@ -25,7 +25,8 @@ class MotionSecondControllerTest extends TestCase
 //        $this->user->meetings()->attach($this->meeting);
 //        $this->user->push();
 
-        $this->motion = Motion::factory()->create();
+        $this->motionAuthor = User::factory()->create();
+        $this->motion = Motion::factory()->create(['author_id' => $this->motionAuthor->id]);
         $this->meeting->motions()->save($this->motion);
         $this->meeting->push();
 
