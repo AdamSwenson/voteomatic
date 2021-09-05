@@ -24,6 +24,8 @@ class Motion extends Model
         'is_complete',
         'is_current',
         'is_in_order',
+        /** Whether it is mutli-line html text where formatting matters */
+        'is_resolution',
         /** Whether users are allowed at this time to cast votes on the motion */
         'is_voting_allowed',
         /** For elections, this defines how many people can be elected to the office */
@@ -86,6 +88,7 @@ class Motion extends Model
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',
         'is_voting_allowed' => 'boolean',
+        'is_resolution' => 'boolean',
         'debatable' => 'boolean',
         'seconded' => 'boolean',
         //election

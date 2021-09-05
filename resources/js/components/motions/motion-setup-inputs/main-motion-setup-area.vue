@@ -9,6 +9,12 @@
             <div class="required">
                 <form>
 
+
+                    <resolution-input
+                        :motion="draftMotion"
+                        v-on:update:content="draftMotion.content  = $event"
+                    ></resolution-input>
+
                     <motion-content-input
                         :motion="draftMotion"
                         v-on:update:content="draftMotion.content  = $event"
@@ -104,10 +110,12 @@ import Payload from "../../../models/Payload";
 import CreateMotionModal from "./create-motion-modal";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import ClearDraftMotionButton from "./clear-draft-motion-button";
+import ResolutionInput from "../resolutions/resolution-input";
 
 export default {
     name: "main-motion-setup-area",
     components: {
+        ResolutionInput,
         ClearDraftMotionButton,
         CreateMotionModal,
         MotionTypeInput,

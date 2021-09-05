@@ -23,7 +23,13 @@
 
                         <label for="editText">Edit amendment</label>
 
-                        <textarea id="editText"
+                        <wysiwyg v-model="text"
+                        v-if="isResolution"
+                        ></wysiwyg>
+
+                        <textarea
+                            v-else
+                            id="editText"
                                   class="form-control"
                                   v-model="text"
                                   cols="30"></textarea>
@@ -59,7 +65,6 @@
 
 import MotionMixin from "../../mixins/motionStoreMixin";
 import MeetingMixin from "../../mixins/meetingMixin";
-
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 import Payload from "../../models/Payload";
 import AmendmentTextDisplay from "./amendment-text-display";
@@ -93,10 +98,16 @@ export default {
             if (_.isUndefined(this.motion)) return ''
             return this.motion.content;
 
-        }
+        },
+
+
     },
 
     computed: {
+        isResolution: function(){
+            if(_.isUndefined(this.motion)) return false;
+            return this.motion.isResolution;
+        },
 
         text: {
             get: function () {

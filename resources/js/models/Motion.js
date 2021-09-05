@@ -9,9 +9,20 @@ export default class Motion extends IModel {
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null, requires=0.5, type=null, is_complete=null, is_voting_allowed=null, applies_to=null, seconded=null, superseded_by=null, debatable=null, max_winners=null}) {
+    constructor({id=null, content=null, description=null,
+                    requires=0.5,
+                    type=null,
+                    is_complete=null,
+                    is_voting_allowed=null,
+                    is_resolution=null,
+                    applies_to=null,
+                    seconded=null,
+                    superseded_by=null,
+                    debatable=null,
+                    max_winners=null}) {
         super();
         this.id = id;
+        this.is_resolution = is_resolution;
 
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
@@ -100,6 +111,19 @@ export default class Motion extends IModel {
     isProceduralSubsidiary(){
         return this.type === 'procedural-subsidiary';
     }
+
+    /**
+     * Whether this is a multiple line html formatted text object
+     * where formatting is important
+     * @returns {boolean}
+     */
+    get isResolution(){
+        return isReadyToRock(this.is_resolution) && this.is_resolution === true;
+    }
+
+    set isResolution(v){
+        this.is_resolution = v;
+     }
 
     /**
      * Whether users are currently allowed to vote

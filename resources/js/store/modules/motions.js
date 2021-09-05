@@ -601,6 +601,19 @@ const actions = {
 
     },
 
+    initializeDraftResolution({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            let motion = new Motion({
+                type: 'main',
+                requires: 0.5,
+                debatable: true,
+                is_resolution: true
+            });
+            commit('setDraftMotion', motion);
+            resolve();
+        }));
+
+    },
 
     /**
      * Gets the motion from the server

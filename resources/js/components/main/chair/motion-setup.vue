@@ -24,6 +24,11 @@
                     v-on:edit-motion-clicked="handleEditMainButtonClick"
             ></edit-motion-button>
 
+            <create-resolution-button
+            v-if="isChair"
+            v-on:create-resolution-clicked="handleResolutionButtonClick"
+            ></create-resolution-button>
+
         </div>
 
         <div class="card-body" v-if="showBody">
@@ -38,6 +43,8 @@
             <main-motion-edit-area
                 v-else-if="showCard === 'edit' && isChair"
             ></main-motion-edit-area>
+
+            <resolution-setup-area v-else-if="showCard === 'resolution'"></resolution-setup-area>
 
         </div>
 
@@ -131,11 +138,15 @@ import AmendmentButton from "../../motions/motion-setup-inputs/amendment-button"
 import AmendmentSetupArea from "../../motions/amendment-setup-area";
 import MainMotionEditArea from "../../motions/motion-setup-inputs/main-motion-edit-area";
 import EditMotionButton from "../../motions/motion-setup-inputs/edit-motion-button";
+import CreateResolutionButton from "../../motions/resolutions/create-resolution-button";
+import ResolutionSetupArea from "../../motions/resolutions/resolution-setup-area";
 
 
 export default {
     name: "motion-setup",
     components: {
+        ResolutionSetupArea,
+        CreateResolutionButton,
         EditMotionButton,
         MainMotionEditArea,
         AmendmentSetupArea,
@@ -199,6 +210,10 @@ export default {
 
         handleEditMainButtonClick: function(){
             this.showCard = 'edit';
+        },
+
+        handleResolutionButtonClick: function(){
+            this.showCard = 'resolution';
         },
 
         /**

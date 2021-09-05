@@ -43,6 +43,7 @@
         "vue-async-computed": "^3.9.0",
         "vue-axios": "^3.2.4",
         "vue-router": "^3.5.1",
+        "vue-wysiwyg": "^1.7.2",
         "vuex": "^3.6.2"
     }
 }

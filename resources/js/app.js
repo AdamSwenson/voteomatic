@@ -52,6 +52,9 @@ import store from './store';
 import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
 
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg, {}); // config is optional. more below
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
  * The following block of code may be used to automatically register your
