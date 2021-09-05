@@ -203,7 +203,15 @@ class Motion extends Model
      */
     public function getPassedAttribute()
     {
-        return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        if($this->requires == 0.5){
+            //A majority is more than half
+            return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        }
+        else{
+            //2/3 votes (and hopefully most others require at least 2/3
+            return count($this->affirmativeVotes) >= $this->voteCountThreshold;
+        }
+
     }
 
     /**
@@ -234,10 +242,11 @@ class Motion extends Model
     }
 
     /**
-     * The number of votes which the affirmatives must exceed
+     * The number of votes which the affirmatives must meet or exceed
      * for the motion to pass
      * todo Should this round up? Is there any case where that matters?
-     * DO NOT USE >=
+     * NB, Majority votes must be greater than this value. 2/3 votes must be at least
+     * this value
      */
     public function getVoteCountThresholdAttribute()
     {
