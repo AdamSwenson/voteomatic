@@ -5,7 +5,16 @@
 let _ = require('lodash');
 
 const Diff = require('diff');
+const HtmlDiff = require('htmldiff-js');
 
+/**
+ * Tags plaintext changes
+ * @param orig
+ * @param amend
+ * @param addedTag
+ * @param removedTag
+ * @returns {string}
+ */
 module.exports.getTaggedChanges = (orig, amend, addedTag = 'text-danger', removedTag = 'struck') => {
     let diff = Diff.diffWords(orig, amend);
     let out = [];
@@ -96,6 +105,14 @@ module.exports.checkChanges = (oldText, newText, searchStartIndex = 0) => {
     return out;
 
 };
+
+
+
+
+module.exports.getTaggedChangesOfHtml = (oldHtml, newHtml) => {
+    diffHtml.innerHTML = HtmlDiff.execute(oldHtml, newHtml);
+    return diffHtml.innerHTML;
+}
 
 
 //     }
