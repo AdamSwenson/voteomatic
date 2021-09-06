@@ -18,66 +18,6 @@
 
                 <motion-info-cell :motion="motion"></motion-info-cell>
 
-<!--                <div-->
-<!--                    v-if="isAmendment"-->
-<!--                    class="amendment-area "-->
-<!--                    v-bind:class="amendmentClass">-->
-
-<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
-
-<!--                    <amendment-text-display-->
-<!--                        v-if="isAmendment"-->
-<!--                    ></amendment-text-display>-->
-
-
-<!--                    <br/>-->
-
-<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
-<!--                                         :motion="motion"></required-vote-badge>-->
-<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
-
-<!--                    <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>-->
-
-<!--                </div>-->
-
-<!--                <div-->
-<!--                    class="procedural-subsidiary-area"-->
-<!--                    v-bind:class="proceduralStyle"-->
-<!--                    v-else-if="isProceduralSubsidiary"-->
-<!--                >-->
-<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
-
-<!--                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>-->
-
-<!--                    <br/>-->
-
-<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
-<!--                                         :motion="motion"></required-vote-badge>-->
-<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
-
-<!--                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>-->
-
-<!--                </div>-->
-
-<!--                <div-->
-<!--                    class="main-ish-area"-->
-<!--                    v-else-->
-<!--                >-->
-<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
-
-<!--&lt;!&ndash;                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>&ndash;&gt;-->
-
-<!--                    <motion-text-display :motionStyle="motionStyle" :motion="motion"></motion-text-display>-->
-<!--                    <br/>-->
-
-<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
-<!--                                         :motion="motion"></required-vote-badge>-->
-<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
-
-<!--                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>-->
-
-<!--                </div>-->
-
             </div>
 
             <div class="col-sm">

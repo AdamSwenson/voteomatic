@@ -37,10 +37,12 @@ import AmendmentMixin from "../../../mixins/amendmentMixin";
 export default {
     name: "amendment-text-display",
     components: {RegularAmendmentTextDisplay, ResolutionAmendmentTextDisplay},
-    mixins: [MotionMixin, MeetingMixin, motionObjectMixin,  AmendmentMixin],
+    mixins: [MeetingMixin, motionObjectMixin,  AmendmentMixin],
 
 
     props: [
+
+        'motion',
         /** When the display is used during the setup process
          * we need to override the usual way of getting altered and original text
          * that is defined in the mixin. That is what these do*/

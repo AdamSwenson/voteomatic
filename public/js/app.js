@@ -6075,6 +6075,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
 /* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _motions_text_display_motion_text_display__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motions/text-display/motion-text-display */ "./resources/js/components/motions/text-display/motion-text-display.vue");
 //
 //
 //
@@ -6152,24 +6153,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -6182,6 +6166,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-results-page",
   components: {
+    MotionTextDisplay: _motions_text_display_motion_text_display__WEBPACK_IMPORTED_MODULE_9__.default,
     MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_7__.default,
     DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_6__.default,
     RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_5__.default
@@ -6403,6 +6388,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../motions/badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
 /* harmony import */ var _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../motions/badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _motions_text_display_motion_text_display__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../motions/text-display/motion-text-display */ "./resources/js/components/motions/text-display/motion-text-display.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6511,9 +6502,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vote-page",
   components: {
+    MotionTextDisplay: _motions_text_display_motion_text_display__WEBPACK_IMPORTED_MODULE_14__.default,
     MotionTypeBadge: _motions_badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_12__.default,
     DebatableBadge: _motions_badges_debatable_badge__WEBPACK_IMPORTED_MODULE_11__.default,
     RequiredVoteBadge: _motions_badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_10__.default,
@@ -7809,13 +7802,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -8663,66 +8649,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _messaging_info_tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../messaging/info-tooltip */ "./resources/js/components/messaging/info-tooltip.vue");
 /* harmony import */ var _text_display_motion_text_display__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./text-display/motion-text-display */ "./resources/js/components/motions/text-display/motion-text-display.vue");
 /* harmony import */ var _text_display_motion_info_cell__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./text-display/motion-info-cell */ "./resources/js/components/motions/text-display/motion-info-cell.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10955,8 +10881,8 @@ __webpack_require__.r(__webpack_exports__);
     RegularAmendmentTextDisplay: _regular_amendment_text_display__WEBPACK_IMPORTED_MODULE_4__.default,
     ResolutionAmendmentTextDisplay: _resolution_amendment_text_display__WEBPACK_IMPORTED_MODULE_3__.default
   },
-  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_0___default()), (_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_5___default())],
-  props: [
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_5___default())],
+  props: ['motion',
   /** When the display is used during the setup process
    * we need to override the usual way of getting altered and original text
    * that is defined in the mixin. That is what these do*/
@@ -10989,20 +10915,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/motionResultsMixin */ "./resources/js/mixins/motionResultsMixin.js");
 /* harmony import */ var _mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/receiptMixin */ "./resources/js/mixins/receiptMixin.js");
-/* harmony import */ var _mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
-/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../badges/motion-status-badge */ "./resources/js/components/motions/badges/motion-status-badge.vue");
-/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
-/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
-/* harmony import */ var _motion_text_display__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./motion-text-display */ "./resources/js/components/motions/text-display/motion-text-display.vue");
-/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../badges/motion-status-badge */ "./resources/js/components/motions/badges/motion-status-badge.vue");
+/* harmony import */ var _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../badges/debatable-badge */ "./resources/js/components/motions/badges/debatable-badge.vue");
+/* harmony import */ var _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../badges/required-vote-badge */ "./resources/js/components/motions/badges/required-vote-badge.vue");
+/* harmony import */ var _motion_text_display__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./motion-text-display */ "./resources/js/components/motions/text-display/motion-text-display.vue");
+/* harmony import */ var _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../badges/motion-type-badge */ "./resources/js/components/motions/badges/motion-type-badge.vue");
 //
 //
 //
@@ -11024,50 +10944,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
 
 
 
@@ -11088,18 +10964,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "motion-info-cell",
   components: {
-    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_13__.default,
-    MotionTextDisplay: _motion_text_display__WEBPACK_IMPORTED_MODULE_12__.default,
-    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_11__.default,
-    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_10__.default,
-    MotionStatusBadge: _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_9__.default
+    MotionTypeBadge: _badges_motion_type_badge__WEBPACK_IMPORTED_MODULE_10__.default,
+    MotionTextDisplay: _motion_text_display__WEBPACK_IMPORTED_MODULE_9__.default,
+    RequiredVoteBadge: _badges_required_vote_badge__WEBPACK_IMPORTED_MODULE_8__.default,
+    DebatableBadge: _badges_debatable_badge__WEBPACK_IMPORTED_MODULE_7__.default,
+    MotionStatusBadge: _badges_motion_status_badge__WEBPACK_IMPORTED_MODULE_6__.default
   },
   props: ['motion'],
-  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_8___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_3___default()), (_mixins_receiptMixin__WEBPACK_IMPORTED_MODULE_4___default())],
+  mixins: [(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_0___default()), (_mixins_amendmentMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_proceduralMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_5___default()), (_mixins_motionResultsMixin__WEBPACK_IMPORTED_MODULE_3___default())],
   data: function data() {
     return {};
   },
   asyncComputed: {
+    /**
+     * What styling to pass to the motion-text display if
+     * motion is amendment
+     */
     amendmentStyle: function amendmentStyle() {
       if (this.isSecondOrder) {
         return ' pl-5 ';
@@ -11149,6 +11029,10 @@ __webpack_require__.r(__webpack_exports__);
 
       return style;
     },
+
+    /**
+     * What styling to add if the motion is a procedural motion
+     */
     proceduralStyle: function proceduralStyle() {
       switch (this.pendingMotionDegree) {
         case 2:
@@ -11176,18 +11060,18 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters.getActiveMotion;
     },
     showDebatableBadge: function showDebatableBadge() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_5__.isReadyToRock)(this.motion)) {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(this.motion)) {
         return !this.isMotionComplete && !this.isSuperseded;
       }
     },
     showRequiredVoteBadge: function showRequiredVoteBadge() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_5__.isReadyToRock)(this.motion)) {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(this.motion)) {
         //Don't show on already passed motions
         return !this.isMotionComplete && !this.isSuperseded;
       }
     },
     showStatusBadge: function showStatusBadge() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_5__.isReadyToRock)(this.motion)) {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(this.motion)) {
         return !this.isMotionComplete && !this.isSuperseded;
       }
     }
@@ -11223,6 +11107,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./amendment-text-display */ "./resources/js/components/motions/text-display/amendment-text-display.vue");
 /* harmony import */ var _regular_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./regular-amendment-text-display */ "./resources/js/components/motions/text-display/regular-amendment-text-display.vue");
 /* harmony import */ var _resolution_amendment_text_display__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./resolution-amendment-text-display */ "./resources/js/components/motions/text-display/resolution-amendment-text-display.vue");
+//
+//
 //
 //
 //
@@ -11274,25 +11160,41 @@ __webpack_require__.r(__webpack_exports__);
   asyncComputed: {
     displayComponent: function displayComponent() {
       if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_5__.isReadyToRock)(this.motion)) {
-        switch (this.motion) {
-          case this.isResolution && !this.isAmendment:
-            //Motion is primary resolution
-            return _resolution_text_display__WEBPACK_IMPORTED_MODULE_4__.default;
-            break;
+        if (this.isAmendment) {
+          //This display class will handle both amendments to resolutions
+          //and regular amendments (since they require similar text-preprocessing)
+          return _amendment_text_display__WEBPACK_IMPORTED_MODULE_7__.default;
+        } else if (this.isResolution) {
+          //Motion is primary resolution. We know it's not an
+          //amendment since that would've been caught above.
+          return _resolution_text_display__WEBPACK_IMPORTED_MODULE_4__.default;
+        } else {
+          // Motion is a regular old motion
+          return _plain_text_primary_motion_text_display__WEBPACK_IMPORTED_MODULE_6__.default;
+        } //
+        //
+        //
+        // switch (this.motion) {
+        //     case this.isResolution && ! this.isAmendment:
+        //         //Motion is primary resolution
+        //         return ResolutionTextDisplay;
+        //         break;
+        //
+        //     case this.isResolution && this.isAmendment:
+        //         //Motion is an amendment to a resolution
+        //         return ResolutionAmendmentTextDisplay;
+        //         break;
+        //
+        //     case this.isAmendment:
+        //         //Motion is an amendment to a non-resolution motion
+        //         return RegularAmendmentTextDisplay;
+        //         break;
+        //
+        //     default:
+        //         return PlainTextPrimaryMotionTextDisplay;
+        //
+        // }
 
-          case this.isResolution && this.isAmendment:
-            //Motion is an amendment to a resolution
-            return _resolution_amendment_text_display__WEBPACK_IMPORTED_MODULE_9__.default;
-            break;
-
-          case this.isAmendment:
-            //Motion is an amendment to a non-resolution motion
-            return _regular_amendment_text_display__WEBPACK_IMPORTED_MODULE_8__.default;
-            break;
-
-          default:
-            return _plain_text_primary_motion_text_display__WEBPACK_IMPORTED_MODULE_6__.default;
-        }
       }
     }
   },
@@ -77352,56 +77254,68 @@ var render = function() {
     _vm.isMotionComplete
       ? _c("div", { staticClass: "card results-display" }, [
           _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c("blockquote", [_vm._v(_vm._s(_vm.motion.content))]),
-                _vm._v(" "),
-                _c("required-vote-badge", { attrs: { motion: _vm.motion } }),
-                _vm._v(" "),
-                _c("debatable-badge", { attrs: { motion: _vm.motion } }),
-                _vm._v(" "),
-                _c("motion-type-badge", { attrs: { motion: _vm.motion } })
-              ],
-              1
-            ),
-            _vm._v(" "),
             _c("div", { staticClass: "card-body", class: _vm.resultStyle }, [
               _c("h1", { staticClass: "card-title " }, [
                 _vm._v("The motion " + _vm._s(_vm.passed))
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: " card" }, [
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "card-text" }, [
-                _c("dl", { staticClass: "row" }, [
-                  _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Yays")]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-sm-9" }, [
-                    _vm._v(_vm._s(_vm.yayCount))
-                  ])
-                ]),
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col" },
+                  [
+                    _c(
+                      "blockquote",
+                      [
+                        _c("motion-text-display", {
+                          attrs: { motion: _vm.motion }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("required-vote-badge", {
+                      attrs: { motion: _vm.motion }
+                    }),
+                    _vm._v(" "),
+                    _c("debatable-badge", { attrs: { motion: _vm.motion } }),
+                    _vm._v(" "),
+                    _c("motion-type-badge", { attrs: { motion: _vm.motion } })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("dl", { staticClass: "row" }, [
-                  _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Nays")]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-sm-9" }, [
-                    _vm._v(_vm._s(_vm.nayCount))
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("dl", { staticClass: "row" }, [
-                  _c("dt", { staticClass: "col-sm-3" }, [
-                    _vm._v("Total votes cast")
-                  ]),
-                  _vm._v(" "),
-                  _c("dd", { staticClass: "col-sm-9" }, [
-                    _vm._v(_vm._s(_vm.totalVotes))
+                _c("div", { staticClass: "col" }, [
+                  _c("div", { staticClass: "card-text" }, [
+                    _c("dl", { staticClass: "row" }, [
+                      _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Yays")]),
+                      _vm._v(" "),
+                      _c("dd", { staticClass: "col-sm-9" }, [
+                        _vm._v(_vm._s(_vm.yayCount))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dl", { staticClass: "row" }, [
+                      _c("dt", { staticClass: "col-sm-3" }, [_vm._v("Nays")]),
+                      _vm._v(" "),
+                      _c("dd", { staticClass: "col-sm-9" }, [
+                        _vm._v(_vm._s(_vm.nayCount))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("dl", { staticClass: "row" }, [
+                      _c("dt", { staticClass: "col-sm-3" }, [
+                        _vm._v("Total votes cast")
+                      ]),
+                      _vm._v(" "),
+                      _c("dd", { staticClass: "col-sm-9" }, [
+                        _vm._v(_vm._s(_vm.totalVotes))
+                      ])
+                    ])
                   ])
                 ])
               ])
@@ -77548,12 +77462,8 @@ var render = function() {
           "div",
           { staticClass: "text-center" },
           [
-            !_vm.isAmendment
-              ? _c("motion-content", {
-                  attrs: { motion: _vm.motion, isReady: _vm.isReady }
-                })
-              : _vm.isReady && _vm.isAmendment
-              ? _c("amendment-text-display")
+            _vm.isReady
+              ? _c("motion-text-display", { attrs: { motion: _vm.motion } })
               : _vm._e()
           ],
           1
@@ -78194,6 +78104,7 @@ var render = function() {
             [
               _c("amendment-text-display", {
                 attrs: {
+                  motion: _vm.motion,
                   "amendment-text-for-setup": _vm.localText,
                   "original-text-for-setup": _vm.originalText
                 }
@@ -78256,7 +78167,7 @@ var render = function() {
           _c(
             "button",
             { staticClass: "btn btn-primary", on: { click: _vm.handleReset } },
-            [_vm._v("Reset to original\n                    ")]
+            [_vm._v("Reset to original\n                ")]
           )
         ]),
         _vm._v(" "),

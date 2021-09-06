@@ -2,7 +2,10 @@
 <div class="motion-info-cell">
     <motion-type-badge :motion="motion"></motion-type-badge>
 
-    <motion-text-display :motionStyle="motionStyle" :motion="motion"></motion-text-display>
+    <motion-text-display
+        :motionStyle="motionStyle"
+        :motion="motion"
+    ></motion-text-display>
 
     <br/>
 
@@ -11,50 +14,6 @@
     <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
 
     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-
-
-    <!--    <div-->
-<!--        v-if="isAmendment"-->
-<!--        class="amendment-area "-->
-<!--        v-bind:class="amendmentClass">-->
-
-<!--        <motion-type-badge :motion="motion"></motion-type-badge>-->
-
-<!--        <amendment-text-display-->
-<!--            v-if="isAmendment"-->
-<!--        ></amendment-text-display>-->
-
-
-<!--        <br/>-->
-
-<!--        <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
-<!--                             :motion="motion"></required-vote-badge>-->
-<!--        -->
-<!--        <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
-
-<!--        <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>-->
-
-<!--    </div>-->
-
-<!--    <div-->
-<!--        class="procedural-subsidiary-area"-->
-<!--        v-bind:class="proceduralStyle"-->
-<!--        v-else-if="isProceduralSubsidiary"-->
-<!--    >-->
-<!--        <motion-type-badge :motion="motion"></motion-type-badge>-->
-
-<!--        <span v-bind:class="motionStyle">   {{ motion.content }}   </span>-->
-
-<!--        <br/>-->
-
-<!--        <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
-<!--                             :motion="motion"></required-vote-badge>-->
-<!--        <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
-
-<!--        <motion-status-badge :is-passed="isPassed"></motion-status-badge>-->
-
-<!--    </div>-->
-
 
 
     </div>
@@ -66,10 +25,7 @@ import ChairMixin from "../../../mixins/chairMixin";
 import AmendmentMixin from "../../../mixins/amendmentMixin";
 import ProceduralMixin from "../../../mixins/proceduralMixin";
 import MotionResultsMixin from "../../../mixins/motionResultsMixin";
-import receiptMixin from "../../../mixins/receiptMixin";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
-import MotionMixin from "../../../mixins/motionStoreMixin";
-import MeetingMixin from "../../../mixins/meetingMixin";
 import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import MotionStatusBadge from "../badges/motion-status-badge";
 import DebatableBadge from "../badges/debatable-badge";
@@ -87,7 +43,7 @@ export default {
     components: {MotionTypeBadge, MotionTextDisplay, RequiredVoteBadge, DebatableBadge, MotionStatusBadge},
     props: ['motion'],
 
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, motionObjectMixin, MotionResultsMixin, receiptMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, motionObjectMixin, MotionResultsMixin],
 
     data: function () {
         return {}
@@ -95,8 +51,10 @@ export default {
 
     asyncComputed: {
 
-
-
+        /**
+         * What styling to pass to the motion-text display if
+         * motion is amendment
+         */
         amendmentStyle: function () {
 
             if (this.isSecondOrder) {
@@ -150,6 +108,9 @@ export default {
 
         },
 
+        /**
+         * What styling to add if the motion is a procedural motion
+         */
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {
                 case 2:
@@ -175,7 +136,6 @@ export default {
         },
 
 
-
         showDebatableBadge: function(){
             if(isReadyToRock(this.motion)) {
                 return !this.isMotionComplete && !this.isSuperseded;
@@ -188,7 +148,6 @@ export default {
                 return ! this.isMotionComplete && ! this.isSuperseded;
             }
         },
-
 
 
         showStatusBadge: function(){

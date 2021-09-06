@@ -6,22 +6,15 @@
             <div class="row display-area text-center">
                 <div class="col">
                     <blockquote class="blockquote mb-0">
-<!--                        <resolution-amendment-text-display-->
-<!--                            v-if="isResolution"-->
-<!--                            :amendment-text="localText"-->
-<!--                            :original-text="originalText"-->
-<!--                        ></resolution-amendment-text-display>-->
-
 
                         <amendment-text-display
+                            :motion="motion"
                             :amendment-text-for-setup="localText"
                             :original-text-for-setup="originalText"
                         ></amendment-text-display>
+
                     </blockquote>
 
-                    <!--                    <h4>Amendment display</h4>-->
-                    <!--                    <div class="clearfix"></div>-->
-                    <!--                    <p v-html="taggedNewText"></p>-->
                 </div>
             </div>
 

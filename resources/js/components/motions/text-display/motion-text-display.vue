@@ -1,6 +1,8 @@
 <template>
 
-    <div class="motion-text-display " v-bind:class="styling">
+    <div class="motion-text-display "
+         v-bind:class="styling"
+    >
 
         <component
             v-bind:is="displayComponent"
@@ -55,26 +57,45 @@ export default {
         displayComponent: function () {
             if (isReadyToRock(this.motion)) {
 
-                switch (this.motion) {
-                    case this.isResolution && ! this.isAmendment:
-                        //Motion is primary resolution
-                        return ResolutionTextDisplay;
-                        break;
-
-                    case this.isResolution && this.isAmendment:
-                        //Motion is an amendment to a resolution
-                        return ResolutionAmendmentTextDisplay;
-                        break;
-
-                    case this.isAmendment:
-                        //Motion is an amendment to a non-resolution motion
-                        return RegularAmendmentTextDisplay;
-                        break;
-
-                    default:
-                        return PlainTextPrimaryMotionTextDisplay;
-
+                if (this.isAmendment) {
+                    //This display class will handle both amendments to resolutions
+                    //and regular amendments (since they require similar text-preprocessing)
+                    return AmendmentTextDisplay;
                 }
+
+                else if(this.isResolution) {
+                    //Motion is primary resolution. We know it's not an
+                    //amendment since that would've been caught above.
+                    return ResolutionTextDisplay;
+
+                } else {
+                    // Motion is a regular old motion
+                    return PlainTextPrimaryMotionTextDisplay;
+                }
+
+                //
+                //
+                //
+                // switch (this.motion) {
+                //     case this.isResolution && ! this.isAmendment:
+                //         //Motion is primary resolution
+                //         return ResolutionTextDisplay;
+                //         break;
+                //
+                //     case this.isResolution && this.isAmendment:
+                //         //Motion is an amendment to a resolution
+                //         return ResolutionAmendmentTextDisplay;
+                //         break;
+                //
+                //     case this.isAmendment:
+                //         //Motion is an amendment to a non-resolution motion
+                //         return RegularAmendmentTextDisplay;
+                //         break;
+                //
+                //     default:
+                //         return PlainTextPrimaryMotionTextDisplay;
+                //
+                // }
 
 
             }
