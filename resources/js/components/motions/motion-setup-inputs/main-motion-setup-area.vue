@@ -9,12 +9,6 @@
             <div class="required">
                 <form>
 
-
-                    <resolution-input
-                        :motion="draftMotion"
-                        v-on:update:content="draftMotion.content  = $event"
-                    ></resolution-input>
-
                     <motion-content-input
                         :motion="draftMotion"
                         v-on:update:content="draftMotion.content  = $event"

@@ -135,7 +135,7 @@ import DeleteMotionButton from "../../motions/motion-setup-inputs/delete-motion-
 import DeleteMotionModal from "../../motions/motion-setup-inputs/delete-motion-modal";
 import MainMotionSetupArea from "../../motions/motion-setup-inputs/main-motion-setup-area";
 import AmendmentButton from "../../motions/motion-setup-inputs/amendment-button";
-import AmendmentSetupArea from "../../motions/amendment-setup-area";
+import AmendmentSetupArea from "../../motions/amendments/amendment-setup-area";
 import MainMotionEditArea from "../../motions/motion-setup-inputs/main-motion-edit-area";
 import EditMotionButton from "../../motions/motion-setup-inputs/edit-motion-button";
 import CreateResolutionButton from "../../motions/resolutions/create-resolution-button";

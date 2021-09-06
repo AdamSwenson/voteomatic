@@ -14,6 +14,13 @@ module.exports = {
 
     asyncComputed: {
 
+
+        isAmendment: function(){
+            if (!_.isUndefined(this.motion) && ! _.isNull(this.motion)) {
+                return this.motion.isAmendment();
+            }
+        },
+
         /**
          * If true, voting has ended on the motion.
          * If false, voting has either not begun or is in progress
@@ -27,16 +34,27 @@ module.exports = {
             default: false
         },
 
-        isAmendment: function(){
-            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-                return this.motion.isAmendment();
-            }
-        },
-
         isMotionReady: function () {
             return ! _.isUndefined(this.motion) && ! _.isNull(this.motion);
         },
 
+
+        /**
+         * Whether the motion is a html formatted resolution
+         * which will require special display options
+         * @returns {boolean|boolean|*}
+         */
+        isResolution: function(){
+            if(_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
+
+            return this.motion.isResolution;
+        },
+
+        /**
+         * Whether another motion has superseded this one
+         * (e.g., if it was altered by an amendment)
+         * @returns {*}
+         */
         isSuperseded: function(){
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isSuperseded();

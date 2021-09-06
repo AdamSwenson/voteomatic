@@ -6,8 +6,16 @@
             <div class="row display-area text-center">
                 <div class="col">
                     <blockquote class="blockquote mb-0">
-                        <amendment-text-display :amendment-text="localText"
-                                                :original-text="originalText"
+<!--                        <resolution-amendment-text-display-->
+<!--                            v-if="isResolution"-->
+<!--                            :amendment-text="localText"-->
+<!--                            :original-text="originalText"-->
+<!--                        ></resolution-amendment-text-display>-->
+
+
+                        <amendment-text-display
+                            :amendment-text-for-setup="localText"
+                            :original-text-for-setup="originalText"
                         ></amendment-text-display>
                     </blockquote>
 
@@ -63,16 +71,17 @@
 
 <script>
 
-import MotionMixin from "../../mixins/motionStoreMixin";
-import MeetingMixin from "../../mixins/meetingMixin";
-import motionObjectMixin from "../../mixins/motionObjectMixin";
-import Payload from "../../models/Payload";
-import AmendmentTextDisplay from "./amendment-text-display";
-import ProposeAmendmentButton from "./motion-setup-inputs/propose-amendment-button";
+import MotionMixin from "../../../mixins/motionStoreMixin";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import motionObjectMixin from "../../../mixins/motionObjectMixin";
+import Payload from "../../../models/Payload";
+import AmendmentTextDisplay from "../text-display/amendment-text-display";
+import ProposeAmendmentButton from "../motion-setup-inputs/propose-amendment-button";
+import ResolutionAmendmentTextDisplay from "../text-display/resolution-amendment-text-display";
 
 export default {
     name: "amendment-setup-area",
-    components: {ProposeAmendmentButton, AmendmentTextDisplay},
+    components: {ResolutionAmendmentTextDisplay, ProposeAmendmentButton, AmendmentTextDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
@@ -97,18 +106,17 @@ export default {
         originalText: function () {
             if (_.isUndefined(this.motion)) return ''
             return this.motion.content;
-
         },
 
+
+        // isResolution: function(){
+        //     if(_.isUndefined(this.motion)) return false;
+        //     return this.motion.isResolution;
+        // },
 
     },
 
     computed: {
-        isResolution: function(){
-            if(_.isUndefined(this.motion)) return false;
-            return this.motion.isResolution;
-        },
-
         text: {
             get: function () {
                 if (this.localText === '') {
@@ -133,6 +141,7 @@ export default {
                 applies_to: this.motion.id,
                 content: this.localText,
                 type: 'amendment',
+                is_resolution: this.motion.isResolution,
                 requires: 0.5
             };
             let me = this;

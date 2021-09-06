@@ -1,23 +1,25 @@
 <template>
-    <div class="resolution-amendment-text-display"
-    v-html="taggedNewText"
-    ></div>
+    <span class="amendment-text-display">
+        <span v-html="taggedNewText"></span>
+    </span>
 
 
 </template>
 
 <script>
-import Payload from "../../models/Payload";
+import Payload from "../../../models/Payload";
 
-import {checkChanges, getTaggedChanges} from '../../utilities/amendment.utilities';
+import {checkChanges, getTaggedChanges} from '../../../utilities/amendment.utilities';
 
 /**
  * Displays an html tagged string indicating where
  * changes have been made between the original and the
  * amendment.
+ *
+ * THIS USUALLY SHOULD NOT BE USED DIRECTLY. USE AMENDMENT-TEXT-DISPLAY
  */
 export default {
-    name: "amendment-text-display",
+    name: "regular-amendment-text-display",
 
     // props: ['amendmentText', 'originalText'],
 
@@ -170,27 +172,27 @@ export default {
 
 <style>
 
-.altered-text {
-    font-weight: bold;
-}
+/*.altered-text {*/
+/*    font-weight: bold;*/
+/*}*/
 
-.struck {
-    text-decoration: line-through;
-}
+/*.struck {*/
+/*    text-decoration: line-through;*/
+/*}*/
 
 
 
-/*
-Classes added to the primary amendment text when
-displaying a secondary amendment.
-*/
-.primary-insert {
+/*!**/
+/*Classes added to the primary amendment text when*/
+/*displaying a secondary amendment.*/
+/**!*/
+/*.primary-insert {*/
 
-}
+/*}*/
 
-.primary-strike {
-}
+/*.primary-strike {*/
+/*}*/
 
-.primary-strike-insert {
-}
+/*.primary-strike-insert {*/
+/*}*/
 </style>

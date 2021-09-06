@@ -16,66 +16,67 @@
 
             <div class="col ">
 
-                <div
-                    v-if="isAmendment"
-                    class="amendment-area "
-                    v-bind:class="amendmentClass">
+                <motion-info-cell :motion="motion"></motion-info-cell>
 
-                    <motion-type-badge :motion="motion"></motion-type-badge>
+<!--                <div-->
+<!--                    v-if="isAmendment"-->
+<!--                    class="amendment-area "-->
+<!--                    v-bind:class="amendmentClass">-->
 
-                    <amendment-text-display
-                        v-if="isAmendment"
-                        :original-text="originalText"
-                        :amendment-text="motion.content"
-                        :tags="amendmentTags"
-                    ></amendment-text-display>
+<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
 
-                    <br/>
+<!--                    <amendment-text-display-->
+<!--                        v-if="isAmendment"-->
+<!--                    ></amendment-text-display>-->
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
 
-                    <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>
+<!--                    <br/>-->
 
-                </div>
+<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
+<!--                                         :motion="motion"></required-vote-badge>-->
+<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
 
-                <div
-                    class="procedural-subsidiary-area"
-                    v-bind:class="proceduralStyle"
-                    v-else-if="isProceduralSubsidiary"
-                >
-                    <motion-type-badge :motion="motion"></motion-type-badge>
+<!--                    <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>-->
 
-                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+<!--                </div>-->
 
-                    <br/>
+<!--                <div-->
+<!--                    class="procedural-subsidiary-area"-->
+<!--                    v-bind:class="proceduralStyle"-->
+<!--                    v-else-if="isProceduralSubsidiary"-->
+<!--                >-->
+<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
+<!--                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>-->
 
-                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+<!--                    <br/>-->
 
-                </div>
+<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
+<!--                                         :motion="motion"></required-vote-badge>-->
+<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
 
-                <div
-                    class="main-ish-area"
-                    v-else
-                >
-                    <motion-type-badge :motion="motion"></motion-type-badge>
+<!--                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>-->
 
-                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
+<!--                </div>-->
 
-                    <br/>
+<!--                <div-->
+<!--                    class="main-ish-area"-->
+<!--                    v-else-->
+<!--                >-->
+<!--                    <motion-type-badge :motion="motion"></motion-type-badge>-->
 
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
+<!--&lt;!&ndash;                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>&ndash;&gt;-->
 
-                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+<!--                    <motion-text-display :motionStyle="motionStyle" :motion="motion"></motion-text-display>-->
+<!--                    <br/>-->
 
-                </div>
+<!--                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"-->
+<!--                                         :motion="motion"></required-vote-badge>-->
+<!--                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>-->
+
+<!--                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>-->
+
+<!--                </div>-->
 
             </div>
 
@@ -122,7 +123,7 @@ import MotionStatusBadge from "./badges/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
-import AmendmentTextDisplay from "./amendment-text-display";
+import AmendmentTextDisplay from "./text-display/amendment-text-display";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import MotionResultsMixin from '../../mixins/motionResultsMixin';
 import ProceduralMixin from "../../mixins/proceduralMixin";
@@ -135,10 +136,16 @@ import DebatableBadge from "./badges/debatable-badge";
 import OpenVotingButton from "./open-voting-button";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import InfoTooltip from "../messaging/info-tooltip";
+import MainMotionTextDisplay from "./text-display/motion-text-display";
+import MotionTextDisplay from "./text-display/motion-text-display";
+import MotionInfoCell from "./text-display/motion-info-cell";
 
 export default {
     name: "motion-select-area",
     components: {
+        MotionInfoCell,
+        MotionTextDisplay,
+        MainMotionTextDisplay,
         InfoTooltip,
         OpenVotingButton,
         DebatableBadge,

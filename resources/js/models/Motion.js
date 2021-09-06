@@ -22,7 +22,9 @@ export default class Motion extends IModel {
                     max_winners=null}) {
         super();
         this.id = id;
-        this.is_resolution = is_resolution;
+
+        //todo hack because seem to be having trouble typecasting to boolean when get from server
+        this.is_resolution =  is_resolution === 1 ? true : is_resolution;
 
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;

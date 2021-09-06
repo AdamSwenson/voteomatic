@@ -5,7 +5,8 @@
 let _ = require('lodash');
 
 const Diff = require('diff');
-const HtmlDiff = require('htmldiff-js');
+// const HtmlDiff = require('htmldiff-js');
+// import HtmlDiff from 'htmldiff-js';
 
 /**
  * Tags plaintext changes
@@ -107,11 +108,16 @@ module.exports.checkChanges = (oldText, newText, searchStartIndex = 0) => {
 };
 
 
-
-
+/**
+ * Used on resolution text where all text is htm
+ *
+ * @param oldHtml
+ * @param newHtml
+ * @returns {*}
+ */
 module.exports.getTaggedChangesOfHtml = (oldHtml, newHtml) => {
-    diffHtml.innerHTML = HtmlDiff.execute(oldHtml, newHtml);
-    return diffHtml.innerHTML;
+    // diffHtml.innerHTML = HtmlDiff.execute(oldHtml, newHtml);
+    // return diffHtml.innerHTML;
 }
 
 

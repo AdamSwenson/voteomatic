@@ -54,7 +54,7 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 
 import motionObjectMixin from "../../../mixins/motionObjectMixin";
 
-import resolutionTextDisplay from "./resolution-text-display";
+import resolutionTextDisplay from "../text-display/resolution-text-display";
 import ProposeResolutionButton from "./propose-resolution-button";
 import ResolutionInput from "./resolution-input";
 
