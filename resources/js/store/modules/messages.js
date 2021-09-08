@@ -57,6 +57,17 @@ const mutations = {
 
 
 const actions = {
+
+    handlePusherGeneralNotification({dispatch, commit, getters}, pusherPayload){
+        return new Promise(((resolve, reject) => {
+            let m = Message.makeFromServerResponse(pusherPayload);
+            dispatch('showMessage', m).then(() => {
+                resolve();
+            });
+        }));
+    },
+
+
     /**
      * Shows the message for the amount of time set on the object.
      *

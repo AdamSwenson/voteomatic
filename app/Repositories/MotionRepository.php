@@ -13,6 +13,10 @@ use http\Env\Request;
 
 class MotionRepository implements IMotionRepository
 {
+
+    const PUSHER_BYTE_LIMIT = 10240;
+
+
     /**
      * we will copy everything except these when
      * creating superseding motions.
@@ -31,6 +35,10 @@ class MotionRepository implements IMotionRepository
 
         $this->stackRepo = app()->make(IMotionStackRepository::class);
 
+    }
+
+    static public function isPusherCompatible(Motion $motion){
+       return mb_strlen($motion->toJson()) <= self::PUSHER_BYTE_LIMIT;
     }
 
     public function createMotion(User $user, Meeting $meeting, MotionRequest $request)

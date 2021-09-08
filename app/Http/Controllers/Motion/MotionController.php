@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Motion;
 
 use App\Events\MotionSeconded;
 use App\Events\MotionNeedingApproval;
+use App\Events\NotifyPageRefreshNeeded;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MotionRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
+use App\Repositories\MotionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -109,6 +111,11 @@ class MotionController extends Controller
                 //seek authorization and (later) a second
                 MotionNeedingApproval::dispatch($motion);
             }
+        }
+
+        //Check in case we've sent a payload which exceeds pusher's limits
+        if(! MotionRepository::isPusherCompatible($motion)){
+            NotifyPageRefreshNeeded::dispatch($this->meeting);
         }
 
         return response()->json($motion);

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Exceptions\PageRefreshNeededException;
+use App\Models\Meeting;
 use App\Models\Motion;
 use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Broadcasting\Channel;
@@ -14,27 +15,26 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class MotionSeconded implements ShouldBroadcast
+class NotifyPageRefreshNeeded implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, GeneralNotificationTrait;
+
+    const ERROR_CODE = 801;
+
+    const MESSAGE = "New content is available. Please refresh your browser to see it";
+
+    const MESSAGE_STYLE = 'danger';
+
+    const DISPLAY_TIME = 15000;
+
+    /** @var bool Whether the user must dismiss the message */
+    const BLOCKING_MESSAGE = true;
 
 
-    /**
-     * @var Motion
-     */
-    public $motion;
 
-    public $meeting;
-
-    /**
-     * Create a new event instance.
-     *
-     * @param Motion $motion
-     */
-    public function __construct(Motion $motion)
+    public function __construct(Meeting $meeting)
     {
-        $this->motion = $motion;
-        $this->meeting = $motion->meeting;
+        $this->meeting = $meeting;
     }
 
     /**
@@ -44,13 +44,8 @@ class MotionSeconded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        try {
-            return new PrivateChannel($this->meetingChannelName());
-
-        }catch (BroadcastException $e) {
-            Log::alert('taco');
-        throw new PageRefreshNeededException();
-        }
+        return new PrivateChannel($this->meetingChannelName());
     }
+
 
 }

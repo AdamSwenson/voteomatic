@@ -4,7 +4,7 @@
 namespace App\Events;
 
 
-trait MotionEventTrait
+trait ChannelDefinitionTrait
 {
 
     public function chairChannelName(){

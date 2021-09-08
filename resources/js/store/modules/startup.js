@@ -57,6 +57,9 @@ const actions = {
         let meeting = getters.getActiveMeeting;
         let channel = `meeting.${meeting.id}`;
         Echo.private(channel)
+            .listen("GeneralNotification", (e) => {
+                dispatch('handlePusherGeneralNotification', e);
+            })
             .listen("MotionSeekingSecond", (e) => {
                 window.console.log('Received broadcast event meeting', e);
                 dispatch('handleMotionSeekingSecondMessage', e);

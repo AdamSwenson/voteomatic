@@ -21,7 +21,7 @@ use Illuminate\Queue\SerializesModels;
  */
 class MotionVoteCast implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
 
 
     /**

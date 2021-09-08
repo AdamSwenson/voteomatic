@@ -42,6 +42,22 @@ class MotionFactory extends Factory
         ],
     ];
 
+    public $resolutionText = "ACADEMIC FREEDOM AND TEACHING MODALITY IN THE COVID-19 PANDEMIC
+1.	RESOLVED:	That the Academic Senate of the California State University (ASCSU) recognize that we are still dealing with the COVID-19 pandemic and the very contagious Delta variant; and be it further
+2.	RESOLVED:	That the faculty have a right to make decisions as to what pertains to their teaching environment and their personal health; and be it further
+3.	RESOLVED:	That to avoid canceling classes, faculty have the ad hoc flexibility to rapidly pivot face-to-face courses temporarily to virtual instruction during acute or dynamic transitory extenuating circumstances such as sudden COVID-19 spikes, childcare, elder care, and for physical and/or mental health management; and be it further
+4.	RESOLVED:	That the ASCSU request that the Chancellor’s Office (CO) declare that, for as long as COVID-19 remains a concern, course modality be determined by the faculty member; and be it further
+5.	RESOLVED:	That ASCSU urge individual campuses to accept instructor-initiated changes in the mode of instruction in response to the changing conditions of the pandemic; and be it further
+6.	RESOLVED:	That the ASCSU distribute this resolution to the:
+●	CSU Board of Trustees,
+●	CSU Chancellor,
+●	CSU campus Presidents,
+●	CSU campus Senate Chairs,
+●	CSU campus Senate Executive Committees,
+●	CSU Provosts/Vice Presidents of Academic Affairs, and
+●	President of California Faculty Association (CFA).
+";
+
 //    public $descriptions = ["",
 //        "If this motion is approved, we will immediately vote on the next motion",
 //        "Please vote once or forever hold your peace",
@@ -78,7 +94,8 @@ class MotionFactory extends Factory
         ];
     }
 
-    public function amendment(){
+    public function amendment()
+    {
 
         return $this->state(function (array $attributes) {
             $main = new Motion();
@@ -156,6 +173,14 @@ class MotionFactory extends Factory
         });
     }
 
+    public function resolution()
+    {
+        return [
+            'content' => $this->resolutionText,
+            'requires' => 0.5,
+            'description' => ''
+        ];
+    }
 
     /**
      * A motion used in an election

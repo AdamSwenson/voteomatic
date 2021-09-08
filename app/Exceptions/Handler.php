@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -35,6 +36,17 @@ class Handler extends ExceptionHandler
         $this->renderable(function (ClientVisibleException $e, $request) {
             return response()->json($e, $e->status);
         });
+
+//        $this->reportable(/**
+//         * @param BroadcastException $e
+//         */ function (BroadcastException $e) {
+//             abort(443);
+//dd($e);
+//             throw new PageRefreshNeededException();
+
+
+
+//        });
 
 //        $this->renderable(function (DoubleVoteAttempt $e, $request) {
 //            return response()->json($e, DoubleVoteAttempt::ERROR_CODE);

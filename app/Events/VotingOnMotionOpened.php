@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 
 class VotingOnMotionOpened implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
     /**
      * @var Motion
      */

@@ -14806,7 +14806,9 @@ var Message = /*#__PURE__*/function (_IModel) {
         _ref$showToChair = _ref.showToChair,
         showToChair = _ref$showToChair === void 0 ? null : _ref$showToChair,
         _ref$chairOnly = _ref.chairOnly,
-        chairOnly = _ref$chairOnly === void 0 ? null : _ref$chairOnly;
+        chairOnly = _ref$chairOnly === void 0 ? null : _ref$chairOnly,
+        _ref$blockingMessage = _ref.blockingMessage,
+        blockingMessage = _ref$blockingMessage === void 0 ? null : _ref$blockingMessage;
 
     _classCallCheck(this, Message);
 
@@ -14816,7 +14818,10 @@ var Message = /*#__PURE__*/function (_IModel) {
     _this._showToChair = showToChair;
     /** Whether to only show the message to the chair */
 
-    _this._chairOnly = chairOnly; //We add a bit of entropy so vue won't get confused by multiple
+    _this._chairOnly = chairOnly;
+    /** Whether the message should demand dismissal */
+
+    _this.blockingMessage = blockingMessage; //We add a bit of entropy so vue won't get confused by multiple
     //instances of same message
 
     _this.id = 'message-' + id + '-' + _.random(3, 9999);
@@ -17446,6 +17451,18 @@ var mutations = {
 
 };
 var actions = {
+  handlePusherGeneralNotification: function handlePusherGeneralNotification(_ref, pusherPayload) {
+    var dispatch = _ref.dispatch,
+        commit = _ref.commit,
+        getters = _ref.getters;
+    return new Promise(function (resolve, reject) {
+      var m = _models_Message__WEBPACK_IMPORTED_MODULE_0__.default.makeFromServerResponse(pusherPayload);
+      dispatch('showMessage', m).then(function () {
+        resolve();
+      });
+    });
+  },
+
   /**
    * Shows the message for the amount of time set on the object.
    *
@@ -17457,10 +17474,10 @@ var actions = {
    * @param messageObject
    * @returns {Promise<unknown>}
    */
-  showMessage: function showMessage(_ref, messageObject) {
-    var dispatch = _ref.dispatch,
-        commit = _ref.commit,
-        getters = _ref.getters;
+  showMessage: function showMessage(_ref2, messageObject) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        getters = _ref2.getters;
     return new Promise(function (resolve, reject) {
       if (getters.getIsAdmin && messageObject.showToChair === false) return resolve();
       if (!getters.getIsAdmin && messageObject.chairOnly === true) return resolve();
@@ -17487,10 +17504,10 @@ var actions = {
    * @param serverResponse
    * @returns {Promise<unknown>}
    */
-  showServerProvidedMessage: function showServerProvidedMessage(_ref2, serverResponse) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
-        getters = _ref2.getters;
+  showServerProvidedMessage: function showServerProvidedMessage(_ref3, serverResponse) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        getters = _ref3.getters;
     return new Promise(function (resolve, reject) {
       var m = _models_Message__WEBPACK_IMPORTED_MODULE_0__.default.makeFromServerResponse(serverResponse);
       dispatch('showMessage', m).then(function () {
@@ -19600,7 +19617,9 @@ var actions = {
         getters = _ref2.getters;
     var meeting = getters.getActiveMeeting;
     var channel = "meeting.".concat(meeting.id);
-    Echo["private"](channel).listen("MotionSeekingSecond", function (e) {
+    Echo["private"](channel).listen("GeneralNotification", function (e) {
+      dispatch('handlePusherGeneralNotification', e);
+    }).listen("MotionSeekingSecond", function (e) {
       window.console.log('Received broadcast event meeting', e);
       dispatch('handleMotionSeekingSecondMessage', e);
     }).listen("MotionSeconded", function (e) {

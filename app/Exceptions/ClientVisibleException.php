@@ -13,6 +13,7 @@ use Exception;
 class ClientVisibleException extends Exception
 {
 //dev all children must define the following constants
+
 //    const ERROR_CODE = ;
 //
 //    const MESSAGE_STYLE = '';

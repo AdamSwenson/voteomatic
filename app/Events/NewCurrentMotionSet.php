@@ -2,7 +2,9 @@
 
 namespace App\Events;
 
+use App\Exceptions\PageRefreshNeededException;
 use App\Models\Motion;
+use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -13,7 +15,7 @@ use Illuminate\Queue\SerializesModels;
 
 class NewCurrentMotionSet implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
     /**
      * @var Motion
      */
@@ -39,7 +41,13 @@ class NewCurrentMotionSet implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel($this->meetingChannelName());
+        try {
+            return new PrivateChannel($this->meetingChannelName());
+
+        }catch (BroadcastException $e) {
+//            dd($e);
+//        throw new PageRefreshNeededException();
+        }
     }
 
 }
