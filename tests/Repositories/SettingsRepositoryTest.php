@@ -27,7 +27,7 @@ class SettingsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function testcreateSettingStore()
+    public function createSettingStore()
     {
         $this->markTestSkipped();
     }
@@ -41,6 +41,7 @@ class SettingsRepositoryTest extends TestCase
         //check
         $this->assertInstanceOf(SettingStore::class, $result);
         $this->assertTrue($result->is_meeting_master);
+        $this->assertEquals($this->meeting->id,  $result->meeting->id, "meeting properly associated with settings");
     }
 
 
@@ -200,6 +201,7 @@ class SettingsRepositoryTest extends TestCase
 
         $this->assertEquals($mm->settings, $result->settings, 'meeting master settings merged');
     }
+
 
 
 }

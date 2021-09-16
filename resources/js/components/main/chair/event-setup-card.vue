@@ -12,11 +12,15 @@
             <election-setup-card v-if="isElection"></election-setup-card>
         </div>
 
+<div class="card-body">
+    <settings-area></settings-area>
+</div>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6">
                     <participants-list-card></participants-list-card>
                 </div>
+
 
                 <div class="col-lg-6">
                     <event-list-card></event-list-card>
@@ -39,6 +43,7 @@ import EventListCard from "../../common/event-list-card";
 import MeetingSetupCard from "../../meetings/meeting-setup-card";
 import ParticipantsListCard from "../../common/participants-list-card";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import SettingsArea from "../../settings/settings-area";
 
 /**
  * Displays the setup page for either meeting or election
@@ -48,6 +53,7 @@ export default {
     name: "event-setup-card",
 
     components: {
+        SettingsArea,
         ParticipantsListCard,
         MeetingSetupCard, EventListCard, ElectionSetupCard, SetupControls},
 

@@ -18,7 +18,9 @@ class SettingsRequest extends FormRequest
     public function authorize()
     {
         $user = Auth::user();
-        $meeting = Meeting::find($this->meetingId);
+        $settingStore = SettingStore::find($this->id);
+        $meeting = $settingStore->meeting;
+//        $meeting = Meeting::find($this->meetingId);
         foreach ($this->settings as $name => $v) {
             if (in_array($name, SettingStore::CHAIR_ONLY_SETTINGS)) {
                 if (!$meeting->isOwner($user)) return false;

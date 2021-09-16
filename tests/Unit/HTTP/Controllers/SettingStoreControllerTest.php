@@ -142,7 +142,7 @@ class SettingStoreControllerTest extends TestCase
     /** @test */
     public function destroy()
     {
-
+$this->markTestSkipped();
         $setting = SettingStore::factory()->create([
             'user_id' => $this->user->id,
             'meeting_id' => $this->meeting->id
@@ -218,13 +218,14 @@ class SettingStoreControllerTest extends TestCase
     public function updatePreventsMemberFromChangingDifferentMemberSettings()
     {
 
+        $this->markTestIncomplete('todo');
     }
 
 
     /** @test */
-    public function testshow()
+    public function show()
     {
-
+$this->markTestIncomplete('todo');
     }
 
 }

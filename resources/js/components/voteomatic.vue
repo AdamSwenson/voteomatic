@@ -21,6 +21,7 @@
 
         <chair-indicator></chair-indicator>
 
+
         <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
         <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
         <!--        </svg>-->
@@ -56,7 +57,12 @@ export default {
         VoteCountAlert,
         MessageArea,
         ChairMotionSecondModal,
-        MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
+        MotionInOrderModal,
+        MotionSecondModal,
+        ChairIndicator,
+        RefreshButton,
+        RouterTabs,
+        VotePage
     },
 
     mixins: [MeetingMixin, NavigationMixin, ChairMixin],

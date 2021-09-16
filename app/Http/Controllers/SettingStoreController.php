@@ -107,14 +107,33 @@ class SettingStoreController extends Controller
      * @param \App\Models\SettingStore $settings
      * @return \Illuminate\Http\Response
      */
-    public function update(SettingsRequest $request, SettingStore $settings)
+    public function update(SettingsRequest  $request,  SettingStore $settings)
     {
         $this->setLoggedInUser();
+        //dev No idea why it isn't injecting the actual model from db, doing this for now
+        $settings = SettingStore::find($request->id);
+//        $settings->refresh();
+//        dd($settings);
         $this->authorize('update', [SettingStore::class, $settings]);
 
         $settings->update($request->all());
 
         $settings->refresh();
+
+
+        if($settings->meeting->isOwner($this->user)){
+            // if the user was chair, we need to update any
+            // master settings that have changed
+            $meetingMaster = $settings->meeting->getMasterSettingStore();
+
+            foreach(SettingStore::CHAIR_ONLY_SETTINGS as $setting){
+                if(! is_null($request->settings[$setting])){
+                    $meetingMaster->setSetting($setting, $request->settings[$setting]);
+                }
+
+            }
+            $meetingMaster->save();
+        }
 
         return response()->json($settings);
     }

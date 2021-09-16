@@ -17,9 +17,36 @@ class SettingStore extends Model
      * only be set via the repository
      */
     const VALID_SETTINGS = [
+        /** Whether members have the option of directly making motions */
         'members_make_motions',
 
+        /** Whether upon a motion being approved, a second is solicited */
+        'members_second_motions',
+
+        /** Whether to show vote counts in the results. If false, only shows pass/fail */
         'show_vote_counts',
+    ];
+
+    /**
+     * These are used when someone edits the settings from the client.
+     * Since all settings must be part of VALID_SETTINGS, we will just get them
+     * from here rather than store them in the database.
+     * dev If settings start proliferating, we may want to start storing in the database
+     */
+    const SETTINGS_DISPLAY_PROPERTIES = [
+      'members_make_motions' => [
+          'displayName' => "Members can make motions",
+          'displayDescription' => "Whether members have the option of making motions directly",
+      ],
+        'members_second_motions' => [
+            'displayName' => "Solicit second from members",
+            'displayDescription' => "Whether the program should solicit a second once a member makes a motion."
+        ],
+        'show_vote_counts' => [
+            'displayName' => "Show vote totals with results",
+            'displayDescription' => "Whether to show vote counts in the results. If false, only shows pass/fail."
+        ],
+
     ];
 
     /**
@@ -31,7 +58,8 @@ class SettingStore extends Model
      */
     const CHAIR_ONLY_SETTINGS = [
         'members_make_motions',
-
+        'show_vote_counts',
+        'members_second_motions'
     ];
 //
 //    /**
@@ -63,6 +91,8 @@ class SettingStore extends Model
 
         'settings->members_make_motions',
 
+        'settings->members_second_motions',
+
         'settings->show_vote_counts',
     ];
 
@@ -73,7 +103,17 @@ class SettingStore extends Model
         'applies_to_all_members' => 'boolean'
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['display'];
 
+
+    public function getDisplayAttribute(){
+        return self::SETTINGS_DISPLAY_PROPERTIES;
+    }
 
 
     /**

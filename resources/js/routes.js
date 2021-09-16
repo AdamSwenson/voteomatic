@@ -272,7 +272,7 @@ module.exports = {
         },
 
         resource: (settingId) => {
-            return normalizedRouteRoot() + 'settingStore/' + settingId;
+            return normalizedRouteRoot() + 'settingStores/' + settingId;
         }
     }
 

@@ -66,7 +66,7 @@ class SettingStorePolicy
     /**
      * This just checks the user's permissions.
      *
-     * Whether the setting being accessed is allowed will
+     * Whether the specific setting being accessed is allowed will
      * be checked in the SettingsRequest
      *
      * @param User $user
@@ -76,8 +76,8 @@ class SettingStorePolicy
     public function update(User $user, SettingStore $settings)
     {
 
-        $meeting = Meeting::find($settings->meeting_id);
-        //settings->meeting()->first()
+//        $meeting = Meeting::find($settings->meeting_id);
+        $meeting = $settings->meeting;
 
 
         return $user->is($settings->user()->first()) || $meeting->isOwner($user);

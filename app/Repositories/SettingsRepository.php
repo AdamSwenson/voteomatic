@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Meeting;
 use App\Models\SettingStore;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SettingsRepository implements ISettingsRepository
 {
@@ -21,9 +22,18 @@ class SettingsRepository implements ISettingsRepository
      */
     public function getConsolidatedSettings(Meeting $meeting, User $user)
     {
-        $userSettings = SettingStore::where('meeting_id', $meeting->id)
-            ->where('user_id', $user->id)
-            ->firstOrCreate();
+        //We start by looking up the store for the user.
+        //If one doesn't exist, we create it
+        try {
+            $userSettings = SettingStore::where('meeting_id', $meeting->id)
+                ->where('user_id', $user->id)
+                ->firstOrFail();
+        }catch (ModelNotFoundException $e){
+            $userSettings = new SettingStore();
+            $userSettings->user()->associate($user);
+            $userSettings->meeting()->associate($meeting);
+            $userSettings->save();
+        }
 
         $meetingMaster = $meeting->getMasterSettingStore();
 
@@ -34,6 +44,8 @@ class SettingsRepository implements ISettingsRepository
                 $userSettings->setSetting($k, $v);
             }
         }
+        $userSettings->save();
+//        $userSettings->fresh();
         return $userSettings;
 
     }
@@ -54,6 +66,13 @@ class SettingsRepository implements ISettingsRepository
         $settings->is_meeting_master = true;
         //NB, no user is set
         $settings->meeting()->associate($meeting);
+
+        //Add null settings so that can use the keys
+        //on client side
+        foreach(SettingStore::VALID_SETTINGS as $setting){
+            $settings->setSetting($setting, null);
+        }
+
         $settings->save();
         return $settings;
     }

@@ -8,10 +8,12 @@ import IModel from "./IModel";
  */
 export default class Settings extends IModel {
 
-    constructor({id = null, settings = null}) {
+    constructor({id = null, settings = null, display=null, meeting_id=null}) {
         super();
         this.id = id;
         this.settings = settings;
+        this.display = display;
+        this.meetingId = meeting_id;
 
         let me = this;
 
@@ -33,6 +35,14 @@ export default class Settings extends IModel {
         });
 
 
+    }
+
+    get settingNames(){
+        return _.keys(this.settings);
+    }
+
+    getDisplayForSetting(settingName){
+        return this.display[settingName];
     }
 }
 

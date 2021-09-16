@@ -36,7 +36,7 @@ const actions = {
             return Vue.axios.get(url)
                 .then((response) => {
                     let settings = new Settings(response.data);
-                    commit.setSettings(settings);
+                    commit('setSettings', settings);
                     resolve();
                 });
         }));
@@ -53,13 +53,13 @@ const actions = {
      */
     updateSettings({dispatch, commit, getters}, payload) {
         //change the value locally
-        commit(payload);
+        commit('setSettingsProp', payload);
         let settingsObj = getters.getSettings;
 
         let url = routes.settings.resource(settingsObj.id);
 
         return new Promise(((resolve, reject) => {
-            return Vue.axios.put(url, settingsObj)
+            return Vue.axios.patch(url, settingsObj)
                 .then((response) => {
                     //todo consider rollback on error
                 });
