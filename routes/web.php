@@ -62,7 +62,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
 //Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
-Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
+//Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
 
 /* =============================
         Login, LTI authentication, and other admin
