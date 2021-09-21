@@ -52,7 +52,10 @@ export const routes = [
         // components: {main: votePage},
         components: {main: voteCard},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+
+        //Will show if any of the settings defined here are true
+        showIfSettings: []
     },
 
     {
@@ -62,7 +65,10 @@ export const routes = [
         label: "Results",
         components: {main: resultsCard},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+
+        //Will show if any of the settings defined here are true
+        showIfSettings: []
     },
 
     {
@@ -77,7 +83,10 @@ export const routes = [
         props: true,
         // adminOnly: true,
 
-        adminOnly: false
+        adminOnly: false,
+
+        //Will show if the setting defined here is true
+        showIfSettings: ['members_make_motions']
     },
 
     {
@@ -87,7 +96,10 @@ export const routes = [
         label: "Verify votes",
         components: {main: voteVerify},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+
+        //Will show if any of the settings defined here are true
+        showIfSettings: []
     },
 
 
@@ -100,7 +112,9 @@ export const routes = [
         },
         components: {main: eventSetupCard},
         props: true,
-        adminOnly: true
+        adminOnly: true,
+        //Will show if any of the settings defined here are true
+        showIfSettings: []
     },
 
 

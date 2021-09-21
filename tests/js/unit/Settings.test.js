@@ -9,7 +9,9 @@ describe("Settings", () => {
         settings: {
             a: 1,
             b: 3,
-            c: 4
+            c: 4,
+            d: true,
+            e: false
         }
     };
     let s;
@@ -43,4 +45,27 @@ describe("Settings", () => {
 
         expect(s.c).toEqual(0);
     });
+
+
+    test("isSettingTrue", () => {
+    expect(s.isSettingTrue('d')).toBe(true);
+
+        expect(s.isSettingTrue('e')).toBe(false);
+
+
+        //undefined case
+        expect(s.isSettingTrue('f')).toBe(false);
+    });
+
+
+    test("isAnySettingTrue", () => {
+        expect(s.isAnySettingTrue(['d', 'e', 'f'])).toBe(true);
+
+        expect(s.isAnySettingTrue(['e', 'f'])).toBe(false);
+
+
+        //undefined case
+        expect(s.isSettingTrue(['f'])).toBe(false);
+
+});
 });

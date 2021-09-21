@@ -44,5 +44,31 @@ export default class Settings extends IModel {
     getDisplayForSetting(settingName){
         return this.display[settingName];
     }
+
+    /**
+     * Returns true if the name is in the settings object
+     * and has the value true
+     *
+     * @param settingName
+     */
+    isSettingTrue(settingName){
+        if(! _.has(this.settings, settingName)) return false;
+
+        return this.settings[settingName] === true;
+    }
+
+    /**
+     * Returns true if any of the list of names is
+     * in the setting object and is true
+     * @param listOfSettingNames
+     */
+    isAnySettingTrue(listOfSettingNames){
+        let me = this;
+        let v = false;
+        _.forEach(listOfSettingNames, (settingName) => {
+            if(me.isSettingTrue(settingName)) v = true;
+        });
+        return v;
+    }
 }
 

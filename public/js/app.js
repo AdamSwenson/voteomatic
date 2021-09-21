@@ -11034,6 +11034,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _routes_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes.client */ "./resources/js/routes.client.js");
 /* harmony import */ var _router_tab__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router-tab */ "./resources/js/components/navigation/router-tab.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
 //
 //
 //
@@ -11073,6 +11074,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /**
@@ -11099,27 +11101,69 @@ __webpack_require__.r(__webpack_exports__);
         return this.$store.getters.getIsAdmin;
       },
       "default": false
-    }
-  },
-  computed: {
+    },
+    settingsObject: function settingsObject() {
+      return this.$store.getters.getSettings;
+    },
     routes: function routes() {
       var showRoutes = [];
       var me = this;
 
       _.forEach(_routes_client__WEBPACK_IMPORTED_MODULE_0__.routes, function (r) {
-        if (r.adminOnly) {
-          if (me.isAdmin) {
-            showRoutes.push(r);
-          }
-        } else {
+        window.console.log(r.name, me.passesAdminCheck(r), me.passesSettingChecks(r));
+
+        if (me.passesAdminCheck(r) && me.passesSettingChecks(r)) {
           showRoutes.push(r);
-        }
+        } //
+        // if (r.adminOnly) {
+        //     if (me.isAdmin) {
+        //         showRoutes.push(r);
+        //     }
+        // } else {
+        //     showRoutes.push(r);
+        // }
+
       });
 
       return showRoutes; // return routes
     }
   },
-  methods: {}
+  computed: {},
+  methods: {
+    /**
+     * Shortcut check of adminOnly
+     *
+     * If not adminOnly, returns true
+     * If adminONly and user is admin, returns true
+     * @param route
+     */
+    passesAdminCheck: function passesAdminCheck(route) {
+      //if no setting is defined for adminOnly, passes
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(route.adminOnly)) return true; //If it's not admin only, check passes
+
+      if (!route.adminOnly) return true;
+      window.console.log('admin', route.adminOnly, this.isAdmin); //If it is admin only we need to check that the user is admin
+
+      if (route.adminOnly && this.isAdmin) return true;
+      return false;
+    },
+    passesSettingChecks: function passesSettingChecks(route) {
+      //no settings are defined for the route
+      // if (!isReadyToRock(route.showIfSettings)) return true;
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.settingsObject)) return false;
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(route.showIfSettings)) return true;
+      if (route.showIfSettings.length === 0) return true;
+      return this.settingsObject.isAnySettingTrue(route.showIfSettings); //  _.forEach(route.showIfSettings, (s) => {
+      //     window.console.log(settingsObj[s]);
+      //     //dev or is is better to define by the condition being false?
+      //     if (settingsObj[s] === true) {
+      //     return true;}
+      //     else {
+      //         return true;
+      //     }
+      // });
+    }
+  }
 });
 
 /***/ }),
@@ -15033,6 +15077,37 @@ var Settings = /*#__PURE__*/function (_IModel) {
     value: function getDisplayForSetting(settingName) {
       return this.display[settingName];
     }
+    /**
+     * Returns true if the name is in the settings object
+     * and has the value true
+     *
+     * @param settingName
+     */
+
+  }, {
+    key: "isSettingTrue",
+    value: function isSettingTrue(settingName) {
+      if (!_.has(this.settings, settingName)) return false;
+      return this.settings[settingName] === true;
+    }
+    /**
+     * Returns true if any of the list of names is
+     * in the setting object and is true
+     * @param listOfSettingNames
+     */
+
+  }, {
+    key: "isAnySettingTrue",
+    value: function isAnySettingTrue(listOfSettingNames) {
+      var me = this;
+      var v = false;
+
+      _.forEach(listOfSettingNames, function (settingName) {
+        if (me.isSettingTrue(settingName)) v = true;
+      });
+
+      return v;
+    }
   }]);
 
   return Settings;
@@ -15215,7 +15290,9 @@ var routes = [{
     main: _components_main_vote_card__WEBPACK_IMPORTED_MODULE_6__.default
   },
   props: true,
-  adminOnly: false
+  adminOnly: false,
+  //Will show if any of the settings defined here are true
+  showIfSettings: []
 }, {
   name: 'results',
   path: '/results',
@@ -15225,7 +15302,9 @@ var routes = [{
     main: _components_main_results_card__WEBPACK_IMPORTED_MODULE_2__.default
   },
   props: true,
-  adminOnly: false
+  adminOnly: false,
+  //Will show if any of the settings defined here are true
+  showIfSettings: []
 }, {
   name: 'ballot',
   path: '/ballot',
@@ -15241,7 +15320,9 @@ var routes = [{
   },
   props: true,
   // adminOnly: true,
-  adminOnly: false
+  adminOnly: false,
+  //Will show if the setting defined here is true
+  showIfSettings: ['members_make_motions']
 }, {
   name: 'verify',
   path: '/verify',
@@ -15251,7 +15332,9 @@ var routes = [{
     main: _components_main_vote_verification_page__WEBPACK_IMPORTED_MODULE_3__.default
   },
   props: true,
-  adminOnly: false
+  adminOnly: false,
+  //Will show if any of the settings defined here are true
+  showIfSettings: []
 }, {
   name: 'setup',
   path: '/setup',
@@ -15265,7 +15348,9 @@ var routes = [{
     main: _components_main_chair_event_setup_card__WEBPACK_IMPORTED_MODULE_5__.default
   },
   props: true,
-  adminOnly: true
+  adminOnly: true,
+  //Will show if any of the settings defined here are true
+  showIfSettings: []
 } // {
 //     name: 'meeting',
 //     path: '/meeting',
