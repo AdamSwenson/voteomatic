@@ -78,8 +78,6 @@ class LTIDemoControllerTest extends TestCase
         $this->meeting->addUserToMeeting($this->user);
         $this->payload = LTIPayloadMaker::makePayload($this->meeting, $this->endpoint, $this->resourceLink, $this->user);
 
-
-
     }
 
 

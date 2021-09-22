@@ -26,7 +26,7 @@ use Illuminate\Support\Str;
 class LTIRepository implements ILTIRepository
 {
 
-    const KEY_LENGTH = 32;
+    const KEY_LENGTH = 40;
 
     static public function generateConsumerKey()
     {
