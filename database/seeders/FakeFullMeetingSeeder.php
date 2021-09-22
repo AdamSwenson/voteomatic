@@ -60,7 +60,8 @@ class FakeFullMeetingSeeder extends Seeder
            'content' => "That the dog not be given hamburgers",
            'requires' => 0.5,
            'meeting_id' => $meeting->id,
-           'type' => 'main'
+           'type' => 'main',
+            'seconded' => true
         ]);
 
 
@@ -71,7 +72,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'amendment',
-            'applies_to' => $main1->id
+            'applies_to' => $main1->id,
+            'seconded' => true
         ]);
 
         //defeated
@@ -89,7 +91,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'amendment',
-            'applies_to' => $main1->id
+            'applies_to' => $main1->id,
+            'seconded' => true
         ]);
 
         //If we're going to praise him, lets really make it clear why he deserves
@@ -99,7 +102,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'amendment-secondary',
-            'applies_to' => $m1a2->id
+            'applies_to' => $m1a2->id,
+            'seconded' => true
         ]);
 
         //Way too much discussion.
@@ -109,7 +113,8 @@ class FakeFullMeetingSeeder extends Seeder
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
             'applies_to' => $m1a2a->id,
-            'debatable' => false
+            'debatable' => false,
+            'seconded' => true
         ]);
 
         //question is called
@@ -133,7 +138,8 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
             'type' => 'amendment',
-            'applies_to' => $main1->id
+            'applies_to' => $main1->id,
+            'seconded' => true
         ]);
         //mark superseded
         $m1a1->markSuperseded($m1a3);
@@ -145,7 +151,8 @@ class FakeFullMeetingSeeder extends Seeder
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
             'applies_to' => $m1a3->id,
-            'debatable' => false
+            'debatable' => false,
+            'seconded' => true
         ]);
 
         //Vote on tabling
@@ -158,7 +165,8 @@ class FakeFullMeetingSeeder extends Seeder
             'content' => "That the CSUN cats be invited to every Senate meeting",
             'requires' => 0.5,
             'meeting_id' => $meeting->id,
-            'type' => 'main'
+            'type' => 'main',
+            'seconded' => true
         ]);
 
         //Vote on main2
@@ -174,7 +182,8 @@ class FakeFullMeetingSeeder extends Seeder
             'meeting_id' => $meeting->id,
             'type' => 'procedural-subsidiary',
             'applies_to' => $m1a3->id,
-            'debatable' => false
+            'debatable' => false,
+            'seconded' => true
         ]);
 
         Vote::factory(['motion_id' => $m1a3b->id])->affirmative()->count(9)->create();
@@ -215,11 +224,13 @@ class FakeFullMeetingSeeder extends Seeder
             'requires' => 0.5,
             'type' => 'main',
             'is_current' => true,
-            'meeting_id' => $meeting->id
+            'meeting_id' => $meeting->id,
+            'seconded' => true
         ]);
 
 
         echo "\nFull meeting id: " . $meeting->id . "\n";
+        Log::debug('FakeFullMeetingSeeder: seeded meeting \n' . $meeting);
 
         return $meeting;
     }
