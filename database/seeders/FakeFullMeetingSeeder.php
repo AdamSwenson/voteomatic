@@ -220,6 +220,7 @@ class FakeFullMeetingSeeder extends Seeder
 
 
         echo "\nFull meeting id: " . $meeting->id . "\n";
+        Log::debug('FakeFullMeetingSeeder: seeded meeting \n' . $meeting);
 
         return $meeting;
     }
