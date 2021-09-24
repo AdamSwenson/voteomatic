@@ -97,7 +97,7 @@ Route::post('lti/chair-demo', [LTIDemoController::class, 'launchChairDemo'])
 Route::post('lti/member-demo', [LTIDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
-Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
+Route::get('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
