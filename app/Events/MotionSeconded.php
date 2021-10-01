@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class MotionSeconded implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionOnlyTrait;
 
 
     /**

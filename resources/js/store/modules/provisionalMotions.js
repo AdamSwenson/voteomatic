@@ -37,8 +37,12 @@ const mutations = {
 
 
 const actions = {
-    /** When a new motion has been created by a member, this asks the chair to approve
+    /**
+     * When a new motion has been created by a member, this asks the chair to approve
      * it as in order.
+     *
+     * Required Pusher payload: Full motion
+     *
      * */
     handleMotionNeedingApprovalMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
@@ -48,6 +52,17 @@ const actions = {
         }));
     },
 
+    /**
+     * Displays the message that a motion is seeking a second
+     *
+     * Required Pusher payload: Full motion
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param pusherEvent
+     * @returns {Promise<unknown>}
+     */
     handleMotionSeekingSecondMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
             let motion = new Motion(pusherEvent.motion);
@@ -57,19 +72,33 @@ const actions = {
         }));
     },
 
+    /**
+     * Tells the user that the chair marked the motion out of order
+     *
+     * Required Pusher payload: Full motion
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param pusherEvent
+     * @returns {Promise<unknown>}
+     */
     handleMotionMarkedOutOfOrderMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
             let motion = new Motion(pusherEvent.motion);
             let m = Message.makeFromTemplate('notApproved', motion);
             window.console.log('motion out of order', m);
-
             dispatch('showMessage', m);
             resolve();
         }));
     },
 
     /**
-     * If no one seconds a motion, it dies
+     * If no one seconds a motion, it dies. This tells the user
+     * that the motion has not been seconded
+     *
+     * Required Pusher payload: Full motion
+     *
      * @param dispatch
      * @param commit
      * @param getters
@@ -90,6 +119,16 @@ const actions = {
     },
 
 
+    /**
+     * Handles telling the server and other actions upon
+     * the chair's decision that a motion is in order
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
     markMotionInOrder({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.inOrder(motion.id);
@@ -107,6 +146,16 @@ const actions = {
     },
 
 
+    /**
+     * Handles telling the server and other actions upon
+     * the chair's decision that a motion is not in order
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
     markMotionOutOfOrder({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.outOfOrder(motion.id);
@@ -123,6 +172,16 @@ const actions = {
         }));
     },
 
+    /**
+     * Handles telling the server and other actions upon the chair
+     * determining that no second has been obtained
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
     markNoSecondObtained({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.secondMotion(motion.id);
@@ -182,6 +241,16 @@ const actions = {
         }));
     },
 
+    /**
+     * Handles news that a motion has been proposed and is
+     * seeking a second
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     * @returns {Promise<unknown>}
+     */
     setMotionPendingSecond({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             commit('setMotionPendingSecond', motion);

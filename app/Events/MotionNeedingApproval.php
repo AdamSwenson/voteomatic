@@ -21,7 +21,7 @@ use Illuminate\Queue\SerializesModels;
  */
 class MotionNeedingApproval implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionOnlyTrait;
 
     /**
      * @var Motion

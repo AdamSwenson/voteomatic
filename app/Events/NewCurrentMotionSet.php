@@ -15,7 +15,7 @@ use Illuminate\Queue\SerializesModels;
 
 class NewCurrentMotionSet implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionOnlyTrait;
     /**
      * @var Motion
      */
