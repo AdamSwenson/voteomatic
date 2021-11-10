@@ -18358,65 +18358,10 @@ var actions = {
       });
     });
   },
-
-  /**
-   * This will be run on everything when the motion closes. Thus this checks for:
-   * - whether it was an amendment
-   * - whether it passed
-   *
-   * If it was a successful amendment, this quietly creates a new motion with the
-   * updated text
-   *
-   * We do not set the new motion as active. That is the job of other actions.
-   *
-   * This can be passed either a json (from the pusher event / response.data) or
-   * an array of motion objects with the same keys
-   *
-   * @param dispatch
-   * @param commit
-   * @param getters
-   */
-  handlePotentialAmendmentAfterVotingClosed: function handlePotentialAmendmentAfterVotingClosed(_ref8, _ref9) {
+  deleteMotion: function deleteMotion(_ref8, motion) {
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
-    var ended = _ref9.ended,
-        superseding = _ref9.superseding,
-        _ref9$original = _ref9.original,
-        original = _ref9$original === void 0 ? null : _ref9$original;
-    return new Promise(function (resolve, reject) {
-      //The server will return a new motion under the key superseding
-      //if the motion was an amendment and was successful.
-      //It returns false otherwise.
-      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(superseding) || superseding === false) {
-        return resolve();
-      } //Since superseding was not false, we know that the motion which
-      //ended was an amendment and that it was successful
-      //So we make a new motion out of the response and add it to the store
-      //(we don't send it to the server, since we're handling the server's response)
-
-
-      superseding = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](superseding);
-      commit('addMotionToStore', superseding); //We now need to swap the superseding motion in for the original
-
-      original = getters.getMotionById(ended.applies_to); //Prevent the original from being voted upon
-
-      dispatch('markMotionComplete', original); //Set the fact that it was superseded so that the display
-      //can prevent it from being selected.
-
-      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__["default"].factory({
-        object: original,
-        updateProp: 'superseded_by',
-        updateVal: superseding.id
-      });
-      commit('setMotionProp', pl);
-      resolve();
-    });
-  },
-  deleteMotion: function deleteMotion(_ref10, motion) {
-    var dispatch = _ref10.dispatch,
-        commit = _ref10.commit,
-        getters = _ref10.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.resource(motion.id);
@@ -18452,10 +18397,10 @@ var actions = {
    * @param motion
    * @returns {Promise<unknown>}
    */
-  endVotingOnMotion: function endVotingOnMotion(_ref11, motion) {
-    var dispatch = _ref11.dispatch,
-        commit = _ref11.commit,
-        getters = _ref11.getters;
+  endVotingOnMotion: function endVotingOnMotion(_ref9, motion) {
+    var dispatch = _ref9.dispatch,
+        commit = _ref9.commit,
+        getters = _ref9.getters;
     return new Promise(function (resolve, reject) {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_2__.motions.endVoting(motion.id);
@@ -18476,51 +18421,17 @@ var actions = {
     });
   },
 
-  /** When a new motion has been created and seconded,
-   * this sets the motion as the current motion and navigates to the
-   * voting tab
-   * */
-  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref12, pusherEvent) {
-    var dispatch = _ref12.dispatch,
-        commit = _ref12.commit,
-        getters = _ref12.getters;
-    return new Promise(function (resolve, reject) {
-      dispatch('resetMotionPendingSecond');
-      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](pusherEvent.motion);
-      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
-
-      return dispatch('setMotion', motion).then(function () {
-        dispatch('forceNavigationToHome');
-        return resolve(motion);
-      });
-    });
-  },
-  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref13, pusherEvent) {
-    var dispatch = _ref13.dispatch,
-        commit = _ref13.commit,
-        getters = _ref13.getters;
-    return new Promise(function (resolve, reject) {
-      // dispatch('resetMotionPendingSecond');
-      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](pusherEvent.motion);
-      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
-
-      return dispatch('setMotion', motion).then(function () {
-        dispatch('forceNavigationToHome');
-        return resolve(motion);
-      });
-    });
-  },
-
   /**
    * When the client is notified by the server that voting on the currently active
    * motion has been ended, this removes the option to try to vote and
    * initiates the loading of results.
    *
+   *  Required Pusher payload: Full motion (stored as ended; optionally
    */
-  handleMotionClosedMessage: function handleMotionClosedMessage(_ref14, pusherEvent) {
-    var dispatch = _ref14.dispatch,
-        commit = _ref14.commit,
-        getters = _ref14.getters;
+  handleMotionClosedMessage: function handleMotionClosedMessage(_ref10, pusherEvent) {
+    var dispatch = _ref10.dispatch,
+        commit = _ref10.commit,
+        getters = _ref10.getters;
     return new Promise(function (resolve, reject) {
       var ended = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](pusherEvent.ended); // let superseding = new Motion(pusherEvent.superseding);
       // let original = new Motion(pusherEvent.original);
@@ -18541,8 +18452,117 @@ var actions = {
   },
 
   /**
+   * When a new motion has been created and seconded,
+   * this sets the motion as the current motion and navigates to the
+   * voting tab
+   *
+   *  Required Pusher payload: Full motion
+   * */
+  handleMotionSecondedMessage: function handleMotionSecondedMessage(_ref11, pusherEvent) {
+    var dispatch = _ref11.dispatch,
+        commit = _ref11.commit,
+        getters = _ref11.getters;
+    return new Promise(function (resolve, reject) {
+      dispatch('resetMotionPendingSecond');
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](pusherEvent.motion);
+      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
+
+      return dispatch('setMotion', motion).then(function () {
+        dispatch('forceNavigationToHome');
+        return resolve(motion);
+      });
+    });
+  },
+
+  /**
+   * Handles setting a motion as current and navigation tasks
+   * when the chair has marked the motion as current
+   *
+   * Required Pusher payload: Full motion
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param pusherEvent
+   * @returns {Promise<unknown>}
+   */
+  handleNewCurrentMotionSetMessage: function handleNewCurrentMotionSetMessage(_ref12, pusherEvent) {
+    var dispatch = _ref12.dispatch,
+        commit = _ref12.commit,
+        getters = _ref12.getters;
+    return new Promise(function (resolve, reject) {
+      // dispatch('resetMotionPendingSecond');
+      var motion = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](pusherEvent.motion);
+      commit('addMotionToStore', motion); //Make it the current motion and attach relevant listeners
+
+      return dispatch('setMotion', motion).then(function () {
+        dispatch('forceNavigationToHome');
+        return resolve(motion);
+      });
+    });
+  },
+
+  /**
+   * This will be run on everything when the motion closes. Thus this checks for:
+   * - whether it was an amendment
+   * - whether it passed
+   *
+   * If it was a successful amendment, this quietly creates a new motion with the
+   * updated text
+   *
+   * We do not set the new motion as active. That is the job of other actions.
+   *
+   * This can be passed either a json (from the pusher event / response.data) or
+   * an array of motion objects with the same keys
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   */
+  handlePotentialAmendmentAfterVotingClosed: function handlePotentialAmendmentAfterVotingClosed(_ref13, _ref14) {
+    var dispatch = _ref13.dispatch,
+        commit = _ref13.commit,
+        getters = _ref13.getters;
+    var ended = _ref14.ended,
+        superseding = _ref14.superseding,
+        _ref14$original = _ref14.original,
+        original = _ref14$original === void 0 ? null : _ref14$original;
+    return new Promise(function (resolve, reject) {
+      //The server will return a new motion under the key superseding
+      //if the motion was an amendment and was successful.
+      //It returns false otherwise.
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_4__.isReadyToRock)(superseding) || superseding === false) {
+        return resolve();
+      } //Since superseding was not false, we know that the motion which
+      //ended was an amendment and that it was successful
+      //So we make a new motion out of the response and add it to the store
+      //(we don't send it to the server, since we're handling the server's response)
+
+
+      superseding = new _models_Motion__WEBPACK_IMPORTED_MODULE_0__["default"](superseding);
+      commit('addMotionToStore', superseding); //We now need to swap the superseding motion in for the original
+
+      original = getters.getMotionById(ended.applies_to); //Prevent the original from being voted upon
+
+      dispatch('markMotionComplete', original); //Set the fact that it was superseded so that the display
+      //can prevent it from being selected.
+
+      var pl = _models_Payload__WEBPACK_IMPORTED_MODULE_3__["default"].factory({
+        object: original,
+        updateProp: 'superseded_by',
+        updateVal: superseding.id
+      });
+      commit('setMotionProp', pl);
+      resolve();
+    });
+  },
+
+  /**
    * When the client is notified by the server that voting on a motion is now open
    * this handles everything.
+   *
+   * Required Pusher payload: Full motion
+   *
    * @param dispatch
    * @param commit
    * @param getters
@@ -18590,6 +18610,14 @@ var actions = {
       resolve();
     });
   },
+
+  /**
+   * Same as initializeDraftMainMotion but for resolutions
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
   initializeDraftResolution: function initializeDraftResolution(_ref17) {
     var dispatch = _ref17.dispatch,
         commit = _ref17.commit,
@@ -19277,8 +19305,12 @@ var mutations = {
 
 };
 var actions = {
-  /** When a new motion has been created by a member, this asks the chair to approve
+  /**
+   * When a new motion has been created by a member, this asks the chair to approve
    * it as in order.
+   *
+   * Required Pusher payload: Full motion
+   *
    * */
   handleMotionNeedingApprovalMessage: function handleMotionNeedingApprovalMessage(_ref, pusherEvent) {
     var dispatch = _ref.dispatch,
@@ -19290,6 +19322,18 @@ var actions = {
       resolve();
     });
   },
+
+  /**
+   * Displays the message that a motion is seeking a second
+   *
+   * Required Pusher payload: Full motion
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param pusherEvent
+   * @returns {Promise<unknown>}
+   */
   handleMotionSeekingSecondMessage: function handleMotionSeekingSecondMessage(_ref2, pusherEvent) {
     var dispatch = _ref2.dispatch,
         commit = _ref2.commit,
@@ -19301,6 +19345,18 @@ var actions = {
       resolve();
     });
   },
+
+  /**
+   * Tells the user that the chair marked the motion out of order
+   *
+   * Required Pusher payload: Full motion
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param pusherEvent
+   * @returns {Promise<unknown>}
+   */
   handleMotionMarkedOutOfOrderMessage: function handleMotionMarkedOutOfOrderMessage(_ref3, pusherEvent) {
     var dispatch = _ref3.dispatch,
         commit = _ref3.commit,
@@ -19315,7 +19371,11 @@ var actions = {
   },
 
   /**
-   * If no one seconds a motion, it dies
+   * If no one seconds a motion, it dies. This tells the user
+   * that the motion has not been seconded
+   *
+   * Required Pusher payload: Full motion
+   *
    * @param dispatch
    * @param commit
    * @param getters
@@ -19337,6 +19397,17 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Handles telling the server and other actions upon
+   * the chair's decision that a motion is in order
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
   markMotionInOrder: function markMotionInOrder(_ref5, motion) {
     var dispatch = _ref5.dispatch,
         commit = _ref5.commit,
@@ -19354,6 +19425,17 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Handles telling the server and other actions upon
+   * the chair's decision that a motion is not in order
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
   markMotionOutOfOrder: function markMotionOutOfOrder(_ref6, motion) {
     var dispatch = _ref6.dispatch,
         commit = _ref6.commit,
@@ -19371,6 +19453,17 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Handles telling the server and other actions upon the chair
+   * determining that no second has been obtained
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
   markNoSecondObtained: function markNoSecondObtained(_ref7, motion) {
     var dispatch = _ref7.dispatch,
         commit = _ref7.commit,
@@ -19435,6 +19528,17 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Handles news that a motion has been proposed and is
+   * seeking a second
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motion
+   * @returns {Promise<unknown>}
+   */
   setMotionPendingSecond: function setMotionPendingSecond(_ref10, motion) {
     var dispatch = _ref10.dispatch,
         commit = _ref10.commit,
