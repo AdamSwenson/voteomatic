@@ -37,7 +37,7 @@ class MotionClosedTest extends TestCase
         $this->t($this->motion);
 
         $motion =$this->motion;
-//        Event::assertDispatched(MotionClosed::class);
+        Event::assertDispatched(MotionClosed::class);
 //        Event::assertDispatched(function (MotionClosed $event) use ($motion) {
 //            return $event->ended->is($motion) && $event->ended->is_complete === true && $event->ended->is_voting_allowed === false;
 //        });
