@@ -25,10 +25,8 @@
                 </div>
 
                 <entry-instructions></entry-instructions>
-                <!--                <p class="text-muted">Your entries are automatically saved on the-->
-                <!--                    server as you type. You don't need to click anything when you are done.</p>-->
-                <!--                <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete-->
-                <!--                    button to fix this.</p>-->
+
+                <meeting-url-display></meeting-url-display>
 
             </div>
 
@@ -44,10 +42,11 @@ import MeetingMixin from '../../mixins/meetingMixin';
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import ModeMixin from "../../mixins/modeMixin";
 import EntryInstructions from "./entry-instructions";
+import MeetingUrlDisplay from "../meetings/meeting-url-display";
 
 export default {
     name: "event-edit-card",
-    components: {EntryInstructions},
+    components: {MeetingUrlDisplay, EntryInstructions},
     // components: {
     // props: ['shouldShowFields'],
 // {
