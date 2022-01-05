@@ -17438,11 +17438,17 @@ var actions = {
       //send to server
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.meetings.resource();
       return Vue.axios.post(url).then(function (response) {
-        var d = response.data;
-        var meeting = new _models_Meeting__WEBPACK_IMPORTED_MODULE_0__["default"](d.id, d.name, d.date);
-        commit('addMeetingToStore', meeting);
-        commit('setMeeting', meeting);
-        resolve();
+        var d = response.data; // dev Added in VOT-117 to deal with problem of still being on original meeting
+        // NB, this opens the new meeting in a new window. Not sure how annoying that will be
+
+        var url = _routes__WEBPACK_IMPORTED_MODULE_1__.meetings.main(d.id);
+        dispatch('forceNavigationToUrl', url); // dev removed in VOT-117
+        // let meeting = new Meeting(d.id, d.name, d.date);
+        // commit('addMeetingToStore', meeting);
+        //
+        // dispatch('setActiveMeeting', meeting).then(() => {
+        //     resolve();
+        // });
       })["catch"](function (error) {
         // error handling
         if (error.response) {
@@ -19281,6 +19287,22 @@ var actions = {
       commit('setVoteNavTrigger', true);
       resolve();
     });
+  },
+
+  /***
+   * Opens a new page with the given url.
+   * Usually used when creating a new meeting to ensure everything gets
+   * cleaned out
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param url
+   */
+  forceNavigationToUrl: function forceNavigationToUrl(_ref4, url) {
+    var dispatch = _ref4.dispatch,
+        commit = _ref4.commit,
+        getters = _ref4.getters;
+    window.open(url);
   }
 };
 var getters = {
