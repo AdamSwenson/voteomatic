@@ -2,7 +2,7 @@
     <div class="card" style="width: 25rem;">
 
         <div class="card-header">
-            <div class="h4 card-title">Candidate pool</div>
+            <div class="h4 card-title">Eligible for nomination</div>
         </div>
 
         <ul class="list-group list-group-flush">

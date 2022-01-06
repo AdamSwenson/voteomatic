@@ -10,11 +10,14 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 import PoolMember from "../../models/PoolMember";
 
 const state = {
+    /**
+     * People who have been nominated for offices
+     */
     candidates: [],
 
     /**
-     * Used during election setup. Holds candidate
-     * objects who have a motion id, but they are not necessarily
+     * Used during election setup. Holds pool members. I.e., people associated
+     * with a motion id, but who are not yet
      * candidates.
      */
     candidatePool: [],
@@ -36,17 +39,16 @@ const mutations = {
     },
 
     addCandidateToStore: (state, candidateObject) => {
-        //todo This attempt to filter duplicates doesn't work because the candidate objects have different ids
-        window.console.log(getById(state.candidates, candidateObject.id));
-        if (!isReadyToRock(getById(state.candidates, candidateObject.id))) {
 
+        //See if the person is already in candidates
+        //NB, we can't just filter duplicate objects
+        let r = state.candidates.filter(function (c) {
+            if(c.isIdentical(candidateObject)) return c
+        });
+        if (r.length === 0){
             state.candidates.push(candidateObject);
         }
 
-        // window.console.log(state.candidates.indexOf(candidateObject));
-        // if(state.candidates.indexOf(candidateObject) === -1){
-        //
-        // }
 
     },
 
@@ -88,6 +90,10 @@ const actions = {
 
 
     /**
+     * Takes a pool member and makes them a candidate for
+     * the office. That is, they will now be someone whom voters
+     * can vote for.
+     *
      * NB, while the candidate object may exist on the client as
      * part of the candidatePool, it may not yet exist on the server
      *
@@ -97,7 +103,7 @@ const actions = {
      * @param candidate
      * @returns {Promise<unknown>}
      */
-    addPoolMemberToOfficeElection({dispatch, commit, getters}, poolMember) {
+    addCandidate({dispatch, commit, getters}, poolMember) {
 
         let url = routes.election.nominatePoolMember(poolMember.id);
         // let url = routes.election.resource.candidate();
@@ -145,6 +151,14 @@ const actions = {
 
     },
 
+    /**
+     * Create an election event in which votes will be
+     * cast for several offices. Election is equivalent to a meeting
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
     createElection: function ({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             // let data = {name : name, date : date};
@@ -168,7 +182,7 @@ const actions = {
     },
 
     /**
-     * Creates a new elected office within the meeting.
+     * Creates a new elected office within the election.
      *
      * @param dispatch
      * @param commit
@@ -255,9 +269,19 @@ const actions = {
      * @param payload
      */
     editPerson({dispatch, commit, getters}, payload){
-
+//todo
     },
 
+    /**
+     * Takes and existing person and makes the a potential
+     * candidate for a given office
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param person
+     * @param motionId
+     * @returns {Promise<unknown>}
+     */
     addPersonToPool({dispatch, commit, getters}, {person, motionId}) {
 
         let url = routes.election.addToPool(motionId, person.id);
@@ -317,47 +341,17 @@ const actions = {
         }));
     },
 
-    // loadAllElections({dispatch, commit, getters}){
-    //     return new Promise(((resolve, reject) => {
-    //
-    //         //send to server
-    //         let url = routes.election.resource.election();
-    //         return Vue.axios.get(url)
-    //             .then((response) => {
-    //                 _.forEach(response.data, (d) => {
-    //                     // window.console.log('loadAllMeetings', d);
-    //                     let election = new Election(d);
-    //                     commit('addMeetingToStore', election);
-    //                     resolve()
-    //                 });
-    //             });
-    //     }));
-    // },
 
-    // loadOfficesForElection({dispatch, commit, getters}, meetingId) {
-    //     let url = routes.election.getOffices(meetingId);
-    //
-    //     return new Promise(((resolve, reject) => {
-    //
-    //         return Vue.axios.get(url).then((response) => {
-    //
-    //             _.forEach(response.data, (d) => {
-    //                 // window.console.log('loadAllMeetings', d);
-    //                 let motion = new Motion(d);
-    //                 commit('addMotionToStore', motion);
-    //
-    //             });
-    //
-    //             resolve();
-    //
-    //         });
-    //
-    //     }));
-    //
-    //
-    // },
-
-
+    /**
+     * Load those who are eligible to be nominated for this
+     * office (i.e., pool members)
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motionId
+     * @returns {Promise<unknown>}
+     */
     loadCandidatePool({dispatch, commit, getters}, motionId) {
         motionId = idify(motionId);
         let url = routes.election.getPool(motionId);
@@ -465,7 +459,6 @@ const actions = {
                 // reject();
             }
 
-
         }));
 
     },
@@ -550,18 +543,12 @@ const getters = {
     },
 
     /**
-     * Returns all candidate objects from the pool for the
+     * Returns all potential nominees from the pool for the
      * provided motion
      * @param state
      * @returns {function(*): *[]}
      */
     getCandidatePoolForOffice: (state) => (motion) => {
-//         let candidateIds = [];
-//         _.forEach(state.candidates, (c) => {
-// candidateIds.push(c);
-//         });
-//     return
-//         window.console.log('cl', candidateIds);
         return state.candidatePool.filter(function (c) {
             return c.motion_id === motion.id
         })

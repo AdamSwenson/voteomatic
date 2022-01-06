@@ -34,9 +34,6 @@ class CreateCandidatesTable extends Migration
             /** Whether the person became a candidate through being written in on a ballot */
             $table->boolean('is_write_in')->nullable();
 
-//            $table->integer('pool_member_id')->nullable();
-
-//            $table->index(['motion_id', 'pool_member_id']);
 
             $table->timestamps();
         });

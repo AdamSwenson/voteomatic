@@ -1,4 +1,3 @@
-
 import IModel from "./IModel";
 
 /**
@@ -9,7 +8,15 @@ import IModel from "./IModel";
 export default class Candidate extends IModel {
 
 
-    constructor({id = null, first_name = null, last_name=null, info = null, motion_id=null, is_write_in=null, person_id=null}) {
+    constructor({
+                    id = null,
+                    first_name = null,
+                    last_name = null,
+                    info = null,
+                    motion_id = null,
+                    is_write_in = null,
+                    person_id = null
+                }) {
         super();
         this.id = id;
         this.first_name = first_name;
@@ -21,19 +28,33 @@ export default class Candidate extends IModel {
         // this.pool_member_id = pool_member_id;
 
         // this.type = 'nominated';
-
     }
 
-    get name(){
+    /**
+     * This is used in checking for duplicates. Since a person
+     * may be a candidate in multiple elections, we have to check both
+     * the person id and the motion id.
+     *
+     * We cannot rely just on the id since the candidate objects if separately
+     * created will always have different ids
+     *
+     * @param candidate
+     */
+    isIdentical(candidate) {
+        return this.person_id === candidate.person_id && this.motion_id === candidate.motion_id;
+    }
+
+    get name() {
         return this.first_name + " " + this.last_name;
     }
-;
-    get isWriteIn(){
+    ;
+
+    get isWriteIn() {
         return this.is_write_in;
     }
 
 
-    get motionId(){
+    get motionId() {
         return motion_id;
     }
 }

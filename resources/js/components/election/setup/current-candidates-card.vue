@@ -37,6 +37,16 @@ export default {
         }
     },
 
+    watch: {
+    /**
+     * This handles loading the candidates on subsequent changes of the
+     * motion.
+     */
+    motion: function () {
+        this.$store.dispatch('loadElectionCandidates', this.motion.id);
+    }
+},
+
     asyncComputed: {
         candidates: {
             get: function () {
@@ -57,6 +67,15 @@ export default {
             //async computed property will know to change
             this.events += 1;
             window.console.log('selection-handler', this.events);
+        }
+    },
+
+    mounted() {
+        //This ensures that the list of candidates loads for the first time the edit
+        //button is clicked.
+        if (isReadyToRock(this.motion)) {
+            this.$store.dispatch('loadElectionCandidates', this.motion.id).then(function () {
+            });
         }
     }
 

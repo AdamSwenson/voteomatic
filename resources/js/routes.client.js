@@ -70,7 +70,7 @@ export const routes = [
         path: '/ballot',
         icon: "fa fa-bar-chart",
         get label() {
-            if (store.getters.isElection) return "Create office";
+            if (store.getters.isElection) return "Setup offices";
             return "Make motion";
         },
         components: {main: ballotSetupCard},

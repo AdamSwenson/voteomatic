@@ -4,7 +4,7 @@ import MeetingMixin from "../../../../mixins/meetingMixin";
 import ModeMixin from "../../../../mixins/modeMixin";
 
 export default {
-    name: "delete-election-button",
+    name: "delete-office-button",
     extends: DeleteButtonParent,
     props: [],
 
@@ -14,12 +14,13 @@ export default {
             label: 'Delete office',
           }
     },
+computed : {
+    modalId : function(){
+        return "deleteOfficeModal"
+    },
 
-    asyncComputed: {},
+},
 
-    computed: {},
-
-    methods: {}
 
 }
 </script>

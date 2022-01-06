@@ -4346,7 +4346,7 @@ __webpack_require__.r(__webpack_exports__);
   asyncComputed: {
     label: function label() {
       if (this.isPool) {
-        return this.selected ? 'Selected' : 'Select';
+        return this.selected ? 'Selected' : 'Nominate';
       } //If we are just the list of candidates
 
 
@@ -4400,7 +4400,7 @@ __webpack_require__.r(__webpack_exports__);
         //Make them into a candidate
         // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
         window.console.log('add', 'candidate-setup-row button clicked for ', this.candidate.name);
-        this.$store.dispatch('addPoolMemberToOfficeElection', this.candidate);
+        this.$store.dispatch('addCandidate', this.candidate);
       } else {
         //remove them as a candidate
         window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);
@@ -4573,6 +4573,104 @@ __webpack_require__.r(__webpack_exports__);
       //provided template
 
       var p = this.$store.dispatch('deleteElection', me.meeting).then(function () {});
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _controls_delete_button_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../controls/delete-button-parent */ "./resources/js/components/controls/delete-button-parent.vue");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "delete-office-button",
+  "extends": _controls_delete_button_parent__WEBPACK_IMPORTED_MODULE_0__["default"],
+  props: [],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_2___default())],
+  data: function data() {
+    return {
+      label: 'Delete office'
+    };
+  },
+  computed: {
+    modalId: function modalId() {
+      return "deleteOfficeModal";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _controls_delete_button_parent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../controls/delete-button-parent */ "./resources/js/components/controls/delete-button-parent.vue");
+/* harmony import */ var _controls_delete_modal_parent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../controls/delete-modal-parent */ "./resources/js/components/controls/delete-modal-parent.vue");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
+/* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../mixins/motionObjectMixin */ "./resources/js/mixins/motionObjectMixin.js");
+/* harmony import */ var _mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "delete-office-modal",
+  "extends": _controls_delete_modal_parent__WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: [],
+  data: function data() {
+    return {
+      eventType: 'office',
+      subsidiaryType: 'candidate lists'
+    };
+  },
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_4___default()), (_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_5___default()), (_mixins_motionObjectMixin__WEBPACK_IMPORTED_MODULE_6___default())],
+  computed: {
+    modalId: function modalId() {
+      return "deleteOfficeModal";
+    }
+  },
+  methods: {
+    handleClick: function handleClick() {
+      var me = this; //First we create and store a new meeting from the
+      //provided template
+
+      var p = this.$store.dispatch('deleteOffice', me.motion).then(function () {
+        window.console.log("Office deleted");
+      });
     }
   }
 });
@@ -4783,6 +4881,15 @@ __webpack_require__.r(__webpack_exports__);
       events: 0
     };
   },
+  watch: {
+    /**
+     * This handles loading the candidates on subsequent changes of the
+     * motion.
+     */
+    motion: function motion() {
+      this.$store.dispatch('loadElectionCandidates', this.motion.id);
+    }
+  },
   asyncComputed: {
     candidates: {
       get: function get() {
@@ -4800,6 +4907,13 @@ __webpack_require__.r(__webpack_exports__);
       //async computed property will know to change
       this.events += 1;
       window.console.log('selection-handler', this.events);
+    }
+  },
+  mounted: function mounted() {
+    //This ensures that the list of candidates loads for the first time the edit
+    //button is clicked.
+    if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) {
+      this.$store.dispatch('loadElectionCandidates', this.motion.id).then(function () {});
     }
   }
 });
@@ -5002,6 +5116,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingPropertiesMixin */ "./resources/js/mixins/meetingPropertiesMixin.js");
 /* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _controls_delete_office_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./controls/delete-office-button */ "./resources/js/components/election/setup/controls/delete-office-button.vue");
+/* harmony import */ var _controls_delete_office_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./controls/delete-office-modal */ "./resources/js/components/election/setup/controls/delete-office-modal.vue");
 //
 //
 //
@@ -5039,6 +5155,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
+
 
 
 
@@ -5048,6 +5168,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "office-edit-card",
   components: {
+    DeleteOfficeModal: _controls_delete_office_modal__WEBPACK_IMPORTED_MODULE_7__["default"],
+    DeleteOfficeButton: _controls_delete_office_button__WEBPACK_IMPORTED_MODULE_6__["default"],
     CandidateRow: _candidate_row__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: [],
@@ -5268,6 +5390,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _controls_delete_office_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./controls/delete-office-modal */ "./resources/js/components/election/setup/controls/delete-office-modal.vue");
+/* harmony import */ var _controls_delete_office_button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./controls/delete-office-button */ "./resources/js/components/election/setup/controls/delete-office-button.vue");
 //
 //
 //
@@ -5301,6 +5425,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -5312,6 +5445,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "office-setup-card",
   components: {
+    DeleteOfficeButton: _controls_delete_office_button__WEBPACK_IMPORTED_MODULE_9__["default"],
+    DeleteOfficeModal: _controls_delete_office_modal__WEBPACK_IMPORTED_MODULE_8__["default"],
     CreateOfficeButton: _controls_create_office_button__WEBPACK_IMPORTED_MODULE_4__["default"],
     OfficeListCard: _office_list_card__WEBPACK_IMPORTED_MODULE_3__["default"],
     OfficeEditCard: _office_edit_card__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -14763,8 +14898,24 @@ var Candidate = /*#__PURE__*/function (_IModel) {
 
     return _this;
   }
+  /**
+   * This is used in checking for duplicates. Since a person
+   * may be a candidate in multiple elections, we have to check both
+   * the person id and the motion id.
+   *
+   * We cannot rely just on the id since the candidate objects if separately
+   * created will always have different ids
+   *
+   * @param candidate
+   */
+
 
   _createClass(Candidate, [{
+    key: "isIdentical",
+    value: function isIdentical(candidate) {
+      return this.person_id === candidate.person_id && this.motion_id === candidate.motion_id;
+    }
+  }, {
     key: "name",
     get: function get() {
       return this.first_name + " " + this.last_name;
@@ -16289,7 +16440,7 @@ var routes = [{
   icon: "fa fa-bar-chart",
 
   get label() {
-    if (_store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.isElection) return "Create office";
+    if (_store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.isElection) return "Setup offices";
     return "Make motion";
   },
 
@@ -16981,11 +17132,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var state = {
+  /**
+   * People who have been nominated for offices
+   */
   candidates: [],
 
   /**
-   * Used during election setup. Holds candidate
-   * objects who have a motion id, but they are not necessarily
+   * Used during election setup. Holds pool members. I.e., people associated
+   * with a motion id, but who are not yet
    * candidates.
    */
   candidatePool: [],
@@ -17001,16 +17155,15 @@ var mutations = {
     state.candidatePool.push(candidateObject);
   },
   addCandidateToStore: function addCandidateToStore(state, candidateObject) {
-    //todo This attempt to filter duplicates doesn't work because the candidate objects have different ids
-    window.console.log((0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__.getById)(state.candidates, candidateObject.id));
+    //See if the person is already in candidates
+    //NB, we can't just filter duplicate objects
+    var r = state.candidates.filter(function (c) {
+      if (c.isIdentical(candidateObject)) return c;
+    });
 
-    if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_7__.isReadyToRock)((0,_utilities_object_utilities__WEBPACK_IMPORTED_MODULE_3__.getById)(state.candidates, candidateObject.id))) {
+    if (r.length === 0) {
       state.candidates.push(candidateObject);
-    } // window.console.log(state.candidates.indexOf(candidateObject));
-    // if(state.candidates.indexOf(candidateObject) === -1){
-    //
-    // }
-
+    }
   },
   clearCandidates: function clearCandidates(state) {
     state.candidates = [];
@@ -17038,6 +17191,10 @@ var mutations = {
 };
 var actions = {
   /**
+   * Takes a pool member and makes them a candidate for
+   * the office. That is, they will now be someone whom voters
+   * can vote for.
+   *
    * NB, while the candidate object may exist on the client as
    * part of the candidatePool, it may not yet exist on the server
    *
@@ -17047,7 +17204,7 @@ var actions = {
    * @param candidate
    * @returns {Promise<unknown>}
    */
-  addPoolMemberToOfficeElection: function addPoolMemberToOfficeElection(_ref2, poolMember) {
+  addCandidate: function addCandidate(_ref2, poolMember) {
     var dispatch = _ref2.dispatch,
         commit = _ref2.commit,
         getters = _ref2.getters;
@@ -17096,6 +17253,15 @@ var actions = {
       });
     });
   },
+
+  /**
+   * Create an election event in which votes will be
+   * cast for several offices. Election is equivalent to a meeting
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @returns {Promise<unknown>}
+   */
   createElection: function createElection(_ref5) {
     var dispatch = _ref5.dispatch,
         commit = _ref5.commit,
@@ -17120,7 +17286,7 @@ var actions = {
   },
 
   /**
-   * Creates a new elected office within the meeting.
+   * Creates a new elected office within the election.
    *
    * @param dispatch
    * @param commit
@@ -17197,11 +17363,23 @@ var actions = {
    * @param getters
    * @param payload
    */
-  editPerson: function editPerson(_ref8, payload) {
+  editPerson: function editPerson(_ref8, payload) {//todo
+
     var dispatch = _ref8.dispatch,
         commit = _ref8.commit,
         getters = _ref8.getters;
   },
+
+  /**
+   * Takes and existing person and makes the a potential
+   * candidate for a given office
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param person
+   * @param motionId
+   * @returns {Promise<unknown>}
+   */
   addPersonToPool: function addPersonToPool(_ref9, _ref10) {
     var dispatch = _ref9.dispatch,
         commit = _ref9.commit,
@@ -17259,44 +17437,17 @@ var actions = {
       });
     });
   },
-  // loadAllElections({dispatch, commit, getters}){
-  //     return new Promise(((resolve, reject) => {
-  //
-  //         //send to server
-  //         let url = routes.election.resource.election();
-  //         return Vue.axios.get(url)
-  //             .then((response) => {
-  //                 _.forEach(response.data, (d) => {
-  //                     // window.console.log('loadAllMeetings', d);
-  //                     let election = new Election(d);
-  //                     commit('addMeetingToStore', election);
-  //                     resolve()
-  //                 });
-  //             });
-  //     }));
-  // },
-  // loadOfficesForElection({dispatch, commit, getters}, meetingId) {
-  //     let url = routes.election.getOffices(meetingId);
-  //
-  //     return new Promise(((resolve, reject) => {
-  //
-  //         return Vue.axios.get(url).then((response) => {
-  //
-  //             _.forEach(response.data, (d) => {
-  //                 // window.console.log('loadAllMeetings', d);
-  //                 let motion = new Motion(d);
-  //                 commit('addMotionToStore', motion);
-  //
-  //             });
-  //
-  //             resolve();
-  //
-  //         });
-  //
-  //     }));
-  //
-  //
-  // },
+
+  /**
+   * Load those who are eligible to be nominated for this
+   * office (i.e., pool members)
+   *
+   * @param dispatch
+   * @param commit
+   * @param getters
+   * @param motionId
+   * @returns {Promise<unknown>}
+   */
   loadCandidatePool: function loadCandidatePool(_ref13, motionId) {
     var dispatch = _ref13.dispatch,
         commit = _ref13.commit,
@@ -17470,19 +17621,13 @@ var getters = {
   },
 
   /**
-   * Returns all candidate objects from the pool for the
+   * Returns all potential nominees from the pool for the
    * provided motion
    * @param state
    * @returns {function(*): *[]}
    */
   getCandidatePoolForOffice: function getCandidatePoolForOffice(state) {
     return function (motion) {
-      //         let candidateIds = [];
-      //         _.forEach(state.candidates, (c) => {
-      // candidateIds.push(c);
-      //         });
-      //     return
-      //         window.console.log('cl', candidateIds);
       return state.candidatePool.filter(function (c) {
         return c.motion_id === motion.id;
       });
@@ -67686,6 +67831,82 @@ component.options.__file = "resources/js/components/election/setup/controls/dele
 
 /***/ }),
 
+/***/ "./resources/js/components/election/setup/controls/delete-office-button.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/election/setup/controls/delete-office-button.vue ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _delete_office_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./delete-office-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _delete_office_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "2ce3b786",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/setup/controls/delete-office-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/setup/controls/delete-office-modal.vue":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/election/setup/controls/delete-office-modal.vue ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _delete_office_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./delete-office-modal.vue?vue&type=script&lang=js& */ "./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _delete_office_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "2d45a0f2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/setup/controls/delete-office-modal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/election/setup/controls/edit-election-button.vue":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/election/setup/controls/edit-election-button.vue ***!
@@ -72168,6 +72389,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_election_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./delete-election-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-election-modal.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_election_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_office_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./delete-office-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_office_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_office_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./delete-office-modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/setup/controls/delete-office-modal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_delete_office_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -77014,7 +77267,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "h4 card-title" }, [_vm._v("Candidate pool")])
+      _c("div", { staticClass: "h4 card-title" }, [
+        _vm._v("Eligible for nomination")
+      ])
     ])
   }
 ]
@@ -77215,77 +77470,102 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "office-edit" }, [
+  return _c("div", { staticClass: " card office-edit-card" }, [
     _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("label", { attrs: { for: "office-name" } }, [
-        _vm._v(_vm._s(_vm.subsidiaryTypeCapitalized) + " name")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group mb-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.officeName,
-              expression: "officeName"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "office-name" },
-          domProps: { value: _vm.officeName },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      [
+        _c("label", { attrs: { for: "office-name" } }, [
+          _vm._v(_vm._s(_vm.subsidiaryTypeCapitalized) + " name")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.officeName,
+                expression: "officeName"
               }
-              _vm.officeName = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "office-max-winners" } }, [
-        _vm._v("Max winners")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group mb-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.maxWinners,
-              expression: "maxWinners"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "number", id: "office-max-winners" },
-          domProps: { value: _vm.maxWinners },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "office-name" },
+            domProps: { value: _vm.officeName },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.officeName = $event.target.value
               }
-              _vm.maxWinners = $event.target.value
             }
-          }
-        })
-      ]),
-      _vm._v(" "),
+          })
+        ]),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "office-max-winners" } }, [
+          _vm._v("Max winners")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.maxWinners,
+                expression: "maxWinners"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number", id: "office-max-winners" },
+            domProps: { value: _vm.maxWinners },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.maxWinners = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-lg-2" },
+            [_c("delete-office-button")],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("delete-office-modal")
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-10" }, [
       _c("p", { staticClass: "text-muted" }, [
         _vm._v(
-          "Your entries are saved as you type. You don't need to click anything when you are done."
+          "Your entries are saved as you type. You don't need to click anything when you\n                    are\n                    done."
         )
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -77332,9 +77612,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "h4 card-title" }, [
-        _vm._v("Offices in this election")
-      ])
+      _c("div", { staticClass: "h4 card-title" }, [_vm._v("Offices")])
     ])
   }
 ]
@@ -77360,39 +77638,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card office-setup" }, [
-    _c("div", { staticClass: "card-body" }, [_c("office-list-card")], 1),
-    _vm._v(" "),
-    _vm.showOfficeSetup
-      ? _c("div", { staticClass: "card-body" }, [_c("office-edit-card")], 1)
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.showOfficeSetup
-      ? _c("div", { staticClass: "card-body" }, [
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(
-              "Use the Select buttons to add names from the pool on the left to the list of candidates\n                on the right."
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-lg-6" },
-              [_c("candidate-pool-card")],
-              1
-            ),
+  return _c(
+    "div",
+    { staticClass: "card office-setup" },
+    [
+      _c("office-list-card"),
+      _vm._v(" "),
+      _vm.showOfficeSetup ? _c("office-edit-card") : _vm._e(),
+      _vm._v(" "),
+      _vm.showOfficeSetup
+        ? _c("div", { staticClass: "card-body" }, [
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v(
+                "The pool on the left contains people who are eligible to be\n                nominated for this office. The list on the right contains those who have been nominated --i.e.,\n                candidates whom voters will select. Use the Nominate buttons to add names\n                from the pool on the left to the list of candidates\n                on the right."
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-6" },
-              [_c("current-candidates-card")],
-              1
-            )
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-lg-6" },
+                [_c("candidate-pool-card")],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-lg-6" },
+                [_c("current-candidates-card")],
+                1
+              )
+            ])
           ])
-        ])
-      : _vm._e()
-  ])
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

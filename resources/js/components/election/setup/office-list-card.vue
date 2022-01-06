@@ -2,7 +2,7 @@
     <div class="card" style="width: 25rem;">
 
         <div class="card-header">
-            <div class="h4 card-title">Offices in this election</div>
+            <div class="h4 card-title">Offices</div>
         </div>
 
 <!--        <div class="card-body">-->
