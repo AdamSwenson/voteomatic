@@ -185,7 +185,10 @@ const actions = {
             //NB, an office is represented by a motion, hence we need to use
             //the expected keys even though it seems odd in this context
             content: '',
-            description: ''
+            description: '',
+            //Otherwise the controller will not send the office
+            //when we ask for all motions
+            seconded : true
         };
 
         return new Promise(((resolve, reject) => {
@@ -195,11 +198,79 @@ const actions = {
                     let motion = new Motion(response.data);
 
                     commit('addMotionToStore', motion);
-                    dispatch('setMotion', motion);
-
-                    dispatch('loadCandidatePool', motion).then((response) => {
-                        resolve();
+                    dispatch('setMotion', motion).then(() => {
+                        dispatch('loadCandidatePool', motion).then((response) => {
+                            resolve();
+                        });
                     });
+
+
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+
+    },
+
+    /**
+     * Creates a person who can be a pool member or a candidate
+     * NB, the pool member object provided is just used to organize the
+     * relevant properties. It doesn't have any of the ids.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param poolMember
+     */
+    createPerson({dispatch, commit, getters}, poolMember){
+        return new Promise(((resolve, reject) => {
+            let url = routes.election.resource.people();
+
+            return Vue.axios.post(url, poolMember)
+                .then((response) => {
+                    let person = new PoolMember(response.data);
+
+                    return resolve(person);
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+
+    },
+
+    /**
+     * Edit properties of a pool member ---makes the changes on the
+     * underlying person object
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param payload
+     */
+    editPerson({dispatch, commit, getters}, payload){
+
+    },
+
+    addPersonToPool({dispatch, commit, getters}, {person, motionId}) {
+
+        let url = routes.election.addToPool(motionId, person.id);
+
+        return new Promise(((resolve, reject) => {
+
+            return Vue.axios.post(url)
+                .then((response) => {
+                    //we receive a pool member object with the correct motion id
+                    let member = new PoolMember(response.data);
+
+                    commit('addCandidateToPool', member);
+                        return resolve(member);
 
                 }).catch(function (error) {
                     // error handling

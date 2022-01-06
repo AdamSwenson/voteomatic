@@ -1,18 +1,18 @@
 <template>
     <div class="card office-setup">
-        <div class="card-header">
-            <create-office-button></create-office-button>
-        </div>
+<!--        <div class="card-header">-->
+<!--            <create-office-button></create-office-button>-->
+<!--        </div>-->
 
         <div class="card-body">
             <office-list-card></office-list-card>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="showOfficeSetup">
             <office-edit-card></office-edit-card>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="showOfficeSetup">
             <p class="card-text">Use the Select buttons to add names from the pool on the left to the list of candidates
                 on the right.</p>
             <div class="row">
@@ -37,19 +37,31 @@ import CurrentCandidatesCard from "./current-candidates-card";
 import OfficeEditCard from "./office-edit-card";
 import OfficeListCard from "./office-list-card";
 import CreateOfficeButton from "./controls/create-office-button";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "office-setup-card",
     components: {CreateOfficeButton, OfficeListCard, OfficeEditCard, CurrentCandidatesCard, CandidatePoolCard},
     props: [],
 
-    mixins: [],
+    mixins: [MeetingMixin, MotionStoreMixin],
 
     data: function () {
         return {}
     },
 
-    asyncComputed: {},
+    asyncComputed: {
+        /**
+         * Hide the editing fields if no office is selected since
+         * otherwise that seems confusing
+         * @returns {boolean}
+         */
+        showOfficeSetup: function(){
+            return  isReadyToRock(this.motion);
+        }
+    },
 
     computed: {},
 

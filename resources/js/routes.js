@@ -66,7 +66,7 @@ module.exports = {
             },
 
             people: (personId = null) => {
-                let r = normalizedRouteRoot() + '/election/people';
+                let r = normalizedRouteRoot() + 'election/people';
                 if (!_.isNull(personId)) {
                     r = r + '/' + personId;
                 }

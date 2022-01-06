@@ -57,7 +57,10 @@ class ElectionRepository implements IElectionRepository
             'content' => $officeName,
             'description' => $description,
             'meeting_id' => $election->id,
-            'max_winners' => $maxWinners
+            'max_winners' => $maxWinners,
+            //Otherwise it will not be returned when we request the offices
+            //via the motion controller
+            'seconded' => true
         ]);
 
         return $office;

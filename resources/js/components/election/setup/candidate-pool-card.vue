@@ -15,7 +15,7 @@
             ></candidate-setup-row>
 
         </ul>
-
+        <pool-member-creation-card></pool-member-creation-card>
     </div>
 
 
@@ -26,10 +26,11 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import CandidateSetupRow from "./candidate-setup-row";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import PoolMemberCreationCard from "./pool-member-creation-card";
 
 export default {
     name: "candidate-pool-card",
-    components: {CandidateSetupRow},
+    components: {PoolMemberCreationCard, CandidateSetupRow},
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin],
@@ -38,15 +39,27 @@ export default {
         return {}
     },
 
+    watch: {
+        /**
+         * This handles loading the pool on subsequent changes of the
+         * motion.
+         */
+        motion: function () {
+            this.$store.dispatch('loadCandidatePool', this.motion.id);
+        }
+
+    },
+
     asyncComputed: {
         candidatePool: {
             get: function () {
                 let me = this;
                 if (!isReadyToRock(this.motion)) return [];
-                return this.$store.dispatch('loadCandidatePool', this.motion.id).then(function(){
-                    return me.$store.getters.getCandidatePoolForOffice(me.motion);
-                })
 
+                let p = me.$store.getters.getCandidatePoolForOffice(me.motion);
+                if (p.length > 0) {
+                    return p;
+                }
             },
             default: [],
             watch: ['motion']
@@ -57,7 +70,16 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {},
+
+    mounted() {
+        //This ensures that the pool loads for the first time the edit
+        //button is clicked.
+        if (isReadyToRock(this.motion)) {
+            this.$store.dispatch('loadCandidatePool', this.motion.id).then(function () {
+            });
+        }
+        }
 
 }
 </script>
