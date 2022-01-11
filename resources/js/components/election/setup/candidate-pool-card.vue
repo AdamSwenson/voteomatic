@@ -15,7 +15,10 @@
             ></candidate-setup-row>
 
         </ul>
+
         <pool-member-creation-card></pool-member-creation-card>
+
+
     </div>
 
 
@@ -27,10 +30,11 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import CandidateSetupRow from "./candidate-setup-row";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import PoolMemberCreationCard from "./pool-member-creation-card";
+import ImportPoolControls from "./controls/import-pool-controls";
 
 export default {
     name: "candidate-pool-card",
-    components: {PoolMemberCreationCard, CandidateSetupRow},
+    components: {ImportPoolControls, PoolMemberCreationCard, CandidateSetupRow},
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin],

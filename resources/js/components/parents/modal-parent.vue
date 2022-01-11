@@ -8,6 +8,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title"
                         v-bind:id="labelId"
@@ -20,7 +21,11 @@
                     </button>
                 </div>
 
-                <div class="modal-body" v-html="modalText">
+                <div class="modal-body" >
+                    <div class="modalText" v-html="modalText"></div>
+                    <slot>
+                        <div class="modalText" v-html="modalSecondaryText"></div>
+                    </slot>
                 </div>
 
                 <div class="modal-footer">
@@ -32,10 +37,10 @@
 
                     <button type="button"
                             class="btn btn-primary"
+                            v-if="showActionButton"
                             data-dismiss="modal"
                             v-on:click="handleClick"
-                    >{{buttonLabel}}
-                    </button>
+                    >{{buttonLabel}}</button>
 
                 </div>
             </div>
@@ -48,68 +53,97 @@
 
 import MeetingMixin from '../../mixins/meetingMixin'
 import ModeMixin from "../../mixins/modeMixin";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 /**
- * Note, this will require that a corresponding button is
- * included elsewhere on the page, if it isn't launched programatically.
+ * Note, this will require that a corresponding button which inherits from
+ * modal-button-parent is included elsewhere on the page
  * They are linked via  bootstrap
  * using the data-dismiss=modal attribute.
+ *
+ * Content of the modal is either defined via the slot
+ *      <modal-child>
+ *          stuff that goes in modal
+ *       </modal-child>
+ * or by defining modalSecondaryText in data or property
+ *
+ * Children must define (data or property):
+ *      modalId
+ *      modalTitle
+ *      handleClick
+ *      buttonLabel : The label on the action button
+ *
+ * Children may define (data or property):
+ *      styling
+ *      modalText
+ *      hideActionButton : Boolean of whether to hide the action button.
+ *                          mostly used when a button will be used in the slot
+ *
  */
 export default {
-    name: "delete-modal-parent",
+    name: "modal-parent",
 
     props: [],
 
     mixins: [MeetingMixin, ModeMixin],
 
-    data: function () {
-        return {}
-    },
+    // data: function () {
+    //     return {}
+    // },
 
     computed: {
-        buttonLabel : function (){},
-        modalId: function () {
-            return ""
+        showActionButton : function(){
+            if(! isReadyToRock(this.hideActionButton)) return true;
+            return ! this.hideActionButton;
         },
+        // buttonLabel : function (){},
+        // modalId: function () {
+        //     return ""
+        // },
 
         labelId: function () {
             return "modalLabelId" + this.modalId;
         },
 
-        modalTitle: function(){},
+        // modalTitle: function(){},
 
-        modalText: function () {
-            return `<p></p>`;
-         },
+        // modalText: function () {
+        //     return `<p></p>`;
+        //  },
 
-
-        /**
-         * First letter capitalized for use in labels etc
-         * @returns {string}
-         */
-        typeCapitalized : function(){
-            // return _.capitalize(this.eventType);
-        },
+        //
+        // /**
+        //  * First letter capitalized for use in labels etc
+        //  * @returns {string}
+        //  */
+        // typeCapitalized : function(){
+        //     // return _.capitalize(this.eventType);
+        // },
 
 
 
     },
 
     methods: {
-        handleClick: function () {
-            //
-            //     let me = this;
-            //
-            //     //First we create and store a new meeting from the
-            //     //provided template
-            //     let p = this.$store.dispatch('deleteMeeting', me.meeting)
-            //         .then(function () {
-            //         });
-            // }
-
-        }
+        closeModal : function(){
+            $('#' + this.modalId).modal('hide');
+        },
 
     }
+    //     handleClick: function () {
+    //         //
+    //         //     let me = this;
+    //         //
+    //         //     //First we create and store a new meeting from the
+    //         //     //provided template
+    //         //     let p = this.$store.dispatch('deleteMeeting', me.meeting)
+    //         //         .then(function () {
+    //         //         });
+    //         // }
+    //
+    //     }
+    //
+    // }
 }
 
 </script>

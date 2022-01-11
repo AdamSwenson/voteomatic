@@ -24,8 +24,12 @@
                 </div>
 
             </div>
+
         </div>
 
+        <div class="card-body" v-if="showOfficeSetup">
+            <import-pool-controls></import-pool-controls>
+        </div>
 <!--        <div class="card-footer" v-if="showOfficeSetup">-->
 <!--            <div class="text-right">-->
 <!--                <delete-office-button></delete-office-button>-->
@@ -49,10 +53,14 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import DeleteOfficeModal from "./controls/delete-office-modal";
 import DeleteOfficeButton from "./controls/delete-office-button";
+import ImportPoolControls from "./controls/import-pool-controls";
+
+// import bsCustomFileInput from 'bs-custom-file-input'
 
 export default {
     name: "office-setup-card",
     components: {
+        ImportPoolControls,
         DeleteOfficeButton,
         DeleteOfficeModal,
         CreateOfficeButton, OfficeListCard, OfficeEditCard, CurrentCandidatesCard, CandidatePoolCard
@@ -78,7 +86,15 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {},
+
+    mounted() {
+        // dev This would be used if decide to use bs-custom-file-input for the file field
+
+        // $(document).ready(function () {
+        //     bsCustomFileInput.init()
+        // })
+    }
 
 }
 </script>

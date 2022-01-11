@@ -1,13 +1,19 @@
-import * as routes from "../../routes";
-import Meeting from "../../models/Meeting";
-import Candidate from "../../models/Candidate";
-import {getById} from "../../utilities/object.utilities";
-import CandidateResult from "../../models/CandidateResult";
-import Election from "../../models/Election";
-import {idify} from "../../utilities/object.utilities";
-import Motion from "../../models/Motion";
-import {isReadyToRock} from "../../utilities/readiness.utilities";
-import PoolMember from "../../models/PoolMember";
+import * as routes from "../../../routes";
+import Meeting from "../../../models/Meeting";
+import Candidate from "../../../models/Candidate";
+import {getById} from "../../../utilities/object.utilities";
+import CandidateResult from "../../../models/CandidateResult";
+import Election from "../../../models/Election";
+import {idify} from "../../../utilities/object.utilities";
+import Motion from "../../../models/Motion";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import PoolMember from "../../../models/PoolMember";
+
+// import {actions as iactions} from './candidateFileImporter';
+// import {importCandidatesFromFile} from './candidateFileImporter';
+import a from './elections.actions';
+
+// import importCandidatesFromFile from './candidateFileImporter';
 
 const state = {
     /**
@@ -43,9 +49,9 @@ const mutations = {
         //See if the person is already in candidates
         //NB, we can't just filter duplicate objects
         let r = state.candidates.filter(function (c) {
-            if(c.isIdentical(candidateObject)) return c
+            if (c.isIdentical(candidateObject)) return c
         });
-        if (r.length === 0){
+        if (r.length === 0) {
             state.candidates.push(candidateObject);
         }
 
@@ -87,8 +93,12 @@ const mutations = {
 
 
 const actions = {
+    ...a,
 
+    // ...importCandidatesFromFile,
 
+// ...iactions,
+//     importCandidatesFromFile,
     /**
      * Takes a pool member and makes them a candidate for
      * the office. That is, they will now be someone whom voters
@@ -202,7 +212,7 @@ const actions = {
             description: '',
             //Otherwise the controller will not send the office
             //when we ask for all motions
-            seconded : true
+            seconded: true
         };
 
         return new Promise(((resolve, reject) => {
@@ -217,7 +227,6 @@ const actions = {
                             resolve();
                         });
                     });
-
 
 
                 }).catch(function (error) {
@@ -240,7 +249,7 @@ const actions = {
      * @param getters
      * @param poolMember
      */
-    createPerson({dispatch, commit, getters}, poolMember){
+    createPerson({dispatch, commit, getters}, poolMember) {
         return new Promise(((resolve, reject) => {
             let url = routes.election.resource.people();
 
@@ -260,6 +269,26 @@ const actions = {
 
     },
 
+    createPoolFromFile({dispatch, commit, getters}, {file, motionId}) {
+        return new Promise(((resolve, reject) => {
+            dispatch('readPeopleFromFile', file).then((people) => {
+                window.console.log('people', people);
+                //Will have a list of people objects
+                _.forEach(people, (p) => {
+                    p.motion_id = motionId;
+                    dispatch('createPerson', p).then((p2) => {
+                        dispatch('addPersonToPool', {person: p2, motionId: motionId})
+                            .then(() => {
+                                return resolve();
+                            });
+                    });
+                });
+
+            });
+
+        }));
+    },
+
     /**
      * Edit properties of a pool member ---makes the changes on the
      * underlying person object
@@ -268,7 +297,7 @@ const actions = {
      * @param getters
      * @param payload
      */
-    editPerson({dispatch, commit, getters}, payload){
+    editPerson({dispatch, commit, getters}, payload) {
 //todo
     },
 
@@ -294,7 +323,7 @@ const actions = {
                     let member = new PoolMember(response.data);
 
                     commit('addCandidateToPool', member);
-                        return resolve(member);
+                    return resolve(member);
 
                 }).catch(function (error) {
                     // error handling
@@ -478,20 +507,20 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-                return Vue.axios.delete(url)
-                    .then((response) => {
+            return Vue.axios.delete(url)
+                .then((response) => {
 
-                        commit('removeCandidate', candidate);
-                        resolve();
+                    commit('removeCandidate', candidate);
+                    resolve();
 
-                    }).catch(function (error) {
-                        // error handling
-                        if (error.response) {
-                            dispatch('showServerProvidedMessage', error.response.data);
-                        }
-                    });
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
 
-            }));
+        }));
 
     },
 

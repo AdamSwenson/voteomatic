@@ -16,7 +16,7 @@ import * as state from './state'
 //modules
 import auth from "./modules/auth";
 import chairUtilities from "./modules/chairUtilities";
-import elections from "./modules/elections";
+import elections from "./modules/elections/elections";
 import meetings from './modules/meetings';
 import modes from "./modules/modes";
 import motions from './modules/motions';
