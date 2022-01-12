@@ -1,15 +1,16 @@
 
-import IModel from "./IModel";
+import IPerson from "./IPerson";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 /**
  * One person running for one office.
  *
  * Importantly, the candidate knows the id of the election (motion)
  */
-export default class PoolMember extends IModel {
+export default class PoolMember extends IPerson {
 
 
-    constructor({id = null, first_name = null, last_name=null, info = null, motion_id=null, person_id=null }) {
+    constructor({id = null, first_name = null, last_name=null, info = {}, motion_id=null, person_id=null }) {
         super();
         this.id = id;
         this.first_name = first_name;
@@ -22,9 +23,18 @@ export default class PoolMember extends IModel {
 
     }
 
-    get name(){
-        return this.first_name + " " + this.last_name;
-    }
+    // getInfoField(fieldName){
+    //     if(! isReadyToRock(this.info) || !isReadyToRock(this.info[fieldName])) return ''
+    //     return this.info[fieldName];
+    // }
+    //
+    // setInfoField(fieldName, val){
+    //     this.info[fieldName] = val;
+    // }
+
+    // get name(){
+    //     return this.first_name + " " + this.last_name;
+    // }
 
     get motionId(){
         return motion_id;

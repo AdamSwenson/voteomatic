@@ -53,6 +53,7 @@ export default {
 
     methods: {
         setMeeting: function () {
+
             this.$store.dispatch('setActiveMeeting', this.meeting);
             // this.$store.commit('setMeeting', this.meeting);
         }

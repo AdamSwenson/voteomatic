@@ -14,27 +14,27 @@ use Tests\TestCase;
 class MultipleWinnersCalculatorTest extends TestCase
 {
 
-    private $motion;
+    public $motion;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $candidate;
+    public $candidate;
     /**
      * @var int
      */
-    private $numOthers;
+    public $numOthers;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $otherCandidates;
+    public $otherCandidates;
     /**
      * @var int
      */
-    private $winningVotes;
+    public $winningVotes;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $winners;
+    public $winners;
 
     public function setUp(): void
     {

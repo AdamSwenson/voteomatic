@@ -25,7 +25,9 @@ class MotionSecondControllerTest extends TestCase
 //        $this->user->meetings()->attach($this->meeting);
 //        $this->user->push();
 
-        $this->motion = Motion::factory()->create();
+        $this->motionAuthor = User::factory()->create();
+        $this->motion = Motion::factory()->create(['author_id' => $this->motionAuthor->id]);
+
         $this->meeting->motions()->save($this->motion);
         $this->meeting->push();
 
@@ -63,5 +65,39 @@ class MotionSecondControllerTest extends TestCase
         $response->assertStatus(403);
 
     }
+
+
+    /** @test */
+    public function markNoSecondObtained()
+    {
+        $this->assertFalse($this->motion->seconded, "Starting un-seconded");
+
+        //call
+        $response = $this->actingAs($this->user)->post($this->url);
+
+        //check
+        $response->assertSuccessful();
+        $this->motion->refresh();
+
+        $this->assertTrue($this->motion->seconded, "Updated as seconded");
+    }
+
+
+    /** @test */
+    public function markNoSecondObtainedDeniesNonChair()
+    {
+        $nonMember = User::factory()->create();
+        $this->assertFalse($this->motion->seconded, "Starting un-seconded");
+
+        //call
+        $response = $this->actingAs($nonMember)->post($this->url);
+
+        //check
+        $response->assertStatus(403);
+
+    }
+
+
+
 
 }

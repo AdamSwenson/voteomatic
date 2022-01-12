@@ -52,6 +52,9 @@ import store from './store';
 import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
 
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg, {}); // config is optional. more below
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
  * The following block of code may be used to automatically register your
@@ -71,13 +74,14 @@ Vue.component('voteomatic', require('./components/voteomatic').default);
 Vue.component('page-navbar', require('./components/navigation/page-navbar').default);
 Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
+Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
 
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/motion-results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
 Vue.component('amendment-page', require('./components/main/amendment-page').default);
-Vue.component('election-card', require('./components/election/election-card').default);
+Vue.component('election-card', require('./components/election/voting/election-card').default);
 Vue.component('election-setup-card', require('./components/election/setup/election-setup-card').default);
 
 /**

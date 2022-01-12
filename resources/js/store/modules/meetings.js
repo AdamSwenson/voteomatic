@@ -71,11 +71,26 @@ const actions = {
             return Vue.axios.post(url)
                 .then((response) => {
                     let d = response.data;
-                    let meeting = new Meeting(d.id, d.name, d.date);
-                    commit('addMeetingToStore', meeting);
 
-                    commit('setMeeting', meeting);
-                    resolve()
+                    // dev Added in VOT-117 to deal with problem of still being on original meeting
+                    //  NB, this opens the new meeting in a new window. Not sure how annoying that will be
+                    let url = routes.meetings.main(d.id);
+                    dispatch('forceNavigationToUrl', url);
+
+                    // dev removed in VOT-117
+                    // let meeting = new Meeting(d.id, d.name, d.date);
+                    // commit('addMeetingToStore', meeting);
+                    //
+                    // dispatch('setActiveMeeting', meeting).then(() => {
+                    //     resolve();
+                    // });
+
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -92,18 +107,28 @@ const actions = {
                     //remove it from the list of meetings
                     commit('deleteMeeting', meeting);
 
-                    //check whether it is the currently set meeting
-                    let activeMeeting = getters.getActiveMeeting;
-                    if (activeMeeting.id === meeting.id) {
-                        //we need to remove it and set another in its place
-                        let newActive = getters.getStoredMeetings[0];
-                        // commit('setMeeting', newActive);
+                    //actually, we're just going to go to the
+                    //meeting index page. That way the store
+                    //gets completely cleaned up
+                    dispatch('openHomePage');
 
-                        dispatch('setActiveMeeting', newActive).then(() => {
-                            return resolve()
-                        });
+                    // //check whether it is the currently set meeting
+                    // let activeMeeting = getters.getActiveMeeting;
+                    // if (activeMeeting.id === meeting.id) {
+                    //     //we need to remove it and set another in its place
+                    //     let newActive = getters.getStoredMeetings[0];
+                    //     // commit('setMeeting', newActive);
+                    //
+                    //     dispatch('setActiveMeeting', newActive).then(() => {
+                    //         return resolve()
+                    //     });
+                    // }
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
                     }
-
                 });
         }));
 
@@ -124,9 +149,14 @@ const actions = {
                     commit('addMeetingToStore', meeting);
                     commit('setMeeting', meeting);
                     resolve()
-                }).catch((response) => {
-                    window.console.log("Error in loadMeeting ", response);
+
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
+
         }));
     },
 
@@ -139,7 +169,12 @@ const actions = {
      * @param getters
      */
     loadAllEvents({dispatch, commit, getters}) {
-        dispatch('loadAllMeetings');
+        return new Promise(((resolve, reject) => {
+
+            return dispatch('loadAllMeetings').then(() => {
+                resolve();
+            });
+        }));
     },
 
     /**
@@ -179,8 +214,11 @@ const actions = {
                         // }
                     });
                     resolve();
-                }).catch((response) => {
-                    window.console.log('bad load', response);
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     },
@@ -236,6 +274,11 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     resolve()
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
                 });
         }));
     }

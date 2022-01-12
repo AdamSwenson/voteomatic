@@ -9,19 +9,29 @@
         </div>
 
         <div class="card-body v-else">
-            <p class="text-danger">Use this to correct minor clerical errors or accidentally created motions.</p>
-            <p class="text-danger"><strong>Do not use this for formal amendments.</strong></p>
+            <p class="text-danger"><strong>Only</strong> use this to correct minor clerical errors.</p>
+
+            <h4 class="text-danger">Do not use this for formal amendments.</h4>
+
+            <p class="text-danger">Your edits are automatically saved to the server as you type</p>
 
             <div class="required">
                 <form>
+<!--                    <resolution-input-->
+<!--                        :motion="motion"-->
+<!--                        :edit-mode="true"-->
+<!--                        v-on:update:type="handleUpdate('type', $event)"-->
+<!--                    ></resolution-input>-->
 
                     <motion-content-input
                         :motion="motion"
+                        :edit-mode="true"
                         v-on:update:content="handleUpdate('content', $event)"
                     ></motion-content-input>
 
                     <vote-required-inputs
                         :motion="motion"
+                        :edit-mode="true"
                         v-on:update:requires="handleUpdate('requires', $event)"
                     ></vote-required-inputs>
 
@@ -35,12 +45,15 @@
                 <form>
 
                     <motion-type-input
+
                         :motion="motion"
+                        :edit-mode="true"
                         v-on:update:type="handleUpdate('type', $event)"
                     ></motion-type-input>
 
                     <description-input
                         :motion="motion"
+                        :edit-mode="true"
                         v-on:update:description="handleUpdate('description', $event)"
                     ></description-input>
 
@@ -86,17 +99,21 @@ import MotionTypeInput from "./motion-type-input";
 import Motion from "../../../models/Motion";
 import Payload from "../../../models/Payload";
 import CreateMotionModal from "./create-motion-modal";
+import ResolutionInput from "../resolutions/resolution-input";
 
 export default {
     name: "main-motion-edit-area",
     components: {
+        ResolutionInput,
         CreateMotionModal,
         MotionTypeInput,
         DescriptionInput,
         DeleteMotionModal,
         DeleteMotionButton, VoteRequiredInputs, MotionContentInput
     },
-    props: [],
+    props: [
+        // 'isResolution'
+    ],
 
     mixins: [MotionMixin, MeetingMixin],
 
@@ -125,9 +142,9 @@ export default {
         },
 
         handleDone: function () {
-            let me = this;
 
-            me.$router.push('meeting-home');
+            this.$store.dispatch('forceNavigationToHome');
+            // me.$router.push('meeting-home');
 
         }
     },

@@ -11,9 +11,10 @@
             <ul class="list-group list-group-flush"
                 v-if="isReady">
 
-                <meeting-select-button v-for="m in displayedEvents"
-                                       :meeting="m"
-                                       :key="m.id">
+                <meeting-select-button
+                    v-for="m in displayedEvents"
+                    :meeting="m"
+                    :key="m.id">
                 </meeting-select-button>
 
             </ul>
@@ -38,13 +39,16 @@ export default {
     name: "event-list-card",
     components: {MeetingSelectButton},
 
+    props: ['eventType'],
 
-    mixins: [MeetingMixin, ChairMixin, ModeMixin],
+    mixins: [MeetingMixin, ChairMixin,],
+
+    // mixins: [MeetingMixin, ChairMixin, ModeMixin],
 
     // mixins : [MeetingMixin],
     data: function () {
         return {
-            isReady: false
+            // _isReady: false
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -56,6 +60,29 @@ export default {
     },
 
     asyncComputed: {
+        /**
+         * Not going to determine this via the mode mixin
+         * so that can have a list of meetings and a list of meetings in
+         * the same place. (VOT-30)
+         */
+        isElection: function () {
+            return this.eventType === 'election';
+        },
+
+
+        /**
+         * Not going to determine this via the mode mixin
+         * so that can have a list of meetings and a list of meetings in
+         * the same place. (VOT-30)
+         */
+        isMeeting: function () {
+            return this.eventType === 'meeting';
+        },
+
+        isReady: function () {
+            return isReadyToRock(this.events) && this.events.length > 0;
+            // return this._isReady;
+        },
         events: function () {
             let m = this.$store.getters.getStoredMeetings;
             if (!isReadyToRock(m)) return [];
@@ -97,10 +124,6 @@ export default {
         loadEvents: function () {
             let me = this;
             this.$store.dispatch('loadAllEvents').then(() => {
-                // me.$store.dispatch('loadAllElections').then(() => {
-                me.isReady = true;
-                // });
-
             });
 
 

@@ -31,7 +31,12 @@ class MotionStackRepository implements IMotionStackRepository
     {
         //first unset any other motion set as current
         $prevCurrent = $this->getCurrentMotion($meeting);
-        if (!is_null($prevCurrent)) {
+        /*
+         * If the previous current is the one we are setting, it fails to mark it as
+         * current. That causes VOT-79. Still not sure why that happens, but
+         * checking to make sure they aren't identical solves VOT-79
+         */
+        if (!is_null($prevCurrent) && !$prevCurrent->is($motion)) {
             $prevCurrent->is_current = false;
             $prevCurrent->save();
         }
@@ -39,6 +44,7 @@ class MotionStackRepository implements IMotionStackRepository
         //now set the motion as current
         $motion->is_current = true;
         $motion->save();
+        $motion->fresh();
 
         return $motion;
     }

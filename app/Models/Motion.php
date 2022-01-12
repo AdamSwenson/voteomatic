@@ -13,17 +13,29 @@ class Motion extends Model
     use HasFactory;
 
     protected $fillable = [
+        /** The user who ruled on whether the motion is in order */
+        'approver_id',
+        /** The user who made the motion */
+        'author_id',
         'applies_to',
         'content',
         'description',
         'debatable',
         'is_complete',
         'is_current',
+        'is_in_order',
+        /** Whether it is mutli-line html text where formatting matters */
+        'is_resolution',
+        /** Whether users are allowed at this time to cast votes on the motion */
+        'is_voting_allowed',
         /** For elections, this defines how many people can be elected to the office */
         'max_winners',
         'meeting_id',
         'requires',
         'superseded_by',
+        /** The user who seconded the motion */
+        'seconder_id',
+
         'seconded',
         'type'];
 
@@ -74,6 +86,9 @@ class Motion extends Model
     protected $casts = [
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
+        'is_in_order' => 'boolean',
+        'is_voting_allowed' => 'boolean',
+        'is_resolution' => 'boolean',
         'debatable' => 'boolean',
         'seconded' => 'boolean',
         //election
@@ -130,6 +145,11 @@ class Motion extends Model
     }
 
 
+    /**
+     * Returns the motion which replaced this motion
+     * after an amendment
+     * @return mixed
+     */
     public function getSupersedingMotion()
     {
         if (!is_null($this->superseded_by)) {
@@ -153,7 +173,8 @@ class Motion extends Model
         return $types->contains($this->type);
     }
 
-    public function isProcedural(){
+    public function isProcedural()
+    {
         $types = collect(self::$proceduralTypes);
         return $types->contains($this->type);
     }
@@ -185,7 +206,15 @@ class Motion extends Model
      */
     public function getPassedAttribute()
     {
-        return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        if($this->requires == 0.5){
+            //A majority is more than half
+            return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        }
+        else{
+            //2/3 votes (and hopefully most others require at least 2/3
+            return count($this->affirmativeVotes) >= $this->voteCountThreshold;
+        }
+
     }
 
     /**
@@ -216,16 +245,84 @@ class Motion extends Model
     }
 
     /**
-     * The number of votes which the affirmatives must exceed
+     * The number of votes which the affirmatives must meet or exceed
      * for the motion to pass
      * todo Should this round up? Is there any case where that matters?
-     * DO NOT USE >=
+     * NB, Majority votes must be greater than this value. 2/3 votes must be at least
+     * this value
      */
     public function getVoteCountThresholdAttribute()
     {
         return $this->totalVotesCast * $this->requires;
 
 //        return $this->attributes['totalVotesCast'] * $this->requires;
+    }
+
+    public function author()
+    {
+        return User::find($this->author_id);
+    }
+
+    public function setAuthor(User $user)
+    {
+        $this->author_id = $user->id;
+        $this->save();
+    }
+
+    /**
+     * If the chair creates the motion, it is automatically seconded
+     * with them as the seconder.
+     * @return mixed
+     */
+    public function seconder()
+    {
+        return User::find($this->seconder_id);
+    }
+
+
+    public function setSecond(User $user)
+    {
+        $this->seconder_id = $user->id;
+        $this->save();
+    }
+
+//    public function markInOrder(User $user)
+//    {
+//        $this->approver_id = $user->id;
+//        $this->is_in_order = true;
+//        $this->save();
+//    }
+
+    /**
+     * Returns the person who ruled on the orderliness of the motion
+     *
+     * @return mixed
+     */
+    public function approver()
+    {
+        return User::find($this->approver_id);
+    }
+
+    /**
+     * Determines whether someone other than the author
+     * is seconding.
+     *
+     * IF THE USER IS THE CHAIR, THEY WILL BE ALLOWED TO DO SO
+     * SINCE PRESUMABLY THEY ARE RECORDING WHAT HAS HAPPENED VERBALLY
+     *
+     * @param User $potentialSecond
+     * @return bool
+     */
+    public function isEligibleToSecond(User $potentialSecond)
+    {
+        //check if they are the chair
+        if ($this->meeting->isOwner($potentialSecond)) {
+            return true;
+        }
+
+        //if not, they must not be identical to the author
+        $author = $this->author();
+        return !$author->is($potentialSecond);
     }
 
 
@@ -275,11 +372,13 @@ class Motion extends Model
         return $this->hasMany(Vote::class);
     }
 
-    public function candidates(){
+    public function candidates()
+    {
         return $this->hasMany(Candidate::class);
     }
 
-    public function poolMembers(){
+    public function poolMembers()
+    {
         return $this->hasMany(PoolMember::class);
     }
 

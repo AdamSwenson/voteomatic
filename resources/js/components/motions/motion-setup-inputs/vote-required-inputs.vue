@@ -54,11 +54,12 @@
 import Payload from "../../../models/Payload";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "vote-required-inputs",
 
-    props: ['motion'],
+    props: ['motion', 'editMode'],
 
     mixins: [MeetingMixin], //, MotionMixin],
 
@@ -141,9 +142,15 @@ export default {
                             'updateVal': _.toNumber(v)
                         }
                     );
+                    if(isReadyToRock(this.editMode) && this.editMode===true){
+                        this.$emit('update:content', p.updateVal);
+                    }else{
+                        this.$store.dispatch('updateDraftMotion', p);
+                    }
+
 
                     // this.$store.dispatch('updateMotion', p);
-                    this.$emit('update:requires', p.updateVal);
+//                    this.$emit('update:requires', p.updateVal);
 
                 }
 

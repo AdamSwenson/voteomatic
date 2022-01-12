@@ -4,9 +4,6 @@
             <h4 class="card-title">{{ title }}</h4>
         </div>
 
-        <div class="closed-notice card-body" v-if="isMotionComplete">
-            <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>
-        </div>
 
         <div class="card-body v-else">
             <div class="required">
@@ -18,19 +15,19 @@
                     ></motion-content-input>
 
                     <vote-required-inputs
+                        v-if="isChair"
                         :motion="draftMotion"
                         v-on:update:requires="draftMotion.requires  = $event"
                     ></vote-required-inputs>
 
                 </form>
 
-                <p class="text-muted">A blank motion has been created. Your entries are automatically saved on the
-                    server.</p>
-                <p class="text-muted">If you do not type anything, the pending motion will be blank. Use the delete
-                    button to fix this.</p>
+
             </div>
 
-            <div class="optional">
+            <div class="optional"
+                 v-if="isChair"
+            >
                 <h4 class="card-subtitle text-center">Optional</h4>
 
                 <form>
@@ -49,7 +46,9 @@
             </div>
 
             <div class="row">
-                <div class="col text-center">
+                <div class="col text-center"
+                     v-if="isChair"
+                >
 
                     <delete-motion-button></delete-motion-button>
 
@@ -57,26 +56,35 @@
                 </div>
 
                 <div class="col text-center">
+                    <clear-draft-motion-button
+                                               v-on:hide-editing-card="requestResetEditingCard"
+                    ></clear-draft-motion-button>
+                </div>
+
+                <div class="col text-center">
                     <button class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#confirmMotionModal"
-                            >Make motion</button>
+                    >Make motion
+                    </button>
 
                     <create-motion-modal :motion="draftMotion"
-                                    v-on:confirmed="handleDone"
-                ></create-motion-modal>
+                                         v-on:confirmed="handleDoneClick"
+                    ></create-motion-modal>
                 </div>
 
             </div>
 
         </div>
 
-        <div class="card-footer make-button-area">
-            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not
-                use
-                it for formal amendments.</strong></p>
+<!--        <div class="card-footer make-button-area"-->
+<!--             v-if="isChair"-->
+<!--        >-->
+<!--            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not-->
+<!--                use-->
+<!--                it for formal amendments.</strong></p>-->
 
-        </div>
+<!--        </div>-->
     </div>
 
 </template>
@@ -84,6 +92,7 @@
 <script>
 import MotionContentInput from "./motion-content-input";
 import VoteRequiredInputs from "./vote-required-inputs";
+import ChairMixin from "../../../mixins/chairMixin";
 import DeleteMotionButton from "./delete-motion-button";
 import DeleteMotionModal from "./delete-motion-modal";
 import MotionMixin from '../../../mixins/motionStoreMixin';
@@ -93,10 +102,15 @@ import MotionTypeInput from "./motion-type-input";
 import Motion from "../../../models/Motion";
 import Payload from "../../../models/Payload";
 import CreateMotionModal from "./create-motion-modal";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import ClearDraftMotionButton from "./clear-draft-motion-button";
+import ResolutionInput from "../resolutions/resolution-input";
 
 export default {
     name: "main-motion-setup-area",
     components: {
+        ResolutionInput,
+        ClearDraftMotionButton,
         CreateMotionModal,
         MotionTypeInput,
         DescriptionInput,
@@ -105,64 +119,90 @@ export default {
     },
     props: [],
 
-    mixins: [MotionMixin, MeetingMixin],
+    mixins: [ChairMixin, MotionMixin, MeetingMixin],
 
     data: function () {
         return {
-            draftMotion: null
+            // draftMotion: null
         }
     },
 
     computed: {
         title: function () {
-            if (this.isMotionComplete) {
-                return "Create motion";
-            }
-            return "Edit motion";
-
+            return "Create motion";
         },
+
+        draftMotion: function () {
+            return this.$store.getters.getDraftMotion;
+        }
 
     },
     methods: {
-        handleUpdate: function (payload) {
-            payload = payload[0];
+        handleUpdate: function (event) {
+            //Going to handle updates here, outside of the
+            //input component so can distinguish between
+            //creating and editing if we decide to keep the
+            //editing function.
+            let payload = event[0];
             window.console.log(payload);
-            this.draftMotion[payload.updateProp] = payload.updateVal;
+            this.$store.dispatch('updateDraftMotion', payload);
+            //this.draftMotion[event.updateProp] = event.updateVal;
         },
 
-        handleDone: function () {
+        /**
+         * This formally makes the motion, i.e., saves it to the
+         * server.
+         *
+         */
+        handleDoneClick: function () {
             let me = this;
-            //create it on the server and set it as active
-            this.$store.dispatch('createMotion', this.meeting.id)
-                .then(function () {
-                    //update all the properties stored in draftMotion
-                    let p = new Promise((resolve, reject) => {
-                        _.forEach(_.keys(me.draftMotion), function (k) {
-                            let pl = Payload.factory({
-                                'object': me.motion,
-                                'updateProp': k,
-                                'updateVal': me.draftMotion[k]
-                            });
-                            me.$store.dispatch('updateMotion', pl);
-                        });
-                        return resolve();
-                    });
-                    p.then(function () {
-                        me.$router.push('meeting-home');
-                    });
-                });
+            this.$store.dispatch('createMotionFromDraft').then(() => {
+                //clear draft motion and hide the window.
+                me.requestResetEditingCard();
+                me.$store.commit('clearDraftMotion');
+            });
+
+            // let me = this;
+            // //create it on the server and set it as active
+            // this.$store.dispatch('createMotion', this.meeting.id)
+            //     .then(function () {
+            //         //update all the properties stored in draftMotion
+            //         let p = new Promise((resolve, reject) => {
+            //             _.forEach(_.keys(me.draftMotion), function (k) {
+            //                 let pl = Payload.factory({
+            //                     'object': me.motion,
+            //                     'updateProp': k,
+            //                     'updateVal': me.draftMotion[k]
+            //                 });
+            //                 me.$store.dispatch('updateMotion', pl);
+            //             });
+            //             return resolve();
+            //         });
+            //         p.then(function () {
+            //             me.$router.push('meeting-home');
+            //         });
+            //     });
 
 
+        },
+
+        requestResetEditingCard: function () {
+            this.$emit('hide-editing-card');
         }
     },
 
     mounted() {
-        this.draftMotion = {
-            requires : 0.5,
-            content : '',
-            type : 'main',
-            description : ''
-        }; //new Motion();
+        //In case we somehow got here without the button
+        if (!isReadyToRock(this.draftMotion)) {
+            this.$store.dispatch('initializeDraftMotion');
+        }
+
+        // this.draftMotion = {
+        //     requires : 0.5,
+        //     content : '',
+        //     type : 'main',
+        //     description : ''
+        // }; //new Motion();
     }
 
 }

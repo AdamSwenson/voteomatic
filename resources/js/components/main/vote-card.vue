@@ -12,7 +12,7 @@
 <script>
 import MeetingMixin from "../../mixins/meetingMixin";
 import ChairMixin from "../../mixins/chairMixin";
-import ElectionCard from "../election/election-card";
+import ElectionCard from "../election/voting/election-card";
 import ModeMixin from "../../mixins/modeMixin";
 
 import VotePage from "../main/vote-page";

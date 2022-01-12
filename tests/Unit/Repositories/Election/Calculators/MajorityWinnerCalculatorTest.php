@@ -13,11 +13,11 @@ use Tests\TestCase;
 class MajorityWinnerCalculatorTest extends TestCase
 {
 
-    private $motion;
+    public $motion;
     /**
      * @var int
      */
-    private $winningVotes;
+    public $winningVotes;
 
     public function setUp(): void
     {

@@ -16,13 +16,14 @@
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import Payload from "../../../models/Payload";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
 name: "motion-content-input",
     mixins: [MeetingMixin], //, MotionMixin],
 
 
-    props : ['motion'],
+    props : ['motion', 'editMode'],
 
 
 data : function(){
@@ -43,12 +44,22 @@ computed : {
             return this.motion.content;
         },
         set(v) {
+
+            //If they cleared the draft and the window is st
+
             let p = Payload.factory({
                     'object': this.motion,
                     'updateProp': 'content',
                     'updateVal': v
                 }
             );
+
+            if(isReadyToRock(this.editMode) && this.editMode===true){
+                this.$emit('update:content', p.updateVal);
+            }else{
+                this.$store.dispatch('updateDraftMotion', p);
+            }
+
             //
             // if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
             //     //initialize first if no motion exists
@@ -61,7 +72,7 @@ computed : {
 
             // } else {
                 //otherwise we can just update as normal
-                this.$emit('update:content', p.updateVal);
+                // this.$emit('update:content', p.updateVal);
                 // this.$store.dispatch('updateMotion', p);
 
             // }

@@ -13,23 +13,23 @@ class ResultsControllerTest extends TestCase
 
     //todo authorization
 
-    private $meeting;
+    public $meeting;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $motion;
+    public $motion;
     /**
      * @var string
      */
-    private $path;
+    public $path;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $user;
+    public $user;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $nonMember;
+    public $nonMember;
 
     public function setUp():void
     {

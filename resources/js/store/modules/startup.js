@@ -27,20 +27,18 @@ const actions = {
 
                         let meeting = getters.getActiveMeeting;
 
+                        dispatch('initializeMeetingListeners');
+
                         //get existing motions for meeting
                         dispatch('loadMotionsForMeeting', meeting.id).then(function () {
 
                             //get motions which have already been handled
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
-                                dispatch('loadMotionTypesAndTemplates').then(function(){
+                                dispatch('loadResultsForAllMeetingMotions').then(function () {
+                                });
 
-                                    // dispatch('loadAllMeetings').then(function(){
-                                    //
-                                    //     return resolve();
-                                    // });
-                                    //
-
+                                dispatch('loadMotionTypesAndTemplates').then(function () {
                                 });
 
                             });
@@ -53,6 +51,58 @@ const actions = {
 
             });
         });
+    },
+
+    initializeMeetingListeners({dispatch, commit, getters}) {
+        let meeting = getters.getActiveMeeting;
+        let channel = `meeting.${meeting.id}`;
+        Echo.private(channel)
+            .listen("GeneralNotification", (e) => {
+                dispatch('handlePusherGeneralNotification', e);
+            })
+            .listen("MotionSeekingSecond", (e) => {
+                window.console.log('Received broadcast event meeting', e);
+                dispatch('handleMotionSeekingSecondMessage', e);
+            })
+            .listen("MotionSeconded", (e) => {
+                window.console.log('Received broadcast event meeting', e);
+                //Switches to the motion which has now been approved and seconded
+                dispatch('handleMotionSecondedMessage', e);
+            })
+            .listen("NoSecondObtained", (e) => {
+                window.console.log('Received broadcast event meeting', e);
+                dispatch('handleNoSecondObtainedMessage', e);
+            })
+            .listen('MotionMarkedOutOfOrder', (e) => {
+                window.console.log('Received broadcast event meeting', e);
+                dispatch('handleMotionMarkedOutOfOrderMessage', e);
+            })
+            .listen('NewCurrentMotionSet', (e) => {
+                //In some cases the chair may select a motion from the
+                //home page. When that heppens we need to force everyone onto
+                //a new motion
+                dispatch('handleNewCurrentMotionSetMessage', e);
+            })
+            .listen('VotingOnMotionOpened', (e) => {
+                dispatch('handleVotingOnMotionOpenedMessage', e);
+            });
+
+        window.console.log('Meeting listeners initialized for ', channel);
+
+        if (getters.getIsAdmin) {
+            let chairChannel = `chair.${meeting.id}`;
+            Echo.private(chairChannel)
+                .listen('MotionNeedingApproval', (e) => {
+                    window.console.log('Received chair broadcast', chairChannel, e);
+                    dispatch('handleMotionNeedingApprovalMessage', e);
+                })
+                .listen('MotionVoteCast', (e) => {
+                    window.console.log('Received chair broadcast', chairChannel, e);
+                    dispatch('handleCastVoteMessage', e);
+                });
+
+            window.console.log('Chair listeners initialized for ', chairChannel);
+        }
     },
 
     /**
@@ -75,8 +125,8 @@ const actions = {
             console.log("Reading admin from page data", data.isAdmin);
 
             let p = Payload.factory({
-                'updateProp' : 'isAdmin',
-                'updateVal' : data.isAdmin
+                'updateProp': 'isAdmin',
+                'updateVal': data.isAdmin
             });
 
             commit('setAdmin', p);
@@ -101,9 +151,9 @@ const actions = {
 
             console.log("Reading motion from page data", data.motion);
             let motion = new Motion(data.motion);
-            commit('setMotion', motion);
-
-            resolve();
+            dispatch('setMotion', motion).then(() => {
+                resolve();
+            });
 
         });
     },

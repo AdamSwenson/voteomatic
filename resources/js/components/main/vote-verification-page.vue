@@ -3,11 +3,10 @@
     <div class="card vote-verification">
         <div class="card-header">
             <h4 card-title>Confirm that your vote was counted</h4>
-
         </div>
 
         <div class="card-body">
-            <h5 card-title> Please enter your receipt in the box and click the 'Verify vote' button.</h5>
+            <h5 card-title> To check that your vote was counted, enter a receipt in the box and click the 'Verify vote' button.</h5>
             <div class="card-text">
 
                 <div class="input-group mb-3">
@@ -28,26 +27,25 @@
                         </button>
                     </div>
                 </div>
+
+                <p>Feel free to enter fake receipts to demonstrate that this is actually checking your receipts</p>
+
+                <p>For more information about how the voteomatic keeps your vote
+                anonymous, please see <a href="https://github.com/AdamSwenson/voteomatic#anonymity">https://github.com/AdamSwenson/voteomatic#anonymity</a> </p>
+
+
             </div>
-        </div>
-        <!--                    <input type="text" id="receipt-entry" v-model="receipt">-->
-        <!--                    <p>-->
-        <!--                        <button type="button" class="btn btn-info"-->
-        <!--                                v-on:click="handleClick"-->
-        <!--                        >Verify vote-->
-        <!--                        </button>-->
-        <!--                    </p>-->
+<!--        </div>-->
 
 
         <!--            </div>-->
-        <div class="card-body">
+<!--        <div class="card-body">-->
             <div class="card-text">
                 <p v-if="verificationResult"></p>
 
-                <p>Feel free to enter fake receipts to check the legitimacy of your receipt</p>
 
                 <div class="alert alert-success" role="alert" v-if="showGood">
-                    <h4 class="alert-heading">Your receipt is valid</h4>
+                    <h4 class="alert-heading">This receipt is valid</h4>
                     <p>The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
                     <p>Receipt : {{ receipt }}</p>
 
@@ -56,16 +54,31 @@
                     </p>
                 </div>
 
-                <div class="alert alert-error" role="alert" v-if="showBad">
+                <div class="alert alert-danger" role="alert" v-if="showBad">
                     <h4 class="alert-heading">This is not a valid receipt</h4>
-                    <!--            <p>todo receipt here along with meeting / motion info</p>-->
                     <p> Receipt : {{ receipt }} </p>
-
+                    <p class="text-right">
                     <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
-
+                    </p>
                 </div>
 
             </div>
+
+        </div>
+
+        <div class="card-body">
+            <p>The receipts below are temporarily stored on your browser. If you refresh the page,
+                it will no longer be possible to retrieve your receipts since your user id is not
+                linked to them in the database. Use the buttons below to download a list of your
+                receipts for safekeeping</p>
+
+            <receipt-list-area></receipt-list-area>
+
+        </div>
+
+        <div class="card-footer">
+            <copy-button></copy-button>
+            <download-receipts-button></download-receipts-button>
 
         </div>
     </div>
@@ -77,9 +90,13 @@
 
 import routes from '../../routes';
 import Vote from '../../models/Vote';
+import ReceiptListArea from "../vote-verification/receipt-list-area";
+import CopyButton from "../vote-verification/copy-receipts-button";
+import DownloadReceiptsButton from "../vote-verification/download-receipts-button";
 
 export default {
     name: "vote-verification-page",
+    components: {DownloadReceiptsButton, CopyButton, ReceiptListArea},
     data: function () {
         return {
             showBad: false,
@@ -101,7 +118,7 @@ export default {
         voteDisplay: function () {
             if (_.isNull(this.vote) || _.isUndefined(this.vote)) return ''
 
-            return this.vote.voteEnglish()
+            return this.vote.voteDisplayEnglish()
         }
 
     },
@@ -121,6 +138,7 @@ export default {
 
         verifyReceipt: function (receipt) {
             let me = this;
+            this.closeAlert();
             return new Promise((resolve, reject) => {
                 let url = routes.receipts.validateReceipt();
                 let payload = {receipt: receipt};

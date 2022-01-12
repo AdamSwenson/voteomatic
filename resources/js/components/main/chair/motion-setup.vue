@@ -3,38 +3,49 @@
     <div class="motion-setup card">
 
         <div class="card-header make-button-area">
+            <p class="card-text"><i>Please wait until the Chair has recognized you before making a motion</i></p>
             <h5 class="card-subtitle">Procedural motions</h5>
             <motion-template-buttons></motion-template-buttons>
         </div>
 
         <div class="card-header make-button-area">
-            <h5 class="card-subtitle">Amendments</h5>
+
             <amendment-button
                 v-on:new-amendment="handleAmendmentButtonClick"
             ></amendment-button>
-        </div>
-
-        <div class="card-header make-button-area">
-            <h5 class="card-subtitle">Substantive main motions</h5>
 
             <create-motion-button
                 :meeting="meeting"
                 v-on:create-motion-clicked="handleNewMainButtonClick"
-            ></create-motion-button>
+             ></create-motion-button>
 
-            <button class="btn btn-outline-danger"
+            <edit-motion-button
                     v-if="isChair"
-                    v-on:click="handleEditMainButtonClick"
-            >Edit pending motion</button>
+                    v-on:edit-motion-clicked="handleEditMainButtonClick"
+            ></edit-motion-button>
+
+            <create-resolution-button
+            v-if="isChair"
+            v-on:create-resolution-clicked="handleResolutionButtonClick"
+            ></create-resolution-button>
+
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="showBody">
 
-            <main-motion-setup-area v-if="showCard == 'main'"></main-motion-setup-area>
+            <main-motion-setup-area
+                v-if="showCard === 'main'"
+                v-on:hide-editing-card="resetCard"
+            ></main-motion-setup-area>
 
-            <amendment-setup-area v-else-if="showCard == 'amendment'"></amendment-setup-area>
+            <amendment-setup-area v-else-if="showCard === 'amendment'"></amendment-setup-area>
 
-            <main-motion-edit-area v-else-if="showCard == 'edit' && isChair"></main-motion-edit-area>
+            <main-motion-edit-area
+                v-else-if="showCard === 'edit' && isChair"
+            ></main-motion-edit-area>
+
+            <resolution-setup-area v-else-if="showCard === 'resolution'"></resolution-setup-area>
+
         </div>
 
 
@@ -105,7 +116,7 @@
 
 <script>
 
-
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import * as routes from "../../../routes";
 import Meeting from '../../../models/Meeting';
 import MeetingMixin from '../../../mixins/meetingMixin';
@@ -119,18 +130,24 @@ import MotionContentInput from "../../motions/motion-setup-inputs/motion-content
 import MotionTypeInput from "../../motions/motion-setup-inputs/motion-type-input";
 import DescriptionInput from "../../motions/motion-setup-inputs/description-input";
 import MotionTemplateButtons from "../../motions/motion-setup-inputs/motion-template-buttons";
-import CreateMotionButton from "../../motions/create-motion-button";
+import CreateMotionButton from "../../motions/motion-setup-inputs/create-motion-button";
 import DeleteMotionButton from "../../motions/motion-setup-inputs/delete-motion-button";
 import DeleteMotionModal from "../../motions/motion-setup-inputs/delete-motion-modal";
 import MainMotionSetupArea from "../../motions/motion-setup-inputs/main-motion-setup-area";
 import AmendmentButton from "../../motions/motion-setup-inputs/amendment-button";
-import AmendmentSetupArea from "../../motions/amendment-setup-area";
+import AmendmentSetupArea from "../../motions/amendments/amendment-setup-area";
 import MainMotionEditArea from "../../motions/motion-setup-inputs/main-motion-edit-area";
+import EditMotionButton from "../../motions/motion-setup-inputs/edit-motion-button";
+import CreateResolutionButton from "../../motions/resolutions/create-resolution-button";
+import ResolutionSetupArea from "../../motions/resolutions/resolution-setup-area";
 
 
 export default {
     name: "motion-setup",
     components: {
+        ResolutionSetupArea,
+        CreateResolutionButton,
+        EditMotionButton,
         MainMotionEditArea,
         AmendmentSetupArea,
         AmendmentButton,
@@ -154,6 +171,12 @@ export default {
     },
 
     computed: {
+        /**
+         * Computed property so will update
+         */
+        showBody : function(){
+          return isReadyToRock(this.showCard);
+        },
 
 
         title: function () {
@@ -187,7 +210,19 @@ export default {
 
         handleEditMainButtonClick: function(){
             this.showCard = 'edit';
+        },
+
+        handleResolutionButtonClick: function(){
+            this.showCard = 'resolution';
+        },
+
+        /**
+         * Hides whatever card is showing
+         */
+        resetCard : function(){
+            this.showCard = null;
         }
+
 
     },
 

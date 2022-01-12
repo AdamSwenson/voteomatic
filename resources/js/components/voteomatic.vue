@@ -9,20 +9,26 @@
         <!--            <div class="text-right refresh-area">-->
         <!--                <refresh-button></refresh-button>-->
         <!--        </div>-->
-
+        <message-area></message-area>
+        <vote-count-alert></vote-count-alert>
 
         <router-view name="main"></router-view>
 
-        <div class="text-center refresh-area">
+<!--        <div class="text-center refresh-area">-->
 
-            <refresh-button></refresh-button>
-        </div>
+<!--            <refresh-button></refresh-button>-->
+<!--        </div>-->
 
         <chair-indicator></chair-indicator>
 
         <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
         <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
         <!--        </svg>-->
+
+        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>
+        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>
+        <motion-second-modal v-if="! isChair"></motion-second-modal>
+
     </div>
 
 </template>
@@ -36,12 +42,24 @@ import MeetingMixin from '../mixins/meetingMixin';
 import RouterTabs from "./navigation/router-tabs";
 import RefreshButton from "./navigation/refresh-button";
 import ChairIndicator from "./text-display/chair-indicator";
+import NavigationMixin from '../mixins/NavigationMixin';
+import ChairMixin from "../mixins/chairMixin";
+import MotionSecondModal from "./motions/motion-second-modal";
+import MotionInOrderModal from "./motions/motion-in-order-modal";
+import ChairMotionSecondModal from "./motions/chair-motion-second-modal";
+import MessageArea from "./messaging/message-area";
+import VoteCountAlert from "./main/chair/vote-count-alert";
 
 export default {
     name: "voteomatic",
-    components: {ChairIndicator, RefreshButton, RouterTabs, VotePage},
+    components: {
+        VoteCountAlert,
+        MessageArea,
+        ChairMotionSecondModal,
+        MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
+    },
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, NavigationMixin, ChairMixin],
 
     data: function () {
         return {
@@ -73,7 +91,8 @@ export default {
         //something open (and not a blank card) and
         //don't send them back to the home tab if they've
         //clicked another tab while things were loading.
-        me.$router.push('meeting-home');
+        // me.$router.push('meeting-home');
+        me.$store.dispatch('forceNavigationToHome');
 
 
         //parse data from page and store stuff

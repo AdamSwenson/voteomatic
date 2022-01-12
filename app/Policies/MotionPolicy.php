@@ -11,6 +11,12 @@ class MotionPolicy
 {
     use HandlesAuthorization;
 
+    public function canRuleOnOrderliness(User $user, Motion $motion)
+    {
+//todo
+        return true;
+    }
+
     public function setAsCurrent(User $user, Motion $motion)
     {
 //todo should this be chair only?
@@ -27,6 +33,19 @@ class MotionPolicy
 
     }
 
+    public function markNoSecondObtained(User $user, Motion $motion)
+    {
+        $meeting = $motion->meeting;
+        return $meeting->isOwner($user);
+
+    }
+
+    /**
+     * Determines if the user is part of the meeting
+     * @param User $user
+     * @param Motion $motion
+     * @return bool
+     */
     public function secondMotion(User $user, Motion $motion)
     {
         $meeting = $motion->meeting;
@@ -63,29 +82,30 @@ class MotionPolicy
 
     // ========================== ELECTION SPECIFIC
 
-    public function createOffice(User $user, Meeting $meeting){
+    public function createOffice(User $user, Meeting $meeting)
+    {
 
         return $meeting->isOwner($user);
 
     }
 
 
-    public function castVoteForOffice(User $user, Motion $office)
+    public function castVoteForOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        $election = $motion->meeting;
         return $election->isPartOfMeeting($user);
     }
 
-    public function deleteOffice(User $user, Motion $office)
+    public function deleteOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        $election = $motion->meeting;
         return $election->isOwner($user);
     }
 
 
-
-    public function viewOffice(User $user, Motion $office){
-        $meeting = $office->meeting;
+    public function viewOffice(User $user, Motion $motion)
+    {
+        $meeting = $motion->meeting;
         return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
@@ -104,14 +124,15 @@ class MotionPolicy
      * @param Motion $motion
      * @return bool
      */
-    public function viewOfficeResults(User $user, Motion $office)
+    public function viewOfficeResults(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
-        return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+        $meeting = $motion->meeting;
+        return $motion->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
-    public function updateOffice(User $user, Motion $office){
-        $meeting = $office->meeting;
+    public function updateOffice(User $user, Motion $motion)
+    {
+        $meeting = $motion->meeting;
         return $meeting->isOwner($user);
     }
 
@@ -160,14 +181,16 @@ class MotionPolicy
      */
     public function create(User $user)
     {
-        return $user->isChair();
+//        return $user->isChair();
 
-        //todo Eventually for VOT-6
+        //todo update for VOT-73
         return true;
     }
 
     /**
      * Determine whether the user can update the model.
+     * Only the chair should be able to do this, since it is only
+     * for minor adjustments
      *
      * @param \App\Models\User $user
      * @param \App\Models\Motion $motion
@@ -175,6 +198,7 @@ class MotionPolicy
      */
     public function update(User $user, Motion $motion)
     {
+//        return $motion->seconded !== true && $user->is($motion->author());
         return $user->isChair();
 
         //todo Eventually for VOT-6

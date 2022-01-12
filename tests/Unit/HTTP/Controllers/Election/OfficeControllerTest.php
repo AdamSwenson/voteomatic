@@ -14,17 +14,17 @@ use Tests\TestCase;
 class OfficeControllerTest extends TestCase
 {
 
-    private $owner;
-    private $election;
+    public $owner;
+    public $election;
     /**
      * @var string
      */
-    private $url;
+    public $url;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $regularUserMember;
-    private $office;
+    public $regularUserMember;
+    public $office;
 
     public function setUp(): void
     {

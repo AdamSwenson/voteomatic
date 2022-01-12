@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AmendmentDisplay from "../motions/amendment-setup-area";
+import AmendmentDisplay from "../motions/amendments/amendment-setup-area";
 export default {
 name: "amendment-page",
     components: {AmendmentDisplay},

@@ -13,7 +13,7 @@ class MotionStackRepositoryTest extends TestCase
     public $meeting;
     public $motions;
     public $currentMotion;
-    private $completedMotions;
+    public $completedMotions;
 
     public function setUp():void
     {
@@ -77,13 +77,31 @@ class MotionStackRepositoryTest extends TestCase
         $motion = Motion::factory()->create(['meeting_id' => $meeting->id]);
 
         //call
-        $this->object->setAsCurrentMotion($meeting, $motion);
+        $returnedMotion = $this->object->setAsCurrentMotion($meeting, $motion);
 
         //check
         $prevCurrent->refresh();
         $this->assertFalse($prevCurrent->is_current, "Previous motion has been unset as current");
-
         $this->assertTrue($motion->is_current, "Motion has been set");
+        $this->assertTrue($returnedMotion->is_current, "Method returned motion object with is_current set");
+
+    }
+
+    /** @test */
+    public function setAsCurrentMotionWhenMotionWasAlreadyCurrent_VOT79()
+    {
+        //dev This validates the fix for VOT-79
+
+        $meeting = Meeting::factory()->create();
+        $motion = Motion::factory()->current()->create(['meeting_id' => $meeting->id]);
+
+        //call
+        $returnedMotion = $this->object->setAsCurrentMotion($meeting, $motion);
+
+        //check
+        $motion->refresh();
+        $this->assertTrue($motion->is_current, "Motion has been set");
+        $this->assertTrue($returnedMotion->is_current, "Method returned motion object with is_current set");
 
     }
 }
