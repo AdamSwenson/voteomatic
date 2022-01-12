@@ -9,6 +9,7 @@ use App\Http\Middleware\CheckIfMaxElectionWinnersExceeded;
 use App\Http\Middleware\CheckIfMeetingExists;
 use App\Http\Middleware\CheckIfMotionClosed;
 use App\Http\Middleware\CheckVoterEligibility;
+use App\Http\Middleware\ValidateWriteIn;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         'meeting-exists' => CheckIfMeetingExists::class,
 
         //election specific
-        'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class
+        'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class,
+        'validate-write-in' => ValidateWriteIn::class
     ];
 }
