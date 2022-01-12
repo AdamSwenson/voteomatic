@@ -111,10 +111,6 @@ export default {
         },
 
         handleCreate: function () {
-            // let person = new PoolMember({
-            //     first_name: this.firstName,
-            //     last_name: this.lastName
-            // });
             let person = this.poolMember;
             let me = this;
             this.$store.dispatch('createPerson', person).then((p) => {

@@ -139,13 +139,21 @@ const actions = {
             let url = routes.election.resource.election()
             return Vue.axios.post(url)
                 .then((response) => {
-                    let meeting = new Election(response.data);
-                    commit('addMeetingToStore', meeting);
-                    commit('setMeeting', meeting);
-                    //now set to be in editing mode
 
-                    window.console.log('election created id: ', meeting.id);
-                    resolve()
+                    // dev Added in VOT-125 to deal with problem of still being on original meeting
+                    //  NB, this opens the new meeting in a new window. Not sure how annoying that will be.
+                    //  These changes parallel VOT-117
+                    let url = routes.meetings.main(response.data.id);
+                    dispatch('forceNavigationToUrl', url);
+
+                    // dev Removed in VOT-125
+                    // let meeting = new Election(response.data);
+                    // commit('addMeetingToStore', meeting);
+                    // commit('setMeeting', meeting);
+                    // //now set to be in editing mode
+                    //
+                    // window.console.log('election created id: ', meeting.id);
+                    // resolve()
                 }).catch(function (error) {
                     // error handling
                     if (error.response) {

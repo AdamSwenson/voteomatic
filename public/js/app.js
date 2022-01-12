@@ -5537,10 +5537,6 @@ __webpack_require__.r(__webpack_exports__);
       this.poolMember.setInfoField(fieldName, fieldVal);
     },
     handleCreate: function handleCreate() {
-      // let person = new PoolMember({
-      //     first_name: this.firstName,
-      //     last_name: this.lastName
-      // });
       var person = this.poolMember;
       var me = this;
       this.$store.dispatch('createPerson', person).then(function (p) {
@@ -18592,12 +18588,18 @@ var actions = _objectSpread(_objectSpread({}, _elections_people_actions__WEBPACK
       // let data = {name : name, date : date};
       var url = _routes__WEBPACK_IMPORTED_MODULE_0__.election.resource.election();
       return Vue.axios.post(url).then(function (response) {
-        var meeting = new _models_Election__WEBPACK_IMPORTED_MODULE_5__["default"](response.data);
-        commit('addMeetingToStore', meeting);
-        commit('setMeeting', meeting); //now set to be in editing mode
-
-        window.console.log('election created id: ', meeting.id);
-        resolve();
+        // dev Added in VOT-125 to deal with problem of still being on original meeting
+        //  NB, this opens the new meeting in a new window. Not sure how annoying that will be.
+        //  These changes parallel VOT-117
+        var url = _routes__WEBPACK_IMPORTED_MODULE_0__.meetings.main(response.data.id);
+        dispatch('forceNavigationToUrl', url); // dev Removed in VOT-125
+        // let meeting = new Election(response.data);
+        // commit('addMeetingToStore', meeting);
+        // commit('setMeeting', meeting);
+        // //now set to be in editing mode
+        //
+        // window.console.log('election created id: ', meeting.id);
+        // resolve()
       })["catch"](function (error) {
         // error handling
         if (error.response) {
@@ -19274,7 +19276,7 @@ var actions = {
       var url = _routes__WEBPACK_IMPORTED_MODULE_1__.meetings.resource();
       return Vue.axios.post(url).then(function (response) {
         var d = response.data; // dev Added in VOT-117 to deal with problem of still being on original meeting
-        // NB, this opens the new meeting in a new window. Not sure how annoying that will be
+        //  NB, this opens the new meeting in a new window. Not sure how annoying that will be
 
         var url = _routes__WEBPACK_IMPORTED_MODULE_1__.meetings.main(d.id);
         dispatch('forceNavigationToUrl', url); // dev removed in VOT-117

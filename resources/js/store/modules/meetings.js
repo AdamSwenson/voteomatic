@@ -73,7 +73,7 @@ const actions = {
                     let d = response.data;
 
                     // dev Added in VOT-117 to deal with problem of still being on original meeting
-                    // NB, this opens the new meeting in a new window. Not sure how annoying that will be
+                    //  NB, this opens the new meeting in a new window. Not sure how annoying that will be
                     let url = routes.meetings.main(d.id);
                     dispatch('forceNavigationToUrl', url);
 
