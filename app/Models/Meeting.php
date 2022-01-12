@@ -16,9 +16,16 @@ class Meeting extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['date','name', 'is_election'];
+    protected $fillable= [
+        'date',
+        'name',
+        'is_election',
+        'info'
+    ];
 
-    protected $casts = ['is_election' => 'boolean'];
+    protected $casts = [
+        'is_election' => 'boolean',
+        'info' => 'array'];
 
     /**
      * @return User

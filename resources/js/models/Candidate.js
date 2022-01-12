@@ -1,18 +1,19 @@
-import IModel from "./IModel";
+import IPerson from "./IPerson";
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 /**
  * One person running for one office.
  *
  * Importantly, the candidate knows the id of the election (motion)
  */
-export default class Candidate extends IModel {
+export default class Candidate extends IPerson {
 
 
     constructor({
                     id = null,
                     first_name = null,
                     last_name = null,
-                    info = null,
+                    info = {},
                     motion_id = null,
                     is_write_in = null,
                     person_id = null
@@ -43,11 +44,20 @@ export default class Candidate extends IModel {
     isIdentical(candidate) {
         return this.person_id === candidate.person_id && this.motion_id === candidate.motion_id;
     }
-
-    get name() {
-        return this.first_name + " " + this.last_name;
-    }
-    ;
+    //
+    // get name() {
+    //     let n =  this.first_name + " " + this.last_name ;
+    //     let me = this;
+    //     let other = ''
+    //     _.forEach(this.info.keys(), (k) => {
+    //         other += me.info[k]
+    //         other += ' '
+    //     });
+    //     if (other.length > 0){
+    //         return n + " (" + other + ")";
+    //     }
+    //     return n;
+    // };
 
     get isWriteIn() {
         return this.is_write_in;
@@ -57,4 +67,14 @@ export default class Candidate extends IModel {
     get motionId() {
         return motion_id;
     }
+
+    // getInfoField(fieldName){
+    //     if(! isReadyToRock(this.info) || !isReadyToRock(this.info[fieldName])) return ''
+    //     return this.info[fieldName];
+    // }
+    //
+    // setInfoField(fieldName, val){
+    //     this.info[fieldName] = val;
+    // }
+
 }

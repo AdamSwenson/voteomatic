@@ -5,7 +5,7 @@ export default class IModel {
 
 
     /**
-     * Create a new exam object
+     * Create a new  object
      * @param params
      */
     constructor(...params) {

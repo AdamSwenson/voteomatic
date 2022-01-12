@@ -7,7 +7,7 @@
                 v-on:click="handleClick"
         >{{ label }}
         </button>
-        {{ candidate.name }}
+        {{ candidate.nameAndInfo }}
     </li>
 
 
