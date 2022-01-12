@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import {isReadyToRock} from "../../utilities/readiness.utilities";
-import MotionStoreMixin from "../../mixins/motionStoreMixin"
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin"
 
 export default {
     name: "max-winners-instruction",

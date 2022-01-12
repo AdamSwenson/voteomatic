@@ -18,8 +18,12 @@
                 <input type="text" class="form-control" id="last-name" v-model="lastName">
             </div>
 
-            <candidate-field-input :field-name="f" v-for="f in customFields" :key="f"
-            v-on:field-update="handleUpdate"
+            <candidate-field-input
+                :field-name="f"
+                :clear-count="clearCount"
+                v-for="f in customFields"
+                :key="f"
+                v-on:field-update="handleUpdate"
             ></candidate-field-input>
 
             <button class="btn btn-success" v-on:click="handleCreate">Add</button>
@@ -56,8 +60,9 @@ export default {
         return {
             showFields: false,
             poolMember: new PoolMember({}),
-            // firstName: '',
-            // lastName: ''
+            //This will be watched by the candidate-field-input
+            //children. When it is updated, those will reset their values
+            clearCount : 0
         }
     },
 
@@ -71,8 +76,8 @@ export default {
             return 'Add person to pool';
         },
 
-        customFields : function(){
-          return this.meeting.candidateFields;
+        customFields: function () {
+            return this.meeting.candidateFields;
         },
 
 
@@ -97,10 +102,10 @@ export default {
     methods: {
         clearFields: function () {
             this.poolMember = new PoolMember({});
-            // this.firstName = '';
-            // this.lastName = '';
+            this.clearCount += 1;
         },
-        handleUpdate : function({fieldName, fieldVal}){
+
+        handleUpdate: function ({fieldName, fieldVal}) {
             window.console.log(fieldName, fieldVal);
             this.poolMember.setInfoField(fieldName, fieldVal);
         },

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {isReadyToRock} from "../../utilities/readiness.utilities";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "candidate-button",

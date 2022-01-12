@@ -42,11 +42,11 @@
 
 <script>
 import CandidateButton from "./candidate-button";
-import {isReadyToRock} from "../../utilities/readiness.utilities";
-import WriteInBadge from "./write-in/write-in-badge";
-import CandidateInfoItem from "./voting/candidate-info-item";
-import MeetingMixin from "../../mixins/meetingMixin";
-import MotionStoreMixin from "../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import WriteInBadge from "../write-in/write-in-badge";
+import CandidateInfoItem from "./candidate-info-item";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 
 export default {
 

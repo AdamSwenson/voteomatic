@@ -62,16 +62,16 @@
 
 <script>
 import CandidateRow from "./candidate-row";
-import MeetingMixin from "../../mixins/meetingMixin";
-import MotionStoreMixin from "../../mixins/motionStoreMixin"
-import {isReadyToRock} from '../../utilities/readiness.utilities'
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin"
+import {isReadyToRock} from '../../../utilities/readiness.utilities'
 import CastBallotButton from "./cast-ballot-button";
 import OverselectionWarning from "./overselection-warning";
 import MaxWinnersInstruction from "./max-winners-instruction";
-import WriteinRow from "../deprecated/writein-row";
-import WriteInControls from "./write-in/write-in-controls";
-import ElectionResultsCard from "./results/election-results-card";
-import ModeMixin from "../../mixins/modeMixin";
+import WriteinRow from "../../deprecated/writein-row";
+import WriteInControls from "../write-in/write-in-controls";
+import ElectionResultsCard from "../results/election-results-card";
+import ModeMixin from "../../../mixins/modeMixin";
 
 export default {
     name: "election-card",

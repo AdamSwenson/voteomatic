@@ -14,6 +14,10 @@
                 v-if="universalFields.indexOf(field) === -1"></delete-candidate-field-button>     {{ field }}
                 </li>
             </ul>
+
+            <div class="card-text"><p class="text-muted">NB, deleting a field does not
+            delete any information you have entered for the candidates. Creating a new field with the
+            same name as a deleted field will again display that information.</p></div>
         </div>
 
         <div class="card-body" v-if="showFields">

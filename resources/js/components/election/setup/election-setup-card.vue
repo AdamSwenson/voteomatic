@@ -15,7 +15,7 @@
 
 <script>
 
-import CandidateRow from "../candidate-row";
+import CandidateRow from "../voting/candidate-row";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from '../../../utilities/readiness.utilities';

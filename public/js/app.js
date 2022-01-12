@@ -3263,7 +3263,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _election_candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../election/candidate-button */ "./resources/js/components/election/candidate-button.vue");
+/* harmony import */ var _election_voting_candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../election/voting/candidate-button */ "./resources/js/components/election/voting/candidate-button.vue");
 /* harmony import */ var _writein_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./writein-input */ "./resources/js/components/deprecated/writein-input.vue");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
@@ -3297,7 +3297,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "writein-row",
   components: {
     WriteinInput: _writein_input__WEBPACK_IMPORTED_MODULE_1__["default"],
-    CandidateButton: _election_candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
+    CandidateButton: _election_voting_candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ['candidate'],
   mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default())],
@@ -3330,605 +3330,6 @@ __webpack_require__.r(__webpack_exports__);
     //     window.console.log('clear writein');
     // }
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "candidate-button",
-  props: ['candidate'],
-  mixins: [],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    label: function label() {
-      return this.selected ? 'Selected' : 'Select';
-    },
-    selectedCandidates: function selectedCandidates() {
-      return this.$store.getters.getSelectedCandidatesForMotion;
-    },
-    selected: {
-      get: function get() {
-        // let selectedCandidates =
-        if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.selectedCandidates)) return false; // window.console.log('selected', this.selectedCandidates);
-
-        if (this.selectedCandidates.length === 0) return false; // return _.includes(selectedCandidates, this.candidate);
-
-        return this.selectedCandidates.indexOf(this.candidate) > -1;
-      },
-      // watch :['selectedCandidates'],
-      "default": []
-    },
-    styling: {
-      get: function get() {
-        if (this.selected) return "btn-info";
-        return "btn-outline-info";
-      } // watch: ['selected']
-
-    }
-  },
-  computed: {},
-  methods: {
-    handleClick: function handleClick() {
-      window.console.log('Vote button clicked for ', this.candidate.name);
-      var me = this;
-
-      if (this.selected) {
-        this.$store.dispatch('unselectCandidate', this.candidate);
-        window.console.log('unselect');
-      } else {
-        window.console.log('select');
-        this.$store.dispatch('selectCandidate', this.candidate);
-      } // });
-      // let pl = {
-      //     motionId: this.candidate.motion_id,
-      //     candidateId : this.candidate.id
-      // };
-      //             this.$store.dispatch('castElectionVote', pl)
-      //                 .then((response) => {
-      //                 window.console.log(response.data);
-      //
-      //             });
-      //
-
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button */ "./resources/js/components/election/candidate-button.vue");
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./write-in/write-in-badge */ "./resources/js/components/election/write-in/write-in-badge.vue");
-/* harmony import */ var _voting_candidate_info_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./voting/candidate-info-item */ "./resources/js/components/election/voting/candidate-info-item.vue");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "candidate-row",
-  components: {
-    CandidateInfoItem: _voting_candidate_info_item__WEBPACK_IMPORTED_MODULE_3__["default"],
-    WriteInBadge: _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CandidateButton: _candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ['candidate'],
-  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5___default())],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    candidateName: function candidateName() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate)) return this.candidate.name;
-      return '';
-    },
-
-    /**
-     * These are the fields which should be shown
-     * @returns {boolean}
-     */
-    infoFields: function infoFields() {
-      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.meeting)) return this.meeting.candidateFields;
-    },
-    candidateInfo: function candidateInfo() {
-      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate)) return '';
-      this.candidate.info;
-      return '';
-    },
-    isWriteIn: function isWriteIn() {
-      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate) && this.candidate.is_write_in === true;
-    }
-  },
-  computed: {},
-  methods: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "cast-ballot-button",
-  props: [],
-  mixins: [],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    showOverSelectionWarning: function showOverSelectionWarning() {
-      return this.$store.getters.showOverSelectionWarning;
-    },
-    ariaDisabled: function ariaDisabled() {
-      if (this.showOverSelectionWarning) return true;
-    },
-    styling: function styling() {
-      if (this.showOverSelectionWarning) return 'btn-warning disabled';
-      return "btn-warning";
-    }
-  },
-  computed: {},
-  methods: {
-    handleClick: function handleClick() {
-      window.console.log('Record Vote button clicked');
-      var me = this;
-
-      if (!this.showOverSelectionWarning) {
-        this.$store.dispatch('castElectionVote').then(function () {
-          me.$store.dispatch('nextOffice').then(function () {})["catch"](function () {
-            //If there are no further offices to vote
-            //upon, it will reject.
-            me.$emit('election-complete');
-            window.console.log('election complete');
-          });
-        });
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _candidate_row__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-row */ "./resources/js/components/election/candidate-row.vue");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
-/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cast-ballot-button */ "./resources/js/components/election/cast-ballot-button.vue");
-/* harmony import */ var _overselection_warning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overselection-warning */ "./resources/js/components/election/overselection-warning.vue");
-/* harmony import */ var _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./max-winners-instruction */ "./resources/js/components/election/max-winners-instruction.vue");
-/* harmony import */ var _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../deprecated/writein-row */ "./resources/js/components/deprecated/writein-row.vue");
-/* harmony import */ var _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./write-in/write-in-controls */ "./resources/js/components/election/write-in/write-in-controls.vue");
-/* harmony import */ var _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
-/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
-/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "election-card",
-  components: {
-    ElectionResultsCard: _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__["default"],
-    WriteInControls: _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__["default"],
-    WriteinRow: _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__["default"],
-    MaxWinnersInstruction: _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__["default"],
-    OverselectionWarning: _overselection_warning__WEBPACK_IMPORTED_MODULE_5__["default"],
-    CastBallotButton: _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__["default"],
-    CandidateRow: _candidate_row__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: [],
-  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default())],
-  data: function data() {
-    return {
-      randomizeCandidates: true
-    };
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    next(function (vm) {
-      // vm.setElection();
-      window.console.log('entering election route. Mode:', vm.mode); // access to component instance via `vm`
-    });
-  },
-  asyncComputed: {
-    office: {
-      get: function get() {
-        return this.motion;
-      },
-      "default": null
-    },
-    writeInCandidates: {
-      get: function get() {
-        return this.$store.getters.getWriteInCandidatesForCurrentOffice;
-      },
-      watch: ['candidates']
-    },
-    candidates: {
-      get: function get() {
-        var me = this;
-
-        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.meeting) && (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) {
-          var c = me.$store.getters.getCandidatesForOffice(me.motion);
-
-          if (me.randomizeCandidates) {
-            c = _.shuffle(c);
-          }
-
-          return c;
-        }
-
-        return []; // //dev hackery
-        //     let firstMotion = this.$store.getters.getStoredMotions;
-        //
-        //     if (firstMotion.length === 0) return [];
-        //
-        //     firstMotion = firstMotion[0];
-        //     window.console.log(firstMotion, "first motion");
-        //     //
-        //     return this.$store.dispatch('setCurrentMotion', {
-        //         meetingId: this.meeting.id,
-        //         motionId: firstMotion.id,
-        //     }).then(() => {
-        //
-        //         return me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-        //
-        //             return me.$store.getters.getCandidatesForOffice(me.motion);
-        //
-        //         });
-        //     })
-        //
-        //
-        // }
-      },
-      watch: ['motion'],
-      "default": []
-    },
-    instructions: {
-      get: function get() {
-        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.description;
-        return '';
-      },
-      "default": ''
-    },
-    isComplete: function isComplete() {
-      return this.$store.getters.isElectionComplete;
-    },
-    maxWinners: {
-      get: function get() {
-        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.max_winners; // return ''
-      },
-      "default": null // },
-
-    },
-    officeName: {
-      get: function get() {
-        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.content;
-      },
-      "default": ''
-    }
-  },
-  computed: {},
-  methods: {},
-  mounted: function mounted() {
-    var me = this;
-    me.$store.dispatch('loadElectionCandidates', me.motion.id).then(function () {
-      window.console.log('election-card', 'isReady', 159, me.isReady);
-    }); //
-    // //todo DEV ONLY
-    //         let me = this;
-    //         //parse data from page and store stuff
-    //         let p = this.$store.dispatch('initialize');
-    //         p.then(function () {
-    //             // me.$router.push('meeting-home');
-    //             // if (isReadyToRock(me.meeting)) {
-    //
-    //             //dev hackery
-    //             let firstMotion = me.$store.getters.getStoredMotions;
-    //
-    //             if (firstMotion.length === 0) return [];
-    //
-    //             firstMotion = firstMotion[0];
-    //             window.console.log(firstMotion, "first motion");
-    //             //
-    //             me.$store.dispatch('setCurrentMotion', {
-    //                 meetingId: me.meeting.id,
-    //                 motionId: firstMotion.id,
-    //             }).then(() => {
-    //
-    //                 me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-    //
-    //                     window.console.log('voteomatic', 'isReady', 159, me.isReady);
-    //                 });
-    //
-    //             })
-    // }
-    // });
-    // this.$store.dispatch('loadElectionCandidates', this.motion.id);
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
-/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "max-winners-instruction",
-  props: [],
-  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default())],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    maxWinners: {
-      get: function get() {
-        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.motion)) return this.motion.max_winners;
-      },
-      "default": null
-    },
-    showInstructions: function showInstructions() {
-      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.maxWinners) && !this.$store.getters.showOverSelectionWarning;
-    }
-  },
-  computed: {},
-  methods: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "overselection-warning",
-  props: [],
-  mixins: [],
-  data: function data() {
-    return {};
-  },
-  asyncComputed: {
-    maxWinners: function maxWinners() {
-      return this.$store.getters.getMaxWinners;
-    },
-    numSelected: function numSelected() {
-      return this.$store.getters.getSelectedCandidatesForMotion.length;
-    },
-    numOver: function numOver() {
-      return this.numSelected - this.maxWinners;
-    },
-    showOverSelectionWarning: function showOverSelectionWarning() {
-      return this.$store.getters.showOverSelectionWarning;
-    }
-  },
-  computed: {},
-  methods: {}
 });
 
 /***/ }),
@@ -4272,6 +3673,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -4576,12 +3981,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "candidate-field-input",
-  props: ['fieldName'],
+  props: ['fieldName', 'clearCount'],
   mixins: [],
   data: function data() {
     return {
       val: ''
     };
+  },
+  watch: {
+    // When the parent has cleared out the
+    //fields it will update this value. That will
+    //tell this component to clear out the fields.
+    clearCount: function clearCount() {
+      //We use this rather than setting fieldVal since that
+      //would trigger the event broadcast
+      this.resetField();
+    }
   },
   asyncComputed: {},
   computed: {
@@ -4601,7 +4016,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  methods: {}
+  methods: {
+    /**
+     * Resets the input field without triggering the update
+     * event
+     */
+    resetField: function resetField() {
+      this.val = '';
+    }
+  }
 });
 
 /***/ }),
@@ -5432,7 +4855,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _candidate_row__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../candidate-row */ "./resources/js/components/election/candidate-row.vue");
+/* harmony import */ var _voting_candidate_row__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../voting/candidate-row */ "./resources/js/components/election/voting/candidate-row.vue");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
@@ -5617,7 +5040,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
 /* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _candidate_row__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../candidate-row */ "./resources/js/components/election/candidate-row.vue");
+/* harmony import */ var _voting_candidate_row__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../voting/candidate-row */ "./resources/js/components/election/voting/candidate-row.vue");
 /* harmony import */ var _models_Payload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/Payload */ "./resources/js/models/Payload.js");
 /* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/meetingPropertiesMixin */ "./resources/js/mixins/meetingPropertiesMixin.js");
 /* harmony import */ var _mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5__);
@@ -5675,7 +5098,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     DeleteOfficeModal: _controls_delete_office_modal__WEBPACK_IMPORTED_MODULE_7__["default"],
     DeleteOfficeButton: _controls_delete_office_button__WEBPACK_IMPORTED_MODULE_6__["default"],
-    CandidateRow: _candidate_row__WEBPACK_IMPORTED_MODULE_3__["default"]
+    CandidateRow: _voting_candidate_row__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: [],
   mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_meetingPropertiesMixin__WEBPACK_IMPORTED_MODULE_5___default())],
@@ -6044,6 +5467,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -6063,9 +5490,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       showFields: false,
-      poolMember: new _models_PoolMember__WEBPACK_IMPORTED_MODULE_0__["default"]({}) // firstName: '',
-      // lastName: ''
-
+      poolMember: new _models_PoolMember__WEBPACK_IMPORTED_MODULE_0__["default"]({}),
+      //This will be watched by the candidate-field-input
+      //children. When it is updated, those will reset their values
+      clearCount: 0
     };
   },
   asyncComputed: {},
@@ -6099,8 +5527,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     clearFields: function clearFields() {
-      this.poolMember = new _models_PoolMember__WEBPACK_IMPORTED_MODULE_0__["default"]({}); // this.firstName = '';
-      // this.lastName = '';
+      this.poolMember = new _models_PoolMember__WEBPACK_IMPORTED_MODULE_0__["default"]({});
+      this.clearCount += 1;
     },
     handleUpdate: function handleUpdate(_ref) {
       var fieldName = _ref.fieldName,
@@ -6127,6 +5555,93 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleFields: function toggleFields() {
       this.showFields = !this.showFields;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "candidate-button",
+  props: ['candidate'],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    label: function label() {
+      return this.selected ? 'Selected' : 'Select';
+    },
+    selectedCandidates: function selectedCandidates() {
+      return this.$store.getters.getSelectedCandidatesForMotion;
+    },
+    selected: {
+      get: function get() {
+        // let selectedCandidates =
+        if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.selectedCandidates)) return false; // window.console.log('selected', this.selectedCandidates);
+
+        if (this.selectedCandidates.length === 0) return false; // return _.includes(selectedCandidates, this.candidate);
+
+        return this.selectedCandidates.indexOf(this.candidate) > -1;
+      },
+      // watch :['selectedCandidates'],
+      "default": []
+    },
+    styling: {
+      get: function get() {
+        if (this.selected) return "btn-info";
+        return "btn-outline-info";
+      } // watch: ['selected']
+
+    }
+  },
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      window.console.log('Vote button clicked for ', this.candidate.name);
+      var me = this;
+
+      if (this.selected) {
+        this.$store.dispatch('unselectCandidate', this.candidate);
+        window.console.log('unselect');
+      } else {
+        window.console.log('select');
+        this.$store.dispatch('selectCandidate', this.candidate);
+      } // });
+      // let pl = {
+      //     motionId: this.candidate.motion_id,
+      //     candidateId : this.candidate.id
+      // };
+      //             this.$store.dispatch('castElectionVote', pl)
+      //                 .then((response) => {
+      //                 window.console.log(response.data);
+      //
+      //             });
+      //
+
     }
   }
 });
@@ -6189,6 +5704,518 @@ __webpack_require__.r(__webpack_exports__);
     isShown: function isShown() {
       if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.candidate) || !(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_2__.isReadyToRock)(this.fieldName)) return false;
       return _.includes(this.meeting.candidateFields, this.fieldName);
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _candidate_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button */ "./resources/js/components/election/voting/candidate-button.vue");
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../write-in/write-in-badge */ "./resources/js/components/election/write-in/write-in-badge.vue");
+/* harmony import */ var _candidate_info_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./candidate-info-item */ "./resources/js/components/election/voting/candidate-info-item.vue");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "candidate-row",
+  components: {
+    CandidateInfoItem: _candidate_info_item__WEBPACK_IMPORTED_MODULE_3__["default"],
+    WriteInBadge: _write_in_write_in_badge__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CandidateButton: _candidate_button__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['candidate'],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_4___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_5___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    candidateName: function candidateName() {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate)) return this.candidate.name;
+      return '';
+    },
+
+    /**
+     * These are the fields which should be shown
+     * @returns {boolean}
+     */
+    infoFields: function infoFields() {
+      if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.meeting)) return this.meeting.candidateFields;
+    },
+    candidateInfo: function candidateInfo() {
+      if (!(0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate)) return '';
+      this.candidate.info;
+      return '';
+    },
+    isWriteIn: function isWriteIn() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_1__.isReadyToRock)(this.candidate) && this.candidate.is_write_in === true;
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "cast-ballot-button",
+  props: [],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    showOverSelectionWarning: function showOverSelectionWarning() {
+      return this.$store.getters.showOverSelectionWarning;
+    },
+    ariaDisabled: function ariaDisabled() {
+      if (this.showOverSelectionWarning) return true;
+    },
+    styling: function styling() {
+      if (this.showOverSelectionWarning) return 'btn-warning disabled';
+      return "btn-warning";
+    }
+  },
+  computed: {},
+  methods: {
+    handleClick: function handleClick() {
+      window.console.log('Record Vote button clicked');
+      var me = this;
+
+      if (!this.showOverSelectionWarning) {
+        this.$store.dispatch('castElectionVote').then(function () {
+          me.$store.dispatch('nextOffice').then(function () {})["catch"](function () {
+            //If there are no further offices to vote
+            //upon, it will reject.
+            me.$emit('election-complete');
+            window.console.log('election complete');
+          });
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _candidate_row__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-row */ "./resources/js/components/election/voting/candidate-row.vue");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/meetingMixin */ "./resources/js/mixins/meetingMixin.js");
+/* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cast-ballot-button */ "./resources/js/components/election/voting/cast-ballot-button.vue");
+/* harmony import */ var _overselection_warning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overselection-warning */ "./resources/js/components/election/voting/overselection-warning.vue");
+/* harmony import */ var _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./max-winners-instruction */ "./resources/js/components/election/voting/max-winners-instruction.vue");
+/* harmony import */ var _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../deprecated/writein-row */ "./resources/js/components/deprecated/writein-row.vue");
+/* harmony import */ var _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../write-in/write-in-controls */ "./resources/js/components/election/write-in/write-in-controls.vue");
+/* harmony import */ var _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../results/election-results-card */ "./resources/js/components/election/results/election-results-card.vue");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
+/* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "election-card",
+  components: {
+    ElectionResultsCard: _results_election_results_card__WEBPACK_IMPORTED_MODULE_9__["default"],
+    WriteInControls: _write_in_write_in_controls__WEBPACK_IMPORTED_MODULE_8__["default"],
+    WriteinRow: _deprecated_writein_row__WEBPACK_IMPORTED_MODULE_7__["default"],
+    MaxWinnersInstruction: _max_winners_instruction__WEBPACK_IMPORTED_MODULE_6__["default"],
+    OverselectionWarning: _overselection_warning__WEBPACK_IMPORTED_MODULE_5__["default"],
+    CastBallotButton: _cast_ballot_button__WEBPACK_IMPORTED_MODULE_4__["default"],
+    CandidateRow: _candidate_row__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: [],
+  mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_2___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_10___default())],
+  data: function data() {
+    return {
+      randomizeCandidates: true
+    };
+  },
+  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+    next(function (vm) {
+      // vm.setElection();
+      window.console.log('entering election route. Mode:', vm.mode); // access to component instance via `vm`
+    });
+  },
+  asyncComputed: {
+    office: {
+      get: function get() {
+        return this.motion;
+      },
+      "default": null
+    },
+    writeInCandidates: {
+      get: function get() {
+        return this.$store.getters.getWriteInCandidatesForCurrentOffice;
+      },
+      watch: ['candidates']
+    },
+    candidates: {
+      get: function get() {
+        var me = this;
+
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.meeting) && (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) {
+          var c = me.$store.getters.getCandidatesForOffice(me.motion);
+
+          if (me.randomizeCandidates) {
+            c = _.shuffle(c);
+          }
+
+          return c;
+        }
+
+        return []; // //dev hackery
+        //     let firstMotion = this.$store.getters.getStoredMotions;
+        //
+        //     if (firstMotion.length === 0) return [];
+        //
+        //     firstMotion = firstMotion[0];
+        //     window.console.log(firstMotion, "first motion");
+        //     //
+        //     return this.$store.dispatch('setCurrentMotion', {
+        //         meetingId: this.meeting.id,
+        //         motionId: firstMotion.id,
+        //     }).then(() => {
+        //
+        //         return me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+        //
+        //             return me.$store.getters.getCandidatesForOffice(me.motion);
+        //
+        //         });
+        //     })
+        //
+        //
+        // }
+      },
+      watch: ['motion'],
+      "default": []
+    },
+    instructions: {
+      get: function get() {
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.description;
+        return '';
+      },
+      "default": ''
+    },
+    isComplete: function isComplete() {
+      return this.$store.getters.isElectionComplete;
+    },
+    maxWinners: {
+      get: function get() {
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.max_winners; // return ''
+      },
+      "default": null // },
+
+    },
+    officeName: {
+      get: function get() {
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_3__.isReadyToRock)(this.motion)) return this.motion.content;
+      },
+      "default": ''
+    }
+  },
+  computed: {},
+  methods: {},
+  mounted: function mounted() {
+    var me = this;
+    me.$store.dispatch('loadElectionCandidates', me.motion.id).then(function () {
+      window.console.log('election-card', 'isReady', 159, me.isReady);
+    }); //
+    // //todo DEV ONLY
+    //         let me = this;
+    //         //parse data from page and store stuff
+    //         let p = this.$store.dispatch('initialize');
+    //         p.then(function () {
+    //             // me.$router.push('meeting-home');
+    //             // if (isReadyToRock(me.meeting)) {
+    //
+    //             //dev hackery
+    //             let firstMotion = me.$store.getters.getStoredMotions;
+    //
+    //             if (firstMotion.length === 0) return [];
+    //
+    //             firstMotion = firstMotion[0];
+    //             window.console.log(firstMotion, "first motion");
+    //             //
+    //             me.$store.dispatch('setCurrentMotion', {
+    //                 meetingId: me.meeting.id,
+    //                 motionId: firstMotion.id,
+    //             }).then(() => {
+    //
+    //                 me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+    //
+    //                     window.console.log('voteomatic', 'isReady', 159, me.isReady);
+    //                 });
+    //
+    //             })
+    // }
+    // });
+    // this.$store.dispatch('loadElectionCandidates', this.motion.id);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/readiness.utilities */ "./resources/js/utilities/readiness.utilities.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/motionStoreMixin */ "./resources/js/mixins/motionStoreMixin.js");
+/* harmony import */ var _mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "max-winners-instruction",
+  props: [],
+  mixins: [(_mixins_motionStoreMixin__WEBPACK_IMPORTED_MODULE_1___default())],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    maxWinners: {
+      get: function get() {
+        if ((0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.motion)) return this.motion.max_winners;
+      },
+      "default": null
+    },
+    showInstructions: function showInstructions() {
+      return (0,_utilities_readiness_utilities__WEBPACK_IMPORTED_MODULE_0__.isReadyToRock)(this.maxWinners) && !this.$store.getters.showOverSelectionWarning;
+    }
+  },
+  computed: {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "overselection-warning",
+  props: [],
+  mixins: [],
+  data: function data() {
+    return {};
+  },
+  asyncComputed: {
+    maxWinners: function maxWinners() {
+      return this.$store.getters.getMaxWinners;
+    },
+    numSelected: function numSelected() {
+      return this.$store.getters.getSelectedCandidatesForMotion.length;
+    },
+    numOver: function numOver() {
+      return this.numSelected - this.maxWinners;
+    },
+    showOverSelectionWarning: function showOverSelectionWarning() {
+      return this.$store.getters.showOverSelectionWarning;
     }
   },
   computed: {},
@@ -7447,7 +7474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/chairMixin */ "./resources/js/mixins/chairMixin.js");
 /* harmony import */ var _mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _election_election_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../election/election-card */ "./resources/js/components/election/election-card.vue");
+/* harmony import */ var _election_voting_election_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../election/voting/election-card */ "./resources/js/components/election/voting/election-card.vue");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/modeMixin */ "./resources/js/mixins/modeMixin.js");
 /* harmony import */ var _mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _main_vote_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../main/vote-page */ "./resources/js/components/main/vote-page.vue");
@@ -7472,7 +7499,7 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   components: {
     VotePage: _main_vote_page__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ElectionCard: _election_election_card__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ElectionCard: _election_voting_election_card__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mixins: [(_mixins_meetingMixin__WEBPACK_IMPORTED_MODULE_0___default()), (_mixins_chairMixin__WEBPACK_IMPORTED_MODULE_1___default()), (_mixins_modeMixin__WEBPACK_IMPORTED_MODULE_3___default())],
   data: function data() {
@@ -14684,7 +14711,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('event-list-card', __webpa
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('results', __webpack_require__(/*! ./components/main/motion-results-page */ "./resources/js/components/main/motion-results-page.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('setup-page', __webpack_require__(/*! ./components/setup-page */ "./resources/js/components/setup-page.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('amendment-page', __webpack_require__(/*! ./components/main/amendment-page */ "./resources/js/components/main/amendment-page.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('election-card', __webpack_require__(/*! ./components/election/election-card */ "./resources/js/components/election/election-card.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('election-card', __webpack_require__(/*! ./components/election/voting/election-card */ "./resources/js/components/election/voting/election-card.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('election-setup-card', __webpack_require__(/*! ./components/election/setup/election-setup-card */ "./resources/js/components/election/setup/election-setup-card.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -68742,240 +68769,6 @@ component.options.__file = "resources/js/components/deprecated/writein-row.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/election/candidate-button.vue":
-/*!***************************************************************!*\
-  !*** ./resources/js/components/election/candidate-button.vue ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button.vue?vue&type=template&id=f6df6592&scoped=true& */ "./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true&");
-/* harmony import */ var _candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "f6df6592",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/candidate-button.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/candidate-row.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/election/candidate-row.vue ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true& */ "./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true&");
-/* harmony import */ var _candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate-row.vue?vue&type=script&lang=js& */ "./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "c9189bb6",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/candidate-row.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/cast-ballot-button.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/election/cast-ballot-button.vue ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true& */ "./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true&");
-/* harmony import */ var _cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cast-ballot-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "21369fb0",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/cast-ballot-button.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/election-card.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/election/election-card.vue ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./election-card.vue?vue&type=template&id=a0abc44e&scoped=true& */ "./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true&");
-/* harmony import */ var _election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./election-card.vue?vue&type=script&lang=js& */ "./resources/js/components/election/election-card.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "a0abc44e",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/election-card.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/max-winners-instruction.vue":
-/*!**********************************************************************!*\
-  !*** ./resources/js/components/election/max-winners-instruction.vue ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true& */ "./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true&");
-/* harmony import */ var _max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./max-winners-instruction.vue?vue&type=script&lang=js& */ "./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "695bf87e",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/max-winners-instruction.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/election/overselection-warning.vue":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/election/overselection-warning.vue ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true& */ "./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true&");
-/* harmony import */ var _overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./overselection-warning.vue?vue&type=script&lang=js& */ "./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "4942c51c",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/election/overselection-warning.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/election/results/candidate-result-row.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/election/results/candidate-result-row.vue ***!
@@ -70020,6 +69813,45 @@ component.options.__file = "resources/js/components/election/setup/pool-member-c
 
 /***/ }),
 
+/***/ "./resources/js/components/election/voting/candidate-button.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-button.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-button.vue?vue&type=template&id=8284a00e&scoped=true& */ "./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true&");
+/* harmony import */ var _candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "8284a00e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/candidate-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/election/voting/candidate-info-item.vue":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/election/voting/candidate-info-item.vue ***!
@@ -70055,6 +69887,201 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/election/voting/candidate-info-item.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/candidate-row.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-row.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true& */ "./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true&");
+/* harmony import */ var _candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate-row.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "1155d2ba",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/candidate-row.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/cast-ballot-button.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/election/voting/cast-ballot-button.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true& */ "./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true&");
+/* harmony import */ var _cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cast-ballot-button.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "53c46a6a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/cast-ballot-button.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/election-card.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/election/voting/election-card.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./election-card.vue?vue&type=template&id=0b8b8257&scoped=true& */ "./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true&");
+/* harmony import */ var _election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./election-card.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "0b8b8257",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/election-card.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/max-winners-instruction.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/election/voting/max-winners-instruction.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true& */ "./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true&");
+/* harmony import */ var _max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./max-winners-instruction.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "205662bf",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/max-winners-instruction.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/overselection-warning.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/election/voting/overselection-warning.vue ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true& */ "./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true&");
+/* harmony import */ var _overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./overselection-warning.vue?vue&type=script&lang=js& */ "./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "2da268cc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/election/voting/overselection-warning.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -74033,102 +74060,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-row.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cast-ballot-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/election-card.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/election/election-card.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./election-card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./max-winners-instruction.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./overselection-warning.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/js/components/election/results/candidate-result-row.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/components/election/results/candidate-result-row.vue?vue&type=script&lang=js& ***!
@@ -74561,6 +74492,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/election/voting/candidate-info-item.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************!*\
   !*** ./resources/js/components/election/voting/candidate-info-item.vue?vue&type=script&lang=js& ***!
@@ -74574,6 +74521,86 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_info_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-info-item.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-info-item.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_info_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-row.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cast-ballot-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./election-card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./max-winners-instruction.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./overselection-warning.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -76520,108 +76547,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true& ***!
-  \**********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_f6df6592_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-button.vue?vue&type=template&id=f6df6592&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true& ***!
-  \*******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_c9189bb6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true&":
-/*!************************************************************************************************************!*\
-  !*** ./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true& ***!
-  \************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_21369fb0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true& ***!
-  \*******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_a0abc44e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./election-card.vue?vue&type=template&id=a0abc44e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true&":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true& ***!
-  \*****************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_695bf87e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true&":
-/*!***************************************************************************************************************!*\
-  !*** ./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true& ***!
-  \***************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_4942c51c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true&");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/election/results/candidate-result-row.vue?vue&type=template&id=38cfa0a8&scoped=true&":
 /*!**********************************************************************************************************************!*\
   !*** ./resources/js/components/election/results/candidate-result-row.vue?vue&type=template&id=38cfa0a8&scoped=true& ***!
@@ -76894,6 +76819,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true& ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_button_vue_vue_type_template_id_8284a00e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-button.vue?vue&type=template&id=8284a00e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/election/voting/candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true&":
 /*!********************************************************************************************************************!*\
   !*** ./resources/js/components/election/voting/candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true& ***!
@@ -76907,6 +76849,91 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_info_item_vue_vue_type_template_id_3a492cdb_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_info_item_vue_vue_type_template_id_3a492cdb_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_candidate_row_vue_vue_type_template_id_1155d2ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cast_ballot_button_vue_vue_type_template_id_53c46a6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_election_card_vue_vue_type_template_id_0b8b8257_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./election-card.vue?vue&type=template&id=0b8b8257&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true& ***!
+  \************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_max_winners_instruction_vue_vue_type_template_id_205662bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true& ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overselection_warning_vue_vue_type_template_id_2da268cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true&");
 
 
 /***/ }),
@@ -78961,303 +78988,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-button.vue?vue&type=template&id=f6df6592&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    { staticClass: "btn", class: _vm.styling, on: { click: _vm.handleClick } },
-    [_vm._v(_vm._s(_vm.label) + "\n")]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/candidate-row.vue?vue&type=template&id=c9189bb6&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "candidate-row card mb-3",
-      staticStyle: { "max-width": "540px" }
-    },
-    [
-      _c("div", { staticClass: "row no-gutters" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-4" },
-          [_c("candidate-button", { attrs: { candidate: _vm.candidate } })],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(_vm.candidateName))
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.infoFields, function(field) {
-                return _c("candidate-info-item", {
-                  key: field,
-                  attrs: { "field-name": field, candidate: _vm.candidate }
-                })
-              }),
-              _vm._v(" "),
-              _vm.isWriteIn ? _c("p", [_c("write-in-badge")], 1) : _vm._e()
-            ],
-            2
-          )
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/cast-ballot-button.vue?vue&type=template&id=21369fb0&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    {
-      staticClass: "btn",
-      class: _vm.styling,
-      attrs: { "aria-disabled": _vm.ariaDisabled },
-      on: { click: _vm.handleClick }
-    },
-    [_vm._v("Record selections\n")]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/election-card.vue?vue&type=template&id=a0abc44e&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "election-card" }, [
-    _vm.isComplete
-      ? _c("div", { staticClass: "election-complete-card card" }, [_vm._m(0)])
-      : _vm.isElection
-      ? _c(
-          "div",
-          { staticClass: "card" },
-          [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h2", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(_vm.officeName))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("max-winners-instruction"),
-            _vm._v(" "),
-            _c("overselection-warning"),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _vm._l(_vm.candidates, function(candidate) {
-                  return _c("candidate-row", {
-                    key: candidate.id,
-                    attrs: { candidate: candidate }
-                  })
-                }),
-                _vm._v(" "),
-                _c("overselection-warning")
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-footer" },
-              [_c("cast-ballot-button")],
-              1
-            )
-          ],
-          1
-        )
-      : _c("div", { staticClass: "wrong-mode-message card" }, [_vm._m(1)])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("p", { staticClass: "card-text" }, [_vm._v("Thank you for voting!")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("p", { staticClass: "card-text" }, [
-        _vm._v("There is no pending election")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/max-winners-instruction.vue?vue&type=template&id=695bf87e&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "max-winners-instruction" }, [
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.showInstructions,
-            expression: "showInstructions"
-          }
-        ],
-        staticClass: "alert alert-primary",
-        attrs: { role: "alert" }
-      },
-      [_vm._v("Please vote for up to " + _vm._s(_vm.maxWinners) + "\n    ")]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/overselection-warning.vue?vue&type=template&id=4942c51c&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "overselection-warning" }, [
-    _vm.showOverSelectionWarning
-      ? _c(
-          "div",
-          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
-          [
-            _vm._v(
-              "\n    You may only select " +
-                _vm._s(_vm.maxWinners) +
-                " for this position.\n    Please de-select " +
-                _vm._s(_vm.numOver) +
-                " candidates.\n"
-            )
-          ]
-        )
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/results/candidate-result-row.vue?vue&type=template&id=38cfa0a8&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/results/candidate-result-row.vue?vue&type=template&id=38cfa0a8&scoped=true& ***!
@@ -79440,7 +79170,9 @@ var render = function() {
           )
         }),
         0
-      )
+      ),
+      _vm._v(" "),
+      _vm._m(0)
     ]),
     _vm._v(" "),
     _vm.showFields
@@ -79494,7 +79226,20 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-text" }, [
+      _c("p", { staticClass: "text-muted" }, [
+        _vm._v(
+          "NB, deleting a field does not\n            delete any information you have entered for the candidates. Creating a new field with the\n            same name as a deleted field will again display that information."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -79668,14 +79413,7 @@ var render = function() {
   return _c("div", { staticClass: "election-setup-controls row" }, [
     _c(
       "div",
-      { staticClass: "col-lg-2 text-left" },
-      [_c("create-office-button")],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-lg-4 " },
+      { staticClass: "col-lg-6 " },
       [
         _c("create-election-button"),
         _vm._v(" "),
@@ -80201,7 +79939,7 @@ var render = function() {
           _vm._l(_vm.customFields, function(f) {
             return _c("candidate-field-input", {
               key: f,
-              attrs: { "field-name": f },
+              attrs: { "field-name": f, "clear-count": _vm.clearCount },
               on: { "field-update": _vm.handleUpdate }
             })
           }),
@@ -80238,6 +79976,35 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-button.vue?vue&type=template&id=8284a00e&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    { staticClass: "btn", class: _vm.styling, on: { click: _vm.handleClick } },
+    [_vm._v(_vm._s(_vm.label) + "\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-info-item.vue?vue&type=template&id=3a492cdb&scoped=true& ***!
@@ -80261,6 +80028,274 @@ var render = function() {
         ])
       ])
     : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/candidate-row.vue?vue&type=template&id=1155d2ba&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "candidate-row card mb-3",
+      staticStyle: { "max-width": "540px" }
+    },
+    [
+      _c("div", { staticClass: "row no-gutters" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-4" },
+          [_c("candidate-button", { attrs: { candidate: _vm.candidate } })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("h4", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.candidateName))
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.infoFields, function(field) {
+                return _c("candidate-info-item", {
+                  key: field,
+                  attrs: { "field-name": field, candidate: _vm.candidate }
+                })
+              }),
+              _vm._v(" "),
+              _vm.isWriteIn ? _c("p", [_c("write-in-badge")], 1) : _vm._e()
+            ],
+            2
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/cast-ballot-button.vue?vue&type=template&id=53c46a6a&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn",
+      class: _vm.styling,
+      attrs: { "aria-disabled": _vm.ariaDisabled },
+      on: { click: _vm.handleClick }
+    },
+    [_vm._v("Record selections\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/election-card.vue?vue&type=template&id=0b8b8257&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "election-card" }, [
+    _vm.isComplete
+      ? _c("div", { staticClass: "election-complete-card card" }, [_vm._m(0)])
+      : _vm.isElection
+      ? _c(
+          "div",
+          { staticClass: "card" },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h2", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.officeName))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("max-winners-instruction"),
+            _vm._v(" "),
+            _c("overselection-warning"),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm._l(_vm.candidates, function(candidate) {
+                  return _c("candidate-row", {
+                    key: candidate.id,
+                    attrs: { candidate: candidate }
+                  })
+                }),
+                _vm._v(" "),
+                _c("overselection-warning")
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-footer" },
+              [_c("cast-ballot-button")],
+              1
+            )
+          ],
+          1
+        )
+      : _c("div", { staticClass: "wrong-mode-message card" }, [_vm._m(1)])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("p", { staticClass: "card-text" }, [_vm._v("Thank you for voting!")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("p", { staticClass: "card-text" }, [
+        _vm._v("There is no pending election")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/max-winners-instruction.vue?vue&type=template&id=205662bf&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "max-winners-instruction" }, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showInstructions,
+            expression: "showInstructions"
+          }
+        ],
+        staticClass: "alert alert-primary",
+        attrs: { role: "alert" }
+      },
+      [_vm._v("Please vote for up to " + _vm._s(_vm.maxWinners) + "\n    ")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/election/voting/overselection-warning.vue?vue&type=template&id=2da268cc&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "overselection-warning" }, [
+    _vm.showOverSelectionWarning
+      ? _c(
+          "div",
+          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+          [
+            _vm._v(
+              "\n    You may only select " +
+                _vm._s(_vm.maxWinners) +
+                " for this position.\n    Please de-select " +
+                _vm._s(_vm.numOver) +
+                " candidates.\n"
+            )
+          ]
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
