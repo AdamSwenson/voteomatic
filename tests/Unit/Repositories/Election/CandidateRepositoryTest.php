@@ -3,6 +3,7 @@
 namespace Tests\Repositories\Election;
 
 use App\Exceptions\BallotStuffingAttempt;
+use App\Exceptions\WriteInDuplicatesOfficial;
 use App\Models\Election\Candidate;
 use App\Models\Election\Person;
 use App\Models\Meeting;
@@ -49,7 +50,7 @@ class CandidateRepositoryTest extends TestCase
 
         $result = $this->object->checkForDuplication($newPerson->first_name, $newPerson->last_name, $newPerson->info, $this->motion);
 
-        $this->assertTrue($result);
+        $this->assertEmpty($result);
     }
 
 
@@ -64,14 +65,14 @@ class CandidateRepositoryTest extends TestCase
 
         $result = $this->object->checkForDuplication($newPerson->first_name, $newPerson->last_name, $newPerson->info, $this->motion);
 
-        $this->assertTrue($result);
+        $this->assertEmpty($result);
     }
 
 
     /** @test */
     public function checkForDuplicationExactDuplicate()
     {
-        $this->expectException(BallotStuffingAttempt::class);
+        $this->expectException(WriteInDuplicatesOfficial::class);
 
         $newPerson = Person::factory()->create([
             'first_name' => $this->person->first_name,
