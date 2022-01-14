@@ -183,22 +183,24 @@ class CandidateRepository implements ICandidateRepository
      * @throws BallotStuffingAttempt
      */
     public function checkForDuplication( $first_name, $last_name, $info, Motion $motion){
-        $candidateFields = $motion->meeting->info['candidateFields'];
 
         //Get any existing people with the same name
         $possibleDuplicates = Person::where('first_name', $first_name)
             ->where('last_name', $last_name)->get();
 
-        if(sizeof($candidateFields) > 0 && sizeof($info) > 0){
-            $dups = [];
-            //we need to check the info array. Laravel doesn't
-            //let us do that in the earlier query
-            foreach($possibleDuplicates as $person){
-                if($person->info == $info){
-                    $dups[] = $person;
+        if(! is_null( $motion->meeting->info)) {
+            $candidateFields = $motion->meeting->info['candidateFields'];
+            if (!is_null($candidateFields) && sizeof($candidateFields) > 0 && sizeof($info) > 0) {
+                $dups = [];
+                //we need to check the info array. Laravel doesn't
+                //let us do that in the earlier query
+                foreach ($possibleDuplicates as $person) {
+                    if ($person->info == $info) {
+                        $dups[] = $person;
+                    }
                 }
+                $possibleDuplicates = collect($dups);
             }
-            $possibleDuplicates = collect($dups);
         }
 
         if( $possibleDuplicates->count() > 0){
