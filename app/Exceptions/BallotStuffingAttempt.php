@@ -15,7 +15,8 @@ class BallotStuffingAttempt extends ClientVisibleException
     /** @var bool Whether the user must dismiss the message */
     const BLOCKING_MESSAGE = true;
 
-    const MESSAGE = "The same candidate was voted for more than once, please try again";
+    const MESSAGE = "The same candidate was voted for more than once, please try again. You may need to
+    refresh your browser";
 
 //
 //    /**

@@ -5853,8 +5853,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.showOverSelectionWarning) return true;
     },
     styling: function styling() {
-      if (this.showOverSelectionWarning) return 'btn-warning disabled';
-      return "btn-warning";
+      if (this.showOverSelectionWarning) return 'btn-success disabled';
+      return "btn-success ";
     }
   },
   computed: {},
@@ -80105,7 +80105,7 @@ var render = function() {
   return _c(
     "button",
     {
-      staticClass: "btn",
+      staticClass: "btn btn-lg ",
       class: _vm.styling,
       attrs: { "aria-disabled": _vm.ariaDisabled },
       on: { click: _vm.handleClick }
