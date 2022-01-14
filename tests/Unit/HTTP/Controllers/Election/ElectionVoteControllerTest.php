@@ -2,6 +2,7 @@
 
 namespace Tests\Http\Controllers\Election;
 
+use App\Exceptions\BallotStuffingAttempt;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\ExcessCandidatesSelected;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
@@ -67,10 +68,9 @@ class ElectionVoteControllerTest extends TestCase
     /** @test */
     public function recordVote()
     {
-
         $response = $this->actingAs($this->regularUserMember)->post($this->url, $this->requestData);
 
-//check
+        //check
         $response->assertSuccessful();
     }
 
@@ -80,7 +80,7 @@ class ElectionVoteControllerTest extends TestCase
         $this->election->addUserToMeeting($this->owner);
         $response = $this->actingAs($this->owner)->post($this->url, $this->requestData);
 
-//check
+        //check
         $response->assertSuccessful();
     }
 
@@ -165,5 +165,23 @@ class ElectionVoteControllerTest extends TestCase
             ->post($this->url, $this->requestData);
 
         $response->assertStatus(ExcessCandidatesSelected::ERROR_CODE);
+    }
+
+    /** @test */
+    public function recordVoteDeniesWhenDuplicateIds(){
+        $selectedCandidateIds = collect($this->faker->randomElements($this->candidates))->pluck('id');
+        $this->office->max_winners = sizeof($selectedCandidateIds) +1;
+        $this->office->save();
+
+        $selectedCandidateIds->push($selectedCandidateIds[0]);
+        $this->requestData = ['candidateIds' => $selectedCandidateIds,
+            'writeIns' => []
+        ];
+
+        $response = $this->actingAs($this->regularUserMember)
+            ->post($this->url, $this->requestData);
+
+        $response->assertStatus(BallotStuffingAttempt::ERROR_CODE);
+
     }
 }

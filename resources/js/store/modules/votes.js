@@ -3,6 +3,7 @@ import Vote from "../../models/Vote";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import {idify, getById} from "../../utilities/object.utilities";
 import Message from "../../models/Message";
+
 const state = {
     selectedCandidates: [],
 
@@ -222,6 +223,12 @@ const actions = {
                     commit('addVotedUponMotion', motionId);
 
                     return resolve();
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                        return reject(error);
+                    }
                 });
         }));
 

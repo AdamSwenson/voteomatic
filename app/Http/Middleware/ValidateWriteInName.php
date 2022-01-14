@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Motion;
 use Illuminate\Support\Facades\Validator;
 
-class ValidateWriteIn
+class ValidateWriteInName
 {
     /**
      * Handle an incoming request.

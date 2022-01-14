@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Election;
 
+use App\Exceptions\BallotStuffingAttempt;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\ExcessCandidatesSelected;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
@@ -42,6 +43,7 @@ class ElectionVoteController extends Controller
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');
         $this->middleware('excess-candidates-selected');
+        $this->middleware('check-for-ballot-stuffing');
 
         $this->voterEligibilityRepo = app()->make(IVoterEligibilityRepository::class);
         $this->electionVoteRepo = app()->make(IElectionVoteRepository::class);
@@ -163,6 +165,9 @@ class ElectionVoteController extends Controller
         } catch (ExcessCandidatesSelected $e3) {
             abort($e3::ERROR_CODE);
         }
+//        catch (BallotStuffingAttempt $e4){
+//            abort($e4::ERROR_CODE);
+//        }
     }
 
 

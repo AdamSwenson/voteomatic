@@ -4,6 +4,8 @@
 namespace App\Repositories\Election;
 
 
+use App\Exceptions\BallotStuffingAttempt;
+use App\Exceptions\WriteInDuplicatesOfficial;
 use App\Http\Requests\CandidateRequest;
 use App\Http\Requests\Election\WriteInCandidateRequest;
 use App\Models\Election\Candidate;
@@ -122,8 +124,14 @@ class CandidateRepository implements ICandidateRepository
      */
     public function addWriteInCandidate(Motion $motion, $first_name='', $last_name='', $info=null ){
 
-        //Check for duplicates
-//        $existingPerson = $this->checkForDuplication($first_name, $last_name, $info);
+        //Check for duplicates again (we did this in middleware, to block duplication
+        // of official candidates. However, multiple people could write someone in, so
+        //we will just reuse that candidate and check for sneakiness when the vote is recorded
+        $candidate = $this->checkForDuplication($first_name, $last_name, $info, $motion);
+
+        if(! is_null($candidate)) return $candidate;
+
+        //There wasn't a duplicate, so we create a new candidate
 
         //First create a person
         $person = Person::create([
@@ -142,25 +150,88 @@ class CandidateRepository implements ICandidateRepository
     }
 
     /**
+     * Utility method for comparing the info arrays of two person
+     * objects
+     * @param Person $checked
+     * @param Person $reference
+     * @return bool
+     */
+    public function doesInfoMatch(Person $checked, Person $reference){
+        $checkedInfo = $checked->info;
+        $referenceInfo = $reference->info;
+
+        return $checkedInfo == $referenceInfo;
+    }
+
+
+    /**
      * Used when creating write in candidates to see if there already
      * is a candidate in the database who matches exactly.
      *
-     * dev
-     * Not using this yet, because need to understand all sorts of potential issue
-     * e.g., what if the person has the same name as an official candidate
+     * If there is and they were also written in, we will return the
+     * candidate so they may be reused (we will check when the vote is cast
+     * to ensure they haven't done this to vote twice).
+     *
+     * If they duplicate an official candidate, we will reject the attempt
+     *
      *
      * @param $first_name
      * @param $last_name
      * @param $info
+     * @param Motion $motion
+     * @return mixed
+     * @throws BallotStuffingAttempt
      */
-    public function checkForDuplication( $first_name, $last_name, $info){
-        //Check whether the write in candidate duplicates an existing candidate
-        $possibleDuplicates = Person::where('first_name', $first_name)
-            ->where('last_name', $last_name)
-            ->where('info', $info)
-            ->first();
+    public function checkForDuplication( $first_name, $last_name, $info, Motion $motion){
+        $candidateFields = $motion->meeting->info['candidateFields'];
 
-        return $possibleDuplicates;
+        //Get any existing people with the same name
+        $possibleDuplicates = Person::where('first_name', $first_name)
+            ->where('last_name', $last_name)->get();
+
+        if(sizeof($candidateFields) > 0 && sizeof($info) > 0){
+            $dups = [];
+            //we need to check the info array. Laravel doesn't
+            //let us do that in the earlier query
+            foreach($possibleDuplicates as $person){
+                if($person->info == $info){
+                    $dups[] = $person;
+                }
+            }
+            $possibleDuplicates = collect($dups);
+        }
+
+        if( $possibleDuplicates->count() > 0){
+            //We now know that we have some instances of the same person.
+            //But that could be fine --they could be candidates in different
+            //elections or for different offices.
+            //So now we need to see if any of them are already candidates
+            //for this office
+            foreach($possibleDuplicates as $person){
+                $c = Candidate::where('person_id', $person->id)
+                    ->where('motion_id', $motion->id)
+                    ->first();
+                if(! is_null($c)){
+                    //If the candidate was a write in, we will return them
+                    //so they can be reused (this could be valid if someone else had
+                    //also written the same person in).
+                    if($c->is_write_in){
+                        return $c;
+                    }
+                    //If the written in person is the same as someone who is an
+                    //official candidate, we will reject.
+                    // While there could be edge cases depending on
+                    //what fields exist in the candidate's info (e.g., if there aren't enough
+                    //properties to differentiate 2 people with the same name in the same department),
+                    //we're going to call this invalid
+                    throw new WriteInDuplicatesOfficial($motion);
+                }
+            }
+
+        }
+
+        //No duplicates found
+        return null;
     }
 
     /**

@@ -6484,6 +6484,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(function () {
         me.clearFields();
+      })["catch"](function (e) {
+        me.clearFields();
       });
     }
   }
@@ -18538,11 +18540,12 @@ var actions = _objectSpread(_objectSpread({}, _elections_people_actions__WEBPACK
         commit('addCandidateToStore', candidate); //No reason to make the user separately select a write in
 
         commit('addCandidateToSelected', candidate);
-        resolve();
+        return resolve();
       })["catch"](function (error) {
         // error handling
         if (error.response) {
           dispatch('showServerProvidedMessage', error.response.data);
+          return reject(error);
         }
       });
     });
@@ -22154,6 +22157,12 @@ var actions = {
 
         commit('addVotedUponMotion', motionId);
         return resolve();
+      })["catch"](function (error) {
+        // error handling
+        if (error.response) {
+          dispatch('showServerProvidedMessage', error.response.data);
+          return reject(error);
+        }
       });
     });
   },

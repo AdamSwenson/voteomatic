@@ -113,11 +113,12 @@ const actions = {
                     //No reason to make the user separately select a write in
                     commit('addCandidateToSelected', candidate);
 
-                    resolve();
+                    return resolve();
                 }).catch(function (error) {
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
+                        return reject(error);
                     }
                 });
         }));

@@ -117,6 +117,8 @@ export default {
 
             this.$store.dispatch('addWriteInCandidateToOfficeElection', d).then(() => {
                 me.clearFields();
+            }).catch((e) => {
+            me.clearFields();
             });
         }
 

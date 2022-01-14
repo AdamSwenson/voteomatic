@@ -135,7 +135,7 @@ Route::post('election/nominate/{poolMember}', [CandidateController::class, 'addC
 Route::resource('election/people', PersonController::class);
 
 Route::post('election/write-in/{motion}', [CandidateController::class, 'addWriteInCandidate'])
-    ->middleware('validate-write-in');
+    ->middleware(['validate-write-in-name', 'check-write-in-does-not-duplicate-official']);
 
 //Handles update and destroy
 Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
