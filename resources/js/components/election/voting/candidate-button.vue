@@ -29,7 +29,7 @@ export default {
         },
 
         selectedCandidates: function(){
-            return this.$store.getters.getSelectedCandidatesForMotion;
+            return this.$store.getters.getSelectedCandidatesForActiveMotion;
         },
 
         selected: {

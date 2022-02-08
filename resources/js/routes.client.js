@@ -15,6 +15,8 @@ import meetingHome from './components/main/meeting-home'
 import eventSetupCard from "./components/main/chair/event-setup-card";
 import voteCard from "./components/main/vote-card";
 
+import electionVoterHomeCard from './components/election/voter/election-voter-home-card';
+
 Vue.component('ballot-setup-card', ballotSetupCard);
 // Vue.component('election-card', electionCard);
 // Vue.component('election-setup-card', electionSetupCard);
@@ -29,8 +31,21 @@ Vue.component('results-card', resultsCard);
 Vue.component('vote-card', voteCard);
 Vue.component('vote-verify', resultsCard);
 
+//dev
+Vue.component('election-voter-home-card', electionVoterHomeCard)
+
 
 export const routes = [
+    {
+        name: 'election-dev',
+        path: '/election-voter',
+        label: 'election dev',
+        components: {main: electionVoterHomeCard},
+        default: true,
+        props: true,
+        adminOnly: false
+
+    },
     {
         name: 'home',
         path: '/meeting-home',

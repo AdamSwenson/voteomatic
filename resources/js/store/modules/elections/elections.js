@@ -213,8 +213,6 @@ const actions = {
     },
 
 
-
-
     /**
      * Alias for deleting motions which represent offices
      *
@@ -251,7 +249,7 @@ const actions = {
 
 
     /**
-     * Sets the next elected office as the current motion
+     * Sets the next unvoted elected office as the current motion
      *
      * While this is technically operating on motions, the
      * way we get from one motion to another is very different
@@ -263,7 +261,7 @@ const actions = {
      * @param motionId
      * @returns {Promise<unknown>}
      */
-    nextOffice({dispatch, commit, getters}, motionId) {
+    nextOffice({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
 
             let idx = getters.getMotions.indexOf(getters.getActiveMotion);
@@ -273,17 +271,87 @@ const actions = {
 
             if (unvotedOffices.length > 0) {
                 let toSet = unvotedOffices[0];
-                dispatch('setCurrentMotion', {
-                    meetingId: getters.getActiveMeeting.id,
-                    motionId: toSet.id
-                }).then(() => {
-                    dispatch('loadElectionCandidates', toSet.id).then(() => {
-                        return resolve();
-                    });
+
+                dispatch('setOfficeForVoting', toSet).then(() => {
+                    return resolve();
                 });
-            } else {
+
+                     } else {
                 // reject();
             }
+
+        }));
+
+    },
+
+
+    /**
+     * Sets the next elected office as the current motion, regardless
+     * of whether it has been voted upon
+     *
+     * While this is technically operating on motions, the
+     * way we get from one motion to another is very different
+     * for elections. Thus handling this here.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motionId
+     * @returns {Promise<unknown>}
+     */
+    nextOfficeInStack({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+
+            let currentIdx = getters.getMotions.indexOf(getters.getActiveMotion);
+            let nxtIdx = currentIdx + 1;
+            window.console.log('setting next office. idx: ', nxtIdx);
+
+            let numMotions = _.size(getters.getMotions);
+
+            //zero indexed so works
+            if (nxtIdx === numMotions) {
+                return resolve();
+            }
+
+            let nxtOffice = getters.getMotionByIndex(nxtIdx);
+
+            dispatch('setOfficeForVoting', nxtOffice).then(() => {
+                return resolve();
+            });
+
+        }));
+
+    },
+
+    /**
+     * Sets the previous elected office (in stack) as the current motion
+     *
+     * While this is technically operating on motions, the
+     * way we get from one motion to another is very different
+     * for elections. Thus handling this here.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motionId
+     * @returns {Promise<unknown>}
+     */
+    previousOffice({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+
+            let currentIdx = getters.getMotions.indexOf(getters.getActiveMotion);
+            let prevIdx = currentIdx - 1;
+            window.console.log('setting previous office. idx: ', prevIdx);
+
+            if (prevIdx < 0) {
+                return resolve();
+            }
+
+            let prevOffice = getters.getMotionByIndex(prevIdx);
+
+            dispatch('setOfficeForVoting', prevOffice).then(() => {
+                return resolve();
+            });
 
         }));
 
@@ -321,6 +389,37 @@ const actions = {
 
     },
 
+
+    /**
+     * Sets the specified office as the current motion for voting
+     *
+     * While this is technically operating on motions, the
+     * way we get from one motion to another is very different
+     * for elections. Thus handling this here.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion Motion or motion id
+     * @returns {Promise<unknown>}
+     */
+    setOfficeForVoting({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            let motionId = idify(motion);
+
+            window.console.log('setting office id ', motionId);
+            commit('setMotion', motion);
+            // dispatch('setCurrentMotion', {
+            //     meetingId: getters.getActiveMeeting.id,
+            //     motionId: motionId
+            // }).then(() => {
+            dispatch('loadElectionCandidates', motionId).then(() => {
+                return resolve();
+                // });
+            });
+        }));
+
+    },
 
     // updateCandidate({dispatch, commit, getters}, payload) {
     //     let motionId = getters.getActiveMotion.id;

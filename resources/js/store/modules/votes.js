@@ -182,7 +182,8 @@ const actions = {
 
     /**
      * This sends all the selected candidates to the server
-     * and records the vote for the  office
+     * and records the vote for the  office.
+     * If motion is null or undefined, uses current active motion
      * @param dispatch
      * @param commit
      * @param getters
@@ -190,8 +191,9 @@ const actions = {
      * @param candidateId
      * @returns {Promise<unknown>}
      */
-    castElectionVote({dispatch, commit, getters}) {
-        let motionId = getters.getActiveMotion.id;
+    castElectionVote({dispatch, commit, getters}, motion) {
+
+        let motionId = isReadyToRock(motion) ? motion.id : getters.getActiveMotion.id;
 
         let url = routes.election.recordVote(motionId);
 
@@ -234,6 +236,56 @@ const actions = {
 
 
     },
+
+    /**
+     * Sends selections for all offices with selections to the server
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    castAllElectionVotes({dispatch, commit, getters}) {
+        let motions = getters.getMotions;
+
+        return new Promise(((resolve, reject) => {
+
+            _.forEach(motions, (motion) => {
+                dispatch('castElectionVote', motion);
+            })
+
+            // _.forEach(getters.getSelectedCandidatesForMotion, (candidate) => {
+            //     data.candidateIds.push(candidate.id);
+            // });
+            //
+            // let me = this;
+            //
+            // return Vue.axios.post(url, data)
+            //     .then((response) => {
+            //
+            //         console.log(response.data);
+            //
+            //         commit('addReceipt', {
+            //             motionId: motionId,
+            //             receipt: response.data.receipt
+            //         });
+            //
+            //         //Add it to the already voted list
+            //         commit('addVotedUponMotion', motionId);
+            //
+            //         return resolve();
+            //     }).catch(function (error) {
+            //         // error handling
+            //         if (error.response) {
+            //             dispatch('showServerProvidedMessage', error.response.data);
+            //             return reject(error);
+            //         }
+            //     });
+        }));
+
+
+    },
+
 
     unselectCandidate({dispatch, commit, getters}, candidateObject) {
 
@@ -303,14 +355,36 @@ const getters = {
         return state.selectedCandidates;
     },
 
-    getSelectedCandidatesForMotion: (state, getters) => {
-        let motion = getters.getActiveMotion;
+    /**
+     * Returns the candidates selected by the user.
+     *
+     * If motion is null, gets them for the ative motion
+     *
+     * @param state
+     * @param getters
+     * @returns {function(*=): string[]}
+     */
+    getSelectedCandidatesForMotion: (state, getters) => (motion) => {
+        // window.console.log('gc'. motion);
+        motion = isReadyToRock(motion) ? motion : getters.getActiveMotion;
         // window.console.log('taco');
+        // window.console.log('gca', motion);
         return _.filter(getters.getAllSelectedCandidates, (candidate) => {
             return candidate.motion_id === motion.id;
         });
 
     },
+
+    getSelectedCandidatesForActiveMotion: (state, getters) => {
+
+        let motion = getters.getActiveMotion;
+
+        return _.filter(getters.getAllSelectedCandidates, (candidate) => {
+            return candidate.motion_id === motion.id;
+        });
+
+    },
+
 
     showOverSelectionWarning: (state, getters) => {
 
