@@ -62,10 +62,18 @@ export default {
         /**
          * Whether the motion that has been handed to this
          * component is the one globally selected.
+         *
+         * Will not show as selected if the summary card is showing (even if
+         * the given motion is the one currently on top of the stack)
+         *
          * @returns {boolean}
          */
         isSelected: function () {
             if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
+
+            //Do not show as selected if summary card is showing
+            if ( this.$store.getters.isSummarySubmitCardVisible) return false;
+            if ( this.$store.getters.isInstructionsCardVisible) return false;
 
             return this.motion.id === this.selectedMotion.id
         },

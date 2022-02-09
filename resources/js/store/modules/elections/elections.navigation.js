@@ -1,9 +1,19 @@
 import {idify} from "../../../utilities/object.utilities";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import ElectionCard from "../../../components/election/voting/election-card";
+import VotingCompleteCard from "../../../components/election/voter/voting-complete-card";
+import VotingInstructionsCard from "../../../components/election/voter/voting-instructions-card";
+import SummarySubmitCard from "../../../components/election/voter/summary-submit-card";
+
 const state = {
     //things: []
 
-    showSummarySubmitCard: false
+
+    shownCard: 'instructions',
+
+    // showSummarySubmitCard: false,
+
+    // showInstructionsCard: true
 };
 
 const mutations = {
@@ -13,21 +23,40 @@ const mutations = {
     *    }
     */
 
-    showSummarySubmitCard: (state) => {
-        state.showSummarySubmitCard = true;
-
+    setShownCard: (state, cardName) => {
+        state.shownCard = cardName;
     },
 
-    hideSummarySubmitCard: (state) => {
-        state.showSummarySubmitCard = false;
-    }
+    showSummarySubmitCard: (state) => {
+        state.shownCard = 'summary'
+        // state.showSummarySubmitCard = true;
+    },
 
+    // hideSummarySubmitCard: (state) => {
+    //     state.showSummarySubmitCard = false;
+    // },
+
+    showInstructionsCard: (state) => {
+        state.shownCard = 'instructions';
+        // state.showInstructionsCard = true;
+    },
+
+    // hideInstructionsCard: (state) => {
+    //     state.showInstructionsCard = false;
+    // },
+
+    showVotingCard: (state) => {
+    state.shownCard = 'election';
+    },
+
+    showVotingCompleteCard : (state) => {
+    state.shownCard = 'complete';
+    }
 
 };
 
 
 const actions = {
-
 
 
     /**
@@ -145,7 +174,8 @@ const actions = {
 
             dispatch('setOfficeForVoting', prevOffice).then(() => {
                 //the action should hide the summary card but just in case
-                commit('hideSummarySubmitCard');
+                commit('showVotingCard');
+                // commit('hideSummarySubmitCard');
                 return resolve();
             });
 
@@ -161,6 +191,8 @@ const actions = {
      * way we get from one motion to another is very different
      * for elections. Thus handling this here.
      *
+     * This hides the instruction and summary submit cards
+     *
      * @param dispatch
      * @param commit
      * @param getters
@@ -172,7 +204,9 @@ const actions = {
             let motionId = idify(motion);
 
             window.console.log('setting office id ', motionId);
-            commit('hideSummarySubmitCard');
+            commit('showVotingCard');
+            // commit('hideSummarySubmitCard');
+            // commit('hideInstructionsCard');
 
             commit('setMotion', motion);
             // dispatch('setCurrentMotion', {
@@ -208,11 +242,52 @@ const actions = {
  *    getThing: (state, getters) => {}
  */
 const getters = {
-
+    isInstructionsCardVisible: (state) => {
+        return state.shownCard === 'instructions';
+        // return state.showInstructionsCard;
+    },
 
     isSummarySubmitCardVisible: (state) => {
-        return state.showSummarySubmitCard;
+        return state.shownCard === 'summary';
+        // return state.showSummarySubmitCard;
     },
+
+    /**
+     * Returns the master dict of cards
+     * which can be shown on the main election page
+     *
+     * @param state
+     * @returns {any}
+     */
+    getShowableCards: (state) => {
+        return {
+            //Allows user to select candidates
+            'election': ElectionCard,
+            //Tells the user they are not allowed to vote
+            'complete': VotingCompleteCard,
+            //Tells the user how to vote
+            'instructions': VotingInstructionsCard,
+            //User submits their selections
+            'summary': SummarySubmitCard,
+
+        }
+    },
+
+    getShownCard : (state, getters) => {
+        let c = {
+            //Allows user to select candidates
+            'election': ElectionCard,
+            //Tells the user they are not allowed to vote
+            'complete': VotingCompleteCard,
+            //Tells the user how to vote
+            'instructions': VotingInstructionsCard,
+            //User submits their selections
+            'summary': SummarySubmitCard,
+
+        }
+    // let c = getters.getShowableCards;
+    return c[state.shownCard];
+    }
 
 };
 

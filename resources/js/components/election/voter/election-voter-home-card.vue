@@ -10,10 +10,12 @@
                     <office-select-area></office-select-area>
                 </div>
                 <div class="col-md-9">
-                    <voting-complete-card v-if="isVotingComplete"></voting-complete-card>
-                    <summary-submit-card v-else-if="showSummarySubmitCard"></summary-submit-card>
-                    <election-card v-else-if="isOfficeSelected"></election-card>
-                    <voting-instructions-card v-else></voting-instructions-card>
+                    <component v-bind:is="shownCard"></component>
+<!--                    -->
+<!--                    <voting-complete-card v-if="isVotingComplete"></voting-complete-card>-->
+<!--                    <summary-submit-card v-else-if="showSummarySubmitCard"></summary-submit-card>-->
+<!--                    <election-card v-else-if="isOfficeSelected"></election-card>-->
+<!--                    <voting-instructions-card v-else></voting-instructions-card>-->
 
                     </div>
             </div>
@@ -39,6 +41,7 @@ import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import VotingInstructionsCard from "./voting-instructions-card";
 import SummarySubmitCard from "./summary-submit-card";
+import ElectionCard from "../voting/election-card";
 
 /**
  * This will hold the new voter interface
@@ -51,7 +54,19 @@ export default {
 
 
     data: function () {
-        return {}
+        return {
+            // showableCards : {
+            //     //Allows user to select candidates
+            //     'election' : ElectionCard,
+            //     //Tells the user they are not allowed to vote
+            //     'complete' : VotingCompleteCard,
+            //     //Tells the user how to vote
+            //     'instructions' : VotingInstructionsCard,
+            //     //User submits their selections
+            //     'summary' : SummarySubmitCard,
+            //
+            // }
+        }
     },
 
     asyncComputed: {
@@ -59,6 +74,18 @@ export default {
             if (!isReadyToRock(this.meeting)) return ''
             return this.meeting.name;
         },
+
+        /**
+         * Handles all the logic for determining
+         * what card gets shown
+         */
+        shownCard: function(){
+            return this.$store.getters.getShownCard;
+        },
+
+        // showableCards : function (){
+        //     return this.$state.getShowableCards;
+        // },
 
         /**
          * Whether the whole election is on
@@ -86,7 +113,11 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {},
+
+    mounted() {
+        // this.$store.commit('showInstructionsCard');
+    }
 
 }
 </script>

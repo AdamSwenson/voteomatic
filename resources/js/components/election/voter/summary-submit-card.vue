@@ -13,7 +13,7 @@
 
 <script>
 
-import SummaryListing from "./summary-listing";
+import SummaryListing from "../voting/summary-listing";
 import RecordAllSelectionsButton from "../voting/record-all-selections-button";
 import RecordAllSelectionsModal from "../voting/record-all-selections-modal";
 

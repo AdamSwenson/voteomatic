@@ -5,6 +5,7 @@
         </h5>
 
         <div class="list-group list-group-flush">
+            <instructions-row></instructions-row>
             <office-select-row :motion="m" v-for="m in motions" :key="m.id"></office-select-row>
             <summary-select-row></summary-select-row>
         </div>
@@ -29,10 +30,11 @@ import motionObjectMixin from "../../../../mixins/motionObjectMixin";
 import OfficeSelectRow from "./office-select-row";
 import SummarySubmitCard from "../summary-submit-card";
 import SummarySelectRow from "./summary-select-row";
+import InstructionsRow from "./instructions-row";
 
 export default {
     name: "office-select-area",
-    components: {SummarySelectRow, SummarySubmitCard, OfficeSelectRow},
+    components: {InstructionsRow, SummarySelectRow, SummarySubmitCard, OfficeSelectRow},
     props: [],
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 

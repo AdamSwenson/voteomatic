@@ -39,6 +39,8 @@
             <!--            Enable after VOT-60 is complete-->
             <div class="card-body">
                 <write-in-controls></write-in-controls>
+
+                <p class="text-muted">You will confirm and record your selections later.</p>
             </div>
 
 
