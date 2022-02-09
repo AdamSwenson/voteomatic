@@ -71,10 +71,15 @@ export default {
 
         /**
          * These are the fields which should be shown
-         * @returns {boolean}
+         *
+         * dev To be fixed in VOT-141
          */
-        infoFields: function(){
-            if(isReadyToRock(this.meeting)) return this.meeting.candidateFields;
+        infoFields: function () {
+            //dev This should eventually be used see VOT-141
+            // if(isReadyToRock(this.meeting)) return this.meeting.candidateFields;
+            if (!isReadyToRock(this.candidate) || this.candidate.info.length === 0) return []
+
+            return _.keys(this.candidate.info);
         },
 
         candidateInfo: function () {

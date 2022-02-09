@@ -1,9 +1,11 @@
 <template>
     <button
+        class="btn "
         v-bind:class="calculatedStyling"
         data-toggle="modal"
         v-bind:data-target="target"
         v-on:click="handleClick"
+        v-bind:aria-disabled="ariaDisabled"
     >{{label}}</button>
 
 
@@ -23,9 +25,11 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
  * Children must define (data or property):
  *      modalId
  *      label
+ *      ariaDisabled
  *
  * Children may define (data or property):
  *      styling
+ *
  */
 export default {
     name: "modal-button-parent",
@@ -36,13 +40,16 @@ export default {
 
     computed: {
         calculatedStyling: function(){
-            // if(isReadyToRock(this.styling)) return this.styling;
-            return "btn btn-primary "
+            if(isReadyToRock(this.styling)) return this.styling;
+
+            return " btn-primary "
         },
 
         target : function(){
             return '#' + this.modalId;
-        }
+        },
+
+
 
         // label : function(){
         // },

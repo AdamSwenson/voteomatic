@@ -41,7 +41,15 @@ export default {
             return this.candidate.getInfoField(this.fieldName);
         },
 
+        /**
+         * Whether to display the particular item.
+         * dev This should be sorted out in VOT-141
+         *
+         * @returns {boolean}
+         */
         isShown: function () {
+           return true;
+           //dev Enable in VOT-141
             if (!isReadyToRock(this.candidate) || !isReadyToRock(this.fieldName)) return false;
 
             return _.includes(this.meeting.candidateFields, this.fieldName);

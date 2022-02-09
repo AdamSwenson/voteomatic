@@ -27,24 +27,40 @@
                 ></candidate-row>
 
                 <!--                Enable after VOT-60 is complete-->
-                                <candidate-row v-if="writeInCandidates.length > 0"
-                                             v-for="candidate in writeInCandidates"
-                                             :candidate="candidate"
-                                             :key="candidate.id"
-                                ></candidate-row>
+                <candidate-row v-if="writeInCandidates.length > 0"
+                               v-for="candidate in writeInCandidates"
+                               :candidate="candidate"
+                               :key="candidate.id"
+                ></candidate-row>
                 <overselection-warning></overselection-warning>
 
             </div>
 
             <!--            Enable after VOT-60 is complete-->
-                        <div class="card-body">
-                            <write-in-controls></write-in-controls>
-                        </div>
+            <div class="card-body">
+                <write-in-controls></write-in-controls>
+            </div>
 
 
             <div class="card-footer">
-                <cast-ballot-button></cast-ballot-button>
+                <div class="row">
+                    <div class="col-md-4">
+<!--                        <span class="text-left mr-5">-->
+                            <button class="btn btn-info btn-block" v-on:click="handlePrevious">Previous office</button>
+<!--                        </span>-->
+                        </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+<!--                        <span class="text-right ml-3">-->
+                            <button class="btn btn-success btn-block" v-on:click="handleNext">Next office</button>
+<!--                        </span>-->
+                    </div>
+                </div>
+
             </div>
+            <!--            <div class="card-footer">-->
+            <!--                <cast-ballot-button></cast-ballot-button>-->
+            <!--            </div>-->
 
         </div>
 
@@ -201,7 +217,15 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {
+        handleNext: function () {
+            this.$store.dispatch('nextOfficeInStack');
+        },
+        handlePrevious: function () {
+            this.$store.dispatch('previousOffice');
+        }
+
+    }
     ,
 
     mounted() {

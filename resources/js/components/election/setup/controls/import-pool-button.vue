@@ -11,7 +11,8 @@ export default {
     data: function () {
         return {
             label: 'Import pool from file',
-            modalId: 'import-pool-modal'
+            modalId: 'import-pool-modal',
+            ariaDisabled: false
         }
     },
 

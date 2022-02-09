@@ -25,7 +25,7 @@ export default {
     asyncComputed: {
 
         showOverSelectionWarning: function () {
-            return this.$store.getters.showOverSelectionWarning;
+            return this.$store.getters.showOverSelectionWarningForActiveMotion;
         },
 
         ariaDisabled: function () {

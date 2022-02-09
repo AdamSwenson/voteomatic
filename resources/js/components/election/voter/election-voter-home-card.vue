@@ -1,8 +1,8 @@
 <template>
     <div class="election-home-card card">
-        <div class="card-header">
-            <h3 class="header-text">{{electionName}}</h3>
-        </div>
+<!--        <div class="card-header">-->
+<!--            <h3 class="card-header">{{electionName}}</h3>-->
+<!--        </div>-->
 
         <div class="card-body">
             <div class="row">
@@ -11,13 +11,14 @@
                 </div>
                 <div class="col-md-9">
                     <voting-complete-card v-if="isVotingComplete"></voting-complete-card>
+                    <summary-submit-card v-else-if="showSummarySubmitCard"></summary-submit-card>
                     <election-card v-else-if="isOfficeSelected"></election-card>
                     <voting-instructions-card v-else></voting-instructions-card>
+
                     </div>
             </div>
         </div>
 
-        <summary-submit-card></summary-submit-card>
         <!--    <div class="card-body">-->
 
         <!--        <p class="card-text">All voting happens here. If voting is complete, displays a thank you</p>-->
@@ -30,7 +31,7 @@
 <script>
 
 
-import OfficeSelectArea from "./office-select-area";
+import OfficeSelectArea from "./office-selector/office-select-area";
 import VotingCompleteCard from "./voting-complete-card";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import MeetingMixin from "../../../mixins/meetingMixin";
@@ -75,6 +76,10 @@ export default {
          */
         isOfficeSelected: function(){
             return isReadyToRock(this.motion);
+        },
+
+        showSummarySubmitCard: function(){
+            return this.$store.getters.isSummarySubmitCardVisible;
         }
     },
 

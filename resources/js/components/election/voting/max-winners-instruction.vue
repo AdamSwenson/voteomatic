@@ -34,7 +34,7 @@ export default {
         },
 
         showInstructions: function () {
-            return isReadyToRock(this.maxWinners) && ! this.$store.getters.showOverSelectionWarning;
+            return isReadyToRock(this.maxWinners) && ! this.$store.getters.showOverSelectionWarningForActiveMotion;
         }
     },
 

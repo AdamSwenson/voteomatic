@@ -1,16 +1,20 @@
 <template>
-<div class="summary-listing card-body">
-<h4>{{officeName}}</h4>
+    <div class="summary-listing card-body">
+        <h4>{{ officeName }}</h4>
 
-    <div class="ml-3">
-        <ul>
-            <li v-for="c in selectedCandidates" :key="c.id">{{c.nameAndInfo}}</li>
-        </ul>
+        <div class="ml-3">
+            <ul>
+                <li v-for="c in selectedCandidates"
+                    :key="c.id"
+                    v-bind:class="styling"
+                >{{ c.nameAndInfo }}
+                </li>
+            </ul>
 
+
+        </div>
 
     </div>
-
-</div>
 </template>
 
 <script>
@@ -28,15 +32,21 @@ export default {
     },
 
     asyncComputed: {
-        officeName: function(){
-            if(!isReadyToRock(this.motion)) return '';
+        officeName: function () {
+            if (!isReadyToRock(this.motion)) return '';
             return this.motion.content;
         },
 
-        selectedCandidates: function(){
-            if(!isReadyToRock(this.motion)) return [];
+        selectedCandidates: function () {
+            if (!isReadyToRock(this.motion)) return [];
 
             return this.$store.getters.getSelectedCandidatesForMotion(this.motion)
+        },
+
+        styling : function(){
+            if(!isReadyToRock(this.motion)) return '';
+
+            if(this.$store.getters.showOverSelectionWarningForMotion(this.motion)) return ' text-danger '
         }
     },
 
