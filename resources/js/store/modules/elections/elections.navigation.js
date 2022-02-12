@@ -213,10 +213,11 @@ const actions = {
             //     meetingId: getters.getActiveMeeting.id,
             //     motionId: motionId
             // }).then(() => {
-            dispatch('loadElectionCandidates', motionId).then(() => {
+
+            // dispatch('loadElectionCandidates', motionId).then(() => {
                 return resolve();
                 // });
-            });
+            // });
         }));
 
     },

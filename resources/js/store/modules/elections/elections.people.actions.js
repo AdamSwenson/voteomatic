@@ -236,7 +236,7 @@ const actions ={
 
             return Vue.axios.get(url)
                 .then((response) => {
-                    commit('clearCandidates');
+                    // commit('clearCandidates');
                     _.forEach(response.data, (d) => {
 
                         window.console.log('loadElectionCandidates', d);
@@ -256,6 +256,20 @@ const actions ={
                         dispatch('showServerProvidedMessage', error.response.data);
                     }
                 });
+
+        }));
+
+    },
+
+
+    loadAllOfficeCandidates({dispatch, commit, getters}) {
+let motions = getters.getMotions;
+
+        return new Promise(((resolve, reject) => {
+            _.forEach(motions, (motion) => {
+            dispatch('loadElectionCandidates', motion.id);
+            });
+            return resolve();
 
         }));
 

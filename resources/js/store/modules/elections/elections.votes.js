@@ -254,6 +254,23 @@ const getters = {
 
     },
 
+    /**
+     * Returns true if the candidate is amongst those
+     * the voter has selected for the currently active office
+     *
+     * @param state
+     * @param getters
+     * @returns boolean
+     */
+    isCandidateSelectedInActiveMotion: (state, getters) => (candidate) => {
+        let selected = getters.getSelectedCandidatesForActiveMotion;
+
+        let f = _.filter(selected, (s) => {
+            if (s.isIdentical(candidate)) return s
+        });
+        return f.length > 0;
+    },
+
     showOverSelectionWarningForActiveMotion: (state, getters) => {
         // window.console.log('osw in ', motion);
         let motion = getters.getActiveMotion;

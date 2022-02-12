@@ -116,6 +116,7 @@ export default {
     methods: {},
 
     mounted() {
+        this.$store.dispatch('loadAllOfficeCandidates');
         // this.$store.commit('showInstructionsCard');
     }
 

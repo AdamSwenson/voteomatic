@@ -48,7 +48,9 @@
                 <div class="row">
                     <div class="col-md-4">
 <!--                        <span class="text-left mr-5">-->
-                            <button class="btn btn-info btn-block" v-on:click="handlePrevious">Previous office</button>
+                            <button class="btn  btn-block"
+                                v-if="showPreviousButton"
+                                    v-on:click="handlePrevious">Previous office</button>
 <!--                        </span>-->
                         </div>
                     <div class="col-md-4"></div>
@@ -214,6 +216,15 @@ export default {
                 if (isReadyToRock(this.motion)) return this.motion.content;
             },
             default: ''
+        },
+
+        /**
+         * We make it look disabled when on the first in
+         * the stack
+         */
+        showPreviousButton : function(){
+            return this.$store.getters.getMotions.indexOf(this.$store.getters.getActiveMotion) > 0
+
         }
     },
 
@@ -233,10 +244,10 @@ export default {
     mounted() {
         let me = this;
 
-        me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-
-            window.console.log('election-card', 'isReady', 159, me.isReady);
-        });
+        // me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+        //
+        //     window.console.log('election-card', 'isReady', 159, me.isReady);
+        // });
 //
 // //todo DEV ONLY
 //         let me = this;
