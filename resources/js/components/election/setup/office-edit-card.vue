@@ -17,6 +17,16 @@
                 <input type="number" class="form-control" id="office-max-winners" v-model="maxWinners">
             </div>
 
+            <label for="office-description">Description / instruction</label>
+            <div class="input-group mb-3">
+                <textarea class="form-control" id="office-description"
+                          placeholder="Optional"
+                          v-model="description"
+                />
+
+            </div>
+
+
             <div class="row">
                 <div class="col-lg-10">
                     <p class="text-muted">Your entries are saved as you type. You don't need to click anything when you
@@ -97,6 +107,23 @@ export default {
     },
 
     computed: {
+
+        description: {
+            get: function () {
+                if (isReadyToRock(this.motion)) return this.motion.description;
+                // return ''
+            },
+
+            set: function (v) {
+                // window.console.log('description, v);
+                let pl = Payload.factory({
+                    updateProp: 'description',
+                    updateVal: v
+                });
+                this.$store.dispatch('updateMotion', pl);
+            }
+
+        },
 
         maxWinners: {
             get: function () {

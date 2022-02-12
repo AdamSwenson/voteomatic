@@ -193,7 +193,7 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
 
                 'requires' => 1.0,
                 'type' => 'election',
@@ -215,7 +215,9 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
 
                 'requires' => 1.0,
                 'type' => 'election',

@@ -13,6 +13,11 @@
             </div>
 
             <max-winners-instruction></max-winners-instruction>
+
+            <div class="card-body" v-if="showDescription">
+                <p class="card-text ml-4 mr-4">{{motion.description}}</p>
+            </div>
+
             <overselection-warning></overselection-warning>
 
             <!--        <div class="card-body instructions" v-if="instructions.length > 0">-->
@@ -184,16 +189,16 @@ export default {
 
         },
 
-        instructions: {
-            get: function () {
-                if (isReadyToRock(this.motion)) return this.motion.description;
-
-                return ''
-            },
-
-            default: ''
-
-        },
+        // instructions: {
+        //     get: function () {
+        //         if (isReadyToRock(this.motion)) return this.motion.description;
+        //
+        //         return ''
+        //     },
+        //
+        //     default: ''
+        //
+        // },
 
         isComplete: function () {
             return this.$store.getters.isElectionComplete;
@@ -225,8 +230,12 @@ export default {
         showPreviousButton : function(){
             return this.$store.getters.getMotions.indexOf(this.$store.getters.getActiveMotion) > 0
 
+        },
+
+        showDescription : function(){
+            return isReadyToRock(this.motion, 'description') && this.motion.description.length > 0;
         }
-    },
+        },
 
     computed: {},
 
