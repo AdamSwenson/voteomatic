@@ -3,7 +3,7 @@
 
         <summary-listing :motion="m" v-for="m in motions" :key="m.id"></summary-listing>
 
-        <div class="card-footer">
+        <div class="card-footer" >
             <record-all-selections-button></record-all-selections-button>
             <record-all-selections-modal></record-all-selections-modal>
         </div>
@@ -16,18 +16,23 @@
 import SummaryListing from "../voting/summary-listing";
 import RecordAllSelectionsButton from "../voting/record-all-selections-button";
 import RecordAllSelectionsModal from "../voting/record-all-selections-modal";
+import CopyReceiptsButton from "../../vote-verification/copy-receipts-button";
+import DownloadReceiptsButton from "../../vote-verification/download-receipts-button";
+import ReceiptListArea from "../../vote-verification/receipt-list-area";
 
 /**
  * This is where the votes will be reviewed and submitted
  */
 export default {
     name: "summary-submit-card",
-    components: {RecordAllSelectionsModal, RecordAllSelectionsButton, SummaryListing},
+    components: {
+        ReceiptListArea,
+        DownloadReceiptsButton,
+        CopyReceiptsButton, RecordAllSelectionsModal, RecordAllSelectionsButton, SummaryListing
+    },
     props: [],
 
     mixins: [],
-
-
 
 
     data: function () {
@@ -37,7 +42,8 @@ export default {
     asyncComputed: {
         motions: function () {
             return this.$store.getters.getMotions;
-        }
+        },
+
     },
 
     computed: {},

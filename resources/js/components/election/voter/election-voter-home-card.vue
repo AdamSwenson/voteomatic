@@ -6,7 +6,7 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3" v-if="! isVotingComplete">
                     <office-select-area></office-select-area>
                 </div>
                 <div class="col-md-9">
@@ -88,12 +88,11 @@ export default {
         // },
 
         /**
-         * Whether the whole election is on
-         *
-         * todo THIS DOES NOT WORK YET
+         * Returns true if the election has closed or if the
+         * user has voted
          */
         isVotingComplete: function(){
-                return this.$store.getters.isElectionComplete;
+                return this.$store.getters.isCompleteCardShown || this.$store.getters.isElectionComplete;
 
         },
 

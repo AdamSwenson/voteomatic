@@ -253,6 +253,9 @@ const getters = {
         // return state.showSummarySubmitCard;
     },
 
+    isCompleteCardShown: (state) => {
+    return state.shownCard === 'complete';
+        },
     /**
      * Returns the master dict of cards
      * which can be shown on the main election page
@@ -274,16 +277,28 @@ const getters = {
         }
     },
 
+
+
+    /**
+     * Returns the appropriate component.
+     * NB, actually returns component not just name
+     *
+     * @param state
+     * @param getters
+     * @returns {*}
+     */
     getShownCard : (state, getters) => {
         let c = {
             //Allows user to select candidates
             'election': ElectionCard,
-            //Tells the user they are not allowed to vote
+            //Tells the user they are not allowed to vote. Allows to see receipts
+            //if available
             'complete': VotingCompleteCard,
             //Tells the user how to vote
             'instructions': VotingInstructionsCard,
             //User submits their selections
             'summary': SummarySubmitCard,
+
 
         }
     // let c = getters.getShowableCards;

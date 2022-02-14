@@ -46,7 +46,7 @@
 
                 <div class="alert alert-success" role="alert" v-if="showGood">
                     <h4 class="alert-heading">This receipt is valid</h4>
-                    <p>The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
+                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
                     <p>Receipt : {{ receipt }}</p>
 
                     <p class="text-right">
@@ -93,10 +93,14 @@ import Vote from '../../models/Vote';
 import ReceiptListArea from "../vote-verification/receipt-list-area";
 import CopyButton from "../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../vote-verification/download-receipts-button";
+import ModeMixin from "../../mixins/modeMixin";
 
 export default {
     name: "vote-verification-page",
     components: {DownloadReceiptsButton, CopyButton, ReceiptListArea},
+
+    mixins : [ModeMixin],
+
     data: function () {
         return {
             showBad: false,
@@ -147,7 +151,15 @@ export default {
                     .then(function (response) {
                         if (!_.isUndefined(response.data.id)) {
 
-                            me.vote = new Vote(response.data.is_yay);
+                            if(me.isElection){
+                                me.vote = new Vote({candidateId : response.data.candidate_id});
+
+                            }else{
+                                //The is_yay prop being undefined will report the
+                                //receipt as invalid. The error will be caught below
+                                me.vote = new Vote({isYay : response.data.is_yay});
+                            }
+
                             me.showGood = true;
 
                         } else {

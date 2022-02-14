@@ -1,6 +1,7 @@
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import * as routes from "../../../routes";
 import {idify} from "../../../utilities/object.utilities";
+import Vote from "../../../models/Vote";
 
 const state = {
 
@@ -53,7 +54,7 @@ const actions = {
     castElectionVote({dispatch, commit, getters}, motion) {
 
         let motionId = isReadyToRock(motion) ? motion.id : getters.getActiveMotion.id;
-
+        window.console.log('saving votes for motion ', motionId);
         let url = routes.election.recordVote(motionId);
 
         //These are required by the route
@@ -64,7 +65,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            _.forEach(getters.getSelectedCandidatesForMotion, (candidate) => {
+            _.forEach(getters.getSelectedCandidatesForMotion(motion), (candidate) => {
                 data.candidateIds.push(candidate.id);
             });
 
@@ -75,13 +76,32 @@ const actions = {
 
                     console.log(response.data);
 
-                    commit('addReceipt', {
-                        motionId: motionId,
-                        receipt: response.data.receipt
-                    });
+                    // commit('addReceipt', {
+                    //     motionId: motionId,
+                    //     receipt: response.data.receipt
+                    // });
+                    //
+                    // //Add it to the already voted list
+                    // commit('addVotedUponMotion', motionId);
 
-                    //Add it to the already voted list
-                    commit('addVotedUponMotion', motionId);
+                    let voteObject = new Vote({motionId : motionId,
+                    id:  response.data.id,
+                        receipt : response.data.receipt})
+                    // //NB, this is kosher since we haven't saved the object to state yet.
+                    // voteObject.receipt = response.data.receipt;
+                    // voteObject.id = response.data.id;
+
+                    //Add the motion to the list of motions the user has voted upon
+                    commit('addVotedUponMotion', voteObject.motionId);
+
+                    //Store the receipt for the user. These are done separately since
+                    //the voted upon list is used to restrict what a user may do and
+                    //is populated every time the page loads.
+                    //The castVote is used to store receipts in a store which
+                    // will empty every time the page loads
+                    commit('addCastVote', voteObject);
+
+                    resolve();
 
                     return resolve();
                 }).catch(function (error) {
@@ -112,6 +132,11 @@ const actions = {
             _.forEach(motions, (motion) => {
                 dispatch('castElectionVote', motion);
             })
+
+            //Prevent from accessing votes and show receipts if present
+            commit('showVotingCompleteCard');
+
+            resolve();
 
             // _.forEach(getters.getSelectedCandidatesForMotion, (candidate) => {
             //     data.candidateIds.push(candidate.id);

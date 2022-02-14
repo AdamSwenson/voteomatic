@@ -72,6 +72,10 @@ class ElectionVoteControllerTest extends TestCase
 
         //check
         $response->assertSuccessful();
+        $this->assertDatabaseHas('votes', [
+            'motion_id' => $this->office->id,
+            'candidate_id' => $this->requestData['candidateIds'][0]
+        ]);
     }
 
     /** @test */
