@@ -34,7 +34,7 @@
         </div>
 
 
-        <div class="card-footer">
+        <div class="card-body">
             <div class="row">
                 <div class="col">
                     <button type="button"
@@ -60,6 +60,8 @@
 
         </div>
 
+        <navigation-footer></navigation-footer>
+
     </div>
 </template>
 
@@ -72,10 +74,11 @@ import ModeMixin from "../../../mixins/modeMixin";
 import MotionTextDisplay from "../../motions/text-display/motion-text-display";
 import RequiredVote from "../../text-display/required-vote";
 import RequiredVoteBadge from "../../motions/badges/required-vote-badge";
+import NavigationFooter from "../voter/navigation/navigation-footer";
 
 export default {
     name: "proposition-vote-card",
-    components: {RequiredVoteBadge, RequiredVote, MotionTextDisplay},
+    components: {NavigationFooter, RequiredVoteBadge, RequiredVote, MotionTextDisplay},
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin, ModeMixin],
@@ -91,7 +94,7 @@ export default {
 
         cardTitle: {
             get: function () {
-                if (!isReadyToRock(this.motion)) return ''
+                if (!isReadyToRock(this.motion, 'info') || !isReadyToRock(this.motion.info.name)) return ''
 
                 return this.motion.info.name;
             },

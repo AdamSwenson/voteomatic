@@ -179,7 +179,7 @@ const actions = {
 
             dispatch('setOfficeForVoting', prevOffice).then(() => {
                 //the action should hide the summary card but just in case
-                commit('showVotingCard');
+                // commit('showVotingCard');
                 // commit('hideSummarySubmitCard');
                 return resolve();
             });

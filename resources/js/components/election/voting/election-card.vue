@@ -48,25 +48,26 @@
                 <p class="text-muted">You will confirm and record your selections later.</p>
             </div>
 
+            <navigation-footer></navigation-footer>
 
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-md-4">
-<!--                        <span class="text-left mr-5">-->
-                            <button class="btn  btn-block"
-                                v-if="showPreviousButton"
-                                    v-on:click="handlePrevious">Previous office</button>
-<!--                        </span>-->
-                        </div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-<!--                        <span class="text-right ml-3">-->
-                            <button class="btn btn-success btn-block" v-on:click="handleNext">Next office</button>
-<!--                        </span>-->
-                    </div>
-                </div>
+<!--            <div class="card-footer">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4">-->
+<!--&lt;!&ndash;                        <span class="text-left mr-5">&ndash;&gt;-->
+<!--                            <button class="btn  btn-block"-->
+<!--                                v-if="showPreviousButton"-->
+<!--                                    v-on:click="handlePrevious">Previous office</button>-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    <div class="col-md-4"></div>-->
+<!--                    <div class="col-md-4">-->
+<!--&lt;!&ndash;                        <span class="text-right ml-3">&ndash;&gt;-->
+<!--                            <button class="btn btn-success btn-block" v-on:click="handleNext">Next office</button>-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
+<!--            </div>-->
             <!--            <div class="card-footer">-->
             <!--                <cast-ballot-button></cast-ballot-button>-->
             <!--            </div>-->
@@ -97,10 +98,12 @@ import WriteinRow from "../../deprecated/writein-row";
 import WriteInControls from "../write-in/write-in-controls";
 import ElectionResultsCard from "../results/election-results-card";
 import ModeMixin from "../../../mixins/modeMixin";
+import NavigationFooter from "../voter/navigation/navigation-footer";
 
 export default {
     name: "election-card",
     components: {
+        NavigationFooter,
         ElectionResultsCard,
         WriteInControls,
         WriteinRow, MaxWinnersInstruction, OverselectionWarning, CastBallotButton, CandidateRow

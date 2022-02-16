@@ -13,7 +13,6 @@
                 others. However, the past votes cannot be altered.</p>
 
 
-
             <p class="card-text">
                 <button class="btn btn-lg btn-success" v-on:click="handleStart">Start voting</button>
             </p>
