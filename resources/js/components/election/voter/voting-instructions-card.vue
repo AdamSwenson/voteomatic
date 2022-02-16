@@ -4,7 +4,7 @@
         <div class="card-header">Instructions</div>
 
         <div class="card-body" >
-            <p class="card-text">Instructions here. </p>
+            <p class="card-text"> TODO Instructions here. </p>
 
             <p class="card-text">If you refresh your browser before recording your selections,
                 the selections will be lost. </p>
@@ -12,7 +12,7 @@
             <p class="card-text">You may record some selections and return later to record
                 others. However, the past votes cannot be altered.</p>
 
-            <p class="card-text">Click an office to start</p>
+
 
             <p class="card-text">
                 <button class="btn btn-lg btn-success" v-on:click="handleStart">Start voting</button>

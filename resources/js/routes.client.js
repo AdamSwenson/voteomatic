@@ -16,8 +16,12 @@ import eventSetupCard from "./components/main/chair/event-setup-card";
 import voteCard from "./components/main/vote-card";
 
 import electionVoterHomeCard from './components/election/voter/election-voter-home-card';
+import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
 
 Vue.component('ballot-setup-card', ballotSetupCard);
+
+Vue.component('proposition-setup-card', propositionSetupCard);
+
 // Vue.component('election-card', electionCard);
 // Vue.component('election-setup-card', electionSetupCard);
 Vue.component(('event-setup-card', eventSetupCard));
@@ -92,6 +96,17 @@ export const routes = [
         props: true,
         // adminOnly: true,
 
+        adminOnly: false
+    },
+
+    {
+        name: 'dev-props',
+        path: '/dev-props',
+        icon: "fa fa-bar-chart",
+        label: 'dev Proposition',
+        components: {main: propositionSetupCard},
+        props: true,
+        // adminOnly: true,
         adminOnly: false
     },
 

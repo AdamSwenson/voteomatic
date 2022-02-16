@@ -21,6 +21,11 @@ class Motion extends Model
         'content',
         'description',
         'debatable',
+
+        /** JSON field for storing stuff needed by different forms of motion */
+        'info',
+        'info->propositionName',
+
         'is_complete',
         'is_current',
         'is_in_order',
@@ -46,11 +51,14 @@ class Motion extends Model
     protected $motionTypes = [
         'amendment',
         'amendment-secondary',
+        /** An office voted upon during an election */
         'election',
         'main',
         'privileged',
         'procedural-main',
         'procedural-subsidiary',
+        /** A proposal voted upon during an election */
+        'proposition',
         'incidental'
     ];
 
@@ -84,6 +92,7 @@ class Motion extends Model
 
 
     protected $casts = [
+        'info' => 'array',
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',

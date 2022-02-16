@@ -12,6 +12,7 @@ export default class Motion extends IModel {
     constructor({id=null, content=null, description=null,
                     requires=0.5,
                     type=null,
+        info=null,
                     is_complete=null,
                     is_voting_allowed=null,
                     is_resolution=null,
@@ -22,6 +23,7 @@ export default class Motion extends IModel {
                     max_winners=null}) {
         super();
         this.id = id;
+        this.info = info;
 
         //todo hack because seem to be having trouble typecasting to boolean when get from server
         this.is_resolution =  is_resolution === 1 ? true : is_resolution;

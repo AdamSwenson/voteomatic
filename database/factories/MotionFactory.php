@@ -203,6 +203,29 @@ class MotionFactory extends Factory
         });
     }
 
+    public function proposition()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'info->name' => $this->faker->company,
+
+                /** The office being voted upon */
+                'content' => $this->faker->realText,
+
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
+
+                'requires' => 0.5,
+                'type' => 'proposition',
+                'is_resolution' => true,
+
+//                'max_winners' => 1,
+                'seconded' => true,
+            ];
+        });
+
+    }
 
     /**
      * A motion used in an election which does not specify number of winners

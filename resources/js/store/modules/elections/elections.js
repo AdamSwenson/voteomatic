@@ -528,13 +528,32 @@ const getters = {
     //
     // },
 
-    getElectionOffices: (state, getters) => (election) => {
+    /**
+     * Returns the subset of motions for the current
+     * election which represent office elections.
+     * @param state
+     * @param getters
+     * @returns {string[]}
+     */
+    getElectionOffices: (state, getters) => {
         let motions = getters.getMotions;
         return _.filter(motions, (m) => {
-
-
+            return m.type !== 'proposition';
         });
+    },
 
+    /**
+     * Returns the subset of motions for the current election
+     * which represent propositions
+     * @param state
+     * @param getters
+     * @returns {string[]}
+     */
+    getElectionPropositions: (state, getters) => {
+        let motions = getters.getMotions;
+        return _.filter(motions, (m) => {
+            return m.type === 'proposition';
+        });
     },
 
 

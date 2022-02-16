@@ -4,6 +4,7 @@ import ElectionCard from "../../../components/election/voting/election-card";
 import VotingCompleteCard from "../../../components/election/voter/voting-complete-card";
 import VotingInstructionsCard from "../../../components/election/voter/voting-instructions-card";
 import SummarySubmitCard from "../../../components/election/voter/summary-submit-card";
+import PropositionVoteCard from "../../../components/election/voting/proposition-vote-card";
 
 const state = {
     //things: []
@@ -44,6 +45,10 @@ const mutations = {
     // hideInstructionsCard: (state) => {
     //     state.showInstructionsCard = false;
     // },
+
+    showPropositionVoteCard : (state) => {
+   state.shownCard = 'proposition';
+    },
 
     showVotingCard: (state) => {
     state.shownCard = 'election';
@@ -204,7 +209,12 @@ const actions = {
             let motionId = idify(motion);
 
             window.console.log('setting office id ', motionId);
-            commit('showVotingCard');
+
+            if(motion.type === 'proposition'){
+                commit('showPropositionVoteCard');
+            }else{
+                commit('showVotingCard');
+            }
             // commit('hideSummarySubmitCard');
             // commit('hideInstructionsCard');
 
@@ -271,6 +281,8 @@ const getters = {
             'complete': VotingCompleteCard,
             //Tells the user how to vote
             'instructions': VotingInstructionsCard,
+            //Voting on a proposition
+            'proposition' : PropositionVoteCard,
             //User submits their selections
             'summary': SummarySubmitCard,
 
@@ -296,12 +308,12 @@ const getters = {
             'complete': VotingCompleteCard,
             //Tells the user how to vote
             'instructions': VotingInstructionsCard,
+            //Voting on a proposition
+            'proposition' : PropositionVoteCard,
             //User submits their selections
             'summary': SummarySubmitCard,
-
-
         }
-    // let c = getters.getShowableCards;
+
     return c[state.shownCard];
     }
 

@@ -10,6 +10,13 @@ const state = {
 
     writeInCandidates: [],
 
+    /**
+     * Holds vote objects representing the user's selections.
+     * We use a dictionary since there can only be one vote
+     * per proposition
+     */
+    propositionVotes: {}
+
 
 };
 
@@ -29,6 +36,15 @@ const mutations = {
         // });
     },
 
+    addPropositionVote: (state, voteObject) => {
+        state.propositionVotes[voteObject.motionId] = voteObject;
+    },
+
+    removePropositionVote: (state, motion) => {
+        let motionId = idify(motion);
+        state.propositionVotes[motionId] = null;
+
+    },
 
     addWriteIn: (state, candidateObject) => {
         state.writeInCandidates.push(candidateObject);
@@ -43,6 +59,9 @@ const actions = {
     /**
      * This sends all the selected candidates to the server
      * and records the vote for the  office.
+     *
+     * This does not operate on propositions
+     *
      * If motion is null or undefined, uses current active motion
      * @param dispatch
      * @param commit
@@ -84,9 +103,11 @@ const actions = {
                     // //Add it to the already voted list
                     // commit('addVotedUponMotion', motionId);
 
-                    let voteObject = new Vote({motionId : motionId,
-                    id:  response.data.id,
-                        receipt : response.data.receipt})
+                    let voteObject = new Vote({
+                        motionId: motionId,
+                        id: response.data.id,
+                        receipt: response.data.receipt
+                    })
                     // //NB, this is kosher since we haven't saved the object to state yet.
                     // voteObject.receipt = response.data.receipt;
                     // voteObject.id = response.data.id;
@@ -113,11 +134,11 @@ const actions = {
                 });
         }));
 
-
     },
 
     /**
-     * Sends selections for all offices with selections to the server
+     * Sends selections for all offices and all propositions
+     * to the server
      *
      * @param dispatch
      * @param commit
@@ -125,13 +146,24 @@ const actions = {
      * @returns {Promise<unknown>}
      */
     castAllElectionVotes({dispatch, commit, getters}) {
-        let motions = getters.getMotions;
+        // let offices = getters.getMotions;
 
         return new Promise(((resolve, reject) => {
-
-            _.forEach(motions, (motion) => {
+            let offices = getters.getElectionOffices;
+            _.forEach(offices, (motion) => {
                 dispatch('castElectionVote', motion);
-            })
+            });
+
+            let propositions = getters.getElectionPropositions;
+            _.forEach(propositions, (motion) => {
+                let voteObj = getters.getPropositionVoteForMotion(motion);
+
+                //Doing this in VOT-126 so that can use the OG castMotionVote
+                // which assumes the vote object hasn't been stored to state yet.
+                let voteObj2 = new Vote(voteObj);
+                window.console.log('recording ', voteObj2);
+                dispatch('castMotionVote', voteObj2);
+            });
 
             //Prevent from accessing votes and show receipts if present
             commit('showVotingCompleteCard');
@@ -194,7 +226,17 @@ const actions = {
             resolve();
 
         }));
+    },
+
+    storePropositionVote({dispatch, commit, getters}, voteObject) {
+        return new Promise(((resolve, reject) => {
+
+            commit('addPropositionVote', voteObject);
+            resolve();
+
+        }));
     }
+
 
 };
 
@@ -243,6 +285,11 @@ const getters = {
             return motion.max_winners;
         }
 
+    },
+
+    getPropositionVoteForMotion: (state, getters) => (motion) => {
+        let motionId = idify(motion);
+        return state.propositionVotes[motionId];
     },
 
     getAllSelectedCandidates: (state) => {

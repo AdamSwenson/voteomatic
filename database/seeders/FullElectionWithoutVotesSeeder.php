@@ -42,6 +42,12 @@ class FullElectionWithoutVotesSeeder extends Seeder
 
         }
 
+        $m2 = Motion::factory()
+            ->proposition()
+            ->create([
+                'meeting_id' => $election->id,
+            ]);
+
         $this->command->line("\n Election with no votes: {$election->id}");
 
     }

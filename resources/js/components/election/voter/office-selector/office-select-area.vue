@@ -6,7 +6,8 @@
 
         <div class="list-group list-group-flush">
             <instructions-row></instructions-row>
-            <office-select-row :motion="m" v-for="m in motions" :key="m.id"></office-select-row>
+            <office-select-row :motion="m" v-for="m in offices" :key="m.id"></office-select-row>
+           <proposition-select-row :motion="p" v-for="p in propositions" :key="p.id"></proposition-select-row>
             <summary-select-row></summary-select-row>
         </div>
     </div>
@@ -31,10 +32,11 @@ import OfficeSelectRow from "./office-select-row";
 import SummarySubmitCard from "../summary-submit-card";
 import SummarySelectRow from "./summary-select-row";
 import InstructionsRow from "./instructions-row";
+import PropositionSelectRow from "./proposition-select-row";
 
 export default {
     name: "office-select-area",
-    components: {InstructionsRow, SummarySelectRow, SummarySubmitCard, OfficeSelectRow},
+    components: {PropositionSelectRow, InstructionsRow, SummarySelectRow, SummarySubmitCard, OfficeSelectRow},
     props: [],
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
@@ -44,6 +46,38 @@ export default {
     },
 
     asyncComputed: {
+        offices : function(){
+
+            let m = this.$store.getters.getStoredMotions;
+            if (_.isUndefined(m)) return [];
+
+            m = _.filter(m, (o) => {
+            return o.type !== 'proposition';
+            });
+
+            m = _.sortBy(m, ['id']);
+            // m = _.reverse(m);
+
+            return m;
+
+        },
+
+        propositions : function(){
+
+            let m = this.$store.getters.getStoredMotions;
+            if (_.isUndefined(m)) return [];
+
+            m = _.filter(m, (o) => {
+                return o.type === 'proposition';
+            });
+
+            m = _.sortBy(m, ['id']);
+            // m = _.reverse(m);
+
+            return m;
+
+        },
+
         motions: function () {
             let m = this.$store.getters.getStoredMotions;
             if (_.isUndefined(m)) return [];

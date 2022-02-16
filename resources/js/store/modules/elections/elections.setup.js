@@ -2,6 +2,8 @@ import * as routes from "../../../routes";
 import {idify} from "../../../utilities/object.utilities";
 import Motion from "../../../models/Motion";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import Payload from "../../../models/Payload";
+import Proposition from "../../../models/Proposition";
 
 const state = {
     //things: []
@@ -166,6 +168,32 @@ const actions = {
         }));
 
     },
+
+    initializeDraftProposition({dispatch, commit, getters})
+    {
+        return new Promise(((resolve, reject) => {
+            let motion = new Proposition({});
+            commit('setDraftMotion', motion);
+
+                // //We set it as a resolution since that will allow html display
+                // let p = Payload.factory({
+                //     'updateProp': 'is_resolution',
+                //     'updateVal': true
+                // });
+                // dispatch('updateDraftMotion', p);
+                //
+                // //Needs to be a proposition
+                // let p2 = Payload.factory({
+                //     'updateProp': 'type',
+                //     'updateVal': 'proposition'
+                // });
+                // dispatch('updateDraftMotion', p2);
+
+                return resolve();
+            // });
+
+        }));
+    }
 
 
     /*
