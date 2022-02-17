@@ -50,28 +50,6 @@
 
             <navigation-footer></navigation-footer>
 
-<!--            <div class="card-footer">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-4">-->
-<!--&lt;!&ndash;                        <span class="text-left mr-5">&ndash;&gt;-->
-<!--                            <button class="btn  btn-block"-->
-<!--                                v-if="showPreviousButton"-->
-<!--                                    v-on:click="handlePrevious">Previous office</button>-->
-<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
-<!--                        </div>-->
-<!--                    <div class="col-md-4"></div>-->
-<!--                    <div class="col-md-4">-->
-<!--&lt;!&ndash;                        <span class="text-right ml-3">&ndash;&gt;-->
-<!--                            <button class="btn btn-success btn-block" v-on:click="handleNext">Next office</button>-->
-<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-            <!--            <div class="card-footer">-->
-            <!--                <cast-ballot-button></cast-ballot-button>-->
-            <!--            </div>-->
-
         </div>
 
 

@@ -35,8 +35,11 @@ export default {
         },
 
         motionText : function(){
-          if(isReadyToRock(this.motion)) return this.motion.content;
-          return ''
+          if(! isReadyToRock(this.motion)) return '';
+
+          if(this.motion.type === 'proposition' && isReadyToRock(this.motion, 'info')) return this.motion.info.name;
+
+          return this.motion.content;
         },
 
         receipt : function(){

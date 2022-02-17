@@ -1,7 +1,19 @@
 <template>
     <div class="summary-submit-card card">
+        <div class="card-body instructions">
+            <p class="card-text">Please review your selections. When you are ready, please
+        click 'Record all selections' to save them to the server. </p>
 
-        <summary-listing :motion="m" v-for="m in motions" :key="m.id"></summary-listing>
+            <p class="card-text">Once your selections have been saved, they can no longer be changed.</p>
+
+            <p class="card-text">To change your selections, click the office name in the list to the left or
+            use the 'Previous office' button below</p>
+
+        </div>
+
+        <summary-office-listing :motion="m" v-for="m in offices" :key="m.id"></summary-office-listing>
+
+        <summary-proposition-listing :motion="m" v-for="m in propositions" :key="m.id"></summary-proposition-listing>
 
         <div class="card-body" >
             <record-all-selections-button></record-all-selections-button>
@@ -15,13 +27,15 @@
 
 <script>
 
-import SummaryListing from "../voting/summary-listing";
-import RecordAllSelectionsButton from "../voting/record-all-selections-button";
-import RecordAllSelectionsModal from "../voting/record-all-selections-modal";
+import SummaryListing from "../voting/summary-submit/summary-office-listing";
+import RecordAllSelectionsButton from "../voting/summary-submit/record-all-selections-button";
+import RecordAllSelectionsModal from "../voting/summary-submit/record-all-selections-modal";
 import CopyReceiptsButton from "../../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../../vote-verification/download-receipts-button";
 import ReceiptListArea from "../../vote-verification/receipt-list-area";
 import NavigationFooter from "./navigation/navigation-footer";
+import SummaryOfficeListing from "../voting/summary-submit/summary-office-listing";
+import SummaryPropositionListing from "../voting/summary-submit/summary-proposition-listing";
 
 /**
  * This is where the votes will be reviewed and submitted
@@ -29,6 +43,8 @@ import NavigationFooter from "./navigation/navigation-footer";
 export default {
     name: "summary-submit-card",
     components: {
+        SummaryPropositionListing,
+        SummaryOfficeListing,
         NavigationFooter,
         ReceiptListArea,
         DownloadReceiptsButton,
@@ -44,9 +60,16 @@ export default {
     },
 
     asyncComputed: {
-        motions: function () {
-            return this.$store.getters.getMotions;
+        // motions: function () {
+        //     return this.$store.getters.getMotions;
+        // },
+
+        offices: function(){
+            return this.$store.getters.getElectionOffices;
         },
+        propositions : function(){
+            return this.$store.getters.getElectionPropositions;
+        }
 
     },
 

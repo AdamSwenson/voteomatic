@@ -51,6 +51,15 @@ export default class Vote extends IModel {
         if(! this._isYay) return 'nay';
     }
 
+    /**
+     * Returns yes / no instead of yay / nay
+     * @returns {string}
+     */
+    get voteDisplayYesNo(){
+        if(this._isYay) return 'Yes';
+
+        if(! this._isYay) return 'No';
+    }
 
 
 }
