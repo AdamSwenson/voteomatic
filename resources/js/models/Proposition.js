@@ -7,8 +7,17 @@ export default class Proposition extends Motion {
 
 
     constructor({id = null, content = null, description = null, info = null}) {
+        //If we have a brand new proposition, initialize
+        //the name so that can update it
+        if(_.isNull(info)){
+            info = {name : ''}
+        }
+
         super({id, content, description, info});
+
+        //will have html fields
         this.is_resolution = true;
+
         this.type = 'proposition';
 
         // this.id = id;

@@ -154,4 +154,15 @@ export default class Motion extends IModel {
         })
 
     }
+
+    /**
+     * Since the thing we'll want to display in things like the downloaded
+     * receipts differs depending on
+     * the sort of thing voted upon, this returns the relevant text
+     */
+    get displayName(){
+        if(isReadyToRock(this.type) && this.type === 'proposition' && isReadyToRock(this.info, 'name')) return this.info.name;
+
+        return this.content;
+    }
 };

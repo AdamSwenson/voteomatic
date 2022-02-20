@@ -25,7 +25,7 @@ export default {
     methods: {
         initializeMotion: function () {
 
-            let p = this.$store.dispatch('initializeDraftMainMotion');
+            let p = this.$store.dispatch('initializeDraftProposition');
             let me = this;
             p.then(() => {
                 me.$emit('create-motion-clicked');

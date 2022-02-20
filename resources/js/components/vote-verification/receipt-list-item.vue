@@ -1,15 +1,15 @@
 <template>
-<!--    <a href="#"-->
-       <li class="list-group-item "
+    <!--    <a href="#"-->
+    <li class="list-group-item "
     >
-        <p class="motion-text ">{{motionText}}</p>
-           <ul v-if="isElection">
-               <li class="candidates" v-for="c in candidates" :id="c.id">{{c.nameAndInfo}}</li>
-           </ul>
+        <p class="motion-text ">{{ motionText }}</p>
+        <ul v-if="isElection">
+            <li class="candidates" v-for="c in candidates" :id="c.id">{{ c.nameAndInfo }}</li>
+        </ul>
 
-        <p class="receipt user-select-all">{{receipt}}</p>
-       </li>
-<!--    </a>-->
+        <p class="receipt user-select-all">{{ receipt }}</p>
+    </li>
+    <!--    </a>-->
 
 </template>
 
@@ -22,7 +22,7 @@ export default {
 
     props: ['voteObject'],
 
-    mixins : [ModeMixin],
+    mixins: [ModeMixin],
 
     data: function () {
         return {}
@@ -30,19 +30,18 @@ export default {
 
     asyncComputed: {
 
-        motion : function(){
+        motion: function () {
             return this.$store.getters.getMotionById(this.voteObject.motionId);
         },
 
-        motionText : function(){
-          if(! isReadyToRock(this.motion)) return '';
+        motionText: function () {
+            if (!isReadyToRock(this.motion)) return '';
+            //The motion itself will decide what to show (name if proposition, content if motion)
+            return this.motion.displayName;
 
-          if(this.motion.type === 'proposition' && isReadyToRock(this.motion, 'info')) return this.motion.info.name;
-
-          return this.motion.content;
         },
 
-        receipt : function(){
+        receipt: function () {
             return this.voteObject.receipt;
         },
 
@@ -57,11 +56,11 @@ export default {
          *
          * @returns {*[]}
          */
-        candidates: function(){
-            if(! this.isElection ) return [];
+        candidates: function () {
+            if (!this.isElection) return [];
 
-            if(isReadyToRock(this.motion) && this.voteObject.receipt){
-                return  this.$store.getters.getSelectedCandidatesForMotion(this.motion);
+            if (isReadyToRock(this.motion) && this.voteObject.receipt) {
+                return this.$store.getters.getSelectedCandidatesForMotion(this.motion);
             }
         }
 

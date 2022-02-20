@@ -279,7 +279,7 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
-                    resolve();
+                    resolve(response);
                 })
                 .catch(function (error) {
                     // error handling

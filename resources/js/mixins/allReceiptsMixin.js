@@ -1,3 +1,4 @@
+const {isReadyToRock} = require("../utilities/readiness.utilities");
 /**
  * This is used by utilities which format and do something
  * with all the receipts stored on the client
@@ -22,6 +23,10 @@ module.exports = {
             return `\n\n\nReceipts as of: ${this.currentTime}\nReceipts will be missing if the browser was refreshed.\nSince your user id is not stored with the receipt, missing receipts cannot be recovered.`;
         },
 
+        /**
+         * The formatted text that will be downloaded, copied to clipboard, etc.
+         * @returns {string}
+         */
         text: function () {
             let me = this;
             let t = '';
@@ -30,7 +35,7 @@ module.exports = {
             _.forEach(this.allVotes, (vote) => {
                 let motion = me.$store.getters.getMotionById(vote.motionId);
 
-                let e = `\n${motion.content}\n${vote.receipt}\n`;
+                let e = `\n${motion.displayName}\n${vote.receipt}\n`;
 
                 t += e;
             });
@@ -45,6 +50,20 @@ module.exports = {
 
     computed: {},
 
-    methods: {}
+    methods: {
+
+        // /**
+        //  * Since the thing we'll want to list differs depending on
+        //  * the sort of thing voted upon, this returns the relevant text
+        //  * @param motion
+        //  * @returns {*}
+        //  */
+        // formatName : function(motion){
+        //     if(motion.type === 'proposition' && isReadyToRock(motion, 'info')) return motion.info.name;
+        //
+        //     return motion.content
+        //
+        // }
+    }
 
 };

@@ -32,7 +32,6 @@ const mutations = {
     },
 
 
-
 };
 
 
@@ -169,33 +168,54 @@ const actions = {
 
     },
 
-    initializeDraftProposition({dispatch, commit, getters})
-    {
+    initializeDraftProposition({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             let motion = new Proposition({});
             commit('setDraftMotion', motion);
 
-                // //We set it as a resolution since that will allow html display
-                // let p = Payload.factory({
-                //     'updateProp': 'is_resolution',
-                //     'updateVal': true
-                // });
-                // dispatch('updateDraftMotion', p);
-                //
-                // //Needs to be a proposition
-                // let p2 = Payload.factory({
-                //     'updateProp': 'type',
-                //     'updateVal': 'proposition'
-                // });
-                // dispatch('updateDraftMotion', p2);
+            // //We set it as a resolution since that will allow html display
+            // let p = Payload.factory({
+            //     'updateProp': 'is_resolution',
+            //     'updateVal': true
+            // });
+            // dispatch('updateDraftMotion', p);
+            //
+            // //Needs to be a proposition
+            // let p2 = Payload.factory({
+            //     'updateProp': 'type',
+            //     'updateVal': 'proposition'
+            // });
+            // dispatch('updateDraftMotion', p2);
 
-                return resolve();
+            return resolve();
             // });
 
         }));
+    },
+
+    createPropositionFromDraft({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+
+            dispatch('createMotionFromDraft').then((response) => {
+
+                let p = new Proposition(response.data);
+
+                //clear draft motion and hide the window.
+                // me.requestResetEditingCard();
+                commit('clearDraftMotion');
+
+                // let motion = new Motion(d.id, d.name, d.date);
+                commit('addMotionToStore', p);
+
+                let pl = {meetingId: meetingId, motionId: p.id};
+
+                return dispatch('setCurrentMotion', pl).then(() => {
+                    return resolve(p);
+                });
+            });
+        }));
+
     }
-
-
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
     *        return new Promise(((resolve, reject) => {

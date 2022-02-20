@@ -1,7 +1,7 @@
 <template>
     <div class="election-complete-card card" >
-        <div class="card-body">
-            <p class="card-text font-weight-bold">Thank you for voting!</p>
+        <div class="card-header">
+            <h3 class="card-title">Thank you for voting!</h3>
         </div>
 
         <div class="card-body" v-if="showReceipts">
@@ -10,7 +10,7 @@
                 linked to them in the database. Use the buttons below to download a list of your
                 receipts for safekeeping</p>
 
-            <p class="card-text">Please feel free to use the 'Verify votes' tab to confirm the validity of your receipts</p>
+            <p class="card-text">Please feel free to use the <a href="#" v-on:click="handleNavigationToVerify">Verify votes tab</a> to confirm the validity of your receipts</p>
 
             <receipt-list-area></receipt-list-area>
         </div>
@@ -47,7 +47,12 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {
+
+        handleNavigationToVerify : function(){
+            this.$router.push('verify');
+        }
+    }
 
 }
 </script>

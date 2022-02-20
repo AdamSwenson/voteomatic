@@ -6,8 +6,18 @@
 
         <div class="list-group list-group-flush">
             <instructions-row></instructions-row>
-            <office-select-row :motion="m" v-for="m in offices" :key="m.id"></office-select-row>
-           <proposition-select-row :motion="p" v-for="p in propositions" :key="p.id"></proposition-select-row>
+            <office-select-row
+                v-if="showOffices"
+                :motion="m"
+                v-for="m in offices"
+                :key="m.id"
+            ></office-select-row>
+           <proposition-select-row
+               v-if="showPropositions"
+               :motion="p"
+               v-for="p in propositions"
+               :key="p.id"
+           ></proposition-select-row>
             <summary-select-row></summary-select-row>
         </div>
     </div>
@@ -37,7 +47,14 @@ import PropositionSelectRow from "./proposition-select-row";
 export default {
     name: "office-select-area",
     components: {PropositionSelectRow, InstructionsRow, SummarySelectRow, SummarySubmitCard, OfficeSelectRow},
-    props: [],
+    props: {
+        showOffices : {
+            default : true
+        },
+        showPropositions : {
+            default: true
+        }
+    },
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
 

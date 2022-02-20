@@ -37,6 +37,13 @@ class FullElectionWithoutVotesSeeder extends Seeder
                     'meeting_id' => $election->id,
                 ]);
 
+            //Randomly have multiple winner elections
+            if($this->faker->boolean){
+                $numWinners = $this->faker->numberBetween(2, self::MAX_CANDIDATES);
+                $m->max_winners = $numWinners;
+                $m->save();
+            }
+
             $numCandidates = $this->faker->numberBetween(1, self::MAX_CANDIDATES);
             $candidates = Candidate::factory()->count($numCandidates)->create(['motion_id' => $m->id]);
 

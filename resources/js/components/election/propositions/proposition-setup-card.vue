@@ -5,60 +5,82 @@
             <h4 class="card-title">Setup propositions</h4>
         </div>
 
-        <div class="card-body ">
-            <create-proposition-button></create-proposition-button>
-        </div>
-        <!--            <div class="required">-->
-        <!--                <form>-->
-        <div class="card-body">
-            <form>
+        <div class="row">
+            <div class="col-lg-3">
 
-                <div class="form-group">
-                    <label class="form" for="propName">Name</label>
-                    <input type="text" class="form-control" id="propName" v-model="propName"/>
+                <proposition-list-card
+                    v-on:edit-requested="setEditMode"
+                    v-on:new-mode-requested="removeEditMode"
+                ></proposition-list-card>
+
+            </div>
+
+
+            <div class="col-lg-9">
+                <div class="inputs card " v-if="showInputs">
+                    <div class="card-body">
+                        <form>
+
+                            <div class="form-group">
+                                <label class="form" for="propName">Name</label>
+                                <input type="text" class="form-control" id="propName" v-model="propName"/>
+                            </div>
+                        </form>
+
+
+                        <proposition-content-input
+                            :motion="draftMotion"
+                            v-on:update:content="draftMotion.content  = $event"
+                        ></proposition-content-input>
+                    </div>
+                    <div class="card-body">
+                        <proposition-description-input
+                            :motion="draftMotion"
+                            v-on:update:description="draftMotion.description  = $event"
+                        ></proposition-description-input>
+
+                        <vote-required-inputs
+                            v-if="isChair"
+                            :motion="draftMotion"
+                            v-on:update:requires="draftMotion.requires  = $event"
+                        ></vote-required-inputs>
+
+                    </div>
+
+                    <div class="card-body" v-if="editMode">
+                        <p class="text-muted">Edits are saved automatically as you type</p>
+                    </div>
+
+                    <!--                    If we are editing an existing prop    -->
+                    <div class="card-footer" v-if="editMode">
+
+                        <delete-motion-button></delete-motion-button>
+                        <delete-motion-modal></delete-motion-modal>
+
+                    </div>
+
+                    <!--                        If we are working on something new-->
+                    <div class="card-footer" v-else>
+
+                        <button
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#confirmMotionModal"
+                        >Save proposition
+                        </button>
+
+                        <create-motion-modal :motion="draftMotion"
+                                             v-on:confirmed="handleDoneClick"
+                        ></create-motion-modal>
+                        <clear-draft-motion-button
+                            v-on:hide-editing-card="handleClear"
+                        ></clear-draft-motion-button>
+
+                    </div>
+
                 </div>
-            </form>
 
-
-            <proposition-content-input
-                :motion="draftMotion"
-                v-on:update:content="draftMotion.content  = $event"
-            ></proposition-content-input>
-        </div>
-        <div class="card-body">
-            <proposition-description-input
-                :motion="draftMotion"
-                v-on:update:description="draftMotion.description  = $event"
-            ></proposition-description-input>
-
-            <vote-required-inputs
-                v-if="isChair"
-                :motion="draftMotion"
-                v-on:update:requires="draftMotion.requires  = $event"
-            ></vote-required-inputs>
-
-        </div>
-
-        <div class="card-body">
-            <button class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#confirmMotionModal"
-            >Make motion
-            </button>
-
-            <create-motion-modal :motion="draftMotion"
-                                 v-on:confirmed="handleDoneClick"
-            ></create-motion-modal>
-
-            <delete-motion-button></delete-motion-button>
-            <delete-motion-modal></delete-motion-modal>
-
-            <clear-draft-motion-button
-                v-on:hide-editing-card="requestResetEditingCard"
-            ></clear-draft-motion-button>
-        </div>
-        <div class="card-footer">
-
+            </div>
         </div>
     </div>
 
@@ -79,10 +101,14 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 import CreateMotionModal from "../../motions/motion-setup-inputs/create-motion-modal";
 import VoteRequiredInputs from "../../motions/motion-setup-inputs/vote-required-inputs";
 import Payload from "../../../models/Payload";
+import OfficeListCard from "../setup/office-list-card";
+import PropositionListCard from "./proposition-list-card";
 
 export default {
     name: "proposition-setup",
     components: {
+        PropositionListCard,
+        OfficeListCard,
         VoteRequiredInputs,
         CreateMotionModal,
         ClearDraftMotionButton,
@@ -95,14 +121,26 @@ export default {
     mixins: [ChairMixin, MotionMixin, MeetingMixin],
 
     data: function () {
-        return {}
+        return {
+            // showInputs: false
+
+            /** In edit mode we operate on the active motion.
+             * Otherwise we operate on draft motion */
+            editMode: false
+        }
     },
 
     asyncComputed: {
 
 
         draftMotion: function () {
+            if (this.editMode) return this.motion;
+
             return this.$store.getters.getDraftMotion;
+        },
+
+        showInputs: function () {
+            return isReadyToRock(this.draftMotion);
         }
     },
 
@@ -110,7 +148,7 @@ export default {
 
         propName: {
             get: function () {
-                if (!isReadyToRock(this.draftMotion)) return ''
+                if (!isReadyToRock(this.draftMotion, 'info')) return ''
                 return this.draftMotion.name;
             },
             set: function (v) {
@@ -118,7 +156,13 @@ export default {
                     'updateProp': 'name',
                     'updateVal': v
                 });
-                this.$store.dispatch('updateDraftMotion', p);
+
+                if (this.editMode) {
+                    this.$store.dispatch('updateMotion', p);
+                } else {
+                    this.$store.dispatch('updateDraftMotion', p);
+                }
+
             }
         },
 
@@ -132,7 +176,12 @@ export default {
             //editing function.
             let payload = event[0];
             window.console.log(payload);
-            this.$store.dispatch('updateDraftMotion', payload);
+            if (this.editMode) {
+                this.$store.dispatch('updateMotion', payload);
+            } else {
+                this.$store.dispatch('updateDraftMotion', payload);
+            }
+            // this.$store.dispatch('updateDraftMotion', payload);
             //this.draftMotion[event.updateProp] = event.updateVal;
         },
 
@@ -143,21 +192,27 @@ export default {
          */
         handleDoneClick: function () {
             let me = this;
-            this.$store.dispatch('createMotionFromDraft').then(() => {
-                //clear draft motion and hide the window.
-                me.requestResetEditingCard();
-                me.$store.commit('clearDraftMotion');
+            this.$store.dispatch('createPropositionFromDraft').then(() => {
+
             });
         },
-        requestResetEditingCard: function () {
-            this.$emit('hide-editing-card');
+
+        handleClear: function () {
+
+        },
+
+        setEditMode: function () {
+            this.editMode = true;
+        },
+
+        removeEditMode: function () {
+            this.editMode = false;
         }
+
     },
     mounted() {
         //In case we somehow got here without the button
         if (!isReadyToRock(this.draftMotion)) {
-
-            this.$store.dispatch('initializeDraftProposition');
 
         }
     }

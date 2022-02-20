@@ -83,7 +83,8 @@ computed : {
                 // this.$store.dispatch('updateMotion', p);
 
             // }
-        }
+        },
+        watch : ['motion']
     },
 }
 

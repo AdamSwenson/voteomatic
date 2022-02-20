@@ -41,7 +41,7 @@ export default {
 
     asyncComputed: {
         offices : function(){
-            return  this.$store.getters.getMotions;
+            return  this.$store.getters.getElectionOffices;
         }
     },
 
