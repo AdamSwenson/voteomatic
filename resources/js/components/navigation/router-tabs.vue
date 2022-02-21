@@ -1,30 +1,30 @@
 <template>
 
     <div class="router-tabs" role="navigation">
-    <ul class=" nav nav-tabs ">
-        <router-tab v-for="r in routes" :route="r" :key="r.name"></router-tab>
+        <ul class=" nav nav-tabs ">
+            <router-tab v-for="r in shownRoutes" :route="r" :key="r.name"></router-tab>
 
-<!--        <router-link-->
-<!--            v-for="r in routes"-->
-<!--            v-bind:key="r.name"-->
-<!--            tag="li"-->
-<!--            v-bind:style="styling"-->
-<!--            v-bind:active-class="activeClass"-->
-<!--            v-bind:to="r.path"-->
-<!--        >-->
-<!--            &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-<!--            <a class="page-nav nav-link">-->
-<!--                    <span class="icon is-small">-->
-<!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
-<!--&lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
-<!--                        </span>-->
-<!--                <span>{{ r.label }}</span>-->
-<!--            </a>-->
-<!--        </router-link>-->
+            <!--        <router-link-->
+            <!--            v-for="r in routes"-->
+            <!--            v-bind:key="r.name"-->
+            <!--            tag="li"-->
+            <!--            v-bind:style="styling"-->
+            <!--            v-bind:active-class="activeClass"-->
+            <!--            v-bind:to="r.path"-->
+            <!--        >-->
+            <!--            &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
+            <!--            <a class="page-nav nav-link">-->
+            <!--                    <span class="icon is-small">-->
+            <!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
+            <!--&lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
+            <!--&lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
+            <!--                        </span>-->
+            <!--                <span>{{ r.label }}</span>-->
+            <!--            </a>-->
+            <!--        </router-link>-->
 
-    </ul>
+        </ul>
     </div>
 
 
@@ -41,6 +41,7 @@
 
 import {routes} from '../../routes.client';
 import RouterTab from "./router-tab";
+import store from "../../store";
 
 
 /**
@@ -70,30 +71,60 @@ export default {
                 return this.$store.getters.getIsAdmin;
             },
             default: false
-        }
-    },
+        },
+        // },
+        //
+        //
+        // computed: {
 
+        electionRoutes:
+            function () {
+                let showRoutes = [];
+                let me = this;
+                _.forEach(routes, (r) => {
+                    if (r.type === 'election' || r.type === 'all') {
+                        if (r.adminOnly) {
+                            if (me.isAdmin) {
+                                showRoutes.push(r);
+                            }
+                        } else {
+                            showRoutes.push(r);
+                        }
+                    }
+                });
 
-    computed: {
+                return showRoutes;
+                // return routes
+            },
 
         routes: function () {
             let showRoutes = [];
             let me = this;
             _.forEach(routes, (r) => {
-                if (r.adminOnly) {
-                    if (me.isAdmin) {
+                if (r.type === 'meeting' || r.type === 'all') {
+                    if (r.adminOnly) {
+                        if (me.isAdmin) {
+                            showRoutes.push(r);
+                        }
+                    } else {
                         showRoutes.push(r);
                     }
-                } else {
-                    showRoutes.push(r);
                 }
-            })
+            });
 
             return showRoutes;
             // return routes
         },
 
+        shownRoutes: function () {
+            window.console.log('isElection', this.$store.getters.isElection);
+            if (this.$store.getters.isElection) {
+                return this.electionRoutes;
+            }
+            return this.routes;
+        }
     },
+
 
     methods: {},
 

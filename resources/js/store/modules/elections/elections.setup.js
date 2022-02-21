@@ -168,6 +168,14 @@ const actions = {
 
     },
 
+    /**
+     * Creates a new Proposition objects as the draftMotion
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
     initializeDraftProposition({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             let motion = new Proposition({});
@@ -193,21 +201,29 @@ const actions = {
         }));
     },
 
+    /**
+     * Sends the draft proposition to the server and adds the
+     * newly created object to store, and sets as current
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
     createPropositionFromDraft({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
+            let meeting = getters.getActiveMeeting;
 
             dispatch('createMotionFromDraft').then((response) => {
 
                 let p = new Proposition(response.data);
 
                 //clear draft motion and hide the window.
-                // me.requestResetEditingCard();
                 commit('clearDraftMotion');
 
-                // let motion = new Motion(d.id, d.name, d.date);
                 commit('addMotionToStore', p);
 
-                let pl = {meetingId: meetingId, motionId: p.id};
+                let pl = {meetingId: meeting.id, motionId: p.id};
 
                 return dispatch('setCurrentMotion', pl).then(() => {
                     return resolve(p);

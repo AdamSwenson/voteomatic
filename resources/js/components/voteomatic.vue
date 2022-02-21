@@ -87,18 +87,21 @@ export default {
         let me = this;
 
         //We're going to push it to the home tab
-        //before loading anything. That way we both have
+        //before loading anything else. That way we both have
         //something open (and not a blank card) and
         //don't send them back to the home tab if they've
         //clicked another tab while things were loading.
-        // me.$router.push('meeting-home');
-        me.$store.dispatch('forceNavigationToHome');
+        //We did need to load the meeting first so that
+        //we can determine whether it is a meeting or election
 
+        this.$store.dispatch('forceNavigationToHome');
 
         //parse data from page and store stuff
         let p = this.$store.dispatch('initialize');
         p.then(function () {
             // me.$router.push('meeting-home');
+
+            // if()
 
             window.console.log('voteomatic', 'isReady', 159, me.isReady);
         });

@@ -41,24 +41,38 @@ Vue.component('election-voter-home-card', electionVoterHomeCard)
 
 export const routes = [
     {
-        name: 'election-dev',
-        path: '/election-voter',
-        label: 'election dev',
+        name: 'election-home',
+        path: '/election-home',
+        label: 'Home',
         components: {main: electionVoterHomeCard},
-        default: true,
+        get default() {
+            if (store.getters.isElection) return true;
+            return false;
+        },
         props: true,
-        adminOnly: false
-
+        adminOnly: false,
+        type: 'election'
     },
+
     {
         name: 'home',
         path: '/meeting-home',
         icon: "fa fa-book",
         label: "Home",
-        components: {main: meetingHome},
-        default: true,
+        get components(){
+            // window.console.log('home', store.getters.isElection);
+           // if (store.getters.isElection ){
+           //     return {main: electionVoterHomeCard};
+           // }
+           return {main: meetingHome};
+        },
+        get default() {
+            if (store.getters.isElection) return false;
+        return true;
+            },
         props: true,
-        adminOnly: false
+        adminOnly: false,
+        type: 'meeting'
 
     },
 
@@ -71,7 +85,8 @@ export const routes = [
         // components: {main: votePage},
         components: {main: voteCard},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+        type: 'meeting'
     },
 
     {
@@ -81,7 +96,34 @@ export const routes = [
         label: "Results",
         components: {main: resultsCard},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+        type: 'meeting'
+    },
+
+    {
+        name: 'election-results',
+        path: '/election-results',
+        icon: "fa fa-comments-o",
+        label: "Results",
+        components: {main: resultsCard},
+        props: true,
+        adminOnly: false,
+        type: 'election'
+    },
+
+    {
+        name: 'setup-offices',
+        path: '/setup-offices',
+        icon: "fa fa-bar-chart",
+        label : "Setup offices",
+        // get label() {
+        //     if (store.getters.isElection) return "Setup offices";
+        //     return "Make motion";
+        // },
+        components: {main: ballotSetupCard},
+        props: true,
+        adminOnly: true,
+        type : 'election'
     },
 
     {
@@ -89,25 +131,30 @@ export const routes = [
         path: '/ballot',
         icon: "fa fa-bar-chart",
         get label() {
-            if (store.getters.isElection) return "Setup offices";
+            // if (store.getters.isElection) return "Setup offices";
             return "Make motion";
         },
         components: {main: ballotSetupCard},
         props: true,
         // adminOnly: true,
-
-        adminOnly: false
+adminOnly : false,
+        type : 'meeting'
+        // get adminOnly() {
+        //     if (store.getters.isElection) return true;
+        //     return false;
+        // }
     },
 
     {
-        name: 'dev-props',
-        path: '/dev-props',
+        name: 'setup-props',
+        path: '/setup-props',
         icon: "fa fa-bar-chart",
-        label: 'dev Proposition',
+        label: 'Setup propositions',
         components: {main: propositionSetupCard},
         props: true,
         // adminOnly: true,
-        adminOnly: false
+        adminOnly: true,
+        type : 'election'
     },
 
     {
@@ -117,7 +164,8 @@ export const routes = [
         label: "Verify votes",
         components: {main: voteVerify},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+        type : 'all'
     },
 
 
@@ -130,9 +178,9 @@ export const routes = [
         },
         components: {main: eventSetupCard},
         props: true,
-        adminOnly: true
+        adminOnly: true,
+        type : 'all'
     },
-
 
 
     // {
@@ -162,9 +210,6 @@ export const routes = [
     //     props: true,
     //     adminOnly: true
     // },
-
-
-
 
 
 ];
