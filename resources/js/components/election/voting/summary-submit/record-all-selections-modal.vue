@@ -59,7 +59,8 @@ export default {
     methods: {
         handleClick: function () {
             if (!this.hasProblem) {
-                this.$store.dispatch('castAllElectionVotes')
+                // this.$store.dispatch('castAllElectionVotes')
+                this.$store.dispatch('castElectionVotesForSelections');
             }
         }
     }

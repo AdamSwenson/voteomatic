@@ -7,10 +7,12 @@ use App\Repositories\Assignment\IAssignmentRepository;
 use App\Repositories\Assignment\IReviewAssignmentRepository;
 use App\Repositories\Assignment\ReviewAssignmentRepository;
 use App\Repositories\Election\CandidateRepository;
+use App\Repositories\Election\ElectionAdminRepository;
 use App\Repositories\Election\ElectionRepository;
 use App\Repositories\Election\ElectionResultsRepository;
 use App\Repositories\Election\ElectionVoteRepository;
 use App\Repositories\Election\ICandidateRepository;
+use App\Repositories\Election\IElectionAdminRepository;
 use App\Repositories\Election\IElectionRepository;
 use App\Repositories\Election\IElectionResultsRepository;
 use App\Repositories\Election\IElectionVoteRepository;
@@ -50,6 +52,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
 
         $this->app->bind(ICandidateRepository::class, CandidateRepository::class);
+
+        $this->app->bind(IElectionAdminRepository::class, ElectionAdminRepository::class);
 
         $this->app->bind(IElectionRepository::class, ElectionRepository::class);
 

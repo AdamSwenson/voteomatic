@@ -34,7 +34,7 @@
 
 
 import OfficeSelectArea from "./office-selector/office-select-area";
-import VotingCompleteCard from "./voting-complete-card";
+import VotingCompleteCard from "../unavailable/voting-complete-card";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import motionObjectMixin from "../../../mixins/motionObjectMixin";
@@ -115,7 +115,7 @@ export default {
     methods: {},
 
     mounted() {
-        this.$store.dispatch('loadAllOfficeCandidates');
+        // this.$store.dispatch('loadAllOfficeCandidates');
         // this.$store.commit('showInstructionsCard');
     }
 

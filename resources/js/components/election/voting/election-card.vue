@@ -15,7 +15,7 @@
             <max-winners-instruction></max-winners-instruction>
 
             <div class="card-body" v-if="showDescription">
-                <p class="card-text ml-4 mr-4">{{motion.description}}</p>
+                <p class="card-text ml-4 mr-4">{{ motion.description }}</p>
             </div>
 
             <overselection-warning></overselection-warning>
@@ -24,30 +24,37 @@
             <!--            {{ instructions }}-->
             <!--        </div>-->
 
-            <div class="card-body">
-
-                <candidate-row v-for="candidate in candidates"
-                               :key="candidate.id"
-                               :candidate="candidate"
-                ></candidate-row>
-
-                <!--                Enable after VOT-60 is complete-->
-                <candidate-row v-if="writeInCandidates.length > 0"
-                               v-for="candidate in writeInCandidates"
-                               :candidate="candidate"
-                               :key="candidate.id"
-                ></candidate-row>
-                <overselection-warning></overselection-warning>
-
+            <div class="alert alert-success" role="alert" v-if="hasUserVoted">
+                <p class="card-text">You have voted on this. </p>
             </div>
 
-            <!--            Enable after VOT-60 is complete-->
-            <div class="card-body">
-                <write-in-controls></write-in-controls>
+            <div class="vote-controls" v-else>
+                <div class="card-body">
 
-                <p class="text-muted">You will confirm and record your selections later.</p>
+                    <candidate-row v-for="candidate in candidates"
+                                   :key="candidate.id"
+                                   :candidate="candidate"
+                    ></candidate-row>
+
+                    <!--                Enable after VOT-60 is complete-->
+                    <candidate-row v-if="writeInCandidates.length > 0"
+                                   v-for="candidate in writeInCandidates"
+                                   :candidate="candidate"
+                                   :key="candidate.id"
+                    ></candidate-row>
+
+
+                    <overselection-warning></overselection-warning>
+
+                </div>
+
+                <!--            Enable after VOT-60 is complete-->
+                <div class="card-body">
+                    <write-in-controls></write-in-controls>
+
+                    <p class="text-muted">You will confirm and record your selections later.</p>
+                </div>
             </div>
-
             <navigation-footer></navigation-footer>
 
         </div>
@@ -108,6 +115,10 @@ export default {
 
 
     asyncComputed: {
+
+        hasUserVoted: function () {
+            return this.$store.getters.hasVotedOnCurrentMotion;
+        },
 
         office: {
             get: function () {
@@ -208,15 +219,15 @@ export default {
          * We make it look disabled when on the first in
          * the stack
          */
-        showPreviousButton : function(){
+        showPreviousButton: function () {
             return this.$store.getters.getMotions.indexOf(this.$store.getters.getActiveMotion) > 0
 
         },
 
-        showDescription : function(){
+        showDescription: function () {
             return isReadyToRock(this.motion, 'description') && this.motion.description.length > 0;
         }
-        },
+    },
 
     computed: {},
 

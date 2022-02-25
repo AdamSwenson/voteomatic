@@ -17,21 +17,11 @@ const actions = {
 
     initialize({dispatch, commit, getters}) {
         return new Promise((resolve, reject) => {
-            window.console.log('startup', 'Initializing from page data');
+            window.console.log('startup', 'Initializing meeting from page data');
 
             dispatch('loadIsAdminFromPageData').then(function () {
 
                 dispatch('loadMeetingFromPageData').then(function () {
-                    //
-                    // //We're going to push it to the home tab
-                    // //before loading anything else. That way we both have
-                    // //something open (and not a blank card) and
-                    // //don't send them back to the home tab if they've
-                    // //clicked another tab while things were loading.
-                    // //We did need to load the meeting first so that
-                    // //we can determine whether it is a meeting or election
-                    //
-                    // dispatch('forceNavigationToHome');
 
                     dispatch('loadMotionFromPageData').then(function () {
 

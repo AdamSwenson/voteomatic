@@ -10,17 +10,38 @@ module.exports = {
             return this.$store.getters.getUsersCastVotes;
         },
 
-        heading: function(){
+        heading: function () {
             return `${this.meetingName}\n${this.meetingDate}\n\n`;
         },
 
-        currentTime : function(){
+        currentTime: function () {
             let date = new Date();
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         },
 
-        footer : function(){
+        footer: function () {
             return `\n\n\nReceipts as of: ${this.currentTime}\nReceipts will be missing if the browser was refreshed.\nSince your user id is not stored with the receipt, missing receipts cannot be recovered.`;
+        },
+
+        /**
+         * Used to govern things like whether to show the download
+         * receipts buttons.
+         * Returns true if there's at least one receipt available
+         */
+        isReceiptsAvailable: function () {
+            if(! isReadyToRock(this.allVotes)) return false;
+
+            let val = false;
+            if (this.allVotes.length > 0) {
+
+                _.forEach(this.allVotes, (v) => {
+                    if (isReadyToRock(v, 'receipt')) {
+                        val = true;
+                    }
+                });
+
+            }
+            return val
         },
 
         /**

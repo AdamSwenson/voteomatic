@@ -14,17 +14,21 @@ import PoolMember from "../../../models/PoolMember";
 import a from './elections.people.actions';
 import Payload from "../../../models/Payload";
 
+import Admin from './elections.admin';
 import Navigation from './elections.navigation';
 import Results from './elections.results';
 import Setup from './elections.setup';
+import Startup from './elections.startup';
 import Votes from './elections.votes';
 
 // import importCandidatesFromFile from './candidateFileImporter';
 
 const state = {
+    ...Admin.state,
     ...Navigation.state,
     ...Results.state,
     ...Setup.state,
+    ...Startup.state,
     ...Votes.state,
 
     /**
@@ -32,24 +36,14 @@ const state = {
      */
     candidates: [],
 
-    // /**
-    //  * Used during election setup. Holds pool members. I.e., people associated
-    //  * with a motion id, but who are not yet
-    //  * candidates.
-    //  */
-    // candidatePool: [],
-    //
-    // electionResults: [],
-
-    // showSummarySubmitCard: false
-
-
 };
 
 const mutations = {
+    ...Admin.mutations,
     ...Navigation.mutations,
     ...Results.mutations,
     ...Setup.mutations,
+    ...Startup.mutations,
     ...Votes.mutations,
 
     // /**
@@ -92,21 +86,6 @@ const mutations = {
         });
     },
 
-    // addResults: (state, results) => {
-    //     state.electionResults.push(results);
-    //     // Vue.set(state.electionResults, motionId, results);
-    //
-    // },
-
-    //
-    // showSummarySubmitCard: (state) => {
-    //     state.showSummarySubmitCard = true;
-    //
-    // },
-    //
-    // hideSummarySubmitCard: (state) => {
-    //     state.showSummarySubmitCard = false;
-    // }
 
 };
 
@@ -116,12 +95,11 @@ const actions = {
     ...a,
 
     //Import actions used to move between offices etc
+    ...Admin.actions,
     ...Navigation.actions,
-
     ...Results.actions,
-
     ...Setup.actions,
-
+    ...Startup.actions,
     ...Votes.actions,
 
 
@@ -487,9 +465,11 @@ const actions = {
 };
 
 const getters = {
+    ...Admin.getters,
     ...Navigation.getters,
     ...Results.getters,
     ...Setup.getters,
+    ...Startup.getters,
     ...Votes.getters,
 
     getCandidateByPersonId: (state) => (personId) => {

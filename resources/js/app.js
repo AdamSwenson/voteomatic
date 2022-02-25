@@ -35,7 +35,7 @@ import  {routes} from './routes.client';
 // import { routes } from './routes';
 
 // // Create the router instance and pass the `routes` option
-const router = new VueRouter( {
+export const router = new VueRouter( {
     routes, // short for routes: routes
     base: window.routeRoot
 } );

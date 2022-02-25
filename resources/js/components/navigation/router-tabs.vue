@@ -117,7 +117,7 @@ export default {
         },
 
         shownRoutes: function () {
-            window.console.log('isElection', this.$store.getters.isElection);
+            // window.console.log('isElection', this.$store.getters.isElection);
             if (this.$store.getters.isElection) {
                 return this.electionRoutes;
             }

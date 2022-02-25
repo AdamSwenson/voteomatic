@@ -102,6 +102,8 @@ export default {
         },
 
         textStyling : function(){
+            return 'font-weight-bold';
+
             if(this.hasVoted) return 'text-muted';
 
             if(this.isError) return 'text-danger'

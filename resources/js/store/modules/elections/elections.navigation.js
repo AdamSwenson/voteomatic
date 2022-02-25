@@ -1,28 +1,21 @@
 import {idify} from "../../../utilities/object.utilities";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import ElectionCard from "../../../components/election/voting/election-card";
-import VotingCompleteCard from "../../../components/election/voter/voting-complete-card";
+import VotingCompleteCard from "../../../components/election/unavailable/voting-complete-card";
 import VotingInstructionsCard from "../../../components/election/voter/voting-instructions-card";
 import SummarySubmitCard from "../../../components/election/voter/summary-submit-card";
 import PropositionVoteCard from "../../../components/election/voting/proposition-vote-card";
+import PrematureAccessCard from "../../../components/election/unavailable/premature-access-card";
+import {router} from "../../../app";
 
 const state = {
-    //things: []
-
 
     shownCard: 'instructions',
 
-    // showSummarySubmitCard: false,
-
-    // showInstructionsCard: true
 };
 
 const mutations = {
-    /*
-    *   addThing: (state, thing) => {
-    *        state.things.push(thing);
-    *    }
-    */
+
 
     setShownCard: (state, cardName) => {
         state.shownCard = cardName;
@@ -46,16 +39,20 @@ const mutations = {
     //     state.showInstructionsCard = false;
     // },
 
-    showPropositionVoteCard : (state) => {
-   state.shownCard = 'proposition';
+    showPropositionVoteCard: (state) => {
+        state.shownCard = 'proposition';
     },
 
     showVotingCard: (state) => {
-    state.shownCard = 'election';
+        state.shownCard = 'election';
     },
 
-    showVotingCompleteCard : (state) => {
-    state.shownCard = 'complete';
+    showVotingCompleteCard: (state) => {
+        state.shownCard = 'complete';
+    },
+
+    showPrematureCard: (state) => {
+        state.shownCard = 'premature';
     }
 
 };
@@ -63,6 +60,68 @@ const mutations = {
 
 const actions = {
 
+    /**
+     * Pushes the election home tab to the router.
+     *
+     * Unlike the meeting navigation, this does not rely on the watchers
+     * that are defined in NavigationMixin.
+     *
+     * dev If we need websocket action, add the watcher to NavigationMixin
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    forceNavigationToElectionHome({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+
+            if(router.currentRoute.name !== 'election-home'){
+                router.push('election-home');
+            }
+            resolve();
+        }));
+    },
+
+
+    /**
+     * Makes the decision on where to go and sends there
+     */
+    navigateToAppropriateLocation({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+            if (!isReadyToRock(meeting)) return reject();
+
+            //Election access has not yet been enabled by
+            //the chair
+            if (!meeting.isVotingAvailable && !meeting.isComplete) {
+                commit('showPrematureCard');
+                return resolve();
+            }
+
+            //The election has ended
+            if (! meeting.isVotingAvailable && meeting.isComplete) {
+                //Results are available
+                //dev todo
+
+                //No results available
+                commit('showVotingCompleteCard');
+
+                return resolve();
+            }
+
+            //Voter has completed voting (The election could still be open for others)
+            //todo Determine if there are no available motions (offices/props) to vote upon
+            if(getters.isVotingComplete){
+                commit('showVotingCompleteCard');
+            }
+
+            //Voter can vote for stuff
+            dispatch('forceNavigationToElectionHome').then(() => {
+                return resolve();
+            });
+
+        }));
+    },
 
     /**
      * Sets the next unvoted elected office as the current motion
@@ -210,9 +269,9 @@ const actions = {
 
             window.console.log('setting office id ', motionId);
 
-            if(motion.type === 'proposition'){
+            if (motion.type === 'proposition') {
                 commit('showPropositionVoteCard');
-            }else{
+            } else {
                 commit('showVotingCard');
             }
             // commit('hideSummarySubmitCard');
@@ -225,33 +284,16 @@ const actions = {
             // }).then(() => {
 
             // dispatch('loadElectionCandidates', motionId).then(() => {
-                return resolve();
-                // });
+            return resolve();
+            // });
             // });
         }));
 
     },
 
 
-    /*
-    *    doThing({dispatch, commit, getters}, thingParam) {
-    *        return new Promise(((resolve, reject) => {
-    *        }));
-    *    },
-    */
 };
 
-/**
- *
- *    getThingViaId: (state) => (thingId) => {
- *        return state.things.filter(function (c) {
- *            return c.thing_id === thingId;
- *        })
- *    },
- *
- *
- *    getThing: (state, getters) => {}
- */
 const getters = {
     isInstructionsCardVisible: (state) => {
         return state.shownCard === 'instructions';
@@ -264,8 +306,8 @@ const getters = {
     },
 
     isCompleteCardShown: (state) => {
-    return state.shownCard === 'complete';
-        },
+        return state.shownCard === 'complete';
+    },
     /**
      * Returns the master dict of cards
      * which can be shown on the main election page
@@ -282,13 +324,12 @@ const getters = {
             //Tells the user how to vote
             'instructions': VotingInstructionsCard,
             //Voting on a proposition
-            'proposition' : PropositionVoteCard,
+            'proposition': PropositionVoteCard,
             //User submits their selections
             'summary': SummarySubmitCard,
 
         }
     },
-
 
 
     /**
@@ -299,7 +340,7 @@ const getters = {
      * @param getters
      * @returns {*}
      */
-    getShownCard : (state, getters) => {
+    getShownCard: (state, getters) => {
         let c = {
             //Allows user to select candidates
             'election': ElectionCard,
@@ -308,13 +349,15 @@ const getters = {
             'complete': VotingCompleteCard,
             //Tells the user how to vote
             'instructions': VotingInstructionsCard,
+            //Voting not yet allowed
+            'premature': PrematureAccessCard,
             //Voting on a proposition
-            'proposition' : PropositionVoteCard,
+            'proposition': PropositionVoteCard,
             //User submits their selections
             'summary': SummarySubmitCard,
         }
 
-    return c[state.shownCard];
+        return c[state.shownCard];
     }
 
 };

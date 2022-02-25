@@ -18,6 +18,7 @@ import voteCard from "./components/main/vote-card";
 import electionVoterHomeCard from './components/election/voter/election-voter-home-card';
 import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
 
+import electionAdminCard from './components/election/admin/election-admin-card';
 Vue.component('ballot-setup-card', ballotSetupCard);
 
 Vue.component('proposition-setup-card', propositionSetupCard);
@@ -36,7 +37,9 @@ Vue.component('vote-card', voteCard);
 Vue.component('vote-verify', resultsCard);
 
 //dev
-Vue.component('election-voter-home-card', electionVoterHomeCard)
+Vue.component('election-voter-home-card', electionVoterHomeCard);
+
+Vue.component('election-admin-card', electionAdminCard);
 
 
 export const routes = [
@@ -181,6 +184,19 @@ adminOnly : false,
         adminOnly: true,
         type : 'all'
     },
+
+
+    {
+        name: 'admin',
+        path: '/admin',
+        label : 'Admin',
+        components: {main: electionAdminCard},
+        props: true,
+        adminOnly: true,
+        type : 'election'
+    },
+
+
 
 
     // {

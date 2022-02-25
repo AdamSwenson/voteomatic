@@ -276,6 +276,28 @@ let motions = getters.getMotions;
     },
 
 
+    /**
+     * Loads all candidates for all offices the user hasn't
+     * yet voted upon
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    loadUnvotedOfficeCandidates({dispatch, commit, getters}) {
+        let motions = getters.getUnvotedOffices;
+        return new Promise(((resolve, reject) => {
+            _.forEach(motions, (motion) => {
+                dispatch('loadElectionCandidates', motion.id);
+            });
+            return resolve();
+
+        }));
+
+    },
+
+
 };
 
 

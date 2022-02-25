@@ -6,6 +6,7 @@ use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\Election\CandidateController;
+use App\Http\Controllers\Election\ElectionAdminController;
 use App\Http\Controllers\Election\ElectionController;
 use App\Http\Controllers\Election\ElectionResultsController;
 use App\Http\Controllers\Election\CandidatePoolController;
@@ -140,7 +141,9 @@ Route::post('election/write-in/{motion}', [CandidateController::class, 'addWrite
 //Handles update and destroy
 Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
 
-
+Route::post('election/admin/start/{meeting}', [ElectionAdminController::class, 'startVoting']);
+Route::post('election/admin/stop/{meeting}', [ElectionAdminController::class, 'stopVoting']);
+Route::post('election/admin/results/release/{meeting}', [ElectionAdminController::class, 'releaseResults']);
 
 
 

@@ -203,6 +203,79 @@ const actions = {
     },
 
 
+    /**
+     * Sends selections for all offices and all propositions
+     * where the user has made a selection
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    castElectionVotesForSelections({dispatch, commit, getters}) {
+        // let offices = getters.getMotions;
+
+        return new Promise(((resolve, reject) => {
+            let offices = getters.getElectionOffices;
+            _.forEach(offices, (motion) => {
+                let selections = getters.getSelectedCandidatesForMotion(motion);
+                if (selections.length > 0) {
+                    dispatch('castElectionVote', motion);
+                }
+            });
+
+            let propositions = getters.getElectionPropositions;
+            _.forEach(propositions, (motion) => {
+                let voteObj = getters.getPropositionVoteForMotion(motion);
+                if (isReadyToRock(voteObj)) {
+
+                    //Doing this in VOT-126 so that can use the OG castMotionVote
+                    // which assumes the vote object hasn't been stored to state yet.
+                    let voteObj2 = new Vote(voteObj);
+                    window.console.log('recording ', voteObj2);
+                    dispatch('castMotionVote', voteObj2);
+                }
+
+            });
+
+            //Prevent from accessing votes and show receipts if present
+            commit('showVotingCompleteCard');
+
+            resolve();
+
+            // _.forEach(getters.getSelectedCandidatesForMotion, (candidate) => {
+            //     data.candidateIds.push(candidate.id);
+            // });
+            //
+            // let me = this;
+            //
+            // return Vue.axios.post(url, data)
+            //     .then((response) => {
+            //
+            //         console.log(response.data);
+            //
+            //         commit('addReceipt', {
+            //             motionId: motionId,
+            //             receipt: response.data.receipt
+            //         });
+            //
+            //         //Add it to the already voted list
+            //         commit('addVotedUponMotion', motionId);
+            //
+            //         return resolve();
+            //     }).catch(function (error) {
+            //         // error handling
+            //         if (error.response) {
+            //             dispatch('showServerProvidedMessage', error.response.data);
+            //             return reject(error);
+            //         }
+            //     });
+        }));
+
+
+    },
+
+
     unselectCandidate({dispatch, commit, getters}, candidateObject) {
 
         return new Promise(((resolve, reject) => {
@@ -263,6 +336,29 @@ const getters = {
             window.console.log(e);
             return false;
         }
+    },
+
+    /**
+     * Returns true if the user has
+     * voted on all offices and propositions; false otherwise
+     * @param state
+     * @param getters
+     */
+    isVotingComplete: (state, getters) => {
+        let votedIds = getters.getMotionIdsUserVotedUpon;
+        let motionIds = []
+
+        //don't return yes if haven't loaded
+        if(votedIds.length === 0 || motionIds.length ===  0){
+            return false;
+        }
+
+        _.forEach(getters.getMotions, (motion) => {
+            motionIds.push(motion.id);
+        });
+
+        return _.difference(motionIds, votedIds).length === 0;
+
     },
 
     getOfficesWithErrors: (state, getters) => {

@@ -22,15 +22,25 @@ const mutations = {
 
     /**
      * Pushes a meeting object into meetings
+     * If the new object has the same id as an existing one,
+     * it replaces it
      * @param state
      * @param meetingObject
      */
     addMeetingToStore: (state, meetingObject) => {
-        //todo double check that there is no reason to have duplicates or raise an error
+
         let mi = -1;
+
         _.forEach(state.meetings, function (m) {
             if (m.id === meetingObject.id) {
+                //If the object already exists, we will replace it
+                let idx = state.meetings.indexOf(m);
+                window.console.log('idx' , idx, m);
+                state.meetings.splice(idx,);
+                state.meetings.push(meetingObject);
+
                 mi = 1;
+
             }
         });
 

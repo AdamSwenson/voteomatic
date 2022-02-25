@@ -16,16 +16,25 @@ class Meeting extends Model
 {
     use HasFactory;
 
-    protected $fillable= [
+    protected $fillable = [
         'date',
         'name',
         'is_election',
+        /** If an election, whether the chair has closed voting */
+        'is_complete',
+        /** If an election, determines whether any user can vote */
+        'is_voting_available',
         'info'
     ];
 
     protected $casts = [
         'is_election' => 'boolean',
-        'info' => 'array'];
+        'is_voting_available' => 'boolean',
+        'is_complete' => 'boolean',
+        'info' => 'array'
+    ];
+
+    // =============================== Authentication and Authorization
 
     /**
      * @return User
@@ -52,7 +61,8 @@ class Meeting extends Model
      * @param User $user
      * @return bool
      */
-    public function isOwner(User $user){
+    public function isOwner(User $user)
+    {
         return $user->is($this->getOwner());
     }
 
@@ -77,6 +87,31 @@ class Meeting extends Model
         $this->users()->attach($user);
         $this->push();
     }
+
+
+    // ============================= Election specific
+
+    /**
+     * Makes it possible for voters to vote
+     */
+    public function openVoting()
+    {
+        $this->is_voting_available = true;
+        if( $this->is_complete === true) $this->is_complete = false;
+        $this->save();
+    }
+
+    /**
+     * Removes the ability for anyone to vote in the election
+     * and indicates that the election is complete
+     */
+    public function closeVoting()
+    {
+        $this->is_voting_available = false;
+        $this->is_complete = true;
+        $this->save();
+    }
+
 
 
 // ----------------------- start
