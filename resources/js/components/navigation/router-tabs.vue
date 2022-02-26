@@ -89,9 +89,11 @@ export default {
                     if (r.type === 'election' || r.type === 'all') {
                         if(r.name === 'election-results' && this.showResultsTab){
                             showRoutes.push(r);
-                        }else {
-
-
+                        }
+                        else if(r.name === 'verify' && this.showVerifyTab){
+                            showRoutes.push(r);
+                        }
+                        else {
                             if (r.adminOnly) {
                                 if (me.isAdmin) {
                                     showRoutes.push(r);
@@ -135,7 +137,9 @@ isElection: function(){
             }
             return this.routes;
         },
-
+showVerifyTab: function(){
+    return this.$store.getters.getMotionIdsUserVotedUpon.length > 0;
+},
         showResultsTab: function(){
             if(this.isElection && isReadyToRock(this.motion)){
                 //dev Eventually this should be instead controlled by a 'results available' prop
