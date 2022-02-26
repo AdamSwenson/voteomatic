@@ -34,7 +34,7 @@ class CSUNStandingCommitteeWithCandidatesSeeder extends Seeder
         }
 
 
-        $this->command->line("\n Fake CSUN Senate election (no candidates): {$election->id}");
+        $this->command->line("\n Fake CSUN Standing Committee election (with candidates): {$election->id}");
 
     }
 }

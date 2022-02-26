@@ -107,7 +107,7 @@ This Advisory Committee shall make recommendations to the Director of the Learni
         }
 
 
-        $this->command->line("\n Fake CSUN Senate election (no candidates): {$election->id}");
+        $this->command->line("\n Fake CSUN Standing Committee election (no candidates): {$election->id}");
 
     }
 }
