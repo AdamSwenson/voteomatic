@@ -8,9 +8,8 @@
        class="list-group-item list-group-item-action"
        v-bind:class="styling"
     v-on:click="handleSelect">
-        <span v-bind:class="textStyling">
-           Instructions
-        </span></a>
+        <i class="bi-book" aria-hidden="true"></i>   <span v-bind:class="textStyling">Instructions</span>
+    </a>
 
 </template>
 
@@ -102,7 +101,7 @@ export default {
         },
 
         textStyling : function(){
-            return 'font-weight-bold';
+            return 'font-weight-bolder';
 
             if(this.hasVoted) return 'text-muted';
 

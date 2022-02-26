@@ -4,17 +4,28 @@
         <div class="card-header">Instructions</div>
 
         <div class="card-body" >
-            <p class="card-text"> TODO Instructions here. </p>
+            <p class="card-text">Welcome to the CSUN faculty election! Thank you for your participation in shared governance.</p>
 
-            <p class="card-text">If you refresh your browser before recording your selections,
-                the selections will be lost. </p>
+            <p class="card-text">[todo video link]</p>
 
-            <p class="card-text">You may record some selections and return later to record
-                others. However, the past votes cannot be altered.</p>
+            <p class="card-text">Please make your selections for each office on the following screens. Your votes will not be recorded
+                until you review and submit them on the final page. If you refresh your browser before recording your selections,
+                the selections will be lost.</p>
+
+            <p class="card-text">You may vote for some offices and return later to vote for others.
+                However, since your vote is recorded anonymously, once you review and submit your choices for a position,
+                it cannot be altered. </p>
 
 
+            <p class="card-text">For more information about how the voteomatic keeps your vote
+                anonymous, please see <a href="https://github.com/AdamSwenson/voteomatic#anonymity">https://github.com/AdamSwenson/voteomatic#anonymity</a> </p>
+
+
+        </div>
+
+        <div class="card-body">
             <p class="card-text">
-                <button class="btn btn-lg btn-success" v-on:click="handleStart">Start voting</button>
+                <button class="btn btn-block btn-success" v-on:click="handleStart">Start voting</button>
             </p>
         </div>
 

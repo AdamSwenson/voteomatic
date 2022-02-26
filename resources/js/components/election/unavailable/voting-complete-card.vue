@@ -4,6 +4,9 @@
             <h3 class="card-title">Thank you for voting!</h3>
         </div>
 
+        <div class="card-body">
+            <p class="card-text">If you did not vote for every position, you can finish voting on the <a href="#" v-on:click="handleNavigationToVote">Home tab</a>. </p> </div>
+
         <div class="card-body" v-if="showReceipts">
             <p class="card-text">The receipts below are temporarily stored on your browser. If you refresh the page,
                 it will no longer be possible to retrieve your receipts since your user id is not
@@ -52,6 +55,10 @@ export default {
 
         handleNavigationToVerify : function(){
             this.$router.push('verify');
+        },
+
+        handleNavigationToVote : function(){
+            this.$router.push('election-home');
         }
     }
 

@@ -30,9 +30,9 @@ export default {
         },
 
         styling: function(){
-            if (this.hasProblem) return ' btn-large btn-success disabled'
+            if (this.hasProblem) return ' btn-block btn-success disabled'
 
-            return ' btn-large btn-success'
+            return ' btn-block btn-success'
         },
 
         ariaDisabled: function () {

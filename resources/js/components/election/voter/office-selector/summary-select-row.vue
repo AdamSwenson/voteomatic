@@ -9,7 +9,7 @@
        v-bind:class="styling"
     v-on:click="handleSelect">
         <span v-bind:class="textStyling">
-            Review and record selections
+            <i class="bi-save" aria-hidden="true"></i>   Review and record selections
         </span></a>
 
 </template>

@@ -14,7 +14,8 @@ export default {
             modalId: 'recordAllSelectionsModal',
             modalTitle: 'Record your votes',
             buttonLabel: 'Record',
-            modalText: "Once you click 'Record' your selections will be sent to the server. You will not be able to change your votes.",
+            modalText: "<p>Once you click 'Record' your selections will be sent to the server. You will <strong>not</strong> be able to change these votes.</p>" +
+                "<p>If you did not vote for every position, you will be able to finish voting later.</p>",
 
         }
     },
