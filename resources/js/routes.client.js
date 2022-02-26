@@ -91,6 +91,16 @@ export const routes = [
         adminOnly: false,
         type: 'meeting'
     },
+    {
+        name: 'verify',
+        path: '/verify',
+        icon: "fa fa-check",
+        label: "Verify votes",
+        components: {main: voteVerify},
+        props: true,
+        adminOnly: false,
+        type : 'all'
+    },
 
     {
         name: 'results',
@@ -160,16 +170,6 @@ adminOnly : false,
         type : 'election'
     },
 
-    {
-        name: 'verify',
-        path: '/verify',
-        icon: "fa fa-check",
-        label: "Verify votes",
-        components: {main: voteVerify},
-        props: true,
-        adminOnly: false,
-        type : 'all'
-    },
 
 
     {

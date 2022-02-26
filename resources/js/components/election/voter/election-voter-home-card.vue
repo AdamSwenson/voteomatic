@@ -6,7 +6,7 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-md-3" v-if="! isVotingComplete">
+                <div class="col-md-3" v-if="showOfficeSelector">
                     <office-select-area></office-select-area>
                 </div>
                 <div class="col-md-9">
@@ -81,6 +81,10 @@ export default {
          */
         shownCard: function(){
             return this.$store.getters.getShownCard;
+        },
+
+        showOfficeSelector : function(){
+            return ! this.isVotingComplete && isReadyToRock(this.meeting, 'isVotingAvailable');
         },
 
         // showableCards : function (){

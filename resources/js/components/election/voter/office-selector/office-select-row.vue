@@ -7,7 +7,8 @@
     <a href="#"
        class="list-group-item list-group-item-action"
        v-bind:class="styling"
-    v-on:click="handleSelect">
+    v-on:click="handleSelect"
+    ><i v-if="hasVoted" class="bi-check text-success"></i>
         <span v-bind:class="textStyling">{{officeName}}</span></a>
 
 </template>
@@ -43,6 +44,8 @@ export default {
          * Returns true if the user has already voted on this office
          */
         hasVoted: function(){
+            if(!isReadyToRock(this.motion)) return false;
+            return this.$store.getters.hasVotedOnMotion(this.motion);
 // return true;
         },
 

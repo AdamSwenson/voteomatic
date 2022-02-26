@@ -1077,6 +1077,12 @@ const getters = {
     },
 
 
+    hasVotedOnMotion: (state) => (motion) => {
+        return state.motionIdsUserHasVotedUpon.indexOf(motion.id) > -1
+
+        // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
+    },
+
     /**
      * Not actually a getter from state; doing this way to keep
      * the definitions centrally. Returns the

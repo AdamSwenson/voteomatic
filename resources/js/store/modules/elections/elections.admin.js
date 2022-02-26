@@ -6,7 +6,9 @@
 import {idify} from "../../../utilities/object.utilities";
 
 import Election from "../../../models/Election";
+import Payload from "../../../models/Payload";
 import * as routes from "../../../routes";
+
 const state = {
     //things: []
 };
@@ -23,6 +25,14 @@ const mutations = {
 
 const actions = {
 
+    /**
+     * Makes it possible for voters to vote
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
     enableElectionVoting({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             let meetingId = idify(meeting);
@@ -34,13 +44,30 @@ const actions = {
                     //there may be several things that change when the election
                     //starts and don't want to tightly couple.
                     let e = new Election(response.data);
-                    commit('addMeetingToStore', e);
-                    commit('setMeeting', e);
+
+                    _.forEach(_.keys(meeting), (prop) => {
+                        if (e[prop] !== meeting[prop]) {
+                            let p = new Payload();
+                            p.updateProp = prop;
+                            p.updateVal = e[prop];
+                            commit('setMeetingProp', p);
+                        }
+                    });
+                    // commit('addMeetingToStore', e);
+                    // commit('setMeeting', e);
                     return resolve();
                 });
         }));
     },
 
+    /**
+     * Makes it no longer possible for anyone to vote
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
     closeElectionVoting({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             let meetingId = idify(meeting);
@@ -52,13 +79,28 @@ const actions = {
                     //there may be several things that change when the election
                     //starts and don't want to tightly couple.
                     let e = new Election(response.data);
-                    commit('addMeetingToStore', e);
-                    commit('setMeeting', e);
+                    _.forEach(_.keys(meeting), (prop) => {
+                        if (e[prop] !== meeting[prop]) {
+                            let p = new Payload();
+                            p.updateProp = prop;
+                            p.updateVal = e[prop];
+                            commit('setMeetingProp', p);
+                        }
+                    });
                     return resolve();
                 });
         }));
     },
 
+    /**
+     * After the election has closed, allows voters generally to view results
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
     releaseResults({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             let meetingId = idify(meeting);

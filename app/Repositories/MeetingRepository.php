@@ -87,6 +87,8 @@ class MeetingRepository implements IMeetingRepository
         $meeting->addUserToMeeting($user);
         $meeting->setOwner($user);
         $meeting->is_election = true;
+        //Prevent users from voting by default
+        $meeting->is_voting_available = false;
         $meeting->save();
         return $meeting;
 

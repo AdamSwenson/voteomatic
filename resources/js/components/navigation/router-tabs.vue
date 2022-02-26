@@ -42,7 +42,8 @@
 import {routes} from '../../routes.client';
 import RouterTab from "./router-tab";
 import store from "../../store";
-
+import MeetingMixin from "../../mixins/meetingMixin";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 /**
  * Page navigation tabs
@@ -51,6 +52,9 @@ import store from "../../store";
 export default {
     components: {RouterTab},
     props: [],
+
+
+    mixins: [MeetingMixin],
 
     data: function () {
         return {
@@ -83,12 +87,18 @@ export default {
                 let me = this;
                 _.forEach(routes, (r) => {
                     if (r.type === 'election' || r.type === 'all') {
-                        if (r.adminOnly) {
-                            if (me.isAdmin) {
+                        if(r.name === 'election-results' && this.showResultsTab){
+                            showRoutes.push(r);
+                        }else {
+
+
+                            if (r.adminOnly) {
+                                if (me.isAdmin) {
+                                    showRoutes.push(r);
+                                }
+                            } else {
                                 showRoutes.push(r);
                             }
-                        } else {
-                            showRoutes.push(r);
                         }
                     }
                 });
@@ -115,13 +125,26 @@ export default {
             return showRoutes;
             // return routes
         },
-
+isElection: function(){
+            return this.$store.getters.isElection;
+},
         shownRoutes: function () {
             // window.console.log('isElection', this.$store.getters.isElection);
             if (this.$store.getters.isElection) {
                 return this.electionRoutes;
             }
             return this.routes;
+        },
+
+        showResultsTab: function(){
+            if(this.isElection && isReadyToRock(this.motion)){
+                //dev Eventually this should be instead controlled by a 'results available' prop
+                return this.motion.isComplete;
+            }
+
+            //dev If need to do for regular meeting, that check goes here
+
+            return true;
         }
     },
 
