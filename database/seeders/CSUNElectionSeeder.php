@@ -37,7 +37,7 @@ public static $electionProps =  [
     public static $multiwinnerOffices = [
         [
             'content' => 'Senator-at-Large',
-            'description' => "Senators elected by all Faculty",
+            'description' => "Twelve Senators shall be elected at-large by and from the Faculty. (III.1.2.1)",
             'max_winners' => 8
         ],
     ];
