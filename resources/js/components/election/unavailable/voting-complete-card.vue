@@ -5,7 +5,8 @@
         </div>
 
         <div class="card-body">
-            <p class="card-text">If you did not vote for every position, you can finish voting on the <a href="#" v-on:click="handleNavigationToVote">Home tab</a>. </p> </div>
+            <p class="card-text">If you did not vote for every position, you can finish voting by refreshing the page or logging back in from Canvas later (make sure you have recorded your receipts first!) </p></div>
+<!--        on the <a href="#" v-on:click="handleNavigationToVote">Home tab</a>. </p> </div>-->
 
         <div class="card-body" v-if="showReceipts">
             <p class="card-text">The receipts below are temporarily stored on your browser. If you refresh the page,
