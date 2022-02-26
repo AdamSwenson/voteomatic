@@ -24,7 +24,11 @@ class PersonFactory extends Factory
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'info' => ['department' => $this->faker->jobTitle]
+            'info' => [
+                'link' => $this->faker->url,
+                'department' => $this->faker->jobTitle,
+
+            ]
         ];
     }
 }

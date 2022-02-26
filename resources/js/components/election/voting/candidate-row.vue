@@ -79,7 +79,10 @@ export default {
             // if(isReadyToRock(this.meeting)) return this.meeting.candidateFields;
             if (!isReadyToRock(this.candidate) || this.candidate.info.length === 0) return []
 
-            return _.keys(this.candidate.info);
+            //dev Don't need the unique part, just the sort to get the link last
+            let k =  _.keys(this.candidate.info);
+            k.sort();
+            return k;
         },
 
         candidateInfo: function () {

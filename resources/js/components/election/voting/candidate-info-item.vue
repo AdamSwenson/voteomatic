@@ -1,7 +1,7 @@
 <template>
     <div class="info-item" v-if="isShown">
         <p class="card-text">
-            {{ info }}
+            <span v-html="info"></span>
         </p>
     </div>
 </template>
@@ -37,8 +37,23 @@ export default {
     },
 
     asyncComputed: {
+
+
         info: function () {
+            let info = this.candidate.getInfoField(this.fieldName);
+
+            if(this.isLink) return `<a href='${info}'>${info}</a>`;
+
             return this.candidate.getInfoField(this.fieldName);
+        },
+
+        /**
+         * Returns boolean of whether the item is a
+         * url.
+         * dev Everything around this (including display order is very hacky)
+         */
+        isLink: function(){
+            return this.fieldName === 'link';
         },
 
         /**
