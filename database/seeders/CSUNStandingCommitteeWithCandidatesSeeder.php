@@ -25,10 +25,10 @@ class CSUNStandingCommitteeWithCandidatesSeeder extends Seeder
         foreach(CSUNStandingCommitteeSeeder::$multiwinnerOffices as $office){
             $office['meeting_id'] = $election->id;
            $m = Motion::factory()
-                ->electedOfficeSingleChoice()
+                ->electedOffice()
                 ->create($office);
 
-            $numCandidates = $this->faker->numberBetween($office->max_winners, 2 * $office->max_winners);
+            $numCandidates = $this->faker->numberBetween($office['max_winners'], 2 * $office['max_winners']);
             Candidate::factory()->count($numCandidates)->create(['motion_id' => $m->id]);
 
         }
