@@ -239,7 +239,7 @@ const actions ={
                     // commit('clearCandidates');
                     _.forEach(response.data, (d) => {
 
-                        window.console.log('loadElectionCandidates', d);
+                        // window.console.log('loadElectionCandidates', d);
 
                         let candidate = new Candidate(d);
 

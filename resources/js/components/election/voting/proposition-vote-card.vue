@@ -6,11 +6,30 @@
         </div>
 
         <div class="vote-area card-body" >
+            <div class="contentArea" v-html="motionContent"></div>
+            </div>
 
-            <div class="text-center">
-                <motion-text-display
-                    :motion="motion"
-                ></motion-text-display>
+        <div class="card-body">
+            <div class="descriptionArea" v-html="motionDescription"></div>
+
+<!--            <div class="text-center">-->
+<!--                <motion-text-display-->
+<!--                    :motion="motion"-->
+<!--                ></motion-text-display>-->
+<!--            </div>-->
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h3 class="card-title">Pro</h3>
+                <p class="card-text">[Insert]</p>
+                </div>
+
+                <div class="col">
+                    <h3 class="card-title">Con</h3>
+                    <p class="card-text">[Insert]</p>
+                </div>
             </div>
         </div>
 
@@ -27,7 +46,7 @@
                 </div>
 
                 <div class="col">
-                    <p class="motionDescription text-muted">{{ motionDescription }}</p>
+<!--                    <p class="motionDescription text-muted">{{ motionDescription }}</p>-->
 
                 </div>
             </div>
@@ -140,6 +159,8 @@ export default {
 
         motionDescription: function () {
             if (!isReadyToRock(this.motion)) return ''
+
+            return this.motion.description;
         },
 
         nayStyling: function () {

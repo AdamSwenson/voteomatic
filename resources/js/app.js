@@ -31,12 +31,16 @@ Vue.use( VueRouter );
 // Each route should map to a component. The "component" can
 // either be an actual component constructor created via
 // Vue.extend(), or just a component options object.
-import  {routes} from './routes.client';
-// import { routes } from './routes';
+import  {meetingRoutes} from './routes.client.meeting';
+import { electionRoutes } from './routes.client.election';
 
+let routes = _.concat(electionRoutes, meetingRoutes);
+
+// let routes = window.startData.isElection ? electionRoutes : meetingRoutes;
+// window.console.log(routes);
 // // Create the router instance and pass the `routes` option
 export const router = new VueRouter( {
-    routes, // short for routes: routes
+    routes: routes, // short for routes: routes
     base: window.routeRoot
 } );
 
