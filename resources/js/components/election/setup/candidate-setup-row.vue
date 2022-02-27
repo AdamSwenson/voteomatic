@@ -7,7 +7,7 @@
                 v-on:click="handleClick"
         >{{ label }}
         </button>
-        {{ candidate.name }}
+        {{ candidate.nameAndInfo }}
     </li>
 
 
@@ -37,7 +37,7 @@ export default {
     asyncComputed: {
         label: function () {
             if (this.isPool) {
-                return this.selected ? 'Selected' : 'Select';
+                return this.selected ? 'Selected' : 'Nominate';
             }
             //If we are just the list of candidates
             return 'Remove'
@@ -99,17 +99,17 @@ export default {
     methods: {
 
         handleClick: function () {
-let me = this;
+            let me = this;
             if (!this.selected) {
                 //Make them into a candidate
                 // let data = {name: this.candidate.name, info: this.candidate.info, motionId : this.candidate}
                 window.console.log('add', 'candidate-setup-row button clicked for ', this.candidate.name);
 
-                this.$store.dispatch('addPoolMemberToOfficeElection', this.candidate);
+                this.$store.dispatch('addCandidate', this.candidate);
             } else {
                 //remove them as a candidate
                 window.console.log('remove', 'candidate-setup-row button clicked for ', this.candidate.name);
-                this.$store.dispatch('removeCandidate', this.candidate).then(function(){
+                this.$store.dispatch('removeCandidate', this.candidate).then(function () {
                     me.events += 1;
 
                 });

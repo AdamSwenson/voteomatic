@@ -15,7 +15,14 @@ import meetingHome from './components/main/meeting-home'
 import eventSetupCard from "./components/main/chair/event-setup-card";
 import voteCard from "./components/main/vote-card";
 
+import electionVoterHomeCard from './components/election/voter/election-voter-home-card';
+import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
+
+import electionAdminCard from './components/election/admin/election-admin-card';
 Vue.component('ballot-setup-card', ballotSetupCard);
+
+Vue.component('proposition-setup-card', propositionSetupCard);
+
 // Vue.component('election-card', electionCard);
 // Vue.component('election-setup-card', electionSetupCard);
 Vue.component(('event-setup-card', eventSetupCard));
@@ -29,79 +36,107 @@ Vue.component('results-card', resultsCard);
 Vue.component('vote-card', voteCard);
 Vue.component('vote-verify', resultsCard);
 
+//dev
+Vue.component('election-voter-home-card', electionVoterHomeCard);
 
-export const routes = [
+Vue.component('election-admin-card', electionAdminCard);
+
+
+export const electionRoutes = [
     {
-        name: 'home',
-        path: '/meeting-home',
-        icon: "fa fa-book",
-        label: "Home",
-        components: {main: meetingHome},
-        default: true,
-        props: true,
-        adminOnly: false
-
-    },
-
-
-    {
-        name: 'vote',
-        path: '/vote',
-        icon: "fa fa-pencil",
-        label: "Vote",
-        // components: {main: votePage},
-        components: {main: voteCard},
-        props: true,
-        adminOnly: false
-    },
-
-    {
-        name: 'results',
-        path: '/results',
-        icon: "fa fa-comments-o",
-        label: "Results",
-        components: {main: resultsCard},
-        props: true,
-        adminOnly: false
-    },
-
-    {
-        name: 'ballot',
-        path: '/ballot',
-        icon: "fa fa-bar-chart",
-        get label() {
-            if (store.getters.isElection) return "Create office";
-            return "Make motion";
+        name: 'election-home',
+        path: '/election-home',
+        label: 'Home',
+        components: {main: electionVoterHomeCard},
+        get default() {
+            if (store.getters.isElection) return true;
+            return false;
         },
-        components: {main: ballotSetupCard},
         props: true,
-        // adminOnly: true,
-
-        adminOnly: false
+        adminOnly: false,
+        type: 'election'
     },
 
+
+//Not actually different, just needed a different name to prevent collision
     {
-        name: 'verify',
+        name: 'election-verify',
         path: '/verify',
         icon: "fa fa-check",
         label: "Verify votes",
         components: {main: voteVerify},
         props: true,
-        adminOnly: false
+        adminOnly: false,
+        type : 'all'
     },
 
 
     {
-        name: 'setup',
+        name: 'election-results',
+        path: '/election-results',
+        icon: "fa fa-comments-o",
+        label: "Results",
+        components: {main: resultsCard},
+        props: true,
+        adminOnly: false,
+        type: 'election'
+    },
+
+    {
+        name: 'setup-offices',
+        path: '/setup-offices',
+        icon: "fa fa-bar-chart",
+        label : "Setup offices",
+        // get label() {
+        //     if (store.getters.isElection) return "Setup offices";
+        //     return "Make motion";
+        // },
+        components: {main: ballotSetupCard},
+        props: true,
+        adminOnly: true,
+        type : 'election'
+    },
+
+
+    {
+        name: 'setup-props',
+        path: '/setup-props',
+        icon: "fa fa-bar-chart",
+        label: 'Setup propositions',
+        components: {main: propositionSetupCard},
+        props: true,
+        // adminOnly: true,
+        adminOnly: true,
+        type : 'election'
+    },
+
+
+
+    {
+        name: 'setup-election',
         path: '/setup',
         get label() {
-            if (store.getters.isElection) return "Setup election";
-            return "Setup meeting";
+            return "Setup election";
+            // if (store.getters.isElection) return "Setup election";
+            // return "Setup meeting";
         },
         components: {main: eventSetupCard},
         props: true,
-        adminOnly: true
+        adminOnly: true,
+        type : 'election'
     },
+
+
+    {
+        name: 'admin',
+        path: '/admin',
+        label : 'Admin',
+        components: {main: electionAdminCard},
+        props: true,
+        adminOnly: true,
+        type : 'election'
+    },
+
 
 
 
@@ -132,9 +167,6 @@ export const routes = [
     //     props: true,
     //     adminOnly: true
     // },
-
-
-
 
 
 ];

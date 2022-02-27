@@ -37,6 +37,20 @@ module.exports = {
 
     election: {
 
+        admin : {
+            startVoting : (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/start/' + meetingId;
+            },
+
+            stopVoting : (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/stop/' + meetingId;
+            },
+
+            releaseResults : (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/results/release/' + meetingId;
+            }
+        },
+
         resource: {
             // candidate: (candidateId) => {
             //     let r = normalizedRouteRoot() + '/election/candidate';
@@ -66,7 +80,7 @@ module.exports = {
             },
 
             people: (personId = null) => {
-                let r = normalizedRouteRoot() + '/election/people';
+                let r = normalizedRouteRoot() + 'election/people';
                 if (!_.isNull(personId)) {
                     r = r + '/' + personId;
                 }

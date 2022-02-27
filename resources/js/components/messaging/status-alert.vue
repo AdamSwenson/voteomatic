@@ -50,7 +50,7 @@ export default {
             return idx > -1;
         },
         alertId: function () {
-            return 'statusAlert' + this.message.id;
+            return _.camelCase('statusAlert' + this.message.id);
         },
         displayTime: function () {
             return this.message.displayTime;
@@ -73,16 +73,33 @@ export default {
         },
         showMotionText: function(){
             return isReadyToRock(this.motionText) && this.motionText.length > 0;
-        }
+        },
+
     },
 
 
     computed: {},
 
+    watch : {
+        alertId : function(){
+            if(isReadyToRock(this.alertId)) this.focusAlert();
+        }
+    },
+
     methods: {
         handleClick: function () {
             this.$store.commit('removeFromMessageQueue', this.message);
+        },
+
+        focusAlert : function(){
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
         }
+    },
+
+
+    mounted() {
+
     }
 
 }

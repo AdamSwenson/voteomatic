@@ -2,8 +2,8 @@
 
     <div class="receipt-list-area"
     v-if="showArea">
-        <h3>{{meetingName}}</h3>
-        <p>{{meetingDate}}</p>
+<!--        <h3>{{// meetingName}}</h3>-->
+<!--        <p>{{meetingDate}}</p>-->
         <div ul="list-group">
 
         <receipt-list-item

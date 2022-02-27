@@ -33,7 +33,11 @@ class MainController extends Controller
             'data' => [
                 'meeting_id' => $meeting->id,
 
+                'isElection' => $meeting->is_election,
+
                 'isAdmin' => $this->user->is_admin,
+
+                'meeting' => $meeting
             ]
         ];
 

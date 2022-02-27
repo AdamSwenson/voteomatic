@@ -50,11 +50,13 @@ class ElectionVoteRepository implements IElectionVoteRepository
         $hash = Vote::makeReceiptHash();
 
         foreach ($candidates as $candidate) {
-            Vote::create([
+            $v = Vote::create([
                 'motion_id' => $motion->id,
                 'candidate_id' => $candidate->id,
                 'receipt' => $hash
             ]);
+            $v->save();
+
         }
 
         return $hash;

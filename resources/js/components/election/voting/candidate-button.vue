@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {isReadyToRock} from "../../utilities/readiness.utilities";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "candidate-button",
@@ -28,19 +28,21 @@ export default {
             return  this.selected ? 'Selected'  : 'Select';
         },
 
-        selectedCandidates: function(){
-            return this.$store.getters.getSelectedCandidatesForMotion;
-        },
+        // selectedCandidates: function(){
+        //     return this.$store.getters.getSelectedCandidatesForActiveMotion;
+        // },
 
         selected: {
             get:function () {
-            // let selectedCandidates =
-                if(!  isReadyToRock(this.selectedCandidates) ) return false;
+                return this.$store.getters.isCandidateSelectedInActiveMotion(this.candidate);
 
-            // window.console.log('selected', this.selectedCandidates);
-            if(this.selectedCandidates.length === 0) return false;
-// return _.includes(selectedCandidates, this.candidate);
-           return this.selectedCandidates.indexOf(this.candidate) > -1;
+//             // let selectedCandidates =
+//                 if(!  isReadyToRock(this.selectedCandidates) ) return false;
+//
+//             // window.console.log('selected', this.selectedCandidates);
+//             if(this.selectedCandidates.length === 0) return false;
+// // return _.includes(selectedCandidates, this.candidate);
+//            return this.selectedCandidates.indexOf(this.candidate) > -1;
 
         },
             // watch :['selectedCandidates'],

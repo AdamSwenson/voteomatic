@@ -22,12 +22,15 @@ const mutations = {
 
     /**
      * Pushes a meeting object into meetings
+     * If the new object has the same id as an existing one,
+     * it replaces it
      * @param state
      * @param meetingObject
      */
     addMeetingToStore: (state, meetingObject) => {
-        //todo double check that there is no reason to have duplicates or raise an error
+
         let mi = -1;
+
         _.forEach(state.meetings, function (m) {
             if (m.id === meetingObject.id) {
                 mi = 1;
@@ -71,11 +74,21 @@ const actions = {
             return Vue.axios.post(url)
                 .then((response) => {
                     let d = response.data;
-                    let meeting = new Meeting(d.id, d.name, d.date);
-                    commit('addMeetingToStore', meeting);
 
-                    commit('setMeeting', meeting);
-                    resolve()
+                    // dev Added in VOT-117 to deal with problem of still being on original meeting
+                    //  NB, this opens the new meeting in a new window. Not sure how annoying that will be
+                    let url = routes.meetings.main(d.id);
+                    dispatch('forceNavigationToUrl', url);
+
+                    // dev removed in VOT-117
+                    // let meeting = new Meeting(d.id, d.name, d.date);
+                    // commit('addMeetingToStore', meeting);
+                    //
+                    // dispatch('setActiveMeeting', meeting).then(() => {
+                    //     resolve();
+                    // });
+
+
                 }).catch(function (error) {
                     // error handling
                     if (error.response) {

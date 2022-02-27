@@ -193,7 +193,7 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
 
                 'requires' => 1.0,
                 'type' => 'election',
@@ -203,6 +203,29 @@ class MotionFactory extends Factory
         });
     }
 
+    public function proposition()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'info->name' => $this->faker->company,
+
+                /** The office being voted upon */
+                'content' => $this->faker->realText,
+
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
+
+                'requires' => 0.5,
+                'type' => 'proposition',
+                'is_resolution' => true,
+
+//                'max_winners' => 1,
+                'seconded' => true,
+            ];
+        });
+
+    }
 
     /**
      * A motion used in an election which does not specify number of winners
@@ -215,7 +238,9 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
 
                 'requires' => 1.0,
                 'type' => 'election',

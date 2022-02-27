@@ -37,8 +37,11 @@ class DatabaseSeeder extends Seeder
             LTIDevCredsSeeder::class,
             FakeFullMeetingSeeder::class,
             FullElectionWithoutVotesSeeder::class,
-            FullElectionWithVotesSeeder::class
-
+            FullElectionWithVotesSeeder::class,
+            CSUNElectionSeeder::class,
+            CSUNElectionSeederWithCandidates::class,
+            CSUNStandingCommitteeSeeder::class,
+            CSUNStandingCommitteeWithCandidatesSeeder::class
         ]);
 
         $meetings = Meeting::all();

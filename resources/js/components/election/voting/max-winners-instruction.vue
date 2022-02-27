@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import {isReadyToRock} from "../../utilities/readiness.utilities";
-import MotionStoreMixin from "../../mixins/motionStoreMixin"
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin"
 
 export default {
     name: "max-winners-instruction",
@@ -34,7 +34,7 @@ export default {
         },
 
         showInstructions: function () {
-            return isReadyToRock(this.maxWinners) && ! this.$store.getters.showOverSelectionWarning;
+            return isReadyToRock(this.maxWinners) && ! this.$store.getters.showOverSelectionWarningForActiveMotion;
         }
     },
 

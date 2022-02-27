@@ -279,7 +279,7 @@ const actions = {
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
                     //set it on a timer
                     dispatch('showMessage', statusMessage);
-                    resolve();
+                    resolve(response);
                 })
                 .catch(function (error) {
                     // error handling
@@ -1076,6 +1076,12 @@ const getters = {
         // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
     },
 
+
+    hasVotedOnMotion: (state) => (motion) => {
+        return state.motionIdsUserHasVotedUpon.indexOf(motion.id) > -1
+
+        // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
+    },
 
     /**
      * Not actually a getter from state; doing this way to keep

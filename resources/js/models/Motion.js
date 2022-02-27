@@ -12,6 +12,7 @@ export default class Motion extends IModel {
     constructor({id=null, content=null, description=null,
                     requires=0.5,
                     type=null,
+        info=null,
                     is_complete=null,
                     is_voting_allowed=null,
                     is_resolution=null,
@@ -22,6 +23,7 @@ export default class Motion extends IModel {
                     max_winners=null}) {
         super();
         this.id = id;
+        this.info = info;
 
         //todo hack because seem to be having trouble typecasting to boolean when get from server
         this.is_resolution =  is_resolution === 1 ? true : is_resolution;
@@ -151,5 +153,16 @@ export default class Motion extends IModel {
             return d.english === text;
         })
 
+    }
+
+    /**
+     * Since the thing we'll want to display in things like the downloaded
+     * receipts differs depending on
+     * the sort of thing voted upon, this returns the relevant text
+     */
+    get displayName(){
+        if(isReadyToRock(this.type) && this.type === 'proposition' && isReadyToRock(this.info, 'name')) return this.info.name;
+
+        return this.content;
     }
 };

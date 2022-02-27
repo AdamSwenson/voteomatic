@@ -21,6 +21,11 @@ class Motion extends Model
         'content',
         'description',
         'debatable',
+
+        /** JSON field for storing stuff needed by different forms of motion */
+        'info',
+        'info->propositionName',
+
         'is_complete',
         'is_current',
         'is_in_order',
@@ -46,11 +51,14 @@ class Motion extends Model
     protected $motionTypes = [
         'amendment',
         'amendment-secondary',
+        /** An office voted upon during an election */
         'election',
         'main',
         'privileged',
         'procedural-main',
         'procedural-subsidiary',
+        /** A proposal voted upon during an election */
+        'proposition',
         'incidental'
     ];
 
@@ -84,6 +92,7 @@ class Motion extends Model
 
 
     protected $casts = [
+        'info' => 'array',
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',
@@ -96,6 +105,35 @@ class Motion extends Model
     ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
+
+
+    // ----------------- Ability to vote related
+
+    /**
+     * Updates the motion so that votes can no longer
+     * be cast. This should be used rather than manually
+     * marking the changes to avoid overly tight coupling
+     */
+    public function closeVoting()
+    {
+        $this->is_voting_allowed = false;
+        $this->is_complete = true;
+        $this->save();
+    }
+
+    /**
+     * Makes it possible for voters to vote.
+     * This is normally only used in elections where the administrator
+     * may need to reopen voting after closing it.
+     * Not needed for regular motions in meetings
+     */
+    public function openVoting()
+    {
+        $this->is_voting_allowed = true;
+        if( $this->is_complete === true) $this->is_complete = false;
+        $this->save();
+    }
+
 
 
     // ------------------ Motion tree related
@@ -117,6 +155,7 @@ class Motion extends Model
         $subsidiaryMotion->applies_to = $this->id;
         $subsidiaryMotion->save();
     }
+
 
     /**
      * Returns all subsidiary direct descendent motions, FILO ordered

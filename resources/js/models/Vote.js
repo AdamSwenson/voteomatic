@@ -2,18 +2,20 @@ import IModel from "./IModel";
 import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Vote extends IModel {
+    candidateId;
 
 
     /**
      * Create a new motion
      * @param params
      */
-    constructor({isYay=null, receipt=null, id=null, motionId=null}) {
+    constructor({isYay=null, receipt=null, id=null, motionId=null, candidateId=null}) {
         super();
         this._isYay = isYay;
         this.receipt = receipt;
         this.id = id;
         this.motionId = motionId;
+        this.candidateId = candidateId;
     }
 
     get isYay(){
@@ -49,6 +51,15 @@ export default class Vote extends IModel {
         if(! this._isYay) return 'nay';
     }
 
+    /**
+     * Returns yes / no instead of yay / nay
+     * @returns {string}
+     */
+    get voteDisplayYesNo(){
+        if(this._isYay) return 'Yes';
+
+        if(! this._isYay) return 'No';
+    }
 
 
 }

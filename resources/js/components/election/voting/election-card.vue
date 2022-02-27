@@ -13,38 +13,49 @@
             </div>
 
             <max-winners-instruction></max-winners-instruction>
+
+            <div class="card-body" v-if="showDescription">
+                <p class="card-text ml-4 mr-4">{{ motion.description }}</p>
+            </div>
+
             <overselection-warning></overselection-warning>
 
             <!--        <div class="card-body instructions" v-if="instructions.length > 0">-->
             <!--            {{ instructions }}-->
             <!--        </div>-->
 
-            <div class="card-body">
-
-                <candidate-row v-for="candidate in candidates"
-                               :key="candidate.id"
-                               :candidate="candidate"
-                ></candidate-row>
-
-                <!--                Enable after VOT-60 is complete-->
-                <!--                <candidate-row v-if="writeInCandidates.length > 0"-->
-                <!--                             v-for="candidate in writeInCandidates"-->
-                <!--                             :candidate="candidate"-->
-                <!--                             :key="candidate.id"-->
-                <!--                ></candidate-row>-->
-                <overselection-warning></overselection-warning>
-
+            <div class="alert alert-success" role="alert" v-if="hasUserVoted">
+                <p class="card-text">You have voted on this. </p>
             </div>
 
-            <!--            Enable after VOT-60 is complete-->
-            <!--            <div class="card-body">-->
-            <!--                <write-in-controls></write-in-controls>-->
-            <!--            </div>-->
+            <div class="vote-controls" v-else>
+                <div class="card-body">
+
+                    <candidate-row v-for="candidate in candidates"
+                                   :key="candidate.id"
+                                   :candidate="candidate"
+                    ></candidate-row>
+
+                    <!--                Enable after VOT-60 is complete-->
+                    <candidate-row v-if="writeInCandidates.length > 0"
+                                   v-for="candidate in writeInCandidates"
+                                   :candidate="candidate"
+                                   :key="candidate.id"
+                    ></candidate-row>
 
 
-            <div class="card-footer">
-                <cast-ballot-button></cast-ballot-button>
+                    <overselection-warning></overselection-warning>
+
+                </div>
+
+                <!--            Enable after VOT-60 is complete-->
+                <div class="card-body">
+                    <write-in-controls></write-in-controls>
+
+                    <p class="text-muted">You will confirm and record your selections later.</p>
+                </div>
             </div>
+            <navigation-footer></navigation-footer>
 
         </div>
 
@@ -62,20 +73,22 @@
 
 <script>
 import CandidateRow from "./candidate-row";
-import MeetingMixin from "../../mixins/meetingMixin";
-import MotionStoreMixin from "../../mixins/motionStoreMixin"
-import {isReadyToRock} from '../../utilities/readiness.utilities'
+import MeetingMixin from "../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin"
+import {isReadyToRock} from '../../../utilities/readiness.utilities'
 import CastBallotButton from "./cast-ballot-button";
 import OverselectionWarning from "./overselection-warning";
 import MaxWinnersInstruction from "./max-winners-instruction";
-import WriteinRow from "../deprecated/writein-row";
-import WriteInControls from "./write-in/write-in-controls";
-import ElectionResultsCard from "./results/election-results-card";
-import ModeMixin from "../../mixins/modeMixin";
+import WriteinRow from "../../deprecated/writein-row";
+import WriteInControls from "../write-in/write-in-controls";
+import ElectionResultsCard from "../results/election-results-card";
+import ModeMixin from "../../../mixins/modeMixin";
+import NavigationFooter from "../voter/navigation/navigation-footer";
 
 export default {
     name: "election-card",
     components: {
+        NavigationFooter,
         ElectionResultsCard,
         WriteInControls,
         WriteinRow, MaxWinnersInstruction, OverselectionWarning, CastBallotButton, CandidateRow
@@ -102,6 +115,10 @@ export default {
 
 
     asyncComputed: {
+
+        hasUserVoted: function () {
+            return this.$store.getters.hasVotedOnCurrentMotion;
+        },
 
         office: {
             get: function () {
@@ -164,16 +181,16 @@ export default {
 
         },
 
-        instructions: {
-            get: function () {
-                if (isReadyToRock(this.motion)) return this.motion.description;
-
-                return ''
-            },
-
-            default: ''
-
-        },
+        // instructions: {
+        //     get: function () {
+        //         if (isReadyToRock(this.motion)) return this.motion.description;
+        //
+        //         return ''
+        //     },
+        //
+        //     default: ''
+        //
+        // },
 
         isComplete: function () {
             return this.$store.getters.isElectionComplete;
@@ -196,21 +213,42 @@ export default {
                 if (isReadyToRock(this.motion)) return this.motion.content;
             },
             default: ''
+        },
+
+        /**
+         * We make it look disabled when on the first in
+         * the stack
+         */
+        showPreviousButton: function () {
+            return this.$store.getters.getMotions.indexOf(this.$store.getters.getActiveMotion) > 0
+
+        },
+
+        showDescription: function () {
+            return isReadyToRock(this.motion, 'description') && this.motion.description.length > 0;
         }
     },
 
     computed: {},
 
-    methods: {}
+    methods: {
+        handleNext: function () {
+            this.$store.dispatch('nextOfficeInStack');
+        },
+        handlePrevious: function () {
+            this.$store.dispatch('previousOffice');
+        }
+
+    }
     ,
 
     mounted() {
         let me = this;
 
-        me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
-
-            window.console.log('election-card', 'isReady', 159, me.isReady);
-        });
+        // me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
+        //
+        //     window.console.log('election-card', 'isReady', 159, me.isReady);
+        // });
 //
 // //todo DEV ONLY
 //         let me = this;

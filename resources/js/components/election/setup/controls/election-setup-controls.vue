@@ -1,11 +1,11 @@
 <template>
 
     <div class="election-setup-controls row">
-        <div class="col-lg-2 text-left">
-            <create-office-button></create-office-button>
-        </div>
+<!--        <div class="col-lg-2 text-left">-->
+<!--            <create-office-button></create-office-button>-->
+<!--        </div>-->
 
-        <div class="col-lg-4 ">
+        <div class="col-lg-6 ">
             <create-election-button></create-election-button>
 
             <edit-election-button></edit-election-button>

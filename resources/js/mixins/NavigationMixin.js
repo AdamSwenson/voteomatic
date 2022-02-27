@@ -7,7 +7,24 @@ module.exports = {
 
 
     asyncComputed: {
-
+        // /**
+        //  * Not actually used by a component.
+        //  * This watches the navTrigger value. When
+        //  * an incoming websocket message tells us that the vote is complete,
+        //  * this switches to the home tab. It then resets the navTrigger value
+        //  * so that the user can navigate away from home.
+        //  */
+        // electionNomeNavTrigger: {
+        //     get : function(){
+        //         if(this.$store.getters.getElectionHomeNavTrigger === true){
+        //             if(this.$router.currentRoute.name !== 'election-home') {
+        //                 this.$router.push('election-home');
+        //             }
+        //             this.$store.commit('setHomeNavTrigger', false);
+        //         }
+        //     },
+        //
+        // },
         /**
          * Not actually used by a component.
          * This watches the navTrigger value. When
@@ -18,8 +35,13 @@ module.exports = {
         homeNavTrigger: {
             get : function(){
                 if(this.$store.getters.getHomeNavTrigger === true){
-                    if(this.$router.currentRoute.name !== 'home') {
-                        this.$router.push('meeting-home');
+                    if(this.$store.getters.isElection){
+                        this.$router.push('election-home');
+                    }
+                    else {
+                        if (this.$router.currentRoute.name !== 'home') {
+                            this.$router.push('meeting-home');
+                        }
                     }
                     this.$store.commit('setHomeNavTrigger', false);
                 }

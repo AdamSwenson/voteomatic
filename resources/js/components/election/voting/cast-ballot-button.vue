@@ -1,7 +1,7 @@
 <template>
 
     <button
-        class="btn"
+        class="btn btn-lg "
         v-bind:class="styling"
         v-on:click="handleClick"
         v-bind:aria-disabled="ariaDisabled"
@@ -25,7 +25,7 @@ export default {
     asyncComputed: {
 
         showOverSelectionWarning: function () {
-            return this.$store.getters.showOverSelectionWarning;
+            return this.$store.getters.showOverSelectionWarningForActiveMotion;
         },
 
         ariaDisabled: function () {
@@ -33,8 +33,8 @@ export default {
         },
 
         styling: function () {
-            if (this.showOverSelectionWarning) return 'btn-warning disabled'
-            return "btn-warning";
+            if (this.showOverSelectionWarning) return 'btn-success disabled'
+            return "btn-success ";
         }
     },
 

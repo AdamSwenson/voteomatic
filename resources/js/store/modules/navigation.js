@@ -61,6 +61,19 @@ const actions = {
         }));
     },
 
+    /***
+     * Opens a new page with the given url.
+     * Usually used when creating a new meeting to ensure everything gets
+     * cleaned out
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param url
+     */
+    forceNavigationToUrl({dispatch, commit, getters}, url) {
+        window.open(url, );
+    },
+
 };
 
 const getters = {
