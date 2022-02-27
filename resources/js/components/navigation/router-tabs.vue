@@ -4,25 +4,6 @@
         <ul class=" nav nav-tabs ">
             <router-tab v-for="r in shownRoutes" :route="r" :key="r.name"></router-tab>
 
-            <!--        <router-link-->
-            <!--            v-for="r in routes"-->
-            <!--            v-bind:key="r.name"-->
-            <!--            tag="li"-->
-            <!--            v-bind:style="styling"-->
-            <!--            v-bind:active-class="activeClass"-->
-            <!--            v-bind:to="r.path"-->
-            <!--        >-->
-            <!--            &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-            <!--            <a class="page-nav nav-link">-->
-            <!--                    <span class="icon is-small">-->
-            <!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
-            <!--&lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;                        </svg>&ndash;&gt;-->
-            <!--&lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
-            <!--                        </span>-->
-            <!--                <span>{{ r.label }}</span>-->
-            <!--            </a>-->
-            <!--        </router-link>-->
 
         </ul>
     </div>

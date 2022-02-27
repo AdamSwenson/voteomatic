@@ -1,10 +1,14 @@
 <template>
     <div class="card voting-instructions-card">
 
-        <div class="card-header">Instructions</div>
+        <div class="card-header" >
+            <h3 class="card-title">Instructions</h3>
+        </div>
 
         <div class="card-body" >
-            <p class="card-text">Welcome to the CSUN faculty election! Thank you for your participation in shared governance.</p>
+            <p class="card-text">Welcome to the CSUN faculty election! </p>
+
+            <p class="card-text">Thank you for your participation in shared governance.</p>
 
             <p class="card-text">[todo video link]</p>
 
