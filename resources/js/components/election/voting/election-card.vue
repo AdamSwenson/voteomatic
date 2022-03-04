@@ -15,7 +15,7 @@
             <max-winners-instruction></max-winners-instruction>
 
             <div class="card-body" v-if="showDescription">
-                <p class="card-text ml-4 mr-4">{{ motion.description }}</p>
+                <p class="card-text ms-4 me-4">{{ motion.description }}</p>
             </div>
 
             <overselection-warning></overselection-warning>

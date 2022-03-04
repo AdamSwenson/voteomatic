@@ -20,7 +20,7 @@
         <delete-meeting-modal></delete-meeting-modal>
         </div>
 
-    <div class="col text-right">
+    <div class="col text-end">
         <mode-toggle-switch></mode-toggle-switch>
     </div>
     </div>

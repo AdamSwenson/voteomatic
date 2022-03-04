@@ -7,8 +7,8 @@
         <!-- Button trigger modal -->
         <button type="button"
                 v-bind:class="styling"
-                data-toggle="modal"
-                data-target="#endVotingModal">
+                data-bs-toggle="modal"
+                data-bs-target="#endVotingModal">
             End voting
         </button>
 
@@ -19,7 +19,7 @@
 <!--                <div class="modal-content">-->
 <!--                    <div class="modal-header">-->
 <!--                        <h5 class="modal-title" id="endVotingModalLabel">End voting</h5>-->
-<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">-->
 <!--                            <span aria-hidden="true">&times;</span>-->
 <!--                        </button>-->
 <!--                    </div>-->
@@ -29,10 +29,10 @@
 <!--                        <p>Are you sure?</p>-->
 <!--                    </div>-->
 <!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No. Keep voting</button>-->
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No. Keep voting</button>-->
 <!--                        <button type="button"-->
 <!--                                class="btn btn-primary"-->
-<!--                                data-dismiss="modal"-->
+<!--                                data-bs-dismiss="modal"-->
 <!--                                v-on:click="endVoting">Yes. End voting.-->
 <!--                        </button>-->
 <!--                    </div>-->

@@ -12,17 +12,24 @@
                     <h5 class="modal-title"
                         v-bind:id="labelId"
                     >Add write-in candidate</h5>
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+
+<!--                    <button type="button"-->
+<!--                            class="btn-close"-->
+<!--                            data-bs-dismiss="modal"-->
+<!--                            aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
                 </div>
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="writeInFirst">First name</label>
+                        <label  class='form-label' for="writeInFirst">First name</label>
                         <input type="text"
                                class="form-control"
                                id="writeInFirst"
@@ -30,7 +37,7 @@
                                v-model="firstName"
                         >
 
-                        <label for="writeInLast">Last name</label>
+                        <label  class='form-label' for="writeInLast">Last name</label>
                         <input type="text"
                                class="form-control"
                                id="writeInLast"
@@ -47,7 +54,7 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="clearFields"
                     >Cancel
                     </button>
@@ -55,7 +62,7 @@
 
                     <button type="button"
                             class="btn btn-primary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="handleClick"
                     >Done
                     </button>

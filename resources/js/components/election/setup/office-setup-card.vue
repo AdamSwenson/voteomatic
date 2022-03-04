@@ -31,7 +31,7 @@
             <import-pool-controls></import-pool-controls>
         </div>
 <!--        <div class="card-footer" v-if="showOfficeSetup">-->
-<!--            <div class="text-right">-->
+<!--            <div class="text-end">-->
 <!--                <delete-office-button></delete-office-button>-->
 <!--                <delete-office-modal></delete-office-modal>-->
 <!--            </div>-->

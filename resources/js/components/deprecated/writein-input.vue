@@ -2,7 +2,7 @@
 
 
     <div class="form-group">
-        <label for="writeIn">Write-in candidate name</label>
+        <label class='form-label' for="writeIn">Write-in candidate name</label>
         <input type="text"
                class="form-control"
                id="writeIn"

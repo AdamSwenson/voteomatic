@@ -4,7 +4,7 @@
 
         <div class="form-group">
 
-            <label for="requiresSelect">Vote required to pass</label>
+             <label class='form-label' for="requiresSelect">Vote required to pass</label>
 
             <select
                 id="requiresSelect"
@@ -23,7 +23,7 @@
         <div class="form-group"
              v-if="showCustomRequires"
         >
-            <label for="requiresOther">Enter the percentage which the vote count must exceed</label>
+             <label class='form-label' for="requiresOther">Enter the percentage which the vote count must exceed</label>
             <div class="input-group input-group-sm">
 
                 <input type="number"

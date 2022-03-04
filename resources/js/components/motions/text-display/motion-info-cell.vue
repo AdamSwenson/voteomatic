@@ -58,10 +58,10 @@ export default {
         amendmentStyle: function () {
 
             if (this.isSecondOrder) {
-                return ' pl-5 ';
+                return ' ps-5 ';
             }
 
-            return ' pl-4 ';
+            return ' ps-4 ';
         },
 
         /**
@@ -91,7 +91,7 @@ export default {
                 style += ' text-muted ';
             }
             if (this.isSelected) {
-                style += ' lead font-weight-bold ';
+                style += ' lead fw--bold ';
             }
 
             //Amendments
@@ -114,10 +114,10 @@ export default {
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {
                 case 2:
-                    return ' pl-5 '
+                    return ' ps-5 '
                     break;
                 case  1:
-                    return ' pl-4 '
+                    return ' ps-4 '
                     break;
                 case 0:
                     return ' ';

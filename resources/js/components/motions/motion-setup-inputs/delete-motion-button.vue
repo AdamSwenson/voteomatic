@@ -1,8 +1,8 @@
 <template>
     <button
         v-bind:class="styling"
-        data-toggle="modal"
-        data-target="#deleteMotionModal"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteMotionModal"
     >Delete Motion</button>
 
 

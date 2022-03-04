@@ -2,8 +2,8 @@
 
     <button type="button"
             class="btn btn-success btn-lg btn-block"
-            data-toggle="modal"
-            data-target="#yayConfirmationModal"
+            data-bs-toggle="modal"
+            data-bs-target="#yayConfirmationModal"
             v-on:click="handleClick"
     >Aye</button>
 

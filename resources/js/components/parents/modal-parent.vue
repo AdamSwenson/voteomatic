@@ -13,12 +13,14 @@
                     <h5 class="modal-title"
                         v-bind:id="labelId"
                     >{{ modalTitle }}</h5>
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+
                 </div>
 
                 <div class="modal-body" >
@@ -31,14 +33,15 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                     >Cancel
                     </button>
+
 
                     <button type="button"
                             class="btn btn-primary"
                             v-if="showActionButton"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="handleClick"
                     >{{buttonLabel}}</button>
 
@@ -59,7 +62,7 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
  * Note, this will require that a corresponding button which inherits from
  * modal-button-parent is included elsewhere on the page
  * They are linked via  bootstrap
- * using the data-dismiss=modal attribute.
+ * using the data-bs-dismiss=modal attribute.
  *
  * Content of the modal is either defined via the slot
  *      <modal-child>

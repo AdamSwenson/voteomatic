@@ -33,7 +33,7 @@ export default {
             // a factory function
             default: function () {
                 return {
-                    altered: 'text-monospace',
+                    altered: 'font-monospace',
                     inserted: 'text-danger',
                     struck: 'struck',
                 }
@@ -71,7 +71,7 @@ export default {
                 // },
                 //
 
-        //         altered: 'text-monospace',
+        //         altered: 'font-monospace',
         //         inserted: 'text-danger',
         //         struck: 'struck',
         //     }
@@ -173,7 +173,7 @@ export default {
 <style>
 
 /*.altered-text {*/
-/*    font-weight: bold;*/
+/*    fw-: bold;*/
 /*}*/
 
 /*.struck {*/

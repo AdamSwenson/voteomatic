@@ -68,7 +68,7 @@ export default {
 <style>
 
 .altered-text {
-    font-weight: bold;
+    fw-: bold;
 }
 
 .struck {

@@ -21,7 +21,7 @@
         </div>
 
         <div class="card-body" v-if="showFields">
-            <label for="fieldName">Field name</label>
+             <label class='form-label' for="fieldName">Field name</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="fieldName" v-model="fieldName">
             </div>

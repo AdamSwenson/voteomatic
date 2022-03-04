@@ -2,7 +2,7 @@
     <div class="summary-listing card-body">
         <h4>{{ propositionName }}</h4>
 
-        <div class="ml-3">
+        <div class="ms-3">
             <ul>
                 <li
                     v-bind:class="styling"

@@ -2,8 +2,8 @@
     <button
         class="btn "
         v-bind:class="calculatedStyling"
-        data-toggle="modal"
-        v-bind:data-target="target"
+        data-bs-toggle="modal"
+        v-bind:data-bs-target="target"
         v-on:click="handleClick"
         v-bind:aria-disabled="ariaDisabled"
     >{{label}}</button>

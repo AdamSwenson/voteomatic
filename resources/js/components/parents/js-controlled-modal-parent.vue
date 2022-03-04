@@ -15,7 +15,7 @@
                     >{{ headerText }}</h5>
 
                     <button type="button"
-                            class="close"
+                            class="btn-close"
                             v-on:click="closeModal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>

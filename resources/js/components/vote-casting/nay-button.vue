@@ -1,8 +1,8 @@
 <template>
     <button type="button"
             class="btn btn-danger btn-lg btn-block"
-            data-toggle="modal"
-            data-target="#nayConfirmationModal"
+            data-bs-toggle="modal"
+            data-bs-target="#nayConfirmationModal"
             v-on:click="handleClick"
     >Nay
     </button>

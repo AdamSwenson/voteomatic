@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-dark shadow-sm " style="background-color: darkblue;">
 
 <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
-        <div class="container">
+        <div class="container-fluid">
 
 
             <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
@@ -10,10 +10,10 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto "></ul>
+                <ul class="navbar-nav ms-auto "></ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav me-auto">
 <!--                    <li class="nav-item">-->
 <!--                        <form class="form-inline">-->
 <!--                            <refresh-button></refresh-button>-->
@@ -22,7 +22,7 @@
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         >{{ userName }}</a>
 
                         <!-- Authentication Links -->

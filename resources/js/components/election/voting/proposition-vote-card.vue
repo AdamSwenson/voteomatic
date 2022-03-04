@@ -54,21 +54,25 @@
 
 
         <div class="card-body">
+<!--            <div class="grid">-->
             <div class="row">
-                <div class="col">
+<!--                <div class="g-col-4">-->
+                <div class="col-3 text-end">
                     <button type="button"
-                            class="btn btn-lg btn-block"
+                            class="btn btn-lg "
                             v-bind:class="yayStyling"
                             v-on:click="handleYay"
                     >Aye
                     </button>
                 </div>
 
-                <div class="col"></div>
-
-                <div class="col">
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+<!--                <div class="g-col-4"></div>-->
+<!--                <div class="g-col-4">-->
+                <div class="col-3 text-start">
                     <button type="button"
-                            class="btn btn-lg btn-block"
+                            class="btn btn-lg "
                             v-on:click="handleNay"
                             v-bind:class="nayStyling"
                     >Nay

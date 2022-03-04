@@ -114,9 +114,9 @@ export default {
         amendmentClass: function () {
 
             if (this.isSecondOrder) {
-                return 'pl-5 ' + this.motionStyle
+                return 'ps-5 ' + this.motionStyle
             }
-            return 'pl-4 ' + this.motionStyle;
+            return 'ps-4 ' + this.motionStyle;
         },
 
         hasVotedOnCurrentMotion: function () {
@@ -189,17 +189,17 @@ export default {
                 return 'text-muted';
             }
             if (this.isSelected) {
-                return 'lead font-weight-bold';
+                return 'lead fw--bold';
             }
         },
 
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {
                 case 2:
-                    return 'pl-5'
+                    return 'ps-5'
                     break;
                 case  1:
-                    return 'pl-4'
+                    return 'ps-4'
                     break;
                 case 0:
                     return '';

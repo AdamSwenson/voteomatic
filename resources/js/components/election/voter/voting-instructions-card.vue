@@ -28,9 +28,9 @@
         </div>
 
         <div class="card-body">
-            <p class="card-text">
-                <button class="btn btn-block btn-success" v-on:click="handleStart">Start voting</button>
-            </p>
+            <div class="d-grid gap-2">
+                <button class="btn btn-success" v-on:click="handleStart">Start voting</button>
+            </div>
         </div>
 
     </div>

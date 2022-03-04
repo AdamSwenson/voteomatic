@@ -56,7 +56,7 @@
         <!--        <div class="closed-notice card-body" v-if="isMotionComplete">-->
         <!--            <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>-->
 
-        <!--            <div class="text-right">-->
+        <!--            <div class="text-end">-->
         <!--                <create-motion-button v-on:create-motion-clicked="handleNewButtonClick"></create-motion-button>-->
         <!--            </div>-->
 

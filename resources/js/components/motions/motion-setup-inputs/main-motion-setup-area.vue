@@ -63,8 +63,8 @@
 
                 <div class="col text-center">
                     <button class="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#confirmMotionModal"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmMotionModal"
                     >Make motion
                     </button>
 

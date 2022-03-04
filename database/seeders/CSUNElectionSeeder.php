@@ -41,7 +41,8 @@ DOC;
 
 
 public static $electionProps =  [
-    'name' => "CSUN Faculty Election"
+    'name' => "CSUN Faculty Election",
+    'info->candidateFields' =>['link', 'department']
 ] ;
     public static $singleChoiceOffices = [
         [

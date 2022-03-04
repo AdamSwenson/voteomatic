@@ -22,12 +22,12 @@ export default {
         return {
 
             procedural: {
-                styling: 'badge-secondary',
+                styling: 'bg-secondary',
                 text: 'Procedural'
             },
 
             amendment: {
-                styling: 'badge-warning',
+                styling: 'bg-warning',
                 text: 'Amendment'
             }
 

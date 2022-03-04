@@ -101,7 +101,7 @@ export default {
         },
 
         textStyling : function(){
-            return 'font-weight-bolder';
+            return 'fw--bolder';
 
             if(this.hasVoted) return 'text-muted';
 

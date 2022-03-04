@@ -22,7 +22,7 @@
                 <div class="col">
                     <div class="form-group">
 
-                        <label for="editText">Edit amendment</label>
+                        <label  class='form-label' for="editText">Edit amendment</label>
 
                         <wysiwyg v-model="text"
                         v-if="isResolution"
@@ -88,7 +88,7 @@ export default {
              * Classes to attach to a word for different purposes
              */
             tags: {
-                altered: 'text-monospace',
+                altered: 'font-monospace',
                 inserted: 'text-danger',
                 struck: 'struck',
             }

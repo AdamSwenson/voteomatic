@@ -16,8 +16,10 @@
         <summary-proposition-listing :motion="m" v-for="m in propositions" :key="m.id"></summary-proposition-listing>
 
         <div class="card-body" >
+            <div class="d-grid gap-2">
             <record-all-selections-button></record-all-selections-button>
             <record-all-selections-modal></record-all-selections-modal>
+        </div>
         </div>
 
         <navigation-footer></navigation-footer>

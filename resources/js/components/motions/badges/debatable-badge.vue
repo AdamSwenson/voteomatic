@@ -1,7 +1,7 @@
 <template>
                     <span
                         v-if="show"
-                        class="badge badge-warning"
+                        class="badge bg-warning"
                     >{{ labelText }}</span>
 
 </template>

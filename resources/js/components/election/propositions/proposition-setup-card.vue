@@ -22,7 +22,7 @@
                         <form>
 
                             <div class="form-group">
-                                <label class="form" for="propName">Name</label>
+                                <label  class='form-label' for="propName">Name</label>
                                 <input type="text" class="form-control" id="propName" v-model="propName"/>
                             </div>
                         </form>
@@ -64,8 +64,8 @@
 
                         <button
                             class="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#confirmMotionModal"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmMotionModal"
                         >Save proposition
                         </button>
 

@@ -7,7 +7,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="endVotingModalLabel">End voting</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -17,10 +17,10 @@
                     <p>Are you sure?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No. Keep voting</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No. Keep voting</button>
                     <button type="button"
                             class="btn btn-primary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="endVoting">Yes. End voting.
                     </button>
                 </div>
@@ -39,7 +39,7 @@ import motionObjectMixin from "../../mixins/motionObjectMixin";
 /**
  * Note, this will require that the end-voting-button is
  * included elsewhere on the page. They are linked via  bootstrap
- * using the data-dismiss=modal attribute. They are not linked
+ * using the data-bs-dismiss=modal attribute. They are not linked
  * by vue or vuex events.
  */
 export default {

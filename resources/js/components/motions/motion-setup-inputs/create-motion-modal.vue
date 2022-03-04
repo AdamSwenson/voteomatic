@@ -11,12 +11,18 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="confirmMotionModalLabel">
                             Please confirm that this is the motion you wish to make. You will not be able to edit it after you click 'Make motion'</h5>
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<!--                        <button type="button"-->
+<!--                                class="btn-close"-->
+<!--                                data-bs-dismiss="modal"-->
+<!--                                aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+
                     </div>
 
                     <div class="modal-body">
@@ -34,12 +40,12 @@
                     <div class="modal-footer">
                         <button type="button"
                                 class="btn btn-secondary"
-                                data-dismiss="modal"
+                                data-bs-dismiss="modal"
                         >Continue editing</button>
 
                         <button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal"
+                                data-bs-dismiss="modal"
                                 v-on:click="handleClick"
                         >Make motion</button>
 
@@ -67,6 +73,10 @@ data : function(){
 },
 
 computed : {
+    // modalId : function(){},
+    // modalTitle : function(){},
+    //   handleClick : function(){},
+    //  buttonLabel : function(){},
     isReady: function(){
       return isReadyToRock(this.motion);
     },

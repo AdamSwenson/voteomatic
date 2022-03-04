@@ -7,13 +7,13 @@
 
         <div class="card-body" v-show="showFields">
 
-            <label for="first-name">First name</label>
+             <label class='form-label' for="first-name">First name</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="first-name" v-model="firstName">
             </div>
 
 
-            <label for="first-name">Last name</label>
+             <label class='form-label' for="first-name">Last name</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="last-name" v-model="lastName">
             </div>

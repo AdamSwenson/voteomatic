@@ -8,14 +8,14 @@
             {{ messageText }}
         </p>
         <!--    <hr>-->
-        <p class="ml-5"
+        <p class="ms-5"
            v-if="showMotionText">
             {{ motionText }}
         </p>
 
         <button type="button"
-                class="close"
-                data-dismiss="alert"
+                class="btn-close"
+                data-bs-dismiss="alert"
                 aria-label="Close"
                 v-on:click="handleClick"
         >

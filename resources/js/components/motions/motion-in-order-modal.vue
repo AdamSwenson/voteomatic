@@ -14,7 +14,7 @@
                         id="motionInOrderModalLabel"
                     >It has been moved that</h5>
                     <!--                    <button type="button"-->
-                    <!--                            class="close"-->
+                    <!--                            class="btn-close"-->
                     <!--                            v-on:click="handleDismiss"-->
                     <!--                            aria-label="Close">-->
                     <!--                        <span aria-hidden="true">&times;</span>-->

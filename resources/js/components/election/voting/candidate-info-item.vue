@@ -42,7 +42,7 @@ export default {
         info: function () {
             let info = this.candidate.getInfoField(this.fieldName);
 
-            if(this.isLink) return `<a href='${info}'>${info}</a>`;
+            if(this.isLink) return `<a href='${info}' target="_blank" rel="noopener noreferrer">${info}</a>`;
 
             return this.candidate.getInfoField(this.fieldName);
         },

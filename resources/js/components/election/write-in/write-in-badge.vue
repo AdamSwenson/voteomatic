@@ -1,6 +1,6 @@
 <template>
 
-             <span class="badge badge-warning"
+             <span class="badge bg-warning"
              >Write-in</span>
 </template>
 

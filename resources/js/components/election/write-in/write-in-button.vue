@@ -1,8 +1,8 @@
 <template>
     <button
         v-bind:class="styling"
-        data-toggle="modal"
-        v-bind:data-target="target"
+        data-bs-toggle="modal"
+        v-bind:data-bs-target="target"
         v-on:click="handleClick"
     >{{ label }}
     </button>

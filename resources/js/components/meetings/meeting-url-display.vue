@@ -1,6 +1,6 @@
 <template>
 
-    <div class="meeting-link text-left mt-4" v-if="isChair">
+    <div class="meeting-link text-start mt-4" v-if="isChair">
         <h5 class="card-subtitle user-select-all">{{ meetingLink }}</h5>
         <p class="text-muted ">Use this link in creating the Canvas assignment.</p>
     </div>

@@ -7,9 +7,9 @@
 
         <div class="card-body meeting-display">
 
-            <h5 class="card-title text-left">{{ meetingName }}</h5>
+            <h5 class="card-title text-start">{{ meetingName }}</h5>
 
-            <h5 class="card-subtitle text-left">{{ meetingDate }}</h5>
+            <h5 class="card-subtitle text-start">{{ meetingDate }}</h5>
 
             <meeting-url-display></meeting-url-display>
 

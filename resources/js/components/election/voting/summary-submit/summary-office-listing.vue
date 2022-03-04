@@ -3,7 +3,7 @@
          v-bind:class="styling">
         <h4>{{ officeName }}</h4>
 
-        <div class="ml-3">
+        <div class="ms-3">
             <p v-if="hasError"
             >There was a problem with your selections for this office.</p>
             <ul>

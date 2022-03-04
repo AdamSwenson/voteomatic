@@ -4,11 +4,11 @@
         <span class="result-badge">
             <span class="no-results" v-if="! showBadge"></span>
 
-             <span class="badge badge-success"
+             <span class="badge bg-success"
                    v-else-if="isPassed"
              >Passed</span>
 
-            <span class="badge badge-danger"
+            <span class="badge bg-danger"
                   v-else-if="! isPassed"
             >Failed</span>
 

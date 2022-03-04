@@ -2,7 +2,7 @@
     <!--   See  https://getbootstrap.com/docs/4.5/components/card/#horizontal for layout-->
 
     <div class="candidate-row card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
+        <div class="row g-0">
 
             <div class="col-md-4">
                 <candidate-button :candidate="candidate"></candidate-button>

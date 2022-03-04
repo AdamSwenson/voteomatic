@@ -1,7 +1,7 @@
 <template>
 
     <div class="election-setup-controls row">
-<!--        <div class="col-lg-2 text-left">-->
+<!--        <div class="col-lg-2 text-start">-->
 <!--            <create-office-button></create-office-button>-->
 <!--        </div>-->
 
@@ -15,7 +15,7 @@
 
         </div>
 
-        <div class="col-lg-6 text-right">
+        <div class="col-lg-6 text-end">
             <mode-toggle-switch></mode-toggle-switch>
         </div>
 

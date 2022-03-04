@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Assignment;
 use App\Models\ResourceLink;
 use App\Models\Motion;
+use Database\Seeders\CSUNElectionSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,7 +25,8 @@ class Meeting extends Model
         'is_complete',
         /** If an election, determines whether any user can vote */
         'is_voting_available',
-        'info'
+        'info',
+        'info->candidateFields'
     ];
 
     protected $casts = [
