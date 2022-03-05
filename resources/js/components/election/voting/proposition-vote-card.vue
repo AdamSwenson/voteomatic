@@ -23,12 +23,23 @@
             <div class="row">
                 <div class="col-md-6">
                     <h3 class="card-title">Pro</h3>
-                <p class="card-text">[Insert]</p>
+                <p class="card-text">The Executive Committee shall set the agenda for meetings of the Senate and meetings of the Faculty.
+                    They shall review all policy recommendations, monitor membership, and oversee activities of the Standing and Advisory Committees.
+                    They shall oversee and conduct the nomination process and elections for the Senate and the Faculty.
+                    They shall act for the Faculty, the Senate and the Standing Committees of the Senate on those matters requiring Faculty action or
+                    consultation during the intersession, special sessions or summer months.</p>
+
+                    <p class="card-text">Sixty percent or more of the faculty are Lecturers.  This by-law change will add a dedicated seat to the Executive Committee
+                        for a Lecturer.  Voting yes on this by-law change will add the Lecturer’s voice to faculty decisions and will ensure representation of more than
+                        60 percent of the faculty.</p>
+
                 </div>
 
                 <div class="col-md-6">
                     <h3 class="card-title">Con</h3>
-                    <p class="card-text">[Insert]</p>
+                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee (SEC). For tenure track senators,
+                        the SEC’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this
+                        Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work; pressure from which their tenure track colleagues are immune.  </p>
                 </div>
             </div>
         </div>
@@ -62,7 +73,7 @@
                             class="btn btn-lg "
                             v-bind:class="yayStyling"
                             v-on:click="handleYay"
-                    >Aye
+                    >Yes
                     </button>
                 </div>
 
@@ -75,7 +86,7 @@
                             class="btn btn-lg "
                             v-on:click="handleNay"
                             v-bind:class="nayStyling"
-                    >Nay
+                    >No
                     </button>
                 </div>
 

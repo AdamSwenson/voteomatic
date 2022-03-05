@@ -5,6 +5,7 @@
 
         <meeting-module v-else></meeting-module>
 
+        <page-footer></page-footer>
     </div>
 
 </template>
@@ -14,6 +15,7 @@
 
 import ElectionModule from "./election-module";
 import MeetingModule from "./meeting-module";
+import PageFooter from "./navigation/page-footer";
 
 /**
  * This is the main page. All it does is decide which
@@ -22,6 +24,7 @@ import MeetingModule from "./meeting-module";
 export default {
     name: "voteomatic",
     components: {
+        PageFooter,
         MeetingModule,
         ElectionModule,
        },
