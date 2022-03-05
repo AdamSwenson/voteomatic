@@ -2,7 +2,7 @@
     <div class="card vote-page">
 
         <div class="card-header">
-            <h4 class="card-title">{{ cardTitle }}</h4>
+            <h1 class="card-title">{{ cardTitle }}</h1>
         </div>
 
         <div class="vote-area card-body" >

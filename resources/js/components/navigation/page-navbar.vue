@@ -4,16 +4,14 @@
 <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
         <div class="container-fluid">
 
-
             <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
-
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav ms-auto "></ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav me-3">
 <!--                    <li class="nav-item">-->
 <!--                        <form class="form-inline">-->
 <!--                            <refresh-button></refresh-button>-->
@@ -21,25 +19,32 @@
 <!--                    </li>-->
 
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        <a id="navbarDropdown"
+                           class="nav-link dropdown-toggle"
+                           href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false"
                         >{{ userName }}</a>
 
                         <!-- Authentication Links -->
-                        <div class="dropdown-menu dropdown-menu-right"
-                             aria-labelledby="navbarDropdown"
-                        >
-
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+<!--                        <div class="dropdown-menu dropdown-menu-right"-->
+<!--                             aria-labelledby="navbarDropdown"-->
+<!--                        >-->
+<li>
                             <a class="dropdown-item"
                                v-if="isDev"
                                v-bind:href="nonLTILoginUrl">Login</a>
-
+</li>
+                            <li>
 
                             <a class="dropdown-item"
                                v-on:click="logout"
                             >Logout</a>
-
-                        </div>
+                            </li>
+<!--                        </div>-->
+                            </ul>
                     </li>
 
                 </ul>

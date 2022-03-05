@@ -9,7 +9,7 @@
         <div class="card" v-else-if="isElection">
 
             <div class="card-header">
-                <h2 class="card-title">{{ officeName }}</h2>
+                <h1 class="card-title">{{ officeName }}</h1>
             </div>
 
             <max-winners-instruction></max-winners-instruction>
@@ -45,14 +45,20 @@
 
 
                     <overselection-warning></overselection-warning>
-
                 </div>
+
 
                 <!--            Enable after VOT-60 is complete-->
                 <div class="card-body">
-                    <write-in-controls></write-in-controls>
-
-                    <p class="text-muted">You will confirm and record your selections later.</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <write-in-controls></write-in-controls>
+                        </div>
+<!--                        <div class="col-4"></div>-->
+                        <div class="col-6 text-start">
+                            <p class="text-muted">You will confirm and record your selections later.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <navigation-footer></navigation-footer>

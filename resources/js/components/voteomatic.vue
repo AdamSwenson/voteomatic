@@ -1,7 +1,6 @@
 <template>
 
     <div class="voteomatic">
-
         <election-module v-if="isElection"></election-module>
 
         <meeting-module v-else></meeting-module>
@@ -38,7 +37,9 @@ export default {
 
         isElection: function(){
             return window.startData.isElection;
-        }
+        },
+
+
 
     },
 

@@ -1,7 +1,7 @@
 <template>
 
     <button
-        class="btn"
+        class="btn btn-lg"
         v-bind:class="styling"
         v-on:click="handleClick"
     >{{label}}
@@ -94,5 +94,8 @@ export default {
 </script>
 
 <style scoped>
-
+.btn-outline-info {
+    color : #385c79;
+    border-color :  #385c79;
+}
 </style>

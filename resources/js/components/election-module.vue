@@ -6,15 +6,15 @@
 
         <message-area></message-area>
 
-        <vote-count-alert></vote-count-alert>
+<!--        <vote-count-alert></vote-count-alert>-->
 
         <router-view name="main"></router-view>
 
         <chair-indicator></chair-indicator>
 
-        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>
-        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>
-        <motion-second-modal v-if="! isChair"></motion-second-modal>
+<!--        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>-->
+<!--        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>-->
+<!--        <motion-second-modal v-if="! isChair"></motion-second-modal>-->
 
     </div>
 
