@@ -168,7 +168,12 @@ $btn-disabled-bg-color: $gray-light;
     //@include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
 }
 
-
+//.text-warning {
+//    color : $brand-warning
+//}
+.text-warning{
+    color: #8a3c03;
+}
 
 // Link buttons
 // -------------------------

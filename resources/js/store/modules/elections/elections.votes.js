@@ -458,6 +458,18 @@ const getters = {
         return numberSelected > motion.max_winners;
     },
 
+    /**
+     * Returns true if the user has selected more than 0 but less than the maximum
+     * number of candidates for an office
+     * @param state
+     * @param getters
+     * @returns {function(*=): boolean}
+     */
+    showUnderSelectionWarningForMotion: (state, getters) => (motion) => {
+        let numberSelected = getters.getSelectedCandidatesForMotion(motion).length;
+        return numberSelected > 0 && numberSelected < motion.max_winners;
+        },
+
     getWriteInIndex: (state) => (name) => {
         return state.writeIns.indexOf(name);
     }

@@ -14,7 +14,8 @@
                  v-if="isAbstention">
                 <p class="text-muted">You have abstained from voting on this issue. Abstentions are not 'No' votes.
                     Unlike 'No' votes, they do not
-                    count in the denominator when determining whether a proposal passes.</p>
+                    count in the denominator when determining whether a proposal passes. </p>
+                <p class="text-muted">You will be able to return and vote on this issue after recording your vote.</p>
                 <p class="text-muted">If this is not your intent, please go back and select 'Aye' or 'Nay' before
                     recording your selections.</p>
             </div>

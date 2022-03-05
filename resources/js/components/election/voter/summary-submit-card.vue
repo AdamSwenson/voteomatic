@@ -4,10 +4,12 @@
             <p class="card-text">Please review your selections. When you are ready, please
         click 'Record all selections' to save them to the server. </p>
 
-            <p class="card-text">Once your selections have been saved, they can no longer be changed.</p>
+            <p class="card-text">Once your selections have been saved, they can no longer be changed. If you have not selected any candidates for an office,
+                you may return and finish voting. However, if you have selected some but not all of the maximum allowed number of candidates, you will not be able
+                to return and select additional candidates. </p>
 
             <p class="card-text">To change your selections, click the office name in the list to the left or
-            use the 'Previous office' button below</p>
+            use the 'Previous office' button below.</p>
 
         </div>
 

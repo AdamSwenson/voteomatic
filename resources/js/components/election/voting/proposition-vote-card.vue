@@ -21,12 +21,12 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col">
+                <div class="col-md-6">
                     <h3 class="card-title">Pro</h3>
                 <p class="card-text">[Insert]</p>
                 </div>
 
-                <div class="col">
+                <div class="col-md-6">
                     <h3 class="card-title">Con</h3>
                     <p class="card-text">[Insert]</p>
                 </div>
@@ -34,22 +34,22 @@
         </div>
 
         <div class="card-body">
-            <div class="row">
-                <div class="col">
+<!--            <div class="row">-->
+<!--                <div class="col">-->
                     <required-vote :motion="motion"></required-vote>
 
                     <required-vote-badge :motion="motion"></required-vote-badge>
 
-                </div>
-                <div class="col">
+<!--                </div>-->
+<!--                <div class="col">-->
 
-                </div>
+<!--                </div>-->
 
-                <div class="col">
-<!--                    <p class="motionDescription text-muted">{{ motionDescription }}</p>-->
+<!--                <div class="col">-->
+<!--&lt;!&ndash;                    <p class="motionDescription text-muted">{{ motionDescription }}</p>&ndash;&gt;-->
 
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
         </div>
 
 

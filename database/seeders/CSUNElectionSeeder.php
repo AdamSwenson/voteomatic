@@ -33,10 +33,13 @@ serve as chair of the Executive Committee.</p>
 DOC;
 
     const PROP_SUPP = <<<DOC
-<p>[Info/link about senate exec]</p>
-<p>[Info/link about bylaws changes]</p>
-<!--<p>[Info/link to pro]</p>-->
-<!--<p>[Info/link to con]</p>-->
+<p>For information about the role of the Senate Executive Committee, please see
+<a href="https://www.csun.edu/faculty-senate/about-senate-executive-committee" target="_blank" rel="noopener noreferrer"
+>https://www.csun.edu/faculty-senate/about-senate-executive-committee</a>
+</p>
+<p>For information about the process for changing the Bylaws, please see Article VII of the
+<a href="http://www.csun.edu/sites/default/files/Bylaws.pdf">Bylaws of the Faculty</a></p>
+
 DOC;
 
 
