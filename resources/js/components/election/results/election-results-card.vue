@@ -6,10 +6,12 @@
             <h1 class="card-title">Results </h1>
         </div>
 
-        <div class="card-body" v-if="isMotionComplete">
+        <div class="card-body" v-if="isVotingComplete">
 
-            <office-results-card :motion="motion"></office-results-card>
-<!--            <office-results-card v-for="motion in motions" :key="motion.id" :motion="motion"></office-results-card>-->
+<!--            <office-results-card :motion="motion"></office-results-card>-->
+            <office-results-card v-for="motion in offices" :key="motion.id" :motion="motion"></office-results-card>
+
+            <proposition-results-card v-for="m in propositions" :key="m.id" :motion="m"></proposition-results-card>
         </div>
 
         <div class="card-body" v-else>
@@ -45,10 +47,12 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import OfficeResultsCard from "./office-results-card";
 import ModeMixin from "../../../mixins/modeMixin";
 import ChairMixin from "../../../mixins/chairMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import PropositionResultsCard from "./proposition-results-card";
 
 export default {
     name: "election-results-card",
-    components: {OfficeResultsCard},
+    components: {PropositionResultsCard, OfficeResultsCard},
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin, ],
@@ -58,11 +62,29 @@ export default {
     },
 
     asyncComputed: {
+
+        offices : function(){
+            if(this.motions.length === 0) return []
+            return _.filter(this.motions, (m) => {
+                return m.type === 'election';
+            });
+},
+propositions : function(){
+    if(this.motions.length === 0) return []
+    return _.filter(this.motions, (m) => {
+        return m.type === 'proposition';
+    });
+},
+
         motions: {
             get: function () {
                 return this.$store.getters.getMotions;
             },
             default: []
+        },
+        isVotingComplete : function(){
+            if(! isReadyToRock(this.meeting)) return false;
+            return this.meeting.isComplete && ! this.meeting.isVotingAvailable;
         }
     },
 

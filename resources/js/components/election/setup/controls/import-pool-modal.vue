@@ -25,8 +25,14 @@ export default {
         modalText: function () {
             return `<p>This allows you to import from a .csv file.</p>
 <p>Please ensure that your csv file separates the candidate names into 2 columns.</p>
-<p>The first column should contain the headers <strong>First name</strong>, <strong>Last name</strong>
-</p>`;
+<p>The first column should contain the headers:</p>
+<ul>
+<li><strong>First name</strong></li>
+<li><strong>Last name</strong></li>
+<li>department (optional)</li>
+<li>link (optional)</li>
+</ul>
+`;
 
         }
     },

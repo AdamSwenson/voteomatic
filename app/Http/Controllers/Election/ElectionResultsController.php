@@ -28,7 +28,11 @@ class ElectionResultsController extends Controller
         $this->setLoggedInUser();
         $this->authorize('viewOfficeResults', [Motion::class, $motion]);
 
-        $out = $this->electionResultsRepo->getResultsForClient($motion);
+        if($motion->type === 'proposition'){
+            $out = $this->electionResultsRepo->getPropositionResultsForClient($motion);
+        }else{
+            $out = $this->electionResultsRepo->getResultsForClient($motion);
+        }
 
         return response()->json($out);
     }

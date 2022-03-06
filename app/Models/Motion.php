@@ -24,7 +24,8 @@ class Motion extends Model
 
         /** JSON field for storing stuff needed by different forms of motion */
         'info',
-        'info->propositionName',
+        'info->propositionName', //dev Unsure if this is used
+        'info->name',
 
         'is_complete',
         'is_current',

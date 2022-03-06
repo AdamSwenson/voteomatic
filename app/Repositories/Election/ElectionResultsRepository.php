@@ -10,6 +10,25 @@ use App\Repositories\Election\Calculators\ResultsCalculatorFactory;
 class ElectionResultsRepository implements IElectionResultsRepository
 {
 
+    public function getPropositionResultsForClient(Motion $motion)
+    {
+//        $calculator = ResultsCalculatorFactory::make($motion);
+
+        $out = [[
+                'motionId' => $motion->id,
+                'resultId' => $motion->id,
+                'candidateName' => $motion->info['name'],
+                'voteCount' => sizeof($motion->affirmativeVotes),
+                'pctOfTotal' => sizeof($motion->affirmativeVotes) / $motion->totalVotesCast,
+                'isWinner' => $motion->passed,
+                'isRunoffParticipant' => false
+
+            ]];
+
+
+
+        return collect($out);
+    }
 
 
     /**
@@ -25,7 +44,7 @@ class ElectionResultsRepository implements IElectionResultsRepository
 
         $out = [];
 
-        foreach($calculator->results as $candidate){
+        foreach ($calculator->results as $candidate) {
 
             $out[] = [
                 'motionId' => $motion->id,
@@ -41,6 +60,7 @@ class ElectionResultsRepository implements IElectionResultsRepository
 
 
         return collect($out);
+
 //
 //        $out = [];
 //        if($returnCandidateObjects){

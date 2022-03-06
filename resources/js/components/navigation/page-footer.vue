@@ -18,7 +18,7 @@
                 <div class="col-6 col-lg-2 mb-3">
 
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href=https://github.com/AdamSwenson/voteomatic#the-voteomatic"  target="_blank" rel="noopener noreferrer">Documentation</a></li>
+                        <li class="mb-2"><a href="https://github.com/AdamSwenson/voteomatic#the-voteomatic"  target="_blank" rel="noopener noreferrer">Documentation</a></li>
                         <li class="mb-2"><a href="https://github.com/AdamSwenson/voteomatic/issues"  target="_blank" rel="noopener noreferrer">Feedback</a></li>
                      </ul>
                 </div>
