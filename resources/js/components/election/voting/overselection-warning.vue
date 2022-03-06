@@ -44,6 +44,14 @@ asyncComputed : {
         return 'candidates'
     },
 
+    /**
+     * Added for VOT-134. Yanks the focus to the top of the screen
+     * when an overselection warning appears
+     */
+    runFocus : function(){
+        if(this.showOverSelectionWarning) this.focusAlert();
+    },
+
 
     showOverSelectionWarning : function(){
         return this.$store.getters.showOverSelectionWarningForActiveMotion;
@@ -52,7 +60,12 @@ asyncComputed : {
 
 computed : {},
 
-methods : {}
+methods : {
+    focusAlert : function(){
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    }
+}
 
 }
 </script>

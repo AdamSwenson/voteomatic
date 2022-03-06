@@ -4,7 +4,7 @@
         <h4>{{ officeName }}</h4>
 
         <div class="ms-3">
-            <p v-if="hasError">There was a problem with your selections for this office.</p>
+            <p class='h3' v-if="hasError">There was a problem with your selections for this office. Please fix it in order to record your votes</p>
 
             <p v-else-if="hasUnderSelectionWarning">You have selected less than the maximum allowed number of candidates for this office.
             That is allowed, but you will not be able to select additional candidates after recording your votes.</p>

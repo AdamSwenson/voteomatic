@@ -12,24 +12,24 @@ class CSUNElectionSeeder extends Seeder
 
     const PROP_TEXT = <<<DOC
 
-
-<blockquote class="blockquote text-justify">
+<div class="propText">
+<!--<blockquote class="blockquote">-->
 <p class="card-text">That Article IV Section 1 of the Bylaws of the Faculty be revised to read (additions indicated by underlining):</p>
 
-<p class="ml-3 mr-3">There shall be constituted each year a twelve-member Executive Committee consisting of: the
+<p class="ms-3 me-3">There shall be constituted each year a twelve-member Executive Committee consisting of: the
 President of the Faculty, the Vice President of the Faculty, the Secretary of the
 Faculty, the senior representative of the CSU Academic Senate, the Provost and
 Vice President for Academic Affairs (non-voting), <u>one Lecturer elected by and
 from the Senate,</u> and six members of the faculty elected by and from the Senate.</p>
-<p  class="ml-3 mr-3">The Executive Committee shall have no more than two members from any one
+<p  class="ms-3 me-3">The Executive Committee shall have no more than two members from any one
 College except in the event that more than two ex officio members are from one
 College <u>and the two-college rule shall not apply to the elected Lecturer
 representative to the Senate Executive Committee</u>.</p>
-<p  class="ml-3 mr-3">The six members elected by the Senate shall be from Colleges that do not already
+<p  class="ms-3 me-3">The six members elected by the Senate shall be from Colleges that do not already
 have two representatives on the committee. The President of the Faculty shall
 serve as chair of the Executive Committee.</p>
-</blockquote>
-
+<!--</blockquote>-->
+</div>
 DOC;
 
     const PROP_SUPP = <<<DOC

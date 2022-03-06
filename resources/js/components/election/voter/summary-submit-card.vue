@@ -1,10 +1,13 @@
 <template>
     <div class="summary-submit-card card">
         <div class="card-body instructions">
-            <p class="card-text">Please review your selections. When you are ready, please
-        click 'Record all selections' to save them to the server. </p>
+            <p class="card-text">Please review your selections.</p>
+            <p  class="card-text"> When you are ready, please
+        click 'Record all selections' to save your votes. </p>
 
-            <p class="card-text">Once your selections have been saved, they can no longer be changed. If you have not selected any candidates for an office,
+            <p class="card-text">Once your selections have been saved, they cannot be changed.</p>
+
+            <p class="card-text">If you have not selected any candidates for an office,
                 you may return and finish voting. However, if you have selected some but not all of the maximum allowed number of candidates, you will not be able
                 to return and select additional candidates. </p>
 

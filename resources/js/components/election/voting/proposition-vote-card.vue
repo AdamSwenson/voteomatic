@@ -37,8 +37,8 @@
 
                 <div class="col-md-6">
                     <h3 class="card-title">Con</h3>
-                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee (SEC). For tenure track senators,
-                        the SEC’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this
+                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee. For tenure track senators,
+                        the Executive Committee’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this
                         Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work; pressure from which their tenure track colleagues are immune.  </p>
                 </div>
             </div>
