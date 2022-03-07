@@ -1,15 +1,13 @@
 <template>
 
-<!--    <li class="list-group-item office-select-row"-->
-<!--        v-bind:class="styling"-->
-<!--    >{{officeName}}</li>-->
+
 
     <a href="#"
        class="list-group-item list-group-item-action"
        v-bind:class="styling"
-    v-on:click="handleSelect"
+       v-on:click="handleSelect"
     ><i v-if="hasVoted" class="bi-check text-success"></i>
-        <span v-bind:class="textStyling">{{officeName}}</span></a>
+        <span v-bind:class="textStyling">{{ officeName }}</span></a>
 
 </template>
 
@@ -36,15 +34,15 @@ export default {
     },
 
     asyncComputed: {
-        officeName: function(){
+        officeName: function () {
             return this.motion.content;
         },
 
         /**
          * Returns true if the user has already voted on this office
          */
-        hasVoted: function(){
-            if(!isReadyToRock(this.motion)) return false;
+        hasVoted: function () {
+            if (!isReadyToRock(this.motion)) return false;
             return this.$store.getters.hasVotedOnMotion(this.motion);
 // return true;
         },
@@ -54,8 +52,8 @@ export default {
          * should prevent navigation or submission, e.g.,
          * overselection
          */
-        isError : function(){
-            if(!isReadyToRock(this.motion)) return '';
+        isError: function () {
+            if (!isReadyToRock(this.motion)) return '';
 
             return this.$store.getters.showOverSelectionWarningForMotion(this.motion);
 
@@ -75,8 +73,8 @@ export default {
             if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
 
             //Do not show as selected if summary card is showing
-            if ( this.$store.getters.isSummarySubmitCardVisible) return false;
-            if ( this.$store.getters.isInstructionsCardVisible) return false;
+            if (this.$store.getters.isSummarySubmitCardVisible) return false;
+            if (this.$store.getters.isInstructionsCardVisible) return false;
 
             return this.motion.id === this.selectedMotion.id
         },
@@ -109,10 +107,10 @@ export default {
             default: ''
         },
 
-        textStyling : function(){
-            if(this.hasVoted) return 'text-muted';
+        textStyling: function () {
+            if (this.hasVoted) return 'text-muted';
 
-            if(this.isError) return 'text-danger'
+            if (this.isError) return 'text-danger'
         }
 
     },
@@ -120,7 +118,7 @@ export default {
     computed: {},
 
     methods: {
-        handleSelect: function(){
+        handleSelect: function () {
             // window.console.log('setting office ');
             this.$store.dispatch('setOfficeForVoting', this.motion);
         }

@@ -29,42 +29,34 @@
                     They shall act for the Faculty, the Senate and the Standing Committees of the Senate on those matters requiring Faculty action or
                     consultation during the intersession, special sessions or summer months.</p>
 
-                    <p class="card-text">Sixty percent or more of the faculty are Lecturers.  This by-law change will add a dedicated seat to the Executive Committee
-                        for a Lecturer.  Voting yes on this by-law change will add the Lecturer’s voice to faculty decisions and will ensure representation of more than
-                        60 percent of the faculty.</p>
+                    <p class="card-text">Sixty percent or more of the faculty are Lecturers.  This Bylaw change will add a dedicated seat to the Executive Committee
+                        for a Lecturer. Voting yes on this Bylaw change will add the Lecturer’s voice to deliberations, recommendations and decisions rendered by the Executive Committee.</p>
 
                 </div>
 
                 <div class="col-md-6">
                     <h3 class="card-title">Con</h3>
-                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee. For tenure track senators,
+                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee. Lecturers can and do serve on the Executive Committee; there is no restriction on how
+                        many elected seats lecturer senators may occupy.</p>
+                    <p class="card-text">For tenure track senators,
                         the Executive Committee’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this
-                        Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work; pressure from which their tenure track colleagues are immune.  </p>
+                        Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work. This is pressure from which their tenure track colleagues are immune; pressure they may have
+                        been unaware of when they decided to run for Senate.</p>
                 </div>
             </div>
         </div>
 
         <div class="card-body">
-<!--            <div class="row">-->
-<!--                <div class="col">-->
                     <required-vote :motion="motion"></required-vote>
 
                     <required-vote-badge :motion="motion"></required-vote-badge>
-
-<!--                </div>-->
-<!--                <div class="col">-->
-
-<!--                </div>-->
-
-<!--                <div class="col">-->
-<!--&lt;!&ndash;                    <p class="motionDescription text-muted">{{ motionDescription }}</p>&ndash;&gt;-->
-
-<!--                </div>-->
-<!--            </div>-->
         </div>
 
+        <div class="alert alert-success" role="alert" v-if="hasUserVoted">
+            <p class="card-text">You have voted on this. </p>
+        </div>
 
-        <div class="card-body">
+        <div class="card-body" v-else>
 <!--            <div class="grid">-->
             <div class="row">
 <!--                <div class="g-col-4">-->
@@ -147,6 +139,11 @@ export default {
             },
             watch: ['cnt']
         },
+
+        hasUserVoted: function () {
+            return this.$store.getters.hasVotedOnCurrentMotion;
+        },
+
 
         isReady: function () {
             return isReadyToRock(this.motion);

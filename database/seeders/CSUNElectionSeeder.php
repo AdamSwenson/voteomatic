@@ -37,8 +37,8 @@ DOC;
 <a href="https://www.csun.edu/faculty-senate/about-senate-executive-committee" target="_blank" rel="noopener noreferrer"
 >https://www.csun.edu/faculty-senate/about-senate-executive-committee</a>
 </p>
-<p>For information about the process for changing the Bylaws, please see Article VII of the
-<a href="http://www.csun.edu/sites/default/files/Bylaws.pdf">Bylaws of the Faculty</a></p>
+<!--<p>For information about the process for changing the Bylaws, please see Article VII of the-->
+<!--<a href="http://www.csun.edu/sites/default/files/Bylaws.pdf" target="_blank" rel="noopener noreferrer">Bylaws of the Faculty</a></p>-->
 
 DOC;
 
