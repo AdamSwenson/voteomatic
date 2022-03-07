@@ -1,8 +1,8 @@
 <template>
     <div class="summary-listing card-body">
         <h4>{{ propositionName }}</h4>
-
-        <div class="ms-3" v-if="! hasVoted">
+        <div class="ms-3" >
+<!--        <div class="ms-3" v-if="! hasVoted">-->
             <ul>
                 <li
                     v-bind:class="styling"
@@ -47,10 +47,10 @@ export default {
          * @returns {boolean}
          */
         isAbstention: function () {
-            return isReadyToRock(this.motion) && !isReadyToRock(this.voteObj) && this.hasVoted   },
+            return isReadyToRock(this.motion) && !isReadyToRock(this.voteObj) && ! this.hasVoted   },
 
         hasVoted: function(){
-           return  isReadyToRock(this.motion) &&! this.$store.getters.hasVotedOnMotion(this.motion);
+           return  isReadyToRock(this.motion) && this.$store.getters.hasVotedOnMotion(this.motion);
         },
 
         propositionName: function () {

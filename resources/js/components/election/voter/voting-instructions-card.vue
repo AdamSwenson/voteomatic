@@ -6,7 +6,7 @@
         </div>
 
         <div class="card-body">
-            <p class="card-text">We appreciate you taking the time to vote your representatives.</p>
+            <p class="card-text">We appreciate you taking the time to vote for your representatives.</p>
 
             <!--            <p class="card-text">[todo video link]</p>-->
             <p class="card-text">Please click 'Start voting' below or on an office in the list to the left (above, if
