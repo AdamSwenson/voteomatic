@@ -7,18 +7,21 @@
         </div>
 
         <div class="card-body" v-if="isVotingComplete">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <!--            <office-results-card :motion="motion"></office-results-card>-->
+                <office-results-card v-for="motion in offices" :key="motion.id" :motion="motion"></office-results-card>
+            </div>
 
-            <!--            <office-results-card :motion="motion"></office-results-card>-->
-            <office-results-card v-for="motion in offices" :key="motion.id" :motion="motion"></office-results-card>
-
+            <!--            <div class="card-group">-->
             <proposition-results-card v-for="m in propositions" :key="m.id" :motion="m"></proposition-results-card>
+            <!--        </div>-->
         </div>
 
         <div class="card-body" v-else>
             <p class="card-text">Results will be available once the Chair has closed voting</p>
             <p class="card-text">If you should be seeing the results, try refreshing your browser</p>
         </div>
-
+        <!--        </div>-->
     </div>
 </template>
 

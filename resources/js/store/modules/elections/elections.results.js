@@ -11,7 +11,7 @@ const mutations = {
 
 
     addResults: (state, results) => {
-     
+
         //dev Add filter to deal with VOT-128
         let matches = state.electionResults.filter((r) => {
             return r.candidateId === results.candidateId;

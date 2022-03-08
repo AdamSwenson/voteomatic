@@ -22,10 +22,7 @@ class ElectionResultsRepository implements IElectionResultsRepository
                 'pctOfTotal' => sizeof($motion->affirmativeVotes) / $motion->totalVotesCast,
                 'isWinner' => $motion->passed,
                 'isRunoffParticipant' => false
-
             ]];
-
-
 
         return collect($out);
     }

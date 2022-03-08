@@ -14,4 +14,11 @@ interface IElectionResultsRepository
      * @return \Illuminate\Support\Collection
      */
     public function getResultsForClient(Motion $motion);
+
+    /**
+     * Returns a collection of results with the expected keys etc that the client is expecting
+     * @param Motion $motion
+     * @return mixed
+     */
+    public function getPropositionResultsForClient(Motion $motion);
 }
