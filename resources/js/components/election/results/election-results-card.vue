@@ -8,7 +8,7 @@
 
         <div class="card-body" v-if="isVotingComplete">
 
-<!--            <office-results-card :motion="motion"></office-results-card>-->
+            <!--            <office-results-card :motion="motion"></office-results-card>-->
             <office-results-card v-for="motion in offices" :key="motion.id" :motion="motion"></office-results-card>
 
             <proposition-results-card v-for="m in propositions" :key="m.id" :motion="m"></proposition-results-card>
@@ -21,26 +21,7 @@
 
     </div>
 </template>
-<!--<div class="election-results-card card">-->
 
-
-<!--<div class="card-header">-->
-<!--    <h2 class="card-title">Results for the election </h2>-->
-<!--</div>-->
-
-<!--<div class="card-body">-->
-
-<!--    <office-results-card-->
-<!--        v-if="motions.length > 0"-->
-<!--        v-for="motion in motions"-->
-<!--        :key="motion.id"-->
-<!--        :motion="motion"-->
-<!--    ></office-results-card>-->
-
-<!--</div>-->
-
-
-<!--</div>-->
 <script>
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
@@ -55,7 +36,7 @@ export default {
     components: {PropositionResultsCard, OfficeResultsCard},
     props: [],
 
-    mixins: [MeetingMixin, MotionStoreMixin, ],
+    mixins: [MeetingMixin, MotionStoreMixin,],
 
     data: function () {
         return {}
@@ -63,18 +44,19 @@ export default {
 
     asyncComputed: {
 
-        offices : function(){
-            if(this.motions.length === 0) return []
+        offices: function () {
+            if (this.motions.length === 0) return []
             return _.filter(this.motions, (m) => {
                 return m.type === 'election';
             });
-},
-propositions : function(){
-    if(this.motions.length === 0) return []
-    return _.filter(this.motions, (m) => {
-        return m.type === 'proposition';
-    });
-},
+        },
+
+        propositions: function () {
+            if (this.motions.length === 0) return []
+            return _.filter(this.motions, (m) => {
+                return m.type === 'proposition';
+            });
+        },
 
         motions: {
             get: function () {
@@ -82,9 +64,9 @@ propositions : function(){
             },
             default: []
         },
-        isVotingComplete : function(){
-            if(! isReadyToRock(this.meeting)) return false;
-            return this.meeting.isComplete && ! this.meeting.isVotingAvailable;
+        isVotingComplete: function () {
+            if (!isReadyToRock(this.meeting)) return false;
+            return this.meeting.isComplete && !this.meeting.isVotingAvailable;
         }
     },
 
