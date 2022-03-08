@@ -242,7 +242,11 @@ class Motion extends Model
 
 
     /**
-     * Whether the motion has succeeded
+     * Whether the motion has succeeded.
+     * Will return true for a majority question (0.5) if the total
+     * is more than 50%
+     * Will return true for any other threshold if the total is greater than
+     * or equal to the threshold
      */
     public function getPassedAttribute()
     {

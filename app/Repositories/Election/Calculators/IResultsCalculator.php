@@ -21,6 +21,8 @@ abstract class IResultsCalculator
     public $results;
 
 
+
+
     public function __construct(Motion $motion){
         $this->motion = $motion;
         $this->loadResults($motion);
@@ -36,7 +38,7 @@ abstract class IResultsCalculator
      */
     public function loadResults(Motion $motion)
     {
-        $k = $motion->candidates()->get();
+//        $k = $motion->candidates()->get();
         $this->results = collect($motion->candidates)
             ->sortByDesc('totalVotesReceived');
     }

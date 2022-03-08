@@ -70,6 +70,9 @@ class Candidate extends Model
         return $this->motion->totalVotesCast > 0 ? $this->totalVotesReceived / $this->motion->totalVotesCast : 0;
     }
 
+    public function getShareOfVotesCastAttribute(){
+        return $this->getShareOfVotesCast();
+    }
 
     /**
      * Returns the non-write in candidates

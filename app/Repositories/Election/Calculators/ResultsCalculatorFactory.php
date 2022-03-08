@@ -12,6 +12,7 @@ class ResultsCalculatorFactory
 
 
     static public function make(Motion $motion){
+        //dev Currently unused
         if($motion->type === 'proposition') return new PropositionCalculator($motion);
 
         if($motion->max_winners === 1) return new MajorityWinnerCalculator($motion);

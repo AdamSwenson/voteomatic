@@ -14,6 +14,8 @@ use App\Repositories\Election\Calculators\IResultsCalculator;
  * Determines winners when the winner must win more than
  * 50% of the vote
  *
+ * dev currently unused
+ *
  * @package App\Repositories\Election
  */
 class PropositionCalculator extends IResultsCalculator

@@ -48,7 +48,7 @@ export default {
         },
 
         isRunoff: function () {
-            if (isReadyToRock(this.result)) return this.result.isRunoff;
+            if (isReadyToRock(this.result)) return this.result.isRunoffParticipant;
         },
 
         candidateName: function () {
