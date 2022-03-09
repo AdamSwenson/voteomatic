@@ -24,12 +24,6 @@ use App\Repositories\Election\Calculators\IResultsCalculator;
 class MajorityWinnerCalculator extends IResultsCalculator
 {
 
-
-    /**
-     * @var \Illuminate\Support\Collection
-     */
-    public $inRunoff;
-
     /**
      * The number of votes received by the candidate listed first in results
      * @var int
@@ -38,8 +32,6 @@ class MajorityWinnerCalculator extends IResultsCalculator
 
     public function __construct(Motion $motion)
     {
-        $this->inRunoff = collect();
-
         //This creates the list of candidates in descending order stored
         //in results
         parent::__construct($motion);

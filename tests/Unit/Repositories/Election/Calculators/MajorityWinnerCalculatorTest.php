@@ -32,7 +32,7 @@ class MajorityWinnerCalculatorTest extends TestCase
 
         $this->numOthers = 5;
         $this->otherCandidates = Candidate::factory()->count($this->numOthers)->create(['motion_id' => $this->motion->id]);
-
+//$this->otherCandidates = collect($this->otherCandidates)->shuffle();
         $this->winningVotes = 51;
 //        $this->winningVotes = $this->faker->numberBetween(10, 100);
 
@@ -51,7 +51,8 @@ class MajorityWinnerCalculatorTest extends TestCase
     }
 
     public function giveOtherCandidatesVotes($numVotes=10){
-        foreach ($this->otherCandidates as $candidate) {
+        //mix them up in assigning votes to hopefully expose the key order problem
+        foreach (collect($this->otherCandidates)->shuffle() as $candidate) {
             Vote::factory()->count($numVotes)
                 ->create(['motion_id' => $this->motion->id,
                     'candidate_id' => $candidate->id
@@ -213,6 +214,7 @@ class MajorityWinnerCalculatorTest extends TestCase
         foreach($this->otherCandidates as $candidate){
             $candidates[] = $candidate;
         }
+        shuffle($candidates);
         for($i=0;$i<sizeof($totals); $i++) {
             Vote::factory()->count($totals[$i])
                 ->create([
@@ -242,6 +244,7 @@ class MajorityWinnerCalculatorTest extends TestCase
         foreach($this->otherCandidates as $candidate){
             $candidates[] = $candidate;
         }
+        shuffle($candidates);
         for($i=0;$i<sizeof($totals); $i++) {
             Vote::factory()->count($totals[$i])
                 ->create([
@@ -272,6 +275,7 @@ class MajorityWinnerCalculatorTest extends TestCase
         foreach($this->otherCandidates as $candidate){
             $candidates[] = $candidate;
         }
+        shuffle($candidates);
         for($i=0;$i<sizeof($totals); $i++) {
             Vote::factory()->count($totals[$i])
                 ->create([
