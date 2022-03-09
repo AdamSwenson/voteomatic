@@ -24,11 +24,6 @@ use App\Repositories\Election\Calculators\IResultsCalculator;
 class MajorityWinnerCalculator extends IResultsCalculator
 {
 
-    /**
-     * The number of votes received by the candidate listed first in results
-     * @var int
-     */
-    public $topVoteCount;
 
     public function __construct(Motion $motion)
     {
@@ -36,8 +31,7 @@ class MajorityWinnerCalculator extends IResultsCalculator
         //in results
         parent::__construct($motion);
 
-        $this->topVoteCount = $this->results[0]->totalVotesReceived;
-        $this->constructRunoffList();
+        $this->calculate();
     }
 
     /**
@@ -69,48 +63,15 @@ class MajorityWinnerCalculator extends IResultsCalculator
         //This may be called on our winner
         if ($this->isWinner($candidate)) return false;
 
-        //First we check to see if there is a tie at the top. We need to do this
-        //because the next check, where we add up totals until we get to 50%+
-        //could fail if there is 3-way tie.
-//        if ($this->topVoteCount === $candidate->getVoteTotal()) return true;
-
-        //Up to this point is covered by the test isRunoffParticipantWhenMultipleTiesAtTopInPlurality
         return $this->inRunoff->pluck('id')->contains($candidate->id);
-//
-//        $inRunoff = [];
-//        $shareTotal = 0;
-//
-//        $i = 0;
-//        while ($shareTotal < 0.5) {
-//            $c = $this->results[$i];
-//            //If the loop is running, we're still under the
-//            //threshold, so add them to the list.
-//            $inRunoff[] = $c;
-//            $shareTotal += $c->getShareOfVotesCast();
-//            $i += 1;
-//        }
-
-//        //Get the ids of those within the allowed number of winners
-//        $topIds = $this->results->slice(0, $this->motion->max_winners)->pluck('id');
-//
-//        //If there's only one person with the score, there's no tie
-//        if (sizeof($sameScore) === 1) return false;
-//
-//        foreach ($sameScore as $candidate) {
-//            if ($topIds->contains($candidate->id)) {
-//                //If any of the candidates with the same score
-//                //are within the range defined by max winners, there will
-//                //need to be a runoff
-//                return true;
-//            }
-//        }
-//
-//        //We end up here if there was a tie but no tied candidate could've been the winner
-//        return false;
-
     }
 
-    public function constructRunoffList()
+    /**
+     * Constructs the runoff list
+     *
+     * @return bool|void
+     */
+    protected function calculate()
     {
         //check if top vote getter is clear winner; stop if they are
         if ($this->isWinner($this->results[0])) return true;

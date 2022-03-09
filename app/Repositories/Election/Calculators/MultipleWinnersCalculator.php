@@ -17,7 +17,7 @@ use App\Models\Motion;
 class MultipleWinnersCalculator extends IResultsCalculator
 {
 
-    public mixed $maxWinners;
+    public int $maxWinners;
 
     public function __construct(Motion $motion)
     {
@@ -45,7 +45,7 @@ class MultipleWinnersCalculator extends IResultsCalculator
         return ($winners + $add) <= $this->maxWinners;
     }
 
-    public function calculate()
+    protected function calculate()
     {
         $k = 0;
         //Using a while loop because need to control how much the
@@ -75,72 +75,11 @@ class MultipleWinnersCalculator extends IResultsCalculator
             //so we increment by the number of items we just added.
             $k += sizeof($toAdd);
         }
-//
-//
-//
-//                if(sizeof($toAdd) === 0){
-//                if($this->isRoomInWinners($candidate)){
-//                    $this->winners->push($candidate);
-//                }else{
-//                    //We will hit this on the first person who doesn't fit
-//                    break;
-//                }
-//            }else{
-//
-//                if($this->isRoomInWinners($candidate)){
-//                    $this->winners->concat($candidate);
-//                }else{
-//                    //We will hit this on the first person who doesn't fit
-//                    break;
-//                }
-//            }
-
-
-//            if (sizeof($this->winners) < $this->maxWinners
-
-
-//        $i = 0;
-//            $a = $candidate->totalVotesReceived;
-//        foreach ($this->results as $candidate) {
-//            $i += 1;
-        //We need to start checking when we are at one less than
-        //the number of winners, because the person may be in a runoff
-//            if (sizeof($this->winners) === $this->maxWinners - 1) {
-//                $nextCandidate = $this->results[$k + 1]; //->get($i);
-//                if ($candidate->totalVotesReceived > $nextCandidate->totalVotesReceived) {
-//                    //if there is no tie, we add them and are done
-//                    $this->winners->push($candidate);
-//                    break;
-//                }
-//
-////                $c = $candidate->id;
-////                $b = $nextCandidate->totalVotesReceived;
-////                $d = $nextCandidate->id;
-//                //we have a tie and need to begin the runoff check
-//                $this->inRunoff->push($candidate);
-//                $this->inRunoff->push($nextCandidate);
-//                $i = $k + 2;
-//                while (++$i) {
-//                    if ($i === sizeof($this->results)) break 2; //we've been through all of them
-//                    $candidate3 = $this->results[$i]; //->get($i);
-//                    if ($nextCandidate->totalVotesRecieved > $candidate3->totalVotesReceived) {
-//                        break 2;
-//                    }
-//                    //that candidate is also tied so we push them into the runoff slot and keep going
-//                    $this->inRunoff->push($candidate3);
-//                    $nextCandidate = $candidate3;
-//                }
-//
-//            }
-//
-//            //Otherwise we add them and keep going
-//            $this->winners->push($candidate);
-//        }
 
     }
 
-
     /**
+     * Determine whether the candidate is an outright winner
      * @param Candidate $candidate
      * @return bool
      */
@@ -157,28 +96,6 @@ class MultipleWinnersCalculator extends IResultsCalculator
     public function isRunoffParticipant(Candidate $candidate)
     {
         return $this->inRunoff->pluck('id')->contains($candidate->id);
-
-//        //Grab everyone that has the same score as our candidate
-//        $sameScore = $this->results->where('totalVotesReceived', $candidate->totalVotesReceived)->all();
-//
-//        //Get the ids of those within the allowed number of winners
-//        $topIds = $this->results->slice(0, $this->motion->max_winners)->pluck('id');
-//
-//        //If there's only one person with the score, there's no tie
-//        if (sizeof($sameScore) === 1) return false;
-//
-//        foreach ($sameScore as $candidate) {
-//            if ($topIds->contains($candidate->id)) {
-//                //If any of the candidates with the same score
-//                //are within the range defined by max winners, there will
-//                //need to be a runoff
-//                return true;
-//            }
-//        }
-//
-//        //We end up here if there was a tie but no tied candidate could've been the winner
-//        return false;
-
     }
 
 

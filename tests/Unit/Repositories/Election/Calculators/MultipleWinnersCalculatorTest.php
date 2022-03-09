@@ -43,13 +43,9 @@ class MultipleWinnersCalculatorTest extends TestCase
         $this->maxWinners = 3;
         $this->motion = Motion::factory()->electedOffice()->create(['max_winners' => $this->maxWinners]);
 
-//        $this->winners = Candidate::factory()->count($this->maxWinners)->create(['motion_id' => $this->motion->id]);
-
         $this->numOthers = 5;
         $this->otherCandidates = Candidate::factory()->count($this->numOthers)->create(['motion_id' => $this->motion->id]);
 
-//        $this->winningVotes = 51;
-//        $this->winningVotes = $this->faker->numberBetween(10, 100);
     }
 
     // ============================= Utilities
@@ -144,9 +140,7 @@ class MultipleWinnersCalculatorTest extends TestCase
         $this->object->maxWinners = 4;
         $this->object->winners = collect(Candidate::factory()->count(2)->make());
 
-//        $this->assertTrue($this->object->isRoomInWinners($r), "returns true when room and given object");
         $this->assertTrue($this->object->isRoomInWinners(collect($r)), "returns true when room and given collection");
-//        $this->assertTrue($this->object->isRoomInWinners([$r]), "returns true when room and given array");
     }
 
     /** @test  */
@@ -160,9 +154,7 @@ class MultipleWinnersCalculatorTest extends TestCase
         $this->object->winners = collect(Candidate::factory()->count(4)->make());
 
         $this->assertFalse($this->object->isRoomInWinners($r), "returns false when no room and given object");
-//        $this->assertTrue($this->object->isRoomInWinners(collect($r)), "returns true when room and given collection");
         $this->assertFalse($this->object->isRoomInWinners([$r]), "returns false when no room and given array");
-
     }
 
 

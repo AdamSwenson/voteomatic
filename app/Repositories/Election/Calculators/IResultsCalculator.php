@@ -42,6 +42,8 @@ abstract class IResultsCalculator
         $this->winners = collect();
         $this->motion = $motion;
         $this->loadResults($motion);
+        //NB, we don't call calculate here since different calculators
+        //may need to do additional setup
     }
 
     /**

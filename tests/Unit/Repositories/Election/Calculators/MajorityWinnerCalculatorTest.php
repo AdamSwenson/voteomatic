@@ -32,10 +32,7 @@ class MajorityWinnerCalculatorTest extends TestCase
 
         $this->numOthers = 5;
         $this->otherCandidates = Candidate::factory()->count($this->numOthers)->create(['motion_id' => $this->motion->id]);
-//$this->otherCandidates = collect($this->otherCandidates)->shuffle();
         $this->winningVotes = 51;
-//        $this->winningVotes = $this->faker->numberBetween(10, 100);
-
     }
 
     /**
