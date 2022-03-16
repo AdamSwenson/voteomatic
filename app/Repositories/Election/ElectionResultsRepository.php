@@ -50,7 +50,8 @@ class ElectionResultsRepository implements IElectionResultsRepository
                 'voteCount' => $candidate->totalVotesReceived,
                 'pctOfTotal' => $candidate->getShareOfVotesCast(),
                 'isWinner' => $calculator->isWinner($candidate),
-                'isRunoffParticipant' => $calculator->isRunoffParticipant($candidate)
+                'isRunoffParticipant' => $calculator->isRunoffParticipant($candidate),
+                'person' => $candidate->person
 
             ];
         }

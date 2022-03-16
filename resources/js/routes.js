@@ -48,6 +48,9 @@ module.exports = {
 
             releaseResults : (meetingId) => {
                 return normalizedRouteRoot() + 'election/admin/results/release/' + meetingId;
+            },
+            hideResults : (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/results/hide/' + meetingId;
             }
         },
 
@@ -160,7 +163,8 @@ module.exports = {
 
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId;
-        }
+        },
+
     },
 
     votes: {

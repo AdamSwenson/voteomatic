@@ -2,7 +2,8 @@ import Meeting from "./Meeting";
 import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Election extends Meeting {
-    is_voting_available;
+    election_phase;
+
 
     /**
      * Create a new motion
@@ -10,11 +11,12 @@ export default class Election extends Meeting {
      * @param name
      * @param date
      */
-    constructor({id=null, name=null, date=null, info= {}, is_voting_available=null, is_complete=null_}) {
+    constructor({id=null, name=null, date=null, info= {}, is_voting_available=null, is_complete=null, election_phase=nll}) {
         super(id, name, date);
         this.info = info;
         this.is_voting_available = is_voting_available;
         this.is_complete = is_complete;
+        this.election_phase = election_phase;
 
         /** The string used on buttons etc */
         this.type = 'election';
@@ -57,6 +59,23 @@ export default class Election extends Meeting {
 
     set isVotingAvailable(v){
         this.is_voting_available = v;
+    }
+
+    get electionPhase(){
+        return this.election_phase;
+    }
+
+    /**
+     * Whether all users are able to view results
+     */
+    get isResultsAvailable(){
+        if(! this.is_complete ) return false;
+        if( this.is_voting_available ) return false;
+        return this.info.is_results_available;
+    }
+
+    set isResultsAvailable(v){
+        this.info.is_results_available = v;
     }
 
 }

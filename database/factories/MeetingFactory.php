@@ -43,7 +43,8 @@ class MeetingFactory extends Factory
             return [
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
-                'is_voting_available' => true
+                'is_voting_available' => true,
+                'info' => ['is_results_available' => false]
             ];
         });
     }

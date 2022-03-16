@@ -19,9 +19,11 @@
                 aria-label="Close"
                 v-on:click="handleClick"
         >
-            <span aria-hidden="true">&times;</span>
+            <span class="visually-hidden" aria-hidden="true">&times;</span>
         </button>
     </div>
+
+
 </template>
 
 <script>

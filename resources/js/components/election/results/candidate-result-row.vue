@@ -1,7 +1,11 @@
 <template>
     <div class="candidate-result-row card-body" v-bind:class="styling">
-        <p class="h4">{{ candidateName }}   <component v-bind:is="badgeShown"></component>
+        <p class="h4">{{ candidateName }}
+            <component v-bind:is="badgeShown"></component>
         </p>
+
+        <div class="candidate-info" v-html="candidateInfo"></div>
+
         <!--        <dl class="row">-->
         <div class="row" v-if="showVoteTotal || showVoteShare">
             <dl class="col-md-6" v-if="showVoteTotal">
@@ -43,6 +47,19 @@ export default {
             if (this.isRunoff) return RunoffBadge;
         },
 
+        /**
+         * Additional html to be added as required in the election
+         */
+        candidateInfo: function () {
+            if (isReadyToRock(this.department)) {
+                return `<p class="card-text mb-2">${this.department}</p>`
+            }
+        },
+
+        department: function () {
+            if (isReadyToRock(this.result, 'person') && isReadyToRock(this.result.person.info, 'department')) return this.result.person.info.department;
+        },
+
         isWinner: function () {
             if (isReadyToRock(this.result)) return this.result.isWinner;
         },
@@ -63,7 +80,7 @@ export default {
          * Whether to display the total number of
          * votes the candidate received
          */
-        showVoteTotal : function(){
+        showVoteTotal: function () {
             return true;
         },
 
@@ -71,7 +88,7 @@ export default {
          * Whether to display the percentage the candidate received
          * @returns {boolean}
          */
-        showVoteShare : function (){
+        showVoteShare: function () {
             return true;
         },
 

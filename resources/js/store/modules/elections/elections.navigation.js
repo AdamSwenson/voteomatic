@@ -6,6 +6,9 @@ import VotingInstructionsCard from "../../../components/election/voter/voting-in
 import SummarySubmitCard from "../../../components/election/voter/summary-submit-card";
 import PropositionVoteCard from "../../../components/election/voting/proposition-vote-card";
 import PrematureAccessCard from "../../../components/election/unavailable/premature-access-card";
+import ResultsCard from "../../../components/election/results/election-results-card";
+import ClosedCard from "../../../components/election/unavailable/election-closed-card";
+
 import {router} from "../../../app";
 
 const state = {
@@ -21,6 +24,9 @@ const mutations = {
         state.shownCard = cardName;
     },
 
+    showClosedCard: (state) => {
+        state.shownCard = 'closed';
+    },
     showSummarySubmitCard: (state) => {
         state.shownCard = 'summary'
         // state.showSummarySubmitCard = true;
@@ -45,6 +51,10 @@ const mutations = {
 
     showVotingCard: (state) => {
         state.shownCard = 'election';
+    },
+
+    showResultsCard: (state) => {
+        state.shownCard = 'results';
     },
 
     showVotingCompleteCard: (state) => {
@@ -76,8 +86,18 @@ const actions = {
     forceNavigationToElectionHome({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
 
-            if(router.currentRoute.name !== 'election-home'){
+            if (router.currentRoute.name !== 'election-home') {
                 router.push('election-home');
+            }
+            resolve();
+        }));
+    },
+
+    forceNavigationToElectionResults({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+
+            if (router.currentRoute.name !== 'election-results') {
+                router.push('election-results');
             }
             resolve();
         }));
@@ -85,40 +105,280 @@ const actions = {
 
 
     /**
-     * Makes the decision on where to go and sends there
+     * Makes the decision on where to go and sends there.
+     * See the election lifecycle in the documentation for Meeting.php
+     * for explanation.
      */
     navigateToAppropriateLocation({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             if (!isReadyToRock(meeting)) return reject();
 
-            //Election access has not yet been enabled by
-            //the chair
-            if (!meeting.isVotingAvailable && !meeting.isComplete) {
-                commit('showPrematureCard');
-                return resolve();
+            if (getters.getIsAdmin) {
+                dispatch('navigateToAppropriateLocationChair', meeting).then(() => {
+                    return resolve();
+                });
+            } else {
+                dispatch('navigateToAppropriateLocationRegularUser', meeting).then(() => {
+                    return resolve();
+                });
             }
 
-            //The election has ended
-            if (! meeting.isVotingAvailable && meeting.isComplete) {
-                //Results are available
-                //dev todo
+            // //Election access has not yet been enabled by
+            // //the chair
+            // if (!meeting.isVotingAvailable && !meeting.isComplete) {
+            //     commit('showPrematureCard');
+            //     return resolve();
+            // }
+            //
+            // //The election has ended
+            // if (! meeting.isVotingAvailable && meeting.isComplete) {
+            //     //Results are available
+            //     if(meeting.isResultsAvailable) {
+            //         commit('showResultsCard');
+            //         return dispatch('forceNavigationToElectionResults').then(() => {
+            //             return resolve();
+            //         });
+            //
+            //
+            //     }else{
+            //         //No results available
+            //         commit('showVotingCompleteCard');
+            //         return resolve();
+            //     }
+            //
+            // }
+            //
+            // //Voter has completed voting (The election could still be open for others)
+            // //todo Determine if there are no available motions (offices/props) to vote upon
+            // if(getters.isVotingComplete){
+            //     commit('showVotingCompleteCard');
+            // }
+            //
+            // //Voter can vote for stuff
+            // dispatch('forceNavigationToElectionHome').then(() => {
+            //     return resolve();
+            // });
 
-                //No results available
-                commit('showVotingCompleteCard');
+        }));
+    },
 
-                return resolve();
+
+    /**
+     * Makes the decision on where to go and sends there.
+     * See the election lifecycle in the documentation for Meeting.php
+     * for explanation.
+     */
+    navigateToAppropriateLocationChair({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+            if (!isReadyToRock(meeting)) return reject();
+            switch (meeting.electionPhase) {
+
+                case 'setup':
+                    commit('setShownCard', 'setup');
+                    break;
+
+                case 'nominations':
+                    commit('setShownCard', 'setup');
+                    break;
+
+                case 'voting':
+                    commit('setShownCard', 'instructions');
+                    break;
+
+                case 'closed':
+                    //chair can see results and administer
+                    commit('setShownCard', 'admin');
+                    break;
+
+                case 'results':
+                    commit('showResultsCard');
+                    break;
+
+                default:
             }
-
-            //Voter has completed voting (The election could still be open for others)
-            //todo Determine if there are no available motions (offices/props) to vote upon
-            if(getters.isVotingComplete){
-                commit('showVotingCompleteCard');
-            }
-
-            //Voter can vote for stuff
             dispatch('forceNavigationToElectionHome').then(() => {
+return resolve();
+            });
+            //
+            //
+            //
+            // switch (meeting.electionPhase) {
+            //
+            //     case 'setup':
+            //         dispatch('forceNavigationToElectionHome').then(() => {
+            //
+            //         });
+            //         break;
+            //
+            //     case 'nominations':
+            //         dispatch('forceNavigationToElectionHome').then(() => {
+            //
+            //         });
+            //         break;
+            //
+            //     case 'voting':
+            //
+            //         //Voter has completed voting (The election could still be open for others)
+            //         //todo Determine if there are no available motions (offices/props) to vote upon
+            //         if (getters.isVotingComplete) {
+            //             commit('showVotingCompleteCard');
+            //         }else{
+            //             //Voter can vote for stuff
+            //             dispatch('forceNavigationToElectionHome').then(() => {
+            //
+            //             });
+            //         }
+            //
+            //         break;
+            //
+            //     case 'closed':
+            //         //No results available
+            //         commit('showVotingCompleteCard');
+            //         break;
+            //
+            //     case 'results':
+            //         commit('showResultsCard');
+            //         return dispatch('forceNavigationToElectionResults').then(() => {
+            //
+            //         });
+            //         break;
+            //
+            //     default:
+            // }
+            // return resolve();
+            // //
+            // // //Election access has not yet been enabled by
+            // // //the chair
+            // // if (!meeting.isVotingAvailable && !meeting.isComplete) {
+            // //     commit('showPrematureCard');
+            // //     return resolve();
+            // // }
+            // //
+            // // //The election has ended
+            // // if (!meeting.isVotingAvailable && meeting.isComplete) {
+            // //     //Results are available
+            // //     if (meeting.isResultsAvailable) {
+            // //         commit('showResultsCard');
+            // //         return dispatch('forceNavigationToElectionResults').then(() => {
+            // //             return resolve();
+            // //         });
+            // //
+            // //
+            // //     } else {
+            // //         //No results available
+            // //         commit('showVotingCompleteCard');
+            // //         return resolve();
+            // //     }
+            // //
+            // // }
+            // //
+            // // //Voter has completed voting (The election could still be open for others)
+            // // //todo Determine if there are no available motions (offices/props) to vote upon
+            // // if (getters.isVotingComplete) {
+            // //     commit('showVotingCompleteCard');
+            // // }
+            // //
+            // // //Voter can vote for stuff
+            // dispatch('forceNavigationToElectionHome').then(() => {
+            //     return resolve();
+            // });
+
+        }));
+    },
+
+
+    /**
+     * Makes the decision on where to go and sends there.
+     * See the election lifecycle in the documentation for Meeting.php
+     * for explanation.
+     */
+    navigateToAppropriateLocationRegularUser({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+            if (!isReadyToRock(meeting)) return reject();
+            window.console.log(meeting.electionPhase, 'ep');
+
+            switch (meeting.electionPhase) {
+
+                case 'setup':
+                    commit('showPrematureCard');
+                    break;
+
+                case 'nominations':
+                    commit('showPrematureCard');
+
+                    break;
+
+                case 'voting':
+
+                    //Voter has completed voting (The election could still be open for others)
+                    //todo Determine if there are no available motions (offices/props) to vote upon
+                    if (getters.isVotingComplete) {
+                        commit('showVotingCompleteCard');
+                    } else {
+                        commit('showVotingCard');
+                        //Voter can vote for stuff
+                    }
+
+                    break;
+
+                case 'closed':
+                    window.console.log('closed');
+                    //No results available
+                    commit('showClosedCard');
+                    // dispatch('forceNavigationToElectionHome').then(() => {
+                    // });
+                    break;
+
+                case 'results':
+                    commit('showResultsCard');
+                    // return dispatch('forceNavigationToElectionResults').then(() => {
+                    //
+                    // });
+                    break;
+
+                default:
+            }
+
+            return dispatch('forceNavigationToElectionHome').then(() => {
                 return resolve();
             });
+
+            //
+            // //Election access has not yet been enabled by
+            // //the chair
+            // if (!meeting.isVotingAvailable && !meeting.isComplete) {
+            //     commit('showPrematureCard');
+            //     return resolve();
+            // }
+            //
+            // //The election has ended
+            // if (!meeting.isVotingAvailable && meeting.isComplete) {
+            //     //Results are available
+            //     if (meeting.isResultsAvailable) {
+            //         commit('showResultsCard');
+            //         return dispatch('forceNavigationToElectionResults').then(() => {
+            //             return resolve();
+            //         });
+            //
+            //
+            //     } else {
+            //         //No results available
+            //         commit('showVotingCompleteCard');
+            //         return resolve();
+            //     }
+            //
+            // }
+            //
+            // //Voter has completed voting (The election could still be open for others)
+            // //todo Determine if there are no available motions (offices/props) to vote upon
+            // if (getters.isVotingComplete) {
+            //     commit('showVotingCompleteCard');
+            // }
+            //
+            // //Voter can vote for stuff
+            // dispatch('forceNavigationToElectionHome').then(() => {
+            //     return resolve();
+            // });
 
         }));
     },
@@ -333,8 +593,10 @@ const getters = {
 
 
     /**
-     * Returns the appropriate component.
+     * Returns the appropriate component for election home.
+     * This is for cards which occupy election-home
      * NB, actually returns component not just name
+     *
      *
      * @param state
      * @param getters
@@ -342,6 +604,8 @@ const getters = {
      */
     getShownCard: (state, getters) => {
         let c = {
+            //Election has ended but results are not available
+            'closed': ClosedCard,
             //Allows user to select candidates
             'election': ElectionCard,
             //Tells the user they are not allowed to vote. Allows to see receipts
@@ -353,6 +617,8 @@ const getters = {
             'premature': PrematureAccessCard,
             //Voting on a proposition
             'proposition': PropositionVoteCard,
+            //Results of the election
+            'results': ResultsCard,
             //User submits their selections
             'summary': SummarySubmitCard,
         }

@@ -44,12 +44,7 @@ const actions = {
         }));
     },
 
-    /*
-    *    doThing({dispatch, commit, getters}, thingParam) {
-    *        return new Promise(((resolve, reject) => {
-    *        }));
-    *    },
-    */
+
 };
 
 /**

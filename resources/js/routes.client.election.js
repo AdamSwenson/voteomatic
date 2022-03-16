@@ -54,6 +54,29 @@ export const electionRoutes = [
         },
         props: true,
         adminOnly: false,
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting', 'closed'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : ['voting'],
+
+        type: 'election'
+    },
+
+
+    {
+        name: 'election-results',
+        path: '/election-results',
+        icon: "fa fa-comments-o",
+        label: "Results",
+        components: {main: resultsCard},
+        props: true,
+        adminOnly: false,
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : [ 'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : [ 'results'],
+
         type: 'election'
     },
 
@@ -67,20 +90,15 @@ export const electionRoutes = [
         components: {main: voteVerify},
         props: true,
         adminOnly: false,
-        type : 'all'
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting',  'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : ['voting', 'closed', 'results'],
+
+        type : 'election'
     },
 
-
-    {
-        name: 'election-results',
-        path: '/election-results',
-        icon: "fa fa-comments-o",
-        label: "Results",
-        components: {main: resultsCard},
-        props: true,
-        adminOnly: false,
-        type: 'election'
-    },
 
     {
         name: 'setup-offices',
@@ -94,6 +112,12 @@ export const electionRoutes = [
         components: {main: ballotSetupCard},
         props: true,
         adminOnly: true,
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : [],
+
         type : 'election'
     },
 
@@ -107,6 +131,12 @@ export const electionRoutes = [
         props: true,
         // adminOnly: true,
         adminOnly: true,
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : [],
+
         type : 'election'
     },
 
@@ -123,6 +153,12 @@ export const electionRoutes = [
         components: {main: eventSetupCard},
         props: true,
         adminOnly: true,
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : [],
+
         type : 'election'
     },
 
@@ -134,6 +170,12 @@ export const electionRoutes = [
         components: {main: electionAdminCard},
         props: true,
         adminOnly: true,
+
+        /** List of phases in which this tab is displayed to administrators*/
+        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        /** List of phases in which this tab is displayed to voters */
+        electionPhasesVoter : [],
+
         type : 'election'
     },
 

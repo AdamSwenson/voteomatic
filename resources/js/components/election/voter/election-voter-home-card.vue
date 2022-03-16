@@ -84,6 +84,7 @@ export default {
         },
 
         showOfficeSelector : function(){
+            return isReadyToRock(this.meeting) && this.meeting.electionPhase === 'voting';
             return ! this.isVotingComplete && isReadyToRock(this.meeting, 'isVotingAvailable');
         },
 

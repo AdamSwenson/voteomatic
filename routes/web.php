@@ -144,6 +144,7 @@ Route::delete('election/candidate/{candidate}', [CandidateController::class, 're
 Route::post('election/admin/start/{meeting}', [ElectionAdminController::class, 'startVoting']);
 Route::post('election/admin/stop/{meeting}', [ElectionAdminController::class, 'stopVoting']);
 Route::post('election/admin/results/release/{meeting}', [ElectionAdminController::class, 'releaseResults']);
+Route::post('election/admin/results/hide/{meeting}', [ElectionAdminController::class, 'hideResults']);
 
 
 

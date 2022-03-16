@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Assignment;
-use App\Models\ResourceLink;
 use App\Models\Motion;
+use App\Models\ResourceLink;
 use Database\Seeders\CSUNElectionSeeder;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Meeting
@@ -20,24 +22,31 @@ class Meeting extends Model
     protected $fillable = [
         'date',
         'name',
-        'is_election',
+        'info',
+
+        // ---------------- Election specific
         /** If an election, whether the chair has closed voting */
         'is_complete',
+        'is_election',
         /** If an election, determines whether any user can vote */
         'is_voting_available',
-        'info',
-        'info->candidateFields'
+        /** The names of informational fields about candidates which should be shown to voters */
+        'info->candidateFields',
+        'info->is_results_available'
     ];
 
     protected $casts = [
         'is_election' => 'boolean',
         'is_voting_available' => 'boolean',
         'is_complete' => 'boolean',
-        'info' => 'array'
+        'info' => AsArrayObject::class,
     ];
 
-    // =============================== Authentication and Authorization
+    protected $appends = ['election_phase'];
 
+    /* =======================
+        Authentication and Authorization
+     ======================= */
     /**
      * @return User
      */
@@ -91,7 +100,90 @@ class Meeting extends Model
     }
 
 
-    // ============================= Election specific
+
+    /* =======================
+        Election specific
+     ======================= */
+
+    /**
+     * If an election, returns a string which represents where
+     * in the election lifecycle we are. This is used by the client
+     * to determine what to show the user
+     *
+     * The Election lifecycle:
+     * (1) setup
+     * Event is created
+     *       - is_voting_available = false
+     *      - is_complete = false
+     *      - info->is_results_available = false
+     *  Chair sees:
+     *      - Setup pages
+     *  Users see:
+     *      - Premature access card
+     *
+     * (2) nominations
+     * Authorized users nominate candidates
+     *  Chair sees:
+     *      - Setup and nomination pages
+     *  Users see:
+     *      - Nomination pages
+     *
+     * (3) voting
+     *  Voting is opened to all users
+     *      - is_voting_available = true
+     *      - is_complete = false
+     *      - info->is_results_available = false
+     *  Chair sees:
+     *      - All
+     *  Users see:
+     *      - Vote card
+     *      - Verify vote card
+     *
+     * (4) closed
+     * Voting is closed
+     *  At this point, no one may cast votes. The chair/election admin may view the results
+     *  but regular users cannot see the results.
+     *      - is_voting_available = false
+     *      - is_complete = true
+     *      - info->is_results_available = false
+     *  Chair sees:
+     *      - Results
+     *  Users see:
+     *      - Voting closed card
+     *
+     * (5) results
+     * Results are released
+     *  Any user may view the results. (Potentially: Results may be made available on public page)
+     *      - is_voting_available = false
+     *      - is_complete = true
+     *      - info->is_results_available = true
+     *  Chair
+     *      - All
+     *  Users see:
+     *      - Results
+     *      - Vote verify
+     *
+     */
+    public function getElectionPhaseAttribute()
+    {
+        if (!$this->is_election) return null;
+
+        try {
+
+            if (!$this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'setup';
+
+            //dev nominations
+
+            if ($this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'voting';
+
+            if (!$this->is_voting_available && $this->is_complete && !$this->info['is_results_available']) return 'closed';
+
+            if (!$this->is_voting_available && $this->is_complete && $this->info['is_results_available']) return 'results';
+        } catch (\ErrorException $e) {
+            Log::info("Old style meeting object lacks phase fields \n" . $e);
+            return null;
+        }
+    }
 
     /**
      * Makes it possible for voters to vote
@@ -99,7 +191,11 @@ class Meeting extends Model
     public function openVoting()
     {
         $this->is_voting_available = true;
-        if( $this->is_complete === true) $this->is_complete = false;
+        if ($this->is_complete === true) $this->is_complete = false;
+        //ensure that no one can see the results
+        if (array_key_exists('is_results_available', $this->info) && $this->info['is_results_available'] === true) {
+            $this->info['is_results_available'] = false;
+        }
         $this->save();
     }
 
@@ -111,12 +207,70 @@ class Meeting extends Model
     {
         $this->is_voting_available = false;
         $this->is_complete = true;
+        $info = $this->info;
+        //set availability of results since the key may not yet exist
+        $info['is_results_available'] = false;
+        $this->info = $info;
+//        $this->info['is_results_available'] = false;
+
+        $this->save();
+    }
+
+    /**
+     * Make it possible for any user to see the results of
+     * the election
+     */
+    public function releaseElectionResults()
+    {
+        $this->closeVoting(); //just in case someone jumps straight to releasing
+        $this->info['is_results_available'] = true;
+        $this->save();
+    }
+
+    /**
+     * Prevent any non-chair/admin user from seeing the results
+     * of the election
+     */
+    public function hideElectionResults()
+    {
+        $this->info['is_results_available'] = false;
         $this->save();
     }
 
 
+    /* =======================
+        Relationships
+     ======================= */
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
 
-// ----------------------- start
+
+    /**
+     * All the motions introduced at the meeting
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function motions()
+    {
+        return $this->hasMany(Motion::class);
+    }
+
+    public function resourceLink()
+    {
+        return $this->hasOne(ResourceLink::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+
+
+
+
+// ----------------------- start attic
 //These are from an initial attempt at the motion tree based on
 // the gradeomatic structures. May end up using later if need much richer
 // tree. But presently not used.
@@ -213,31 +367,5 @@ class Meeting extends Model
 
     //----------------------- end
 
-    /* =======================
-        Relationships
-     ======================= */
-    public function assignments()
-    {
-        return $this->hasMany(Assignment::class);
-    }
 
-
-    /**
-     * All the motions introduced at the meeting
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function motions()
-    {
-        return $this->hasMany(Motion::class);
-    }
-
-    public function resourceLink()
-    {
-        return $this->hasOne(ResourceLink::class);
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
 }

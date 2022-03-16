@@ -1,4 +1,6 @@
 import IModel from "./IModel";
+import {isReadyToRock} from "../utilities/readiness.utilities";
+import Candidate from "./Candidate";
 
 /**
  * The results for one person running for one office.
@@ -6,7 +8,19 @@ import IModel from "./IModel";
  */
 export default class CandidateResult extends IModel {
 
-    constructor({motionId = null, candidateId = null, candidateName = null, voteCount = null, pctOfTotal = null, isWinner=null, isRunoffParticipant=null}) {
+
+    /**
+     *
+     * @param motionId
+     * @param candidateId
+     * @param candidateName
+     * @param voteCount
+     * @param pctOfTotal
+     * @param isWinner
+     * @param isRunoffParticipant
+     * @param person
+     */
+    constructor({motionId = null, candidateId = null, candidateName = null, voteCount = null, pctOfTotal = null, isWinner=null, isRunoffParticipant=null, person=null}) {
         super();
         this.motionId = motionId;
         this.candidateId = candidateId;
@@ -15,6 +29,7 @@ export default class CandidateResult extends IModel {
         this.pctOfTotal = pctOfTotal;
         this.isWinner = isWinner;
         this.isRunoffParticipant = isRunoffParticipant;
+        this.person = isReadyToRock(person) ? new Candidate(person) : null;
 
     }
 

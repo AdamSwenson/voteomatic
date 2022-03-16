@@ -6,7 +6,7 @@
 
                     <ul class="list-unstyled small text-muted">
                         <li class="mb-2">Designed and built by Adam Swenson</li>
-                        <li class="mb-2">Currently v4.0.0.</li>
+                        <li class="mb-2">{{appVersion}}</li>
                     </ul>
                 </div>
                 <div class="col-6 col-lg-2 offset-lg-1 mb-3">
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+
 export default {
     name: "page-footer",
 
@@ -42,7 +44,12 @@ export default {
         return {}
     },
 
-    asyncComputed: {},
+    asyncComputed: {
+        appVersion: function(){
+            if(isReadyToRock(window.appVersion)) return 'Currently v.' + window.appVersion ;
+            return ''
+        }
+    },
 
     computed: {},
 

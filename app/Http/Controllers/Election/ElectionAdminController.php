@@ -42,6 +42,13 @@ class ElectionAdminController extends Controller
     {
         $election = $this->electionAdminRepo->releaseResults($meeting);
         return response()->json($election);
-
     }
+
+
+    public function hideResults(Meeting $meeting)
+    {
+        $election = $this->electionAdminRepo->hideResults($meeting);
+        return response()->json($election);
+    }
+
 }
