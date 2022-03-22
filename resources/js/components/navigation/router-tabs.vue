@@ -66,7 +66,7 @@ export default {
         electionTabs: function () {
             let showRoutes = [];
             let me = this;
-            if (! isReadyToRock(this.meeting)) return showRoutes;
+            if (!isReadyToRock(this.meeting)) return showRoutes;
 
             let electionRoutes = this.routes.filter((r) => {
                 return r.type === 'election';
@@ -86,10 +86,10 @@ export default {
 
         },
 
-        meetingTabs : function(){
+        meetingTabs: function () {
             let showRoutes = [];
             let me = this;
-            if (! isReadyToRock(this.meeting)) return showRoutes;
+            if (!isReadyToRock(this.meeting)) return showRoutes;
 
             let meetingRoutes = this.routes.filter((r) => {
                 return r.type === 'meeting' || r.type === 'all';
@@ -98,7 +98,7 @@ export default {
             _.forEach(meetingRoutes, (r) => {
 
                 // if (r.type === 'election' || r.type === 'all') {
-                if (r.name === 'results' ){ //|| r.name === 'election-results') {
+                if (r.name === 'results') { //|| r.name === 'election-results') {
                     if (this.showResultsTab) {
                         showRoutes.push(r);
                     }
@@ -129,10 +129,13 @@ export default {
         },
 
         shownRoutes: function () {
-            if (! isReadyToRock(this.meeting)) return [];
+            if (!isReadyToRock(this.meeting)) return [];
 
-            if(this.meeting.type === 'election') return this.electionTabs;
+            if (this.meeting.type === 'election'){
+this.filterToElectionRoutes();
+                return this.electionTabs;
 
+            }
             return this.meetingTabs;
             //
             //
@@ -176,7 +179,8 @@ export default {
         ,
 
 
-// electionRoutes:
+// electionRoutes
+// :
 //     function () {
 //         let showRoutes = [];
 //         let me = this;
@@ -261,11 +265,34 @@ export default {
             return true;
         }
     },
+mounted() {
+    // this.filterToElectionRoutes();
+
+},
 
 
-    methods: {}
-    ,
+    methods: {
 
+        filterToElectionRoutes: function () {
+
+            //
+            // window.console.log('before', this.$router.getRoutes());
+            //
+            // let me = this;
+            // _.forEach(this.routes, (r) => {
+            //     if (r.type === 'meeting') {
+            //         window.console.log('found', r);
+            //         let j = me.$router.addRoute(r);
+            //         j.removeRoute();
+            //     }
+            //     ;
+            // });
+            //
+            // window.console.log(this.$router.getRoutes());
+
+        }
+        ,
+    }
 
 }
 
