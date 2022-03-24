@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
+use App\Http\Middleware\CheckElectionPhase;
 use App\Http\Middleware\CheckForBallotStuffing;
 use App\Http\Middleware\CheckIfAlreadyVoted;
 use App\Http\Middleware\CheckIfEligibleToSecond;
@@ -83,6 +84,7 @@ class Kernel extends HttpKernel
         'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class,
         'validate-write-in-name' => ValidateWriteInName::class,
         'check-write-in-does-not-duplicate-official' => CheckWriteInDoesNotDuplicateOfficialCandidate::class,
-        'check-for-ballot-stuffing' => CheckForBallotStuffing::class
+        'check-for-ballot-stuffing' => CheckForBallotStuffing::class,
+        'check-election-phase' => CheckElectionPhase::class
     ];
 }

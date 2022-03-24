@@ -13,7 +13,8 @@ import {router} from "../../../app";
 
 const state = {
 
-    shownCard: 'instructions',
+    /** What card should be shown when go to /election-home */
+    shownHomeCard: 'instructions',
 
 };
 
@@ -21,14 +22,14 @@ const mutations = {
 
 
     setShownCard: (state, cardName) => {
-        state.shownCard = cardName;
+        state.shownHomeCard = cardName;
     },
 
     showClosedCard: (state) => {
-        state.shownCard = 'closed';
+        state.shownHomeCard = 'closed';
     },
     showSummarySubmitCard: (state) => {
-        state.shownCard = 'summary'
+        state.shownHomeCard = 'summary'
         // state.showSummarySubmitCard = true;
     },
 
@@ -37,7 +38,7 @@ const mutations = {
     // },
 
     showInstructionsCard: (state) => {
-        state.shownCard = 'instructions';
+        state.shownHomeCard = 'instructions';
         // state.showInstructionsCard = true;
     },
 
@@ -46,23 +47,23 @@ const mutations = {
     // },
 
     showPropositionVoteCard: (state) => {
-        state.shownCard = 'proposition';
+        state.shownHomeCard = 'proposition';
     },
 
     showVotingCard: (state) => {
-        state.shownCard = 'election';
+        state.shownHomeCard = 'election';
     },
 
     showResultsCard: (state) => {
-        state.shownCard = 'results';
+        state.shownHomeCard = 'results';
     },
 
     showVotingCompleteCard: (state) => {
-        state.shownCard = 'complete';
+        state.shownHomeCard = 'complete';
     },
 
     showPrematureCard: (state) => {
-        state.shownCard = 'premature';
+        state.shownHomeCard = 'premature';
     }
 
 };
@@ -171,7 +172,7 @@ const actions = {
     navigateToAppropriateLocationChair({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             if (!isReadyToRock(meeting)) return reject();
-            switch (meeting.electionPhase) {
+            switch (meeting.phase) {
 
                 case 'setup':
                     commit('setShownCard', 'setup');
@@ -295,9 +296,9 @@ return resolve();
     navigateToAppropriateLocationRegularUser({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             if (!isReadyToRock(meeting)) return reject();
-            window.console.log(meeting.electionPhase, 'ep');
+            window.console.log(meeting.phase, 'ep');
 
-            switch (meeting.electionPhase) {
+            switch (meeting.phase) {
 
                 case 'setup':
                     commit('showPrematureCard');
@@ -556,17 +557,17 @@ return resolve();
 
 const getters = {
     isInstructionsCardVisible: (state) => {
-        return state.shownCard === 'instructions';
+        return state.shownHomeCard === 'instructions';
         // return state.showInstructionsCard;
     },
 
     isSummarySubmitCardVisible: (state) => {
-        return state.shownCard === 'summary';
+        return state.shownHomeCard === 'summary';
         // return state.showSummarySubmitCard;
     },
 
     isCompleteCardShown: (state) => {
-        return state.shownCard === 'complete';
+        return state.shownHomeCard === 'complete';
     },
     /**
      * Returns the master dict of cards
@@ -602,7 +603,7 @@ const getters = {
      * @param getters
      * @returns {*}
      */
-    getShownCard: (state, getters) => {
+    getShownHomeCard: (state, getters) => {
         let c = {
             //Election has ended but results are not available
             'closed': ClosedCard,
@@ -623,7 +624,7 @@ const getters = {
             'summary': SummarySubmitCard,
         }
 
-        return c[state.shownCard];
+        return c[state.shownHomeCard];
     }
 
 };

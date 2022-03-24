@@ -19,6 +19,7 @@ class ElectionResultsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('check-election-phase');
         $this->electionResultsRepo = app()->make(IElectionResultsRepository::class);
     }
 

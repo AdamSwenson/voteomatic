@@ -73,12 +73,11 @@ export default {
             });
 
             _.forEach(electionRoutes, (r) => {
-                if (me.isAdmin && r.electionPhasesAdmin.indexOf(me.meeting.electionPhase) > -1) {
+                if (me.isAdmin && r.electionPhasesAdmin.indexOf(me.meeting.phase) > -1) {
                     showRoutes.push(r);
 
-                } else if (!me.isAdmin && r.electionPhasesVoter.indexOf(me.meeting.electionPhase) > -1) {
+                } else if (!me.isAdmin && r.electionPhasesVoter.indexOf(me.meeting.phase) > -1) {
                     showRoutes.push(r);
-
                 }
 
             });
@@ -132,7 +131,7 @@ export default {
             if (!isReadyToRock(this.meeting)) return [];
 
             if (this.meeting.type === 'election'){
-this.filterToElectionRoutes();
+// this.filterToElectionRoutes();
                 return this.electionTabs;
 
             }

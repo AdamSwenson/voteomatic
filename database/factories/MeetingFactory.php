@@ -42,6 +42,7 @@ class MeetingFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
+                'phase' => 'setup',
                 'is_election' => true,
                 'is_voting_available' => true,
                 'info' => ['is_results_available' => false]
@@ -55,6 +56,7 @@ class MeetingFactory extends Factory
             return [
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
+                'phase' => 'setup',
                 'is_voting_available' => false,
                 'is_complete' => false,
                 'info' => ['is_results_available' => false]
@@ -69,6 +71,7 @@ class MeetingFactory extends Factory
                 //dev todo
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
+                'phase' => 'nominations',
                 'is_voting_available' => false,
                 'is_complete' => false,
                 'info' => ['is_results_available' => false]
@@ -81,9 +84,10 @@ class MeetingFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                //dev todo
+
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
+                'phase' => 'voting',
                 'is_voting_available' => true,
                 'is_complete' => false,
                 'info' => ['is_results_available' => false]
@@ -96,9 +100,9 @@ class MeetingFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                //dev todo
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
+                'phase' => 'closed',
                 'is_voting_available' => false,
                 'is_complete' => true,
                 'info' => ['is_results_available' => false]
@@ -113,6 +117,7 @@ class MeetingFactory extends Factory
             return [
                 'name' => $this->faker->randomElement($this->names) . " ELECTION!",
                 'is_election' => true,
+                'phase' => 'results',
                 'is_voting_available' => false,
                 'is_complete' => true,
                 'info' => ['is_results_available' => true]

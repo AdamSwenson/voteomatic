@@ -80,7 +80,7 @@ export default {
          * what card gets shown
          */
         shownCard: function(){
-            return this.$store.getters.getShownCard;
+            return this.$store.getters.getShownHomeCard;
         },
 
         showOfficeSelector : function(){

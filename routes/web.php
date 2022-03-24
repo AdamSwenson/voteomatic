@@ -141,6 +141,7 @@ Route::post('election/write-in/{motion}', [CandidateController::class, 'addWrite
 //Handles update and destroy
 Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
 
+//dev Probably unused and deprecated after VOT-177 (phase change handled by regular meeting controller update)
 Route::post('election/admin/start/{meeting}', [ElectionAdminController::class, 'startVoting']);
 Route::post('election/admin/stop/{meeting}', [ElectionAdminController::class, 'stopVoting']);
 Route::post('election/admin/results/release/{meeting}', [ElectionAdminController::class, 'releaseResults']);

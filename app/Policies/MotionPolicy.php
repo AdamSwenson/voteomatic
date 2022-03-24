@@ -127,7 +127,19 @@ class MotionPolicy
     public function viewOfficeResults(User $user, Motion $motion)
     {
         $meeting = $motion->meeting;
-        return $motion->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+
+        //Must be either owner or member
+        if( ! $meeting->isPartOfMeeting($user) && ! $meeting->isOwner($user) ) return false;
+
+        if($meeting->isOwner($user)){
+            //owner may see if closed or results
+            return $meeting->phase === 'closed' || $meeting->phase === 'results';
+        }
+
+            return $meeting->phase === 'results';
+
+
+//        return $motion->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
     public function updateOffice(User $user, Motion $motion)

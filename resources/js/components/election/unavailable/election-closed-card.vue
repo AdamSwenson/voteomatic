@@ -6,7 +6,8 @@
 
         <div class="card-body">
             <p class="card-text">Voting has ended. The results are being reviewed and certified. Once
-                that has taken place, you will be able to view here. </p> </div>
+                that has taken place, you will be able to view them here. </p>
+        </div>
 
 
     </div>

@@ -13,6 +13,65 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Class Meeting
+ *
+ * Covers both regular meetings and elections
+ *
+ *
+ * ===================== Election specific =====================
+ * The Election lifecycle:
+ * (1) setup
+ * Event is created
+ *       - is_voting_available = false
+ *      - is_complete = false
+ *      - info->is_results_available = false
+ *  Chair sees:
+ *      - Setup pages
+ *  Users see:
+ *      - Premature access card
+ *
+ * (2) nominations
+ * Authorized users nominate candidates
+ *  Chair sees:
+ *      - Setup and nomination pages
+ *  Users see:
+ *      - Nomination pages
+ *
+ * (3) voting
+ *  Voting is opened to all users
+ *      - is_voting_available = true
+ *      - is_complete = false
+ *      - info->is_results_available = false
+ *  Chair sees:
+ *      - All
+ *  Users see:
+ *      - Vote card
+ *      - Verify vote card
+ *
+ * (4) closed
+ * Voting is closed
+ *  At this point, no one may cast votes. The chair/election admin may view the results
+ *  but regular users cannot see the results.
+ *      - is_voting_available = false
+ *      - is_complete = true
+ *      - info->is_results_available = false
+ *  Chair sees:
+ *      - Results
+ *  Users see:
+ *      - Voting closed card
+ *
+ * (5) results
+ * Results are released
+ *  Any user may view the results. (Potentially: Results may be made available on public page)
+ *      - is_voting_available = false
+ *      - is_complete = true
+ *      - info->is_results_available = true
+ *  Chair
+ *      - All
+ *  Users see:
+ *      - Results
+ *      - Vote verify
+ *
+ *
  * @package App\Models
  */
 class Meeting extends Model
@@ -23,15 +82,22 @@ class Meeting extends Model
         'date',
         'name',
         'info',
+        'phase',
 
         // ---------------- Election specific
+        //dev deprecated after VOT-177
         /** If an election, whether the chair has closed voting */
         'is_complete',
+
         'is_election',
+
+        //dev deprecated after VOT-177
         /** If an election, determines whether any user can vote */
         'is_voting_available',
         /** The names of informational fields about candidates which should be shown to voters */
         'info->candidateFields',
+
+        //dev deprecated after VOT-177
         'info->is_results_available'
     ];
 
@@ -167,22 +233,23 @@ class Meeting extends Model
     public function getElectionPhaseAttribute()
     {
         if (!$this->is_election) return null;
-
-        try {
-
-            if (!$this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'setup';
-
-            //dev nominations
-
-            if ($this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'voting';
-
-            if (!$this->is_voting_available && $this->is_complete && !$this->info['is_results_available']) return 'closed';
-
-            if (!$this->is_voting_available && $this->is_complete && $this->info['is_results_available']) return 'results';
-        } catch (\ErrorException $e) {
-            Log::info("Old style meeting object lacks phase fields \n" . $e);
-            return null;
-        }
+return $this->phase;
+        //dev remove when ready
+//        try {
+//
+//            if (!$this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'setup';
+//
+//            //dev nominations
+//
+//            if ($this->is_voting_available && !$this->is_complete && !$this->info['is_results_available']) return 'voting';
+//
+//            if (!$this->is_voting_available && $this->is_complete && !$this->info['is_results_available']) return 'closed';
+//
+//            if (!$this->is_voting_available && $this->is_complete && $this->info['is_results_available']) return 'results';
+//        } catch (\ErrorException $e) {
+//            Log::info("Old style meeting object lacks phase fields \n" . $e);
+//            return null;
+//        }
     }
 
     /**
@@ -190,12 +257,16 @@ class Meeting extends Model
      */
     public function openVoting()
     {
-        $this->is_voting_available = true;
-        if ($this->is_complete === true) $this->is_complete = false;
-        //ensure that no one can see the results
-        if (array_key_exists('is_results_available', $this->info) && $this->info['is_results_available'] === true) {
-            $this->info['is_results_available'] = false;
-        }
+        $this->phase = 'voting';
+
+        //dev Remove after VOT-177
+//        $this->is_voting_available = true;
+//        if ($this->is_complete === true) $this->is_complete = false;
+//        //ensure that no one can see the results
+//        if (array_key_exists('is_results_available', $this->info) && $this->info['is_results_available'] === true) {
+//            $this->info['is_results_available'] = false;
+//        }
+
         $this->save();
     }
 
@@ -205,12 +276,16 @@ class Meeting extends Model
      */
     public function closeVoting()
     {
-        $this->is_voting_available = false;
-        $this->is_complete = true;
-        $info = $this->info;
-        //set availability of results since the key may not yet exist
-        $info['is_results_available'] = false;
-        $this->info = $info;
+        $this->phase = 'closed';
+
+//        //dev Remove after VOT-177
+//        $this->is_voting_available = false;
+//        $this->is_complete = true;
+//
+//        //set availability of results since the key may not yet exist
+//        $info = $this->info;
+//        $info['is_results_available'] = false;
+//        $this->info = $info;
 //        $this->info['is_results_available'] = false;
 
         $this->save();
@@ -222,8 +297,13 @@ class Meeting extends Model
      */
     public function releaseElectionResults()
     {
+        $this->phase = 'results';
+
         $this->closeVoting(); //just in case someone jumps straight to releasing
-        $this->info['is_results_available'] = true;
+
+        //dev Remove after VOT-177
+//        $this->info['is_results_available'] = true;
+
         $this->save();
     }
 
@@ -233,7 +313,11 @@ class Meeting extends Model
      */
     public function hideElectionResults()
     {
-        $this->info['is_results_available'] = false;
+        $this->phase = 'closed';
+
+        //dev Remove after VOT-177
+//        $this->info['is_results_available'] = false;
+
         $this->save();
     }
 

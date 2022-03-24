@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Exceptions\ElectionPhaseProhibition;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckElectionPhase
 {
@@ -35,6 +36,7 @@ class CheckElectionPhase
         //Regular user checks
         switch ($meeting->electionPhase) {
             case 'setup':
+                //They should not be able to get any data
                 throw new ElectionPhaseProhibition();
                 break;
             case 'nominations':
@@ -43,10 +45,13 @@ class CheckElectionPhase
             case 'voting':
                 break;
             case 'closed':
+                //They should not be able to get any data
+                //This will not prevent them from logging in and
+                //seeing the 'election closed' message.
                 throw new ElectionPhaseProhibition();
                 break;
             case 'results':
-                throw new ElectionPhaseProhibition();
+//                throw new ElectionPhaseProhibition();
                 break;
 
             default:
@@ -62,6 +67,7 @@ class CheckElectionPhase
      * @param \Illuminate\Http\Request $request
      * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @throws ElectionPhaseProhibition
      */
     public function handle(Request $request, Closure $next)
     {
