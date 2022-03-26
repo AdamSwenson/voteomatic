@@ -19,7 +19,7 @@ export default class Election extends Meeting {
         this.phase = phase;
 
         //dev deprecated
-        this.election_phase = this.phase;
+        // this.election_phase = this.phase;
 
         /** The string used on buttons etc */
         this.type = 'election';
@@ -79,6 +79,10 @@ export default class Election extends Meeting {
     //dev Remove after VOT-177
     // set isVotingAvailable(v){
     //     this.is_voting_available = v;
+    // }
+
+    // get election_phase(){
+    //     return this.phase;
     // }
 
     get electionPhase(){

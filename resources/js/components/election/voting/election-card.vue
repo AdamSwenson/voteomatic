@@ -54,7 +54,7 @@
                         <div class="col-6">
                             <write-in-controls></write-in-controls>
                         </div>
-<!--                        <div class="col-4"></div>-->
+                        <!--                        <div class="col-4"></div>-->
                         <div class="col-6 text-start">
                             <p class="text-muted">You will confirm and record your selections later.</p>
                         </div>
@@ -123,7 +123,10 @@ export default {
     asyncComputed: {
 
         hasUserVoted: function () {
-            return this.$store.getters.hasVotedOnCurrentMotion;
+            if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
+
+                return this.$store.getters.hasVotedOnCurrentMotion;
+            }
         },
 
         office: {
@@ -136,7 +139,10 @@ export default {
 
         writeInCandidates: {
             get: function () {
-                return this.$store.getters.getWriteInCandidatesForCurrentOffice;
+                if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
+
+                    return this.$store.getters.getWriteInCandidatesForCurrentOffice;
+                }
             },
             watch: ['candidates']
         },

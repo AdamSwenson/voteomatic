@@ -68,6 +68,51 @@ class CandidateRepositoryTest extends TestCase
         $this->assertEmpty($result);
     }
 
+    /** @test */
+    public function checkForDuplicationSameNameNoInfoProvided()
+    {
+        $newPerson = Person::factory()->create([
+            'first_name' => $this->person->first_name,
+            'last_name' => $this->person->last_name,
+            'info' => []
+        ]);
+$this->expectException(WriteInDuplicatesOfficial::class);
+        $result = $this->object->checkForDuplication($newPerson->first_name, $newPerson->last_name, $newPerson->info, $this->motion);
+
+    }
+
+    /** @test */
+    public function checkForDuplicationDifferentNameNoInfoProvided()
+    {
+        $newPerson = Person::factory()->create([
+            'first_name' => $this->person->first_name . "abcf",
+            'last_name' => $this->person->last_name  . "abcf",
+            'info' => []
+        ]);
+//        $this->expectException(WriteInDuplicatesOfficial::class);
+        $result = $this->object->checkForDuplication($newPerson->first_name, $newPerson->last_name, $newPerson->info, $this->motion);
+
+        $this->assertEmpty($result);
+    }
+
+    /** @test */
+    public function checkForDuplicationWhenMeetingDoesNotDefineFields()
+    {
+        //dev This was the issue in VOT-181. I.e., using $candidateFields = $motion->meeting->info['candidateFields'] caused error
+        $this->meeting->info =[];
+        $this->meeting->save();
+
+        $newPerson = Person::factory()->create([
+            'first_name' => $this->person->first_name . "abcf",
+            'last_name' => $this->person->last_name  . "abcf",
+            'info' => []
+        ]);
+//        $this->expectException(WriteInDuplicatesOfficial::class);
+        $result = $this->object->checkForDuplication($newPerson->first_name, $newPerson->last_name, $newPerson->info, $this->motion);
+
+        $this->assertEmpty($result);
+    }
+
 
     /** @test */
     public function checkForDuplicationExactDuplicate()
