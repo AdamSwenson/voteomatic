@@ -18,9 +18,9 @@ use Tests\TestCase;
 class CheckElectionPhaseTest extends TestCase
 {
     public $election;
-public $user;
-public $motion;
-public $request;
+    public $user;
+    public $motion;
+    public $request;
 
     public function setUp(): void
     {
@@ -28,14 +28,15 @@ public $request;
         $this->object = new CheckElectionPhase();
     }
 
-    public function initialize(){
+    public function initialize()
+    {
         $this->election->addUserToMeeting($this->user);
         Auth::login($this->user);
         $this->motion = Motion::factory()->create(['meeting_id' => $this->election->id]);
-$this->request = Mockery::mock(Request::class);
-$p = Mockery::mock();
-$p->shouldReceive('parameters')->andReturn($this->motion->id);
-$this->request->shouldReceive('route')->andReturn($p);
+        $this->request = Mockery::mock(Request::class);
+        $p = Mockery::mock();
+        $p->shouldReceive('parameters')->andReturn($this->motion->id);
+        $this->request->shouldReceive('route')->andReturn($p);
     }
 
 
@@ -51,17 +52,23 @@ $this->request->shouldReceive('route')->andReturn($p);
 ////$request->route = $route;
 //    }
 
-
+//    /** @test */
+//    public function passesThroughIfNotElection()
+//    {
+//        $this->election = Meeting::factory()->create();
+//        $this->initialize();
+////
+//}
     // ============================== Admin tests
     /** @test */
     public function adminSetupPhase()
     {
         $this->user = User::factory()->administrator()->create();
         $this->election = Meeting::factory()->electionSetupPhase()->create();
-$this->initialize();
+        $this->initialize();
 
-$result = $this->object->checkAdmin($this->election);
-$this->assertEquals(true, $result);
+        $result = $this->object->checkAdmin($this->election);
+        $this->assertEquals(true, $result);
 //$this->asssertTrue($result);
     }
 
@@ -76,6 +83,7 @@ $this->assertEquals(true, $result);
         $result = $this->object->checkAdmin($this->election);
         $this->assertEquals(true, $result);
     }
+
     /** @test */
     public function adminVotingPhase()
     {
@@ -87,6 +95,7 @@ $this->assertEquals(true, $result);
         $result = $this->object->checkAdmin($this->election);
         $this->assertEquals(true, $result);
     }
+
     /** @test */
     public function adminClosedPhase()
     {
@@ -121,8 +130,8 @@ $this->assertEquals(true, $result);
         $this->election = Meeting::factory()->electionSetupPhase()->create();
         $this->initialize();
 
-$this->expectException(ElectionPhaseProhibition::class);
-        $result = $this->object->checkRegUser($this->election);
+        $this->expectException(ElectionPhaseProhibition::class);
+        $this->object->checkRegUser($this->election);
     }
 
     /** @test */
@@ -132,8 +141,9 @@ $this->expectException(ElectionPhaseProhibition::class);
         $this->election = Meeting::factory()->electionNominationsPhase()->create();
         $this->initialize();
         $this->expectException(ElectionPhaseProhibition::class);
-        $result = $this->object->checkRegUser($this->election);
+        $this->object->checkRegUser($this->election);
     }
+
     /** @test */
     public function regUserVotingPhase()
     {
@@ -143,6 +153,7 @@ $this->expectException(ElectionPhaseProhibition::class);
         $result = $this->object->checkRegUser($this->election);
         $this->assertEquals(true, $result);
     }
+
     /** @test */
     public function regUserClosedPhase()
     {
@@ -151,7 +162,7 @@ $this->expectException(ElectionPhaseProhibition::class);
         $this->initialize();
 
         $this->expectException(ElectionPhaseProhibition::class);
-        $result = $this->object->checkRegUser($this->election);
+        $this->object->checkRegUser($this->election);
 
     }
 
@@ -164,7 +175,6 @@ $this->expectException(ElectionPhaseProhibition::class);
         $result = $this->object->checkRegUser($this->election);
         $this->assertEquals(true, $result);
     }
-
 
 
 }
