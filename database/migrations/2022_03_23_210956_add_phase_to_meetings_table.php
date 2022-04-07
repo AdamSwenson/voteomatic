@@ -13,7 +13,7 @@ class AddPhaseToMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('meetings', function (Blueprint $table) {
+//        Schema::table('meetings', function (Blueprint $table) {
             Schema::table('meetings', function (Blueprint $table) {
                 $table->text('phase')->nullable();
                  });
@@ -22,7 +22,7 @@ class AddPhaseToMeetingsTable extends Migration
 //                $table->dropColumn('is_voting_available');
 //                $table->dropColumn('is_complete');
 //            });
-        });
+//        });
     }
 
     /**

@@ -81,9 +81,9 @@ export default class Election extends Meeting {
     //     this.is_voting_available = v;
     // }
 
-    // get election_phase(){
-    //     return this.phase;
-    // }
+    get election_phase(){
+        return this.phase;
+    }
 
     get electionPhase(){
         return this.phase;
