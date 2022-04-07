@@ -5,24 +5,29 @@
          role="alert"
     >
         <div class="row">
-        <div class="col">
-            <p>
-            <strong>Votes cast:</strong>  {{votesCast}}
-        </p>
+            <div class="col">
+                <p>
+                    <strong>Votes cast:</strong> {{ votesCast }}
+                </p>
 
-        <p><strong>Outstanding: </strong> {{votesOutstanding}}</p>
-        </div>
+                <p><strong>Outstanding: </strong> {{ votesOutstanding }}</p>
+
+            </div>
+
             <div class="col">
                 <end-voting-button :motion="motion"></end-voting-button>
                 <end-voting-modal></end-voting-modal>
             </div>
+
         </div>
+
+
         <button type="button"
                 class="btn-close"
                 data-bs-dismiss="alert"
                 aria-label="Close"
         >
-            <span aria-hidden="true">&times;</span>
+            <span class="visually-hidden" aria-hidden="true">&times;</span>
         </button>
     </div>
 </template>
@@ -33,6 +38,7 @@ import ChairMixin from "../../../mixins/chairMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import EndVotingButton from "../../motions/end-voting-button";
 import EndVotingModal from "../../motions/end-voting-modal";
+
 export default {
     name: "vote-count-alert",
     components: {EndVotingModal, EndVotingButton},
@@ -45,23 +51,23 @@ export default {
     },
 
     asyncComputed: {
-        isVotingAllowed: function(){
+        isVotingAllowed: function () {
             return isReadyToRock(this.motion) && this.motion.isVotingAllowed;
         },
 
-        show: function(){
-            return this.isChair && ! this.isComplete && this.isVotingAllowed;
+        show: function () {
+            return this.isChair && !this.isComplete && this.isVotingAllowed;
         },
 
-        votesCast: function(){
+        votesCast: function () {
             let cnt = this.$store.getters.getCastVotesCount;
-            if(isReadyToRock(cnt)) return cnt;
+            if (isReadyToRock(cnt)) return cnt;
             return '-';
         },
 
-        votesOutstanding : function(){
+        votesOutstanding: function () {
             let cnt = this.$store.getters.getMemberCount;
-            if(isReadyToRock(cnt)) return cnt;
+            if (isReadyToRock(cnt)) return cnt;
             return '-';
         }
 

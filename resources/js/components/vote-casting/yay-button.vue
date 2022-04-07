@@ -1,12 +1,12 @@
 <template>
-
+    <div class="d-grid gap-2">
     <button type="button"
-            class="btn btn-success btn-lg btn-block"
+            class="btn btn-success "
             data-bs-toggle="modal"
             data-bs-target="#yayConfirmationModal"
             v-on:click="handleClick"
     >Aye</button>
-
+    </div>
 </template>
 
 <script>
