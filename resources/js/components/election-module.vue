@@ -81,8 +81,7 @@ export default {
         //parse data from page and store stuff
         this.$store.dispatch('initializeElection').then(function () {
 
-
-            window.console.log('voteomatic - election', 'isReady', 159, me.isReady);
+            window.console.log('voteomatic - election', 'isReady', 159, me.meeting);
         });
 
 
