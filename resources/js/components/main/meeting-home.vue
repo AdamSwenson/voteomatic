@@ -14,6 +14,8 @@
             </div>
         </div>
 
+        <rezzie-view-home></rezzie-view-home>
+
 
     </div>
 
@@ -23,10 +25,11 @@
 <script>
 import MotionsCard from "../motions/motions-card";
 import MeetingMixin from '../../mixins/meetingMixin';
+import RezzieViewHome from "../rezzie-view/rezzie-view-home";
 
 export default {
     name: "meeting-home",
-    components: {MotionsCard},
+    components: {RezzieViewHome, MotionsCard},
     mixins: [MeetingMixin],
 
     computed: {
