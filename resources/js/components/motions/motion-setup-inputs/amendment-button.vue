@@ -1,10 +1,3 @@
-<!--<template>-->
-<!--    <button type="button"-->
-<!--            v-bind:class="styling"-->
-<!--            v-on:click="handleClick"-->
-<!--    >Create amendment</button>-->
-
-<!--</template>-->
 
 <script>
 import ButtonParent from "../../parents/button-parent";
@@ -20,7 +13,7 @@ export default {
     data: function () {
         return {
             label: 'Create amendment',
-            styling: 'btn btn-outline-primary amendment-button'
+            styling: ' btn-outline-primary amendment-button'
         }
     },
 

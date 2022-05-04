@@ -1,9 +1,11 @@
 <template>
 
+    <div class="d-grid gap-2">
     <button
         v-bind:class="styling"
         v-on:click="handleClick"
         >Vote</button>
+    </div>
 
 </template>
 
@@ -17,7 +19,7 @@ export default {
 
     data: function () {
         return {
-            baseStyle: "btn btn-lg btn-block "
+            baseStyle: "btn btn-lg  "
         }
     },
 

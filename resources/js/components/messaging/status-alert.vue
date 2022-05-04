@@ -13,14 +13,16 @@
             {{ motionText }}
         </p>
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-                v-on:click="handleClick"
-        >
-            <span class="visually-hidden" aria-hidden="true">&times;</span>
-        </button>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    v-on:click="handleClick"
+            >
+                <span class="visually-hidden" aria-hidden="true">&times;</span>
+            </button>
+
     </div>
 
 
@@ -73,7 +75,7 @@ export default {
         messages: function () {
             return this.$store.getters.getMessages;
         },
-        showMotionText: function(){
+        showMotionText: function () {
             return isReadyToRock(this.motionText) && this.motionText.length > 0;
         },
 
@@ -82,9 +84,9 @@ export default {
 
     computed: {},
 
-    watch : {
-        alertId : function(){
-            if(isReadyToRock(this.alertId)) this.focusAlert();
+    watch: {
+        alertId: function () {
+            if (isReadyToRock(this.alertId)) this.focusAlert();
         }
     },
 
@@ -93,7 +95,7 @@ export default {
             this.$store.commit('removeFromMessageQueue', this.message);
         },
 
-        focusAlert : function(){
+        focusAlert: function () {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
         }

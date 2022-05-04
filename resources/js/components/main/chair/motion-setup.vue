@@ -38,13 +38,17 @@
                 v-on:hide-editing-card="resetCard"
             ></main-motion-setup-area>
 
-            <amendment-setup-area v-else-if="showCard === 'amendment'"></amendment-setup-area>
+            <amendment-setup-area
+                v-else-if="showCard === 'amendment'"
+            ></amendment-setup-area>
 
             <main-motion-edit-area
                 v-else-if="showCard === 'edit' && isChair"
             ></main-motion-edit-area>
 
-            <resolution-setup-area v-else-if="showCard === 'resolution'"></resolution-setup-area>
+            <resolution-setup-area
+                v-else-if="showCard === 'resolution'"
+            ></resolution-setup-area>
 
         </div>
 

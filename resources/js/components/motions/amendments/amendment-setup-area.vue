@@ -17,43 +17,52 @@
 
                 </div>
             </div>
+        </div>
 
-            <div class="row edit-area">
+
+        <div class="card-body edit-area">
+            <!--                <div class="col">-->
+            <div class="form-group">
+
+                <label class='form-label' for="editText">Edit amendment</label>
+
+                <wysiwyg v-model="text"
+                         v-if="isResolution"
+                ></wysiwyg>
+
+                <textarea
+                    v-else
+                    id="editText"
+                    class="form-control"
+                    v-model="text"
+                    cols="30"></textarea>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
                 <div class="col">
-                    <div class="form-group">
 
-                        <label  class='form-label' for="editText">Edit amendment</label>
+                    <div class="d-grid gap-2">
 
-                        <wysiwyg v-model="text"
-                        v-if="isResolution"
-                        ></wysiwyg>
-
-                        <textarea
-                            v-else
-                            id="editText"
-                                  class="form-control"
-                                  v-model="text"
-                                  cols="30"></textarea>
+                        <button class="btn btn-primary"
+                                v-on:click="handleReset"
+                        >Reset to original
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
 
                 <div class="col">
-                    <button class="btn btn-primary"
-                            v-on:click="handleReset"
-                    >Reset to original
-                    </button>
-                </div>
+                    <div class="d-grid gap-2">
 
-                <div class="col">
-
-                    <propose-amendment-button
-                        v-on:propose-amendment="handleClick"
-                    ></propose-amendment-button>
+                        <propose-amendment-button
+                            v-on:propose-amendment="handleClick"
+                        ></propose-amendment-button>
+                    </div>
 
                 </div>
+
+                <!--                </div>&ndash;&gt;-->
 
             </div>
 

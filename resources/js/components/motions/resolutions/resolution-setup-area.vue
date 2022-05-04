@@ -14,36 +14,39 @@
                     </blockquote>
                 </div>
             </div>
-
-            <div class="row edit-area">
-                <div class="col">
-                    <!--                    <div class="form-group">-->
-
-                    <resolution-input :motion="draftMotion"></resolution-input>
-
-                    <!--                    </div>-->
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col">
-                    <button class="btn btn-primary"
-                            v-on:click="handleReset"
-                    >Clear entry
-                    </button>
-                </div>
-
-                <div class="col">
-
-                    <propose-resolution-button></propose-resolution-button>
-
-                </div>
-
-            </div>
-
         </div>
+        <div class="card-body edit-area">
+            <!--                <div class="col">-->
+            <!--                    <div class="form-group">-->
+
+            <resolution-input :motion="draftMotion"></resolution-input>
+
+            <!--                    </div>-->
+        </div>
+        <!--            </div>-->
+
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary"
+                                v-on:click="handleReset"
+                        >Clear entry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <propose-resolution-button></propose-resolution-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+<!--    </div>-->
 
 </template>
 

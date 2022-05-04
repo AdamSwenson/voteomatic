@@ -18,7 +18,7 @@
                         aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     <p class="text-dark">{{ modalText }}</p>
                     <p>Once you cast your vote, it cannot be changed.</p>
                     <p>Are you sure?</p>
