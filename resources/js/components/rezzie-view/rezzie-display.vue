@@ -26,8 +26,8 @@
 
             <div class="accordion-body">
                 For now, just use straight. May wnt to create clauses as vue components
+<div class="body-text" v-html="motion.content"></div>
 
-                {{ motion.content }}
 
                 <p-mode-chair-controls
                     v-if="isChair"
@@ -75,8 +75,11 @@ export default {
         },
 
         isOpen: function () {
+            if (! isReadyToRock(this.motion)) return false;
             //can't use motionMixin because will collide on name motion
             let m = this.$store.getters.getActiveMotion;
+            if(! isReadyToRock(m)) return false
+
             return m.id === this.motion.id;
         },
 
@@ -85,7 +88,7 @@ export default {
          */
         headerText: function () {
 //dev
-            return this.motion.content;
+            return this.motion.title;
 
         },
 
