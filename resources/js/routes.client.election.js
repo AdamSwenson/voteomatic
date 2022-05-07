@@ -55,7 +55,7 @@ export const electionRoutes = [
         props: true,
         adminOnly: false,
         /** List of phases in which this tab is displayed to administrators*/
-        electionPhasesAdmin : ['setup', 'voting', 'closed'],
+        electionPhasesAdmin : ['setup',  'nominations', 'voting', 'closed'],
         /** List of phases in which this tab is displayed to voters */
         electionPhasesVoter : ['voting'],
 
@@ -114,7 +114,7 @@ export const electionRoutes = [
         adminOnly: true,
 
         /** List of phases in which this tab is displayed to administrators*/
-        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        electionPhasesAdmin : ['setup',  'nominations', 'voting', 'closed', 'results'],
         /** List of phases in which this tab is displayed to voters */
         electionPhasesVoter : [],
 
@@ -133,7 +133,7 @@ export const electionRoutes = [
         adminOnly: true,
 
         /** List of phases in which this tab is displayed to administrators*/
-        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        electionPhasesAdmin : ['setup', 'nominations',  'voting', 'closed', 'results'],
         /** List of phases in which this tab is displayed to voters */
         electionPhasesVoter : [],
 
@@ -155,7 +155,7 @@ export const electionRoutes = [
         adminOnly: true,
 
         /** List of phases in which this tab is displayed to administrators*/
-        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        electionPhasesAdmin : ['setup', 'nominations', 'voting', 'closed', 'results'],
         /** List of phases in which this tab is displayed to voters */
         electionPhasesVoter : [],
 
@@ -172,7 +172,7 @@ export const electionRoutes = [
         adminOnly: true,
 
         /** List of phases in which this tab is displayed to administrators*/
-        electionPhasesAdmin : ['setup', 'voting', 'closed', 'results'],
+        electionPhasesAdmin : ['setup',  'nominations', 'voting', 'closed', 'results'],
         /** List of phases in which this tab is displayed to voters */
         electionPhasesVoter : [],
 
