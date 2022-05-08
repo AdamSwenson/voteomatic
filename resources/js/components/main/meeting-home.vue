@@ -14,6 +14,8 @@
             </div>
         </div>
 
+        <text-stylers></text-stylers>
+
         <rezzie-view-home></rezzie-view-home>
 
 
@@ -26,10 +28,11 @@
 import MotionsCard from "../motions/motions-card";
 import MeetingMixin from '../../mixins/meetingMixin';
 import RezzieViewHome from "../rezzie-view/rezzie-view-home";
+import TextStylers from "../rezzie-view/text-stylers/text-stylers";
 
 export default {
     name: "meeting-home",
-    components: {RezzieViewHome, MotionsCard},
+    components: {TextStylers, RezzieViewHome, MotionsCard},
     mixins: [MeetingMixin],
 
     computed: {

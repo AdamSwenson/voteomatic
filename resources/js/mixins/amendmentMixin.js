@@ -1,3 +1,43 @@
+// const insertRegex = new RegExp('<ins class="diffins">');
+// const strikeRegex = new RegExp('<del class="diffdel"');
+//
+// /**
+//  * Determines the type of amendment.
+//  * Possible returns:
+//  *      strike
+//  *      insert
+//  *      strikeinsert
+//  * @returns {string|boolean}
+//  */
+// export const amendmentType = function(){
+//     //dev also secondary amendment?
+//     if(this.type !== 'amendment') return false
+//     let out = '';
+//     if(this.strikeRegex.test(this.diffTaggedText)){
+//         out += 'strike';
+//     }
+//     if(this.insertRegex.test(this.diffTaggedText)){
+//         out += 'insert'
+//     }
+//     return out;
+// };
+//
+// /**
+//  * Returns the amendment text tagged with
+//  * <ins class="diffins">  and
+//  * <del class="diffdel">
+//  * @returns {string|*|string}
+//  */
+// export function diffTagText(originalText, amendmentText){
+//     if (_.isUndefined(originalText) || _.isNull(originalText)) return ''
+//     if (_.isUndefined(amendmentText) || _.isNull(amendmentText)) return ''
+//
+//     let diffHtml = HtmlDiff.execute(originalText, amendmentText);
+//     return diffHtml;
+//     // (?<=<pre>)(.*?)(?=</pre>)
+// };
+
+
 module.exports = {
 
     asyncComputed: {
@@ -20,6 +60,43 @@ module.exports = {
             }
 
         },
+
+       //  /**
+       //   * Determines the type of amendment.
+       //   * Possible returns:
+       //   *      strike
+       //   *      insert
+       //   *      strikeinsert
+       //   * @returns {string|boolean}
+       //   */
+       //  amendmentType : function(){
+       //      //dev also secondary amendment?
+       //      if(this.type !== 'amendment') return false
+       //      let out = '';
+       //      if(this.strikeRegex.test(this.diffTaggedText)){
+       //          out += 'strike';
+       //      }
+       //      if(this.insertRegex.test(this.diffTaggedText)){
+       //          out += 'insert'
+       //      }
+       //      return out;
+       //  },
+       //
+       //  /**
+       //   * Returns the amendment text tagged with
+       //   * <ins class="diffins">  and
+       //   * <del class="diffdel">
+       //   * @returns {string|*|string}
+       //   */
+       // diffTaggedText : function(){
+       //      if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
+       //      if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
+       //      let me = this;
+       //
+       //      let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
+       //      return diffHtml;
+       //      // (?<=<pre>)(.*?)(?=</pre>)
+       //  },
 
 
         isAmendment: function () {

@@ -25,8 +25,19 @@
         >
 
             <div class="accordion-body">
-                For now, just use straight. May wnt to create clauses as vue components
-<div class="body-text" v-html="motion.content"></div>
+
+
+                <div class="body-text" v-if="motion.is_resolution">
+
+                    <resolution-amendment-text-display
+                        v-if="isResolution"
+                        :original-text="originalText"
+                        :amendment-text="amendmentText"
+                    ></resolution-amendment-text-display>
+
+                </div>
+
+                <div class="body-text" v-else v-html="motion.content"></div>
 
 
                 <p-mode-chair-controls
@@ -47,21 +58,27 @@ import motionObjectMixin from "../../mixins/motionObjectMixin";
 import ChairMixin from "../../mixins/chairMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import PModeChairControls from "./p-mode-chair-controls";
+import AmendmentMixin from "../../mixins/amendmentMixin";
+import ResolutionAmendmentTextDisplay from "../motions/text-display/resolution-amendment-text-display";
+
+
+window.bootstrap = require('bootstrap');
 
 export default {
     name: "rezzie-display",
 
-    components: {PModeChairControls},
+    components: { ResolutionAmendmentTextDisplay, PModeChairControls},
 
     props: ['motion', 'parentId'],
 
-    mixins: [ChairMixin, MeetingMixin, motionObjectMixin],
+    mixins: [AmendmentMixin, ChairMixin, MeetingMixin, motionObjectMixin],
 
     data: function () {
         return {}
     },
 
     asyncComputed: {
+        amendments: function(){},
 
         buttonStyling: function () {
             if (!this.isOpen) return ' collapsed '
@@ -75,10 +92,10 @@ export default {
         },
 
         isOpen: function () {
-            if (! isReadyToRock(this.motion)) return false;
+            if (!isReadyToRock(this.motion)) return false;
             //can't use motionMixin because will collide on name motion
             let m = this.$store.getters.getActiveMotion;
-            if(! isReadyToRock(m)) return false
+            if (!isReadyToRock(m)) return false
 
             return m.id === this.motion.id;
         },
@@ -87,6 +104,7 @@ export default {
          * text, id number, and status if complete
          */
         headerText: function () {
+            if(! isReadyToRock(this.motion, 'title') ) return ''
 //dev
             return this.motion.title;
 
@@ -165,6 +183,19 @@ export default {
             this.$store.commit('setMotion', this.motion);
 
         }
+    },
+
+    mounted() {
+        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        //     return new bootstrap.Tooltip(tooltipTriggerEl)
+        // })
+
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+
     }
 
 }

@@ -9,24 +9,26 @@ export default class Motion extends IModel {
      * NB, is_complete is the way it arrives from the server
      * @param params
      */
-    constructor({id=null, content=null, description=null,
-                    requires=0.5,
-                    type=null,
-        info=null,
-                    is_complete=null,
-                    is_voting_allowed=null,
-                    is_resolution=null,
-                    applies_to=null,
-                    seconded=null,
-                    superseded_by=null,
-                    debatable=null,
-                    max_winners=null}) {
+    constructor({
+                    id = null, content = null, description = null,
+                    requires = 0.5,
+                    type = null,
+                    info = null,
+                    is_complete = null,
+                    is_voting_allowed = null,
+                    is_resolution = null,
+                    applies_to = null,
+                    seconded = null,
+                    superseded_by = null,
+                    debatable = null,
+                    max_winners = null
+                }) {
         super();
         this.id = id;
         this.info = info;
 
         //todo hack because seem to be having trouble typecasting to boolean when get from server
-        this.is_resolution =  is_resolution === 1 ? true : is_resolution;
+        this.is_resolution = is_resolution === 1 ? true : is_resolution;
 
         //if it is subsidiary, this is the motion
         this.appliesTo = applies_to;
@@ -75,7 +77,7 @@ export default class Motion extends IModel {
         this.requirementMap = [
             {'percentage': 0.5, 'english': 'Majority'},
             {'percentage': 0.66, 'english': 'Two-thirds'}
-            ];
+        ];
 
 
         //used for selectors in creating motion
@@ -96,8 +98,8 @@ export default class Motion extends IModel {
 
     }
 
-    isSuperseded(){
-        return ! _.isNull(this.superseded_by);
+    isSuperseded() {
+        return !_.isNull(this.superseded_by);
     }
 
     isAmendment() {
@@ -108,11 +110,11 @@ export default class Motion extends IModel {
      * Whether the motion type is on the procedural motion
      * names list
      */
-    isProcedural(){
+    isProcedural() {
         return _.includes(this.proceduralMotionNames, this.type);
     }
 
-    isProceduralSubsidiary(){
+    isProceduralSubsidiary() {
         return this.type === 'procedural-subsidiary';
     }
 
@@ -121,34 +123,34 @@ export default class Motion extends IModel {
      * where formatting is important
      * @returns {boolean}
      */
-    get isResolution(){
+    get isResolution() {
         return isReadyToRock(this.is_resolution) && this.is_resolution === true;
     }
 
-    set isResolution(v){
+    set isResolution(v) {
         this.is_resolution = v;
-     }
+    }
 
     /**
      * Whether users are currently allowed to vote
      * @returns {boolean}
      */
-    get isVotingAllowed(){
+    get isVotingAllowed() {
         return isReadyToRock(this.is_voting_allowed) && this.is_voting_allowed === true;
     }
 
 
-    set isVotingAllowed(v){
+    set isVotingAllowed(v) {
         return this.is_voting_allowed = v;
     }
 
-    getEnglishRequiresForNumeric(num){
+    getEnglishRequiresForNumeric(num) {
         return this.requirementMap.indexOf((d) => {
             return d.percentage === num;
         })
     }
 
-    getNumericRequiresFromEnglish(text){
+    getNumericRequiresFromEnglish(text) {
         return this.requirementMap.indexOf((d) => {
             return d.english === text;
         })
@@ -160,8 +162,8 @@ export default class Motion extends IModel {
      * receipts differs depending on
      * the sort of thing voted upon, this returns the relevant text
      */
-    get displayName(){
-        if(isReadyToRock(this.type) && this.type === 'proposition' && isReadyToRock(this.info, 'name')) return this.info.name;
+    get displayName() {
+        if (isReadyToRock(this.type) && this.type === 'proposition' && isReadyToRock(this.info, 'name')) return this.info.name;
 
         return this.content;
     }

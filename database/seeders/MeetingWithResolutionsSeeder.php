@@ -45,11 +45,15 @@ class MeetingWithResolutionsSeeder extends Seeder
     public function run()
     {
         $this->faker = Factory::create();
+
         $realUsers = User::all();
+
         $meeting = Meeting::factory()->create();
         foreach($realUsers as $user){
             $meeting->addUserToMeeting($user);
         }
+        $adminUser = User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first();
+        $meeting->setOwner($adminUser);
 
         $numResolutions = $this->faker->numberBetween(3, 8);
 

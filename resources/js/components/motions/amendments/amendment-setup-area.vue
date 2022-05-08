@@ -144,6 +144,7 @@ export default {
                 content: this.localText,
                 type: 'amendment',
                 is_resolution: this.motion.isResolution,
+                info: this.motion.info,
                 requires: 0.5
             };
             let me = this;

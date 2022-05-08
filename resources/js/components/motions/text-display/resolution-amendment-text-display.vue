@@ -9,7 +9,7 @@
 
 <script>
 import HtmlDiff from 'htmldiff-js';
-import {checkChanges, getTaggedChangesOfHtml} from '../../../utilities/amendment.utilities';
+// import {checkChanges, getTaggedChangesOfHtml} from '../../../utilities/amendment.utilities';
 
 /**
  * Displays an html tagged string indicating where
