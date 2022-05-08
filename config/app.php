@@ -246,4 +246,6 @@ return [
 
     ],
 
+    'version' => env('VERSION')
+
 ];
