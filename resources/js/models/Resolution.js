@@ -1,5 +1,6 @@
 import Motion from "./Motion";
 import HtmlDiff from 'htmldiff-js';
+import {isReadyToRock} from "../utilities/readiness.utilities";
 
 export default class Resolution extends Motion {
 
@@ -40,13 +41,17 @@ export default class Resolution extends Motion {
         // this.description = description;
         // super(id, content, description);
 
-        this.insertRegex = new RegExp('<ins class="diffins">');
-        this.strikeRegex = new RegExp('<del class="diffdel"')
+        // this.insertRegex = new RegExp('<ins class="diffins">');
+        // this.strikeRegex = new RegExp('<del class="diffdel"')
     }
 
-    initializeClauses(){
-        // (?<=<pre>)(.*?)(?=</pre>)
+    get isResolutionAmendment(){
+        return isReadyToRock(this.applies_to) && this.type === 'resolution';
     }
+
+    // initializeClauses(){
+        // (?<=<pre>)(.*?)(?=</pre>)
+    // }
     //
     // get diffTaggedText(){
     //     if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
