@@ -1,11 +1,15 @@
 import Chair from './pmode.chair';
+import Amend from './pmode.amendments';
 
 const state = {
+    ...Amend.state,
     ...Chair.state,
+
     //things: []
 };
 
 const mutations = {
+    ...Amend.mutations,
     ...Chair.mutations,
     /*
     *   addThing: (state, thing) => {
@@ -17,6 +21,7 @@ const mutations = {
 
 
 const actions = {
+    ...Amend.actions,
     ...Chair.actions,
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
@@ -38,6 +43,7 @@ const actions = {
  *    getThing: (state, getters) => {}
  */
 const getters = {
+    ...Amend.getters,
     ...Chair.getters,
 };
 

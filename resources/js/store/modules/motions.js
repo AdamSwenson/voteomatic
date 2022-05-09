@@ -6,6 +6,7 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 import Office from "../../models/Office";
 import BallotObjectFactory from "../../models/BallotObjectFactory";
 import {idify} from "../../utilities/object.utilities";
+import Resolution from "../../models/Resolution";
 
 /**
  * Created by adam on 2020-07-30.
@@ -346,10 +347,10 @@ const actions = {
      */
     createSubsidiaryMotion({dispatch, commit, getters}, payload) {
         let me = this;
-
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource();
+
             // window.console.log('sending', p);
             return Vue.axios.post(url, payload)
                 .then((response) => {
@@ -361,7 +362,28 @@ const actions = {
                     //The chair won't see the above message. The user won't see this one
                     // let statusMessage2 = Message.makeFromTemplate('settingUpMotion');
                     // dispatch('showMessage', statusMessage2)
-                    resolve();
+
+                    // window.console.log('rez1', payload, response);
+                    let r = BallotObjectFactory.make(response.data)
+                    // if (r.isResolutionAmendment) {
+                    //     //create a resolution object. This will normally be handled
+                    //     //by pusher, but we need the object's id to update the
+                    //     //tagged text
+                    //     // let r = BallotObjectFactory.make(response.data)
+                    //     window.console.log('rez', r);
+                    //
+                    //     return dispatch('diffTagResolutionAmendment', r).then(() => {
+                    //         return resolve();
+                    //     });
+                    //
+                    // } else {
+
+                    //We return the object created from the data without saving it
+                    //to store. This is because the calling action may need to do more
+                    //with the object's id without waiting for pusher.
+                        return resolve(r);
+                    // }
+
                 })
                 .catch(function (error) {
                     // error handling

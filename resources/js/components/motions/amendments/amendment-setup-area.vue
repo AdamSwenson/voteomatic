@@ -147,8 +147,15 @@ export default {
                 info: this.motion.info,
                 requires: 0.5
             };
+
             let me = this;
-            let p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            let p;
+            if (this.motion.isResolution) {
+                p = this.$store.dispatch('createResolutionAmendment', payload);
+            } else {
+                p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            }
+
             p.then(() => {
                 me.$router.push('meeting-home');
             });
