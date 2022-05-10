@@ -5,7 +5,7 @@
        </span><span v-html="text"></span>
 
 <!--        <a v-bind:href="resultsLink" class="text-decoration-none">-->
-<!--            <span v-html="text"></span>-->
+<!--            <span v-amendmentText="text"></span>-->
 <!--        </a>-->
   </span>
 </template>

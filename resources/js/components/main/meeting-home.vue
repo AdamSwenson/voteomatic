@@ -14,10 +14,6 @@
             </div>
         </div>
 
-        <text-stylers></text-stylers>
-
-        <rezzie-view-home></rezzie-view-home>
-
 
     </div>
 
@@ -27,7 +23,7 @@
 <script>
 import MotionsCard from "../motions/motions-card";
 import MeetingMixin from '../../mixins/meetingMixin';
-import RezzieViewHome from "../rezzie-view/rezzie-view-home";
+import RezzieViewHome from "../rezzie-view/pmode-home";
 import TextStylers from "../rezzie-view/text-stylers/text-stylers";
 
 export default {

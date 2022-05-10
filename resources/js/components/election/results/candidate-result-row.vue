@@ -48,7 +48,7 @@ export default {
         },
 
         /**
-         * Additional html to be added as required in the election
+         * Additional amendmentText to be added as required in the election
          */
         candidateInfo: function () {
             if (isReadyToRock(this.department)) {

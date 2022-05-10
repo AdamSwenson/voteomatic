@@ -1105,6 +1105,12 @@ const getters = {
         // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
     },
 
+    getResolutions : (state) => {
+    return state.motions.filter((m) => {
+    return m.is_resolution === true;
+    });
+        },
+
     /**
      * Not actually a getter from state; doing this way to keep
      * the definitions centrally. Returns the

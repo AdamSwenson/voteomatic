@@ -12,7 +12,7 @@ import HtmlDiff from 'htmldiff-js';
 // import {checkChanges, getTaggedChangesOfHtml} from '../../../utilities/amendment.utilities';
 
 /**
- * Displays an html tagged string indicating where
+ * Displays an amendmentText tagged string indicating where
  * changes have been made between the original and the
  * amendment.
  *

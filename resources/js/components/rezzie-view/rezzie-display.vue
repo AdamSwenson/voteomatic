@@ -27,17 +27,18 @@
             <div class="accordion-body">
 
 
-                <div class="body-text" v-if="motion.is_resolution">
-
-                    <resolution-amendment-text-display
-                        v-if="isResolution"
-                        :original-text="originalText"
-                        :amendment-text="amendmentText"
-                    ></resolution-amendment-text-display>
+                <div class="body-text">
+                    <!--                    v-if="motion.is_resolution">-->
+                    <compiled-rezzie-text :html="amendmentText"></compiled-rezzie-text>
+                    <!--                    <resolution-amendment-text-display-->
+                    <!--                        v-if="isResolution"-->
+                    <!--                        :original-text="originalText"-->
+                    <!--                        :amendment-text="amendmentText"-->
+                    <!--                    ></resolution-amendment-text-display>-->
 
                 </div>
 
-                <div class="body-text" v-else v-html="motion.content"></div>
+<!--                <div class="body-text" v-else v-html="motion.content"></div>-->
 
 
                 <p-mode-chair-controls
@@ -60,6 +61,7 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 import PModeChairControls from "./p-mode-chair-controls";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import ResolutionAmendmentTextDisplay from "../motions/text-display/resolution-amendment-text-display";
+import CompiledRezzieText from "./compiled-rezzie-text";
 
 
 window.bootstrap = require('bootstrap');
@@ -67,7 +69,7 @@ window.bootstrap = require('bootstrap');
 export default {
     name: "rezzie-display",
 
-    components: { ResolutionAmendmentTextDisplay, PModeChairControls},
+    components: {CompiledRezzieText, ResolutionAmendmentTextDisplay, PModeChairControls},
 
     props: ['motion', 'parentId'],
 
@@ -78,7 +80,8 @@ export default {
     },
 
     asyncComputed: {
-        amendments: function(){},
+        amendments: function () {
+        },
 
         buttonStyling: function () {
             if (!this.isOpen) return ' collapsed '
@@ -104,7 +107,7 @@ export default {
          * text, id number, and status if complete
          */
         headerText: function () {
-            if(! isReadyToRock(this.motion, 'title') ) return ''
+            if (!isReadyToRock(this.motion, 'title')) return ''
 //dev
             return this.motion.title;
 

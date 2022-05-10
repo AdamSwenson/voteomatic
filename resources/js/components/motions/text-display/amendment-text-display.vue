@@ -27,7 +27,7 @@ import RegularAmendmentTextDisplay from "./regular-amendment-text-display";
 import AmendmentMixin from "../../../mixins/amendmentMixin";
 
 /**
- * Displays an html tagged string indicating where
+ * Displays an amendmentText tagged string indicating where
  * changes have been made between the original and the
  * amendment.
  *

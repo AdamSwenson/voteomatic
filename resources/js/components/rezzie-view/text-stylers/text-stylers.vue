@@ -1,10 +1,15 @@
 <template>
     <div class="card">
         <div class="card-body">
-
+<p>current motion id : {{currentId}}</p>
             <div class="test">
                 <h3>Interpolating with components</h3>
-                <div class="ithere" v-html="ithere"></div>
+
+                <compiled-rezzie-text html="<p>Dog is <insert-pending text='nice'></insert-pending> and stinky</p>"></compiled-rezzie-text>
+
+                <compiled-rezzie-text html="<p>Dog is <text-styler-factory type='insert' text='nice' v-bind:amendment-id='752'></text-styler-factory> and stinky</p>"></compiled-rezzie-text>
+
+                <!--                <div class="ithere" v-amendmentText="ithere"></div>-->
             </div>
 
             <div class="current">
@@ -14,6 +19,10 @@
                     <insert-pending text=", who is very good,"></insert-pending>
                     likes to eat dog food. In fact, it is his favorite.
                 </p>
+
+                <compiled-rezzie-text html="<p>Dog is <text-styler-factory text='nice' amendment-id='728'></text-styler-factory> and stinky</p>"></compiled-rezzie-text>
+
+
                 <h4>Strike</h4>
                 <p>The dog
                     <strike-pending text=", who is very good,"></strike-pending>
@@ -101,10 +110,16 @@ import InsertPendingSuperseded from "./insert-pending-superseded";
 import StrikePendingSuperseded from "./strike-pending-superseded";
 import InsertPending from "./insert-pending";
 import StrikePending from "./strike-pending";
+import CompiledRezzieText from "../compiled-rezzie-text";
+import MotionMixin from "../../../mixins/motionStoreMixin";
+import MeetingMixin from "../../../mixins/meetingMixin";
+import motionObjectMixin from "../../../mixins/motionObjectMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 export default {
     name: "text-stylers",
     components: {
+        CompiledRezzieText,
         StrikePending,
         InsertPending,
         StrikePendingSuperseded,
@@ -113,13 +128,20 @@ export default {
     },
     props: [],
 
-    mixins: [],
+    mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
     data: function () {
         return {}
     },
 
-    asyncComputed: {},
+    asyncComputed: {
+        currentId : function(){
+            if(isReadyToRock(this.motion)){
+                return this.motion.id;
+            }
+
+        }
+    },
 
     computed: {
         ithere: function () {
@@ -127,7 +149,12 @@ export default {
         }
     },
 
-    methods: {}
+    methods: {},
+
+    beforeMount() {
+        this.$store.commit('setPmode');
+
+}
 
 }
 </script>

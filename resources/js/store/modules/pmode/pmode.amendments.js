@@ -25,8 +25,15 @@ const strikeRegex = new RegExp(strikeTag);
 const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)');
 const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)');
 
+const textStylerCloseTag = "'></text-styler-factory>";
 //Replacement tags
+const textStylerFactoryAdder = (amendmentId,  type) => {
+    return `<text-styler-factory type='${type}' v-bind:amendment-id='${amendmentId}' text='`;
+    // return `<text-styler-factory type='${type}' text='${text}' v-bind:amendment-id='${amendmentId}'></text-styler-factory>`;
+}
+
 const insertTagTemplate = (amendmentId) => {
+
     return `<span class="rezzieAmendment amendmentInsert amendment${amendmentId}" data="${amendmentId}">`;
 };
 
@@ -87,11 +94,16 @@ const getChangedText = (diffTaggedText) => {
 };
 
 const replaceTags = (diffTaggedText, amendmentId) => {
+    let a = diffTaggedText.replace(insertRegex, textStylerFactoryAdder(amendmentId, 'insert'));
+    a = a.replace(new RegExp('</ins>'), textStylerCloseTag);
+    a = a.replace(strikeRegex, textStylerFactoryAdder(amendmentId, 'strike'));
+    return a.replace(new RegExp('</del>'), textStylerCloseTag);
 
-    let a = diffTaggedText.replace(insertRegex, insertTagTemplate(amendmentId));
-    a = a.replace(new RegExp('</ins>'), '</span>');
-    a = a.replace(strikeRegex, strikeTagTemplate(amendmentId));
-    return a.replace(new RegExp('</del>'), '</span>');
+
+    // let a = diffTaggedText.replace(insertRegex, insertTagTemplate(amendmentId));
+    // a = a.replace(new RegExp('</ins>'), '</span>');
+    // a = a.replace(strikeRegex, strikeTagTemplate(amendmentId));
+    // return a.replace(new RegExp('</del>'), '</span>');
 };
 
 /**

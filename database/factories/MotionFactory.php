@@ -7,7 +7,8 @@ use App\Repositories\MotionTemplateRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class MotionFactory extends Factory
+class
+MotionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -5,12 +5,19 @@ const state = {
     ...Amend.state,
     ...Chair.state,
 
+    inPmode: false,
+
+
     //things: []
 };
 
 const mutations = {
     ...Amend.mutations,
     ...Chair.mutations,
+
+    setPmode: (state) => {
+        state.inPmode = true;
+    }
     /*
     *   addThing: (state, thing) => {
     *        state.things.push(thing);
@@ -45,6 +52,22 @@ const actions = {
 const getters = {
     ...Amend.getters,
     ...Chair.getters,
+
+    isInPmode: (state) => {
+        return state.inPmode;
+    },
+
+    /**
+     * Returns tbe initial motions for all resolutions
+     * @param state
+     * @param getters
+     */
+    getResolutionRoots : (state, getters) => {
+let rs = getters.getResolutions;
+return rs.filter((r) => {
+return _.isNull(r.applies_to)
+});
+    }
 };
 
 export default {
