@@ -20,7 +20,7 @@ export default class Resolution extends Motion {
                     superseded_by = null,
                     debatable = null,
                 }) {
-        window.console.log('new');
+
         super({
             id, content, description, info, requires,
             type,

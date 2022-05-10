@@ -143,23 +143,23 @@ const actions = {
             // window.console.log('sending', p);
             Vue.axios.post(url, payload)
                 .then((response) => {
-                    window.console.log('resp', response);
+
                     //Create a resolution object. This will normally be handled
                     //by pusher, but we need the object's id to update the
                     //tagged text
                     let rezAmend = new Resolution(response.data);
-                    window.console.log('prediff', rezAmend);
+                    // £window.console.log('prediff', rezAmend);
                     dispatch('diffTagResolutionAmendment', rezAmend).then((taggedHtml) => {
                         //We haven't saved this to store, so it is ok
                         //to update the content
                         rezAmend.content = taggedHtml;
-                        window.console.log('postdiff', rezAmend);
+                        // window.console.log('postdiff', rezAmend);
 
                         //send to server
                         let url = routes.motions.resource(rezAmend.id);
                         Vue.axios.post(url, {data: rezAmend, _method: 'put'})
                             .then((response) => {
-                                window.console.log(response);
+                                // window.console.log(response);
                                 return resolve()
                                 // return dispatch('updateMotion', p).then(() => {
                                 // return resolve();
