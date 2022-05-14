@@ -5,6 +5,7 @@ import Message from "../../../models/Message";
 import BallotObjectFactory from "../../../models/BallotObjectFactory";
 import Resolution from "../../../models/Resolution";
 import {idify} from "../../../utilities/object.utilities";
+import _ from "lodash";
 
 const state = {
     //things: []
@@ -123,6 +124,61 @@ const processText = (originalText, amendmentText, amendmentId) => {
     return replaceTags(diffed, amendmentId);
 };
 
+/**
+ *
+ * @param text
+ * @param regex Regex which identifies
+ * @param numWords
+ * @returns {string}
+ */
+const getLeadingWords = (text, numWords = 3) => {
+    let words = _.words(text, /[^, ]+/g);
+    let keep = _.slice(words, -numWords);
+    return _.join(keep, ' ');
+};
+
+const getTrailingWords = (text, numWords = 3) => {
+    let words = _.words(text, /[^, ]+/g);
+    let keep = _.slice(words, 0, numWords);
+    return _.join(keep, ' ');
+};
+const truncateTextAroundChanges = (text, numWords = 3) => {
+    const changedTextIncludingTagsRegex = new RegExp("<ins(.*?)</ins>|<del(.*?)</del>", 'g');
+
+    //First we get the altered section including its tags
+    let alteredContent = text.match(changedTextIncludingTagsRegex);
+
+    let out = '';
+    _.forEach(alteredContent, (ic) => {
+        let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+        let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
+        let l = text.match(leadingRx);
+        let t = text.match(trailingRegex);
+        // let trailingRx = = new RegExp('.+?(?=' + ic + ')', 'g');
+        // let insertLeadingRegex = new RegExp(//, 'g');
+        let leading = getLeadingWords(l[0], numWords);
+        let trailing = getTrailingWords(t[0], numWords)
+        out += `...${leading} ${ic} ${trailing}`;
+    });
+
+    return out;
+};
+
+// const truncateAroundChanges = (text, numWords) => {
+//     let insertLeadingRegex = new RegExp(/.+?(?=<ins)/, 'g');
+//     let insertTrailingRegex = new RegExp('(?<=ins>).*$', 'g');
+//     let strikeLeadingRegex = new RegExp(/.+?(?=<ins)/, 'g');
+//     let strikeTrailingRegex = new RegExp('(?<=ins>).*$', 'g');
+// let out = '';
+//     let insertContent = text.match(insertContentRegex);
+//     if(insertContent.length > 0){
+//         _.forEach(insertContent, (ic) => {
+//             let r = new RegExp('.+?(?=' + insertTag + ic + '<\\ins>)', 'g');
+//
+//         });
+//         let leading = getLeadingWords(text)
+//     }
+//     }
 
 
 
@@ -310,5 +366,8 @@ export default {
     insertTagTemplate,
     strikeTagTemplate,
     replaceTags,
-    processText
+    processText,
+    getTrailingWords,
+    getLeadingWords,
+    truncateTextAroundChanges
 }

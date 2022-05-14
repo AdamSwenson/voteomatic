@@ -271,15 +271,15 @@ describe('pmode.amendments actions', () => {
         let a1013 = "<h4 class=\"rezzieTitle\">Est sit magnam recusandae eos.</h4><div>Dog says<text-styler-factory type='insert' v-bind:amendment-id='1012' text='&nbsp;bark and'></text-styler-factory> wag&nbsp;</div><div><br></div>";
 
 
-        test('how tags factory',  () => {
-        let r = pa.diffTagText(a1011, a1013);
-        expect(r).toBe('adlfaf');
+        test('how tags factory', () => {
+            let r = pa.diffTagText(a1011, a1013);
+            expect(r).toBe('adlfaf');
 
-        let received = "<h4 class=\"rezzieTitle\">Est sit magnam recusandae eos.</h4><div><ins class=\"diffins\">Dog says</ins><text-styler-factory type='insert' v-bind:amendment-id='1012' text='&nbsp;bark and'></text-styler-factory><ins class=\"diffins\">&nbsp;wag&nbsp;</ins></div><div><br></div>"
+            let received = "<h4 class=\"rezzieTitle\">Est sit magnam recusandae eos.</h4><div><ins class=\"diffins\">Dog says</ins><text-styler-factory type='insert' v-bind:amendment-id='1012' text='&nbsp;bark and'></text-styler-factory><ins class=\"diffins\">&nbsp;wag&nbsp;</ins></div><div><br></div>"
 
         });
 
-        test('how replaces tags around  factory',  () => {
+        test('how replaces tags around  factory', () => {
 
             let received = "<h4 class=\"rezzieTitle\">Est sit magnam recusandae eos.</h4><div><ins class=\"diffins\">Dog says</ins><text-styler-factory type='insert' v-bind:amendment-id='1012' text='&nbsp;bark and'></text-styler-factory><ins class=\"diffins\">&nbsp;wag&nbsp;</ins></div><div><br></div>"
             let r = pa.replaceTags(received, 1011);
@@ -289,10 +289,123 @@ describe('pmode.amendments actions', () => {
 
         });
 
+        test('truncate', () => {
 
+            let insertLeadingRegex = new RegExp(/.+?(?=<ins)/, 'g');
+            let t = "<p>Words and things which are good <ins class='things'>stuff inserted</ins> more things";
+
+            let expected = "<p>Words and things which are good ";
+            let result = t.match(insertLeadingRegex);
+            expect(result[0]).toBe(expected);
+
+            const getLeadingWords = (text, regex, numWords = 3) => {
+                let words = _.words(result[0], /[^, ]+/g);
+                let keep = _.slice(words, -numWords);
+                return _.join(keep, ' ');
+            };
+
+            let w = _.words(result[0], /[^, ]+/g);
+            let ws = _.slice(w, -3);
+            expect(ws).toStrictEqual(['which', 'are', 'good'])
+
+            expect(getLeadingWords(result[0], insertLeadingRegex)).toBe('which are good');
+        });
+
+        test('trailing', () => {
+// \?(.*)$
+
+            let insertTrailingRegex = new RegExp('(?<=ins>).*$', 'g');
+
+            let t = '<p>Words and things which are good <ins class="diffins">stuff inserted</ins> more things that are things';
+
+            let expected = " more things that are things";
+            let result = t.match(insertTrailingRegex);
+            expect(result[0]).toBe(expected);
+
+            const getTrailingWords = (text, regex, numWords = 3) => {
+                let words = _.words(result[0], /[^, ]+/g);
+                let keep = _.slice(words, 0, numWords);
+                return _.join(keep, ' ');
+            };
+
+            expect(getTrailingWords(result[0], insertTrailingRegex)).toBe('more things that');
+
+
+        });
+
+        describe('truncateTextAroundChanges ', () => {
+
+            test('single change', () => {
+                let singleInsert = '<p>Words and things which are good <ins class="diffins">stuff inserted</ins> more things that are things.';
+                let result = pa.truncateTextAroundChanges(singleInsert);
+                let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
+                expect(result).toBe(exp3);
+            });
+
+            test('multiple changes', () => {
+                let multiInsert = '<p>Words and things which are good <ins class="diffins">stuff inserted</ins> more things that are things. Followed ' +
+                    'by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
+                let result = pa.truncateTextAroundChanges(multiInsert);
+                let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
+                let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
+                expect(result).toBe(exp3 + exp4);
+            });
+
+            //
+            // let result1 =
+            //     let
+            // result2 = truncateTextAroundChanges(multiInsert);
+            // let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
+            // let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
+            //
+
+        // const icr = new RegExp("<ins(.*?)</ins>", 'g');
+        //
+        // let insertContent = multiInsert.match(icr);
+        // expect(insertContent.length).toBe(2);
+        //
+        //
+        // let out = '';
+        // _.forEach(insertContent, (ic) => {
+        //     let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+        //     let insertTrailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
+        //     let l = multiInsert.match(leadingRx);
+        //     let t = multiInsert.match(insertTrailingRegex);
+        //     // let trailingRx = = new RegExp('.+?(?=' + ic + ')', 'g');
+        //     // let insertLeadingRegex = new RegExp(//, 'g');
+        //     let leading = pa.getLeadingWords(l[0]);
+        //     let trailing = pa.getTrailingWords(t[0])
+        //     out += `...${leading} ${ic} ${trailing}`;
+        // });
+        //
+        // let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
+        // let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
+        //
+        // expect(out).toBe(exp3 + exp4);
+
+        // const insertTag = '<ins class="diffins">';
+        // const insertTag2 = '<ins class="diffmod">';
+        //
+        //    const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
+        //    const icr = new RegExp("<ins(.*?)</ins>", 'g');
+        //
+        //
+        //    let insertContent = t.match(icr);
+        //
+        //    expect(insertContent.length).toBe(1);
+        //    expect(insertContent[0]).toBe('<ins class="diffins">stuff inserted</ins>');
+        //
+        //    if(insertContent.length > 0) {
+        //        _.forEach(insertContent, (ic) => {
+        //            let r = new RegExp('.+?(?=' + insertTag + ic + '<\\ins>)', 'g');
+        // let a = t.match(r);
+        // expect(a[0]).toBe('<p>Words and things which are good <ins class="diffins">stuff inserted</ins>');
+        //        });
+        //    }
+        // let leading = getLeadingWords(text)
     });
-
-
-
-
 });
+
+
+})
+;
