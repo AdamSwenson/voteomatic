@@ -27,12 +27,12 @@ class MeetingWithResolutionsSeeder extends Seeder
             ['meeting_id' => $meeting->id,
                 'content' => $body,
                 'seconded' => true,
-                'info' => [
-                    'title' => $title,
-//                        'resolutionIdentifier' => $this->faker->randomNumber(4),
-                    'groupId' => null
-                ],
-                'is_resolution' => true,
+//                'info' => [
+//                    'title' => $title,
+////                        'resolutionIdentifier' => $this->faker->randomNumber(4),
+//                    'groupId' => null
+//                ],
+//                'is_resolution' => true,
             ]
         );
 

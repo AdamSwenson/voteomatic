@@ -204,7 +204,7 @@ MotionFactory extends Factory
                 'type' => 'resolution',
                 'info' => [
                     'title' => $this->faker->bs,
-                    'resolutionIdentifier' => $this->faker->uuid,
+                    'resolutionIdentifier' => $this->faker->randomNumber(4),
                     //will be set by the afterMaking value in configure above
                     'groupId' => null,
                     'formattedContent' => $this->faker->randomHtml
