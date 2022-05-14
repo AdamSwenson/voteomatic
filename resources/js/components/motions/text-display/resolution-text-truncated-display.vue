@@ -31,12 +31,12 @@ export default {
         content : function(){
             let out = '';
             if(! isReadyToRock(this.motion)) return out;
-            out += '<h3>';
+            out += '<h5>';
             if(isReadyToRock(this.motion, 'resolutionIdentifier')){
                 out += '(' + this.motion.resolutionIdentifier +') ';
             }
             out += this.motion.title;
-            out += '</h3>';
+            out += '</h5>';
 
             return out;
         }
