@@ -35,7 +35,27 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {},
+
+    mounted() {
+        // let pid = document.getElementById(this.itemId);
+        // window.console.log(pid);
+        // return new bootstrap.Popover(pid);
+        //
+        // var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        //
+        // window.console.log('pop', popoverTriggerList);
+        // var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        //     return new bootstrap.Popover(popoverTriggerEl)
+        // })
+        // this.$nextTick(function () {
+        //     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        //
+        //     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        //         return new bootstrap.Popover(popoverTriggerEl)
+        //     })
+        // });
+    }
 
 }
 </script>

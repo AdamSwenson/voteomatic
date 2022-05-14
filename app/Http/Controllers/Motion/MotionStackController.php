@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\Motion;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
+use App\Repositories\IResolutionRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -29,6 +30,10 @@ class MotionStackController extends Controller
      * @var IMotionRepository|mixed
      */
     public $motionRepo;
+    /**
+     * @var IResolutionRepository|mixed
+     */
+    public $rezzieRepo;
 
     public function __construct()
     {
@@ -37,6 +42,8 @@ class MotionStackController extends Controller
 
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->motionRepo = app()->make(IMotionRepository::class);
+        $this->rezzieRepo = app()->make(IResolutionRepository::class);
+
     }
 
 
@@ -64,7 +71,12 @@ class MotionStackController extends Controller
         //this will return false if not an amendment
         //otherwise it will return a new motion which has been amended with
         //the motion passed in
-        $superseding = $this->motionRepo->handlePotentialAmendment($motion);
+        if($motion->is_resolution){
+            $superseding = $this->rezzieRepo->handlePotentialAmendment($motion);
+        }else{
+            $superseding = $this->motionRepo->handlePotentialAmendment($motion);
+        }
+
 
         //We would set the superseding motion as current here
         //Not doing so that people on the client can view the results

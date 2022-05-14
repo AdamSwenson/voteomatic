@@ -1,5 +1,5 @@
 <template>
-    <span class="amendment-text-display">
+    <span class="amendment-text-display text-center">
         <span v-html="taggedNewText"></span>
     </span>
 

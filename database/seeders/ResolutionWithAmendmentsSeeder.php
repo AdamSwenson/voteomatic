@@ -8,6 +8,11 @@ use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Database\Seeder;
 
+/**
+ *
+ *
+ * dev NB, needs to be updated to keep the clean and formatted content separate
+ */
 class ResolutionWithAmendmentsSeeder extends Seeder
 {
     /**
@@ -18,11 +23,12 @@ class ResolutionWithAmendmentsSeeder extends Seeder
     public function run()
     {
         $titleBase = 'ESTABLISHING CORE COMPETENCIES FOR CSU GENERAL EDUCATION (GE)AREAS A1,A2,A3,AND B4,COMMONLY REFERRED TO AS THE “GOLDEN FOUR"';
-        $title = "<h4 class='rezzieTitle'>{$titleBase}</h4>";
+//        $title = "<h4 class='rezzieTitle'>{$titleBase}</h4>";
         $rezzieIdentifier = 'AS-3515-21/APEP';
 
         $originalText = <<<HTML
 <div class="rezzie">
+<h4 class='rezzieTitle'>$titleBase</h4>
 <p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
@@ -66,10 +72,15 @@ HTML;
             'is_resolution' => true,
             'meeting_id' => $meeting->id,
             'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
+                'title' => $titleBase,
+                'resolutionIdentifier' => $rezzieIdentifier,
+                'formattedContent' => $originalText
+
             ],
         ]);
+
+        $mainMotion['info']['groupId'] = $mainMotion->id;
+        $mainMotion->save();
 
 
         $erfsaInsert = Motion::factory()->create([
@@ -81,10 +92,10 @@ HTML;
 //            'is_complete' => true,
             'is_current' => false,
             'is_resolution' => true,
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'info' => $mainMotion->info //[
+//                'title™' => $titleBase,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
         $erfsaText = <<<HTML
@@ -119,6 +130,7 @@ to: </p>
 </div>
 HTML;
         $erfsaInsert->content = $erfsaText;
+        $erfsaInsert->info['formattedContent'] = $erfsaText;
         $erfsaInsert->save();
         Vote::factory(['motion_id' => $erfsaInsert->id])->affirmative()->count(8)->create();
         Vote::factory(['motion_id' => $erfsaInsert->id])->negative()->count(2)->create();
@@ -134,11 +146,11 @@ HTML;
             'is_complete' => false,
             'is_resolution' => true,
             'is_current' => true,
-
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'info' => $erfsaInsert->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
         $mainMotion->superseded_by = $main2->id;
@@ -154,10 +166,12 @@ HTML;
 //            'is_complete' => true,
             'is_current' => false,
             'is_resolution' => true,
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'info' => $mainMotion->info
+//
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
         $failedStrikeText = <<<HTML
@@ -195,6 +209,7 @@ to: </p>
 </div>
 HTML;
         $failedStrike->content = $failedStrikeText;
+        $failedStrike->info['formattedContent'] = $failedStrikeText;
         Vote::factory(['motion_id' => $failedStrike->id])->affirmative()->count(2)->create();
         Vote::factory(['motion_id' => $failedStrike->id])->negative()->count(8)->create();
         $failedStrike->is_complete = true;
@@ -207,11 +222,11 @@ HTML;
             'is_complete' => false,
             'is_resolution' => true,
             'is_current' => false,
-
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'info' => $failedStrike->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
         // ======================== Successful strike insert
@@ -225,10 +240,11 @@ HTML;
 //            'is_complete' => true,
             'is_current' => false,
             'is_resolution' => true,
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'info' => $mainMotion->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
         //dev For VOT-190 the compiler needs to run recursively so the change to the second resolved shows up correctly
@@ -249,7 +265,7 @@ HTML;
  v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p>'></text-styler-factory>
   <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the <text-styler-factory type='strike' v-bind:amendment-id='$si->id'
- text='“golden four”'></text-styler-factory> <text-styler-factory
+ text='"golden four"'></text-styler-factory> <text-styler-factory
  type='insert'
  v-bind:amendment-id='$si->id'
  text='“four which are distinctive but not better than others”'></text-styler-factory>
@@ -272,6 +288,7 @@ to: </p>
 </div>
 HTML;
         $si->content = $siText;
+        $si->info['formattedContent'] = $siText;
         Vote::factory(['motion_id' => $si->id])->affirmative()->count(7)->create();
         Vote::factory(['motion_id' => $si->id])->negative()->count(2)->create();
         $si->is_complete = true;
@@ -283,16 +300,99 @@ HTML;
             'seconded' => true,
             'is_complete' => false,
             'is_resolution' => true,
-            'is_current' => true,
-
-            'info' => [
-                'title' => $title,
-                'resolutionIdentifier' => $rezzieIdentifier
-            ],
+            'is_current' => false,
+            'info' => $mainMotion->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
         ]);
 
 
+        // ================ Failed insert
 
+        $failedInsert = Motion::factory()->create([
+            'applies_to' => $main4->id,
+            'meeting_id' => $meeting->id,
+            'content' => '',
+            'type' => 'amendment',
+            'seconded' => true,
+//            'is_complete' => true,
+            'is_current' => false,
+            'is_resolution' => true,
+            'info' => $mainMotion->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
+        ]);
+
+        //dev For VOT-190 the compiler needs to run recursively so the change to the second resolved shows up correctly
+        $failedInsertText = <<<HTML
+<div class="rezzie">
+<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+ reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
+ Education Employer-Employee Relations Act (HEERA),
+  articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
+  Collegiality and Responsibility in the California State University,” and embodied
+  in accepted California State University (CSU) shared governance practices; and be it further</p>
+  <text-styler-factory
+ type='strike'
+ v-bind:amendment-id='$failedStrike->id'
+ text='<p class="resolvedClause">RESOLVED: That the ASCSU recommend the development of
+  core competencies in order to establish clear and uniform college level standards
+  for the <text-styler-factory type="strike" v-bind:amendment-id="$si->id" text="golden four"></text-styler-factory> <text-styler-factory type="insert"
+ v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p>'></text-styler-factory>
+  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+  disciplinary experts, develop proposed core competencies foreach of the <text-styler-factory type='strike' v-bind:amendment-id='$si->id'
+ text='"golden four"'></text-styler-factory> <text-styler-factory
+ type='insert'
+ v-bind:amendment-id='$si->id'
+ text='“four which are distinctive but not better than others”'></text-styler-factory>
+  General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
+  Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
+  Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
+<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+to: </p>
+<ul>
+<li>CSU Board ofTrustees,</li>
+ <text-styler-factory
+ type='insert'
+ text='<li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>'
+ v-bind:amendment-id='$erfsaInsert->id'></text-styler-factory>
+<li>CSU campusProvosts,</li>
+<li>CSU campus SenateChairs,</li>
+ <text-styler-factory
+ type='insert'
+ text='<li>Yo mama,</li>'
+ v-bind:amendment-id='$failedInsert->id'></text-styler-factory>
+<li>California State StudentAssociation (CSSA),</li>
+
+ </ul>
+</div>
+HTML;
+        $failedInsert->content = $failedInsertText;
+        $failedInsert->info['formattedContent'] = $failedInsertText;
+        Vote::factory(['motion_id' => $failedInsert->id])->affirmative()->count(2)->create();
+        Vote::factory(['motion_id' => $failedInsert->id])->negative()->count(9)->create();
+        $failedInsert->is_complete = true;
+        $failedInsert->save();
+
+        $main5 = Motion::factory()->create([
+            'meeting_id' => $meeting->id,
+            'content' => $failedInsert->content,
+            'seconded' => true,
+            'is_complete' => false,
+            'is_resolution' => true,
+            'is_current' => true,
+            'info' => $mainMotion->info
+//            'info' => [
+//                'title' => $title,
+//                'resolutionIdentifier' => $rezzieIdentifier
+//            ],
+        ]);
+        $main5->info['formattedContent'] = $failedInsert->content;
+        $main5->save();
 
 //        $mainMotion->superseded_by = $main2->id;
 //        $mainMotion->save();

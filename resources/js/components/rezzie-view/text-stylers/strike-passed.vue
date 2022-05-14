@@ -1,5 +1,7 @@
 <template>
-    <span class="strike-passed text-success">
+    <span
+          class="strike-passed text-success"
+    >
         <a
             tabindex="0"
             data-bs-toggle="popover"
@@ -29,6 +31,9 @@ export default {
     asyncComputed: {
         popoverContent: function () {
             return this.text;
+        },
+        itemId : function () {
+            return 'strikePassedAmendment' + this.amendmentId;
         }
     },
 
@@ -38,7 +43,8 @@ export default {
         // }
     },
 
-    methods: {}
+    methods: {},
+
 
 }
 </script>

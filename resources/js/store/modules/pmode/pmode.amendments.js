@@ -4,6 +4,8 @@ import * as routes from "../../../routes";
 import Message from "../../../models/Message";
 import BallotObjectFactory from "../../../models/BallotObjectFactory";
 import Resolution from "../../../models/Resolution";
+import {idify} from "../../../utilities/object.utilities";
+
 const state = {
     //things: []
 };
@@ -19,16 +21,18 @@ const mutations = {
 
 
 const insertTag = '<ins class="diffins">';
+const insertTag2 = '<ins class="diffmod">';
 const strikeTag = '<del class="diffdel">';
-const insertRegex = new RegExp(insertTag);
-const strikeRegex = new RegExp(strikeTag);
-const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)');
-const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)');
+const strikeTag2 = '<del class="diffmod">';
+const insertRegex = new RegExp(insertTag + '|' + insertTag2, 'g');
+const strikeRegex = new RegExp(strikeTag + '|' + strikeTag2, 'g');
+const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
+const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)|' + '(?<=' + strikeTag2 + ')(.*?)(?=</del>)', 'g');
 
-const textStylerCloseTag = "'></text-styler-factory>";
+const textStylerCloseTag = "\'></text-styler-factory>";
 //Replacement tags
-const textStylerFactoryAdder = (amendmentId,  type) => {
-    return `<text-styler-factory type='${type}' v-bind:amendment-id='${amendmentId}' text='`;
+const textStylerFactoryAdder = (amendmentId, type) => {
+    return `<text-styler-factory type=\'${type}\' v-bind:amendment-id=\'${amendmentId}\' text=\'`;
     // return `<text-styler-factory type='${type}' text='${text}' v-bind:amendment-id='${amendmentId}'></text-styler-factory>`;
 }
 
@@ -93,11 +97,12 @@ const getChangedText = (diffTaggedText) => {
 
 };
 
+
 const replaceTags = (diffTaggedText, amendmentId) => {
-    let a = diffTaggedText.replace(insertRegex, textStylerFactoryAdder(amendmentId, 'insert'));
-    a = a.replace(new RegExp('</ins>'), textStylerCloseTag);
-    a = a.replace(strikeRegex, textStylerFactoryAdder(amendmentId, 'strike'));
-    return a.replace(new RegExp('</del>'), textStylerCloseTag);
+    let a = diffTaggedText.replaceAll(insertRegex, textStylerFactoryAdder(amendmentId, 'insert'));
+    a = a.replaceAll(new RegExp('</ins>', 'g'), textStylerCloseTag);
+    a = a.replaceAll(strikeRegex, textStylerFactoryAdder(amendmentId, 'strike'));
+    return a.replaceAll(new RegExp('</del>', 'g'), textStylerCloseTag);
 
 
     // let a = diffTaggedText.replace(insertRegex, insertTagTemplate(amendmentId));
@@ -118,6 +123,9 @@ const processText = (originalText, amendmentText, amendmentId) => {
     return replaceTags(diffed, amendmentId);
 };
 
+
+
+
 const actions = {
 
     /**
@@ -131,12 +139,33 @@ const actions = {
      * @returns {Promise<unknown>}
      */
     diffTagResolutionAmendment({dispatch, commit, getters}, amendment) {
-        return new Promise(((resolve, reject) => {
+        // return new Promise(((resolve, reject) => {
+            //First we diff and tag against the immediate parent
             let parent = getters.getMotionById(amendment.applies_to);
             let taggedHtml = processText(parent.content, amendment.content, amendment.id);
-            return resolve(taggedHtml);
 
-        }));
+            window.console.log('+++amendment', amendment,  'parent', parent, parent.isResolutionAmendment);
+
+            //To handle VOT-197 we need to check if this is a secondary amendment
+//            window.console.log('tagged', taggedHtml);
+            if (parent.isResolutionAmendment) {
+                window.console.log('secondary');
+                //We have a secondary amendment, so we need to diff the tagged content
+                //against the primary amendment's parent so that it reflects the primary amendment too
+                let main = getters.getMotionById(parent.applies_to);
+
+                // let main = getters.getByAppliesToId(primary.applies_to);
+                //We diff and tag against the main motion but set the amendment id to the
+                //parent's id
+                taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
+                window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
+                window.console.log('secondary tagged', taggedHtml);
+
+            }
+return taggedHtml;
+            // return resolve(taggedHtml);
+
+        // }));
     },
 
     /**
@@ -160,12 +189,14 @@ const actions = {
                     //by pusher, but we need the object's id to update the
                     //tagged text
                     let rezAmend = new Resolution(response.data);
-                    // £window.console.log('prediff', rezAmend);
+                    // window.console.log('prediff', rezAmend);
                     dispatch('diffTagResolutionAmendment', rezAmend).then((taggedHtml) => {
+                        window.console.log('dispatched diffTagResolutionAmendment', taggedHtml);
                         //We haven't saved this to store, so it is ok
                         //to update the content
-                        rezAmend.content = taggedHtml;
-                        // window.console.log('postdiff', rezAmend);
+                        //dev Split formatted content and content in VOT-190 / VOT-197
+                        // rezAmend.content = taggedHtml;
+                        rezAmend.formattedContent = taggedHtml;
 
                         //send to server
                         let url = routes.motions.resource(rezAmend.id);
@@ -240,12 +271,23 @@ const actions = {
  */
 const getters = {
 
-    getAmendments: (state, getters) => (motion) => {
-        let primaryAmends = getters.getMotions.filter(function (i) {
-            if (i.applies_to === motion.id) {
-                return i;
-            }
-        });
+        getAmendments: (state, getters) => (motion) => {
+            let primaryAmends = getters.getMotions.filter(function (i) {
+                if (i.applies_to === motion.id) {
+                    return i;
+                }
+            });
+        },
+        // /**
+        //  * Returns any motions which apply to the provided motion
+        //  * motion : Motion object or motion id
+        //  */
+        // getByAppliesToId: (state, getters) => (appliedToMotion) => {
+        //     let motionId = idify(appliedToMotion);
+        //     window.console.log('checking applies to ', motionId);
+        //     return getters.getMotionById(motionId);
+        //
+        // }
 
         // let secondaryAmends = getters.getMotions.filter(function (i) {
         //     if (i.applies_to === motion.id) {
@@ -254,7 +296,7 @@ const getters = {
 
 
     }
-};
+;
 
 export default {
     actions,

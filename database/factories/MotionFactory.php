@@ -64,6 +64,25 @@ MotionFactory extends Factory
 //        "Please vote once or forever hold your peace",
 //        "This proposes a revision to the Bylaws which will be voted upon by the whole Faculty"];
 
+
+    public function configure()
+    {
+        return $this->afterMaking(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        })->afterCreating(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        });
+    }
+
+
     /**
      * Define the model's default state.
      *
@@ -176,11 +195,44 @@ MotionFactory extends Factory
 
     public function resolution()
     {
+        return $this->state(function (array $attributes) {
+            return [
+                'content' => $this->resolutionText,
+                'requires' => 0.5,
+                'description' => '',
+                'is_resolution' => true,
+                'type' => 'resolution',
+                'info' => [
+                    'title' => $this->faker->bs,
+                    'resolutionIdentifier' => $this->faker->uuid,
+                    //will be set by the afterMaking value in configure above
+                    'groupId' => null,
+                    'formattedContent' => $this->faker->randomHtml
+                ]
+            ];
+        });
+    }
+
+
+    public function resolutionAmendment()
+    {return $this->state(function (array $attributes) {
+        $appliesToId = $this->faker->randomNumber;
         return [
+            'applies_to' => $appliesToId,
             'content' => $this->resolutionText,
             'requires' => 0.5,
-            'description' => ''
+            'description' => '',
+            'is_resolution' => true,
+            'type' => 'amendment',
+            'info' => [
+                'title' => $this->faker->bs,
+                'resolutionIdentifier' => $this->faker->uuid,
+                //will be set by the afterMaking value in configure above
+                'groupId' => $appliesToId,
+                'formattedContent' => $this->faker->randomHtml
+            ]
         ];
+    });
     }
 
     /**

@@ -7,7 +7,7 @@
 
         <div class="vote-area card-body">
 
-            <div class="text-center">
+<!--            <div class="text-center">-->
                 <motion-text-display
                     v-if="isReady"
                     :motion="motion"
@@ -23,7 +23,7 @@
 <!--                    v-else-if="isReady && isAmendment"-->
 <!--                ></amendment-text-display>-->
 
-            </div>
+<!--            </div>-->
 
             <vote-receipt
                 :receipt="receipt"

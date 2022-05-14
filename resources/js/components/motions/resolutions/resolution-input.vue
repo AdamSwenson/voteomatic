@@ -1,6 +1,6 @@
 <template>
 
-    <wysiwyg v-model="content" />
+    <wysiwyg v-model="content"/>
 
 </template>
 
@@ -14,7 +14,7 @@ export default {
     mixins: [MeetingMixin], //, MotionMixin],
 
 
-    props : ['motion', 'editMode'],
+    props: ['motion', 'editMode'],
 
     data: function () {
         return {}
@@ -79,6 +79,7 @@ export default {
 
             }
         },
+
     },
 
     methods: {}

@@ -1,7 +1,6 @@
 <template>
 
     <component :is="componentType" :text="text" :amendment-id="amendmentId"></component>
-
 </template>
 
 <script>
@@ -37,6 +36,10 @@ export default {
         type: {type: String},
         text: {type: String},
         amendmentId: {type: [Number, String]},
+        //optional (if secondary exists)
+        // secondaryAmendmentType,
+        // secondaryAmendmentId,
+        // secondaryAmendmentText
         // showOnlyPending: {type: Boolean, default: false}
     },
 
@@ -51,44 +54,6 @@ export default {
         amendment: function () {
             return this.$store.getters.getMotionById(this.amendmentId);
         },
-
-        currentMotion: function(){
-            return this.$store.getters.getActiveMotion;
-
-        },
-
-        /**
-         * Whether the amendment is currently pending vote
-         * (returns false if passed or superseded)
-         * @returns {boolean}
-         */
-        isCurrentMotion: function () {
-            if (!isReadyToRock(this.currentMotion)) return false;
-            return this.currentMotion.id === this.amendmentId;
-        },
-
-        /**
-         * True only if currently selected motion and
-         * voting is not complete
-         */
-        isPending: function () {
-            return this.isCurrentMotion && !this.amendment.is_complete;
-        },
-
-        isPendingSuperseded: function () {
-            if (!isReadyToRock(this.amendment)) return false;
-            return !this.isCurrentMotion && !this.amendment.is_complete;
-        },
-
-        passed: function () {
-            return this.$store.getters.getMotionPassed(this.amendmentId);
-        },
-
-        showOnlyPending: function () {
-            return !this.$store.getters.isInPmode;
-        },
-
-
 
         componentType: function () {
             if (!isReadyToRock(this.currentMotion) || !isReadyToRock(this.amendment)) return UnstyledText;
@@ -121,6 +86,10 @@ export default {
 
             // --------------------- Superseded pending
             //todo
+            if (this.isPendingSuperseded) {
+                if (this.type === 'insert') return InsertPendingSuperseded;
+                if (this.type === 'strike') return StrikePendingSuperseded;
+            }
 
 
             //
@@ -163,7 +132,63 @@ export default {
             // }
 
 
-        }
+        },
+
+        currentMotion: function () {
+            return this.$store.getters.getActiveMotion;
+
+        },
+
+        /**
+         * Whether the amendment is currently pending vote
+         * (returns false if passed or superseded)
+         * @returns {boolean}
+         */
+        isCurrentMotion: function () {
+            if (!isReadyToRock(this.currentMotion)) return false;
+            return this.currentMotion.id === this.amendmentId;
+        },
+
+        /**
+         * True only if currently selected motion and
+         * voting is not complete
+         */
+        isPending: function () {
+            return this.isCurrentMotion && !this.amendment.is_complete;
+        },
+
+        isPendingSuperseded: function () {
+            if (!isReadyToRock(this.amendment)) return false;
+            return !this.isCurrentMotion && !this.amendment.is_complete;
+        },
+
+
+        passed: function () {
+            return this.$store.getters.getMotionPassed(this.amendmentId);
+        },
+
+        showOnlyPending: function () {
+            return !this.$store.getters.isInPmode;
+        },
+
+
+        //
+        // /**
+        //  * Gets all secondary amendments which apply to
+        //  * this amendment
+        //  * @returns {*[]|*}
+        //  */
+        // secondaryAmendments: function () {
+        //     if (!isReadyToRock(this.amendment)) return [];
+        //
+        //     let secondaries = this.$store.getters.getByAppliesToId(this.amendment);
+        //     if (secondaries.length === 0) return [];
+        //
+        //     return secondaries.filter((m) => {
+        //         return m.isAmendment();
+        //     });
+        // },
+
 
     },
 

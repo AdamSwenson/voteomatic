@@ -13,8 +13,8 @@
                     v-bind:aria-controls="bodyId"
                     v-bind:data-bs-target="bodyTarget"
                     v-on:click="handleClick"
-            >
-                {{ headerText }}
+            ><motion-status-badge :is-passed="isPassed"
+            ></motion-status-badge> {{ headerText }}
             </button>
         </h2>
 
@@ -29,7 +29,8 @@
 
                 <div class="body-text">
                     <!--                    v-if="motion.is_resolution">-->
-                    <compiled-rezzie-text :html="amendmentText"></compiled-rezzie-text>
+                    <compiled-rezzie-text :html="amendmentText"
+                    ></compiled-rezzie-text>
                     <!--                    <resolution-amendment-text-display-->
                     <!--                        v-if="isResolution"-->
                     <!--                        :original-text="originalText"-->
@@ -38,7 +39,8 @@
 
                 </div>
 
-<!--                <div class="body-text" v-else v-html="motion.content"></div>-->
+                <!--                dev reenable check after VOT-190 working?-->
+                <!--                <div class="body-text" v-else v-html="motion.content"></div>-->
 
 
                 <p-mode-chair-controls
@@ -62,6 +64,8 @@ import PModeChairControls from "./p-mode-chair-controls";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import ResolutionAmendmentTextDisplay from "../motions/text-display/resolution-amendment-text-display";
 import CompiledRezzieText from "./compiled-rezzie-text";
+import MotionResultsMixin from "../../mixins/motionResultsMixin";
+import MotionStatusBadge from "../motions/badges/motion-status-badge";
 
 
 window.bootstrap = require('bootstrap');
@@ -69,18 +73,46 @@ window.bootstrap = require('bootstrap');
 export default {
     name: "rezzie-display",
 
-    components: {CompiledRezzieText, ResolutionAmendmentTextDisplay, PModeChairControls},
+    components: {MotionStatusBadge, CompiledRezzieText, ResolutionAmendmentTextDisplay, PModeChairControls},
 
+    /**
+     * motion should be the root motion of the group
+     */
     props: ['motion', 'parentId'],
 
-    mixins: [AmendmentMixin, ChairMixin, MeetingMixin, motionObjectMixin],
+    mixins: [ChairMixin, MeetingMixin, motionObjectMixin,
+        MotionResultsMixin
+    ],
 
     data: function () {
-        return {}
+        return {
+            isReady : false
+        }
+    },
+
+    watch : {
+        // isReady: function(){
+        // // isOpen : function(){
+        //     let me = this;
+        //
+        //     // if(this.isOpen === true){
+        //         this.$nextTick(function () {
+        //         window.console.log('isOpen changed');
+        //         this.initializePopovers();
+        //
+        //     });
+        //     // }
+        //     }
     },
 
     asyncComputed: {
-        amendments: function () {
+        amendmentText: function () {
+            if (isReadyToRock(this.motion)) return this.motion.formattedContent;
+            return '';
+        },
+
+        showText: function () {
+            return isReadyToRock(this.amendmentText);
         },
 
         buttonStyling: function () {
@@ -107,9 +139,13 @@ export default {
          * text, id number, and status if complete
          */
         headerText: function () {
-            if (!isReadyToRock(this.motion, 'title')) return ''
-//dev
-            return this.motion.title;
+            let txt = '';
+            if (isReadyToRock(this.identifier)) txt += `(${this.identifier}) `;
+            txt += this.title;
+            return txt;
+//             if (!isReadyToRock(this.motion, 'title')) return ''
+// //dev
+//             return this.motion.title;
 
         },
 
@@ -117,12 +153,16 @@ export default {
          *
          */
         title: function () {
+            if (!isReadyToRock(this.motion, 'title')) return ''
+            return this.motion.title;
         },
 
         /**
          * Id number/string of the resolution
          */
         identifier: function () {
+            if (isReadyToRock(this.motion, 'resolutionIdentifier')) return this.motion.resolutionIdentifier;
+
         },
 
 
@@ -184,21 +224,34 @@ export default {
             //Parliamentarian mode shouldn't be setting for everyone,
             //so use the commit directly
             this.$store.commit('setMotion', this.motion);
+            this.initializePopovers();
+        },
 
+
+        initializePopovers() {
+            // this.$nextTick(function () {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            });
+            // window.console.log('popovers', popoverTriggerList,);
+            // });
         }
     },
 
     mounted() {
-        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        //     return new bootstrap.Tooltip(tooltipTriggerEl)
-        // })
+        let me = this;
+        this.$nextTick(function () {
+            // me.isReady = true;
+            // window.console.log('mount');
 
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        })
+            //dev this is incredibly stupid, but it works as a kludge for VOT-194
+            setTimeout(() => {
+                // window.console.log('time');
+                me.initializePopovers();
+            }, 500)
 
+});
     }
 
 }

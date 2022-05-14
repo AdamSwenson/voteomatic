@@ -2,7 +2,7 @@
 <span v-bind:class="containerStyling">
      <i class="bi "
         v-bind:class="icon"
-     ></i><span v-bind:class="textStyling" v-html="text"></span>
+     ></i> <span v-bind:class="textStyling" v-html="text"></span>
 </span>
 </template>
 

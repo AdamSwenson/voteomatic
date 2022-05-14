@@ -5,13 +5,29 @@ import {isReadyToRock} from "../utilities/readiness.utilities";
 export default class Resolution extends Motion {
 
 
+    /**
+     *
+     * @param id
+     * @param content
+     * @param description
+     * @param requires
+     * @param type Can be either resolution (if main) or amendment
+     * @param info
+     * @param is_complete
+     * @param is_voting_allowed
+     * @param is_resolution
+     * @param applies_to
+     * @param seconded
+     * @param superseded_by
+     * @param debatable
+     */
     constructor({
                     id = null,
                     content = null,
                     description = null,
                     requires = 0.5,
                     type = null,
-                    info = null,
+                    info = {},
                     is_complete = null,
                     is_voting_allowed = null,
                     is_resolution = null,
@@ -33,7 +49,6 @@ export default class Resolution extends Motion {
             debatable
         });
 
-        this.type = 'resolution';
 
         this.clauses = [];
         // this.id = id;
@@ -45,44 +60,27 @@ export default class Resolution extends Motion {
         // this.strikeRegex = new RegExp('<del class="diffdel"')
     }
 
+    /**
+     * Whether this is an amendment to a resolution which
+     * requires appropriate html rendering etc.
+     *
+     * NB, checking that the type is amendment rather than
+     * looking at applies_to because the server will rely on the
+     * type being amendment to respond appropriately once marked complete.
+     * See VOT-193 for the issue that was caused by the type not being
+     * set to amendment.
+     * @returns {false|boolean|null}
+     */
     get isResolutionAmendment(){
-        return isReadyToRock(this.applies_to) && this.type === 'resolution';
+        return this.isAmendment() && this.is_resolution;
     }
 
-    // initializeClauses(){
-        // (?<=<pre>)(.*?)(?=</pre>)
-    // }
-    //
-    // get diffTaggedText(){
-    //     if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
-    //     if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
-    //     let me = this;
-    //
-    //     let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
-    //     return diffHtml;
-    //     // (?<=<pre>)(.*?)(?=</pre>)
-    // }
-
-    // /**
-    //  * Determines the type of amendment.
-    //  * Possible returns:
-    //  *      strike
-    //  *      insert
-    //  *      strikeinsert
-    //  * @returns {string|boolean}
-    //  */
-    // get amendmentType(){
-    //     //dev also secondary amendment?
-    //     if(this.type !== 'amendment') return false
-    //     let out = '';
-    //     if(this.strikeRegex.test(this.diffTaggedText)){
-    //         out += 'strike';
-    //     }
-    //     if(this.insertRegex.test(this.diffTaggedText)){
-    //         out += 'insert'
-    //     }
-    //     return out;
-    // }
+    get groupId(){
+        if( isReadyToRock(this.info, 'groupId')) return this.info.groupId;
+    }
+    set groupId(v){
+        this.info.groupId = v;
+    }
 
     get title() {
         return this.info.title;
@@ -99,6 +97,15 @@ export default class Resolution extends Motion {
     set resolutionIdentifier(v) {
         this.info.resolutionIdentifier = v;
     }
+
+    get formattedContent(){
+        return this.info.formattedContent;
+    }
+
+    set formattedContent(v){
+        return this.info.formattedContent = v;
+    }
+
 
 
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Assignment;
 use App\Models\Election\Candidate;
 use App\Models\Election\PoolMember;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,11 @@ class Motion extends Model
         'info',
         'info->propositionName', //dev Unsure if this is used
         'info->name',
+        //resolutions
+        'info->title',
+        'info->resolutionIdentifier',
+        'info->groupId',
+        'info->formattedContent',
 
         'is_complete',
         'is_current',
@@ -93,7 +99,8 @@ class Motion extends Model
 
 
     protected $casts = [
-        'info' => 'array',
+//        'info' => 'array',
+        'info' => AsArrayObject::class,
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',

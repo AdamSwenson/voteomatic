@@ -2,13 +2,21 @@
     <div class="pmode-home card"
          v-bind:id="displayId"
     >
-
         <div class="card-body">
-        <rezzie-display
-            :motion="motion"
-            parent-id="displayId"
-        ></rezzie-display>
+            <rezzie-display
+                v-for="m in motions"
+                :key="m.id"
+                :motion="m"
+                parent-id="displayId"
+            ></rezzie-display>
         </div>
+
+        <!--        <div class="card-body">-->
+<!--        <rezzie-display-->
+<!--            :motion="motion"-->
+<!--            parent-id="displayId"-->
+<!--        ></rezzie-display>-->
+<!--        </div>-->
 
 
         <div class="card-body">
@@ -35,7 +43,7 @@ import RezzieDisplay from "./rezzie-display";
 import TextStylers from "./text-stylers/text-stylers";
 
 export default {
-    name: "rezzie-view-home",
+    name: "pmode-home",
     components: {TextStylers, RezzieDisplay},
     props: [],
 
@@ -51,7 +59,8 @@ export default {
 
     asyncComputed: {
         motions: function () {
-            return _.reverse(this.$store.getters.getMotions);
+           return this.$store.getters.getResolutionsForPModeDisplay;
+            // return _.reverse(this.$store.getters.getMotions);
         }
     },
 

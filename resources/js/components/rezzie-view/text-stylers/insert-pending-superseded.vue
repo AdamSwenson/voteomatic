@@ -2,7 +2,7 @@
 <span v-bind:class="containerStyling">
       <i class="bi "
          v-bind:class="icon"
-      ></i><span v-bind:class="textStyling" v-html="text"></span>
+      ></i> <span v-bind:class="textStyling" v-html="text"></span>
 </span>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 
     data: function () {
         return {
-            containerStyle: ' border border-dark border-3 fs-1',
+            containerStyle: ' border border-warning border-3 ',
             textStyling: "text-decoration-underline ",
             icon: 'bi-pencil',
         }

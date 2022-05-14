@@ -3,7 +3,7 @@
     <div class="amendment-setup-area card">
 
         <div class="card-body">
-            <div class="row display-area text-center">
+            <div class="row display-area ">
                 <div class="col">
                     <blockquote class="blockquote mb-0">
 

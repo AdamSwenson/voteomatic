@@ -17,23 +17,29 @@ class MeetingWithResolutionsSeeder extends Seeder
 
         $title = $this->faker->sentence;
         $body = '';
-        $body .= "<h4 class='rezzieTitle'>" . $title  . "</h4>";
+        $body .= "<h4 class='rezzieTitle'>" . $title . "</h4>";
 
         for ($i = 0; $i <= $numResolves; $i++) {
             $body .= "<p class='resolvedClause'>RESOLVED {$this->faker->paragraph}; and be it further </p>";
         }
-            return Motion::factory()->create(
-                ['meeting_id' => $meeting->id,
-                    'content' => $body,
-                    'seconded' => true,
-                    'info' => [
-                        'title' => $title,
-                        'resolutionIdentifier' => $this->faker->randomNumber(4)
-                    ],
-                    'is_resolution' => true,
-                ]
-            );
 
+        $m = Motion::factory()->resolution()->create(
+            ['meeting_id' => $meeting->id,
+                'content' => $body,
+                'seconded' => true,
+                'info' => [
+                    'title' => $title,
+//                        'resolutionIdentifier' => $this->faker->randomNumber(4),
+                    'groupId' => null
+                ],
+                'is_resolution' => true,
+            ]
+        );
+
+        $m->info['groupId'] = $m->id;
+
+        $m->save();
+        return $m;
     }
 
 
@@ -49,7 +55,7 @@ class MeetingWithResolutionsSeeder extends Seeder
         $realUsers = User::all();
 
         $meeting = Meeting::factory()->create();
-        foreach($realUsers as $user){
+        foreach ($realUsers as $user) {
             $meeting->addUserToMeeting($user);
         }
         $adminUser = User::where('email', env('DEV_USER_ADMIN_EMAIL'))->first();
@@ -58,7 +64,11 @@ class MeetingWithResolutionsSeeder extends Seeder
         $numResolutions = $this->faker->numberBetween(3, 8);
 
         for ($i = 0; $i <= $numResolutions; $i++) {
-            $this->makeResolution($meeting);
+            $m = $this->makeResolution($meeting);
+            if ($i === $numResolutions ) {
+                $m->is_current = true;
+                $m->save();
+            }
         }
 
         $this->command->line("\n Meeting with resolutions: {$meeting->id}");

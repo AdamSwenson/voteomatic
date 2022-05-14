@@ -7,6 +7,7 @@
             :amendment-text="amendmentText"
         ></resolution-amendment-text-display>
 
+
         <regular-amendment-text-display
             v-else
             :original-text="originalText"

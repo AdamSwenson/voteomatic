@@ -49,8 +49,12 @@ export default {
 
     asyncComputed: {
 
-
         taggedNewText: function () {
+
+            //dev
+            // return this.amendmentText;
+
+
             if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
             if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
             let me = this;

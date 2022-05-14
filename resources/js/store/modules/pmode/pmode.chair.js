@@ -33,14 +33,14 @@ const actions = {
                     motionId: motion.id,
                     isYay: true
                 });
-
-            dispatch.startVotingOnMotion(motion).then(() => {
-                dispatch.castMotionVote(vote).then(() => {
-                    dispatch.markMotionComplete(motion).then(() => {
+            dispatch('startVotingOnMotion', motion).then(() => {
+                dispatch('castMotionVote', vote).then(() => {
+                    dispatch('endVotingOnMotion', motion).then(() => {
                         return resolve();
                     });
                 });
             });
+
         }));
     },
 
@@ -57,21 +57,21 @@ const actions = {
      */
     markMotionAsFailed({dispatch, commit, getters}, motion) {
 
-            return new Promise(((resolve, reject) => {
-                let vote = new Vote(
-                    {
-                        motionId: motion.id,
-                        isYay: false
-                    });
+        return new Promise(((resolve, reject) => {
+            let vote = new Vote(
+                {
+                    motionId: motion.id,
+                    isYay: false
+                });
 
-                dispatch.startVotingOnMotion(motion).then(() => {
-                    dispatch.castMotionVote(vote).then(() => {
-                        dispatch.markMotionComplete(motion).then(() => {
-                            return resolve();
-                        });
+            dispatch('startVotingOnMotion', motion).then(() => {
+                dispatch('castMotionVote', vote).then(() => {
+                    dispatch('endVotingOnMotion', motion).then(() => {
+                        return resolve();
                     });
                 });
-            }));
+            });
+        }));
 
     },
 
