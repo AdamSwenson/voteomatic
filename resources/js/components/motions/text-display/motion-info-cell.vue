@@ -5,6 +5,7 @@
     <motion-text-display
         :motionStyle="motionStyle"
         :motion="motion"
+        :truncate-resolutions="true"
     ></motion-text-display>
 
     <br/>

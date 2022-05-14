@@ -1,12 +1,16 @@
 <template>
     <div class="amendment-text-display">
+        <resolution-amendment-truncated-text-display
+            v-if="isResolution && truncateResolutions"
+            :original-text="originalText"
+            :amendment-text="amendmentText"
+        ></resolution-amendment-truncated-text-display>
 
         <resolution-amendment-text-display
-            v-if="isResolution"
+            v-else-if="isResolution"
             :original-text="originalText"
             :amendment-text="amendmentText"
         ></resolution-amendment-text-display>
-
 
         <regular-amendment-text-display
             v-else
@@ -26,6 +30,7 @@ import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import ResolutionAmendmentTextDisplay from "./resolution-amendment-text-display";
 import RegularAmendmentTextDisplay from "./regular-amendment-text-display";
 import AmendmentMixin from "../../../mixins/amendmentMixin";
+import ResolutionAmendmentTruncatedTextDisplay from "./resolution-amendment-truncated-text-display";
 
 /**
  * Displays an amendmentText tagged string indicating where
@@ -37,7 +42,7 @@ import AmendmentMixin from "../../../mixins/amendmentMixin";
  */
 export default {
     name: "amendment-text-display",
-    components: {RegularAmendmentTextDisplay, ResolutionAmendmentTextDisplay},
+    components: {ResolutionAmendmentTruncatedTextDisplay, RegularAmendmentTextDisplay, ResolutionAmendmentTextDisplay},
     mixins: [MeetingMixin, motionObjectMixin,  AmendmentMixin],
 
 
@@ -47,7 +52,8 @@ export default {
         /** When the display is used during the setup process
          * we need to override the usual way of getting altered and original text
          * that is defined in the mixin. That is what these do*/
-        'amendmentTextForSetup', 'originalTextForSetup'],
+        'amendmentTextForSetup', 'originalTextForSetup',
+    'truncateResolutions'],
 
 
 
