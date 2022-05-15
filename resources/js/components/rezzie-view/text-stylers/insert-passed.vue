@@ -1,6 +1,6 @@
 <template>
     <span class="border border-success insert-passed">
-        <i class="bi bi-pencil"></i> <span v-html="text"></span>
+        <i class="bi bi-pencil"></i>&nbsp;<span v-html="text"></span>
     </span>
 </template>
 

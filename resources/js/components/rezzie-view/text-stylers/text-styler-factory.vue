@@ -168,7 +168,7 @@ export default {
         },
 
         showOnlyPending: function () {
-            return !this.$store.getters.isInPmode;
+            return !this.$store.getters.isInPublicPmode;
         },
 
 

@@ -3,7 +3,7 @@
         v-bind:id="itemId"
         class="rezzie-display accordion-item"
     >
-        <h2 class="accordion-header"
+        <h1 class="accordion-header"
             v-bind:id="headingId">
             <button class="accordion-button "
                     v-bind:class="buttonStyling"
@@ -14,9 +14,11 @@
                     v-bind:data-bs-target="bodyTarget"
                     v-on:click="handleClick"
             ><motion-status-badge :is-passed="isPassed"
-            ></motion-status-badge> {{ headerText }}
+            ></motion-status-badge>&nbsp;&nbsp;{{ headerText }}&nbsp;&nbsp;&nbsp;&nbsp;<span
+                v-if='isCurrent'
+                class="badge rounded-pill bg-primary">Current</span>
             </button>
-        </h2>
+        </h1>
 
         <div v-bind:id="itemId"
              v-bind:class="styling"
@@ -86,7 +88,7 @@ export default {
 
     data: function () {
         return {
-            isReady : false
+            isReady : false,
         }
     },
 
@@ -118,6 +120,8 @@ export default {
         buttonStyling: function () {
             if (!this.isOpen) return ' collapsed '
         },
+
+
         styling: function () {
             let s = 'accordion-collapse collapse ';
             if (this.isOpen) {
@@ -126,13 +130,34 @@ export default {
             return s;
         },
 
-        isOpen: function () {
+        /**
+         * Id of the motion whose accordion is open
+         */
+        openMotionId : function(){
+            return this.$store.getters.getOpenMotionId;
+        },
+
+        /**
+         * Whether this is the motion at the top of the stack
+         */
+        isCurrent: function(){
             if (!isReadyToRock(this.motion)) return false;
             //can't use motionMixin because will collide on name motion
             let m = this.$store.getters.getActiveMotion;
             if (!isReadyToRock(m)) return false
-
             return m.id === this.motion.id;
+        },
+
+        /**
+         * Whether this motion's accordion should be open
+         */
+        isOpen: function () {
+            if (!isReadyToRock(this.motion)) return false;
+            //can't use motionMixin because will collide on name motion
+            // let m = this.$store.getters.getActiveMotion;
+            if (!isReadyToRock(this.openMotionId)) return false
+
+            return this.openMotionId === this.motion.id;
         },
 
         /** The full thing displayed. Includes
@@ -223,7 +248,12 @@ export default {
         handleClick: function () {
             //Parliamentarian mode shouldn't be setting for everyone,
             //so use the commit directly
-            this.$store.commit('setMotion', this.motion);
+            // this.$store.commit('setMotion', this.motion);
+
+            //Using a separate store of which motion accordion is
+            //open so that won't lose which motion is currently pending for everyone
+            this.$store.commit('setOpenMotion', this.motion);
+
             this.initializePopovers();
         },
 

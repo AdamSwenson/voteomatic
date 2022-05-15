@@ -1,8 +1,9 @@
 <template>
 <span v-bind:class="containerStyling">
-     <i class="bi "
-        v-bind:class="icon"
-     ></i> <span v-bind:class="textStyling" v-html="text"></span>
+     <span v-bind:class="iconStyling"
+     ><i class="bi "
+         v-bind:class="icon"
+     ></i></span>&nbsp;<span v-bind:class="textStyling" v-html="text"></span>
 </span>
 </template>
 
@@ -18,7 +19,8 @@ export default {
         return {
             containerStyle: ' border border-primary border-3 fs-1',
             icon: 'bi-pencil',
-            textStyling: "text-decoration-underline "
+            textStyling: "text-decoration-underline ",
+            iconStyling: "text-primary"
         }
     },
 

@@ -1,19 +1,10 @@
 <template>
 
     <div class="public-pmode">
+        <message-area></message-area>
+
         <pmode-home></pmode-home>
-        <!--        <router-tabs></router-tabs>-->
 
-        <!--        <message-area></message-area>-->
-        <!--        <vote-count-alert></vote-count-alert>-->
-
-        <!--        <router-view name="main"></router-view>-->
-
-        <!--        <chair-indicator></chair-indicator>-->
-
-        <!--        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>-->
-        <!--        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>-->
-        <!--        <motion-second-modal v-if="! isChair"></motion-second-modal>-->
 
     </div>
 
@@ -41,10 +32,8 @@ export default {
     name: "public-pmode",
     components: {
         PmodeHome,
-        VoteCountAlert,
         MessageArea,
-        ChairMotionSecondModal,
-        MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
+
     },
 
     mixins: [MeetingMixin, NavigationMixin, ChairMixin],
@@ -87,7 +76,7 @@ export default {
         // this.$store.dispatch('forceNavigationToHome');
 
         //parse data from page and store stuff
-        let p = this.$store.dispatch('initialize');
+        let p = this.$store.dispatch('initializePublicPmode');
         p.then(function () {
             // me.$router.push('meeting-home');
 

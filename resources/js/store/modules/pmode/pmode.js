@@ -1,12 +1,19 @@
 import Chair from './pmode.chair';
 import Amend from './pmode.amendments';
+import Startup from './pmode.startup';
+import Events from './pmode.events';
+
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import {idify} from "../../../utilities/object.utilities";
 
 const state = {
     ...Amend.state,
     ...Chair.state,
 
-    inPmode: false,
+    inPublicPmode: false,
+
+    /** Which motion accordion is open */
+    openMotionId: null,
 
 
     //things: []
@@ -16,9 +23,14 @@ const mutations = {
     ...Amend.mutations,
     ...Chair.mutations,
 
-    setPmode: (state) => {
-        state.inPmode = true;
-    }
+    setPublicPmode: (state) => {
+        state.inPublicPmode = true;
+    },
+
+    setOpenMotion : (state, motion) => {
+    state.openMotionId = idify(motion);
+        },
+
     /*
     *   addThing: (state, thing) => {
     *        state.things.push(thing);
@@ -31,6 +43,7 @@ const mutations = {
 const actions = {
     ...Amend.actions,
     ...Chair.actions,
+    ...Startup.actions,
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
     *        return new Promise(((resolve, reject) => {
@@ -54,8 +67,8 @@ const getters = {
     ...Amend.getters,
     ...Chair.getters,
 
-    isInPmode: (state) => {
-        return state.inPmode;
+    isInPublicPmode: (state) => {
+        return state.inPublicPmode;
     },
 
     /**
@@ -147,6 +160,10 @@ const getters = {
         // });
 
         // return roots;
+    },
+
+    getOpenMotionId : (state, getters) => {
+    return state.openMotionId;
     }
 };
 

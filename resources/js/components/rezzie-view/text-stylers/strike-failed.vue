@@ -2,7 +2,7 @@
   <span class="border border-danger strike-failed">
        <span class="text-danger">
            <i class="bi bi-scissors"></i>
-       </span><span v-html="text"></span>
+       </span>&nbsp;<span v-html="text"></span>
 
 <!--        <a v-bind:href="resultsLink" class="text-decoration-none">-->
 <!--            <span v-amendmentText="text"></span>-->

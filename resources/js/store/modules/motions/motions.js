@@ -9,7 +9,7 @@ import {idify} from "../../../utilities/object.utilities";
 import Resolution from "../../../models/Resolution";
 import MotionObjectFactory from "../../../models/MotionObjectFactory";
 
-import Create from './motions.actions.creation';
+import Create from './motions.actions.crud';
 import Events from './motions.actions.events';
 import Loaders from './motions.actions.loaders';
 
@@ -174,37 +174,6 @@ const actions = {
     ...Loaders,
 
 
-    deleteMotion({dispatch, commit, getters}, motion) {
-        return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.resource(motion.id);
-            return Vue.axios.delete(url)
-                .then((response) => {
-                    let d = response.data;
-
-                    //remove it from the list of motions
-                    commit('deleteMotion', motion);
-
-                    //check whether it is the currently set motion
-                    let activeMotino = getters.getActiveMotion;
-                    if (activeMotino.id === motion.id) {
-                        //we need to remove it and set another in its place
-                        let newActive = getters.getStoredMeetings[0];
-                        dispatch('setMotion', newActive);
-
-                    }
-                    return resolve()
-                })
-                .catch(function (error) {
-                    // error handling
-                    if (error.response) {
-                        dispatch('showServerProvidedMessage', error.response.data);
-                    }
-                });
-        }));
-
-    },
-
 
     /**
      * Used by the chair to close the vote and prevent further casting of
@@ -239,59 +208,6 @@ const actions = {
 
     },
 
-
-    /**
-     * Create a draft motion on the client. This is what the user
-     * edits before they click 'make motion'. After that, editing would
-     * be done on the main motion.
-     *
-     * This may help with the problem of the user getting pulled away while
-     * working on their motion (VOT-75)
-     *
-     * @param dispatch
-     * @param commit
-     * @param getters
-     */
-    initializeDraftMainMotion({dispatch, commit, getters}) {
-        return new Promise(((resolve, reject) => {
-
-            let motion = new Motion({
-                type: 'main',
-                requires: 0.5,
-                debatable: true
-            });
-            commit('setDraftMotion', motion);
-            resolve();
-        }));
-
-    },
-
-    /**
-     * Same as initializeDraftMainMotion but for resolutions
-     * @param dispatch
-     * @param commit
-     * @param getters
-     * @returns {Promise<unknown>}
-     */
-    initializeDraftResolution({dispatch, commit, getters}) {
-        return new Promise(((resolve, reject) => {
-            let motion = new Resolution({
-                type: 'resolution',
-                requires: 0.5,
-                debatable: true,
-                is_resolution: true,
-                info: {
-                    title: '',
-                    resolutionIdentifier: '',
-                    formattedContent: '',
-                    groupId: null
-                }
-            });
-            commit('setDraftMotion', motion);
-            resolve();
-        }));
-
-    },
 
 
     /**
@@ -415,7 +331,12 @@ const actions = {
             Echo.private(channel)
                 .listen("MotionClosed", (e) => {
                     window.console.log('Received broadcast event motions', e);
-                    dispatch('handleMotionClosedMessage', e);
+                    // if(getters.isInPublicPmode === true){
+                    //     dispatch('handlePublicPModeMotionClosedMessage')
+                    // }else{
+                        dispatch('handleMotionClosedMessage', e);
+                    // }
+
                 })
 
             window.console.log('Websocket listener set for current motion on channel ', channel);
@@ -486,23 +407,7 @@ const actions = {
     },
 
 
-    /**
-     * Updates properties of the draft motion the user
-     * is working on. Does not tell the server anything.
-     *
-     * @param dispatch
-     * @param commit
-     * @param getters
-     * @param payload
-     * @returns {Promise<unknown>}
-     */
-    updateDraftMotion({dispatch, commit, getters}, payload) {
-        return new Promise(((resolve, reject) => {
-            //make local change only
-            commit('setDraftMotionProp', payload)
-            resolve();
-        }));
-    }
+
 };
 
 
