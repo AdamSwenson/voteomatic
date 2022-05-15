@@ -17,6 +17,7 @@
             </div>
 
             <div class="col-lg-6">
+                <h3>Motion stack</h3>
                 <motions-card></motions-card>
             </div>
         </div>

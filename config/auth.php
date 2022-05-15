@@ -114,4 +114,7 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'public_user_email' => env('PUBLIC_ACCESS_USER_EMAIL')
+
 ];
