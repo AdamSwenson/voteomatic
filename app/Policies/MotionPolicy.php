@@ -19,6 +19,8 @@ class MotionPolicy
 
     public function setAsCurrent(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
 //todo should this be chair only?
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
@@ -27,6 +29,8 @@ class MotionPolicy
 
     public function markComplete(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
 //todo should this be chair only?
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
@@ -35,6 +39,8 @@ class MotionPolicy
 
     public function markNoSecondObtained(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isOwner($user);
 
@@ -48,12 +54,16 @@ class MotionPolicy
      */
     public function secondMotion(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
     }
 
     public function castVoteOnMotion(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
     }
@@ -61,6 +71,7 @@ class MotionPolicy
 
     public function viewMotionResults(User $user, Motion $motion)
     {
+
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user) && $motion->is_complete;
     }
@@ -84,6 +95,7 @@ class MotionPolicy
 
     public function createOffice(User $user, Meeting $meeting)
     {
+        if($user->isPublicUser()) return false;
 
         return $meeting->isOwner($user);
 
@@ -92,12 +104,16 @@ class MotionPolicy
 
     public function castVoteForOffice(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $election = $motion->meeting;
         return $election->isPartOfMeeting($user);
     }
 
     public function deleteOffice(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $election = $motion->meeting;
         return $election->isOwner($user);
     }
@@ -105,6 +121,7 @@ class MotionPolicy
 
     public function viewOffice(User $user, Motion $motion)
     {
+
         $meeting = $motion->meeting;
         return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
@@ -144,6 +161,8 @@ class MotionPolicy
 
     public function updateOffice(User $user, Motion $motion)
     {
+        if($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isOwner($user);
     }
