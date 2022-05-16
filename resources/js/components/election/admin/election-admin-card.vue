@@ -7,7 +7,9 @@
                     <h4 class="card-title">Election phase</h4>
                     <election-phase-selector :meeting="meeting"></election-phase-selector>
                 </div>
-
+<div class="card-body">
+    <release-results-button></release-results-button>
+</div>
                 <div class="card-body">
 
                     <dl class="row">

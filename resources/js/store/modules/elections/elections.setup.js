@@ -96,7 +96,8 @@ const actions = {
             description: '',
             //Otherwise the controller will not send the office
             //when we ask for all motions
-            seconded: true
+            seconded: true,
+            type : 'election'
         };
 
         return new Promise(((resolve, reject) => {
