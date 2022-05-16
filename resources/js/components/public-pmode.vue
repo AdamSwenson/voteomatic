@@ -13,20 +13,11 @@
 <script>
 
 //The main page for anything
-import VotePage from "./main/vote-page";
-import Motion from '../models/Motion';
 import MeetingMixin from '../mixins/meetingMixin';
-import RouterTabs from "./navigation/router-tabs";
-import RefreshButton from "./navigation/refresh-button";
-import ChairIndicator from "./text-display/chair-indicator";
 import NavigationMixin from '../mixins/NavigationMixin';
 import ChairMixin from "../mixins/chairMixin";
-import MotionSecondModal from "./motions/motion-second-modal";
-import MotionInOrderModal from "./motions/motion-in-order-modal";
-import ChairMotionSecondModal from "./motions/chair-motion-second-modal";
 import MessageArea from "./messaging/message-area";
-import VoteCountAlert from "./main/chair/vote-count-alert";
-import PmodeHome from "./rezzie-view/pmode-home";
+import PmodeHome from "./pmode/pmode-home";
 
 export default {
     name: "public-pmode",

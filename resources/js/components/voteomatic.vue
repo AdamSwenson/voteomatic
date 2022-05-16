@@ -18,7 +18,6 @@
 import ElectionModule from "./election-module";
 import MeetingModule from "./meeting-module";
 import PageFooter from "./navigation/page-footer";
-import PmodeHome from "./rezzie-view/pmode-home";
 import PublicPmode from "./public-pmode";
 
 /**
@@ -29,7 +28,6 @@ export default {
     name: "voteomatic",
     components: {
         PublicPmode,
-        PmodeHome,
         PageFooter,
         MeetingModule,
         ElectionModule,

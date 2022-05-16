@@ -181,7 +181,6 @@ const truncateTextAroundChanges = (text, numWords = 3) => {
 //     }
 
 
-
 const actions = {
 
     /**
@@ -196,136 +195,142 @@ const actions = {
      */
     diffTagResolutionAmendment({dispatch, commit, getters}, amendment) {
         // return new Promise(((resolve, reject) => {
-            //First we diff and tag against the immediate parent
-            let parent = getters.getMotionById(amendment.applies_to);
-            let taggedHtml = processText(parent.content, amendment.content, amendment.id);
+        //First we diff and tag against the immediate parent
+        let parent = getters.getMotionById(amendment.applies_to);
+        let taggedHtml = processText(parent.content, amendment.content, amendment.id);
 
-            window.console.log('+++amendment', amendment,  'parent', parent, parent.isResolutionAmendment);
+        window.console.log('+++amendment', amendment, 'parent', parent, parent.isResolutionAmendment);
 
-            //To handle VOT-197 we need to check if this is a secondary amendment
+        //To handle VOT-197 we need to check if this is a secondary amendment
 //            window.console.log('tagged', taggedHtml);
-            if (parent.isResolutionAmendment) {
-                window.console.log('secondary');
-                //We have a secondary amendment, so we need to diff the tagged content
-                //against the primary amendment's parent so that it reflects the primary amendment too
-                let main = getters.getMotionById(parent.applies_to);
+       let  main = parent;
+        if (parent.isResolutionAmendment) {
+            window.console.log('secondary');
+            //We have a secondary amendment, so we need to diff the tagged content
+            //against the primary amendment's parent so that it reflects the primary amendment too
+             main = getters.getMotionById(parent.applies_to);
+        }
 
-                // let main = getters.getByAppliesToId(primary.applies_to);
-                //We diff and tag against the main motion but set the amendment id to the
-                //parent's id
-                taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
-                window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
-                window.console.log('secondary tagged', taggedHtml);
+            // let main = getters.getByAppliesToId(primary.applies_to);
+            //We diff and tag against the main motion but set the amendment id to the
+            //parent's id
+            taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
+            window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
+            window.console.log('secondary tagged', taggedHtml);
 
-            }
-return taggedHtml;
+            // }
+            return taggedHtml;
             // return resolve(taggedHtml);
 
-        // }));
-    },
+            // }));
+        }
+    ,
+
+        /**
+         * Receives same payload as createSubsidiaryMotion
+         * @param dispatch
+         * @param commit
+         * @param getters
+         * @param payload
+         * @returns {Promise<unknown>}
+         */
+        createResolutionAmendment({dispatch, commit, getters}, payload)
+        {
+            return new Promise(((resolve, reject) => {
+                //send to server
+                let url = routes.motions.resource();
+
+                // window.console.log('sending', p);
+                Vue.axios.post(url, payload)
+                    .then((response) => {
+
+                        //Create a resolution object. This will normally be handled
+                        //by pusher, but we need the object's id to update the
+                        //tagged text
+                        let rezAmend = new Resolution(response.data);
+                        // window.console.log('prediff', rezAmend);
+                        dispatch('diffTagResolutionAmendment', rezAmend).then((taggedHtml) => {
+                            window.console.log('dispatched diffTagResolutionAmendment', taggedHtml);
+                            //We haven't saved this to store, so it is ok
+                            //to update the content
+                            //dev Split formatted content and content in VOT-190 / VOT-197
+                            // rezAmend.content = taggedHtml;
+                            rezAmend.formattedContent = taggedHtml;
+
+                            //send to server
+                            let url = routes.motions.resource(rezAmend.id);
+                            Vue.axios.post(url, {data: rezAmend, _method: 'put'})
+                                .then((response) => {
+                                    // window.console.log(response);
+                                    return resolve()
+                                    // return dispatch('updateMotion', p).then(() => {
+                                    // return resolve();
+                                });
+                        });
+
+                        //Set a message for the user telling them what's going to happen
+                        let statusMessage = Message.makeFromTemplate('pendingApproval');
+                        //set it on a timer
+                        dispatch('showMessage', statusMessage);
+
+                    })
+                    .catch(function (error) {
+                        // error handling
+                        if (error.response) {
+                            dispatch('showServerProvidedMessage', error.response.data);
+                        }
+                    });
+            }));
+
+        }
+    ,
+
+
+        diffAmendments({dispatch, commit, getters}, originalMain)
+        {
+            return new Promise(((resolve, reject) => {
+                let taggedText = originalMain.content;
+
+                let amendments = getters.getAmendments(originalMain);
+
+                //Compare to amendment text
+                _.forEach(amendments, (amendment) => {
+                    let parent = getters.getMotionById(amendment.applies_to);
+                    let resultant = getters.getMotionById(parent.superseded_by);
+
+                    //Get tagged text
+                    let diff = diffTagText(originalMain.content, amendment.content);
+
+                    //Get the changed portion from the diff
+                    //dev Currently only works for one change
+                    let changed = getChangedText(diff);
+
+                    //Find the index where the tagged stuff starts
+                });
+
+
+            }));
+        }
+        /*
+        *    doThing({dispatch, commit, getters}, thingParam) {
+        *        return new Promise(((resolve, reject) => {
+        *        }));
+        *    },
+        */
+    };
 
     /**
-     * Receives same payload as createSubsidiaryMotion
-     * @param dispatch
-     * @param commit
-     * @param getters
-     * @param payload
-     * @returns {Promise<unknown>}
+     *
+     *    getThingViaId: (state) => (thingId) => {
+     *        return state.things.filter(function (c) {
+     *            return c.thing_id === thingId;
+     *        })
+     *    },
+     *
+     *
+     *    getThing: (state, getters) => {}
      */
-    createResolutionAmendment({dispatch, commit, getters}, payload) {
-        return new Promise(((resolve, reject) => {
-            //send to server
-            let url = routes.motions.resource();
-
-            // window.console.log('sending', p);
-            Vue.axios.post(url, payload)
-                .then((response) => {
-
-                    //Create a resolution object. This will normally be handled
-                    //by pusher, but we need the object's id to update the
-                    //tagged text
-                    let rezAmend = new Resolution(response.data);
-                    // window.console.log('prediff', rezAmend);
-                    dispatch('diffTagResolutionAmendment', rezAmend).then((taggedHtml) => {
-                        window.console.log('dispatched diffTagResolutionAmendment', taggedHtml);
-                        //We haven't saved this to store, so it is ok
-                        //to update the content
-                        //dev Split formatted content and content in VOT-190 / VOT-197
-                        // rezAmend.content = taggedHtml;
-                        rezAmend.formattedContent = taggedHtml;
-
-                        //send to server
-                        let url = routes.motions.resource(rezAmend.id);
-                        Vue.axios.post(url, {data: rezAmend, _method: 'put'})
-                            .then((response) => {
-                                // window.console.log(response);
-                                return resolve()
-                                // return dispatch('updateMotion', p).then(() => {
-                                // return resolve();
-                            });
-                    });
-
-                    //Set a message for the user telling them what's going to happen
-                    let statusMessage = Message.makeFromTemplate('pendingApproval');
-                    //set it on a timer
-                    dispatch('showMessage', statusMessage);
-
-                })
-                .catch(function (error) {
-                    // error handling
-                    if (error.response) {
-                        dispatch('showServerProvidedMessage', error.response.data);
-                    }
-                });
-        }));
-
-    },
-
-
-    diffAmendments({dispatch, commit, getters}, originalMain) {
-        return new Promise(((resolve, reject) => {
-            let taggedText = originalMain.content;
-
-            let amendments = getters.getAmendments(originalMain);
-
-            //Compare to amendment text
-            _.forEach(amendments, (amendment) => {
-                let parent = getters.getMotionById(amendment.applies_to);
-                let resultant = getters.getMotionById(parent.superseded_by);
-
-                //Get tagged text
-                let diff = diffTagText(originalMain.content, amendment.content);
-
-                //Get the changed portion from the diff
-                //dev Currently only works for one change
-                let changed = getChangedText(diff);
-
-                //Find the index where the tagged stuff starts
-            });
-
-
-        }));
-    }
-    /*
-    *    doThing({dispatch, commit, getters}, thingParam) {
-    *        return new Promise(((resolve, reject) => {
-    *        }));
-    *    },
-    */
-};
-
-/**
- *
- *    getThingViaId: (state) => (thingId) => {
- *        return state.things.filter(function (c) {
- *            return c.thing_id === thingId;
- *        })
- *    },
- *
- *
- *    getThing: (state, getters) => {}
- */
-const getters = {
+    const getters = {
 
         getAmendments: (state, getters) => (motion) => {
             let primaryAmends = getters.getMotions.filter(function (i) {
@@ -352,22 +357,22 @@ const getters = {
 
 
     }
-;
+    ;
 
-export default {
-    actions,
-    getters,
-    mutations,
-    state,
-    //dev exporting these to aid in testing
-    amendmentType,
-    diffTagText,
-    getChangedText,
-    insertTagTemplate,
-    strikeTagTemplate,
-    replaceTags,
-    processText,
-    getTrailingWords,
-    getLeadingWords,
-    truncateTextAroundChanges
-}
+    export default {
+        actions,
+        getters,
+        mutations,
+        state,
+        //dev exporting these to aid in testing
+        amendmentType,
+        diffTagText,
+        getChangedText,
+        insertTagTemplate,
+        strikeTagTemplate,
+        replaceTags,
+        processText,
+        getTrailingWords,
+        getLeadingWords,
+        truncateTextAroundChanges
+    }

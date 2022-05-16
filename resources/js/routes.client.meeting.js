@@ -20,8 +20,8 @@ import propositionSetupCard from "./components/election/propositions/proposition
 
 import electionAdminCard from './components/election/admin/election-admin-card';
 
-import pModeHome from "./components/rezzie-view/pmode-home";
-Vue.component('rezzie-view-home', pModeHome);
+import pModeHome from "./components/pmode/pmode-home";
+Vue.component('pmode-home', pModeHome);
 
 Vue.component('ballot-setup-card', ballotSetupCard);
 

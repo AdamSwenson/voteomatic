@@ -1,11 +1,15 @@
 <template>
-    <div class="pmode-home card"
+    <div class="pmode-home card mt-1"
          v-bind:id="displayId"
     >
         <div class="row">
             <div class="col-lg-6">
-                <h3>Amendment history</h3>
+
                 <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Amendment history</h3>
+                    </div>
+
                     <div class="card-body">
                         <rezzie-display
                             v-for="m in motions"
@@ -18,33 +22,31 @@
             </div>
 
             <div class="col-lg-6">
-                <h3>Motion stack</h3>
-                <motions-card></motions-card>
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Motion stack</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-text">
+                            <ul class="list-group list-group-flush">
+
+                                <motion-select-area v-for="m in motionStack"
+                                                    :motion="m"
+                                                    :key="m.id"
+                                ></motion-select-area>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-            <!--        <div class="card-body">-->
-            <!--        <rezzie-display-->
-            <!--            :motion="motion"-->
-            <!--            parent-id="displayId"-->
-            <!--        ></rezzie-display>-->
-            <!--        </div>-->
 
-
-            <!--        <div class="card-body">-->
-            <!--            <text-stylers></text-stylers>-->
-            <!--        </div>-->
-
-            <!--        <div class="card-body">-->
-            <!--            <rezzie-display-->
-            <!--                v-for="m in motions"-->
-            <!--                :key="m.id"-->
-            <!--                :motion="m"-->
-            <!--                parent-id="displayId"-->
-            <!--            ></rezzie-display>-->
-            <!--        </div>-->
-
-            <!--    </div>-->
 </template>
 
 <script>
@@ -54,10 +56,11 @@ import motionObjectMixin from "../../mixins/motionObjectMixin";
 import RezzieDisplay from "./rezzie-display";
 import TextStylers from "./text-stylers/text-stylers";
 import MotionsCard from "../motions/motions-card";
+import MotionSelectArea from "../motions/motion-select-area";
 
 export default {
     name: "pmode-home",
-    components: {MotionsCard, TextStylers, RezzieDisplay},
+    components: {MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
@@ -65,7 +68,7 @@ export default {
     data: function () {
         return {
             displayId: function () {
-                return 'rezzie-view-home';
+                return this.name;
             }
         }
     },
@@ -74,7 +77,19 @@ export default {
         motions: function () {
             return this.$store.getters.getResolutionsForPModeDisplay;
             // return _.reverse(this.$store.getters.getMotions);
-        }
+        },
+
+        motionStack: function () {
+            let m = this.$store.getters.getStoredMotions;
+            if (_.isUndefined(m)) return [];
+
+            //Display them in FILO order
+            m = _.sortBy(m, ['id']);
+            m = _.reverse(m);
+
+            return m;
+        },
+
     },
 
     computed: {},
