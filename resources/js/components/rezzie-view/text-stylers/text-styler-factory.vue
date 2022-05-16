@@ -68,9 +68,6 @@ export default {
 
             }
 
-            //If we are only to show pending stuff
-            if (this.showOnlyPending && !this.isPending) return UnstyledText;
-
             // -------------------- Completed amendments
             if (this.amendment.isComplete) {
 
@@ -91,6 +88,9 @@ export default {
                 if (this.type === 'strike') return StrikePendingSuperseded;
             }
 
+
+            //If we are only to show pending stuff
+            if (this.showOnlyPending && !this.isPending) return UnstyledText;
 
             //
             // switch (this.amendmentId) {

@@ -4,6 +4,7 @@
     >
         <div class="row">
             <div class="col-lg-6">
+                <h3>Amendment history</h3>
                 <div class="card">
                     <div class="card-body">
                         <rezzie-display
@@ -78,8 +79,13 @@ export default {
 
     computed: {},
 
-    methods: {}
+    methods: {},
+    mounted() {
+        let me = this;
+        this.$nextTick(function () {
 
+        });
+    }
 }
 </script>
 

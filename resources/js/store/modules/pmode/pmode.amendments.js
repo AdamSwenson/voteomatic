@@ -158,7 +158,7 @@ const truncateTextAroundChanges = (text, numWords = 3) => {
         // let insertLeadingRegex = new RegExp(//, 'g');
         let leading = getLeadingWords(l[0], numWords);
         let trailing = getTrailingWords(t[0], numWords)
-        out += `...${leading} ${ic} ${trailing}`;
+        out += `...${leading} ${ic} ${trailing}...`;
     });
 
     return out;

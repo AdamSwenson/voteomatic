@@ -38,8 +38,9 @@ const actions = {
 
                         //get existing motions for meeting
                         dispatch('loadMotionsForMeeting', meeting.id).then(function () {
-                            let current = getters.getActiveMotion;
-                            commit('setOpenMotion', current);
+
+                            //Set which motion accordion is open in pmode
+                            dispatch('setOpenMotionToCurrent');
 
                             //get motions which have already been handled
                             // dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {

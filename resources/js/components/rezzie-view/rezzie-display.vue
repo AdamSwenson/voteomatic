@@ -13,10 +13,11 @@
                     v-bind:aria-controls="bodyId"
                     v-bind:data-bs-target="bodyTarget"
                     v-on:click="handleClick"
-            ><motion-status-badge :is-passed="isPassed"
-            ></motion-status-badge>&nbsp;&nbsp;{{ headerText }}&nbsp;&nbsp;&nbsp;&nbsp;<span
+            >
+                <motion-status-badge :is-passed="isPassed"
+                ></motion-status-badge>&nbsp;&nbsp;{{ headerText }}&nbsp;&nbsp;&nbsp;&nbsp;<span
                 v-if='isCurrent'
-                class="badge rounded-pill bg-primary">Current</span>
+                class="badge bg-primary">Current</span>
             </button>
         </h1>
 
@@ -28,30 +29,29 @@
 
             <div class="accordion-body">
 
-
                 <div class="body-text">
-                    <!--                    v-if="motion.is_resolution">-->
-                    <compiled-rezzie-text :html="amendmentText"
-                    ></compiled-rezzie-text>
-                    <!--                    <resolution-amendment-text-display-->
-                    <!--                        v-if="isResolution"-->
-                    <!--                        :original-text="originalText"-->
-                    <!--                        :amendment-text="amendmentText"-->
-                    <!--                    ></resolution-amendment-text-display>-->
+                    <div class="row">
+                        <div class="col">
+                            <!--                    v-if="motion.is_resolution">-->
+                            <compiled-rezzie-text :html="amendmentText"
+                            ></compiled-rezzie-text>
 
+                        </div>
+
+                        <!--                dev reenable check after VOT-190 working?-->
+                        <!--                <div class="body-text" v-else v-html="motion.content"></div>-->
+                    </div>
                 </div>
 
-                <!--                dev reenable check after VOT-190 working?-->
-                <!--                <div class="body-text" v-else v-html="motion.content"></div>-->
 
-
-                <p-mode-chair-controls
-                    v-if="isChair"
-                    :motion="motion"
-                ></p-mode-chair-controls>
+                        <p-mode-chair-controls
+                            v-if="isChair"
+                            :motion="motion"
+                        ></p-mode-chair-controls>
+<!--                    </div>-->
+<!--                </div>-->
 
             </div>
-
         </div>
     </div>
 
@@ -88,11 +88,11 @@ export default {
 
     data: function () {
         return {
-            isReady : false,
+            isReady: false,
         }
     },
 
-    watch : {
+    watch: {
         // isReady: function(){
         // // isOpen : function(){
         //     let me = this;
@@ -133,19 +133,23 @@ export default {
         /**
          * Id of the motion whose accordion is open
          */
-        openMotionId : function(){
+        openMotionId: function () {
             return this.$store.getters.getOpenMotionId;
+        },
+
+        currentMotion: function () {
+            return this.$store.getters.getActiveMotion;
         },
 
         /**
          * Whether this is the motion at the top of the stack
          */
-        isCurrent: function(){
+        isCurrent: function () {
             if (!isReadyToRock(this.motion)) return false;
             //can't use motionMixin because will collide on name motion
-            let m = this.$store.getters.getActiveMotion;
-            if (!isReadyToRock(m)) return false
-            return m.id === this.motion.id;
+            // let m = this.$store.getters.getActiveMotion;
+            if (!isReadyToRock(this.currentMotion)) return false
+            return this.currentMotion.id === this.motion.id;
         },
 
         /**
@@ -272,8 +276,7 @@ export default {
     mounted() {
         let me = this;
         this.$nextTick(function () {
-            // me.isReady = true;
-            // window.console.log('mount');
+            me.$store.dispatch('setOpenMotionToCurrent');
 
             //dev this is incredibly stupid, but it works as a kludge for VOT-194
             setTimeout(() => {
@@ -281,7 +284,7 @@ export default {
                 me.initializePopovers();
             }, 500)
 
-});
+        });
     }
 
 }

@@ -6,6 +6,7 @@ use App\Models\Meeting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PublicViewController extends Controller
 {
@@ -19,11 +20,13 @@ class PublicViewController extends Controller
         $user = User::where('email', $email)->first();
         Auth::login($user);
 
-        //Log the fact that it has been viewed!
-
     }
 
     public function publicHome(Meeting $meeting){
+        //Log the fact that it has been viewed!
+        Log::debug("=========== PublicViewController@publicHome =========== \n " . \request());
+//        Log::debug(request());
+
 //        dd($meeting);
         $data = [
 

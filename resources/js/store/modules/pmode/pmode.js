@@ -27,9 +27,9 @@ const mutations = {
         state.inPublicPmode = true;
     },
 
-    setOpenMotion : (state, motion) => {
-    state.openMotionId = idify(motion);
-        },
+    setOpenMotion: (state, motion) => {
+        state.openMotionId = idify(motion);
+    },
 
     /*
     *   addThing: (state, thing) => {
@@ -44,6 +44,30 @@ const actions = {
     ...Amend.actions,
     ...Chair.actions,
     ...Startup.actions,
+
+    /**
+     * This will be done during initialization for the public view pmode.
+     * However, we need to do it manually for the chair. That is why this action
+     * exists
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
+    setOpenMotionToCurrent({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            //d
+            if (!isReadyToRock(this.openMotionId)) {
+                let current = getters.getActiveMotion;
+                if (isReadyToRock(current)) {
+                    commit('setOpenMotion', current);
+                }
+            }
+            resolve();
+
+        }));
+    }
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
     *        return new Promise(((resolve, reject) => {
@@ -97,9 +121,9 @@ const getters = {
 
     getNewestGroupMember: (state, getters) => (groupId) => {
         let rezs = getters.getResolutionGroupMembers(groupId);
-        let m =  _.orderBy(rezs, 'id', 'desc');
-    return m[0];
-        },
+        let m = _.orderBy(rezs, 'id', 'desc');
+        return m[0];
+    },
 
     getResolutionGroupMembers: (state, getters) => (groupId) => {
         let rezs = getters.getResolutions;
@@ -162,8 +186,8 @@ const getters = {
         // return roots;
     },
 
-    getOpenMotionId : (state, getters) => {
-    return state.openMotionId;
+    getOpenMotionId: (state, getters) => {
+        return state.openMotionId;
     }
 };
 
