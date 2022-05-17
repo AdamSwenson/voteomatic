@@ -1,6 +1,43 @@
 let _ = require('lodash');
 const sinon = require('sinon');
 import pa from "../../../../../../resources/js/store/modules/pmode/pmode.amendments"
+import Resolution from "../../../../../../resources/js/models/Resolution";
+
+
+const textStylerFactoryFactory = (amendmentId, type, text) => {
+    return `<text-styler-factory type=\'${type}\' v-bind:amendment-id=\'${amendmentId}\' text=\'${text}\'></text-styler-factory>`;
+};
+const tss = textStylerFactoryFactory;
+const resolutionFactory = (id, content, superseded_by = null) => {
+
+    return new Resolution({
+        is_resolution: true,
+        type: 'resolution',
+        id: id,
+        applies_to: null,
+        superseded_by: superseded_by,
+        content: content,
+        info: {
+            formattedContent: content
+        }
+    });
+};
+
+const resolutionAmendmentFactory = (id, applies_to, superseded_by, content, formattedContent) => {
+
+    return new Resolution({
+        is_resolution: true,
+        type: 'amendment',
+        id: id,
+        applies_to: applies_to,
+        superseded_by: superseded_by,
+        content: content,
+        info: {
+            formattedContent: formattedContent
+        }
+    });
+};
+
 
 describe('pmode.amendments actions', () => {
 
@@ -350,14 +387,16 @@ describe('pmode.amendments actions', () => {
                 let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
                 expect(result).toBe(exp3 + exp4);
             });
+        });
 
-            //
-            // let result1 =
-            //     let
-            // result2 = truncateTextAroundChanges(multiInsert);
-            // let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
-            // let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
-            //
+
+        //
+        // let result1 =
+        //     let
+        // result2 = truncateTextAroundChanges(multiInsert);
+        // let exp3 = '...which are good <ins class="diffins">stuff inserted</ins> more things that';
+        // let exp4 = '...Followed by another <ins class="diffins">bunch of inserted stuff</ins> in this location';
+        //
 
         // const icr = new RegExp("<ins(.*?)</ins>", 'g');
         //
@@ -403,9 +442,221 @@ describe('pmode.amendments actions', () => {
         //        });
         //    }
         // let leading = getLeadingWords(text)
+
     });
-});
+
+    describe('VOT-207', () => {
+
+        test('a', () => {
+            let a = 'a b c e f';
+            let b = 'a b c d e f';
+            let expected = 'a b c d e f';
+            a = _.words(a, /[^, ]+/g);
+            b = _.words(b, /[^, ]+/g);
+
+            let orderBySize = (first, second) => {
+                if (first.length > second.length) return [first, second];
+                return [second, first];
+            };
+
+            let c = orderBySize(a, b);
+            let bigger = c[0];
+            let smaller = c[1];
+            let out = [];
+            let k = 0;
+            while (bigger.length > 0) {
+                let w = bigger.pop();
+                out.push(w);
+                if (w === _.last(smaller)) {
+                    smaller.pop();
+                }
+            }
+            if (smaller.length > 0) {
+                while (smaller.length > 0) {
+                    let v = smaller.pop();
+                    out.push(v);
+                }
+
+                // for (let i = 0; i <= bigger.length; i++) {
+                // if(bigger[i] === smaller[k]){
+                //     out += bigger[i];
+                //     k += 1;
+                // }
+            }
+            out = _.reverse(out);
+            out = _.join(out, ' ');
+
+            expect(out).toBe(expected);
+
+        });
 
 
+
+        test('c', () => {
+            const insertTag = '<ins class="diffins">';
+            const insertTag2 = '<ins class="diffmod">';
+            const strikeTag = '<del class="diffdel">';
+            const strikeTag2 = '<del class="diffmod">';
+            const insertRegex = new RegExp(insertTag + '|' + insertTag2, 'g');
+            const strikeRegex = new RegExp(strikeTag + '|' + strikeTag2, 'g');
+            const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
+            const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)|' + '(?<=' + strikeTag2 + ')(.*?)(?=</del>)', 'g');
+
+            //there has been an insertion in the past
+            let mainId = 3;
+            let prevAmendId = 2;
+            let mainContent = "The small dog barks everyday";
+            let mainFmt = "The small dog barks " + tss(prevAmendId, 'insert', 'everyday');
+
+            let amendId = 4;
+            //What we see in the editor window
+            let amendContent = "The small stinky dog barks everyday";
+            let expected = "The small" + tss(amendId, 'insert', '&nbsp;stinky') + " dog barks " +  tss(prevAmendId, 'insert', 'everyday');
+
+            //get the difference between the contents
+            let r = pa.processText(mainContent, amendContent, amendId);
+
+            //now compare the previous formatted text to the newly tagged text
+            //to get the historical stuff
+            let diff = pa.diffTagText(mainFmt, r);
+
+            //now remove the excess tags
+            diff = diff.replace(insertRegex, '');
+            diff = diff.replaceAll(new RegExp('</ins>', 'g'), '');
+
+expect(diff).toBe(expected);
+        });
+
+
+        test('b', () => {
+            //nb the changed text will always be longer because we add stuff
+            //every time we remove stuff and the original stuff is part of the new thing
+
+            let a = 'The small stinky dog barks everyday';
+            let b = 'The small <removed>stinky</removed> dog barks everyday';
+            // let expected = 'a b c d e f';
+            let expected = b;
+            a = _.reverse(_.words(a, /[^, ]+/g));
+            b = _.reverse(_.words(b, /[^, ]+/g));
+
+            let orderBySize = (first, second) => {
+                if (first.length > second.length) return [first, second];
+                return [second, first];
+            };
+
+            let c = orderBySize(a, b);
+            let bigger = c[0];
+            let smaller = c[1];
+            let out = [];
+            let k = 0;
+            while (bigger.length > 0) {
+                let w = bigger.pop();
+                out.push(w);
+                if (w === _.last(smaller)) {
+                    smaller.pop();
+                }
+            }
+            if (smaller.length > 0) {
+                while (smaller.length > 0) {
+                    let v = smaller.pop();
+                    out.push(v);
+                }
+
+                // for (let i = 0; i <= bigger.length; i++) {
+                // if(bigger[i] === smaller[k]){
+                //     out += bigger[i];
+                //     k += 1;
+                // }
+            }
+            out = _.reverse(out);
+            out = _.join(out, ' ');
+
+            expect(out).toBe(expected);
+
+        });
+
+
+        test('j', () => {
+            let a = 'a b c e f';
+            let b = 'a b c d e f';
+            let expected = 'a b c d e f';
+
+            a = _.words(a, /[^, ]+/g);
+            b = _.words(b, /[^, ]+/g);
+
+
+            // let r = _.union(a, b);
+            // r = _.join(r, ' ')
+            // expect(r).toBe();
+
+        });
+
+
+        test('f', () => {
+
+            let original = "This text has been here <text-styler-factory type='insert' v-bind:amendment-id='1011' text='Dog says wag&nbsp;'></text-styler-factory> also this text too";
+            let amendId = 2;
+            let changed = "This is new text has been here <text-styler-factory type='insert' v-bind:amendment-id='1011' text='Dog says wag&nbsp;'></text-styler-factory> also this text too";
+            let expected = "This <text-styler-factory type='insert' v-bind:amendment-id='" + amendId + "' text='is new'></text-styler-factory> text has been here <text-styler-factory type='insert' v-bind:amendment-id='1011' text='Dog says wag&nbsp;'></text-styler-factory> also this text too";
+
+
+            let result = pa.processText(original, changed, amendId);
+            expect(result).toBe(expected);
+
+        });
+
+        describe('diffTagResolutionAmendment', () => {
+            let dispatch;
+            let commit;
+            let getters = {};
+            let amendment;
+            let parent;
+            let main;
+            let result;
+            let s = {dispatch, commit, getters};
+
+            test('primary amendment', () => {
+                main = new Resolution({
+                    is_resolution: true,
+                    type: 'resolution',
+                    id: 1,
+                    applies_to: null,
+                    superseded_by: null,
+                    content: "<p>This is the text that was here from the start</p>",
+                    info: {
+                        formattedContent: "<p>This is the text that was here from the start</p>"
+                    }
+                });
+
+                amendment = new Resolution({
+                    is_resolution: true,
+                    type: 'amendment',
+                    id: 2,
+                    applies_to: 1,
+                    superseded_by: null,
+                    content: "<p>This is the text that was here from the start. But this is new.</p>",
+                    info: {
+                        formattedContent: null
+                    }
+                });
+
+                let expectedAmendmentFC = "<p>This is the text that was here from the start. <text-styler-factory type='insert' v-bind:amendment-id='2' text='But this is new.'></p>";
+// let gmid = new sinon.stub();
+
+                getters = {
+                    getMotionById: () => {
+                    }
+                }
+                let gmid = new sinon.stub(getters, 'getMotionById');
+                gmid.returnsThis(main);
+                result = pa.actions.diffTagResolutionAmendment(s, amendment);
+
+                expect(result).toBe(expectedAmendmentFC);
+
+            });
+
+        });
+
+    });
 })
 ;

@@ -168,8 +168,6 @@ export default {
         handleReset: function () {
             this.localText = this.motion.content;
         }
-
-
     }
 
 }
