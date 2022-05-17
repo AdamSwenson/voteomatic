@@ -1,17 +1,25 @@
-<template>
-<span v-bind:class="containerStyling">
-     <span v-bind:class="iconStyling"
-     ><i class="bi "
-         v-bind:class="icon"
-     ></i></span>&nbsp;<span v-bind:class="textStyling" v-html="text"></span>
-</span>
-</template>
+<!--<template>-->
+<!--<span v-bind:class="containerStyling">-->
+<!--     <span v-bind:class="iconStyling"-->
+<!--     ><i class="bi "-->
+<!--         v-bind:class="icon"-->
+<!--     ></i></span>&nbsp;-->
+<!--    <slot></slot>-->
+<!--&lt;!&ndash;    <slot name="text"></slot>&ndash;&gt;-->
+<!--&lt;!&ndash;    <span v-bind:class="textStyling" v-html="text"></span>&ndash;&gt;-->
+<!--</span>-->
+<!--</template>-->
 
 <script>
+import ComponentCompilerParent from "../component-compiler-parent";
+import TextStylerParentRegular from "./text-styler-parent-regular";
 export default {
     name: "insert-pending",
-
-    props: ['text', 'amendmentId'],
+    extends : TextStylerParentRegular,
+    // extends : ComponentCompilerParent,
+    // props: [
+    //     // 'text',
+    //     'amendmentId'],
 
     mixins: [],
 
@@ -27,9 +35,9 @@ export default {
     asyncComputed: {},
 
     computed: {
-        containerStyling: function () {
-            return this.name + this.containerStyle;
-        }
+        // containerStyling: function () {
+        //     return this.name + this.containerStyle;
+        // }
     },
 
     methods: {}

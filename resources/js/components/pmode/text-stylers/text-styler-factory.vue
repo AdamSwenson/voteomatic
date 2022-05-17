@@ -1,6 +1,10 @@
 <template>
-
-    <component :is="componentType" :text="text" :amendment-id="amendmentId"></component>
+    <component :is="componentType"
+               :amendment-id="amendmentId"
+    >&nbsp;<slot></slot>
+<!--        <slot v-slot="slotProps"></slot>-->
+    </component>
+    <!--    <component :is="componentType" :text="text" :amendment-id="amendmentId"></component>-->
 </template>
 
 <script>
@@ -34,7 +38,7 @@ export default {
      */
     props: {
         type: {type: String},
-        text: {type: String},
+        // text: {type: String},
         amendmentId: {type: [Number, String]},
         //optional (if secondary exists)
         // secondaryAmendmentType,
@@ -50,6 +54,9 @@ export default {
     },
 
     asyncComputed: {
+        // sp : function(){
+        //     return this.default.slotProps;
+        // },
 
         amendment: function () {
             return this.$store.getters.getMotionById(this.amendmentId);

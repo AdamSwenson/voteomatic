@@ -2,7 +2,8 @@
 <span v-bind:class="containerStyling">
       <i class="bi "
          v-bind:class="icon"
-      ></i>&nbsp;<span v-bind:class="textStyling" v-html="text"></span>
+      ></i>&nbsp;<slot></slot>
+<!--    <span v-bind:class="textStyling" v-html="text"></span>-->
 </span>
 </template>
 
@@ -10,7 +11,9 @@
 export default {
     name: "insert-pending-superseded",
 
-    props: ['text', 'amendmentId'],
+    props: [
+        // 'text',
+        'amendmentId'],
 
     mixins: [],
 

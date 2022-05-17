@@ -268,6 +268,8 @@ export default {
             var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
                 return new bootstrap.Popover(popoverTriggerEl)
             });
+            window.console.log('popovers initialized');
+
             // window.console.log('popovers', popoverTriggerList,);
             // });
         }
@@ -282,7 +284,7 @@ export default {
             setTimeout(() => {
                 // window.console.log('time');
                 me.initializePopovers();
-            }, 500)
+            }, 6000)
 
         });
     }

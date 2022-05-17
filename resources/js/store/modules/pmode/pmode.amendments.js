@@ -30,10 +30,11 @@ const strikeRegex = new RegExp(strikeTag + '|' + strikeTag2, 'g');
 const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
 const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)|' + '(?<=' + strikeTag2 + ')(.*?)(?=</del>)', 'g');
 
-const textStylerCloseTag = "\'></text-styler-factory>";
+const textStylerCloseTag = "</text-styler-factory>"; //"\'></text-styler-factory>";
 //Replacement tags
 const textStylerFactoryAdder = (amendmentId, type) => {
-    return `<text-styler-factory type=\'${type}\' v-bind:amendment-id=\'${amendmentId}\' text=\'`;
+    return `<text-styler-factory type=\'${type}\' v-bind:amendment-id=\'${amendmentId}\'>`;
+    // return `<text-styler-factory type=\'${type}\' v-bind:amendment-id=\'${amendmentId}\' text=\'`;
     // return `<text-styler-factory type='${type}' text='${text}' v-bind:amendment-id='${amendmentId}'></text-styler-factory>`;
 }
 

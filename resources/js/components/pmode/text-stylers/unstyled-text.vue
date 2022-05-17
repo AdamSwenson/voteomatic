@@ -1,5 +1,7 @@
 <template>
-    <span class="unstyled-text" v-html="text"></span>
+    <span class="unstyled-text"><slot></slot></span>
+
+<!--&lt;!&ndash;    &ndash;&gt;<span class="unstyled-text" v-html="text"></span>-->
 </template>
 
 <script>
@@ -12,7 +14,9 @@
 export default {
     name: "unstyled-text",
 
-    props: ['text', 'amendmentId'],
+    props: [
+        // 'text',
+        'amendmentId'],
 
     mixins: [],
 

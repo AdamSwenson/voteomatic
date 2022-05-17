@@ -2,6 +2,9 @@
     <div class="pmode-home card mt-1"
          v-bind:id="displayId"
     >
+
+        <pmode-legend></pmode-legend>
+
         <div class="row">
             <div class="col-lg-6">
 
@@ -57,10 +60,11 @@ import RezzieDisplay from "./rezzie-display";
 import TextStylers from "./text-stylers/text-stylers";
 import MotionsCard from "../motions/motions-card";
 import MotionSelectArea from "../motions/motion-select-area";
+import PmodeLegend from "./pmode-legend";
 
 export default {
     name: "pmode-home",
-    components: {MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
+    components: {PmodeLegend, MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

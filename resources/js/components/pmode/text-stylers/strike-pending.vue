@@ -1,38 +1,40 @@
-<template>
-<span v-bind:class="containerStyling">
-     <span v-bind:class="iconStyling"
-     ><i class="bi "
-        v-bind:class="icon"
-     ></i></span>&nbsp;<span v-bind:class="textStyling" v-html="text"></span>
-</span>
-</template>
+<!--<template>-->
+<!--<span v-bind:class="containerStyling">-->
+<!--     <span v-bind:class="iconStyling"-->
+<!--     ><i class="bi "-->
+<!--        v-bind:class="icon"-->
+<!--     ></i></span>&nbsp;<span v-bind:class="textStyling" v-html="text"></span>-->
+<!--</span>-->
+
+<!--</template>-->
 
 <script>
+import TextStylerParentRegular from "./text-styler-parent-regular";
 export default {
     name: "strike-pending",
+    extends: TextStylerParentRegular,
+    // props: ['text', 'amendmentId'],
 
-    props: ['text', 'amendmentId'],
-
-    mixins: [],
+    // mixins: [],
 
     data: function () {
         return {
             containerStyle: ' border border-primary  border-3 fs-1',
             icon : 'bi-scissors',
-            textStyling : "text-decoration-line-through ",
+            textStyling : " text-decoration-line-through ",
             iconStyling: "text-primary"
         }
     },
-
-    asyncComputed: {},
-
-    computed: {
-        containerStyling: function () {
-            return this.name + this.containerStyle;
-        }
-    },
-
-    methods: {}
+    //
+    // asyncComputed: {},
+    //
+    // computed: {
+    //     containerStyling: function () {
+    //         return this.name + this.containerStyle;
+    //     }
+    // },
+    //
+    // methods: {}
 
 }
 </script>
