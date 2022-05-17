@@ -205,55 +205,48 @@ const actions = {
 //dev this taggedhtml is ONLY the most recent alteration
 
         window.console.log('+++amendment', amendment, 'parent', parent, parent.isResolutionAmendment);
-
         //now compare the previous formatted text to the newly tagged text
-        //to get the historical stuff
+        //to get the historical stuff. NB, the trick in VOT-207 seems to be
+        //to reverse and use the original as the parent so that it just adds
+        //the amendment tags
         let diff = diffTagText(taggedHtml, parent.formattedContent);
 
         //Additional text stylers in the original will have been added
         //with insert tags
         //now remove the excess tags
-        // diff = diff.replace(new RegExp(insertTag, 'g'), '');
-        diff = diff.replace(new RegExp(insertTag2 +'(.*?)</ins>', 'g'), '');
-        diff = diff.replace(new RegExp(strikeTag2 +'(.*?)</del>', 'g'), '');
+        diff = diff.replace(new RegExp(insertTag2 + '(.*?)</ins>', 'g'), '');
+        diff = diff.replace(new RegExp(strikeTag2 + '(.*?)</del>', 'g'), '');
         // diff = diff.replace(insertRegex, '');
         // taggedHtml = diff.replaceAll(new RegExp('</ins>', 'g'), '');
-taggedHtml = diff;
+        taggedHtml = diff;
+
 
         //To handle VOT-197 we need to check if this is a secondary amendment
         if (parent.isResolutionAmendment) {
+            /* dev START HERE --- THE LAST THING I TRIED WAS COMMENTING THIS OUT.
+                That solved the unformatted component problem but introduced a new issue. Perhaps
+                if move to using slots, there won't be the problem of escaping quotes etc
+             */
             window.console.log('secondary');
             //We have a secondary amendment, so we need to diff the tagged content
             //against the primary amendment's parent so that it reflects the primary amendment too
             let main = getters.getMotionById(parent.applies_to);
-
 
             //We diff and tag against the main motion but set the amendment id to the
             //parent's id
             taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
             window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
             window.console.log('secondary tagged', taggedHtml);
+        } else {
         }
-//         else{
-//             //dev for VOT-207: hypothesis is that the formatted text is getting lost between amendments and new shell....
-//
-//             //dev once this works we can move this up and get rid of the else
-//             // let  main = parent;
-// //We diff and tag against the main motion but set the amendment id to the
-//             //parent's id
-//             taggedHtml = processText(parent.formattedContent, taggedHtml, parent.id);
-//             window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
-//             window.console.log('secondary tagged', taggedHtml);
-//
-//
+
+
+        //
 //         }
         // }
         return taggedHtml;
-        // return resolve(taggedHtml);
 
-        // }));
-    }
-    ,
+    },
 
     /**
      * Receives same payload as createSubsidiaryMotion
