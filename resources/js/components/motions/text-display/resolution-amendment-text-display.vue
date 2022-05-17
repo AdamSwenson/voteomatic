@@ -1,8 +1,8 @@
 <template>
 
-    <div class="resolution-amendment-text-display"
-         v-html="taggedNewText"
-    ></div>
+<!--    <div class="resolution-amendment-text-display"-->
+<!--         v-html="taggedNewText"-->
+<!--    ></div>-->
 
 
 </template>

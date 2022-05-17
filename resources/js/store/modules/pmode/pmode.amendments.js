@@ -102,9 +102,9 @@ const getChangedText = (diffTaggedText) => {
 
 const replaceTags = (diffTaggedText, amendmentId) => {
     let a = diffTaggedText.replaceAll(insertRegex, textStylerFactoryAdder(amendmentId, 'insert'));
-    a = a.replaceAll(new RegExp('</ins>', 'g'), textStylerCloseTag);
+    // a = a.replaceAll(new RegExp('</ins>', 'g'), textStylerCloseTag);
     a = a.replaceAll(strikeRegex, textStylerFactoryAdder(amendmentId, 'strike'));
-    return a.replaceAll(new RegExp('</del>', 'g'), textStylerCloseTag);
+    return a.replaceAll(new RegExp('</del>|</ins>', 'g'), textStylerCloseTag);
 
 
     // let a = diffTaggedText.replace(insertRegex, insertTagTemplate(amendmentId));
@@ -203,7 +203,7 @@ const actions = {
         //dev parent's formatted content contains correct history
 
         let taggedHtml = processText(parent.content, amendment.content, amendment.id);
-//dev this taggedhtml is ONLY the most recent alteration
+        //dev this taggedhtml is ONLY the most recent alteration
 
         window.console.log('+++amendment', amendment, 'parent', parent, parent.isResolutionAmendment);
         //now compare the previous formatted text to the newly tagged text
@@ -215,36 +215,38 @@ const actions = {
         //Additional text stylers in the original will have been added
         //with insert tags
         //now remove the excess tags
-        diff = diff.replace(new RegExp(insertTag2 + '(.*?)</ins>', 'g'), '');
-        diff = diff.replace(new RegExp(strikeTag2 + '(.*?)</del>', 'g'), '');
-        // diff = diff.replace(insertRegex, '');
-        // taggedHtml = diff.replaceAll(new RegExp('</ins>', 'g'), '');
-        taggedHtml = diff;
+        diff = diff.replaceAll(new RegExp(insertTag2 + '(.*?)</ins>', 'g'), '');
+        diff = diff.replaceAll(new RegExp(strikeTag2 + '(.*?)</del>', 'g'), '');
+        // diff = diff.replace(new RegExp(strikeTag + '(.*?)</del>', 'g'), '');
+        // diff = diff.replace(new RegExp(insertTag + '(.*?)</ins>', 'g'), '');
 
+        //remove the tags but not the content
+        //aimed at removing superfluous additions inside text-styler-factory tags
+        diff = diff.replaceAll(insertRegex, '');
+        diff = diff.replaceAll(strikeRegex, '');
+        diff = diff.replaceAll(new RegExp('</ins>|</del>', 'g'), '');
+
+        taggedHtml = diff;
 
         //To handle VOT-197 we need to check if this is a secondary amendment
         if (parent.isResolutionAmendment) {
-            /* dev START HERE --- THE LAST THING I TRIED WAS COMMENTING THIS OUT.
-                That solved the unformatted component problem but introduced a new issue. Perhaps
-                if move to using slots, there won't be the problem of escaping quotes etc
-             */
-            window.console.log('secondary');
-            //We have a secondary amendment, so we need to diff the tagged content
-            //against the primary amendment's parent so that it reflects the primary amendment too
-            let main = getters.getMotionById(parent.applies_to);
 
-            //We diff and tag against the main motion but set the amendment id to the
-            //parent's id
-            taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
-            window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
-            window.console.log('secondary tagged', taggedHtml);
-        } else {
+            diff = diff.replace(new RegExp(insertTag + '(.*?)</ins>', 'g'), '');
+            diff = diff.replace(new RegExp(strikeTag + '(.*?)</del>', 'g'), '');
+
+
+            // window.console.log('secondary');
+            // //We have a secondary amendment, so we need to diff the tagged content
+            // //against the primary amendment's parent so that it reflects the primary amendment too
+            // let main = getters.getMotionById(parent.applies_to);
+            //
+            // //We diff and tag against the main motion but set the amendment id to the
+            // //parent's id
+            // taggedHtml = processText(main.formattedContent, taggedHtml, parent.id);
+            // window.console.log('secondary amendment', amendment, 'primary amendment', parent, 'main ', main);
+            // window.console.log('secondary tagged', taggedHtml);
         }
 
-
-        //
-//         }
-        // }
         return taggedHtml;
 
     },

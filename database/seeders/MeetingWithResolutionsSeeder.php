@@ -17,10 +17,13 @@ class MeetingWithResolutionsSeeder extends Seeder
 
         $title = $this->faker->sentence;
         $body = '';
-        $body .= "<h4 class='rezzieTitle'>" . $title . "</h4>";
+        $body .= "<h4>" . $title . "</h4>";
+//        $body .= "<h4 class='rezzieTitle'>" . $title . "</h4>";
 
         for ($i = 0; $i <= $numResolves; $i++) {
-            $body .= "<p class='resolvedClause'>RESOLVED {$this->faker->paragraph}; and be it further </p>";
+            $body .= "<p>RESOLVED {$this->faker->paragraph}; and be it further </p>";
+//            $body .= "<p class='resolvedClause'>RESOLVED {$this->faker->paragraph}; and be it further </p>";
+
         }
 
         $m = Motion::factory()->resolution()->create(

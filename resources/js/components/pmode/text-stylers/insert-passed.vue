@@ -27,7 +27,7 @@ export default {
             containerStyle: ' border border-success ',
             icon: 'bi-pencil',
             textStyling: "text-decoration-underline ",
-            iconStyling: "text-primary"
+            iconStyling: "text-success"
         }
     },
     // props: [

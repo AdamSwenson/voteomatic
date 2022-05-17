@@ -27,23 +27,23 @@ class ResolutionWithAmendmentsSeeder extends Seeder
         $rezzieIdentifier = 'AS-3515-21/APEP';
 
         $originalText = <<<HTML
-<div class="rezzie">
-<h4 class='rezzieTitle'>$titleBase</h4>
-<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+<div>
+<h4>$titleBase</h4>
+<p>RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
   articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
   Collegiality and Responsibility in the California State University,” and embodied
   in accepted California State University (CSU) shared governance practices; and be it further</p>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU recommend the development of
+  <p>RESOLVED: That the ASCSU recommend the development of
   core competencies in order to establish clear and uniform college level standards
   for the “golden four”; and be it further</p>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+  <p>RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the “golden four”
   General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
   Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
   Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
-<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+<p>RESOLVED:That the ASCSU distribute this resolution
 to: </p>
 <ul>
 <li>CSU Board ofTrustees,</li>
@@ -99,29 +99,29 @@ HTML;
         ]);
 
         $erfsaText = <<<HTML
-<div class="rezzie">
-<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+<div >
+<p >RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
   articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
   Collegiality and Responsibility in the California State University,” and embodied
   in accepted California State University (CSU) shared governance practices; and be it further</p>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU recommend the development of
+  <p >RESOLVED: That the ASCSU recommend the development of
   core competencies in order to establish clear and uniform college level standards
   for the “golden four”; and be it further</p>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+  <p >RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the “golden four”
   General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
   Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
   Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
-<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+<p >RESOLVED:That the ASCSU distribute this resolution
 to: </p>
 <ul>
 <li>CSU Board ofTrustees,</li>
  <text-styler-factory
- type='insert'
- text='<li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>'
- v-bind:amendment-id='$erfsaInsert->id'></text-styler-factory>
+ type='insert' v-bind:amendment-id='$erfsaInsert->id
+><li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>
+ </text-styler-factory>
 <li>CSU campusProvosts,</li>
 <li>CSU campus SenateChairs,</li>
 <li>California State StudentAssociation (CSSA),</li>
@@ -175,8 +175,8 @@ HTML;
         ]);
 
         $failedStrikeText = <<<HTML
-<div class="rezzie">
-<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+<div >
+<p >RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
   articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
@@ -184,23 +184,23 @@ HTML;
   in accepted California State University (CSU) shared governance practices; and be it further</p>
   <text-styler-factory
  type='strike'
- v-bind:amendment-id='$failedStrike->id'
- text='<p class="resolvedClause">RESOLVED: That the ASCSU recommend the development of
+ v-bind:amendment-id='$failedStrike->id'>
+ <p >RESOLVED: That the ASCSU recommend the development of
   core competencies in order to establish clear and uniform college level standards
-  for the “golden four”; and be it further</p>'></text-styler-factory>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+  for the “golden four”; and be it further</p></text-styler-factory>
+  <p >RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the “golden four”
   General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
   Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
   Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
-<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+<p >RESOLVED:That the ASCSU distribute this resolution
 to: </p>
 <ul>
 <li>CSU Board ofTrustees,</li>
  <text-styler-factory
- type='insert'
- text='<li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>'
- v-bind:amendment-id='$erfsaInsert->id'></text-styler-factory>
+ type='insert' v-bind:amendment-id='$erfsaInsert->id
+><li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>
+ </text-styler-factory>
 <li>CSU campusProvosts,</li>
 <li>CSU campus SenateChairs,</li>
 <li>California State StudentAssociation (CSSA),</li>
@@ -249,8 +249,8 @@ HTML;
 
         //dev For VOT-190 the compiler needs to run recursively so the change to the second resolved shows up correctly
         $siText = <<<HTML
-<div class="rezzie">
-<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+<div >
+<p >RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
   articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
@@ -259,27 +259,27 @@ HTML;
   <text-styler-factory
  type='strike'
  v-bind:amendment-id='$failedStrike->id'
- text='<p class="resolvedClause">RESOLVED: That the ASCSU recommend the development of
+><p>RESOLVED: That the ASCSU recommend the development of
   core competencies in order to establish clear and uniform college level standards
   for the <text-styler-factory type="strike" v-bind:amendment-id="$si->id" text="golden four"></text-styler-factory> <text-styler-factory type="insert"
- v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p>'></text-styler-factory>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+ v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p></text-styler-factory>
+  <p >RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the <text-styler-factory type='strike' v-bind:amendment-id='$si->id'
- text='"golden four"'></text-styler-factory> <text-styler-factory
+>"golden four"</text-styler-factory> <text-styler-factory
  type='insert'
  v-bind:amendment-id='$si->id'
- text='“four which are distinctive but not better than others”'></text-styler-factory>
+>“four which are distinctive but not better than others”</text-styler-factory>
   General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
   Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
   Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
-<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+<p>RESOLVED:That the ASCSU distribute this resolution
 to: </p>
 <ul>
 <li>CSU Board ofTrustees,</li>
  <text-styler-factory
- type='insert'
- text='<li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>'
- v-bind:amendment-id='$erfsaInsert->id'></text-styler-factory>
+ type='insert' v-bind:amendment-id='$erfsaInsert->id
+><li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>
+ </text-styler-factory>
 <li>CSU campusProvosts,</li>
 <li>CSU campus SenateChairs,</li>
 <li>California State StudentAssociation (CSSA),</li>
@@ -329,8 +329,8 @@ HTML;
 
         //dev For VOT-190 the compiler needs to run recursively so the change to the second resolved shows up correctly
         $failedInsertText = <<<HTML
-<div class="rezzie">
-<p class='resolvedClause'>RESOLVED: That the Academic Senate of the California State University (ASCSU)
+<div >
+<p >RESOLVED: That the Academic Senate of the California State University (ASCSU)
  reaffirm the primacy of the faculty role in curricular matters as specified in the Higher
  Education Employer-Employee Relations Act (HEERA),
   articulated in the “Report of the Board of Trustees Ad Hoc Committee on Governance,
@@ -339,33 +339,33 @@ HTML;
   <text-styler-factory
  type='strike'
  v-bind:amendment-id='$failedStrike->id'
- text='<p class="resolvedClause">RESOLVED: That the ASCSU recommend the development of
+><p>RESOLVED: That the ASCSU recommend the development of
   core competencies in order to establish clear and uniform college level standards
   for the <text-styler-factory type="strike" v-bind:amendment-id="$si->id" text="golden four"></text-styler-factory> <text-styler-factory type="insert"
- v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p>'></text-styler-factory>
-  <p class='resolvedClause'>RESOLVED: That the ASCSU, in collaboration with the appropriate
+ v-bind:amendment-id="$si->id" text="four which are distinctive but not better than others"></text-styler-factory>; and be it further</p></text-styler-factory>
+  <p >RESOLVED: That the ASCSU, in collaboration with the appropriate
   disciplinary experts, develop proposed core competencies foreach of the <text-styler-factory type='strike' v-bind:amendment-id='$si->id'
- text='"golden four"'></text-styler-factory> <text-styler-factory
+>"golden four"</text-styler-factory> <text-styler-factory
  type='insert'
  v-bind:amendment-id='$si->id'
- text='“four which are distinctive but not better than others”'></text-styler-factory>
+>“four which are distinctive but not better than others”</text-styler-factory>
   General Education (GE) elements: Oral Communication(CSU GE Area A1), Written
   Communication (CSU GE Area A2), Critical Thinking (CSU GE Area A3), and
   Mathematics/Quantitative Reasoning (CSU GE Area B4); and be it further </p>
-<p class="resolvedClause">RESOLVED:That the ASCSU distribute this resolution
+<p>RESOLVED:That the ASCSU distribute this resolution
 to: </p>
 <ul>
 <li>CSU Board ofTrustees,</li>
  <text-styler-factory
- type='insert'
- text='<li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>'
- v-bind:amendment-id='$erfsaInsert->id'></text-styler-factory>
+ type='insert' v-bind:amendment-id='$erfsaInsert->id
+><li>CSU Emeritus and Retired Faculty & Staff Association(CSU-ERFSA),</li>
+ </text-styler-factory>
 <li>CSU campusProvosts,</li>
 <li>CSU campus SenateChairs,</li>
  <text-styler-factory
  type='insert'
- text='<li>Yo mama,</li>'
- v-bind:amendment-id='$failedInsert->id'></text-styler-factory>
+><li>Yo mama,</li>'
+ v-bind:amendment-id='$failedInsert->id</text-styler-factory>
 <li>California State StudentAssociation (CSSA),</li>
 
  </ul>
