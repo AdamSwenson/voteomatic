@@ -3,7 +3,7 @@
          v-bind:id="displayId"
     >
 
-        <pmode-legend></pmode-legend>
+
 
         <div class="row">
             <div class="col-lg-6">
@@ -48,6 +48,8 @@
 
             </div>
         </div>
+
+        <pmode-legend></pmode-legend>
     </div>
 
 </template>
