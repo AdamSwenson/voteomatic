@@ -3,7 +3,7 @@
      <span v-bind:class="iconStyling"
      ><i class="bi "
          v-bind:class="icon"
-     ></i></span>&nbsp;<slot></slot>
+     ></i></span>&nbsp;<span v-bind:class="textStyling"><slot></slot></span>
     <!--    <slot name="text"></slot>-->
     <!--    <span v-bind:class="textStyling" v-html="text"></span>-->
 </span>

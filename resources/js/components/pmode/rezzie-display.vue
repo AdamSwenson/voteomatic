@@ -44,12 +44,12 @@
                 </div>
 
 
-                        <p-mode-chair-controls
-                            v-if="isChair"
-                            :motion="motion"
-                        ></p-mode-chair-controls>
-<!--                    </div>-->
-<!--                </div>-->
+                <p-mode-chair-controls
+                    v-if="isChair"
+                    :motion="motion"
+                ></p-mode-chair-controls>
+                <!--                    </div>-->
+                <!--                </div>-->
 
             </div>
         </div>

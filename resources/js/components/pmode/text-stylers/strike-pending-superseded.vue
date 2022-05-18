@@ -16,10 +16,10 @@ export default {
 
     data: function () {
         return {
-            containerStyle: ' border border-dark  border-3 fs-1 ',
+            containerStyle: ' border border-warning  border-2 ',
             icon : 'bi-scissors',
-            textStyling : "text-decoration-line-through",
-            iconStyling : " "
+            textStyling : "", // "text-decoration-line-through",
+            iconStyling : "text-warning "
         }
     },
 

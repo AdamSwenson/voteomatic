@@ -1,16 +1,11 @@
-<template>
-<span v-bind:class="containerStyling">
-      <i class="bi "
-         v-bind:class="icon"
-      ></i>&nbsp;<slot></slot>
-<!--    <span v-bind:class="textStyling" v-html="text"></span>-->
-</span>
-</template>
+
+
 
 <script>
+import TextStylerParentRegular from "./text-styler-parent-regular";
 export default {
     name: "insert-pending-superseded",
-
+    extends: TextStylerParentRegular,
     props: [
         // 'text',
         'amendmentId'],
@@ -19,21 +14,22 @@ export default {
 
     data: function () {
         return {
-            containerStyle: ' border border-warning border-3 ',
+            containerStyle: ' border border-warning border-2 ',
             textStyling: "text-decoration-underline ",
             icon: 'bi-pencil',
+            iconStyling: "text-warning"
         }
     },
 
-    asyncComputed: {},
-
-    computed: {
-        containerStyling: function () {
-            return this.name + this.containerStyle;
-        }
-    },
-
-    methods: {}
+    // asyncComputed: {},
+    //
+    // computed: {
+    //     containerStyling: function () {
+    //         return this.name + this.containerStyle;
+    //     }
+    // },
+    //
+    // methods: {}
 
 }
 </script>

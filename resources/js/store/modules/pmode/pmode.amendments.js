@@ -273,15 +273,15 @@ const actions = {
                     //tagged text
                     let rezAmend = new Resolution(response.data);
 
-                    window.console.log('response', response.data.info.formattedContent);
+                    // window.console.log('response', response.data.info.formattedContent);
                     //dev up to this point, the formatted content correctly contains history
-                    window.console.log('rezAmend', rezAmend.info.formattedContent);
+                    // window.console.log('rezAmend', rezAmend.info.formattedContent);
 
                     dispatch('diffTagResolutionAmendment', rezAmend).then((taggedHtml) => {
 
                         //dev here we have added the new change but lost previous changes to formattedContent
 
-                        window.console.log('dispatched diffTagResolutionAmendment', taggedHtml);
+                        // window.console.log('dispatched diffTagResolutionAmendment', taggedHtml);
                         //We haven't saved this to store, so it is ok
                         //to update the content
                         //NB, split formatted content and content in VOT-190 / VOT-197

@@ -11,10 +11,10 @@
 <!--</template>-->
 
 <script>
-import ComponentCompilerParent from "../component-compiler-parent";
 import TextStylerParentRegular from "./text-styler-parent-regular";
 export default {
     name: "insert-pending",
+
     extends : TextStylerParentRegular,
     // extends : ComponentCompilerParent,
     // props: [
@@ -25,7 +25,7 @@ export default {
 
     data: function () {
         return {
-            containerStyle: ' border border-primary border-3 fs-1',
+            containerStyle: ' border border-primary border-3 fs-2',
             icon: 'bi-pencil',
             textStyling: "text-decoration-underline ",
             iconStyling: "text-primary"

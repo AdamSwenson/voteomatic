@@ -19,6 +19,7 @@ import TextStylerParentPopover from "./text-styler-parent-popover";
  */
 export default {
     name: "strike-passed",
+
     extends: TextStylerParentPopover,
     // props: ['text', 'amendmentId'],
 
@@ -29,6 +30,7 @@ export default {
             textStyling: "",
             iconStyling: "text-success ",
             icon: 'bi-scissors',
+            stylerName : 'strikePassed',
             tt: '  '
         }
     },

@@ -41,6 +41,7 @@ export default {
 
     data: function () {
         return {
+            // stylerName,
             // icon: 'bi-pencil',
             // textStyling: "text-danger ",
             // iconStyling: "text-danger ",
@@ -60,7 +61,7 @@ export default {
     asyncComputed: {
         textSlotId: function () {
             // return 'insertFailed' + _.toString(this.amendmentId);
-            return this.name + _.toString(this.amendmentId);
+            return this.stylerName + _.toString(this.amendmentId);
         },
 
         tel: function () {
@@ -103,8 +104,8 @@ export default {
     mounted() {
         let me = this;
         this.$nextTick(function () {
-            window.console.log('j', me.amendmentId);
-
+            window.console.log('j', me.amendmentId, me.textSlotId);
+            // me.setPopoverContent();
             setTimeout(() => {
                 me.setPopoverContent();
                 // var element = document.getElementById(me.textSlotId);

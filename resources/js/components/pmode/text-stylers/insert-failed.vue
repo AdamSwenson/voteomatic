@@ -18,27 +18,30 @@
 
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import TextStylerParentPopover from "./text-styler-parent-popover";
+
 /**
  * Indicates that there was an attempt to insert text at this point.
  */
 
 export default {
     name: "insert-failed",
-extends : TextStylerParentPopover,
+
+    extends: TextStylerParentPopover,
 
     // components: {TextStylerParentPopover},
-    props: [
-        // 'text',
-        'amendmentId'],
-
-    mixins: [],
+    // props: [
+    //     // 'text',
+    //     'amendmentId'],
+    //
+    // mixins: [],
 
     data: function () {
         return {
+            stylerName: 'insertFailed',
             icon: 'bi-pencil',
             textStyling: "text-danger ",
             iconStyling: "text-danger ",
-        tt: '  '
+            tt: '  '
         }
     },
 

@@ -10,6 +10,7 @@
 
 <script>
 import TextStylerParentRegular from "./text-styler-parent-regular";
+
 export default {
     name: "strike-pending",
     extends: TextStylerParentRegular,
@@ -19,9 +20,9 @@ export default {
 
     data: function () {
         return {
-            containerStyle: ' border border-primary  border-3 fs-1',
-            icon : 'bi-scissors',
-            textStyling : " text-decoration-line-through ",
+            containerStyle: ' border border-primary  border-3 fs-2',
+            icon: 'bi-scissors',
+            textStyling: " text-decoration-line-through ",
             iconStyling: "text-primary"
         }
     },

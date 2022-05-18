@@ -38,15 +38,17 @@ const actions = {
             dispatch('startVotingOnMotion', motion).then(() => {
                 dispatch('castMotionVote', vote).then(() => {
                     dispatch('endVotingOnMotion', motion).then((response) => {
-                        if(isReadyToRock(response.data.superseding)){
-                            let supers = MotionObjectFactory.make(response.data.superseding);
-                            window.console.log('next', supers);
-                            dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
+                        // if(isReadyToRock(response.data.superseding)){
+                        //     let supers = MotionObjectFactory.make(response.data.superseding);
+                        //     // window.console.log('next', supers);
+                        //     //dev This was introduced during VOT-207. It causes an error message, I think because the new motion doesn't yet exist elsewhere on client
+                        //     //dev commented out because causes to fail when program gets results for next motion
+                        //     dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
+                        //     return resolve();
+                        //     });
+                        // }else{
                             return resolve();
-                            });
-                        }else{
-                            return resolve();
-                        }
+                        // }
                     });
                 });
             });
@@ -77,15 +79,17 @@ const actions = {
             dispatch('startVotingOnMotion', motion).then(() => {
                 dispatch('castMotionVote', vote).then(() => {
                     dispatch('endVotingOnMotion', motion).then((response) => {
-                        if(isReadyToRock(response.data.superseding)){
-                            let supers = MotionObjectFactory.make(response.data.superseding);
-                            window.console.log('next', supers);
-                            dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
-                                return resolve();
-                            });
-                        }else{
+//                         if(isReadyToRock(response.data.superseding)){
+//                             let supers = MotionObjectFactory.make(response.data.superseding);
+//                             // window.console.log('next', supers);
+//                             //dev This was introduced during VOT-207. It causes an error message, I think because the new motion doesn't yet exist elsewhere on client
+// //dev commented out because causes to fail when program gets results for next motion
+//                             // dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
+//                             //     return resolve();
+//                             // });
+//                         }else{
                             return resolve();
-                        }
+                        // }
                     });
                 });
             });

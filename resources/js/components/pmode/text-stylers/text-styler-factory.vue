@@ -62,6 +62,12 @@ export default {
             return this.$store.getters.getMotionById(this.amendmentId);
         },
 
+        superseding: function(){
+            if(isReadyToRock(this.amendment, 'superseded_by')){
+                return this.$store.getters.getMotionById(this.amendment.superseded_by);
+            }
+        },
+
         componentType: function () {
             if (!isReadyToRock(this.currentMotion) || !isReadyToRock(this.amendment)) return UnstyledText;
 
@@ -76,7 +82,7 @@ export default {
             }
 
             // -------------------- Completed amendments
-            if (this.amendment.isComplete) {
+            if (this.isComplete) {
 
                 if (this.type === 'insert' && this.passed) return InsertPassed;
 
@@ -147,6 +153,18 @@ export default {
         },
 
         /**
+         * We can't just look at the isComplete
+         * property of the amendment because if
+         * it was superseded, that might not be set
+         */
+        isComplete: function(){
+            if(isReadyToRock(this.amendment)){
+                if(isReadyToRock(this.superseding)) return this.superseding.isComplete;
+                return this.amendment.isComplete;
+            }
+        },
+
+        /**
          * Whether the amendment is currently pending vote
          * (returns false if passed or superseded)
          * @returns {boolean}
@@ -171,6 +189,7 @@ export default {
 
 
         passed: function () {
+            if(isReadyToRock(this.superseding)) return this.$store.getters.getMotionPassed(this.superseding.id);
             return this.$store.getters.getMotionPassed(this.amendmentId);
         },
 
