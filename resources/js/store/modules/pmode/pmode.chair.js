@@ -1,4 +1,6 @@
 import Vote from "../../../models/Vote";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import MotionObjectFactory from "../../../models/MotionObjectFactory";
 
 const state = {
     //things: []
@@ -35,8 +37,16 @@ const actions = {
                 });
             dispatch('startVotingOnMotion', motion).then(() => {
                 dispatch('castMotionVote', vote).then(() => {
-                    dispatch('endVotingOnMotion', motion).then(() => {
-                        return resolve();
+                    dispatch('endVotingOnMotion', motion).then((response) => {
+                        if(isReadyToRock(response.data.superseding)){
+                            let supers = MotionObjectFactory.make(response.data.superseding);
+                            window.console.log('next', supers);
+                            dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
+                            return resolve();
+                            });
+                        }else{
+                            return resolve();
+                        }
                     });
                 });
             });
@@ -66,8 +76,16 @@ const actions = {
 
             dispatch('startVotingOnMotion', motion).then(() => {
                 dispatch('castMotionVote', vote).then(() => {
-                    dispatch('endVotingOnMotion', motion).then(() => {
-                        return resolve();
+                    dispatch('endVotingOnMotion', motion).then((response) => {
+                        if(isReadyToRock(response.data.superseding)){
+                            let supers = MotionObjectFactory.make(response.data.superseding);
+                            window.console.log('next', supers);
+                            dispatch('setCurrentMotion', {meetingId: response.data.superseding.meeting_id, motionId : supers.id}).then(() => {
+                                return resolve();
+                            });
+                        }else{
+                            return resolve();
+                        }
                     });
                 });
             });

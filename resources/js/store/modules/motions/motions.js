@@ -196,7 +196,8 @@ const actions = {
                     //      superseding
                     //However, we're just going to wait for the pusher notification
                     //and handle all the updating from there.
-                    resolve();
+                    //Though going to pass this back for specialty purposes like the chair's mark passed button in pmode
+                    resolve(response);
 
                 }).catch(function (error) {
                     // error handling
