@@ -1,64 +1,97 @@
 <template>
-    <div class="pmode-legend card">
-        <div class="card-header">
-            <h4 class="card-title">Legend</h4>
-        </div>
+    <div class="pmode-legend ">
+        <!--       &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+        <!--        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#pmodeLegendModal">-->
+        <!--            Legend-->
+        <!--        </button>-->
 
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5 class="card-subtitle">
-                        Insert
-                    </h5>
-                    <p class="card-text">
-                        <insert-pending :amendment-id="777777">The current motion would insert this text </insert-pending>
-                    </p>
+        <!--        &lt;!&ndash; Modal &ndash;&gt;-->
+        <!--        <div class="modal fade" id="pmodeLegendModal" tabindex="-1" aria-labelledby="pmodeLegendModalLabel" aria-hidden="true">-->
+        <!--            <div class="modal-dialog">-->
+        <!--                <div class="modal-content">-->
+        <!--                    <div class="modal-header">-->
+        <!--                        <h5 class="modal-title" id="pmodeLegendModalLabel">What are these symbols</h5>-->
+        <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+        <!--                    </div>-->
+        <!--                    <div class="modal-body">-->
 
-                    <p class="card-text">
-                        <insert-pending-superseded :amendment-id="88888">Another motion has taken precedence over the
-                            motion to insert this text
-                        </insert-pending-superseded>
-                    </p>
+        <!--                    <div class="pmode-legend card">-->
+        <!--        <div class="card-header">-->
+        <!--            <h4 class="card-title">Legend</h4>-->
+        <!--        </div>-->
 
-                    <p class="card-text">
-                        <insert-passed :amendment-id="666666">This text was successfully inserted</insert-passed>
-                    </p>
+        <!--        <div class="card-body">-->
+        <div class="row">
+            <div class="col-md-6">
+                <h5>
+                    Insert
+                </h5>
+                <p>
+                    <insert-pending :amendment-id="777777">The current motion would insert this text
+                    </insert-pending>
+                </p>
 
-                    <p class="card-text">
-                        Someone attempted to insert text here <insert-failed :amendmentId="99999">Someone tried to insert this text but failed</insert-failed>
-                        <br><span class="form-text">Click the icon to see the unsuccessful amendment</span>
-                    </p>
+                <p>
+                    <insert-pending-superseded :amendment-id="88888">Another motion has taken precedence
+                        over the
+                        motion to insert this text
+                    </insert-pending-superseded>
+                </p>
 
-                </div>
+                <p>
+                    <insert-passed :amendment-id="666666">This text was successfully inserted
+                    </insert-passed>
+                </p>
+
+                <p>
+                    Someone attempted to insert text here
+                    <insert-failed :amendmentId="99999">Someone tried to insert this text but failed
+                    </insert-failed>
+                    <br><span class="form-text">Click the icon to see the unsuccessful amendment</span>
+                </p>
+
+            </div>
 
 
-                <div class="col-md-6">
-                    <h4 class="card-subtitle">
-                        Strike
-                    </h4>
-                    <p class="card-text">
-                        <strike-pending :amendment-id="1777777">The current motion would strike this text</strike-pending>
-                    </p>
+            <div class="col-md-6">
+                <h4>
+                    Strike
+                </h4>
+                <p>
+                    <strike-pending :amendment-id="1777777">The current motion would strike this text
+                    </strike-pending>
+                </p>
 
-                    <p class="card-text">
-                        <strike-pending-superseded :amendment-id="188888">Another motion has taken precedence over the
-                            motion to strike this text
-                        </strike-pending-superseded>
-                    </p>
+                <p>
+                    <strike-pending-superseded :amendment-id="188888">Another motion has taken
+                        precedence over the
+                        motion to strike this text
+                    </strike-pending-superseded>
+                </p>
 
-                    <p class="card-text">
-                       Text was successfully removed from here <strike-passed :amendment-id="1666666">This text was successfully struck</strike-passed>
-                        <br><span class="form-text">Click the icon to see the successful amendment</span>
-                    </p>
+                <p>
+                    Text was successfully removed from here
+                    <strike-passed :amendment-id="1666666">This text was successfully struck
+                    </strike-passed>
+                    <br><span class="form-text">Click the icon to see the successful amendment</span>
+                </p>
 
-                    <p class="card-text">
-                        <strike-failed :amendmentId="199999">Someone tried to strike this text but failed
-                        </strike-failed>
-                    </p>
-                </div>
+                <p>
+                    <strike-failed :amendmentId="199999">Someone tried to strike this text but failed
+                    </strike-failed>
+                </p>
             </div>
         </div>
     </div>
+    <!--                    <div class="modal-footer">-->
+    <!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+    <!--                        &lt;!&ndash;                    <button type="button" class="btn btn-primary">Save changes</button>&ndash;&gt;-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
 </template>
 
 <script>

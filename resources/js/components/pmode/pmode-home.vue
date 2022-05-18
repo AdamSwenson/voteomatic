@@ -4,12 +4,15 @@
     >
         <div class="row">
             <div class="col-lg-6">
+
+
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Amendment history (Experimental)</h3>
+                        <h3 class="card-title">Amendment History (Experimental)</h3>
                     </div>
 
                     <div class="card-body">
+
                         <rezzie-display
                             v-for="m in motions"
                             :key="m.id"
@@ -18,9 +21,15 @@
                         ></rezzie-display>
                     </div>
                 </div>
+                <div class="card-body">
+                    <h4 class="card-title">Legend</h4>
+                    <pmode-legend></pmode-legend>
+                </div>
             </div>
 
             <div class="col-lg-6">
+<!--                <p class="text-end"><whatis></whatis></p>-->
+
                 <div class="card">
 
                     <div class="card-header">
@@ -44,8 +53,6 @@
 
             </div>
         </div>
-        <whatis></whatis>
-        <pmode-legend></pmode-legend>
     </div>
 
 </template>

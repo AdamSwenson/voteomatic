@@ -1,6 +1,6 @@
 <template>
-
-    <wysiwyg v-model="content"/>
+<textarea v-model="content" rows="30"></textarea>
+<!--    <wysiwyg v-model="content"/>-->
 
 </template>
 

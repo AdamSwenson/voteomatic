@@ -27,7 +27,7 @@ export default {
                 if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
                     return '';
                 }
-                return this.motion.info.title;
+                return this.motion.title;
             },
             set(v) {
                 // window.console.log('rezzie-input', v);
@@ -35,7 +35,7 @@ export default {
 
                 let p = Payload.factory({
                         'object': this.motion,
-                        'updateProp': 'info.title',
+                        'updateProp': 'title',
                         'updateVal': v
                     }
                 );

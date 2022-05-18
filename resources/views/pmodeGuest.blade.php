@@ -2,7 +2,7 @@
 
 
 @section('navBar')
-    <page-navbar></page-navbar>
+<pmode-page-navbar></pmode-page-navbar>
 @endsection
 
 @section('content')
