@@ -21,7 +21,7 @@
 
     <!--                <div class="modal-body">-->
 
-    <!--                    <p class="blockquote" v-html="motionText"></p>-->
+    <!--                    <p class="blockquote" v-amendmentText="motionText"></p>-->
 
     <!--                    <p class="second-instruction text-muted">Seconding a motion only implies that you-->
     <!--                        believe the motion to be worth discussing. It does not imply endorsement.</p>;-->

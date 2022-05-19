@@ -39,6 +39,9 @@ const mutations = {
 const actions = {
     forceNavigationToHome({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
+            //If we are in the public viewing mode we shouldn't force to tabs
+            if(getters.isInPublicPmode === true) return resolve();
+
             commit('resetNavTriggers');
             commit('setHomeNavTrigger', true);
             resolve();
@@ -47,6 +50,9 @@ const actions = {
 
     forceNavigationToResults({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
+            //If we are in the public viewing mode we shouldn't force to tabs
+            if(getters.isInPublicPmode === true) return resolve();
+
             commit('resetNavTriggers');
             commit('setResultsNavTrigger', true);
             resolve();
@@ -55,6 +61,9 @@ const actions = {
 
     forceNavigationToVote({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
+            //If we are in the public viewing mode we shouldn't force to tabs
+            if(getters.isInPublicPmode === true) return resolve();
+
             commit('resetNavTriggers');
             commit('setVoteNavTrigger', true);
             resolve();

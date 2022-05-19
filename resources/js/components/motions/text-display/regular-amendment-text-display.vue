@@ -1,5 +1,5 @@
 <template>
-    <span class="amendment-text-display">
+    <span class="amendment-text-display text-center">
         <span v-html="taggedNewText"></span>
     </span>
 
@@ -12,7 +12,7 @@ import Payload from "../../../models/Payload";
 import {checkChanges, getTaggedChanges} from '../../../utilities/amendment.utilities';
 
 /**
- * Displays an html tagged string indicating where
+ * Displays an amendmentText tagged string indicating where
  * changes have been made between the original and the
  * amendment.
  *

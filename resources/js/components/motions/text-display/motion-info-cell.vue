@@ -5,6 +5,7 @@
     <motion-text-display
         :motionStyle="motionStyle"
         :motion="motion"
+        :truncate-resolutions="true"
     ></motion-text-display>
 
     <br/>
@@ -13,8 +14,8 @@
 
     <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
 
+<!--    <motion-status-badge v-if="showStatusBadge" :motion="isPassed"></motion-status-badge>-->
     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-
 
     </div>
 </template>

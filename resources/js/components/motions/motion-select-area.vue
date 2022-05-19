@@ -24,7 +24,7 @@
 
                 <vote-nav-button
                     :motion="motion"
-                    v-if="isSelected && ! isComplete && isVotingAllowed"
+                    v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
                 ></vote-nav-button>
 
                 <open-voting-button
@@ -40,7 +40,7 @@
                 ></end-voting-button>
 
                 <results-nav-button
-                    v-if="isSelected && isComplete"
+                    v-if="isSelected && isComplete && ! isInPublicPmode"
                     :motion="motion"
                 ></results-nav-button>
 
@@ -68,6 +68,7 @@ import AmendmentMixin from "../../mixins/amendmentMixin";
 import MotionResultsMixin from '../../mixins/motionResultsMixin';
 import ProceduralMixin from "../../mixins/proceduralMixin";
 import receiptMixin from "../../mixins/receiptMixin";
+import PublicPModeMixin from "../../mixins/publicPmodeMixin";
 
 // import AmendmentBadge from "./badges/amendment-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
@@ -96,7 +97,7 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, receiptMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, PublicPModeMixin, receiptMixin],
     data: function () {
         return {
             amendmentTags: {
@@ -131,6 +132,7 @@ export default {
         isComplete: function () {
             return this.motion.isComplete;
         },
+
 
 
         // /**

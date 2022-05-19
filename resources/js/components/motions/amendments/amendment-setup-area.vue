@@ -3,7 +3,7 @@
     <div class="amendment-setup-area card">
 
         <div class="card-body">
-            <div class="row display-area text-center">
+            <div class="row display-area ">
                 <div class="col">
                     <blockquote class="blockquote mb-0">
 
@@ -144,10 +144,18 @@ export default {
                 content: this.localText,
                 type: 'amendment',
                 is_resolution: this.motion.isResolution,
+                info: this.motion.info,
                 requires: 0.5
             };
+
             let me = this;
-            let p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            let p;
+            if (this.motion.isResolution) {
+                p = this.$store.dispatch('createResolutionAmendment', payload);
+            } else {
+                p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            }
+
             p.then(() => {
                 me.$router.push('meeting-home');
             });
@@ -160,8 +168,6 @@ export default {
         handleReset: function () {
             this.localText = this.motion.content;
         }
-
-
     }
 
 }

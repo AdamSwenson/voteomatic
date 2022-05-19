@@ -24,6 +24,7 @@ use App\Http\Controllers\Motion\MotionOrderlinessController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\Motion\MotionTemplateController;
+use App\Http\Controllers\PublicViewController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
@@ -153,6 +154,10 @@ Route::post('election/admin/results/hide/{meeting}', [ElectionAdminController::c
 /* =============================
         Main application pages
    ============================= */
+
+//public access
+Route::get('public/{meeting}',[PublicViewController::class, 'publicHome']);
+
 //Internal landing page after non-lti login
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');

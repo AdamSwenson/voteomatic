@@ -13,7 +13,7 @@ import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 /**
  * This displays the text of a resolution. NB, we don't just
- * make all motions use html formatted text to limit the attack surface
+ * make all motions use amendmentText formatted text to limit the attack surface
  * for xss etc
  */
 export default {

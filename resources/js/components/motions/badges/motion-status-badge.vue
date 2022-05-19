@@ -31,6 +31,14 @@ export default {
     computed: {},
 
     asyncComputed: {
+        // isPassed: {
+        //     get: function () {
+        //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        //             return this.$store.getters.getMotionPassed(this.motion);
+        //         }
+        //     },
+        //     default: null
+        // },
 
         showBadge: function () {
             //If the thing hasn't been voted on yet, isPassed will be undefined
