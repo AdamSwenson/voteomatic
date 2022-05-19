@@ -26,10 +26,11 @@ const actions = {
     */
 
     handleForcePageReload({dispatch, commit, getters}, pusherEvent) {
-        return new Promise(((resolve, reject) => {
+        // return new Promise(((resolve, reject) => {
             window.console.log('Caught forcePageReload ');
-            // window.location.reload();
-        }));
+            window.location.reload();
+            return false;
+        // }));
     },
 
 

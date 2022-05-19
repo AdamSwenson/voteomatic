@@ -12,11 +12,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ForcePageReload
+class ForcePageReload implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
 
-    public Motion $motion;
     public mixed $meeting;
 
     /**
