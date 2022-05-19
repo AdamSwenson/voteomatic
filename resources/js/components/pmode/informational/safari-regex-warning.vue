@@ -1,7 +1,7 @@
 <template>
     <div v-if="showAlert" class="alert alert-warning alert-dismissible fade show" role="alert">
         <p><strong>Warning</strong> This isn't fully compatible with Safari. For amendments,
-        the text being changed will not be correctly displayed in the motion stack on the right.</p>
+        the text being changed may not be correctly displayed in the motion stack on the right.</p>
         <p>This will work properly on Chrome and Firefox</p>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
