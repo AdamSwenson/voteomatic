@@ -10,6 +10,7 @@
     </a>
         <span class="visually-hidden" v-bind:id="textSlotId"><slot></slot></span>
         </span>
+
     <!--    <span class="insert-failed text-danger">-->
     <!--    <a-->
     <!--        tabindex="0"-->
@@ -90,11 +91,17 @@ export default {
     ,
 
     methods: {
+
+        filterSpace : function(text) {
+            let r = new RegExp('&nbsp;', 'g')
+            return text.replaceAll(r, '');
+        },
+
         setPopoverContent: function () {
             var element = document.getElementById(this.textSlotId);
             if(isReadyToRock(element)){
                 // window.console.log('ll', element.innerHTML, .textSlotId);
-                this.tt = element.innerHTML;
+                this.tt = this.filterSpace(element.innerHTML);
             }
 
         }

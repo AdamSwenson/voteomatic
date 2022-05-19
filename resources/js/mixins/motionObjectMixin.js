@@ -20,13 +20,13 @@ module.exports = {
             }
         },
 
-        isSecondOrderAmendment: function() {
-            if (this.isAmendment) {
-                let appliedTo = this.$store.getters.getMotionById(this.motion.applies_to);
-                if (!_.isUndefined(appliedTo) && !_.isNull(appliedTo)) {
-                    return appliedTo.isAmendment();
-                }
+        isSecondOrderAmendment: function () {
+            if (!this.isAmendment) return false;
+            let appliedTo = this.$store.getters.getMotionById(this.motion.applies_to);
+            if (!_.isUndefined(appliedTo) && !_.isNull(appliedTo)) {
+                return appliedTo.isAmendment();
             }
+            return false;
         },
 
         /**

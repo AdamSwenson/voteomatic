@@ -2,6 +2,8 @@
     <div class="pmode-home card mt-1"
          v-bind:id="displayId"
     >
+        <safari-regex-warning></safari-regex-warning>
+
         <div class="row">
             <div class="col-lg-6">
 
@@ -67,10 +69,11 @@ import MotionsCard from "../motions/motions-card";
 import MotionSelectArea from "../motions/motion-select-area";
 import PmodeLegend from "./informational/pmode-legend";
 import Whatis from "./informational/whatis";
+import SafariRegexWarning from "./informational/safari-regex-warning";
 
 export default {
     name: "pmode-home",
-    components: {Whatis, PmodeLegend, MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
+    components: {SafariRegexWarning, Whatis, PmodeLegend, MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

@@ -657,6 +657,42 @@ expect(diff).toBe(expected);
 
         });
 
+
+        describe('ddd', () => {
+
+            test('aaaaa', () => {
+                let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+
+                let t = "a b c d<text-thing>dog is wag</text-thing> e f g h i j k";
+                let k =  t.match(trailingRegex);
+
+                let j = t.match(new RegExp('(?:\<text-thing).*$', 'g'));
+                window.console.log(j);
+                window.console.log(k);
+
+            });
+
+            test('a', () => {
+                let trailingRegex = new RegExp('(?<=<text-thing>).*$', 'g');
+
+                let t = "1 2 3 4 5 6 a b c d<text-thing>dog is wag</text-thing> e f g h i j k";
+               let k =  t.match(trailingRegex);
+
+                    let j = t.match(new RegExp('.+?(?:\<text-thing).*$', 'g'));
+
+                // let j = t.match(new RegExp('(?:\<text-thing).*$', 'g'));
+                window.console.log('newer', j);
+                window.console.log('older', k);
+expect(j).toBe(k);
+
+
+
+
+            });
+
+
+        })
+
     });
 })
 ;

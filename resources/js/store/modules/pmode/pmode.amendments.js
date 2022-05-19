@@ -27,8 +27,8 @@ const strikeTag = '<del class="diffdel">';
 const strikeTag2 = '<del class="diffmod">';
 const insertRegex = new RegExp(insertTag + '|' + insertTag2, 'g');
 const strikeRegex = new RegExp(strikeTag + '|' + strikeTag2, 'g');
-const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
-const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)|' + '(?<=' + strikeTag2 + ')(.*?)(?=</del>)', 'g');
+const insertContentRegex =null; //new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)|' + '(?<=' + insertTag2 + ')(.*?)(?=</ins>)', 'g');
+const strikeContentRegex = null; //new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)|' + '(?<=' + strikeTag2 + ')(.*?)(?=</del>)', 'g');
 
 const textStylerCloseTag = "</text-styler-factory>"; //"\'></text-styler-factory>";
 //Replacement tags
@@ -83,8 +83,8 @@ const diffTagText = (originalText, amendmentText) => {
 
 const getChangedText = (diffTaggedText) => {
     //dev todo having trouble with using amendment type so temp made a param
-    let type = amendmentType(diffTaggedText);
-    let r;
+    // let type = amendmentType(diffTaggedText);
+    // let r;
 
     switch (type) {
         case 'insert' :
@@ -151,6 +151,10 @@ const truncateTextAroundChanges = (text, numWords = 3) => {
 
     let out = '';
     _.forEach(alteredContent, (ic) => {
+        // good: /(?:\/)([^#]+)(?=#*)/
+        // bad: /(?<=\/)([^#]+)(?=#*)/
+        //https://stackoverflow.com/questions/51568821/works-in-chrome-but-breaks-in-safari-invalid-regular-expression-invalid-group
+
         let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
         let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
         let l = text.match(leadingRx);
@@ -318,30 +322,30 @@ const actions = {
     ,
 
 
-    diffAmendments({dispatch, commit, getters}, originalMain) {
-        return new Promise(((resolve, reject) => {
-            let taggedText = originalMain.content;
-
-            let amendments = getters.getAmendments(originalMain);
-
-            //Compare to amendment text
-            _.forEach(amendments, (amendment) => {
-                let parent = getters.getMotionById(amendment.applies_to);
-                let resultant = getters.getMotionById(parent.superseded_by);
-
-                //Get tagged text
-                let diff = diffTagText(originalMain.content, amendment.content);
-
-                //Get the changed portion from the diff
-                //dev Currently only works for one change
-                let changed = getChangedText(diff);
-
-                //Find the index where the tagged stuff starts
-            });
-
-
-        }));
-    }
+    // diffAmendments({dispatch, commit, getters}, originalMain) {
+    //     return new Promise(((resolve, reject) => {
+    //         let taggedText = originalMain.content;
+    //
+    //         let amendments = getters.getAmendments(originalMain);
+    //
+    //         //Compare to amendment text
+    //         _.forEach(amendments, (amendment) => {
+    //             let parent = getters.getMotionById(amendment.applies_to);
+    //             let resultant = getters.getMotionById(parent.superseded_by);
+    //
+    //             //Get tagged text
+    //             let diff = diffTagText(originalMain.content, amendment.content);
+    //
+    //             //Get the changed portion from the diff
+    //             //dev Currently only works for one change
+    //             let changed = getChangedText(diff);
+    //
+    //             //Find the index where the tagged stuff starts
+    //         });
+    //
+    //
+    //     }));
+    // }
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
     *        return new Promise(((resolve, reject) => {
@@ -398,7 +402,7 @@ export default {
     //dev exporting these to aid in testing
     amendmentType,
     diffTagText,
-    getChangedText,
+    // getChangedText,
     insertTagTemplate,
     strikeTagTemplate,
     replaceTags,
