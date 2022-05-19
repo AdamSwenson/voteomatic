@@ -18,7 +18,7 @@ class ForcedEventController extends Controller
 
     public function forcePageReload(Meeting $meeting)
     {
-        NotifyPageRefreshNeeded::dispatch($meeting);
+//        NotifyPageRefreshNeeded::dispatch($meeting);
         ForcePageReload::dispatch($meeting);
 //    return ['dof'];
     }
