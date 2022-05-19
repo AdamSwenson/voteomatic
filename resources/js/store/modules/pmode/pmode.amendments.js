@@ -155,15 +155,21 @@ const truncateTextAroundChanges = (text, numWords = 3) => {
         // bad: /(?<=\/)([^#]+)(?=#*)/
         //https://stackoverflow.com/questions/51568821/works-in-chrome-but-breaks-in-safari-invalid-regular-expression-invalid-group
 
+        // let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+//'(?:\<text-thing).*$',
         let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
-        let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
+        // let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
+
         let l = text.match(leadingRx);
-        let t = text.match(trailingRegex);
+        // let t = text.match(trailingRegex);
         // let trailingRx = = new RegExp('.+?(?=' + ic + ')', 'g');
         // let insertLeadingRegex = new RegExp(//, 'g');
         let leading = getLeadingWords(l[0], numWords);
-        let trailing = getTrailingWords(t[0], numWords)
-        out += `...${leading} ${ic} ${trailing}...`;
+
+        // let trailing = getTrailingWords(t[0], numWords)
+
+        // out += `...${leading} ${ic} ${trailing}...`;
+        out += `...${leading} ${ic} ...`;
     });
 
     return out;

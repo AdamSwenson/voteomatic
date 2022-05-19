@@ -1,6 +1,7 @@
 import MotionObjectFactory from "../../../models/MotionObjectFactory";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import Payload from "../../../models/Payload";
+import * as routes from "../../../routes";
 
 const state = {
     //things: []
@@ -24,6 +25,24 @@ const actions = {
     *    },
     */
 
+    handleForcePageReload({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            window.console.log('Caught forcePageReload ');
+            // window.location.reload();
+        }));
+    },
+
+
+    orderPageReload({dispatch, commit, getters}) {
+        return new Promise(((resolve, reject) => {
+            let meeting = getters.getActiveMeeting;
+            let url = routes.events.forceReload(meeting.id);
+
+            return Vue.axios.post(url).then(() => {
+                return resolve();
+            });
+        }));
+    }
     //
     // /**
     //  * When the client is notified by the server that voting on the currently active

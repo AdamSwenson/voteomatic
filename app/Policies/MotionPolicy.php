@@ -73,7 +73,7 @@ class MotionPolicy
     {
 
         $meeting = $motion->meeting;
-        return $meeting->isPartOfMeeting($user) && $motion->is_complete;
+        return $meeting->isPartOfMeeting($user); //&& $motion->is_complete;
     }
 
     /**
