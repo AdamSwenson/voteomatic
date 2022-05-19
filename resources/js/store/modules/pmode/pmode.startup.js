@@ -93,6 +93,10 @@ const actions = {
                 //a new motion
                 dispatch('handleNewCurrentMotionSetMessage', e);
             })
+
+            .listen("ForcePageReload", () => {
+            dispatch('handleForcePageReload');
+            })
             // .listen('VotingOnMotionOpened', (e) => {
             //     dispatch('handleVotingOnMotionOpenedMessage', e);
             // });

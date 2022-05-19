@@ -44,6 +44,7 @@ const actions = {
     ...Amend.actions,
     ...Chair.actions,
     ...Startup.actions,
+    ...Events.actions,
 
     /**
      * This will be done during initialization for the public view pmode.

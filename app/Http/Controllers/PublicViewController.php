@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ForcePageReload;
 use App\Models\Meeting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,4 +45,5 @@ class PublicViewController extends Controller
         return view('pmodeGuest', $data);
 
     }
+
 }

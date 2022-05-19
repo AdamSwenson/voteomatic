@@ -13,6 +13,7 @@ use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Election\PersonController;
+use App\Http\Controllers\ForcedEventController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -175,6 +176,8 @@ Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
 //Route::get('main/{motion}', [MainController::class, 'getVotePage'])
 //    ->name('main');
 
+
+Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
 
 /* =============================
         Meetings
