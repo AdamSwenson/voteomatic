@@ -5,9 +5,10 @@
                 <motion-select-button :motion="motion"></motion-select-button>
                 <p class="form-text">Sets as current rezzie (in stack, not just on client)</p>
             </div>
+
             <div class="col-md-3">
-               <force-page-reload-button></force-page-reload-button>
-                </div>
+                <force-page-reload-button></force-page-reload-button>
+            </div>
 
             <div class="col-md-6">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
