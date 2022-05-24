@@ -35,11 +35,12 @@ const actions = {
                     motionId: motion.id,
                     isYay: true
                 });
+
             dispatch('startVotingOnMotion', motion).then(() => {
                 dispatch('castMotionVote', vote).then(() => {
                     dispatch('endVotingOnMotion', motion).then((response) => {
                         dispatch('orderPageReload');
-                        
+
                         if (isReadyToRock(response.data.superseding)) {
                             let supers = MotionObjectFactory.make(response.data.superseding);
                             // window.console.log('next', supers);
@@ -86,6 +87,7 @@ const actions = {
                 dispatch('castMotionVote', vote).then(() => {
                     dispatch('endVotingOnMotion', motion).then((response) => {
                         dispatch('orderPageReload');
+
                         if (isReadyToRock(response.data.superseding)) {
 
                             let supers = MotionObjectFactory.make(response.data.superseding);
@@ -101,6 +103,7 @@ const actions = {
                         } else {
                             return resolve();
                         }
+
                     });
                 });
             });

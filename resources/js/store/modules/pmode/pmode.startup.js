@@ -32,28 +32,28 @@ const actions = {
 
                     // dispatch('loadMotionFromPageData').then(function () {
 
-                        let meeting = getters.getActiveMeeting;
+                    let meeting = getters.getActiveMeeting;
 
-                        dispatch('initializePublicPmodeMeetingListeners');
+                    dispatch('initializePublicPmodeMeetingListeners');
 
-                        //get existing motions for meeting
-                        dispatch('loadMotionsForMeeting', meeting.id).then(function () {
+                    //get existing motions for meeting
+                    dispatch('loadMotionsForMeeting', meeting.id).then(function () {
 
-                            //Set which motion accordion is open in pmode
-                            dispatch('setOpenMotionToCurrent');
+                        //Set which motion accordion is open in pmode
+                        dispatch('setOpenMotionToCurrent');
 
-                            //get motions which have already been handled
-                            // dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
+                        //get motions which have already been handled
+                        // dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
-                                dispatch('loadResultsForAllMeetingMotions').then(function () {
-                                });
-                                //
-                                // dispatch('loadMotionTypesAndTemplates').then(function () {
-                                // });
-
-                            // });
-
+                        dispatch('loadResultsForAllMeetingMotions').then(function () {
                         });
+                        //
+                        // dispatch('loadMotionTypesAndTemplates').then(function () {
+                        // });
+
+                        // });
+
+                    });
 
                     // });
 
@@ -94,12 +94,12 @@ const actions = {
                 dispatch('handleNewCurrentMotionSetMessage', e);
             })
 
-            .listen("ForcePageReload", () => {
-            dispatch('handleForcePageReload');
+            .listen("ForcePageReload", (e) => {
+                dispatch('handleForcePageReload', e);
             })
-            // .listen('VotingOnMotionOpened', (e) => {
-            //     dispatch('handleVotingOnMotionOpenedMessage', e);
-            // });
+        // .listen('VotingOnMotionOpened', (e) => {
+        //     dispatch('handleVotingOnMotionOpenedMessage', e);
+        // });
 
         window.console.log('Public pmode meeting listeners initialized for ', channel);
 
