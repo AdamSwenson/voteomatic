@@ -7,8 +7,8 @@
         <component
             v-bind:is="displayComponent"
             :motion="motion"
+            :truncate-resolutions="truncateResolutions"
         ></component>
-
 
     </div>
 
@@ -26,6 +26,8 @@ import PlainTextPrimaryMotionTextDisplay from "./plain-text-primary-motion-text-
 import AmendmentTextDisplay from "./amendment-text-display";
 import RegularAmendmentTextDisplay from "./regular-amendment-text-display";
 import ResolutionAmendmentTextDisplay from "./resolution-amendment-text-display";
+import ResolutionAmendmentTruncatedTextDisplay from "./resolution-amendment-truncated-text-display";
+import ResolutionTextTruncatedDisplay from "./resolution-text-truncated-display";
 
 /**
  * Decides how the format the content of a motion.
@@ -36,6 +38,8 @@ import ResolutionAmendmentTextDisplay from "./resolution-amendment-text-display"
 export default {
     name: "motion-text-display",
     components: {
+        ResolutionTextTruncatedDisplay,
+        ResolutionAmendmentTruncatedTextDisplay,
         ResolutionAmendmentTextDisplay,
         RegularAmendmentTextDisplay,
         AmendmentTextDisplay, PlainTextPrimaryMotionTextDisplay, ResolutionTextDisplay
@@ -43,7 +47,8 @@ export default {
     props: [
         'motion',
         /** Since this is used in different contexts, the styling gets passed in from the parent */
-        'motionStyle'
+        'motionStyle',
+        'truncateResolutions'
     ],
 
     mixins: [motionObjectMixin, AmendmentMixin],
@@ -64,6 +69,9 @@ export default {
                 }
 
                 else if(this.isResolution) {
+                    if(this.truncateResolutions){
+                        return ResolutionTextTruncatedDisplay
+                    }
                     //Motion is primary resolution. We know it's not an
                     //amendment since that would've been caught above.
                     return ResolutionTextDisplay;

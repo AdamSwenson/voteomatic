@@ -57,7 +57,7 @@ import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
 
 import wysiwyg from "vue-wysiwyg";
-Vue.use(wysiwyg, {}); // config is optional. more below
+Vue.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
@@ -80,6 +80,7 @@ Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
 Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
+Vue.component('pmode-page-navbar', require('./components/pmode/pmode-page-navbar').default);
 
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/motion-results-page').default);

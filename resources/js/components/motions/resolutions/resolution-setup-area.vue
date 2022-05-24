@@ -16,6 +16,10 @@
             </div>
         </div>
         <div class="card-body edit-area">
+        <resolution-identifier-input :motion="draftMotion"></resolution-identifier-input>
+            <resolution-title-input :motion="draftMotion"></resolution-title-input>
+<!--        </div>-->
+<!--        <div class="card-body edit-area">-->
             <!--                <div class="col">-->
             <!--                    <div class="form-group">-->
 
@@ -60,10 +64,14 @@ import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import resolutionTextDisplay from "../text-display/resolution-text-display";
 import ProposeResolutionButton from "./propose-resolution-button";
 import ResolutionInput from "./resolution-input";
+import ResolutionTitleInput from "./resolution-title-input";
+import ResolutionIdentifierInput from "./resolution-identifier-input";
 
 export default {
     name: "resolution-setup-area",
-    components: {ResolutionInput, ProposeResolutionButton, resolutionTextDisplay},
+    components: {
+        ResolutionIdentifierInput,
+        ResolutionTitleInput, ResolutionInput, ProposeResolutionButton, resolutionTextDisplay},
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

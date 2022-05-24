@@ -7,7 +7,8 @@ use App\Repositories\MotionTemplateRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class MotionFactory extends Factory
+class
+MotionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -62,6 +63,25 @@ class MotionFactory extends Factory
 //        "If this motion is approved, we will immediately vote on the next motion",
 //        "Please vote once or forever hold your peace",
 //        "This proposes a revision to the Bylaws which will be voted upon by the whole Faculty"];
+
+
+    public function configure()
+    {
+        return $this->afterMaking(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        })->afterCreating(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        });
+    }
+
 
     /**
      * Define the model's default state.
@@ -175,11 +195,44 @@ class MotionFactory extends Factory
 
     public function resolution()
     {
+        return $this->state(function (array $attributes) {
+            return [
+                'content' => $this->resolutionText,
+                'requires' => 0.5,
+                'description' => '',
+                'is_resolution' => true,
+                'type' => 'resolution',
+                'info' => [
+                    'title' => $this->faker->bs,
+                    'resolutionIdentifier' => $this->faker->randomNumber(4),
+                    //will be set by the afterMaking value in configure above
+                    'groupId' => null,
+                    'formattedContent' => $this->faker->randomHtml
+                ]
+            ];
+        });
+    }
+
+
+    public function resolutionAmendment()
+    {return $this->state(function (array $attributes) {
+        $appliesToId = $this->faker->randomNumber;
         return [
+            'applies_to' => $appliesToId,
             'content' => $this->resolutionText,
             'requires' => 0.5,
-            'description' => ''
+            'description' => '',
+            'is_resolution' => true,
+            'type' => 'amendment',
+            'info' => [
+                'title' => $this->faker->bs,
+                'resolutionIdentifier' => $this->faker->uuid,
+                //will be set by the afterMaking value in configure above
+                'groupId' => $appliesToId,
+                'formattedContent' => $this->faker->randomHtml
+            ]
         ];
+    });
     }
 
     /**

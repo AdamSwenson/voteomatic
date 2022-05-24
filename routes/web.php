@@ -13,6 +13,7 @@ use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Election\PersonController;
+use App\Http\Controllers\ForcedEventController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Motion\MotionOrderlinessController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\Motion\MotionTemplateController;
+use App\Http\Controllers\PublicViewController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
@@ -153,6 +155,10 @@ Route::post('election/admin/results/hide/{meeting}', [ElectionAdminController::c
 /* =============================
         Main application pages
    ============================= */
+
+//public access
+Route::get('public/{meeting}',[PublicViewController::class, 'publicHome']);
+
 //Internal landing page after non-lti login
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
@@ -170,6 +176,8 @@ Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
 //Route::get('main/{motion}', [MainController::class, 'getVotePage'])
 //    ->name('main');
 
+
+Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
 
 /* =============================
         Meetings

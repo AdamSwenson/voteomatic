@@ -19,6 +19,10 @@ import electionVoterHomeCard from './components/election/voter/election-voter-ho
 import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
 
 import electionAdminCard from './components/election/admin/election-admin-card';
+
+import pModeHome from "./components/pmode/pmode-home";
+Vue.component('pmode-home', pModeHome);
+
 Vue.component('ballot-setup-card', ballotSetupCard);
 
 Vue.component('proposition-setup-card', propositionSetupCard);
@@ -172,6 +176,23 @@ adminOnly : false,
         adminOnly: true,
         type : 'all'
     },
+
+
+    //dev
+
+    {
+        name: 'pmode',
+        path: '/pmode',
+        get label() {
+            // if (store.getters.isElection) return "Setup election";
+            return "Pmode";
+        },
+        components: {main: pModeHome},
+        props: true,
+        adminOnly: true,
+        type : 'all'
+    },
+
 
     //
     // {
