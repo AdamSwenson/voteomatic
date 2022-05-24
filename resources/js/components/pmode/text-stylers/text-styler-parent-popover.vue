@@ -92,6 +92,11 @@ export default {
 
     methods: {
 
+        /**
+         * Added to fix display in VOT-212
+         * @param text
+         * @returns {*}
+         */
         filterSpace : function(text) {
             let r = new RegExp('&nbsp;', 'g')
             return text.replaceAll(r, '');
