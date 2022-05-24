@@ -7,8 +7,7 @@
         <div class="row">
             <div class="col-lg-6">
 
-
-                <div class="card">
+                <div class="card" v-if="isResolution">
                     <div class="card-header">
                         <h3 class="card-title">Amendment History (Experimental)</h3>
                     </div>
@@ -22,15 +21,23 @@
                             parent-id="displayId"
                         ></rezzie-display>
                     </div>
+
+                    <div class="card-body">
+                        <h4 class="card-title">Legend</h4>
+                        <pmode-legend></pmode-legend>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h4 class="card-title">Legend</h4>
-                    <pmode-legend></pmode-legend>
+
+                <div class="card" v-else>
+                    <div class="card-body">
+                        <h6 class="card-title">Amendment history only available for resolutions</h6>
+                    </div>
                 </div>
+
             </div>
 
             <div class="col-lg-6">
-<!--                <p class="text-end"><whatis></whatis></p>-->
+                <!--                <p class="text-end"><whatis></whatis></p>-->
 
                 <div class="card">
 
