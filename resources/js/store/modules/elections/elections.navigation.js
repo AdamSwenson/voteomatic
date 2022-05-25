@@ -296,7 +296,7 @@ return resolve();
     navigateToAppropriateLocationRegularUser({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             if (!isReadyToRock(meeting)) return reject();
-            window.console.log(meeting.phase, 'ep');
+            window.console.log('election phase', meeting.phase );
 
             switch (meeting.phase) {
 
@@ -316,7 +316,8 @@ return resolve();
                     if (getters.isVotingComplete) {
                         commit('showVotingCompleteCard');
                     } else {
-                        commit('showVotingCard');
+                        commit('showInstructionsCard');
+                        // commit('showVotingCard');
                         //Voter can vote for stuff
                     }
 

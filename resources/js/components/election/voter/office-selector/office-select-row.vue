@@ -72,9 +72,10 @@ export default {
         isSelected: function () {
             if (_.isUndefined(this.selectedMotion) || _.isNull(this.selectedMotion)) return false
 
-            //Do not show as selected if summary card is showing
+            //Do not show as selected if summary or other informational cards are showing
             if (this.$store.getters.isSummarySubmitCardVisible) return false;
             if (this.$store.getters.isInstructionsCardVisible) return false;
+            if (this.$store.getters.isCompleteCardShown) return false;
 
             return this.motion.id === this.selectedMotion.id
         },
