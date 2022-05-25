@@ -4,7 +4,7 @@ import {isReadyToRock} from "../utilities/readiness.utilities";
 export default class Message extends IModel {
 
 
-    constructor({id = null, messageText = null, messageStyle = null, displayTime = 0, motion = null, showToChair=null, chairOnly=null, blockingMessage=null, message=null}) {
+    constructor({id = null, messageText = null, messageStyle = 'danger', displayTime = 0, motion = null, showToChair=null, chairOnly=null, blockingMessage=null, message=null}) {
         super();
         /** Whether to display the message to the chair (to avoid annoying them)*/
         this._showToChair = showToChair;
