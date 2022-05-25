@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-dark shadow-sm " style="background-color: darkblue;">
 
-<!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
+        <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
         <div class="container-fluid">
 
             <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
@@ -12,11 +12,11 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav me-3">
-<!--                    <li class="nav-item">-->
-<!--                        <form class="form-inline">-->
-<!--                            <refresh-button></refresh-button>-->
-<!--                        </form>-->
-<!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <form class="form-inline">-->
+                    <!--                            <refresh-button></refresh-button>-->
+                    <!--                        </form>-->
+                    <!--                    </li>-->
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown"
@@ -29,22 +29,28 @@
 
                         <!-- Authentication Links -->
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-<!--                        <div class="dropdown-menu dropdown-menu-right"-->
-<!--                             aria-labelledby="navbarDropdown"-->
-<!--                        >-->
-<li>
-                            <a class="dropdown-item"
-                               v-if="isDev"
-                               v-bind:href="nonLTILoginUrl">Login</a>
-</li>
+                            <!--                        <div class="dropdown-menu dropdown-menu-right"-->
+                            <!--                             aria-labelledby="navbarDropdown"-->
+                            <!--                        >-->
                             <li>
-
-                            <a class="dropdown-item"
-                               v-on:click="logout"
-                            >Logout</a>
+                                <a class="dropdown-item"
+                                   v-if="isDev"
+                                   v-bind:href="nonLTILoginUrl">Login</a>
                             </li>
-<!--                        </div>-->
-                            </ul>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   v-on:click="logout"
+                                >Logout</a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   v-on:click="home"
+                                >Home</a>
+                            </li>
+                            <!--                        </div>-->
+                        </ul>
                     </li>
 
                 </ul>
@@ -104,6 +110,9 @@ export default {
 
         logout: function () {
             this.$store.dispatch('logout');
+        },
+        home: function () {
+            this.$store.dispatch('openHomePage');
         }
     }
 
