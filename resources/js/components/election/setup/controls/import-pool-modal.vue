@@ -6,7 +6,7 @@ import ModalParent from "../../../parents/modal-parent";
 export default {
     name: "import-pool-modal",
     extends: ModalParent,
-    props: [],
+    props: ['shouldClose'],
 
     mixins: [],
 
@@ -17,6 +17,14 @@ export default {
             // hideActionButton: true,
             buttonLabel: 'Done'
 
+        }
+    },
+
+    watch : {
+        shouldClose: function(){
+            // if(this.shouldClose === true){
+                this.closeModal();
+            // }
         }
     },
 

@@ -129,7 +129,11 @@ export default {
 
     methods: {
         closeModal : function(){
-            $('#' + this.modalId).modal('hide');
+            // $('#' + this.modalId).modal('hide');
+            var myModalEl = document.getElementById(this.modalId);
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+
+            modal.hide();
         },
 
     }

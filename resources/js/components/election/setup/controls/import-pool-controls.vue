@@ -1,8 +1,8 @@
 <template>
     <div class="import-pool-controls">
         <import-pool-button></import-pool-button>
-        <import-pool-modal>
-            <file-import-control></file-import-control>
+        <import-pool-modal :should-close="shouldClose">
+            <file-import-control v-on:candidate-import-complete="notifyToClose"></file-import-control>
              </import-pool-modal>
     </div>
 </template>
@@ -24,14 +24,22 @@ export default {
     mixins: [],
 
     data: function () {
-        return {}
+        return {
+            shouldClose : 0
+        }
     },
 
     asyncComputed: {},
 
     computed: {},
 
-    methods: {}
+    methods: {
+        notifyToClose : function(){
+            this.shouldClose += 1;
+            // this.shouldClose = false;
+
+        }
+    }
 
 }
 </script>
