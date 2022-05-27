@@ -3,14 +3,20 @@
     <li class="list-group-item "
         v-bind:class="styling">
         <div class="row">
+            <div class="col-sm ">
 
-            <div class="col-sm "
-                 v-if="isChair"
-            >
+<!--            <div class="col-sm "-->
+<!--                 v-if="isChair"-->
+<!--            >-->
+
                 <motion-select-button
-                    v-if="isChair  "
                     :motion="motion"
                 ></motion-select-button>
+
+<!--                <motion-select-button-->
+<!--                    v-if="isChair  "-->
+<!--                    :motion="motion"-->
+<!--                ></motion-select-button>-->
 
             </div>
 

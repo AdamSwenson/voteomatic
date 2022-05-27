@@ -20,11 +20,12 @@ import MotionObjectMixin from '../../mixins/motionObjectMixin';
 import MeetingMixin from '../../mixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
 import Payload from "../../models/Payload";
+import ChairMixin from "../../mixins/chairMixin";
 
 export default {
     name: "motion-select-button",
     components: {EndVotingButton},
-    mixins: [MeetingMixin, MotionObjectMixin],
+    mixins: [MeetingMixin, MotionObjectMixin, ChairMixin, ],
     data: function () {
         return {
             classBase: 'btn btn-lg btn-block '
@@ -88,10 +89,31 @@ export default {
 
     methods: {
         setMotion: function () {
+            if(this.isChair) {
+                this.setMotionChair();
+            }else{
+                this.setMotionLocal()
+            }
+        },
+
+        /**
+         * Sets the motion as current on the server and pushes
+         * to all users
+         */
+        setMotionChair : function(){
             let pl = Payload.factory({'motionId': this.motion.id, 'meetingId': this.meeting.id});
             this.$store.dispatch('setCurrentMotion', pl)
-            // this.$store.commit('setMotion', this.motion);
         },
+
+
+        /**
+         * Sets the motion as current on client but not
+         * on server. Used by regular user to select past
+         * motions and view results
+         */
+        setMotionLocal : function(){
+            this.$store.commit('setMotion', this.motion)
+        }
 
 
     }

@@ -20,25 +20,36 @@ const actions = {
      */
     handleMotionClosedMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
-            let ended = MotionObjectFactory.make(pusherEvent.ended);
+            // let ended = MotionObjectFactory.make(pusherEvent.ended);
 
-            // let ended = new Motion(pusherEvent.ended);
-            // let superseding = new Motion(pusherEvent.superseding);
-            // let original = new Motion(pusherEvent.original);
+            //Added in VOT-176
+            pusherEvent.motion = pusherEvent.ended; //Action will expect the motion to be on the motion property
+            return dispatch('getMotionFromEvent', pusherEvent).then((ended) => {
 
-            /* Set the current motion as closed and update isVotingAllowed */
-            dispatch('markMotionComplete', ended).then(() => {
+                // let ended = new Motion(pusherEvent.ended);
+                // let superseding = new Motion(pusherEvent.superseding);
+                // let original = new Motion(pusherEvent.original);
 
-                /* Navigate to results card. It will load results on mount  */
-                dispatch('forceNavigationToResults');
+                //Added in VOT-176
+                //If it somehow wasn't the current motion
+                //make it the current motion and attach relevant listeners
+                return dispatch('setMotion', ended).then(() => {
 
-                /* Quietly create a revised  motion if the motion which passed was an amendment */
-                //This checks whether the motion was an amendment and if it was successful
-                dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent);
+                    /* Set the current motion as closed and update isVotingAllowed */
+                    dispatch('markMotionComplete', ended).then(() => {
 
-                //We don't need to wait for it to finish.
-                resolve();
+                        /* Navigate to results card. It will load results on mount  */
+                        dispatch('forceNavigationToResults');
 
+                        /* Quietly create a revised  motion if the motion which passed was an amendment */
+                        //This checks whether the motion was an amendment and if it was successful
+                        dispatch('handlePotentialAmendmentAfterVotingClosed', pusherEvent);
+
+                        //We don't need to wait for it to finish.
+                        resolve();
+
+                    });
+                });
             });
 
         }));
@@ -54,16 +65,20 @@ const actions = {
     handleMotionSecondedMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
             dispatch('resetMotionPendingSecond');
-            let motion = MotionObjectFactory.make(pusherEvent.motion);
 
-            // let motion = new Motion(pusherEvent.motion);
-            commit('addMotionToStore', motion);
-            //Make it the current motion and attach relevant listeners
-            return dispatch('setMotion', motion)
-                .then(() => {
-                    dispatch('forceNavigationToHome');
-                    return resolve(motion);
-                });
+            //Added VOT-176
+            return dispatch('getMotionFromEvent', pusherEvent).then((motion) => {
+                // let motion = MotionObjectFactory.make(pusherEvent.motion);
+
+                // let motion = new Motion(pusherEvent.motion);
+                commit('addMotionToStore', motion);
+                //Make it the current motion and attach relevant listeners
+                return dispatch('setMotion', motion)
+                    .then(() => {
+                        dispatch('forceNavigationToHome');
+                        return resolve(motion);
+                    });
+            });
         }));
     },
 
@@ -82,16 +97,20 @@ const actions = {
     handleNewCurrentMotionSetMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
             // dispatch('resetMotionPendingSecond');
-            let motion = MotionObjectFactory.make(pusherEvent.motion);
 
-            // let motion = new Motion(pusherEvent.motion);
-            commit('addMotionToStore', motion);
-            //Make it the current motion and attach relevant listeners
-            return dispatch('setMotion', motion)
-                .then(() => {
-                    dispatch('forceNavigationToHome');
-                    return resolve(motion);
-                });
+            //Added VOT-176
+            return dispatch('getMotionFromEvent', pusherEvent).then((motion) => {
+                // let motion = MotionObjectFactory.make(pusherEvent.motion);
+
+                // let motion = new Motion(pusherEvent.motion);
+                commit('addMotionToStore', motion);
+                //Make it the current motion and attach relevant listeners
+                return dispatch('setMotion', motion)
+                    .then(() => {
+                        dispatch('forceNavigationToHome');
+                        return resolve(motion);
+                    });
+            });
         }));
     },
 
@@ -149,6 +168,30 @@ const actions = {
         }));
     },
 
+    /**
+     * Not a getter. Checks to see if there already exists a motion
+     * corresponding to the one in the event. If so, it returns it.
+     * If not, it creates a new object from the event (but does not add it to store)
+     *
+     * Added in VOT-176 to deal with regular users being able to change the active motion locally
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param pusherEvent
+     * @returns {Promise<unknown>}
+     */
+    getMotionFromEvent({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+
+            //Get the existing object if possible so that we won't have
+            //duplicates which different things could mutate.
+            let motion = getters.getMotionById(pusherEvent.motion.id);
+            if (isReadyToRock(motion)) return resolve(motion);
+
+            return resolve(MotionObjectFactory.make(pusherEvent.motion));
+        }));
+    },
 
     /**
      * When the client is notified by the server that voting on a motion is now open
@@ -162,17 +205,24 @@ const actions = {
      */
     handleVotingOnMotionOpenedMessage({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
-            let motion = MotionObjectFactory.make(pusherEvent.motion);
-            // let motion = new Motion(pusherEvent.motion);
-            //commit('addMotionToStore', motion);
-            return dispatch('markMotionVotingOpen', motion)
-                .then(() => {
-                    //If it somehow wasn't the current motion
-                    //make it the current motion and attach relevant listeners
-                    dispatch('setMotion', motion);
-                    dispatch('forceNavigationToVote');
-                    return resolve(motion);
+
+            //Added VOT-176
+            return dispatch('getMotionFromEvent', pusherEvent).then((motion) => {
+
+                //If it somehow wasn't the current motion
+                //make it the current motion and attach relevant listeners
+                return dispatch('setMotion', motion).then(() => {
+
+                    return dispatch('markMotionVotingOpen', motion).then(() => {
+
+                        //If it somehow wasn't the current motion
+                        //make it the current motion and attach relevant listeners
+                        // dispatch('setMotion', motion);
+                        dispatch('forceNavigationToVote');
+                        return resolve(motion);
+                    });
                 });
+            });
         }));
 
     },
@@ -181,4 +231,4 @@ const actions = {
 };
 
 
-export { actions as default }
+export {actions as default}
