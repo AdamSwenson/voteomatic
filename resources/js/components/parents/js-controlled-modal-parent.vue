@@ -18,7 +18,7 @@
                             class="btn-close"
                             v-on:click="closeModal"
                             aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+<!--                        <span aria-hidden="true">&times;</span>-->
                     </button>
 
                 </div>
@@ -67,6 +67,7 @@ export default {
 
     data: function () {
         return {
+
             // leftButtonStyling: "",
             // rightButtonStyling : "",
             // modalId : '',
@@ -82,7 +83,8 @@ export default {
     },
 
     mounted() {
-        var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
+        //dev Not sure why but saving this on data and trying to call show() and hide() on that object causes never closing modals
+        new bootstrap.Modal(document.getElementById(this.modalId), {});
     },
 
     computed: {
@@ -98,22 +100,21 @@ export default {
         closeModal: function () {
             var myModalEl = document.getElementById(this.modalId);
             var modal = bootstrap.Modal.getInstance(myModalEl)
+
+            //dev Really not sure why this is needed, but it is
             if (isReadyToRock(modal)) {
                 modal.hide();
-
             }
-            // $('#' + this.modalId).modal('hide');
         },
 
         openModal: function () {
             window.console.log('showing ', this.modalId);
             var myModalEl = document.getElementById(this.modalId);
             var modal = bootstrap.Modal.getInstance(myModalEl)
-            // if (isReadyToRock(modal)) {
+            // // if (isReadyToRock(modal)) {
             modal.show();
             // }
-            // $('#' + this.modalId).modal();
-            // $('#' + this.modalId).modal('show');
+
         },
 
         handleLeftClick: function () {
