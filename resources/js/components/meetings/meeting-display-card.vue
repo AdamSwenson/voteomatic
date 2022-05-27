@@ -7,14 +7,12 @@
 
         <div class="card-body meeting-display">
 
-            <h5 class="card-title text-left">{{ meetingName }}</h5>
+            <h5 class="card-title text-start">{{ meetingName }}</h5>
 
-            <h5 class="card-subtitle text-left">{{ meetingDate }}</h5>
+            <h5 class="card-subtitle text-start">{{ meetingDate }}</h5>
 
-            <div class="meeting-link text-left mt-4" v-if="isChair">
-                <h5 class="card-subtitle user-select-all">{{ meetingLink }}</h5>
-                <p class="text-muted ">Use this link in creating the Canvas assignment.</p>
-            </div>
+            <meeting-url-display></meeting-url-display>
+
 
             <p class="text-secondary">[ Optional short description of meeting will be here ]</p>
 
@@ -35,12 +33,13 @@
 <script>
 import MeetingMixin from '../../mixins/meetingMixin';
 import ChairMixin from "../../mixins/chairMixin";
+import MeetingUrlDisplay from "./meeting-url-display";
 
 // import Payload from "../../models/Payload";
 
 export default {
     name: "meeting-display-card",
-
+    components: {MeetingUrlDisplay},
     props: [],
 
     mixins: [MeetingMixin, ChairMixin],

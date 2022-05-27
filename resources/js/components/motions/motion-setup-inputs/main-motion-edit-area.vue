@@ -8,15 +8,21 @@
             <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>
         </div>
 
-        <div class="card-body v-else">
-            <p class="text-danger"><strong>Only</strong> use this to correct minor clerical errors.</p>
+        <div class="editing" v-else>
+            <div class="required card-body ">
+                <p class="text-danger"><strong>Only</strong> use this to correct minor clerical errors.</p>
 
-            <h4 class="text-danger">Do not use this for formal amendments.</h4>
+                <h4 class="text-danger">Do not use this for formal amendments.</h4>
 
-            <p class="text-danger">Your edits are automatically saved to the server as you type</p>
+                <p class="text-danger">Your edits are automatically saved to the server as you type</p>
 
-            <div class="required">
+                <!--            <div class="">-->
                 <form>
+                    <!--                    <resolution-input-->
+                    <!--                        :motion="motion"-->
+                    <!--                        :edit-mode="true"-->
+                    <!--                        v-on:update:type="handleUpdate('type', $event)"-->
+                    <!--                    ></resolution-input>-->
 
                     <motion-content-input
                         :motion="motion"
@@ -34,12 +40,13 @@
 
             </div>
 
-            <div class="optional">
+            <div class=" card-body optional">
                 <h4 class="card-subtitle text-center">Optional</h4>
 
                 <form>
 
                     <motion-type-input
+
                         :motion="motion"
                         :edit-mode="true"
                         v-on:update:type="handleUpdate('type', $event)"
@@ -54,30 +61,30 @@
                 </form>
             </div>
 
-            <div class="card-footer make-button-area">
+            <div class="card-body make-button-area">
                 <div class="row">
                     <div class="col text-center">
-
-                        <delete-motion-button></delete-motion-button>
-
+                        <div class="d-grid gap-2">
+                            <delete-motion-button></delete-motion-button>
+                        </div>
                         <delete-motion-modal></delete-motion-modal>
                     </div>
 
                     <div class="col text-center">
-                        <button class="btn btn-primary"
-                                v-on:click="handleDone"
-                        >Done editing
-                        </button>
-
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary"
+                                    v-on:click="handleDone"
+                            >Done editing
+                            </button>
+                        </div>
                     </div>
-
                 </div>
 
             </div>
 
-
         </div>
     </div>
+
 
 </template>
 
@@ -93,17 +100,21 @@ import MotionTypeInput from "./motion-type-input";
 import Motion from "../../../models/Motion";
 import Payload from "../../../models/Payload";
 import CreateMotionModal from "./create-motion-modal";
+import ResolutionInput from "../resolutions/resolution-input";
 
 export default {
     name: "main-motion-edit-area",
     components: {
+        ResolutionInput,
         CreateMotionModal,
         MotionTypeInput,
         DescriptionInput,
         DeleteMotionModal,
         DeleteMotionButton, VoteRequiredInputs, MotionContentInput
     },
-    props: [],
+    props: [
+        // 'isResolution'
+    ],
 
     mixins: [MotionMixin, MeetingMixin],
 

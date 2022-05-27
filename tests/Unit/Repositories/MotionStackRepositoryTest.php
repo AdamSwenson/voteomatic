@@ -13,7 +13,7 @@ class MotionStackRepositoryTest extends TestCase
     public $meeting;
     public $motions;
     public $currentMotion;
-    private $completedMotions;
+    public $completedMotions;
 
     public function setUp():void
     {

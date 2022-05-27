@@ -30,6 +30,21 @@ abstract class TestCase extends BaseTestCase
      */
     public $faker;
 
+
+    public $election;
+
+    public $meeting;
+    public $motion;
+    public $office;
+    public $owner;
+
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public $regularUserMember;
+
+
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */

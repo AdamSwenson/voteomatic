@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 
 class MotionSeekingSecond implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionOnlyTrait;
     /**
      * @var Motion
      */

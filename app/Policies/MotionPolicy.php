@@ -19,6 +19,8 @@ class MotionPolicy
 
     public function setAsCurrent(User $user, Motion $motion)
     {
+        if ($user->isPublicUser()) return false;
+
 //todo should this be chair only?
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
@@ -27,6 +29,8 @@ class MotionPolicy
 
     public function markComplete(User $user, Motion $motion)
     {
+        if ($user->isPublicUser()) return false;
+
 //todo should this be chair only?
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
@@ -35,6 +39,8 @@ class MotionPolicy
 
     public function markNoSecondObtained(User $user, Motion $motion)
     {
+        if ($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isOwner($user);
 
@@ -48,12 +54,16 @@ class MotionPolicy
      */
     public function secondMotion(User $user, Motion $motion)
     {
+        if ($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
     }
 
     public function castVoteOnMotion(User $user, Motion $motion)
     {
+        if ($user->isPublicUser()) return false;
+
         $meeting = $motion->meeting;
         return $meeting->isPartOfMeeting($user);
     }
@@ -61,8 +71,9 @@ class MotionPolicy
 
     public function viewMotionResults(User $user, Motion $motion)
     {
+
         $meeting = $motion->meeting;
-        return $meeting->isPartOfMeeting($user) && $motion->is_complete;
+        return $meeting->isPartOfMeeting($user); //&& $motion->is_complete;
     }
 
     /**
@@ -84,28 +95,34 @@ class MotionPolicy
 
     public function createOffice(User $user, Meeting $meeting)
     {
+        if ($user->isPublicUser()) return false;
 
         return $meeting->isOwner($user);
 
     }
 
 
-    public function castVoteForOffice(User $user, Motion $office)
+    public function castVoteForOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        if ($user->isPublicUser()) return false;
+
+        $election = $motion->meeting;
         return $election->isPartOfMeeting($user);
     }
 
-    public function deleteOffice(User $user, Motion $office)
+    public function deleteOffice(User $user, Motion $motion)
     {
-        $election = $office->meeting;
+        if ($user->isPublicUser()) return false;
+
+        $election = $motion->meeting;
         return $election->isOwner($user);
     }
 
 
-    public function viewOffice(User $user, Motion $office)
+    public function viewOffice(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
+
+        $meeting = $motion->meeting;
         return ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
@@ -124,15 +141,30 @@ class MotionPolicy
      * @param Motion $motion
      * @return bool
      */
-    public function viewOfficeResults(User $user, Motion $office)
+    public function viewOfficeResults(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
-        return $office->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
+        $meeting = $motion->meeting;
+
+        //Must be either owner or member (owner may not be part of meeting)
+        if (!$meeting->isPartOfMeeting($user) && !$meeting->isOwner($user)) return false;
+
+        if ($meeting->isOwner($user)) {
+            //owner may see if closed or results
+            return $meeting->phase === 'closed' || $meeting->phase === 'results';
+        }
+
+        //everyone else only gets to see if set to results
+        return $meeting->phase === 'results';
+
+
+//        return $motion->is_complete && ($meeting->isPartOfMeeting($user) || $meeting->isOwner($user));
     }
 
-    public function updateOffice(User $user, Motion $office)
+    public function updateOffice(User $user, Motion $motion)
     {
-        $meeting = $office->meeting;
+        if ($user->isPublicUser()) return false;
+
+        $meeting = $motion->meeting;
         return $meeting->isOwner($user);
     }
 

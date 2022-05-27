@@ -2,6 +2,7 @@
 
 namespace Tests\Http\Controllers\Election;
 
+use App\Exceptions\BallotStuffingAttempt;
 use App\Exceptions\DoubleVoteAttempt;
 use App\Exceptions\ExcessCandidatesSelected;
 use App\Exceptions\VoteSubmittedAfterMotionClosed;
@@ -19,22 +20,22 @@ use Tests\TestCase;
 class ElectionVoteControllerTest extends TestCase
 {
 
-    private $owner;
-    private $election;
-    private $office;
-    private $regularUserMember;
+    public $owner;
+    public $election;
+    public $office;
+    public $regularUserMember;
     /**
      * @var string
      */
-    private $url;
+    public $url;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $candidates;
+    public $candidates;
     /**
      * @var array
      */
-    private $requestData;
+    public $requestData;
 
     public function setUp(): void
     {
@@ -67,11 +68,14 @@ class ElectionVoteControllerTest extends TestCase
     /** @test */
     public function recordVote()
     {
-
         $response = $this->actingAs($this->regularUserMember)->post($this->url, $this->requestData);
 
-//check
+        //check
         $response->assertSuccessful();
+        $this->assertDatabaseHas('votes', [
+            'motion_id' => $this->office->id,
+            'candidate_id' => $this->requestData['candidateIds'][0]
+        ]);
     }
 
     /** @test */
@@ -80,7 +84,7 @@ class ElectionVoteControllerTest extends TestCase
         $this->election->addUserToMeeting($this->owner);
         $response = $this->actingAs($this->owner)->post($this->url, $this->requestData);
 
-//check
+        //check
         $response->assertSuccessful();
     }
 
@@ -165,5 +169,23 @@ class ElectionVoteControllerTest extends TestCase
             ->post($this->url, $this->requestData);
 
         $response->assertStatus(ExcessCandidatesSelected::ERROR_CODE);
+    }
+
+    /** @test */
+    public function recordVoteDeniesWhenDuplicateIds(){
+        $selectedCandidateIds = collect($this->faker->randomElements($this->candidates))->pluck('id');
+        $this->office->max_winners = sizeof($selectedCandidateIds) +1;
+        $this->office->save();
+
+        $selectedCandidateIds->push($selectedCandidateIds[0]);
+        $this->requestData = ['candidateIds' => $selectedCandidateIds,
+            'writeIns' => []
+        ];
+
+        $response = $this->actingAs($this->regularUserMember)
+            ->post($this->url, $this->requestData);
+
+        $response->assertStatus(BallotStuffingAttempt::ERROR_CODE);
+
     }
 }

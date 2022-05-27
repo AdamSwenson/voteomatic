@@ -21,20 +21,25 @@ use Illuminate\Queue\SerializesModels;
  */
 class MotionVoteCast implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, MotionEventTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
 
 
     /**
      * @var Motion
      */
-    public $motion;
+    protected $motion;
 
-    public $meeting;
+    protected $meeting;
     public $count;
     /**
      * @var int
      */
     public $totalMembers;
+    /**
+     * @var mixed
+     */
+    public $motion_id;
+    public $meeting_id;
 
     /**
      * Create a new event instance.
@@ -45,8 +50,28 @@ class MotionVoteCast implements ShouldBroadcast
     {
         $this->motion = $motion;
         $this->meeting = $motion->meeting;
+
+        $this->motion_id = $this->motion->id;
+
+        $this->meeting_id = $this->meeting->id;
+
         $this->count = $motion->totalVotesCast;
         $this->totalMembers = collect($this->meeting->users)->count();
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            "motion" => [
+                "meeting_id" => $this->meeting->id,
+                "id" => $this->motion->id
+            ],
+            "meeting" => [
+                "id" => $this->meeting->id,
+            ],
+            "count" => $this->count,
+            "totalMembers" => $this->totalMembers
+        ];
     }
 
     /**

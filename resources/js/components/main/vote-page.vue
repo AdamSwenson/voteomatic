@@ -7,20 +7,23 @@
 
         <div class="vote-area card-body">
 
-            <div class="text-center">
-                <motion-content
+<!--            <div class="text-center">-->
+                <motion-text-display
+                    v-if="isReady"
                     :motion="motion"
-                    :isReady="isReady"
-                    v-if="! isAmendment"
-                ></motion-content>
+                ></motion-text-display>
+<!--                -->
+<!--                <motion-content-->
+<!--                    :motion="motion"-->
+<!--                    :isReady="isReady"-->
+<!--                    v-if="! isAmendment"-->
+<!--                ></motion-content>-->
 
-                <amendment-text-display
-                    v-else-if="isReady && isAmendment"
-                    :amendment-text="motionContent"
-                    :original-text="originalText"
-                ></amendment-text-display>
+<!--                <amendment-text-display-->
+<!--                    v-else-if="isReady && isAmendment"-->
+<!--                ></amendment-text-display>-->
 
-            </div>
+<!--            </div>-->
 
             <vote-receipt
                 :receipt="receipt"
@@ -106,15 +109,17 @@ import motionMixin from '../../mixins/motionStoreMixin';
 import receiptMixin from "../../mixins/receiptMixin";
 
 import motionObjectMixin from "../../mixins/motionObjectMixin";
-import AmendmentTextDisplay from "../motions/amendment-text-display";
+import AmendmentTextDisplay from "../motions/text-display/amendment-text-display";
 import RequiredVoteBadge from "../motions/badges/required-vote-badge";
 import DebatableBadge from "../motions/badges/debatable-badge";
 import MotionTypeBadge from "../motions/badges/motion-type-badge";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import MotionTextDisplay from "../motions/text-display/motion-text-display";
 
 export default {
     name: "vote-page",
     components: {
+        MotionTextDisplay,
         MotionTypeBadge,
         DebatableBadge,
         RequiredVoteBadge,

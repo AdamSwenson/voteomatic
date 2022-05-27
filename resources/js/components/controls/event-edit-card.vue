@@ -13,22 +13,20 @@
                 <!--                 v-if="showArea === 'edit' || showArea === 'create'"-->
                 <!--            >-->
 
-                <label for="event-name">{{ eventTypeCapitalized }} name</label>
+                 <label class='form-label' for="event-name">{{ eventTypeCapitalized }} name</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="event-name" v-model="eventName">
                 </div>
 
-                <label for="event-date">{{ eventTypeCapitalized }} date <span
+                 <label class='form-label' for="event-date">{{ eventTypeCapitalized }} date <span
                     class="text-secondary">(optional)</span></label>
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" id="event-date" v-model="eventDate">
                 </div>
 
                 <entry-instructions></entry-instructions>
-                <!--                <p class="text-muted">Your entries are automatically saved on the-->
-                <!--                    server as you type. You don't need to click anything when you are done.</p>-->
-                <!--                <p class="text-muted">If you do not type anything, there will be a blank {{ type }}. Use the delete-->
-                <!--                    button to fix this.</p>-->
+
+                <meeting-url-display></meeting-url-display>
 
             </div>
 
@@ -44,10 +42,11 @@ import MeetingMixin from '../../mixins/meetingMixin';
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import ModeMixin from "../../mixins/modeMixin";
 import EntryInstructions from "./entry-instructions";
+import MeetingUrlDisplay from "../meetings/meeting-url-display";
 
 export default {
     name: "event-edit-card",
-    components: {EntryInstructions},
+    components: {MeetingUrlDisplay, EntryInstructions},
     // components: {
     // props: ['shouldShowFields'],
 // {

@@ -6,12 +6,14 @@ use App\Http\Controllers\Demo\WebDemoController;
 use App\Http\Controllers\Dev\DevController;
 use App\Http\Controllers\Dev\EntryController;
 use App\Http\Controllers\Election\CandidateController;
+use App\Http\Controllers\Election\ElectionAdminController;
 use App\Http\Controllers\Election\ElectionController;
 use App\Http\Controllers\Election\ElectionResultsController;
 use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Election\PersonController;
+use App\Http\Controllers\ForcedEventController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\Motion\MotionOrderlinessController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\Motion\MotionTemplateController;
+use App\Http\Controllers\PublicViewController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
@@ -63,7 +66,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
 //Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
 
-Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
+//Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
 
 /* =============================
         Login, LTI authentication, and other admin
@@ -98,7 +101,7 @@ Route::post('lti/chair-demo', [LTIDemoController::class, 'launchChairDemo'])
 Route::post('lti/member-demo', [LTIDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 
-Route::post('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
+Route::get('web/chair-demo', [WebDemoController::class, 'launchChairDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
 Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
     ->withoutMiddleware([ VerifyCsrfToken::class]);
@@ -120,8 +123,12 @@ Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVot
 Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
 
 Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
-Route::resource('elections', ElectionController::class);
-Route::resource('offices', OfficeController::class);
+Route::resource('elections', ElectionController::class)->parameters([
+    'elections' => 'meeting'
+]);
+Route::resource('offices', OfficeController::class)->parameters([
+    'offices' => 'motion'
+]);
 
 //pool of eligible nominees for office
 Route::get('election/pool/{motion}', [CandidatePoolController::class, 'getCandidatePool']);
@@ -131,12 +138,17 @@ Route::post('election/nominate/{poolMember}', [CandidateController::class, 'addC
 
 Route::resource('election/people', PersonController::class);
 
-Route::post('election/write-in/{motion}', [CandidateController::class, 'addWriteInCandidate']);
+Route::post('election/write-in/{motion}', [CandidateController::class, 'addWriteInCandidate'])
+    ->middleware(['validate-write-in-name', 'check-write-in-does-not-duplicate-official']);
 
 //Handles update and destroy
 Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
 
-
+//dev Probably unused and deprecated after VOT-177 (phase change handled by regular meeting controller update)
+Route::post('election/admin/start/{meeting}', [ElectionAdminController::class, 'startVoting']);
+Route::post('election/admin/stop/{meeting}', [ElectionAdminController::class, 'stopVoting']);
+Route::post('election/admin/results/release/{meeting}', [ElectionAdminController::class, 'releaseResults']);
+Route::post('election/admin/results/hide/{meeting}', [ElectionAdminController::class, 'hideResults']);
 
 
 
@@ -144,6 +156,10 @@ Route::delete('election/candidate/{candidate}', [CandidateController::class, 're
 /* =============================
         Main application pages
    ============================= */
+
+//public access
+Route::get('public/{meeting}',[PublicViewController::class, 'publicHome']);
+
 //Internal landing page after non-lti login
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
@@ -161,6 +177,8 @@ Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
 //Route::get('main/{motion}', [MainController::class, 'getVotePage'])
 //    ->name('main');
 
+
+Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
 
 /* =============================
         Meetings

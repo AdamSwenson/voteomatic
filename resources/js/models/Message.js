@@ -4,16 +4,29 @@ import {isReadyToRock} from "../utilities/readiness.utilities";
 export default class Message extends IModel {
 
 
-    constructor({id = null, messageText = null, messageStyle = null, displayTime = 0, motion = null, showToChair=null, chairOnly=null}) {
+    constructor({id = null, messageText = null, messageStyle = 'danger', displayTime = 0, motion = null, showToChair=null, chairOnly=null, blockingMessage=null, message=null}) {
         super();
         /** Whether to display the message to the chair (to avoid annoying them)*/
         this._showToChair = showToChair;
         /** Whether to only show the message to the chair */
         this._chairOnly = chairOnly;
+
+        /** Whether the message should demand dismissal */
+        this.blockingMessage = blockingMessage;
+
         //We add a bit of entropy so vue won't get confused by multiple
         //instances of same message
         this.id = 'message-' + id + '-' + _.random(3,9999);
+
+        //This will be populated from the specialized exceptions
         this.messageText = messageText;
+
+        //If it was a regular error, there will be a message field.
+        //We use this one only as a fallback
+        if(!isReadyToRock(this.messageText) && isReadyToRock(message)){
+            this.messageText = message;
+        }
+
         this.messageStyle = messageStyle;
         this.displayTime = displayTime;
         this.motion = motion;

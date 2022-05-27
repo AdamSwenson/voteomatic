@@ -13,12 +13,13 @@ use Exception;
 class ClientVisibleException extends Exception
 {
 //dev all children must define the following constants
+
 //    const ERROR_CODE = ;
 //
 //    const MESSAGE_STYLE = '';
-//
+
 //    const DISPLAY_TIME = 5000;
-//
+
 //    const BLOCKING_MESSAGE = false;
 //
 //    const MESSAGE = "";
@@ -30,7 +31,8 @@ class ClientVisibleException extends Exception
     public $messageText;
 
     /**
-     * Milliseconds before auto hides
+     * Milliseconds before auto hides.
+     * If the message is blocking, this should be null
      * @var int
      */
     public $displayTime;

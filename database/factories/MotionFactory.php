@@ -7,7 +7,8 @@ use App\Repositories\MotionTemplateRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class MotionFactory extends Factory
+class
+MotionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -42,10 +43,45 @@ class MotionFactory extends Factory
         ],
     ];
 
+    public $resolutionText = "ACADEMIC FREEDOM AND TEACHING MODALITY IN THE COVID-19 PANDEMIC
+1.	RESOLVED:	That the Academic Senate of the California State University (ASCSU) recognize that we are still dealing with the COVID-19 pandemic and the very contagious Delta variant; and be it further
+2.	RESOLVED:	That the faculty have a right to make decisions as to what pertains to their teaching environment and their personal health; and be it further
+3.	RESOLVED:	That to avoid canceling classes, faculty have the ad hoc flexibility to rapidly pivot face-to-face courses temporarily to virtual instruction during acute or dynamic transitory extenuating circumstances such as sudden COVID-19 spikes, childcare, elder care, and for physical and/or mental health management; and be it further
+4.	RESOLVED:	That the ASCSU request that the Chancellor’s Office (CO) declare that, for as long as COVID-19 remains a concern, course modality be determined by the faculty member; and be it further
+5.	RESOLVED:	That ASCSU urge individual campuses to accept instructor-initiated changes in the mode of instruction in response to the changing conditions of the pandemic; and be it further
+6.	RESOLVED:	That the ASCSU distribute this resolution to the:
+●	CSU Board of Trustees,
+●	CSU Chancellor,
+●	CSU campus Presidents,
+●	CSU campus Senate Chairs,
+●	CSU campus Senate Executive Committees,
+●	CSU Provosts/Vice Presidents of Academic Affairs, and
+●	President of California Faculty Association (CFA).
+";
+
 //    public $descriptions = ["",
 //        "If this motion is approved, we will immediately vote on the next motion",
 //        "Please vote once or forever hold your peace",
 //        "This proposes a revision to the Bylaws which will be voted upon by the whole Faculty"];
+
+
+    public function configure()
+    {
+        return $this->afterMaking(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        })->afterCreating(function (Motion $motion) {
+            if($motion->is_resolution && ! $motion->isAmendment()){
+                $motion->info['groupId'] = $motion->id;
+                $motion->info['formattedContent'] = $motion->content;
+                $motion->save();
+            }
+        });
+    }
+
 
     /**
      * Define the model's default state.
@@ -73,10 +109,13 @@ class MotionFactory extends Factory
             'type' => $m['type'],
             'seconded' => false,
 
+            'author_id' => null,
+
         ];
     }
 
-    public function amendment(){
+    public function amendment()
+    {
 
         return $this->state(function (array $attributes) {
             $main = new Motion();
@@ -154,6 +193,47 @@ class MotionFactory extends Factory
         });
     }
 
+    public function resolution()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'content' => $this->resolutionText,
+                'requires' => 0.5,
+                'description' => '',
+                'is_resolution' => true,
+                'type' => 'resolution',
+                'info' => [
+                    'title' => $this->faker->bs,
+                    'resolutionIdentifier' => $this->faker->randomNumber(4),
+                    //will be set by the afterMaking value in configure above
+                    'groupId' => null,
+                    'formattedContent' => $this->faker->randomHtml
+                ]
+            ];
+        });
+    }
+
+
+    public function resolutionAmendment()
+    {return $this->state(function (array $attributes) {
+        $appliesToId = $this->faker->randomNumber;
+        return [
+            'applies_to' => $appliesToId,
+            'content' => $this->resolutionText,
+            'requires' => 0.5,
+            'description' => '',
+            'is_resolution' => true,
+            'type' => 'amendment',
+            'info' => [
+                'title' => $this->faker->bs,
+                'resolutionIdentifier' => $this->faker->uuid,
+                //will be set by the afterMaking value in configure above
+                'groupId' => $appliesToId,
+                'formattedContent' => $this->faker->randomHtml
+            ]
+        ];
+    });
+    }
 
     /**
      * A motion used in an election
@@ -166,7 +246,7 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
 
                 'requires' => 1.0,
                 'type' => 'election',
@@ -176,6 +256,29 @@ class MotionFactory extends Factory
         });
     }
 
+    public function proposition()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'info->name' => $this->faker->company,
+
+                /** The office being voted upon */
+                'content' => $this->faker->realText,
+
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
+
+                'requires' => 0.5,
+                'type' => 'proposition',
+                'is_resolution' => true,
+
+//                'max_winners' => 1,
+                'seconded' => true,
+            ];
+        });
+
+    }
 
     /**
      * A motion used in an election which does not specify number of winners
@@ -188,7 +291,9 @@ class MotionFactory extends Factory
                 /** The office being voted upon */
                 'content' => "Election for {$this->faker->jobTitle}",
 
-                'description' => "Please vote for one of the following candidates",
+                'description' => $this->faker->realText,
+
+//                'description' => "Please vote for one of the following candidates",
 
                 'requires' => 1.0,
                 'type' => 'election',

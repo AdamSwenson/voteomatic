@@ -17,27 +17,75 @@ use App\Models\Motion;
 class MultipleWinnersCalculator extends IResultsCalculator
 {
 
+    public int $maxWinners;
+
     public function __construct(Motion $motion)
     {
+        $this->maxWinners = $motion->max_winners;
+
+        //Loads candidate objects and puts them in results array in descending order of vote total
         parent::__construct($motion);
+
+        $this->calculate();
     }
 
 
-//    public function getWinners()
-//    {
-//    }
+    /**
+     * Returns true if there's room. Do not pass a collection of 1
+     * @param $possibleAddition
+     * @return bool
+     */
+    public function isRoomInWinners($possibleAddition)
+    {
+        if ($possibleAddition instanceof Candidate) {
+            $possibleAddition = [$possibleAddition];
+        }
+        $winners = sizeof($this->winners);
+        $add = sizeof($possibleAddition);
+        return ($winners + $add) <= $this->maxWinners;
+    }
 
+    protected function calculate()
+    {
+        $k = 0;
+        //Using a while loop because need to control how much the
+        // index is increased on each run
+        while ($k < sizeof($this->results)) {
+            $candidate = $this->results[$k];
 
+            //check if they are tied with anyone.
+            //This will return an array with at least one candidate (viz, the
+            //one we provided
+            $toAdd = $this->getTies($candidate);
+
+            if (!$this->isRoomInWinners($toAdd)) {
+                if (sizeof($toAdd) > 1) {
+                    //If there is no room, we need a runoff if there's more than one
+                    //person with that vote total
+                    $this->inRunoff = $this->inRunoff->concat($toAdd);
+                }
+                //either way, we've reached the end of the winners
+                break;
+            }
+
+            //There is room, so they are winner(s)
+            $this->winners = $this->winners->concat($toAdd);
+
+            //If we've reached the end, we will find out on the next loop
+            //so we increment by the number of items we just added.
+            $k += sizeof($toAdd);
+        }
+
+    }
+
+    /**
+     * Determine whether the candidate is an outright winner
+     * @param Candidate $candidate
+     * @return bool
+     */
     public function isWinner(Candidate $candidate)
     {
-
-     //   if ($this->isRunoffParticipant($candidate)) return false;
-
-//If they are not tied, then we can just take the top folks
-        $topIds = $this->results->pluck('ids')->slice(0, $this->motion->max_winners);
-
-        return $topIds->contains($candidate->id);
-
+        return $this->winners->pluck('id')->contains($candidate->id);
     }
 
     /**
@@ -47,27 +95,7 @@ class MultipleWinnersCalculator extends IResultsCalculator
      */
     public function isRunoffParticipant(Candidate $candidate)
     {
-        //Grab everyone that has the same score as our candidate
-        $sameScore = $this->results->where('totalVotesReceived', $candidate->totalVotesReceived)->all();
-
-        //Get the ids of those within the allowed number of winners
-        $topIds = $this->results->slice(0, $this->motion->max_winners)->pluck('id');
-
-        //If there's only one person with the score, there's no tie
-        if (sizeof($sameScore) === 1) return false;
-
-        foreach ($sameScore as $candidate) {
-            if ($topIds->contains($candidate->id)) {
-                //If any of the candidates with the same score
-                //are within the range defined by max winners, there will
-                //need to be a runoff
-                return true;
-            }
-        }
-
-        //We end up here if there was a tie but no tied candidate could've been the winner
-        return false;
-
+        return $this->inRunoff->pluck('id')->contains($candidate->id);
     }
 
 

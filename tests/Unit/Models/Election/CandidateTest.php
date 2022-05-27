@@ -11,13 +11,13 @@ use Tests\TestCase;
 class CandidateTest extends TestCase
 {
 
-    private $motion;
-    private $official;
+    public $motion;
+    public $official;
     /**
      * @var int
      */
-    private $num;
-    private $writeIns;
+    public $num;
+    public $writeIns;
 
 
     public function setUp(): void

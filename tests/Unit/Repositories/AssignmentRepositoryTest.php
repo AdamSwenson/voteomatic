@@ -20,7 +20,7 @@ class AssignmentRepositoryTest extends TestCase
     /**
      * @var AssignmentDataMaker
      */
-    private $dataMaker;
+    public $dataMaker;
 
     public function setUp(): void
     {

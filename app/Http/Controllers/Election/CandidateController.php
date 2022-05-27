@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Election;
 
+use App\Exceptions\BadWriteInAttempt;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Election\CandidateRequest;
 use App\Http\Requests\Election\WriteInCandidateRequest;
@@ -12,6 +13,7 @@ use App\Models\Motion;
 use App\Repositories\Election\ICandidateRepository;
 use App\Repositories\Election\IElectionRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CandidateController extends Controller
 {
@@ -79,6 +81,7 @@ class CandidateController extends Controller
 
     /**
      * Creates a candidate when a voter writes someone in.
+     * NB, validation of the write in name is handled by middleware defined on the route
      *
      * @param Motion $motion
      * @param WriteInCandidateRequest $request

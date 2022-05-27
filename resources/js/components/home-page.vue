@@ -3,7 +3,7 @@
     <div class="home-page card">
         <div class="card-header">
             <h3 class="header-text">Welcome to the Voteomatic </h3>
-        <div class="text-right"><logout-button></logout-button></div>
+        <div class="text-end"><logout-button></logout-button></div>
         </div>
 
 

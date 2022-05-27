@@ -2,9 +2,10 @@
     <div class="card" style="width: 25rem;">
 
         <div class="card-header">
-            <div class="h4 card-title">Offices / positions in this election</div>
+            <div class="h4 card-title">Offices</div>
         </div>
 
+<!--        <div class="card-body">-->
         <ul class="list-group list-group-flush">
 
             <office-list-item
@@ -14,6 +15,11 @@
             ></office-list-item>
 
         </ul>
+<!--            </div>-->
+
+        <div class="card-footer">
+            <create-office-button></create-office-button>
+        </div>
 
     </div>
 
@@ -21,9 +27,10 @@
 
 <script>
 import OfficeListItem from "./office-list-item";
+import CreateOfficeButton from "./controls/create-office-button";
 export default {
     name: "office-list-card",
-    components: {OfficeListItem},
+    components: {CreateOfficeButton, OfficeListItem},
     props: [],
 
     mixins: [],
@@ -34,7 +41,7 @@ export default {
 
     asyncComputed: {
         offices : function(){
-            return  this.$store.getters.getMotions;
+            return  this.$store.getters.getElectionOffices;
         }
     },
 

@@ -12,11 +12,15 @@ class MotionTemplateController extends Controller
 
 
     public function getTemplates(){
-//        if(env('IS_DEMO') !== null && env('IS_DEMO') === true){
-        $d = array_merge(MotionTemplateRepository::$templates , MotionTemplateRepository::$introTemplates);
-//        $d = MotionTemplateRepository::$templates + MotionTemplateRepository::$introTemplates;
+        //dev This is where we control whether to show the prefab motion buttons for demonstration purposes
+        if(env('APP_ENV') !== null && env('APP_ENV') === 'local') {
+            $d = array_merge(MotionTemplateRepository::$templates, MotionTemplateRepository::$introTemplates);
+        }else{
+            $d = MotionTemplateRepository::$templates;
+        }
+
             return response()->json($d);
-//        }
+//
         return response()->json(MotionTemplateRepository::$templates);
     }
 

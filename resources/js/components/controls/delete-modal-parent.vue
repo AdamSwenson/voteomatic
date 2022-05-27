@@ -12,12 +12,18 @@
                     <h5 class="modal-title"
                         v-bind:id="labelId"
                     >Delete {{ typeCapitalized }}</h5>
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+<!--                    <button type="button"-->
+<!--                            class="btn-close"-->
+<!--                            data-bs-dismiss="modal"-->
+<!--                            aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
                 </div>
 
                 <div class="modal-body" v-html="modalText">
@@ -26,13 +32,13 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary"
-                            data-dismiss="modal"
+                            data-ds-dismiss="modal"
                     >No
                     </button>
 
                     <button type="button"
                             class="btn btn-primary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="handleClick"
                     >Yes. Delete it.
                     </button>
@@ -52,7 +58,7 @@ import ModeMixin from "../../mixins/modeMixin";
 /**
  * Note, this will require that the delete-meeting-button is
  * included elsewhere on the page. They are linked via  bootstrap
- * using the data-dismiss=modal attribute. They are not linked
+ * using the data-bs-dismiss=modal attribute. They are not linked
  * by vue or vuex events.
  */
 export default {

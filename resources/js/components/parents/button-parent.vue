@@ -7,7 +7,7 @@
         v-on:click="handleClick"
     >
         <span v-if="isWorking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span v-if="isWorking" class="sr-only">Working...</span> {{label}}</button>
+        <span v-if="isWorking" class="visually-hidden">Working...</span> {{label}}</button>
 
 </template>
 

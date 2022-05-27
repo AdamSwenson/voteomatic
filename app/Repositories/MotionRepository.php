@@ -13,6 +13,10 @@ use http\Env\Request;
 
 class MotionRepository implements IMotionRepository
 {
+
+    const PUSHER_BYTE_LIMIT = 10240;
+
+
     /**
      * we will copy everything except these when
      * creating superseding motions.
@@ -25,12 +29,21 @@ class MotionRepository implements IMotionRepository
      * @var IMotionStackRepository|mixed
      */
     public $stackRepo;
+    /**
+     * @var IResolutionRepository|mixed
+     */
+    public mixed $rezzieRepo;
 
     public function __construct()
     {
 
         $this->stackRepo = app()->make(IMotionStackRepository::class);
+        $this->rezzieRepo = app()->make(IResolutionRepository::class);
+    }
 
+    static public function isPusherCompatible(Motion $motion)
+    {
+        return mb_strlen($motion->toJson()) <= self::PUSHER_BYTE_LIMIT;
     }
 
     public function createMotion(User $user, Meeting $meeting, MotionRequest $request)
@@ -71,6 +84,25 @@ class MotionRepository implements IMotionRepository
         //This is only needed to determine if the second is eligible
         $motion->setAuthor($user);
 
+        // =========== Resolution specific initializations
+        if ($motion->is_resolution) {
+            $motion = $this->rezzieRepo->initializeResolution($motion);
+
+//
+//            //For identifying related motions on a rezzie
+////        if($motion->is_resolution && ! array_key_exists('groupId', $motion->info)){
+//            if (!isset($motion->info['groupId'])) {
+//                $motion->info['groupId'] = $motion->id;
+//                $motion->save();
+//            }
+
+//            //dev in caes the incoming is an amendment we need to copy the formatted content for VOT-197
+//            if (!isset($motion->info['groupId'])) {
+//                $motion->info['groupId'] = $motion->id;
+//                $motion->save();
+//            }
+
+        }
         return $motion;
 
     }
@@ -105,7 +137,14 @@ class MotionRepository implements IMotionRepository
         $atrs = collect($original->attributesToArray())->except($this->nonCopiedFields);
         //add the new content from the approved amendment
         $atrs['content'] = $amendment->content;
+
         $supersedingMotion = Motion::create($atrs->toArray());
+
+//        if(isset($amendment->info['formattedContent'])){
+//            $supersedingMotion->info['formattedContent'] = $amendment->info['formattedContent'];
+//        }
+
+        $supersedingMotion->save();
 
         /*
          * Mark the original superseded.
@@ -120,6 +159,10 @@ class MotionRepository implements IMotionRepository
      * It handles determining whether the motion is an amendment,
      * looking up the original motion, checking whether the amendment passed
      * and creating a superseding motion if needed.
+     *
+     * NB, resolutions will be handled separately by
+     * ResolutionRepository->handlePotentialAmendment which
+     * MotionStackController will call instead of this.
      *
      * @param Motion $amendment
      * @return false|Motion
@@ -145,6 +188,7 @@ class MotionRepository implements IMotionRepository
         $superseding = $this->handleApprovedAmendment($original, $amendment);
 
         return $superseding;
+
     }
 
 

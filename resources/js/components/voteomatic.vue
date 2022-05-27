@@ -1,71 +1,37 @@
 <template>
 
     <div class="voteomatic">
+        <election-module v-if="isElection"></election-module>
 
-        <!--        <div class="row ">-->
-        <!--            <div class="col-8">-->
-        <router-tabs></router-tabs>
-        <!--            </div>-->
-        <!--            <div class="text-right refresh-area">-->
-        <!--                <refresh-button></refresh-button>-->
-        <!--        </div>-->
-        <message-area></message-area>
-        <vote-count-alert></vote-count-alert>
+        <public-pmode v-else-if="isPublicPmode"></public-pmode>
 
-        <router-view name="main"></router-view>
+        <meeting-module v-else></meeting-module>
 
-<!--        <div class="text-center refresh-area">-->
-
-<!--            <refresh-button></refresh-button>-->
-<!--        </div>-->
-
-        <chair-indicator></chair-indicator>
-
-
-        <!--        <svg class="bi" width="32" height="32" fill="currentColor">-->
-        <!--            <use xlink:href="bootstrap-icons.svg#heart-fill"/>-->
-        <!--        </svg>-->
-
-        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>
-        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>
-        <motion-second-modal v-if="! isChair"></motion-second-modal>
-
+        <page-footer></page-footer>
     </div>
 
 </template>
 
 <script>
 
-//The main page for anything
-import VotePage from "./main/vote-page";
-import Motion from '../models/Motion';
-import MeetingMixin from '../mixins/meetingMixin';
-import RouterTabs from "./navigation/router-tabs";
-import RefreshButton from "./navigation/refresh-button";
-import ChairIndicator from "./text-display/chair-indicator";
-import NavigationMixin from '../mixins/NavigationMixin';
-import ChairMixin from "../mixins/chairMixin";
-import MotionSecondModal from "./motions/motion-second-modal";
-import MotionInOrderModal from "./motions/motion-in-order-modal";
-import ChairMotionSecondModal from "./motions/chair-motion-second-modal";
-import MessageArea from "./messaging/message-area";
-import VoteCountAlert from "./main/chair/vote-count-alert";
 
+import ElectionModule from "./election-module";
+import MeetingModule from "./meeting-module";
+import PageFooter from "./navigation/page-footer";
+import PublicPmode from "./public-pmode";
+
+/**
+ * This is the main page. All it does is decide which
+ * mode we are in and display the current module.
+ */
 export default {
     name: "voteomatic",
     components: {
-        VoteCountAlert,
-        MessageArea,
-        ChairMotionSecondModal,
-        MotionInOrderModal,
-        MotionSecondModal,
-        ChairIndicator,
-        RefreshButton,
-        RouterTabs,
-        VotePage
+        PublicPmode,
+        PageFooter,
+        MeetingModule,
+        ElectionModule,
     },
-
-    mixins: [MeetingMixin, NavigationMixin, ChairMixin],
 
     data: function () {
         return {
@@ -76,40 +42,19 @@ export default {
 
     computed: {
 
+        isElection: function () {
+            return window.startData.isElection;
+        },
 
-        //     //the motion being voted upon
-        //     motion: function () {
-        //         //todo convert to
-        //
-        //         let d = window.startData.motion;
-        //         let m = new Motion(d);
-        //
-        //         // let m = new Motion(d.id, d.content, d.description, d.requires);
-        //         return m
-        //     }
+        isPublicPmode: function () {
+            return window.isPublicPmode;
+        }
+
+
     },
 
     mounted: function () {
-        let me = this;
 
-        //We're going to push it to the home tab
-        //before loading anything. That way we both have
-        //something open (and not a blank card) and
-        //don't send them back to the home tab if they've
-        //clicked another tab while things were loading.
-        // me.$router.push('meeting-home');
-        me.$store.dispatch('forceNavigationToHome');
-
-
-        //parse data from page and store stuff
-        let p = this.$store.dispatch('initialize');
-        p.then(function () {
-            // me.$router.push('meeting-home');
-
-            window.console.log('voteomatic', 'isReady', 159, me.isReady);
-        });
-
-        // me.$router.push('meeting-home');
 
     }
 

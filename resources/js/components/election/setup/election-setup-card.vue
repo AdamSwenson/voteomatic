@@ -5,6 +5,7 @@
 
             <event-edit-card v-if="isInEventEditingMode"></event-edit-card>
 
+            <candidate-field-config-card v-if="isInEventEditingMode"></candidate-field-config-card>
         </div>
 
 
@@ -14,7 +15,7 @@
 
 <script>
 
-import CandidateRow from "../candidate-row";
+import CandidateRow from "../voting/candidate-row";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from '../../../utilities/readiness.utilities';
@@ -34,11 +35,13 @@ import ElectionSetupControls from "./controls/election-setup-controls";
 import EventEditCard from "../../controls/event-edit-card";
 import EventDisplayCard from "../../common/event-display-card";
 import ChairMixin from "../../../mixins/chairMixin";
+import CandidateFieldConfigCard from "./candidate-field-config-card";
 
 export default {
     name: "election-setup-card",
 
     components: {
+        CandidateFieldConfigCard,
         EventDisplayCard,
         EventEditCard,
         ElectionSetupControls,

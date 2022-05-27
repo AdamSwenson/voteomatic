@@ -15,10 +15,10 @@
                     >{{ headerText }}</h5>
 
                     <button type="button"
-                            class="close"
+                            class="btn-close"
                             v-on:click="closeModal"
                             aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+<!--                        <span aria-hidden="true">&times;</span>-->
                     </button>
 
                 </div>
@@ -36,16 +36,17 @@
                             class="btn leftButton"
                             v-bind:class="leftButtonStyling"
                             v-on:click="handleLeftClick"
-                    >{{leftButtonLabel}}
+                    >{{ leftButtonLabel }}
                     </button>
 
                     <button type="button"
                             class="btn rightButton"
                             v-bind:class="rightButtonStyling"
                             v-on:click="handleRightClick"
-                    >{{rightButtonLabel}}</button>
+                    >{{ rightButtonLabel }}
+                    </button>
 
-<!--                    <slot name="buttonArea"></slot>-->
+                    <!--                    <slot name="buttonArea"></slot>-->
                 </div>
 
             </div>
@@ -55,6 +56,8 @@
 </template>
 
 <script>
+import {isReadyToRock} from "../../utilities/readiness.utilities";
+
 export default {
     name: "js-controlled-modal-parent",
 
@@ -64,6 +67,7 @@ export default {
 
     data: function () {
         return {
+
             // leftButtonStyling: "",
             // rightButtonStyling : "",
             // modalId : '',
@@ -74,30 +78,49 @@ export default {
     },
 
     asyncComputed: {
-        bodyText : function(){},
+        bodyText: function () {
+        },
+    },
+
+    mounted() {
+        //dev Not sure why but saving this on data and trying to call show() and hide() on that object causes never closing modals
+        new bootstrap.Modal(document.getElementById(this.modalId), {});
     },
 
     computed: {
 
-        modalLabelId : function(){
+        modalLabelId: function () {
             return this.modalId + 'Label';
         },
 
     },
 
+
     methods: {
-        closeModal : function(){
-            $('#' + this.modalId).modal('hide');
+        closeModal: function () {
+            var myModalEl = document.getElementById(this.modalId);
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+
+            //dev Really not sure why this is needed, but it is
+            if (isReadyToRock(modal)) {
+                modal.hide();
+            }
         },
 
-        openModal : function(){
+        openModal: function () {
             window.console.log('showing ', this.modalId);
-            $('#' + this.modalId).modal();
-            $('#' + this.modalId).modal('show');
+            var myModalEl = document.getElementById(this.modalId);
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+            // // if (isReadyToRock(modal)) {
+            modal.show();
+            // }
+
         },
 
-        handleLeftClick : function(){},
-        handleRightClick : function(){},
+        handleLeftClick: function () {
+        },
+        handleRightClick: function () {
+        },
 
     }
 

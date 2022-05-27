@@ -19,7 +19,7 @@ class MeetingControllerTest extends TestCase
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $meeting;
+    public $meeting;
 
     public function setUp(): void
     {

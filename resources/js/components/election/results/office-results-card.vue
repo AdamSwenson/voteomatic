@@ -1,23 +1,24 @@
 <template>
-    <div class="office-results-card card">
+    <div class="office-results-card col">
+        <div class="card">
 
-        <div class="card-header">
-            <h2 class="card-title">{{ officeName }} results</h2>
+            <div class="card-header">
+                <h3 class="card-title">{{ officeName }} ({{maxWinners}})</h3>
+            </div>
+
+            <!--        <div class="card-body">-->
+            <!--            <p>Total votes cast for office: {{ totalCast }}</p>-->
+
+            <!--        </div>-->
+
+<!--            <div class="card-body">-->
+
+                <candidate-result-row v-for="result in results"
+                                      :key="result.candidateId"
+                                      :result="result"
+                ></candidate-result-row>
+<!--            </div>-->
         </div>
-
-<!--        <div class="card-body">-->
-<!--            <p>Total votes cast for office: {{ totalCast }}</p>-->
-
-<!--        </div>-->
-
-        <div class="card-body">
-
-            <candidate-result-row v-for="result in results"
-                                  :key="result.candidateId"
-                                  :result="result"
-            ></candidate-result-row>
-        </div>
-
     </div>
 </template>
 
@@ -49,7 +50,7 @@ export default {
                 //filter out nameless write ins.
                 //todo deal with this on the server
                 return r.filter((result) => {
-                    return !_.isNull(result.candidateName) && ! _.isNull(result.voteCount);
+                    return !_.isNull(result.candidateName) && !_.isNull(result.voteCount);
                 });
             }
 

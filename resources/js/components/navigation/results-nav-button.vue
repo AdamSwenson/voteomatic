@@ -1,10 +1,10 @@
 
 <template>
-
-    <button class="btn btn-warning btn-lg btn-block"
+    <div class="d-grid gap-2">
+    <button class="btn btn-warning btn-lg "
             v-on:click="handleClick"
     >Results</button>
-
+    </div>
 </template>
 
 <script>

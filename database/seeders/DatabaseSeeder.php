@@ -38,6 +38,11 @@ class DatabaseSeeder extends Seeder
             FakeFullMeetingSeeder::class,
             FullElectionWithoutVotesSeeder::class,
             FullElectionWithVotesSeeder::class,
+            CSUNElectionSeeder::class,
+            CSUNElectionSeederWithCandidates::class,
+            CSUNStandingCommitteeSeeder::class,
+            CSUNStandingCommitteeWithCandidatesSeeder::class,
+
 
             MasterSettingsSeeder::class
 
@@ -57,8 +62,6 @@ class DatabaseSeeder extends Seeder
             }
             $meeting->setOwner($adminUser);
         }
-
-
 
     }
 

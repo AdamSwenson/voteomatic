@@ -2,6 +2,9 @@
 
 namespace Tests\Http\Controllers\Election;
 
+use App\Exceptions\BadWriteInAttempt;
+use App\Exceptions\BallotStuffingAttempt;
+use App\Exceptions\WriteInDuplicatesOfficial;
 use App\Http\Controllers\Election\CandidateController;
 
 //use PHPUnit\Framework\TestCase;
@@ -10,6 +13,7 @@ use App\Models\Election\Person;
 use App\Models\Election\PoolMember;
 use App\Models\Meeting;
 use App\Models\User;
+use App\Repositories\Election\CandidateRepository;
 use App\Repositories\Election\ICandidateRepository;
 use App\Repositories\IMotionStackRepository;
 use Tests\TestCase;
@@ -24,19 +28,19 @@ class CandidateControllerTest extends TestCase
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $poolMember;
+    public $poolMember;
     /**
      * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
      */
-    private $motion;
+    public $motion;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    private $owner;
+    public $owner;
     /**
      * @var string
      */
-    private $url;
+    public $url;
 
     public function setUp(): void
     {
@@ -165,9 +169,40 @@ class CandidateControllerTest extends TestCase
 //        $response->assertJson($expected);
     }
 
+    /** @test */
+    public function addWriteInCandidateRejectsInvalidName(){
+        $url = 'election/write-in/' . $this->motion->id;
+        $nonOwner = User::factory()->create();
+        $this->meeting->addUserToMeeting($nonOwner);
+        $person = Person::factory()->create();
+        $data = ['first_name' => '', 'last_name' => '',
+            'info' => null];
 
+        $response = $this->actingAs($nonOwner)->post($url, $data);
 
+        //check
+        $response->assertStatus(BadWriteInAttempt::ERROR_CODE);
 
+    }
+
+    /** @test */
+    public function addWriteInCandidateRejectsDuplicateOfOfficialCandidate(){
+        $candidateRepo = new CandidateRepository();
+        $person = Person::factory()->create();
+        $candidateRepo->addCandidateToBallot($this->motion, $person);
+
+        $url = 'election/write-in/' . $this->motion->id;
+        $nonOwner = User::factory()->create();
+        $this->meeting->addUserToMeeting($nonOwner);
+        $data = ['first_name' => $person->first_name, 'last_name' => $person->last_name,
+            'info' => $person->info];
+
+        $response = $this->actingAs($nonOwner)->post($url, $data);
+
+        //check
+        $response->assertStatus(WriteInDuplicatesOfficial::ERROR_CODE);
+
+    }
 
 
     /** @test */

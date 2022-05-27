@@ -11,6 +11,7 @@ class MotionStackRepository implements IMotionStackRepository
 {
 
 
+
     /**
      * Returns the motion that is currently selected for the given
      * meeting

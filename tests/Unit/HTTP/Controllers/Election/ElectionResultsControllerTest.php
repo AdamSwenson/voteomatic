@@ -14,14 +14,14 @@ use Tests\TestCase;
 class ElectionResultsControllerTest extends TestCase
 {
 
-    private $office;
+    public $office;
     /**
      * @var string
      */
-    private $url;
-    private $election;
-    private $owner;
-    private $regularUserMember;
+    public $url;
+    public $election;
+    public $owner;
+    public $regularUserMember;
 
     public function setUp(): void
     {

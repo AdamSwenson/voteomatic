@@ -8,20 +8,24 @@
             {{ messageText }}
         </p>
         <!--    <hr>-->
-        <p class="ml-5"
+        <p class="ms-5"
            v-if="showMotionText">
             {{ motionText }}
         </p>
 
-        <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                v-on:click="handleClick"
-        >
-            <span aria-hidden="true">&times;</span>
-        </button>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    v-on:click="handleClick"
+            >
+                <span class="visually-hidden" aria-hidden="true">&times;</span>
+            </button>
+
     </div>
+
+
 </template>
 
 <script>
@@ -50,7 +54,7 @@ export default {
             return idx > -1;
         },
         alertId: function () {
-            return 'statusAlert' + this.message.id;
+            return _.camelCase('statusAlert' + this.message.id);
         },
         displayTime: function () {
             return this.message.displayTime;
@@ -71,18 +75,35 @@ export default {
         messages: function () {
             return this.$store.getters.getMessages;
         },
-        showMotionText: function(){
+        showMotionText: function () {
             return isReadyToRock(this.motionText) && this.motionText.length > 0;
-        }
+        },
+
     },
 
 
     computed: {},
 
+    watch: {
+        alertId: function () {
+            if (isReadyToRock(this.alertId)) this.focusAlert();
+        }
+    },
+
     methods: {
         handleClick: function () {
             this.$store.commit('removeFromMessageQueue', this.message);
+        },
+
+        focusAlert: function () {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
         }
+    },
+
+
+    mounted() {
+
     }
 
 }

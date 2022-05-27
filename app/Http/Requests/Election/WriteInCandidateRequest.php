@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Election;
 
+use App\Exceptions\BadWriteInAttempt;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WriteInCandidateRequest extends FormRequest
@@ -23,9 +24,12 @@ class WriteInCandidateRequest extends FormRequest
      */
     public function rules()
     {
+        //dev Validation will be handled by middleware so that we can use
+        // the messaging system with an exception
         return [
-            'first_name' => ['required'],
-            'last_name' => ['required']
+//            'first_name' => ['required'],
+//            'last_name' => ['required']
             ];
     }
+
 }

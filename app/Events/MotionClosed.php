@@ -50,6 +50,16 @@ class MotionClosed implements ShouldBroadcast
 //    $this->original = Motion::find($this->ended->applies_to);
     }
 
+    public function broadcastWith()
+    {
+        //This prevents the relationships from being serialized
+        return [
+            'ended' => $this->ended->attributesToArray(),
+            'superseding' => $this->superseding
+        ];
+    }
+
+
     /**
      * Get the channels the event should broadcast on.
      *
@@ -57,7 +67,6 @@ class MotionClosed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-
         return new PrivateChannel('motions.'.$this->ended->id);
     }
 

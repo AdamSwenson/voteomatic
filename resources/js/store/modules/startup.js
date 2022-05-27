@@ -17,7 +17,7 @@ const actions = {
 
     initialize({dispatch, commit, getters}) {
         return new Promise((resolve, reject) => {
-            window.console.log('startup', 'Initializing from page data');
+            window.console.log('startup', 'Initializing meeting from page data');
 
             dispatch('loadIsAdminFromPageData').then(function () {
 
@@ -58,6 +58,9 @@ const actions = {
         let meeting = getters.getActiveMeeting;
         let channel = `meeting.${meeting.id}`;
         Echo.private(channel)
+            .listen("GeneralNotification", (e) => {
+                dispatch('handlePusherGeneralNotification', e);
+            })
             .listen("MotionSeekingSecond", (e) => {
                 window.console.log('Received broadcast event meeting', e);
                 dispatch('handleMotionSeekingSecondMessage', e);

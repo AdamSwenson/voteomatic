@@ -31,12 +31,16 @@ Vue.use( VueRouter );
 // Each route should map to a component. The "component" can
 // either be an actual component constructor created via
 // Vue.extend(), or just a component options object.
-import  {routes} from './routes.client';
-// import { routes } from './routes';
+import  {meetingRoutes} from './routes.client.meeting';
+import { electionRoutes } from './routes.client.election';
 
+let routes = _.concat(electionRoutes, meetingRoutes);
+
+// let routes = window.startData.isElection ? electionRoutes : meetingRoutes;
+// window.console.log(routes);
 // // Create the router instance and pass the `routes` option
-const router = new VueRouter( {
-    routes, // short for routes: routes
+export const router = new VueRouter( {
+    routes: routes, // short for routes: routes
     base: window.routeRoot
 } );
 
@@ -51,6 +55,9 @@ import store from './store';
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
+
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
@@ -73,12 +80,13 @@ Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
 Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
+Vue.component('pmode-page-navbar', require('./components/pmode/pmode-page-navbar').default);
 
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/motion-results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
 Vue.component('amendment-page', require('./components/main/amendment-page').default);
-Vue.component('election-card', require('./components/election/election-card').default);
+Vue.component('election-card', require('./components/election/voting/election-card').default);
 Vue.component('election-setup-card', require('./components/election/setup/election-setup-card').default);
 
 /**

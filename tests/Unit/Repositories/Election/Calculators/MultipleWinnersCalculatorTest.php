@@ -14,27 +14,27 @@ use Tests\TestCase;
 class MultipleWinnersCalculatorTest extends TestCase
 {
 
-    private $motion;
+    public $motion;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $candidate;
+    public $candidate;
     /**
      * @var int
      */
-    private $numOthers;
+    public $numOthers;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $otherCandidates;
+    public $otherCandidates;
     /**
      * @var int
      */
-    private $winningVotes;
+    public $winningVotes;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private $winners;
+    public $winners;
 
     public function setUp(): void
     {
@@ -43,91 +43,397 @@ class MultipleWinnersCalculatorTest extends TestCase
         $this->maxWinners = 3;
         $this->motion = Motion::factory()->electedOffice()->create(['max_winners' => $this->maxWinners]);
 
-        $this->winners = Candidate::factory()->count($this->maxWinners)->create(['motion_id' => $this->motion->id]);
-
         $this->numOthers = 5;
         $this->otherCandidates = Candidate::factory()->count($this->numOthers)->create(['motion_id' => $this->motion->id]);
 
-        $this->winningVotes = 51;
-//        $this->winningVotes = $this->faker->numberBetween(10, 100);
+    }
 
-        Vote::factory()->count($this->winningVotes)
-            ->create(['motion_id' => $this->motion->id,
-                'candidate_id' => $this->winners[0]->id
-            ]);
+    // ============================= Utilities
+    /** @test */
+    public function getTies()
+    {
+        //prep
+        $totals = [40, 20, 20, 20];
 
-//the second and third are tied
-        Vote::factory()->count($this->winningVotes - 1)
-            ->create(['motion_id' => $this->motion->id,
-                'candidate_id' => $this->winners[1]->id
-            ]);
-
-        Vote::factory()->count($this->winningVotes - 1)
-            ->create(['motion_id' => $this->motion->id,
-                'candidate_id' => $this->winners[2]->id
-            ]);
-
-//losers
+        $candidates = [];
         foreach ($this->otherCandidates as $candidate) {
-
-            Vote::factory()->count(10)
-                ->create(['motion_id' => $this->motion->id,
-                    'candidate_id' => $candidate->id
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
                 ]);
+        }
 
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //call
+        $idx = 1;
+        $result = $this->object->getTies($candidates[$idx]);
+
+        //check
+        $this->assertEquals(3, sizeof($result), "Returns expected size (all ties including person checked)");
+        foreach ($result as $r) {
+            $this->assertEquals($totals[$idx], $r->totalVotesReceived, "Returned candidate has expected vote total");
+        }
+    }
+
+    /** @test */
+    public function getTiesWhenNotTied()
+    {
+        //prep
+        $totals = [40, 20, 20, 20];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //call
+        $idx = 0;
+        $result = $this->object->getTies($candidates[$idx]);
+
+        //check
+        $this->assertEquals(1, sizeof($result), "Returns expected size (all ties including person checked)");
+        foreach ($result as $r) {
+            $this->assertEquals($totals[$idx], $r->totalVotesReceived, "Returned candidate has expected vote total");
         }
 
 
     }
 
 
+    /** @test  */
+    public function isRoomInWinners()
+    {
+        $r = $this->otherCandidates[0];
+        $this->assertInstanceOf(Candidate::class, $r, 'setup validation');
+        $this->object = new MultipleWinnersCalculator($this->motion);
+        //overwrite what was added in setup/instantiation
+        $this->object->maxWinners = 4;
+        $this->object->winners = collect(Candidate::factory()->count(3)->make());
+
+        $this->assertTrue($this->object->isRoomInWinners($r), "returns true when room and given object");
+//        $this->assertTrue($this->object->isRoomInWinners(collect($r)), "returns true when room and given collection");
+        $this->assertTrue($this->object->isRoomInWinners([$r]), "returns true when room and given array");
+
+    }
+
+    /** @test */
+    public function isRoomInWinnersForMultiple()
+    {
+        $r = collect(Candidate::factory()->count(2)->make());
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+        //overwrite what was added in setup/instantiation
+        $this->object->maxWinners = 4;
+        $this->object->winners = collect(Candidate::factory()->count(2)->make());
+
+        $this->assertTrue($this->object->isRoomInWinners(collect($r)), "returns true when room and given collection");
+    }
+
+    /** @test  */
+    public function isRoomInWinnersWhenNotForSingle()
+    {
+        $r = $this->otherCandidates[0];
+        $this->assertInstanceOf(Candidate::class, $r, 'setup validation');
+        $this->object = new MultipleWinnersCalculator($this->motion);
+        //overwrite what was added in setup/instantiation
+        $this->object->maxWinners = 4;
+        $this->object->winners = collect(Candidate::factory()->count(4)->make());
+
+        $this->assertFalse($this->object->isRoomInWinners($r), "returns false when no room and given object");
+        $this->assertFalse($this->object->isRoomInWinners([$r]), "returns false when no room and given array");
+    }
+
+
+// =============================== isWinner
+
     /** @test */
     public function isWinnerWhenWon()
     {
+        //prep
+        $totals = [40, 20, 20, 20];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
         $this->object = new MultipleWinnersCalculator($this->motion);
 
-//        foreach ($this->winners as $winner) {
-            $this->assertTrue($this->object->isWinner($this->winners[0]), "Correctly identifies winner");
-//
-//        }
-
+        //check
+        $this->assertTrue($this->object->isWinner($candidates[0]), "Correctly identifies winner");
     }
 
 
     /** @test */
     public function isWinnerWhenLost()
     {
-        //Finally we initialize (have to do this last since things will be loaded on instantiation)
+        //prep
+        $totals = [40, 20, 20, 15, 5];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
         $this->object = new MultipleWinnersCalculator($this->motion);
 
-
-        foreach ($this->otherCandidates as $candidate) {
-
-            $this->assertFalse($this->object->isWinner($candidate), "Correctly identifies loser");
-        }
+        //check
+        $this->assertFalse($this->object->isWinner($candidates[4]), "Correctly identifies loser");
     }
 
 
     /** @test */
-    public function isWinnerWhenTied()
+    public function isWinnerWhenTiedAtTop()
     {
-//        $this->object = new MultipleWinnersCalculator($this->motion);
+        //prep
+        $totals = [40, 40, 15, 5];
+        $expected = [true, true, true, false];
 
-//        $e = Candidate::factory()->create(['motion_id' => $this->motion->id]);
-//        Vote::factory()->count($this->winningVotes)->create(['motion_id' => $this->motion->id,
-//            'candidate_id' =>  $e->id
-//        ]);
-//
-//        $s = $e->getShareOfVotesCast();
-//
-//        //Finally we initialize (have to do this last since things will be loaded on instantiation)
-//        $this->object = new MajorityWinnerCalculator($this->motion);
-//
-//
-//        //check
-//        $this->assertFalse($this->object->isWinner($this->candidate), "Correctly returns false when tied");
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
 
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isWinner($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
     }
+
+    /** @test */
+    public function isWinnerWhenTieAtTopRequiresRunoff()
+    {
+        //prep
+        $totals = [25, 25, 25, 25, 0];
+        $expected = [false, false, false, false, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isWinner($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+    /** @test */
+    public function isWinnerWhenTiedBelowTop()
+    {
+        //prep
+        $totals = [40, 20, 20, 5];
+        $expected = [true, true, true, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isWinner($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+    /** @test */
+    public function isWinnerWhenTieBelowTopRequiresRunoff()
+    {
+        //prep
+        $totals = [40, 20, 20, 20];
+        $expected = [true, false, false, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isWinner($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+
+    // ================================= isRunoffParticipant
+
+
+    /** @test */
+    public function isRunoffParticipantWhenTiedAtTop()
+    {
+        //prep
+        $totals = [40, 40, 15, 5];
+        $expected = [false, false, false, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isRunoffParticipant($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+    /** @test */
+    public function isRunoffParticipantWhenTieAtTopRequiresRunoff()
+    {
+        //prep
+        $totals = [25, 25, 25, 25, 0];
+        $expected = [true, true, true, true, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isRunoffParticipant($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+    /** @test */
+    public function isRunoffParticipantWhenTiedBelowTop()
+    {
+        //prep
+        $totals = [40, 20, 20, 5];
+        $expected = [false, false, false, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isRunoffParticipant($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+    /** @test */
+    public function isRunoffParticipantWhenTieBelowTopRequiresRunoff()
+    {
+        //prep
+        $totals = [40, 20, 20, 20];
+        $expected = [false, true, true, true];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            $this->assertEquals($expected[$i], $this->object->isRunoffParticipant($candidates[$i]), "isRunoffParticipant returns expected value");
+        }
+    }
+
+
+
+
+
 
 //    /** @test */
 //    public function isRunoffParticipant(){
@@ -150,5 +456,33 @@ class MultipleWinnersCalculatorTest extends TestCase
 //
 //        $this->assertTrue($this->object->isRunoffParticipant($this->candidate), "Correctly returns true when have same score");
 //
+//    }
+//    public function createVotes(): void
+//    {
+//        Vote::factory()->count($this->winningVotes)
+//            ->create(['motion_id' => $this->motion->id,
+//                'candidate_id' => $this->winners[0]->id
+//            ]);
+//
+////the second and third are tied
+//        Vote::factory()->count($this->winningVotes - 1)
+//            ->create(['motion_id' => $this->motion->id,
+//                'candidate_id' => $this->winners[1]->id
+//            ]);
+//
+//        Vote::factory()->count($this->winningVotes - 1)
+//            ->create(['motion_id' => $this->motion->id,
+//                'candidate_id' => $this->winners[2]->id
+//            ]);
+//
+////losers
+//        foreach ($this->otherCandidates as $candidate) {
+//
+//            Vote::factory()->count(10)
+//                ->create(['motion_id' => $this->motion->id,
+//                    'candidate_id' => $candidate->id
+//                ]);
+//
+//        }
 //    }
 }

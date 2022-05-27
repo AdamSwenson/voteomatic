@@ -12,7 +12,7 @@
     <!--                        v-bind:id="labelId"-->
     <!--                    >It has been moved that</h5>-->
     <!--                    <button type="button"-->
-    <!--                            class="close"-->
+    <!--                            class="btn-close"-->
     <!--                            v-on:click="handleDismiss"-->
     <!--                            aria-label="Close">-->
     <!--                        <span aria-hidden="true">&times;</span>-->
@@ -21,7 +21,7 @@
 
     <!--                <div class="modal-body">-->
 
-    <!--                    <p class="blockquote" v-html="motionText"></p>-->
+    <!--                    <p class="blockquote" v-amendmentText="motionText"></p>-->
 
     <!--                    <p class="second-instruction text-muted">Seconding a motion only implies that you-->
     <!--                        believe the motion to be worth discussing. It does not imply endorsement.</p>;-->
@@ -37,7 +37,7 @@
 
     <!--                    <button type="button"-->
     <!--                            class="btn btn-primary"-->
-    <!--                            data-dismiss="modal"-->
+    <!--                            data-bs-dismiss="modal"-->
     <!--                            v-on:click="handleSecond"-->
     <!--                    >{{ buttonLabel }}-->
     <!--                    </button>-->

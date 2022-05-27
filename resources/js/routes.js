@@ -35,7 +35,30 @@ module.exports = {
 
     },
 
+    events: {
+        forceReload: (meetingId) => {
+            return normalizedRouteRoot() + 'events/force/' + meetingId;
+        }
+    },
+
     election: {
+
+        admin: {
+            startVoting: (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/start/' + meetingId;
+            },
+
+            stopVoting: (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/stop/' + meetingId;
+            },
+
+            releaseResults: (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/results/release/' + meetingId;
+            },
+            hideResults: (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/results/hide/' + meetingId;
+            }
+        },
 
         resource: {
             // candidate: (candidateId) => {
@@ -66,7 +89,7 @@ module.exports = {
             },
 
             people: (personId = null) => {
-                let r = normalizedRouteRoot() + '/election/people';
+                let r = normalizedRouteRoot() + 'election/people';
                 if (!_.isNull(personId)) {
                     r = r + '/' + personId;
                 }
@@ -146,7 +169,8 @@ module.exports = {
 
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId;
-        }
+        },
+
     },
 
     votes: {

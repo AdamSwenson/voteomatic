@@ -1,6 +1,6 @@
 <template>
 
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
         <label v-bind:class="meetingLabelStyle">
             <input type="radio" name="options" id="meetingSelect"
                    v-bind:checked="meetingCheckedState"

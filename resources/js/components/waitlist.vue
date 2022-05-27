@@ -15,7 +15,7 @@
             <!--    >-->
 
             <div class="form-group">
-                <label for="name">Name</label>
+                 <label class='form-label' for="name">Name</label>
                 <input type="text" id="name" class="form-control"
                 v-model="name"
                 >
@@ -23,7 +23,7 @@
 
 
             <div class="form-group">
-                <label for="email">Email address</label>
+                 <label class='form-label' for="email">Email address</label>
                 <input type="email"
                        id="email"
                        class="form-control"
@@ -37,13 +37,13 @@
 
 
             <div class="form-group">
-                <label for="organization">Organization</label>
+                 <label class='form-label' for="organization">Organization</label>
                 <input type="text" id="organization" class="form-control"
                 v-model="organization">
             </div>
 
             <div class="form-group">
-                <label for="notes">Notes</label>
+                 <label class='form-label' for="notes">Notes</label>
                 <textarea id="notes"
                           class="form-control" v-model="notes"
                 ></textarea>

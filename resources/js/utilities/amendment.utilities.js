@@ -2,10 +2,86 @@
 //
 //     methods: {
 //
+// import {amendmentType} from "../mixins/amendmentMixin";
+
 let _ = require('lodash');
 
-const Diff = require('diff');
+// import HtmlDiff from 'htmldiff-js';
+//
+// const insertTag = '<ins class="diffins">';
+// const strikeTag = '<del class="diffdel">';
+// const insertRegex = new RegExp(insertTag);
+// const strikeRegex = new RegExp(strikeTag);
+// const insertContentRegex = new RegExp('(?<=' + insertTag + ')(.*?)(?=</ins>)');
+// const strikeContentRegex = new RegExp('(?<=' + strikeTag + ')(.*?)(?=</del>)');
+//
+// /**
+//  * Determines the type of amendment.
+//  * Possible returns:
+//  *      strike
+//  *      insert
+//  *      strikeinsert
+//  * @returns {string|boolean}
+//  */
+// module.exports.amendmentType = (diffTaggedText) => {
+//     let out = '';
+//     if (strikeRegex.test(diffTaggedText)) {
+//         out += 'strike';
+//     }
+//     if (insertRegex.test(diffTaggedText)) {
+//         out += 'insert'
+//     }
+//     return out;
+// };
+//
+// /**
+//  * Returns the amendment text tagged with
+//  * <ins class="diffins">  and
+//  * <del class="diffdel">
+//  * @returns {string|*|string}
+//  */
+// module.exports.diffTagText = (originalText, amendmentText) => {
+//     if (_.isUndefined(originalText) || _.isNull(originalText)) return ''
+//     if (_.isUndefined(amendmentText) || _.isNull(amendmentText)) return ''
+//
+//     let diffHtml = HtmlDiff.execute(originalText, amendmentText);
+//     return diffHtml;
+//     // (?<=<pre>)(.*?)(?=</pre>)
+// };
+//
+// module.exports.getChangedText = (diffTaggedText, type) => {
+//     //dev todo having trouble with using amendment type so temp made a param
+//     // let type = amendmentType(diffTaggedText);
+//     let r;
+//     switch (type) {
+//         case 'insert' :
+//           return insertContentRegex.exec(diffTaggedText);
+//             break;
+//         case 'strike':
+//             return strikeContentRegex.exec(diffTaggedText);
+//             break;
+//         case 'strikeinsert':
+//             break;
+//     }
+//
+// };
 
+
+// ================================== OLD
+
+
+const Diff = require('diff');
+// const HtmlDiff = require('htmldiff-js');
+// import HtmlDiff from 'htmldiff-js';
+
+/**
+ * Tags plaintext changes
+ * @param orig
+ * @param amend
+ * @param addedTag
+ * @param removedTag
+ * @returns {string}
+ */
 module.exports.getTaggedChanges = (orig, amend, addedTag = 'text-danger', removedTag = 'struck') => {
     let diff = Diff.diffWords(orig, amend);
     let out = [];
@@ -96,6 +172,19 @@ module.exports.checkChanges = (oldText, newText, searchStartIndex = 0) => {
     return out;
 
 };
+
+
+/**
+ * Used on resolution text where all text is htm
+ *
+ * @param oldHtml
+ * @param newHtml
+ * @returns {*}
+ */
+module.exports.getTaggedChangesOfHtml = (oldHtml, newHtml) => {
+    // diffHtml.innerHTML = HtmlDiff.execute(oldHtml, newHtml);
+    // return diffHtml.innerHTML;
+}
 
 
 //     }

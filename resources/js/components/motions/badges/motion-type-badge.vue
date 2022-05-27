@@ -22,19 +22,27 @@ export default {
         return {
 
             procedural: {
-                styling: 'badge-secondary',
+                styling: 'bg-secondary',
                 text: 'Procedural'
             },
 
             amendment: {
-                styling: 'badge-warning',
+                styling: 'bg-warning',
                 text: 'Amendment'
+            },
+
+
+            secondaryAmendment: {
+                styling: 'bg-warning',
+                text: 'Amendment - secondary'
             }
+
 
         }
     },
 
     asyncComputed: {
+
 
         styling: function () {
             //stupid async
@@ -49,6 +57,8 @@ export default {
         labelText: function () {
             //stupid async
             if (this.isMotionReady) {
+                if (this.isSecondOrderAmendment) return this.secondaryAmendment.text;
+
                 if (this.isAmendment) return this.amendment.text;
 
                 if (this.isProcedural) return this.procedural.text;

@@ -3,79 +3,26 @@
     <li class="list-group-item "
         v-bind:class="styling">
         <div class="row">
+            <div class="col-sm ">
 
-            <div class="col-sm "
-                 v-if="isChair"
-            >
+<!--            <div class="col-sm "-->
+<!--                 v-if="isChair"-->
+<!--            >-->
+
                 <motion-select-button
-                    v-if="isChair  "
                     :motion="motion"
                 ></motion-select-button>
+
+<!--                <motion-select-button-->
+<!--                    v-if="isChair  "-->
+<!--                    :motion="motion"-->
+<!--                ></motion-select-button>-->
 
             </div>
 
             <div class="col ">
 
-                <div
-                    v-if="isAmendment"
-                    class="amendment-area "
-                    v-bind:class="amendmentClass">
-
-                    <motion-type-badge :motion="motion"></motion-type-badge>
-
-                    <amendment-text-display
-                        v-if="isAmendment"
-                        :original-text="originalText"
-                        :amendment-text="motion.content"
-                        :tags="amendmentTags"
-                    ></amendment-text-display>
-
-                    <br/>
-
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
-
-                    <motion-status-badge v-if="isComplete" :is-passed="isPassed"></motion-status-badge>
-
-                </div>
-
-                <div
-                    class="procedural-subsidiary-area"
-                    v-bind:class="proceduralStyle"
-                    v-else-if="isProceduralSubsidiary"
-                >
-                    <motion-type-badge :motion="motion"></motion-type-badge>
-
-                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
-
-                    <br/>
-
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
-
-                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-
-                </div>
-
-                <div
-                    class="main-ish-area"
-                    v-else
-                >
-                    <motion-type-badge :motion="motion"></motion-type-badge>
-
-                    <span v-bind:class="motionStyle">   {{ motion.content }}   </span>
-
-                    <br/>
-
-                    <required-vote-badge v-if="! isComplete && ! motion.isSuperseded()"
-                                         :motion="motion"></required-vote-badge>
-                    <debatable-badge v-if="!isComplete && ! motion.isSuperseded()" :motion="motion"></debatable-badge>
-
-                    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-
-                </div>
+                <motion-info-cell :motion="motion"></motion-info-cell>
 
             </div>
 
@@ -83,7 +30,7 @@
 
                 <vote-nav-button
                     :motion="motion"
-                    v-if="isSelected && ! isComplete && isVotingAllowed"
+                    v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
                 ></vote-nav-button>
 
                 <open-voting-button
@@ -99,7 +46,7 @@
                 ></end-voting-button>
 
                 <results-nav-button
-                    v-if="isSelected && isComplete"
+                    v-if="isSelected && isComplete && ! isInPublicPmode"
                     :motion="motion"
                 ></results-nav-button>
 
@@ -122,11 +69,12 @@ import MotionStatusBadge from "./badges/motion-status-badge";
 import VoteNavButton from "../navigation/vote-nav-button";
 import ResultsNavButton from "../navigation/results-nav-button";
 import ChairMixin from "../../mixins/chairMixin";
-import AmendmentTextDisplay from "./amendment-text-display";
+import AmendmentTextDisplay from "./text-display/amendment-text-display";
 import AmendmentMixin from "../../mixins/amendmentMixin";
 import MotionResultsMixin from '../../mixins/motionResultsMixin';
 import ProceduralMixin from "../../mixins/proceduralMixin";
 import receiptMixin from "../../mixins/receiptMixin";
+import PublicPModeMixin from "../../mixins/publicPmodeMixin";
 
 // import AmendmentBadge from "./badges/amendment-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
@@ -135,10 +83,16 @@ import DebatableBadge from "./badges/debatable-badge";
 import OpenVotingButton from "./open-voting-button";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import InfoTooltip from "../messaging/info-tooltip";
+import MainMotionTextDisplay from "./text-display/motion-text-display";
+import MotionTextDisplay from "./text-display/motion-text-display";
+import MotionInfoCell from "./text-display/motion-info-cell";
 
 export default {
     name: "motion-select-area",
     components: {
+        MotionInfoCell,
+        MotionTextDisplay,
+        MainMotionTextDisplay,
         InfoTooltip,
         OpenVotingButton,
         DebatableBadge,
@@ -149,7 +103,7 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, receiptMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, PublicPModeMixin, receiptMixin],
     data: function () {
         return {
             amendmentTags: {
@@ -167,9 +121,9 @@ export default {
         amendmentClass: function () {
 
             if (this.isSecondOrder) {
-                return 'pl-5 ' + this.motionStyle
+                return 'ps-5 ' + this.motionStyle
             }
-            return 'pl-4 ' + this.motionStyle;
+            return 'ps-4 ' + this.motionStyle;
         },
 
         hasVotedOnCurrentMotion: function () {
@@ -184,6 +138,7 @@ export default {
         isComplete: function () {
             return this.motion.isComplete;
         },
+
 
 
         // /**
@@ -242,17 +197,17 @@ export default {
                 return 'text-muted';
             }
             if (this.isSelected) {
-                return 'lead font-weight-bold';
+                return 'lead fw--bold';
             }
         },
 
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {
                 case 2:
-                    return 'pl-5'
+                    return 'ps-5'
                     break;
                 case  1:
-                    return 'pl-4'
+                    return 'ps-4'
                     break;
                 case 0:
                     return '';

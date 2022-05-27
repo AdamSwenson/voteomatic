@@ -8,7 +8,7 @@ import ModeMixin from "../../../mixins/modeMixin";
 /**
  * Note, this will require that the delete-meeting-button is
  * included elsewhere on the page. They are linked via  bootstrap
- * using the data-dismiss=modal attribute. They are not linked
+ * using the data-bs-dismiss=modal attribute. They are not linked
  * by vue or vuex events.
  */
 export default {

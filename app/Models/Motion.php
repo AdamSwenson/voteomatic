@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Assignment;
 use App\Models\Election\Candidate;
 use App\Models\Election\PoolMember;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,9 +22,22 @@ class Motion extends Model
         'content',
         'description',
         'debatable',
+
+        /** JSON field for storing stuff needed by different forms of motion */
+        'info',
+        'info->propositionName', //dev Unsure if this is used
+        'info->name',
+        //resolutions
+        'info->title',
+        'info->resolutionIdentifier',
+        'info->groupId',
+        'info->formattedContent',
+
         'is_complete',
         'is_current',
         'is_in_order',
+        /** Whether it is mutli-line html text where formatting matters */
+        'is_resolution',
         /** Whether users are allowed at this time to cast votes on the motion */
         'is_voting_allowed',
         /** For elections, this defines how many people can be elected to the office */
@@ -44,11 +58,14 @@ class Motion extends Model
     protected $motionTypes = [
         'amendment',
         'amendment-secondary',
+        /** An office voted upon during an election */
         'election',
         'main',
         'privileged',
         'procedural-main',
         'procedural-subsidiary',
+        /** A proposal voted upon during an election */
+        'proposition',
         'incidental'
     ];
 
@@ -82,10 +99,13 @@ class Motion extends Model
 
 
     protected $casts = [
+//        'info' => 'array',
+        'info' => AsArrayObject::class,
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',
         'is_voting_allowed' => 'boolean',
+        'is_resolution' => 'boolean',
         'debatable' => 'boolean',
         'seconded' => 'boolean',
         //election
@@ -93,6 +113,35 @@ class Motion extends Model
     ];
 
     const ALLOWED_VOTE_REQUIREMENTS = [0.5, 0.66];
+
+
+    // ----------------- Ability to vote related
+
+    /**
+     * Updates the motion so that votes can no longer
+     * be cast. This should be used rather than manually
+     * marking the changes to avoid overly tight coupling
+     */
+    public function closeVoting()
+    {
+        $this->is_voting_allowed = false;
+        $this->is_complete = true;
+        $this->save();
+    }
+
+    /**
+     * Makes it possible for voters to vote.
+     * This is normally only used in elections where the administrator
+     * may need to reopen voting after closing it.
+     * Not needed for regular motions in meetings
+     */
+    public function openVoting()
+    {
+        $this->is_voting_allowed = true;
+        if( $this->is_complete === true) $this->is_complete = false;
+        $this->save();
+    }
+
 
 
     // ------------------ Motion tree related
@@ -114,6 +163,7 @@ class Motion extends Model
         $subsidiaryMotion->applies_to = $this->id;
         $subsidiaryMotion->save();
     }
+
 
     /**
      * Returns all subsidiary direct descendent motions, FILO ordered
@@ -199,11 +249,23 @@ class Motion extends Model
 
 
     /**
-     * Whether the motion has succeeded
+     * Whether the motion has succeeded.
+     * Will return true for a majority question (0.5) if the total
+     * is more than 50%
+     * Will return true for any other threshold if the total is greater than
+     * or equal to the threshold
      */
     public function getPassedAttribute()
     {
-        return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        if($this->requires == 0.5){
+            //A majority is more than half
+            return count($this->affirmativeVotes) > $this->voteCountThreshold;
+        }
+        else{
+            //2/3 votes (and hopefully most others require at least 2/3
+            return count($this->affirmativeVotes) >= $this->voteCountThreshold;
+        }
+
     }
 
     /**
@@ -234,10 +296,11 @@ class Motion extends Model
     }
 
     /**
-     * The number of votes which the affirmatives must exceed
+     * The number of votes which the affirmatives must meet or exceed
      * for the motion to pass
      * todo Should this round up? Is there any case where that matters?
-     * DO NOT USE >=
+     * NB, Majority votes must be greater than this value. 2/3 votes must be at least
+     * this value
      */
     public function getVoteCountThresholdAttribute()
     {

@@ -1,6 +1,6 @@
 <template>
     <div class="candidate-row card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
+        <div class="row g-0">
             <div class="col-md-4">
 
                 <candidate-button :candidate="candidate"></candidate-button>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import CandidateButton from "../election/candidate-button";
+import CandidateButton from "../election/voting/candidate-button";
 import WriteinInput from "./writein-input";
 import MotionMixin from "../../mixins/motionStoreMixin";
 

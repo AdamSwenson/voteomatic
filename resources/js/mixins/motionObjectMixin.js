@@ -11,8 +11,23 @@
 module.exports = {
 
 
-
     asyncComputed: {
+
+
+        isAmendment: function () {
+            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+                return this.motion.isAmendment();
+            }
+        },
+
+        isSecondOrderAmendment: function () {
+            if (!this.isAmendment) return false;
+            let appliedTo = this.$store.getters.getMotionById(this.motion.applies_to);
+            if (!_.isUndefined(appliedTo) && !_.isNull(appliedTo)) {
+                return appliedTo.isAmendment();
+            }
+            return false;
+        },
 
         /**
          * If true, voting has ended on the motion.
@@ -27,17 +42,28 @@ module.exports = {
             default: false
         },
 
-        isAmendment: function(){
-            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-                return this.motion.isAmendment();
-            }
-        },
-
         isMotionReady: function () {
-            return ! _.isUndefined(this.motion) && ! _.isNull(this.motion);
+            return !_.isUndefined(this.motion) && !_.isNull(this.motion);
         },
 
-        isSuperseded: function(){
+
+        /**
+         * Whether the motion is a html formatted resolution
+         * which will require special display options
+         * @returns {boolean|boolean|*}
+         */
+        isResolution: function () {
+            if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
+
+            return this.motion.isResolution;
+        },
+
+        /**
+         * Whether another motion has superseded this one
+         * (e.g., if it was altered by an amendment)
+         * @returns {*}
+         */
+        isSuperseded: function () {
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isSuperseded();
             }
@@ -49,7 +75,6 @@ module.exports = {
         //         return this.motion.isDebatable();
         //     }
         // },
-
 
 
     }

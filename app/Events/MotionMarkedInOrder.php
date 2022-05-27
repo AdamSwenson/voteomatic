@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 
 class MotionMarkedInOrder implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels, SendWithMotionOnlyTrait;
 
 
     /**

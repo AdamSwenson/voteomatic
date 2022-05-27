@@ -1,6 +1,6 @@
 <template>
 
-             <span class="badge badge-warning"
+             <span class="badge bg-warning"
              >Write-in</span>
 </template>
 
@@ -25,6 +25,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+.badge{
+    color: #0a0a0af5;
+}
 
 </style>

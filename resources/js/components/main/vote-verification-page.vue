@@ -28,9 +28,9 @@
                     </div>
                 </div>
 
-                <p>Feel free to enter fake receipts to demonstrate that this is actually checking your receipts</p>
+                <p class="card-text">Feel free to enter fake receipts to demonstrate that this is actually checking your receipts</p>
 
-                <p>For more information about how the voteomatic keeps your vote
+                <p class="card-text">For more information about how the voteomatic keeps your vote
                 anonymous, please see <a href="https://github.com/AdamSwenson/voteomatic#anonymity">https://github.com/AdamSwenson/voteomatic#anonymity</a> </p>
 
 
@@ -46,10 +46,11 @@
 
                 <div class="alert alert-success" role="alert" v-if="showGood">
                     <h4 class="alert-heading">This receipt is valid</h4>
-                    <p>The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
+                    <h5 class="alert-heading">The database contains a record of this vote</h5>
+                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
                     <p>Receipt : {{ receipt }}</p>
 
-                    <p class="text-right">
+                    <p class="text-end">
                         <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
                     </p>
                 </div>
@@ -57,7 +58,7 @@
                 <div class="alert alert-danger" role="alert" v-if="showBad">
                     <h4 class="alert-heading">This is not a valid receipt</h4>
                     <p> Receipt : {{ receipt }} </p>
-                    <p class="text-right">
+                    <p class="text-end">
                     <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
                     </p>
                 </div>
@@ -66,8 +67,8 @@
 
         </div>
 
-        <div class="card-body">
-            <p>The receipts below are temporarily stored on your browser. If you refresh the page,
+        <div class="card-body" v-if="showReceipts">
+            <p  class="card-text">The receipts below are temporarily stored on your browser. If you refresh the page,
                 it will no longer be possible to retrieve your receipts since your user id is not
                 linked to them in the database. Use the buttons below to download a list of your
                 receipts for safekeeping</p>
@@ -76,7 +77,7 @@
 
         </div>
 
-        <div class="card-footer">
+        <div class="card-footer" v-if="showReceipts">
             <copy-button></copy-button>
             <download-receipts-button></download-receipts-button>
 
@@ -93,10 +94,15 @@ import Vote from '../../models/Vote';
 import ReceiptListArea from "../vote-verification/receipt-list-area";
 import CopyButton from "../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../vote-verification/download-receipts-button";
+import ModeMixin from "../../mixins/modeMixin";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "vote-verification-page",
     components: {DownloadReceiptsButton, CopyButton, ReceiptListArea},
+
+    mixins : [ModeMixin],
+
     data: function () {
         return {
             showBad: false,
@@ -107,6 +113,18 @@ export default {
 
         }
     },
+
+    asyncComputed : {
+        allVotes: function () {
+            return this.$store.getters.getUsersCastVotes;
+        },
+
+        showReceipts : function(){
+            return isReadyToRock(this.allVotes) && this.allVotes.length >0 ;
+        }
+
+    },
+
     computed: {
 
         verificationResult: function () {
@@ -147,7 +165,15 @@ export default {
                     .then(function (response) {
                         if (!_.isUndefined(response.data.id)) {
 
-                            me.vote = new Vote(response.data.is_yay);
+                            if(me.isElection){
+                                me.vote = new Vote({candidateId : response.data.candidate_id});
+
+                            }else{
+                                //The is_yay prop being undefined will report the
+                                //receipt as invalid. The error will be caught below
+                                me.vote = new Vote({isYay : response.data.is_yay});
+                            }
+
                             me.showGood = true;
 
                         } else {
