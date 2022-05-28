@@ -3,7 +3,9 @@
     <li class="list-group-item "
         v-bind:class="styling">
         <div class="row">
-            <div class="col-sm ">
+            <div class="col-sm "
+                 v-if="! isInPublicPmode"
+            >
 
 <!--            <div class="col-sm "-->
 <!--                 v-if="isChair"-->
