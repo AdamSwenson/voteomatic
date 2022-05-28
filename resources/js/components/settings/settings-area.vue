@@ -2,7 +2,7 @@
 <div class="card settings-area">
 
     <div class="card-header">
-        <h3 class="card-heading">Settings</h3>
+        <h3 class="card-heading">Settings (NB, settings don't yet have effects)</h3>
     </div>
 
     <setting-card v-for="name in settingNames"

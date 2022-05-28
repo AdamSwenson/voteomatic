@@ -233,7 +233,7 @@ class Meeting extends Model
     public function getElectionPhaseAttribute()
     {
         if (!$this->is_election) return null;
-return $this->phase;
+        return $this->phase;
         //dev remove when ready
 //        try {
 //
@@ -350,9 +350,10 @@ return $this->phase;
         return $this->belongsToMany(User::class);
     }
 
-public function settingStore(){
+    public function settingStore()
+    {
         return $this->hasOne(SettingStore::class);
-}
+    }
 
 
 
@@ -418,8 +419,9 @@ public function settingStore(){
 //            ->first();
     }
 
-    public function getMasterSettingStore(){
-        return  SettingStore::where('meeting_id', $this->id)
+    public function getMasterSettingStore()
+    {
+        return SettingStore::where('meeting_id', $this->id)
             ->where('is_meeting_master', true)
             ->first();
 

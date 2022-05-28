@@ -21,6 +21,7 @@ import propositionSetupCard from "./components/election/propositions/proposition
 import electionAdminCard from './components/election/admin/election-admin-card';
 
 import pModeHome from "./components/pmode/pmode-home";
+
 Vue.component('pmode-home', pModeHome);
 
 Vue.component('ballot-setup-card', ballotSetupCard);
@@ -54,17 +55,17 @@ export const meetingRoutes = [
         path: '/meeting-home',
         icon: "fa fa-book",
         label: "Home",
-        get components(){
+        get components() {
             // window.console.log('home', store.getters.isElection);
-           // if (store.getters.isElection ){
-           //     return {main: electionVoterHomeCard};
-           // }
-           return {main: meetingHome};
+            // if (store.getters.isElection ){
+            //     return {main: electionVoterHomeCard};
+            // }
+            return {main: meetingHome};
         },
         get default() {
             if (store.getters.isElection) return false;
-        return true;
-            },
+            return true;
+        },
         props: true,
         adminOnly: false,
         type: 'meeting'
@@ -83,6 +84,7 @@ export const meetingRoutes = [
         adminOnly: false,
         type: 'meeting'
     },
+
     {
         name: 'verify',
         path: '/verify',
@@ -91,10 +93,11 @@ export const meetingRoutes = [
         components: {main: voteVerify},
         props: true,
         adminOnly: false,
-        type : 'all',
+        type: 'all',
 
         //Will show if any of the settings defined here are true
         showIfSettings: []
+
     },
 
     {
@@ -148,8 +151,8 @@ export const meetingRoutes = [
         components: {main: ballotSetupCard},
         props: true,
         // adminOnly: true,
-adminOnly : false,
-        type : 'meeting',
+        adminOnly: false,
+        type: 'meeting',
         // get adminOnly() {
         //     if (store.getters.isElection) return true;
         //     return false;
@@ -171,18 +174,18 @@ adminOnly : false,
     //     type : 'election'
     // },
 
-    {
-        name: 'verify',
-        path: '/verify',
-        icon: "fa fa-check",
-        label: "Verify votes",
-        components: {main: voteVerify},
-        props: true,
-        adminOnly: false,
-
-        //Will show if any of the settings defined here are true
-        showIfSettings: []
-    },
+    // {
+    //     name: 'verify',
+    //     path: '/verify',
+    //     icon: "fa fa-check",
+    //     label: "Verify votes",
+    //     components: {main: voteVerify},
+    //     props: true,
+    //     adminOnly: false,
+    //
+    //     //Will show if any of the settings defined here are true
+    //     showIfSettings: []
+    // },
 
 
     {
@@ -198,7 +201,7 @@ adminOnly : false,
         //Will show if any of the settings defined here are true
         showIfSettings: [],
         adminOnly: true,
-        type : 'all'
+        type: 'all'
     },
 
 
@@ -214,7 +217,7 @@ adminOnly : false,
         components: {main: pModeHome},
         props: true,
         adminOnly: true,
-        type : 'all'
+        type: 'all'
     },
 
 
@@ -229,7 +232,6 @@ adminOnly : false,
     //     type : 'election'
     // },
     //
-
 
 
     // {
