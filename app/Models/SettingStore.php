@@ -174,6 +174,16 @@ class SettingStore extends Model
 
 
     /**
+     * Returns VALID_ELECTION_SETTINGS or
+     * VALID_MEETING_SETTINGS depending on what
+     * sort of event this is.
+     */
+    public function getSettingsForEvent()
+    {
+        return $this->meeting->is_election ? self::VALID_ELECTION_SETTINGS : self::VALID_MEETING_SETTINGS;
+    }
+
+    /**
      * Updates the provided setting value and saves the model
      *
      * @param $settingName

@@ -126,7 +126,8 @@ class SettingStoreController extends Controller
             // master settings that have changed
             $meetingMaster = $settings->meeting->getMasterSettingStore();
 
-            foreach(SettingStore::CHAIR_ONLY_SETTINGS as $setting){
+            foreach($settings->getSettingsForEvent() as $setting){
+//            foreach(SettingStore::CHAIR_ONLY_SETTINGS as $setting){
                 if(! is_null($request->settings[$setting])){
                     $meetingMaster->setSetting($setting, $request->settings[$setting]);
                 }
