@@ -69,8 +69,10 @@ class SettingsRepository implements ISettingsRepository
 
         //Add null settings so that can use the keys
         //on client side
-        foreach(SettingStore::VALID_SETTINGS as $setting){
-            $settings->setSetting($setting, null);
+        $validSettings = $meeting->is_election ? SettingStore::VALID_ELECTION_SETTINGS : SettingStore::VALID_MEETING_SETTINGS;
+        foreach($validSettings as $setting){
+            $defaultVal = SettingStore::SETTINGS_DISPLAY_PROPERTIES[$setting]['default'];
+            $settings->setSetting($setting, $defaultVal);
         }
 
         $settings->save();

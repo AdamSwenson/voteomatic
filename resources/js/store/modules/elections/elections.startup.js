@@ -93,6 +93,9 @@ const actions = {
 
                         dispatch('initializeElectionListeners');
 
+                        //These can happen in parallel
+                        dispatch('loadSettings', meeting.id).then(function (){});
+
                         //get existing motions for meeting
                         dispatch('loadMotionsForMeeting', meeting.id).then(function () {
 

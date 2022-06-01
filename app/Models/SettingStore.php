@@ -9,6 +9,15 @@ class SettingStore extends Model
 {
     use HasFactory;
 
+    const VALID_ELECTION_SETTINGS = [
+        /** Whether members have the option of directly making nominations for offices */
+        'members_make_nominations',
+
+        /** Whether to show vote counts in the results. If false, only shows winners  */
+        'show_vote_counts',
+    ];
+
+
     /**
      * These are setting names which can be
      * set by a user through a request
@@ -16,15 +25,23 @@ class SettingStore extends Model
      * NB, is_meeting_master does not appear here since it can
      * only be set via the repository
      */
-    const VALID_SETTINGS = [
+    const VALID_MEETING_SETTINGS = [
+
+        /** Whether events in the meeting (motions proposed, voting started, et cetera should be broadcast to users */
+        'broadcast_events',
+
         /** Whether members have the option of directly making motions */
         'members_make_motions',
 
         /** Whether upon a motion being approved, a second is solicited */
         'members_second_motions',
 
+//        /** Whether there is a publicly accessible view of the motion stack et cetera */
+//        'public_view',
+
         /** Whether to show vote counts in the results. If false, only shows pass/fail */
         'show_vote_counts',
+
     ];
 
     /**
@@ -34,19 +51,40 @@ class SettingStore extends Model
      * dev If settings start proliferating, we may want to start storing in the database
      */
     const SETTINGS_DISPLAY_PROPERTIES = [
-      'members_make_motions' => [
-          'displayName' => "Members can make motions",
-          'displayDescription' => "Whether members have the option of making motions directly",
-      ],
-        'members_second_motions' => [
-            'displayName' => "Solicit second from members",
-            'displayDescription' => "Whether the program should solicit a second once a member makes a motion."
-        ],
         'show_vote_counts' => [
             'displayName' => "Show vote totals with results",
-            'displayDescription' => "Whether to show vote counts in the results. If false, only shows pass/fail."
+            'displayDescription' => "Whether to show vote counts in the results. If false, only shows pass/fail.",
+            'default' => true,
         ],
 
+        'members_make_motions' => [
+            'displayName' => "Members can make motions",
+            'displayDescription' => "Whether members have the option of making motions directly",
+            'default' => true,
+        ],
+        'members_second_motions' => [
+            'displayName' => "Solicit second from members",
+            'displayDescription' => "Whether the program should solicit a second once a member makes a motion.",
+            'default' => true,
+        ],
+
+//        'public_view' => [
+//            'displayName' => "Public view",
+//            'displayDescription' => "Make the motion stack and amendment history available at a public link."
+//        ],
+
+        'broadcast_events' => [
+            'displayName' => "Broadcast events",
+            'displayDescription' => "Whether events such as motions, voting being opened or closed, et cetera should be pushed to all clients",
+            'default' => true,
+        ],
+
+        //Election
+        'members_make_nominations' => [
+            'displayName' => "Members can make nominations",
+            'displayDescription' => "Whether members have the option of making nominations directly",
+            'default' => true,
+        ],
     ];
 
     /**
@@ -57,9 +95,16 @@ class SettingStore extends Model
      * only be set via the repository
      */
     const CHAIR_ONLY_SETTINGS = [
-        'members_make_motions',
+        //General
         'show_vote_counts',
-        'members_second_motions'
+        'broadcast_events',
+
+        //Meeting specific
+        'members_make_motions',
+        'members_second_motions',
+
+        //Election specific
+        'members_make_nominations',
     ];
 //
 //    /**
@@ -86,14 +131,23 @@ class SettingStore extends Model
      */
     protected $fillable = [
         'settings',
+
         'is_universal',
+
         'applies_to_all_members',
 
+        'settings->show_vote_counts',
+
+        'settings->broadcast_events',
+
+        //Meeting specific
         'settings->members_make_motions',
 
         'settings->members_second_motions',
 
-        'settings->show_vote_counts',
+
+        //Election specific
+        'settings->members_make_nominations',
     ];
 
     protected $casts = [
@@ -111,7 +165,8 @@ class SettingStore extends Model
     protected $appends = ['display'];
 
 
-    public function getDisplayAttribute(){
+    public function getDisplayAttribute()
+    {
         return self::SETTINGS_DISPLAY_PROPERTIES;
     }
 

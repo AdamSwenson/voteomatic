@@ -7,14 +7,19 @@
         </div>
 
         <div class="card-body">
-            <meeting-setup-card v-if="isMeeting"></meeting-setup-card>
+            <div class="row">
+                <div class="col-lg-6">
+                    <meeting-setup-card v-if="isMeeting"></meeting-setup-card>
 
-            <election-setup-card v-if="isElection"></election-setup-card>
+                    <election-setup-card v-if="isElection"></election-setup-card>
+                </div>
+                <div class="col-lg-6">
+                    <!--        <div class="card-body">-->
+                    <settings-area></settings-area>
+                </div>
+            </div>
         </div>
-
-<div class="card-body">
-    <settings-area></settings-area>
-</div>
+        
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6">
@@ -55,7 +60,8 @@ export default {
     components: {
         SettingsArea,
         ParticipantsListCard,
-        MeetingSetupCard, EventListCard, ElectionSetupCard, SetupControls},
+        MeetingSetupCard, EventListCard, ElectionSetupCard, SetupControls
+    },
 
     props: [],
 
@@ -66,7 +72,7 @@ export default {
         return {}
     },
 
-    beforeRouteEnter (to, from, next) {
+    beforeRouteEnter(to, from, next) {
         next(vm => {
             // window.console.log('loading events');
             // access to component instance via `vm`
@@ -78,9 +84,7 @@ export default {
 
     computed: {},
 
-    methods: {
-
-    }
+    methods: {}
 
 }
 </script>

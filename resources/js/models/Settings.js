@@ -8,7 +8,7 @@ import IModel from "./IModel";
  */
 export default class Settings extends IModel {
 
-    constructor({id = null, settings = null, display=null, meeting_id=null}) {
+    constructor({id = null, settings = null, display = null, meeting_id = null}) {
         super();
         this.id = id;
         this.settings = settings;
@@ -16,6 +16,9 @@ export default class Settings extends IModel {
         this.meetingId = meeting_id;
 
         let me = this;
+
+        // //Order the settings by the display name
+        // let d = _.orderBy(this.display, 'displayName');
 
         _.forEach(this.settings, (v, k) => {
 
@@ -37,11 +40,23 @@ export default class Settings extends IModel {
 
     }
 
-    get settingNames(){
+//     get orderedNames() {
+//         //make an array
+//         let o = [];
+//         _.forEach(this.display, (d) => {
+//             o.push(d);
+//         });
+// return        _.orderBy(o, ['displayName']);
+//     }
+
+    get settingNames() {
+
+        // return _.keys(d);
+
         return _.keys(this.settings);
     }
 
-    getDisplayForSetting(settingName){
+    getDisplayForSetting(settingName) {
         return this.display[settingName];
     }
 
@@ -51,8 +66,8 @@ export default class Settings extends IModel {
      *
      * @param settingName
      */
-    isSettingTrue(settingName){
-        if(! _.has(this.settings, settingName)) return false;
+    isSettingTrue(settingName) {
+        if (!_.has(this.settings, settingName)) return false;
 
         return this.settings[settingName] === true;
     }
@@ -62,11 +77,11 @@ export default class Settings extends IModel {
      * in the setting object and is true
      * @param listOfSettingNames
      */
-    isAnySettingTrue(listOfSettingNames){
+    isAnySettingTrue(listOfSettingNames) {
         let me = this;
         let v = false;
         _.forEach(listOfSettingNames, (settingName) => {
-            if(me.isSettingTrue(settingName)) v = true;
+            if (me.isSettingTrue(settingName)) v = true;
         });
         return v;
     }

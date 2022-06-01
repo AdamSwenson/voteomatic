@@ -33,6 +33,27 @@ class SettingStoreFactory extends Factory
 
             'settings' => [
                 'members_make_motions' => $this->faker->boolean,
+                'members_second_motions' => $this->faker->boolean,
+//                'public_view' => $this->faker->boolean,
+                'show_vote_counts' => $this->faker->boolean,
+                'use_broadcasting' => $this->faker->boolean,
+            ]
+
+        ];
+    }
+
+    public function election()
+    {
+        $user = User::factory()->create();
+        $meeting = Meeting::factory()->create();
+        return [
+            'user_id' => $user->id,
+            'meeting_id' => $meeting->id,
+            'is_universal' => $this->faker->boolean,
+            'applies_to_all_members' => $this->faker->boolean,
+
+            'settings' => [
+                'members_make_nominations' => $this->faker->boolean,
                 'show_vote_counts' => $this->faker->boolean,
             ]
 
