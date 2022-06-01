@@ -52,7 +52,7 @@ class SettingStore extends Model
      */
     const SETTINGS_DISPLAY_PROPERTIES = [
         'show_vote_counts' => [
-            'displayName' => "Show vote totals with results",
+            'displayName' => "Show vote totals with results [Not enabled]",
             'displayDescription' => "Whether to show vote counts in the results. If false, only shows pass/fail.",
             'default' => true,
         ],
@@ -62,8 +62,9 @@ class SettingStore extends Model
             'displayDescription' => "Whether members have the option of making motions directly",
             'default' => true,
         ],
+
         'members_second_motions' => [
-            'displayName' => "Solicit second from members",
+            'displayName' => "Solicit second from members  [Not enabled]",
             'displayDescription' => "Whether the program should solicit a second once a member makes a motion.",
             'default' => true,
         ],
@@ -74,14 +75,14 @@ class SettingStore extends Model
 //        ],
 
         'broadcast_events' => [
-            'displayName' => "Broadcast events",
+            'displayName' => "Broadcast events  [Not enabled]",
             'displayDescription' => "Whether events such as motions, voting being opened or closed, et cetera should be pushed to all clients",
             'default' => true,
         ],
 
         //Election
         'members_make_nominations' => [
-            'displayName' => "Members can make nominations",
+            'displayName' => "Members can make nominations  [Not enabled]",
             'displayDescription' => "Whether members have the option of making nominations directly",
             'default' => true,
         ],
@@ -136,6 +137,7 @@ class SettingStore extends Model
 
         'applies_to_all_members',
 
+        //General
         'settings->show_vote_counts',
 
         'settings->broadcast_events',

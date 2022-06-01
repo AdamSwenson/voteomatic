@@ -112,6 +112,10 @@ export default {
                         showRoutes.push(r);
                     }
 
+                } else if(r.name === 'ballot'){
+                    if(this.showMakeMotionTab){
+                        showRoutes.push(r);
+                    }
                 }
                 //So it's neither the results nor the verify tab
                 else {
@@ -253,6 +257,14 @@ export default {
         }
         ,
 
+        showMakeMotionTab: function(){
+          if(this.isAdmin) return true;
+
+          if(! isReadyToRock(this.settingsObject)) return false;
+
+          return this.settingsObject.isSettingTrue('members_make_motions');
+
+        },
 
         showResultsTab: function () {
             if (this.isElection) {

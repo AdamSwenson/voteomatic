@@ -9,6 +9,7 @@ use App\Http\Middleware\CheckIfAlreadyVoted;
 use App\Http\Middleware\CheckIfEligibleToSecond;
 use App\Http\Middleware\CheckIfMaxElectionWinnersExceeded;
 use App\Http\Middleware\CheckIfMeetingExists;
+use App\Http\Middleware\CheckIfEligibleToMakeMotion;
 use App\Http\Middleware\CheckIfMotionClosed;
 use App\Http\Middleware\CheckVoterEligibility;
 use App\Http\Middleware\CheckWriteInDoesNotDuplicateOfficialCandidate;
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
 
         'vote-eligibility' => CheckVoterEligibility::class,
         'motion-closed' => CheckIfMotionClosed::class,
+        'motion-make-eligibility' => CheckIfEligibleToMakeMotion::class,
         'previously-voted' => CheckIfAlreadyVoted::class,
         'second-eligibility' => CheckIfEligibleToSecond::class,
         'meeting-exists' => CheckIfMeetingExists::class,

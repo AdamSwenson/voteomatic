@@ -369,7 +369,7 @@ class Meeting extends Model
      * motion in the heirarchy.
      *
      * todo dev unused
-     *
+     * @deprecated
      * @param Motion $motion
      * @param $parentId
      * @param $depth
@@ -403,6 +403,7 @@ class Meeting extends Model
     /**
      * Returns the Assignment representing the meeting
      * which serves as the root for the motion tree
+     * @deprecated
      */
     public function getAssignmentRoot()
     {
@@ -419,6 +420,10 @@ class Meeting extends Model
 //            ->first();
     }
 
+    /**
+     * @deprecated
+     * @return mixed
+     */
     public function getMasterSettingStore()
     {
         return SettingStore::where('meeting_id', $this->id)
