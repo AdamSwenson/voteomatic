@@ -1,19 +1,52 @@
 <template>
+    <div class="btn-group"
+         role="group"
+         aria-label="Event type controls for selecting meeting or election"
+    >
 
-    <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
-        <label v-bind:class="meetingLabelStyle">
-            <input type="radio" name="options" id="meetingSelect"
-                   v-bind:checked="meetingCheckedState"
-                   v-on:click="setMeeting"
-            > Meeting
-        </label>
+        <input type="radio"
+               class="btn-check"
+               name="meetingSelect"
+               id="meetingSelect"
+               autocomplete="off"
+               v-bind:checked="meetingCheckedState"
+               v-on:click="setMeeting"
+        >
+        <label
+            v-bind:class="meetingLabelStyle"
+            for="meetingSelect"
+        >Meeting</label>
 
-        <label v-bind:class="electionLabelStyle">
-            <input type="radio" name="options" id="electionSelect"
-                   v-bind:checked="electionCheckedState"
-                   v-on:click="setElection"> Election
-        </label>
+
+        <input type="radio"
+               class="btn-check"
+               name="electionSelect"
+               id="electionSelect"
+               autocomplete="off"
+               v-bind:checked="electionCheckedState"
+               v-on:click="setElection"
+        >
+        <label
+            v-bind:class="electionLabelStyle"
+        >Election</label>
+
     </div>
+
+
+    <!--    <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">-->
+    <!--        <label v-bind:class="meetingLabelStyle">-->
+    <!--            <input type="radio" name="options" id="meetingSelect"-->
+    <!--                   v-bind:checked="meetingCheckedState"-->
+    <!--                   v-on:click="setMeeting"-->
+    <!--            > Meeting-->
+    <!--        </label>-->
+
+    <!--        <label v-bind:class="electionLabelStyle">-->
+    <!--            <input type="radio" name="options" id="electionSelect"-->
+    <!--                   v-bind:checked="electionCheckedState"-->
+    <!--                   v-on:click="setElection"> Election-->
+    <!--        </label>-->
+    <!--    </div>-->
 
     <!--        <div class="custom-control custom-switch">-->
     <!--        <input type="checkbox"-->
@@ -37,7 +70,7 @@ export default {
         return {
             switchId: 'mode-toggle',
             inactiveStyle: "btn btn-outline-primary ",
-            activeStyle:  "btn btn-primary active"
+            activeStyle: "btn btn-primary active"
         }
     },
 

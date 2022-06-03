@@ -13,6 +13,7 @@ extends : buttonParent,
         return {
             label : "New election",
             styling: 'btn-primary',
+            icon : 'bi-plus'
         }
     },
 

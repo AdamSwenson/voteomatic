@@ -15,6 +15,7 @@ export default {
         return {
             label: "New Office",
             styling: 'btn-info',
+            icon : 'bi-plus'
         }
     },
 

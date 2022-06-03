@@ -16,6 +16,7 @@ export default {
 
             label: "Edit current",
             styling: 'btn-warning',
+            icon: 'bi-pencil'
         }
     },
 

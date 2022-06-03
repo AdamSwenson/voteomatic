@@ -16,6 +16,7 @@ export default {
         return {
             label : "Edit election",
             styling: 'btn-warning',
+            icon : 'bi-pencil'
         }
     },
 

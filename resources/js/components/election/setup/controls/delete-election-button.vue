@@ -12,6 +12,7 @@ export default {
     data: function () {
         return {
             label: 'Delete election',
+            icon : 'bi-x'
           }
     },
 

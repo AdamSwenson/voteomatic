@@ -15,6 +15,7 @@ export default {
 
                 label : "New meeting",
                 styling: 'btn-primary',
+            icon: 'bi-plus'
         }
     },
 

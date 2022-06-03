@@ -107,7 +107,7 @@ class SettingStoreController extends Controller
      * @param \App\Models\SettingStore $settings
      * @return \Illuminate\Http\Response
      */
-    public function update(SettingsRequest  $request,  SettingStore $settings)
+    public function update( SettingStore $settings, SettingsRequest  $request)
     {
         $this->setLoggedInUser();
         //dev No idea why it isn't injecting the actual model from db, doing this for now

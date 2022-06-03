@@ -1,11 +1,17 @@
 <template>
     <div class="election-setup-card card">
 
-        <div class="chair" v-if="isChair">
+        <div class="non-chair" v-if="! isChair">
+            <election-display-card></election-display-card>
+        </div>
+
+        <div class="chair" v-else>
 
             <event-edit-card v-if="isInEventEditingMode"></event-edit-card>
+            <election-display-card v-else></election-display-card>
 
             <candidate-field-config-card v-if="isInEventEditingMode"></candidate-field-config-card>
+
         </div>
 
 
@@ -14,42 +20,35 @@
 </template>
 
 <script>
+import {isReadyToRock} from '../../../utilities/readiness.utilities';
 
-import CandidateRow from "../voting/candidate-row";
 import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import {isReadyToRock} from '../../../utilities/readiness.utilities';
-import WriteinRow from "../../deprecated/writein-row";
-import WriteInControls from "../write-in/write-in-controls";
-import CreateElectionButton from "./controls/create-election-button";
-import CreateOfficeButton from "./controls/create-office-button";
-import MeetingEditCard from "../../deprecated/meeting-setup-card";
-import OfficeSetupCard from "./office-edit-card";
-import CurrentCandidatesCard from "./current-candidates-card";
-import AddCandidatesCard from "./candidate-pool-card";
-import CandidatePoolCard from "./candidate-pool-card";
-import OfficeEditCard from "./office-edit-card";
-import ElectionEditCard from "../../deprecated/election-edit-card";
 import ModeMixin from "../../../mixins/modeMixin";
-import ElectionSetupControls from "./controls/election-setup-controls";
-import EventEditCard from "../../controls/event-edit-card";
-import EventDisplayCard from "../../common/event-display-card";
 import ChairMixin from "../../../mixins/chairMixin";
+
+import EventEditCard from "../../controls/event-edit-card";
 import CandidateFieldConfigCard from "./candidate-field-config-card";
+import ElectionDisplayCard from "./election-display-card";
 
 export default {
     name: "election-setup-card",
 
     components: {
+        ElectionDisplayCard,
         CandidateFieldConfigCard,
-        EventDisplayCard,
+
         EventEditCard,
-        ElectionSetupControls,
-        ElectionEditCard,
-        OfficeEditCard,
-        CandidatePoolCard,
-        AddCandidatesCard,
-        CurrentCandidatesCard, OfficeSetupCard, MeetingEditCard, CreateOfficeButton, CreateElectionButton
+
+        // ElectionEditCard,
+        // OfficeEditCard,
+        // CandidatePoolCard,
+        // AddCandidatesCard,
+        // CurrentCandidatesCard,
+        // OfficeSetupCard,
+        // MeetingEditCard,
+        // CreateOfficeButton,
+        // CreateElectionButton
     },
     props: [],
 
