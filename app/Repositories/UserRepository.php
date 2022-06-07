@@ -7,10 +7,13 @@ namespace App\Repositories;
 use App\Http\Requests\LTIRequest;
 use App\Models\Meeting;
 use App\Models\User;
+use Exception;
 use http\Env\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+
 
 class UserRepository implements IUserRepository
 {
@@ -94,14 +97,19 @@ class UserRepository implements IUserRepository
      */
     public function updateEmail(User $user, LTIRequest $request)
     {
-        if (!$request->has('lis_person_contact_email_primary')) return $user;
+        try {
+            if (!$request->has('lis_person_contact_email_primary')) return $user;
 
-        if ($request->lis_person_contact_email_primary === $user->email) return $user;
+            if ($request->lis_person_contact_email_primary === $user->email) return $user;
 
-        $user->email = $request->lis_person_contact_email_primary;
-        $user->save();
-        return $user;
-
+            $user->email = $request->lis_person_contact_email_primary;
+            $user->save();
+            return $user;
+        } catch (Exception $e) {
+            Log::debug("------------------ Error updating email --------- ");
+            Log::debug($request);
+            Log::debug($e);
+        }
     }
 
 }
