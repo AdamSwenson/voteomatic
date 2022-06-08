@@ -98,10 +98,15 @@ class UserRepository implements IUserRepository
     public function updateEmail(User $user, LTIRequest $request)
     {
         try {
+            //Request must have the email field set
             if (!$request->has('lis_person_contact_email_primary')) return $user;
-
+            //If email is current, do nothing
             if ($request->lis_person_contact_email_primary === $user->email) return $user;
-
+            //Only replace if the string has our dummy prefix (possible that there are
+            //situations where want a user's email address to differ from the one sent by
+            //the LMS --though can't think of what they are).
+            if(! Str::startsWith($user->email, "currently-unusable-" )) return $user;
+            //Set and save
             $user->email = $request->lis_person_contact_email_primary;
             $user->save();
             return $user;
