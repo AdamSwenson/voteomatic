@@ -2,20 +2,32 @@
     <div class="card setting-card">
 
         <div class="card-body">
-
-            <div class="custom-control custom-switch">
-                <input type="checkbox"
-                       class="custom-control-input"
+            <div class="form-check form-switch">
+                <input class="form-check-input"
+                       type="checkbox"
+                       role="switch"
                        v-bind:id="controlId"
                        v-model="settingValue"
                 >
-                <label class="custom-control-label"
+                <label class="form-check-label"
                        v-bind:for="controlId"
-                >{{displayName}}</label>
-
+                >{{ displayName }}</label>
             </div>
+
+
+<!--            <div class="custom-control custom-switch">-->
+<!--                <input type="checkbox"-->
+<!--                       class="custom-control-input"-->
+<!--                       v-bind:id="controlId"-->
+<!--                       v-model="settingValue"-->
+<!--                >-->
+<!--                <label class="custom-control-label"-->
+<!--                       v-bind:for="controlId"-->
+<!--                >{{ displayName }}</label>-->
+
+<!--            </div>-->
             <div class="setting-description">
-                <small class="text-muted">{{displayDescription}}</small>
+                <small class="text-muted">{{ displayDescription }}</small>
             </div>
 
 
@@ -40,7 +52,7 @@ export default {
     },
 
     asyncComputed: {
-        controlId : function(){
+        controlId: function () {
             return 'setting-area-' + this.name;
         },
         displayProps: function () {
@@ -59,13 +71,12 @@ export default {
         },
 
 
-
     },
 
     computed: {
         settingValue: {
             get: function () {
-                if(!isReadyToRock(this.settingsObj[this.name])){
+                if (!isReadyToRock(this.settingsObj[this.name])) {
                     return false;
                 }
                 return this.settingsObj[this.name];
