@@ -3,9 +3,9 @@
     <div class="resolution-setup-area card">
 
         <div class="card-body">
-            <div class="row display-area text-center">
+            <div class="row display-area ">
                 <div class="col">
-                    <blockquote class="blockquote mb-0">
+                    <blockquote class="blockquote ml-3 mb-0">
 
                         <resolution-text-display
                             :motion="draftMotion"
@@ -15,20 +15,23 @@
                 </div>
             </div>
         </div>
-        <div class="card-body edit-area">
-        <resolution-identifier-input :motion="draftMotion"></resolution-identifier-input>
-            <resolution-title-input :motion="draftMotion"></resolution-title-input>
-<!--        </div>-->
-<!--        <div class="card-body edit-area">-->
-            <!--                <div class="col">-->
-            <!--                    <div class="form-group">-->
 
-            <resolution-input :motion="draftMotion"></resolution-input>
+        <div class="card-body ">
+            <form>
+                <div class="mb-2">
+                    <resolution-title-input :motion="draftMotion"></resolution-title-input>
+                </div>
 
-            <!--                    </div>-->
+                <div class="mb-2">
+                    <resolution-identifier-input :motion="draftMotion"></resolution-identifier-input>
+                </div>
+            </form>
+
         </div>
-        <!--            </div>-->
 
+        <div class="card-body">
+            <resolution-input :motion="draftMotion"></resolution-input>
+        </div>
 
         <div class="card-body">
             <div class="row">
@@ -50,7 +53,7 @@
         </div>
 
     </div>
-<!--    </div>-->
+    <!--    </div>-->
 
 </template>
 
@@ -71,7 +74,8 @@ export default {
     name: "resolution-setup-area",
     components: {
         ResolutionIdentifierInput,
-        ResolutionTitleInput, ResolutionInput, ProposeResolutionButton, resolutionTextDisplay},
+        ResolutionTitleInput, ResolutionInput, ProposeResolutionButton, resolutionTextDisplay
+    },
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

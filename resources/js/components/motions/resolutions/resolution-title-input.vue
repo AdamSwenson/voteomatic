@@ -1,7 +1,8 @@
 <template>
     <div class="resolution-title-input">
-    <label for="rezzieTitle">Resolution title</label>
-    <input id="rezzieTitle" type="text" class="resolution-title-input" v-model="title">
+    <label for="rezzieTitle" class="form-label">Resolution title</label>
+    <input id="rezzieTitle" type="text" class="form-control resolution-title-input" v-model="title" aria-describedby="rezzieTitleHelp">
+        <div id="rezzieTitleHelp" class="form-text">This title will not change, even if the actual title is amended.</div>
     </div>
 </template>
 

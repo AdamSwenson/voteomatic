@@ -1,9 +1,10 @@
 <template>
-    <div class="resolution-identifier-input">
-    <label for="rezzieIdentifier">Resolution id (required)</label>
 
-    <input  id="rezzieIdentifier" type="text" class="resolution-identifier-input" v-model="identifier">
+    <div class="resolution-identifier-input">
+        <label for="rezzieIdentifier" class="form-label">Resolution id</label>
+        <input id="rezzieIdentifier" type="text" class="resolution-identifier-input form-control" v-model="identifier">
     </div>
+
 </template>
 
 <script>
