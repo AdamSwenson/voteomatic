@@ -20,9 +20,9 @@
 
         </div>
 
-        <div class="card-footer">
-            <div class="card-text">NB, ignore the url above if you do not have the voteomatic configured as an app in a canvas class.</div>
-        </div>
+<!--        <div class="card-footer">-->
+<!--            <div class="card-text">NB, ignore the url above if you do not have the voteomatic configured as an app in a canvas class.</div>-->
+<!--        </div>-->
 
     </div>
 
