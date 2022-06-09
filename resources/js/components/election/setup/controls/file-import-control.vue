@@ -1,53 +1,38 @@
 <template>
     <div class="file-import-control  "
-         v-bind:class="styling"
-    >
-<!--<label for="file-input">{{buttonLabel}}</label>-->
-<!--                    <input id="file-input"-->
-<!--                           class="file-input"-->
-<!--                           type="file"-->
-<!--                           name="candidate-file-upload"-->
-<!--                           v-on:change.prevent="processFile"-->
-<!--                    >-->
+         v-bind:class="styling">
 
-<!--                    &lt;!&ndash;This is the call to action, i.e., the text&ndash;&gt;-->
-<!--                    <span class="file-cta">-->
-<!--                            <span class="file-icon"><i class="fa fa-upload"></i></span>-->
-<!--                            <span class="file-label">{{buttonLabel}}</span>-->
-<!--                        </span>-->
+        <label v-bind:for="inputId"
+               class="form-label"
+        >Import from .csv file</label>
+
+        <input class="form-control form-control-lg"
+               v-bind:id="inputId"
+               type="file"
+               v-on:change.prevent="processFile"
+        >
+
+        <!--       This was working version before VOT-123-->
+<!--        <label class="file-label">-->
+<!--            &lt;!&ndash;This is the native element which is hidden by css&ndash;&gt;-->
+<!--            <input id="file-input"-->
+<!--                   class="file-input"-->
+<!--                   type="file"-->
+<!--                   name="candidate-file-upload"-->
+<!--                   v-on:change.prevent="processFile"-->
+<!--            >-->
+<!--        </label>-->
 
 
-
-        <!--        <div class="custom-file">-->
-<!--            <input  type="file" class="custom-file-input" id="customFile"-->
-<!--                    name="candidate-file-upload"-->
-<!--                    v-on:change.prevent="processFile">-->
-<!--            <label class="custom-file-label" for="customFile">Choose file</label>-->
-<!--        </div>-->
-
-        <label class="file-label">
-
-            <!--This is the native element which is hidden by css-->
-            <input id="file-input"
-                   class="file-input"
-                   type="file"
-                   name="candidate-file-upload"
-                   v-on:change.prevent="processFile"
-            >
-
-            <!--This is the call to action, i.e., the text-->
-<!--            <span class="file-cta">-->
-<!--                    <span class="file-icon"><i class="fa fa-upload"></i></span>-->
-<!--                    <span class="file-label">{{buttonLabel}}</span>-->
-<!--                </span>-->
-
-        </label>
 
     </div>
 
 </template>
 
 <style lang="scss">
+//@import ~bootstrap/scss/variables
+
+//$form-file-button-color : blue
 
 //.btn-file {
 //    position: relative;
@@ -90,6 +75,8 @@
             return {
                 buttonLabel: 'Select file',
 
+                inputId : 'fileInput',
+
                 styling: '', //'btn btn-primary',
                 events: {
                     importComplete: 'candidate-import-complete',
@@ -108,7 +95,7 @@
                 let me = this;
                 let p = new Promise( function ( resolve, reject ) {
 
-                    let f = document.getElementById( 'file-input' );
+                    let f = document.getElementById( me.inputId );
                     let file = f.files[ 0 ];
 
                     //processFile gets called once
