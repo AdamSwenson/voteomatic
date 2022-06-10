@@ -30,7 +30,7 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import CandidateSetupRow from "./candidate-setup-row";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import PoolMemberCreationCard from "./pool-member-creation-card";
-import ImportPoolControls from "./controls/import-pool-controls";
+import ImportPoolControls from "./import-pool/import-pool-controls";
 
 export default {
     name: "candidate-pool-card",

@@ -7,7 +7,11 @@ const _ = window._ = require('lodash');
 // const Vue = require( 'vue' );
 
 import PoolMember from '../../../models/PoolMember';
-
+import {
+    decomposeFile,
+    doesBrowserSupportFileUpload,
+    doesFirstRowContainTitles
+} from '../../../utilities/fileImport.utilities';
 
 // commonNames[] is a list of the most common first names for candidates born between 1990-2000
 // It is used to scan a column and make a guess at which contains first names
@@ -38,6 +42,7 @@ const browserSupportFileUpload = () => {
 
 /**
  * determines if the first row contains column headers that describe the column's content
+ * @deprecated
  * @param firstLine
  * @returns {boolean}
  */
@@ -83,14 +88,11 @@ const guessColumnDataByTitles = function (titles, cols = {
         }
 
         //dev VOT-169
-        else if(titles[i].search(/department/) >= 0) {
-        cols.deptCol = i;
-        }
-        else if(titles[i].search(/link/) >= 0) {
-        cols.linkCol = i;
-        }
-
-        else {
+        else if (titles[i].search(/department/) >= 0) {
+            cols.deptCol = i;
+        } else if (titles[i].search(/link/) >= 0) {
+            cols.linkCol = i;
+        } else {
             console.log('column not found: "' + titles[i] + '"');
         }
     }
@@ -170,6 +172,41 @@ const filterHeaderRows = (candidates) => {
     return candidates;
 };
 
+
+const candidateColumns = [
+    {
+        name: 'firstName',
+        regex: new RegExp('first', 'gi'),
+        // commond ata[] is a list of the most common first names for candidates born between 1990-2000
+// It is used to scan a column and make a guess at which contains first names
+        commonData : [
+            'Michael', 'Carlos', 'Christopher', 'Matthew',
+            'Maria', 'Joshua', 'Jacob', 'Nicholas',
+            'Jessica', 'Jose', 'Ashley', 'Emily',
+            'Sarah', 'Samantha', 'Amanda'
+        ]
+    },
+
+    {
+        name: 'lastName',
+        regex: new RegExp('last', 'gi'),
+        commonData : []
+    },
+
+    {
+        name: 'department',
+        regex: new RegExp('department', 'gi'),
+        commonData : []
+    },
+
+    {
+        name: 'link',
+        regex: new RegExp('link|url', 'gi'),
+        commonData : ['https', 'http', 'www', '.com', '.edu']
+    }
+
+];
+
 const actions = {
 
 //actions
@@ -180,8 +217,7 @@ const actions = {
 
             window.console.log('candidateFileImporter', 'importCandidatesFromFile called', 'inputFile', inputFile);
 
-
-            if (!browserSupportFileUpload()) {
+            if (!doesBrowserSupportFileUpload()) {
                 alert('The file upload function is not fully supported in this browser!');
                 return;
             }
@@ -201,32 +237,39 @@ const actions = {
              */
             reader.onload = (event) => {
                 // reset columns. prevents bugs if two files with different orderings are imported.
-                var columns = {emailCol: -1, idCol: -1, firstNameCol: -1, lastNameCol: -1}
+                let columns = {emailCol: -1, idCol: -1, firstNameCol: -1, lastNameCol: -1};
+
+                let expectedTitleStrings = ['name', 'department', 'url'];
 
                 //holds the candidates extracted from the file
-                let candidates = [];
+                let {contents, rows} = decomposeFile(event);
+                //rename for compatibility while refactoring
+                let candidates = contents;
 
-                /* We start by reading and decomposing the file */
-                // convert line endings
-                var rows = event.target.result.toString().replace(/[\r\n]+/g, "\n").split("\n");
-
-                // break each row into its elements, pushing them into candidates
-                for (var i = 0; i < rows.length; i++) {
-                    candidates[i] = rows[i].toString().split(separatorChar);
-                }
-
-                /*
-                Now we can process the read data
-                */
-                // remove any resulting lines with 1 or fewer elements
-                for (i = candidates.length - 1; i >= 0; i--) {
-                    // since this looks for rows with 2 or more consecutive commas, rows that import with a few empty columns
-                    // at the beginning (eg:  [,,,data,data,data] ) will be spliced. IT should remove lines with only commas.
-                    if (candidates[i].length <= 1 || (rows[i].search(/,,+/) >= 0)) {
-                        candidates.splice(i, 1);
-                        rows.splice(i, 1);
-                    }
-                }
+                // let candidates = f.contents;
+// let rows = f.rows;;
+//                 window.console.log('candidates', candidates,  'rows', rows);
+                // /* We start by reading and decomposing the file */
+                // // convert line endings
+                // var rows = event.target.result.toString().replace(/[\r\n]+/g, "\n").split("\n");
+                //
+                // // break each row into its elements, pushing them into candidates
+                // for (var i = 0; i < rows.length; i++) {
+                //     candidates[i] = rows[i].toString().split(separatorChar);
+                // }
+                //
+                // /*
+                // Now we can process the read data
+                // */
+                // // remove any resulting lines with 1 or fewer elements
+                // for (i = candidates.length - 1; i >= 0; i--) {
+                //     // since this looks for rows with 2 or more consecutive commas, rows that import with a few empty columns
+                //     // at the beginning (eg:  [,,,data,data,data] ) will be spliced. IT should remove lines with only commas.
+                //     if (candidates[i].length <= 1 || (rows[i].search(/,,+/) >= 0)) {
+                //         candidates.splice(i, 1);
+                //         rows.splice(i, 1);
+                //     }
+                // }
 
                 /*
                 At this point we have a nice clean representation
@@ -239,7 +282,10 @@ const actions = {
                 // analyze the file and look for column headers
                 var firstLine = candidates[0];
                 var startRow = 0;
-                if (firstRowContainsTitles(firstLine)) {
+
+                window.console.log('first row titles', firstLine, doesFirstRowContainTitles(firstLine, ['name', 'department', 'url']));
+
+                if (doesFirstRowContainTitles(firstLine, expectedTitleStrings)) {
                     guessColumnDataByTitles(firstLine, columns);
                     // remove the header line as we don't need it any longer
                     rows.splice(0, 1);
@@ -271,7 +317,7 @@ const actions = {
                     let dept = candidate[columns.deptCol];
                     let link = candidate[columns.linkCol]
                     let info = {
-                        department : dept,
+                        department: dept,
                         link: link
                     };
                     // let email = candidate[columns.emailCol];
@@ -281,8 +327,8 @@ const actions = {
                     let s = new PoolMember({
                         last_name: last,
                         first_name: first,
-                    //dev VOT-169
-                        info : info
+                        //dev VOT-169
+                        info: info
                         // candidateIdentifier: ident,
                         // email: email
                     });

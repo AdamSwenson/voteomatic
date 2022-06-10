@@ -53,7 +53,7 @@ import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import DeleteOfficeModal from "./controls/delete-office-modal";
 import DeleteOfficeButton from "./controls/delete-office-button";
-import ImportPoolControls from "./controls/import-pool-controls";
+import ImportPoolControls from "./import-pool/import-pool-controls";
 
 // import bsCustomFileInput from 'bs-custom-file-input'
 
