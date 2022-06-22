@@ -4,6 +4,7 @@ import Motion from "../../../models/Motion";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import Payload from "../../../models/Payload";
 import Proposition from "../../../models/Proposition";
+import officeFileImporter from "./officeFileImporter";
 
 const state = {
     //things: []
@@ -36,6 +37,7 @@ const mutations = {
 
 
 const actions = {
+    ...officeFileImporter,
 
     /**
      * Create an election event in which votes will be

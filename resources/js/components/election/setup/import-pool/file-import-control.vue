@@ -67,7 +67,7 @@
         mixins: [MeetingMixin, MotionStoreMixin, ModeMixin, ChairMixin,],
 
 
-        props: [],
+        props: ['actionName'],
 
         components: {},
 
@@ -75,11 +75,11 @@
             return {
                 buttonLabel: 'Select file',
 
-                inputId : 'fileInput',
+
 
                 styling: '', //'btn btn-primary',
                 events: {
-                    importComplete: 'candidate-import-complete',
+                    importComplete: 'import-complete',
                     importError: ''
                 },
 
@@ -87,7 +87,11 @@
             }
         },
 
-        computed: {},
+        computed: {
+            inputId : function(){
+                return 'fileInput' + this.actionName;
+            }
+        },
 
         methods: {
 
@@ -98,16 +102,10 @@
                     let f = document.getElementById( me.inputId );
                     let file = f.files[ 0 ];
 
-                    //processFile gets called once
-                    //as indicated by this line only printing once
-                    // window.console.log( 'candidates-panel', 'processFile', 112, evt, f, file );
+                    //Need motion id for when used in importing pool; need meeting id for
+                    //when used in importing offices
+                    me.$store.dispatch( me.actionName, {file: file, motionId: me.motion.id, meetingId : me.meeting.id });
 
-                    //but then it seems this line gets called twice....
-                    //since all the messages for importcandidatesFromFile
-                    //display twice
-                    me.$store.dispatch( 'createPoolFromFile', {file: file, motionId: me.motion.id });
-
-                    // window.console.log( 'candidates-panel', 'processFile', 332, 'after the dispatch has weirdly fired twice' );
                     //finally, reset the attached file
                     f.value = '';
                     resolve();

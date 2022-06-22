@@ -1,5 +1,11 @@
+import {
+    decomposeFile,
+    doesBrowserSupportFileUpload,
+    doesFirstRowContainTitles
+} from "../../../utilities/fileImport.utilities";
+
 /**
- * Created by adam on 7/7/17.
+ * Created by adam on 6/9/22.
  */
 
 
@@ -7,223 +13,50 @@ const _ = window._ = require('lodash');
 // const Vue = require( 'vue' );
 
 import PoolMember from '../../../models/PoolMember';
+import FileImportColumnStore from "../../../models/FileImportColumnStore";
+import * as routes from "../../../routes";
+import {idify} from "../../../utilities/object.utilities";
+import Motion from "../../../models/Motion";
 
 
-// commonNames[] is a list of the most common first names for candidates born between 1990-2000
-// It is used to scan a column and make a guess at which contains first names
-const commonNames = [
-    'Michael', 'Carlos', 'Christopher', 'Matthew',
-    'Maria', 'Joshua', 'Jacob', 'Nicholas',
-    'Jessica', 'Jose', 'Ashley', 'Emily',
-    'Sarah', 'Samantha', 'Amanda'
+const officeColumns = [
+
+    {
+        name: 'officeName',
+        standardTitle: 'Office name',
+        regex: new RegExp('office|name', 'gi'),
+        commonData: ['President', 'Secretary', 'Senator']
+    },
+
+    {
+        name: 'maxWinners',
+        standardTitle: 'Max winners',
+        regex: new RegExp('max|winners', 'gi'),
+        commonData: [1]
+    },
+
+    {
+        name: 'description',
+        standardTitle: 'Description',
+        regex: new RegExp('description', 'gi'),
+        commonData: []
+    }
+
 ];
-
-/**
- * [ separatorChar] defines the character that will be used to divide lines into fields
- * default: comma
- */
-const separatorChar = ',';
-
-/**
- * check that the browser isn't ancient
- * @returns {boolean}
- */
-const browserSupportFileUpload = () => {
-    var isCompatible = false;
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        isCompatible = true;
-    }
-    return isCompatible;
-};
-
-/**
- * determines if the first row contains column headers that describe the column's content
- * @param firstLine
- * @returns {boolean}
- */
-const firstRowContainsTitles = function (firstLine) {
-    var result = false;
-    if (typeof firstLine != 'undefined') {
-        for (var i = 0; i < firstLine.length; i++) {
-            if (firstLine[i].search(/mail/i) >= 0 || firstLine[i].search(/name/i) >= 0) {
-                result = true;
-            }
-            if (firstLine[i].search(/@/) >= 0) {
-                result = false;
-            }
-        }
-    }
-    return result;
-};
-
-/**
- * examine column titles to pick likely ordering
- * @param titles
- */
-const guessColumnDataByTitles = function (titles, cols = {
-    emailCol: -1,
-    idCol: -1,
-    firstNameCol: -1,
-    lastNameCol: -1,
-    //dev VOT-169
-    deptCol: -1,
-    linkCol: -1
-}) {
-    var numColumns = titles.length;
-
-    for (var i = 0; i < numColumns; i++) {
-        if (titles[i].search(/mail/i) >= 0) {
-            cols.emailCol = i;
-        } else if (titles[i].search(/id/) >= 0) {
-            cols.idCol = i;
-        } else if (titles[i].search(/first/) >= 0) {
-            cols.firstNameCol = i;
-        } else if (titles[i].search(/last/) >= 0) {
-            cols.lastNameCol = i;
-        }
-
-        //dev VOT-169
-        else if(titles[i].search(/department/) >= 0) {
-        cols.deptCol = i;
-        }
-        else if(titles[i].search(/link/) >= 0) {
-        cols.linkCol = i;
-        }
-
-        else {
-            console.log('column not found: "' + titles[i] + '"');
-        }
-    }
-
-    // return cols;
-};
-
-/**
- * Examine table data to pick out column ordering
- */
-const guessColumnDataByContent = function (candidates, columns = {
-    emailCol: -1,
-    idCol: -1,
-    firstNameCol: -1,
-    lastNameCol: -1
-}) {
-    window.console.log('candidateFileImporter', 'guessColumnDataByContent', 90, candidates);
-    var startCol = 0;
-    var startRow = 0;
-
-    var numColumns = candidates[0].length;
-    var foundColumns = [];
-
-    for (var i = startCol; i < numColumns; i++) {
-        if (candidates[0][i].search(/@/) >= 0) {
-            // look for @, that's the email
-            columns.emailCol = i;
-            foundColumns.push(i);
-        } else if (candidates[0][i].search(/[0-9]{3}/) >= 0) {
-            // look for 3 digits in a row, that's the candidateId
-            columns.idCol = i;
-            foundColumns.push(i);
-        } else if (candidates[0][i] == '') {
-            // add any empty columns to the blacklist so they are skipped later
-            foundColumns.push(i);
-        }
-    }
-
-    for (i = startCol; i < numColumns; i++) {
-        // skip any columns which have already been flagged as email or candidate ID
-        if (foundColumns.indexOf(i) > -1) {
-            continue;
-        }
-        for (var j = startRow; j < candidates.length; j++) {
-            // any column with 3 more letters is set as last name. Next column found with letters is first name
-            if (candidates[j][i].search(/.{3,}/) > -1) {
-                if (columns.lastNameCol == -1)
-                    columns.lastNameCol = i;
-                else if (columns.lastNameCol != i) {
-                    columns.firstNameCol = i;
-                }
-            }
-            // look for common names and set firstNameCol if any are found
-            if (candidates[j][i].search(commonNames)) {
-                columns.firstNameCol = i;
-                if (columns.lastNameCol == columns.firstNameCol) {
-                    columns.lastNameCol = -1;
-                }
-                foundColumns.push(i);
-                break;
-            }
-        }
-    }
-    return columns
-}
-
-const filterHeaderRows = (candidates) => {
-
-    // remove any resulting lines with 1 or fewer elements
-    for (let i = candidates.length - 1; i >= 0; i--) {
-        // since this looks for rows with 2 or more consecutive commas, rows that import with a few empty columns
-        // at the beginning (eg:  [,,,data,data,data] ) will be spliced. IT should remove lines with only commas.
-        if (candidates[i].length <= 1 || (candidates[i].search(/,,+/) >= 0)) {
-            candidates.splice(i, 1);
-        }
-    }
-    return candidates;
-};
-
-/**
- * Decomposes the file loaded in the event handler and returns
- * the contents
- * @param event
- * @param separatorChar
- * @returns {*[]}
- */
-const decomposeFile = (event, separatorChar=separatorChar) => {
-    //holds the contents extracted from the file
-    let contents = [];
-
-    /* We start by reading and decomposing the file */
-    // convert line endings
-    let rows = event.target.result.toString().replace(/[\r\n]+/g, "\n").split("\n");
-
-    // break each row into its elements, pushing them into contents
-    for (let i = 0; i < rows.length; i++) {
-        contents[i] = rows[i].toString().split(separatorChar);
-    }
-
-    /* Now we can process the read data */
-    // remove any resulting lines with 1 or fewer elements
-    for (let i = contents.length - 1; i >= 0; i--) {
-        // since this looks for rows with 2 or more consecutive commas, rows that import with a few empty columns
-        // at the beginning (eg:  [,,,data,data,data] ) will be spliced. IT should remove lines with only commas.
-        if (contents[i].length <= 1 || (rows[i].search(/,,+/) >= 0)) {
-            contents.splice(i, 1);
-            rows.splice(i, 1);
-        }
-    }
-
-    return contents;
-
-};
-
 
 const actions = {
 
-//actions
-    readPeopleFromFile: ({state, dispatch, commit, getters}, inputFile) => {
+    createOfficesFromFile: ({state, dispatch, commit, getters}, inputFile) => {
         return new Promise((resolve, reject) => {
-            //todo Temporarily commented out the promise while working on this since the below log gets called twice
-            //todo The doubling of candidates on read happens because this action gets called twice. So in looking for the cause, don't focus here.... Are you listening Adam?
+            window.console.log('officeFileImporter', 'createOfficesFromFile called', 'inputFile', inputFile);
 
-            window.console.log('candidateFileImporter', 'importCandidatesFromFile called', 'inputFile', inputFile);
-
-
-            if (!browserSupportFileUpload()) {
+            if (!doesBrowserSupportFileUpload()) {
                 alert('The file upload function is not fully supported in this browser!');
                 return;
             }
 
-            var reader = new FileReader();
-            let people = [];
+            let reader = new FileReader();
+
             /**
              * Run the processing
              * From docs
@@ -236,33 +69,10 @@ const actions = {
              * @param event
              */
             reader.onload = (event) => {
-                // reset columns. prevents bugs if two files with different orderings are imported.
-                var columns = {emailCol: -1, idCol: -1, firstNameCol: -1, lastNameCol: -1}
+                let columnStore = new FileImportColumnStore(officeColumns)
 
                 //holds the contents extracted from the file
-                let contents = [];
-
-                /* We start by reading and decomposing the file */
-                // convert line endings
-                var rows = event.target.result.toString().replace(/[\r\n]+/g, "\n").split("\n");
-
-                // break each row into its elements, pushing them into contents
-                for (var i = 0; i < rows.length; i++) {
-                    contents[i] = rows[i].toString().split(separatorChar);
-                }
-
-                /*
-                Now we can process the read data
-                */
-                // remove any resulting lines with 1 or fewer elements
-                for (i = contents.length - 1; i >= 0; i--) {
-                    // since this looks for rows with 2 or more consecutive commas, rows that import with a few empty columns
-                    // at the beginning (eg:  [,,,data,data,data] ) will be spliced. IT should remove lines with only commas.
-                    if (contents[i].length <= 1 || (rows[i].search(/,,+/) >= 0)) {
-                        contents.splice(i, 1);
-                        rows.splice(i, 1);
-                    }
-                }
+                let {contents, rows} = decomposeFile(event);
 
                 /*
                 At this point we have a nice clean representation
@@ -273,66 +83,65 @@ const actions = {
                 in each column.
                  */
                 // analyze the file and look for column headers
-                var firstLine = contents[0];
-                var startRow = 0;
-                if (firstRowContainsTitles(firstLine)) {
-                    guessColumnDataByTitles(firstLine, columns);
+                let firstLine = contents[0];
+
+                // window.console.log('first row titles', firstLine, doesFirstRowContainTitles(firstLine, ['name', 'department', 'url']));
+
+                if (doesFirstRowContainTitles(firstLine, columnStore.standardTitles)) {
+                    columnStore.setColumnIndexesFromTitles(firstLine);
                     // remove the header line as we don't need it any longer
                     rows.splice(0, 1);
                     contents.splice(0, 1);
                 } else {
-                    guessColumnDataByContent(contents, columns);
+                    columnStore.setColumnIndexesFromContents(contents);
                 }
 
                 /* Test point: The data should be in contents and columns should have correct order values */
-                window.console.log('candidateFileImporter---initialRead TP', 'contents', contents, 'columns', columns);
+                window.console.log('officeFileImporter---initialRead TP', 'contents', contents, 'columns', columnStore);
 
+                let meeting = getters.getActiveMeeting;
+                let url = routes.election.resource.office();
 
                 /*
-                Now that everything is processed, we can send the candidate
+                Now that everything is processed, we can send the office
                 to storage and the server
-                 For bug fixing, here are the values in the standard file
-                    // let ident = candidate[ 0 ];
-                    // let last = candidate[ 1 ];
-                    // let first = candidate[ 2 ];
-                    // let email = candidate[ 3 ];
-                 */
-                _.forEach(contents, (candidate) => {
-                    // window.console.log( 'candidateFileImporter', 'candidate', 249, candidate );
-                    // let ident = candidate[columns.idCol];
-                    let last = candidate[columns.lastNameCol];
-                    let first = candidate[columns.firstNameCol];
-
-                    // dev VOT-169
-                    let dept = candidate[columns.deptCol];
-                    let link = candidate[columns.linkCol]
-                    let info = {
-                        department : dept,
-                        link: link
+                */
+                _.forEach(contents, (c) => {
+                    let s = {
+                        meetingId: idify(meeting),
+                        //NB, an office is represented by a motion, hence we need to use
+                        //the expected keys even though it seems odd in this context
+                        content: c[columnStore.officeName],
+                        description: c[columnStore.description],
+                        max_winners: c[columnStore.maxWinners],
+                        //Otherwise the controller will not send the office
+                        //when we ask for all motions
+                        seconded: true,
+                        type: 'election'
                     };
-                    // let email = candidate[columns.emailCol];
+
+                    // return new Promise(((resolve, reject) => {
+
+                    Vue.axios.post(url, s)
+                        .then((response) => {
+                            let motion = new Office(response.data);
+
+                            commit('addMotionToStore', motion);
 
 
-                    //create a candidate object
-                    let s = new PoolMember({
-                        last_name: last,
-                        first_name: first,
-                    //dev VOT-169
-                        info : info
-                        // candidateIdentifier: ident,
-                        // email: email
+                        }).catch(function (error) {
+                        // error handling
+                        if (error.response) {
+                            dispatch('showServerProvidedMessage', error.response.data);
+                        }
                     });
-                    //Push the candidate into local storage and create
-                    //a new candidate on the server
-                    people.push(s);
-                    // dispatch(aTypes.handleNewcontentstorageAndAssociation, s);
+                    // }));
+
+
                 });
 
-
-                window.console.log('gonna pass back', people);
-                return resolve(people);
-
-
+                // window.console.log('gonna pass back', offices);
+                return resolve();
             };
 
             reader.onerror = function (inputFile) {
@@ -343,8 +152,9 @@ const actions = {
             };
 
             return reader.readAsText(inputFile);
-            //     reader.readAsText(inputFile);
         });
+
+
     }
 
 };

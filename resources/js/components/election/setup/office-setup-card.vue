@@ -29,6 +29,7 @@
 
         <div class="card-body" v-if="showOfficeSetup">
             <import-pool-controls></import-pool-controls>
+            <import-offices-controls></import-offices-controls>
         </div>
 <!--        <div class="card-footer" v-if="showOfficeSetup">-->
 <!--            <div class="text-end">-->
@@ -54,12 +55,14 @@ import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import DeleteOfficeModal from "./controls/delete-office-modal";
 import DeleteOfficeButton from "./controls/delete-office-button";
 import ImportPoolControls from "./import-pool/import-pool-controls";
+import ImportOfficesControls from "./import-offices/import-offices-controls";
 
 // import bsCustomFileInput from 'bs-custom-file-input'
 
 export default {
     name: "office-setup-card",
     components: {
+        ImportOfficesControls,
         ImportPoolControls,
         DeleteOfficeButton,
         DeleteOfficeModal,

@@ -10,7 +10,10 @@ export default class Office extends Motion {
     {
         super({id, content, description, max_winners});
 
-        this.type = 'office';
+        this.type = 'election';
+        //Otherwise the controller will not send the office
+        //when we ask for all motions
+        this.seconded = true;
 
         // this.id = id;
         // this.content = content;
