@@ -1,5 +1,5 @@
 <template>
-    <div class=" card office-edit-card">
+    <div class=" card office-edit-card mt-2">
 
         <div class="card-header">
             <h4 class="card-title">{{ title }}</h4>

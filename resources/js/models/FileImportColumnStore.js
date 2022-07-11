@@ -1,4 +1,3 @@
-import commonNames from "../store/modules/elections/candidateFileImporter";
 import {makeRegexFromList} from "../utilities/regex.utilities";
 
 /**

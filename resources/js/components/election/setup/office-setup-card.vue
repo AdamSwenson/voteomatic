@@ -1,43 +1,53 @@
 <template>
     <div class="card office-setup">
 
-            <office-list-card></office-list-card>
+        <office-list-card></office-list-card>
 
-<!--        <div class="card-body" v-if="showOfficeSetup">-->
-            <office-edit-card v-if="showOfficeSetup"></office-edit-card>
-<!--        </div>-->
+        <!--        <div class="card-body" v-if="showOfficeSetup">-->
+        <office-edit-card v-if="showOfficeSetup"></office-edit-card>
+        <!--        </div>-->
 
-        <div class="card-body" v-if="showOfficeSetup">
-            <p class="card-text">The pool on the left contains people who are eligible to be
-                nominated for this office. The list on the right contains those who have been nominated --i.e.,
-                candidates whom voters will select. Use the Nominate buttons to add names
-                from the pool on the left to the list of candidates
-                on the right.</p>
+        <div class="card pool-management mt-2" v-if="showOfficeSetup">
 
-            <div class="row">
-                <div class="col-lg-6">
-                    <candidate-pool-card></candidate-pool-card>
-                </div>
+            <div class="card-header">
+                <h5 class="card-subtitle">Candidates for office</h5>
+            </div>
 
-                <div class="col-lg-6">
-                    <current-candidates-card></current-candidates-card>
+            <div class="card-body" v-if="showOfficeSetup">
+                <p class="card-text">The pool on the left contains people who are eligible to be
+                    nominated for this office. The list on the right contains those who have been nominated --i.e.,
+                    candidates whom voters will select. Use the Nominate buttons to add names
+                    from the pool on the left to the list of candidates
+                    on the right.</p>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <candidate-pool-card></candidate-pool-card>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <current-candidates-card></current-candidates-card>
+                    </div>
+
                 </div>
 
             </div>
 
+            <div class="card-body" v-if="showOfficeSetup">
+                <div class="d-grid gap-2">
+                    <import-pool-controls></import-pool-controls>
+                    <import-offices-controls></import-offices-controls>
+                </div>
+            </div>
         </div>
 
-        <div class="card-body" v-if="showOfficeSetup">
-            <import-pool-controls></import-pool-controls>
-            <import-offices-controls></import-offices-controls>
-        </div>
-<!--        <div class="card-footer" v-if="showOfficeSetup">-->
-<!--            <div class="text-end">-->
-<!--                <delete-office-button></delete-office-button>-->
-<!--                <delete-office-modal></delete-office-modal>-->
-<!--            </div>-->
+        <!--        <div class="card-footer" v-if="showOfficeSetup">-->
+        <!--            <div class="text-end">-->
+        <!--                <delete-office-button></delete-office-button>-->
+        <!--                <delete-office-modal></delete-office-modal>-->
+        <!--            </div>-->
 
-<!--        </div>-->
+        <!--        </div>-->
 
 
     </div>

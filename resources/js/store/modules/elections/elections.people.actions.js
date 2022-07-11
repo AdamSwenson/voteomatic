@@ -43,16 +43,19 @@ const actions ={
 
     },
 
-    createPoolFromFile({dispatch, commit, getters}, {file, motionId}) {
+    createPoolFromFile({dispatch, commit, getters}, file) {
+        let motion = getters.getActiveMotion;
+
         return new Promise(((resolve, reject) => {
             dispatch('readPeopleFromFile', file).then((people) => {
                 window.console.log('people', people);
                 //Will have a list of people objects
                 _.forEach(people, (p) => {
-                    p.motion_id = motionId;
+                    p.motion_id = motion.id;
                     dispatch('createPerson', p).then((p2) => {
-                        dispatch('addPersonToPool', {person: p2, motionId: motionId})
+                        dispatch('addPersonToPool', {person: p2, motionId: motion.id})
                             .then(() => {
+                            //dev VOT-169 shouldn't this be after the loop?
                                 return resolve();
                             });
                     });

@@ -5,7 +5,7 @@
             <div class="h4 card-title">Offices</div>
         </div>
 
-<!--        <div class="card-body">-->
+        <!--        <div class="card-body">-->
         <ul class="list-group list-group-flush">
 
             <office-list-item
@@ -15,10 +15,17 @@
             ></office-list-item>
 
         </ul>
-<!--            </div>-->
+        <!--            </div>-->
 
         <div class="card-footer">
-            <create-office-button></create-office-button>
+            <div class="row">
+                <div class="col-5 text-start">
+                    <create-office-button></create-office-button>
+                </div>
+                <div class="col-7 ">
+                    <import-offices-controls></import-offices-controls>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -28,9 +35,11 @@
 <script>
 import OfficeListItem from "./office-list-item";
 import CreateOfficeButton from "./controls/create-office-button";
+import ImportOfficesControls from "./import-offices/import-offices-controls";
+
 export default {
     name: "office-list-card",
-    components: {CreateOfficeButton, OfficeListItem},
+    components: {ImportOfficesControls, CreateOfficeButton, OfficeListItem},
     props: [],
 
     mixins: [],
@@ -40,8 +49,8 @@ export default {
     },
 
     asyncComputed: {
-        offices : function(){
-            return  this.$store.getters.getElectionOffices;
+        offices: function () {
+            return this.$store.getters.getElectionOffices;
         }
     },
 

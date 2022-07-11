@@ -104,7 +104,14 @@
 
                     //Need motion id for when used in importing pool; need meeting id for
                     //when used in importing offices
-                    me.$store.dispatch( me.actionName, {file: file, motionId: me.motion.id, meetingId : me.meeting.id });
+                    // let payload;
+                    // switch (me.actionName){
+                    //   case 'createOfficesFromFile':
+                    //       payload = {file: file, motionId: me.motion.id, meetingId : me.meeting.id }
+                    // }
+//                    me.$store.dispatch( me.actionName, {file: file, motionId: me.motion.id, meetingId : me.meeting.id });
+
+                    me.$store.dispatch( me.actionName, file);
 
                     //finally, reset the attached file
                     f.value = '';
