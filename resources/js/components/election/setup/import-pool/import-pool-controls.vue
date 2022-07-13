@@ -2,8 +2,10 @@
     <div class="import-pool-controls">
         <import-pool-button></import-pool-button>
         <import-pool-modal :should-close="shouldClose">
-            <file-import-control v-on:candidate-import-complete="notifyToClose"></file-import-control>
-             </import-pool-modal>
+            <file-import-control action-name="createPoolFromFile"
+                                 v-on:import-complete="notifyToClose"
+            ></file-import-control>
+        </import-pool-modal>
     </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
 
     data: function () {
         return {
-            shouldClose : 0
+            shouldClose: 0
         }
     },
 
@@ -34,7 +36,7 @@ export default {
     computed: {},
 
     methods: {
-        notifyToClose : function(){
+        notifyToClose: function () {
             this.shouldClose += 1;
             // this.shouldClose = false;
 

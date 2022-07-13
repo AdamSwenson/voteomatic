@@ -4,6 +4,7 @@ import Motion from "../../../models/Motion";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import Payload from "../../../models/Payload";
 import Proposition from "../../../models/Proposition";
+import officeFileImporter from "./officeFileImporter";
 
 const state = {
     //things: []
@@ -36,6 +37,7 @@ const mutations = {
 
 
 const actions = {
+    ...officeFileImporter,
 
     /**
      * Create an election event in which votes will be
@@ -67,6 +69,10 @@ const actions = {
                     // window.console.log('election created id: ', meeting.id);
                     // resolve()
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
@@ -115,6 +121,10 @@ const actions = {
 
 
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);

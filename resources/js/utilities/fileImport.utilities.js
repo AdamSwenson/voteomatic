@@ -1,78 +1,6 @@
 let _ = require('lodash');
 import {makeRegexFromList} from "../utilities/regex.utilities";
 
-// export class FileImportColumnStore {
-//     /**
-//      * Expects a list of objects defining the name of the property
-//      * and a regex for finding that column in the titles.
-//      * For example:
-//      *      [
-//      *          {
-//      *              name: 'firstName',
-//      *              regex: new RegExp('first', 'gi'),
-//      *           },
-//      *           {
-//      *              name: 'lastName',
-//      *              regex: new RegExp('last', 'gi'),
-//      *            },
-//      *           ....
-//      *     ]
-//      *
-//      * @param columns
-//      */
-//     constructor(columns) {
-//         this.columns = columns;
-//         let me = this;
-//
-//         //Use the list of columns to create properties on the object
-//         //with the name of each column.
-//         _.forEach(this.columns, (p) => {
-//             me[p.name] = -1;
-//         });
-//     }
-//
-//     /**
-//      * Uses the regex defined in this.columns to
-//      * determine the property name corresponding to the
-//      * provided string (i.e., the column title from the file).
-//      * @param title
-//      * @returns {*}
-//      */
-//     findColumnNameForTitle(title) {
-//         let out = _.filter(this.columns, (c) => {
-//             return title.search(c.regex) >= 0
-//         });
-//         if (out.length > 0) return out[0].name;
-//     }
-//
-//     /**
-//      * Sets the indexes of each column on the object's properties
-//      * based on the column titles in the file.
-//      *
-//      * So, if the titles are ['first name', 'department', 'last name', 'link']
-//      * we will have:
-//      *      this.firstName = 0
-//      *      this.department = 1
-//      *      this.lastName = 2
-//      *      this.link = 3
-//      *
-//      * dev What should this do if there is no property for a provided title?
-//      *
-//      * @param titles
-//      */
-//     setColumnIndexesFromTitles(titles) {
-//         let numColumns = titles.length;
-//
-//         for (let i = 0; i < numColumns; i++) {
-//             let colName = this.findColumnNameForTitle(titles[i]);
-//             if (!_.isUndefined(colName)) {
-//                 this[colName] = i;
-//             }
-//         }
-//     }
-//
-// };
-
 
 /**
  * Decomposes the file loaded in the event handler and returns
@@ -162,37 +90,6 @@ const doesFirstRowContainTitles = (firstLine, expectedStrings, badStrings = []) 
 
 };
 
-//
-// /**
-//  * examine column titles to pick likely ordering
-//  * @param titles
-//  */
-// module.exports.guessColumnDataByTitles = function (titles, columnStore) {
-//     var numColumns = titles.length;
-//
-//     for (var i = 0; i < numColumns; i++) {
-//         if (titles[i].search(/mail/i) >= 0) {
-//             cols.emailCol = i;
-//         } else if (titles[i].search(/id/) >= 0) {
-//             cols.idCol = i;
-//         } else if (titles[i].search(/first/) >= 0) {
-//             cols.firstNameCol = i;
-//         } else if (titles[i].search(/last/) >= 0) {
-//             cols.lastNameCol = i;
-//         }
-//
-//         //dev VOT-169
-//         else if (titles[i].search(/department/) >= 0) {
-//             cols.deptCol = i;
-//         } else if (titles[i].search(/link/) >= 0) {
-//             cols.linkCol = i;
-//         } else {
-//             console.log('column not found: "' + titles[i] + '"');
-//         }
-//     }
-//
-//     // return cols;
-// };
 
 export {
     decomposeFile,
