@@ -137,6 +137,8 @@ export default class FileImportColumnStore {
     }
 
 
+};
+
     // /** Examine table data to pick out column ordering*/
     // guessColumnDataByContent(candidates, columns = {
     //     emailCol: -1,
@@ -193,5 +195,3 @@ export default class FileImportColumnStore {
     //     }
     //     return columns
     // }
-
-};

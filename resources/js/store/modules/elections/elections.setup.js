@@ -69,6 +69,10 @@ const actions = {
                     // window.console.log('election created id: ', meeting.id);
                     // resolve()
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
@@ -117,6 +121,10 @@ const actions = {
 
 
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);

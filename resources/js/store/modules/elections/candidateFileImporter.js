@@ -1,11 +1,11 @@
 /**
  * Created by adam on 7/7/17.
  */
-import FileImportColumnStore from "../../../models/FileImportColumnStore";
-
 
 const _ = window._ = require('lodash');
 // const Vue = require( 'vue' );
+
+import FileImportColumnStore from "../../../models/FileImportColumnStore";
 
 import PoolMember from '../../../models/PoolMember';
 import {
@@ -15,14 +15,21 @@ import {
 } from '../../../utilities/fileImport.utilities';
 
 
-
+/**
+ * Defines the properties of a file which contains the names of people
+ * who may be candidates for an office.
+ *
+ * @type {[{standardTitle: string, regex: RegExp, commonData: string[], name: string}, {standardTitle: string, regex: RegExp, commonData: string[], name: string}, {standardTitle: string, regex: RegExp, commonData: string[], name: string}, {standardTitle: string, regex: RegExp, commonData: string[], name: string}]}
+ */
 const candidateColumns = [
     {
         name: 'firstName',
         standardTitle: 'First name',
         regex: new RegExp('first', 'gi'),
+
         // commonData is a list of the most common first names for candidates born between 1990-2000
-// It is used to scan a column and make a guess at which contains first names
+        // It is used to scan a column and make a guess at which contains first names
+        // dev This is a carry-over from the gradeomatic, names should be updated
         commonData: [
             'Michael', 'Carlos', 'Christopher', 'Matthew',
             'Maria', 'Joshua', 'Jacob', 'Nicholas',
@@ -57,6 +64,54 @@ const candidateColumns = [
 ];
 
 const actions = {
+
+    /**
+     * Creates a pool of potential candidates for an office from
+     * the provided file which contains candidate names, etc (as defined in
+     * candidateFileImporter.candidateColumns.
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param file
+     * @returns {Promise<unknown>}
+     */
+    createPoolFromFile({dispatch, commit, getters}, file) {
+        let motion = getters.getActiveMotion;
+
+        return new Promise(((resolve, reject) => {
+            dispatch('readPeopleFromFile', file).then((people) => {
+                window.console.log('people', people);
+                //Will have a list of people objects
+                _.forEach(people, (p) => {
+                    p.motion_id = motion.id;
+                    dispatch('createPerson', p).then((p2) => {
+                        dispatch('addPersonToPool', {person: p2, motionId: motion.id})
+                            .then(() => {
+                                //dev VOT-169 shouldn't this be after the loop?
+                                return resolve();
+                            });
+                    });
+                });
+
+            });
+
+        }));
+    },
+
+
+    /**
+     * Utility action for reading the file listing people.
+     *
+     * Returns a list of people objects
+     *
+     * @param state
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param inputFile
+     * @returns {Promise<unknown>}
+     */
     readPeopleFromFile: ({state, dispatch, commit, getters}, inputFile) => {
         return new Promise((resolve, reject) => {
             //todo Temporarily commented out the promise while working on this since the below log gets called twice
@@ -165,6 +220,13 @@ const actions = {
     },
 
 };
+
+
+
+export {actions as default};
+export {candidateColumns};
+
+
 
 //actions
 //     readPeopleFromFileOLD: ({state, dispatch, commit, getters}, inputFile) => {
@@ -479,8 +541,5 @@ const actions = {
 //     return columns
 // }
 
-
-export {actions as default};
-export {candidateColumns};
 
 

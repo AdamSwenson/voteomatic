@@ -1,5 +1,4 @@
-
-import readCandidatesFromFile from './candidateFileImporter';
+import candidateFileImporter from './candidateFileImporter';
 import * as routes from "../../../routes";
 import PoolMember from "../../../models/PoolMember";
 import Candidate from "../../../models/Candidate";
@@ -10,8 +9,9 @@ import {idify} from "../../../utilities/object.utilities";
  * All actions that involve pool members and candidates
  * @type {{readPeopleFromFile: function({state: *, dispatch: *, commit: *, getters: *}, *=): Promise<unknown>}}
  */
-const actions ={
-    ...readCandidatesFromFile,
+const actions = {
+    //Tools for reading and creating people/candidates from an uploaded file
+    ...candidateFileImporter,
 
     /**
      * Creates a person who can be a pool member or a candidate
@@ -43,28 +43,6 @@ const actions ={
 
     },
 
-    createPoolFromFile({dispatch, commit, getters}, file) {
-        let motion = getters.getActiveMotion;
-
-        return new Promise(((resolve, reject) => {
-            dispatch('readPeopleFromFile', file).then((people) => {
-                window.console.log('people', people);
-                //Will have a list of people objects
-                _.forEach(people, (p) => {
-                    p.motion_id = motion.id;
-                    dispatch('createPerson', p).then((p2) => {
-                        dispatch('addPersonToPool', {person: p2, motionId: motion.id})
-                            .then(() => {
-                            //dev VOT-169 shouldn't this be after the loop?
-                                return resolve();
-                            });
-                    });
-                });
-
-            });
-
-        }));
-    },
 
     /**
      * Edit properties of a pool member ---makes the changes on the
@@ -121,25 +99,25 @@ const actions ={
      * @param getters
      * @param fieldName
      */
-    addCandidateField({dispatch, commit, getters}, fieldName){
+    addCandidateField({dispatch, commit, getters}, fieldName) {
         let election = getters.getActiveMeeting;
         let fields = _.concat(election.candidateFields, [fieldName]);
         let payload = Payload.factory({
-            updateProp : 'info',
-            updateVal : {'candidateFields' : fields}
+            updateProp: 'info',
+            updateVal: {'candidateFields': fields}
         });
 
         dispatch('updateMeeting', payload)
     },
 
-    deleteCandidateField({dispatch, commit, getters}, fieldName){
+    deleteCandidateField({dispatch, commit, getters}, fieldName) {
         let election = getters.getActiveMeeting;
         let fields = _.filter(election.candidateFields, (c) => {
-        return c != fieldName;
+            return c != fieldName;
         });
         let payload = Payload.factory({
-            updateProp : 'info',
-            updateVal : {'candidateFields' : fields}
+            updateProp: 'info',
+            updateVal: {'candidateFields': fields}
         });
 
         dispatch('updateMeeting', payload)
@@ -266,11 +244,11 @@ const actions ={
 
 
     loadAllOfficeCandidates({dispatch, commit, getters}) {
-let motions = getters.getMotions;
+        let motions = getters.getMotions;
 
         return new Promise(((resolve, reject) => {
             _.forEach(motions, (motion) => {
-            dispatch('loadElectionCandidates', motion.id);
+                dispatch('loadElectionCandidates', motion.id);
             });
             return resolve();
 
@@ -304,4 +282,4 @@ let motions = getters.getMotions;
 };
 
 
-export { actions as default}
+export {actions as default}
