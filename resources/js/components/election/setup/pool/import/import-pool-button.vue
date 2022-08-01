@@ -1,5 +1,5 @@
 <script>
-import ButtonParent from "../../../parents/modal-button-parent";
+import ButtonParent from "../../../../parents/modal-button-parent";
 
 export default {
     name: "import-pool-button",
@@ -10,8 +10,9 @@ export default {
     mixins: [],
     data: function () {
         return {
-            label: 'Import pool from file',
+            label: 'Import people',
             modalId: 'import-pool-modal',
+            icon: 'bi-upload',
             ariaDisabled: false
         }
     },

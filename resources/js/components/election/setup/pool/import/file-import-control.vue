@@ -56,10 +56,10 @@
 </style>
 
 <script>
-    import MeetingMixin from "../../../../mixins/meetingMixin";
-    import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
-    import ModeMixin from "../../../../mixins/modeMixin";
-    import ChairMixin from "../../../../mixins/chairMixin";
+    import MeetingMixin from "../../../../../mixins/meetingMixin";
+    import MotionStoreMixin from "../../../../../mixins/motionStoreMixin";
+    import ModeMixin from "../../../../../mixins/modeMixin";
+    import ChairMixin from "../../../../../mixins/chairMixin";
 
     export default {
         name: 'file-import-control',

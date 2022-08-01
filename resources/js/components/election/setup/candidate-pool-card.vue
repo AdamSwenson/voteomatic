@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="width: 25rem;">
+    <div class="card">
 
         <div class="card-header">
             <div class="h4 card-title">Eligible for nomination</div>
@@ -18,6 +18,23 @@
 
         <pool-member-creation-card></pool-member-creation-card>
 
+        <div class="card-footer">
+            <div class="row ">
+
+                <div class="col-md-auto">
+                    <button class="btn btn-info"
+                            v-on:click="toggleFields"
+                    ><i class="bi bi-plus"></i> {{ buttonLabel }}
+                    </button>
+                </div>
+
+                <div class="col-md-auto">
+                    <import-pool-controls></import-pool-controls>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -29,8 +46,8 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import CandidateSetupRow from "./candidate-setup-row";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
-import PoolMemberCreationCard from "./pool-member-creation-card";
-import ImportPoolControls from "./import-pool/import-pool-controls";
+import PoolMemberCreationCard from "./pool/pool-member-creation-card";
+import ImportPoolControls from "./pool/import/import-pool-controls";
 
 export default {
     name: "candidate-pool-card",
@@ -83,7 +100,7 @@ export default {
             this.$store.dispatch('loadCandidatePool', this.motion.id).then(function () {
             });
         }
-        }
+    }
 
 }
 </script>

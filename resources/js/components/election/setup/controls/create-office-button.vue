@@ -13,7 +13,7 @@ export default {
 
     data: function () {
         return {
-            label: "New Office",
+            label: "New office",
             styling: 'btn-info',
             icon : 'bi-plus'
         }

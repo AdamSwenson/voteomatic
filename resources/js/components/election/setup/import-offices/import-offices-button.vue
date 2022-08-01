@@ -10,9 +10,10 @@ export default {
     mixins: [],
     data: function () {
         return {
-            label: 'Import offices from file',
+            label: 'Import offices',
             modalId: 'import-offices-modal',
-            ariaDisabled: false
+            ariaDisabled: false,
+            icon: 'bi-upload'
         }
     },
 

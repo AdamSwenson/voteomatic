@@ -15,7 +15,8 @@ export default {
     data: function () {
         return {
             label : "Create proposition",
-            styling : "  btn-outline-primary "
+            styling : "  btn-outline-primary ",
+            icon: 'bi-plus'
 
         }
     },

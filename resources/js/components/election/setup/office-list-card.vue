@@ -1,6 +1,6 @@
 <template>
-    <div class="card" style="width: 25rem;">
-
+    <div class="card office-list-card" >
+<!--        <div class="card" style="width: 25rem;">-->
         <div class="card-header">
             <div class="h4 card-title">Offices</div>
         </div>
@@ -19,10 +19,10 @@
 
         <div class="card-footer">
             <div class="row">
-                <div class="col-5 text-start">
+                <div class="col-md-auto text-start">
                     <create-office-button></create-office-button>
                 </div>
-                <div class="col-7 ">
+                <div class="col-md-auto ">
                     <import-offices-controls></import-offices-controls>
                 </div>
             </div>
