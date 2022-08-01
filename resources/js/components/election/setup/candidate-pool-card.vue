@@ -16,16 +16,17 @@
 
         </ul>
 
-        <pool-member-creation-card></pool-member-creation-card>
+        <pool-member-creation-card ></pool-member-creation-card>
 
         <div class="card-footer">
             <div class="row ">
 
                 <div class="col-md-auto">
-                    <button class="btn btn-info"
-                            v-on:click="toggleFields"
-                    ><i class="bi bi-plus"></i> {{ buttonLabel }}
-                    </button>
+                    <create-pool-member-button></create-pool-member-button>
+<!--                    <button class="btn btn-info"-->
+<!--                            v-on:click="toggleFields"-->
+<!--                    ><i class="bi bi-plus"></i> {{ buttonLabel }}-->
+<!--                    </button>-->
                 </div>
 
                 <div class="col-md-auto">
@@ -48,16 +49,19 @@ import CandidateSetupRow from "./candidate-setup-row";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import PoolMemberCreationCard from "./pool/pool-member-creation-card";
 import ImportPoolControls from "./pool/import/import-pool-controls";
+import CreatePoolMemberButton from "./pool/create-pool-member-button";
 
 export default {
     name: "candidate-pool-card",
-    components: {ImportPoolControls, PoolMemberCreationCard, CandidateSetupRow},
+    components: {CreatePoolMemberButton, ImportPoolControls, PoolMemberCreationCard, CandidateSetupRow},
     props: [],
 
     mixins: [MeetingMixin, MotionStoreMixin],
 
     data: function () {
-        return {}
+        return {
+            showModal: false
+        }
     },
 
     watch: {
@@ -91,7 +95,11 @@ export default {
 
     computed: {},
 
-    methods: {},
+    methods: {
+        toggleModal: function(){
+            this.showModal = !this.showModal;
+        }
+    },
 
     mounted() {
         //This ensures that the pool loads for the first time the edit
