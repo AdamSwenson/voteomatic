@@ -1,5 +1,5 @@
 <script>
-import ButtonParent from "../../../parents/modal-button-parent";
+import ButtonParent from "../../../../parents/modal-button-parent";
 
 export default {
     name: "import-offices-button",
@@ -13,7 +13,8 @@ export default {
             label: 'Import offices',
             modalId: 'import-offices-modal',
             ariaDisabled: false,
-            icon: 'bi-upload'
+            icon: 'bi-upload',
+            styling : " btn-info"
         }
     },
 

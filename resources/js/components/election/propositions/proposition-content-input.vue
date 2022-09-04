@@ -1,6 +1,13 @@
 <template>
     <div class="proposition-content-input">
-        <h3> What is to be voted upon</h3>
+        <label for="motionContent" class='form-label'
+        > What is to be voted upon</label>
+        <wysiwyg v-model="content"
+                 id="motionContent"
+                 name="motion-content"
+
+        />
+    </div>
 
 <!--    <div class="form-group">-->
 <!--        <label for="motion-content">What is to be voted upon</label>-->
@@ -10,11 +17,8 @@
 <!--                  v-model="content"-->
 <!--                  v-bind:placeholder="placeholders.content"-->
 <!--        ></textarea>-->
-        <wysiwyg v-model="content"
-                 id="motion-content"
 
-        />
-    </div>
+
 
 
 </template>

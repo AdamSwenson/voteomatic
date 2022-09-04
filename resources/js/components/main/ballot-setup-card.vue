@@ -14,7 +14,7 @@ import ChairMixin from "../../mixins/chairMixin";
 import ModeMixin from "../../mixins/modeMixin";
 import MotionsCard from "../motions/motions-card";
 import MotionSetup from "./chair/motion-setup";
-import OfficeSetupCard from "../election/setup/office-setup-card";
+import OfficeSetupCard from "../election/setup/offices/office-setup-card";
 
 export default {
     name: "ballot-setup-card",

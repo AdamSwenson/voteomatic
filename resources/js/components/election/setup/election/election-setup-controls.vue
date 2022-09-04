@@ -29,7 +29,7 @@ import MeetingMixin from "../../../../mixins/meetingMixin";
 import DeleteMeetingButton from "../../../meetings/controls/delete-meeting-button";
 import DeleteMeetingModal from "../../../meetings/controls/delete-meeting-modal";
 import CreateElectionButton from "./create-election-button";
-import CreateOfficeButton from "./create-office-button";
+import CreateOfficeButton from "../offices/create/create-office-button";
 import ModeMixin from "../../../../mixins/modeMixin";
 import DeleteElectionModal from "./delete-election-modal";
 import DeleteElectionButton from "./delete-election-button";

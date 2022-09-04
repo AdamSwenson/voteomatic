@@ -87,7 +87,7 @@ Vue.component('results', require('./components/main/motion-results-page').defaul
 Vue.component('setup-page', require('./components/setup-page').default);
 Vue.component('amendment-page', require('./components/main/amendment-page').default);
 Vue.component('election-card', require('./components/election/voting/election-card').default);
-Vue.component('election-setup-card', require('./components/election/setup/election-setup-card').default);
+Vue.component('election-setup-card', require('./components/election/setup/election/election-setup-card').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

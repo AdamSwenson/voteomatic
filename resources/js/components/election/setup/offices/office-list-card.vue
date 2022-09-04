@@ -34,8 +34,8 @@
 
 <script>
 import OfficeListItem from "./office-list-item";
-import CreateOfficeButton from "./controls/create-office-button";
-import ImportOfficesControls from "./import-offices/import-offices-controls";
+import CreateOfficeButton from "./create/create-office-button";
+import ImportOfficesControls from "./import/import-offices-controls";
 
 export default {
     name: "office-list-card",

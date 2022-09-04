@@ -13,7 +13,8 @@ export default {
             label: 'Import people',
             modalId: 'import-pool-modal',
             icon: 'bi-upload',
-            ariaDisabled: false
+            ariaDisabled: false,
+            styling: ' btn-info'
         }
     },
 

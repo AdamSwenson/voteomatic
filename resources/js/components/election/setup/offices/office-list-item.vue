@@ -1,8 +1,8 @@
 
 <script>
-import CardListItemParent from "../../parents/card-list-item-parent";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import CardListItemParent from "../../../parents/card-list-item-parent";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../../utilities/readiness.utilities";
 
 export default {
     name: "office-list-item",

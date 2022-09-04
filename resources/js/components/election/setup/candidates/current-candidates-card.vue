@@ -1,10 +1,12 @@
 <template>
 
-    <div class="card" style="width: 25rem;">
+    <div class="card" >
         <div class="card-header">
-            <h4 class="card-title">Candidates</h4></div>
+            <h5 class="card-title">Candidates</h5></div>
 
-            <ul class="list-group list-group-flush">
+        <div class="list-group list-group-flush">
+
+<!--    <ul class="list-group list-group-flush">-->
                 <candidate-setup-row
                     v-for="candidate in candidates"
                     :candidate="candidate"
@@ -12,17 +14,17 @@
                     :is-pool="false"
                     v-on:selection="handleSelection"
                 ></candidate-setup-row>
-            </ul>
-
+<!--            </ul>-->
+</div>
     </div>
 
 </template>
 
 <script>
 import CandidateSetupRow from "./candidate-setup-row";
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../../utilities/readiness.utilities";
 
 export default {
     name: "current-candidates-card",
@@ -51,7 +53,11 @@ export default {
         candidates: {
             get: function () {
                 if (!isReadyToRock(this.motion)) return [];
-                return this.$store.getters.getCandidatesForOffice(this.motion);
+                let p = this.$store.getters.getCandidatesForOffice(this.motion);
+                if (p.length > 0) {
+                    return _.sortBy(p, function(c){return c.last_name;});
+                }
+                // return this.$store.getters.getCandidatesForOffice(this.motion);
             },
             default: [],
             watch: ['motion', 'events']

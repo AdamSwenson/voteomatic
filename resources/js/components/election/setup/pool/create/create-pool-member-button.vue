@@ -1,6 +1,6 @@
 
 <script>
-import ButtonParent from "../../../parents/modal-button-parent";
+import ButtonParent from "../../../../parents/modal-button-parent";
 
 export default {
     name: "create-pool-member-button",
@@ -14,7 +14,7 @@ export default {
             label: 'Add person',
             modalId: 'create-pool-member-modal',
             ariaDisabled: false,
-            styling: 'btn-info',
+            styling: 'btn-primary',
             icon: 'bi-plus'
         }
     },

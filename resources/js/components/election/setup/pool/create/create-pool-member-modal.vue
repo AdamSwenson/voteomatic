@@ -1,8 +1,6 @@
 <script>
-import ModalParent from "../../../parents/modal-parent";
+import ModalParent from "../../../../parents/modal-parent";
 
-// import MeetingMixin from "../../../../mixins/meetingMixin";
-// import ModeMixin from "../../../../mixins/modeMixin";
 export default {
     name: "create-pool-member-modal",
     extends: ModalParent,
@@ -13,7 +11,7 @@ export default {
     data: function () {
         return {
             modalId: 'create-pool-member-modal',
-            modalTitle: 'Add someone to the list of eligible nominees',
+            modalTitle: 'Add someone to the list of potential candidates',
             hideActionButton: true,
             buttonLabel: 'Done'
 
@@ -31,21 +29,12 @@ export default {
 
     computed: {
         modalText: function () {
-//             return `<p>This allows you to import from a .csv file.</p>
-// <p>The first column should contain the headers:</p>
-// <ul>
-// <li><strong>Office name</strong></li>
-// <li><strong>Max winners</strong></li>
-// <li>Description (optional)</li>
-// </ul>
-// `;
-
         }
     },
 
     methods: {
         handleClick: function () {
-            this.closeModal();
+            // this.closeModal();
         }
     }
 

@@ -11,7 +11,7 @@
                 class="form-control "
                 v-model="requiredVote"
             >
-                <option disabled value="">Please select required vote</option>
+                <option disabled  value="">Please select required vote</option>
                 <option value="0.5">Majority</option>
                 <option value="0.66">Two-thirds</option>
                 <option value="other">Other</option>

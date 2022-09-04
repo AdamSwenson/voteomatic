@@ -84,6 +84,14 @@ const mutations = {
     },
 
     /**
+     * Sets the currentMotion to null
+     * @param state
+     */
+    clearCurrentMotion: (state) => {
+        state.currentMotion = null;
+    },
+
+    /**
      * Empties the list of motions. Used when changing
      * meetings / elections
      * @param state

@@ -1,7 +1,7 @@
 <script>
-import DeleteButtonParent from "../../../controls/delete-button-parent";
-import MeetingMixin from "../../../../mixins/meetingMixin";
-import ModeMixin from "../../../../mixins/modeMixin";
+import DeleteButtonParent from "../../../../controls/delete-button-parent";
+import MeetingMixin from "../../../../../mixins/meetingMixin";
+import ModeMixin from "../../../../../mixins/modeMixin";
 
 export default {
     name: "delete-office-button",
@@ -12,7 +12,7 @@ export default {
     data: function () {
         return {
             label: 'Delete office',
-
+            icon : 'bi-x'
           }
     },
 computed : {

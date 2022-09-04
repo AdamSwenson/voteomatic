@@ -28,6 +28,27 @@ export default class IPerson extends IModel {
         return n;
     };
 
+    get nameAndInfoHTML(){
+        let n = '<span class="personName">' + this.name + '</span>';
+
+        if(! isReadyToRock(this.info)) return n;
+
+        let me = this;
+
+        let other = ''
+
+        _.forEach(this.info, (v, k) => {
+            other += me.info[k]
+            other += '  <br>'
+        });
+        if (other.length > 0){
+            return n + "<br>" + other;
+            // return n + "" + other + "";
+
+        }
+        return n;
+    };
+
     /**
      * Returns a list of all the values
      * in the info dict.

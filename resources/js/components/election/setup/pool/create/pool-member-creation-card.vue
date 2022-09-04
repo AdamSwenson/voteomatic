@@ -5,11 +5,7 @@
 
             <div class="card ">
 
-                <!--        <div class="card-header">-->
-                <!--            <div class="h4 card-title">Add someone to the candidate pool</div>-->
-                <!--        </div>-->
                 <div class="card-body">
-<!--                <div class="card-body" v-show="showFields">-->
 
                     <label class='form-label' for="first-name">First name</label>
                     <div class="input-group mb-3">
@@ -34,20 +30,6 @@
                     <button class="btn btn-danger" v-on:click="handleClear">Clear</button>
                 </div>
 
-                <!--        <div class="card-footer">-->
-                <!--            <div class="row ">-->
-
-                <!--                <div class="col-md-auto">-->
-                <!--                    <button class="btn btn-info"-->
-                <!--                            v-on:click="toggleFields"-->
-                <!--                    ><i class="bi bi-plus"></i> {{ buttonLabel }}</button>-->
-                <!--                </div>-->
-
-                <!--                <div class="col-md-auto">-->
-                <!--                    <import-pool-controls></import-pool-controls>-->
-                <!--                </div>-->
-
-                <!--            </div>-->
 
             </div>
 
@@ -58,17 +40,20 @@
 
 <script>
 
-import PoolMember from "../../../../models/PoolMember";
+import PoolMember from "../../../../../models/PoolMember";
 
-import MeetingMixin from "../../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
-import CandidateFieldInput from "../controls/candidate-fields/candidate-field-input";
-import ImportPoolControls from "./import/import-pool-controls";
+import MeetingMixin from "../../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../../mixins/motionStoreMixin";
+import CandidateFieldInput from "../../candidates/candidate-fields/candidate-field-input";
+import ImportPoolControls from "../import/import-pool-controls";
 import CreatePoolMemberModal from "./create-pool-member-modal";
 
 /**
  * This is used to create a pool member for an office. That entails creating a
- * Person and then adding them to the pool
+ * Person and then adding them to the pool.
+ *
+ * Note that this is wrapped by a modal. We did it this way so that could
+ * extend modal parent etc
  */
 export default {
 

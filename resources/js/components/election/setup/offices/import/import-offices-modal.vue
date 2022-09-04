@@ -1,5 +1,5 @@
 <script>
-import ModalParent from "../../../parents/modal-parent";
+import ModalParent from "../../../../parents/modal-parent";
 
 // import MeetingMixin from "../../../../mixins/meetingMixin";
 // import ModeMixin from "../../../../mixins/modeMixin";

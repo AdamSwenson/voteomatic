@@ -11,7 +11,7 @@
 
 
 <script>
-import FileImportControl from "../pool/import/file-import-control";
+import FileImportControl from "../../pool/import/file-import-control";
 import ImportOfficesButton from "./import-offices-button";
 import ImportOfficesModal from "./import-offices-modal";
 

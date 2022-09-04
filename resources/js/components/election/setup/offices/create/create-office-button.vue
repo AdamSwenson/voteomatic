@@ -1,7 +1,7 @@
 <script>
-import buttonParent from "../../../parents/button-parent";
-import MeetingMixin from "../../../../mixins/meetingMixin";
-import ModeMixin from "../../../../mixins/modeMixin";
+import buttonParent from "../../../../parents/button-parent";
+import MeetingMixin from "../../../../../mixins/meetingMixin";
+import ModeMixin from "../../../../../mixins/modeMixin";
 
 export default {
     name: "create-office-button",
@@ -14,7 +14,7 @@ export default {
     data: function () {
         return {
             label: "New office",
-            styling: 'btn-info',
+            styling: 'btn-primary',
             icon : 'bi-plus'
         }
     },

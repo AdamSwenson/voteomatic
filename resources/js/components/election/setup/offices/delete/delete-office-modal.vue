@@ -1,11 +1,11 @@
 <script>
-import DeleteButtonParent from "../../../controls/delete-button-parent";
-import DeleteModalParent from "../../../controls/delete-modal-parent";
-import MeetingMixin from "../../../../mixins/meetingMixin";
-import ModeMixin from "../../../../mixins/modeMixin";
-import MotionMixin from "../../../../mixins/motionStoreMixin";
-import ChairMixin from "../../../../mixins/chairMixin";
-import motionObjectMixin from "../../../../mixins/motionObjectMixin";
+import DeleteButtonParent from "../../../../controls/delete-button-parent";
+import DeleteModalParent from "../../../../controls/delete-modal-parent";
+import MeetingMixin from "../../../../../mixins/meetingMixin";
+import ModeMixin from "../../../../../mixins/modeMixin";
+import MotionMixin from "../../../../../mixins/motionStoreMixin";
+import ChairMixin from "../../../../../mixins/chairMixin";
+import motionObjectMixin from "../../../../../mixins/motionObjectMixin";
 export default {
     name: "delete-office-modal",
     extends : DeleteModalParent,

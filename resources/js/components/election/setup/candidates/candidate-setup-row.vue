@@ -1,24 +1,31 @@
 <template>
-    <li class="list-group-item"
-        v-if="showRow"
-    >
-        <button class="btn "
-                v-bind:class="styling"
-                v-on:click="handleClick"
-        >{{ label }}
-        </button>
-        {{ candidate.nameAndInfo }}
-    </li>
+    <!--    <li class="list-group-item"-->
+    <!--        v-if="showRow"-->
+    <!--    >-->
+    <a href="#" class="list-group-item list-group-item-action" v-if="showRow">
+        <div class="personRow">
+            <p>
+                <button class="btn "
+                        v-bind:class="styling"
+                        v-on:click="handleClick"
+                >{{ label }}</button>  <span class="personName fw-bold">{{candidateName}}</span>
+            </p>
+            <div class="personInfo" v-html="formattedInfo"></div>
+        </div>
 
+<!--        <span v-html="nameAndInfo"></span>-->
+        <!--        {{ candidate.nameAndInfo }}-->
+        <!--    </li>-->
+    </a>
 
 </template>
 
 <script>
-import {isReadyToRock} from "../../../utilities/readiness.utilities";
-import {getById} from "../../../utilities/object.utilities";
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import MeetingPropertiesMixin from "../../../mixins/meetingPropertiesMixin";
+import {isReadyToRock} from "../../../../utilities/readiness.utilities";
+import {getById} from "../../../../utilities/object.utilities";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import MeetingPropertiesMixin from "../../../../mixins/meetingPropertiesMixin";
 
 export default {
     name: "candidate-setup-row",
@@ -56,6 +63,27 @@ export default {
             return this.$store.getters.isPoolMemberACandidate(this.motion, this.candidate);
             // let c = getById(this.candidates, this.candidate.id);
             // return isReadyToRock(c);
+        },
+
+        candidateName: function () {
+            return this.candidate.name;
+        },
+        // candidateInfo: function () {
+        //     return this.candidate.infoAsList;
+        // },
+
+        formattedInfo: function () {
+            let out = '';
+            if (this.candidate.info.length === 0) return out;
+
+            _.forEach(this.candidate.info, (v, k) => {
+                out += `<p class="${k}">${v}</p>`;
+            });
+            return out;
+        },
+
+        nameAndInfo: function () {
+            return this.candidate.nameAndInfoHTML;
         },
 
         selected: {
@@ -123,6 +151,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.personName {
+    font-weight: bold;
+}
 </style>

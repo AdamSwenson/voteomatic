@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import {isReadyToRock} from '../../../utilities/readiness.utilities';
+import {isReadyToRock} from '../../../../utilities/readiness.utilities';
 
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import ModeMixin from "../../../mixins/modeMixin";
-import ChairMixin from "../../../mixins/chairMixin";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import ModeMixin from "../../../../mixins/modeMixin";
+import ChairMixin from "../../../../mixins/chairMixin";
 
-import EventEditCard from "../../controls/event-edit-card";
-import CandidateFieldConfigCard from "./candidate-field-config-card";
+import EventEditCard from "../../../controls/event-edit-card";
+import CandidateFieldConfigCard from "../candidates/candidate-field-config-card";
 import ElectionDisplayCard from "./election-display-card";
 
 export default {

@@ -2,10 +2,10 @@
     <div class="card">
 
         <div class="card-header">
-            <div class="h4 card-title">Eligible for nomination</div>
+            <div class="h5 card-title">Eligible for nomination</div>
         </div>
 
-        <ul class="list-group list-group-flush">
+        <div class="list-group list-group-flush">
 
             <candidate-setup-row
                 v-for="candidate in candidatePool"
@@ -14,19 +14,15 @@
                 :is-pool="true"
             ></candidate-setup-row>
 
-        </ul>
+        </div>
 
-        <pool-member-creation-card ></pool-member-creation-card>
+        <pool-member-creation-card></pool-member-creation-card>
 
         <div class="card-footer">
             <div class="row ">
 
                 <div class="col-md-auto">
                     <create-pool-member-button></create-pool-member-button>
-<!--                    <button class="btn btn-info"-->
-<!--                            v-on:click="toggleFields"-->
-<!--                    ><i class="bi bi-plus"></i> {{ buttonLabel }}-->
-<!--                    </button>-->
                 </div>
 
                 <div class="col-md-auto">
@@ -43,13 +39,13 @@
 </template>
 
 <script>
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import CandidateSetupRow from "./candidate-setup-row";
-import {isReadyToRock} from "../../../utilities/readiness.utilities";
-import PoolMemberCreationCard from "./pool/pool-member-creation-card";
-import ImportPoolControls from "./pool/import/import-pool-controls";
-import CreatePoolMemberButton from "./pool/create-pool-member-button";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import CandidateSetupRow from "../candidates/candidate-setup-row";
+import {isReadyToRock} from "../../../../utilities/readiness.utilities";
+import PoolMemberCreationCard from "./create/pool-member-creation-card";
+import ImportPoolControls from "./import/import-pool-controls";
+import CreatePoolMemberButton from "./create/create-pool-member-button";
 
 export default {
     name: "candidate-pool-card",
@@ -60,7 +56,7 @@ export default {
 
     data: function () {
         return {
-            showModal: false
+
         }
     },
 
@@ -83,7 +79,7 @@ export default {
 
                 let p = me.$store.getters.getCandidatePoolForOffice(me.motion);
                 if (p.length > 0) {
-                    return p;
+                    return _.sortBy(p, function(c){return c.last_name;});
                 }
             },
             default: [],
@@ -96,9 +92,7 @@ export default {
     computed: {},
 
     methods: {
-        toggleModal: function(){
-            this.showModal = !this.showModal;
-        }
+
     },
 
     mounted() {

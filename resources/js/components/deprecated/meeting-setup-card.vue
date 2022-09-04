@@ -44,7 +44,7 @@ import DeleteMotionModal from "../motions/motion-setup-inputs/delete-motion-moda
 import DeleteMeetingButton from "../meetings/controls/delete-meeting-button";
 import DeleteMeetingModal from "../meetings/controls/delete-meeting-modal";
 import MeetingEditControls from "../meetings/meeting-edit-controls";
-import ElectionEditControls from "../election/setup/controls/election-setup-controls";
+import ElectionEditControls from "../election/setup/election/election-setup-controls";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import ModeMixin from "../../mixins/modeMixin";
 import EntryInstructions from "../controls/entry-instructions";

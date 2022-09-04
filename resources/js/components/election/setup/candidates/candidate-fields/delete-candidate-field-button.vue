@@ -16,7 +16,8 @@ export default {
     data: function () {
         return {
             label: 'Delete',
-            styling: 'btn-danger'
+            styling: 'btn-danger',
+            icon : 'bi-x'
             //isWorking : false
         }
     },

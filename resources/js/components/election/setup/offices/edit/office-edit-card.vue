@@ -1,8 +1,8 @@
 <template>
-    <div class=" card office-edit-card mt-2">
+    <div class=" card office-edit-card ">
 
         <div class="card-header">
-            <h4 class="card-title">{{ title }}</h4>
+            <h4 class="card-subtitle">{{ title }}</h4>
         </div>
 
         <div class="card-body">
@@ -17,7 +17,7 @@
                 <input type="number" class="form-control" id="office-max-winners" v-model="maxWinners">
             </div>
 
-             <label class='form-label' for="office-description">Description / instruction</label>
+             <label class='form-label' for="office-description">Description / instructions</label>
             <div class="input-group mb-3">
                 <textarea class="form-control" id="office-description"
                           placeholder="Optional"
@@ -48,14 +48,14 @@
 </template>
 
 <script>
-import {isReadyToRock} from "../../../utilities/readiness.utilities";
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import CandidateRow from "../voting/candidate-row";
-import Payload from "../../../models/Payload";
-import MeetingPropertiesMixin from "../../../mixins/meetingPropertiesMixin";
-import DeleteOfficeButton from "./controls/delete-office-button";
-import DeleteOfficeModal from "./controls/delete-office-modal";
+import {isReadyToRock} from "../../../../../utilities/readiness.utilities";
+import MeetingMixin from "../../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../../mixins/motionStoreMixin";
+import CandidateRow from "../../../voting/candidate-row";
+import Payload from "../../../../../models/Payload";
+import MeetingPropertiesMixin from "../../../../../mixins/meetingPropertiesMixin";
+import DeleteOfficeButton from "../delete/delete-office-button";
+import DeleteOfficeModal from "../delete/delete-office-modal";
 
 export default {
     name: "office-edit-card",
@@ -161,7 +161,7 @@ export default {
         },
 
         title: function () {
-            let defaultTitle = "Position/Office election setup";
+            let defaultTitle = "Position/office setup";
 
             if (!isReadyToRock(this.motion) || !isReadyToRock(this.motion.content)) return defaultTitle
 

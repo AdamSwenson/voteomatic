@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import MeetingMixin from '../../../mixins/meetingMixin';
-import ChairMixin from "../../../mixins/chairMixin";
-import MeetingUrlDisplay from "../../meetings/meeting-url-display";
+import MeetingMixin from '../../../../mixins/meetingMixin';
+import ChairMixin from "../../../../mixins/chairMixin";
+import MeetingUrlDisplay from "../../../meetings/meeting-url-display";
 
 // import Payload from "../../models/Payload";
 

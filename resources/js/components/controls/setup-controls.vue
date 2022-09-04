@@ -18,7 +18,7 @@
 
 import MeetingMixin from "../../mixins/meetingMixin";
 import ModeMixin from "../../mixins/modeMixin";
-import ElectionSetupControls from "../election/setup/controls/election-setup-controls";
+import ElectionSetupControls from "../election/setup/election/election-setup-controls";
 import MeetingEditControls from "../meetings/meeting-edit-controls";
 
 /**

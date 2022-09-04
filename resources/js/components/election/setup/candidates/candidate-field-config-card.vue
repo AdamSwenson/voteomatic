@@ -39,9 +39,9 @@
 
 <script>
 
-import MeetingMixin from "../../../mixins/meetingMixin";
-import MotionStoreMixin from "../../../mixins/motionStoreMixin";
-import DeleteCandidateFieldButton from "./controls/candidate-fields/delete-candidate-field-button";
+import MeetingMixin from "../../../../mixins/meetingMixin";
+import MotionStoreMixin from "../../../../mixins/motionStoreMixin";
+import DeleteCandidateFieldButton from "./candidate-fields/delete-candidate-field-button";
 
 /**
  * Used to configure which fields are displayed for
