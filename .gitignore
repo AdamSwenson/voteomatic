@@ -16,3 +16,5 @@ yarn-error.log
 .idea
 
 /docs/private
+
+.DS_Store

@@ -8,7 +8,8 @@
 <!--                  v-model="description"-->
 <!--                  v-bind:placeholder="placeholders.description"-->
 <!--        ></textarea>-->
-<h3>Instructions, et cetera</h3>
+
+<label for="motion-descrip" class='form-label' >Instructions, et cetera</label>
         <wysiwyg v-model="description"
                  id="motion-descrip"
 

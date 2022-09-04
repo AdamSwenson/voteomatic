@@ -2,6 +2,7 @@
 <script>
 import MeetingMixin from "../../../mixins/meetingMixin";
 import ButtonParent from "../../parents/button-parent";
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 
 export default {
     name: "create-proposition-button",
@@ -10,12 +11,13 @@ export default {
 
     props: [],
 
-    mixins: [MeetingMixin],
+    mixins: [MeetingMixin, MotionStoreMixin],
 
     data: function () {
         return {
-            label : "Create proposition",
-            styling : "  btn-outline-primary "
+            label : "New proposition",
+            styling : "  btn-primary ",
+            icon: 'bi-plus'
 
         }
     },
@@ -28,6 +30,7 @@ export default {
             let p = this.$store.dispatch('initializeDraftProposition');
             let me = this;
             p.then(() => {
+                //Unset
                 me.$emit('create-motion-clicked');
             });
         },

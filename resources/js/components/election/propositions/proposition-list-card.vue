@@ -3,7 +3,7 @@
 <!--        style="width: 25rem;">-->
 
         <div class="card-header">
-            <div class="h4 card-title">Propositions</div>
+            <h4 class="card-title">Propositions</h4>
         </div>
 
 <!--        <div class="card-body">-->
@@ -21,7 +21,8 @@
 
 
         <div class="card-footer">
-            <create-proposition-button v-on:create-motion-clicked="requestNewMode"></create-proposition-button>
+            <create-proposition-button
+                v-on:create-motion-clicked="requestNewMode"></create-proposition-button>
         </div>
 
     </div>

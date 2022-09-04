@@ -6,7 +6,9 @@
         v-bind:data-bs-target="target"
         v-on:click="handleClick"
         v-bind:aria-disabled="ariaDisabled"
-    >{{label}}</button>
+    >
+        <i  v-if="hasIcon" class="bi " v-bind:class="icon"></i> {{label}}
+    </button>
 
 
 </template>
@@ -14,7 +16,6 @@
 <script>
 
 import MeetingMixin from '../../mixins/meetingMixin'
-import MotionStoreMixin from "../../mixins/motionStoreMixin";
 import ModeMixin from "../../mixins/modeMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 
@@ -48,6 +49,9 @@ export default {
         target : function(){
             return '#' + this.modalId;
         },
+        hasIcon: function(){
+            return isReadyToRock(this.icon);
+        }
 
 
 

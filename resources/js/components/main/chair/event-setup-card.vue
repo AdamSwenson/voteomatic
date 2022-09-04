@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6">
@@ -43,7 +43,7 @@
 
 import ModeMixin from "../../../mixins/modeMixin";
 import SetupControls from "../../controls/setup-controls";
-import ElectionSetupCard from "../../election/setup/election-setup-card";
+import ElectionSetupCard from "../../election/setup/election/election-setup-card";
 import EventListCard from "../../common/event-list-card";
 import MeetingSetupCard from "../../meetings/meeting-setup-card";
 import ParticipantsListCard from "../../common/participants-list-card";

@@ -189,8 +189,12 @@ const actions = {
      */
     initializeDraftProposition({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
-            let motion = new Proposition({});
+            let motion = new Proposition({
+                requires : 0.5
+            });
             commit('setDraftMotion', motion);
+            //Now we unset whatever motion was currently selected globally
+            commit('clearCurrentMotion');
 
             // //We set it as a resolution since that will allow html display
             // let p = Payload.factory({
