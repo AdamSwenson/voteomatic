@@ -18,3 +18,5 @@ yarn-error.log
 /docs/private
 
 .DS_Store
+public/.DS_Store
+storage/.DS_Store
