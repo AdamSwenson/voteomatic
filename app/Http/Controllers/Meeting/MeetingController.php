@@ -68,6 +68,8 @@ class MeetingController extends Controller
 
         $meeting->update($request->all());
 
+//        dd($meeting);
+
         return response()->json($meeting);
 
 //        //dev This potentially allows me to fill in a meeting of which you were previously the owner. Is that a problem...

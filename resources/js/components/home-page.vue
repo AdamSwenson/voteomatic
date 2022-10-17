@@ -31,6 +31,8 @@ import meetingMixin from "../mixins/meetingMixin";
 import urlMixin from "../mixins/urlMixin";
 import EventListCard from "./common/event-list-card";
 import LogoutButton from "./navigation/logout-button";
+import CreateMeetingButton from "./meetings/controls/create-meeting-button";
+import CreateElectionButton from "./election/setup/election/create-election-button";
 
 /**
  * This is the internal home page. Only will be accessed if logging in directly
@@ -38,7 +40,7 @@ import LogoutButton from "./navigation/logout-button";
  */
 export default {
     name: "home-page",
-    components: {LogoutButton, EventListCard,},
+    components: {CreateElectionButton, CreateMeetingButton, LogoutButton, EventListCard,},
     props: [],
 
     mixins: [meetingMixin, urlMixin],

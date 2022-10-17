@@ -7,6 +7,11 @@
         </div>
 
         <div class="card-body">
+            <create-meeting-button v-if="isMeeting"></create-meeting-button>
+            <create-election-button v-if="isElection"></create-election-button>
+        </div>
+
+        <div class="card-body">
 
             <ul class="list-group list-group-flush"
                 v-if="isReady">
@@ -32,12 +37,14 @@ import {isReadyToRock} from "../../utilities/readiness.utilities";
 import MeetingMixin from "../../mixins/meetingMixin";
 import ChairMixin from "../../mixins/chairMixin";
 import ModeMixin from "../../mixins/modeMixin";
+import CreateMeetingButton from "../meetings/controls/create-meeting-button";
+import CreateElectionButton from "../election/setup/election/create-election-button";
 // import MeetingMixin from '../storeMixins/meetingMixin';
 // import MeetingMixin from '../storeMixins/meetingMixin';
 
 export default {
     name: "event-list-card",
-    components: {MeetingSelectButton},
+    components: {CreateElectionButton, CreateMeetingButton, MeetingSelectButton},
 
     props: ['eventType'],
 
