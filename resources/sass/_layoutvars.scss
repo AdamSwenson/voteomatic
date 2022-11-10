@@ -1,0 +1,26 @@
+
+/*.router-tabs {*/
+ul.nav-tabs {
+    //set to color of the card so won't get lost in background
+    background-color:$card-bg;
+}
+
+//Topmost level on any of the modes
+.main-area{
+    .card {
+        //background-color: #00efb2;
+        $card-border-radius: 0;
+    }
+}
+
+.main-page{
+    //dev
+    background-color: #7a0000;
+}
+
+.router-tab-touching-card{
+        /*Fix annoying gap with navbar*/
+        --bs-card-border-radius: 0;
+
+}
+

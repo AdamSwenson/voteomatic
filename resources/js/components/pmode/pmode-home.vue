@@ -1,5 +1,5 @@
 <template>
-    <div class="pmode-home card mt-1"
+    <div class="pmode-home card router-tab-touching-card "
          v-bind:id="displayId"
     >
         <safari-regex-warning></safari-regex-warning>

@@ -1,6 +1,7 @@
 <template>
 
-    <div class="voteomatic">
+    <div class="voteomatic main-page" id="voteomatic">
+
         <election-module v-if="isElection"></election-module>
 
         <public-pmode v-else-if="isPublicPmode"></public-pmode>
@@ -8,6 +9,7 @@
         <meeting-module v-else></meeting-module>
 
         <page-footer></page-footer>
+
     </div>
 
 </template>
@@ -64,6 +66,6 @@ export default {
 
 <style scoped>
 .refresh-area {
-    margin-top: 2em;
+    /*margin-top: 2em;*/
 }
 </style>
