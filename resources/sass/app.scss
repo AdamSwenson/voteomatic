@@ -8,10 +8,17 @@
 
 //$min-contrast-ratio : 7;
 
+//container extends to edges of screen
+$container-padding-x : 0;
+
 // Bootstrap
-@import '../css/bootstrap.min.css';
-//@import '~bootstrap/scss/bootstrap';
+//@import '../css/bootstrap.min.css';
+@import '~bootstrap/scss/bootstrap';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
+@import "layoutvars";
+
+
 
 //Add ons
 @import "~vue-wysiwyg/dist/vueWysiwyg.css";

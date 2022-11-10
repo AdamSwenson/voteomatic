@@ -1,5 +1,5 @@
 <template>
-    <div class="ballot-card card">
+    <div class="ballot-card card router-tab-touching-card">
 
         <office-setup-card v-if="isElection"></office-setup-card>
 

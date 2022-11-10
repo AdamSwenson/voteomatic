@@ -1,6 +1,6 @@
 <template>
 
-    <div class="event-setup-card card">
+    <div class="event-setup-card card router-tab-touching-card">
 
         <div class="controls-area card-header">
             <setup-controls></setup-controls>

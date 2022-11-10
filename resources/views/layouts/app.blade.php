@@ -25,16 +25,17 @@
 </head>
 <body>
 
+{{--<div class="container-fluid">--}}
+
     <div id="app">
         @yield('navBar')
 
         <main >
-
-{{--        <main class="py-4">--}}
             @yield('content')
         </main>
-    </div>
 
+    </div>
+{{--</div>--}}
 
     <div id="jsArea">
         @yield('scriptArea')
