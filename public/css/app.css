@@ -11449,7 +11449,7 @@ ul.nav-tabs {
 }
 
 .main-page {
-  background-color: #7a0000;
+  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
 }
 
 .router-tab-touching-card {
