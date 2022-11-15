@@ -17,7 +17,7 @@ ul.nav-tabs {
     //dev
     //background: rgb(8,85,101);
     //background: linear-gradient(90deg, rgba(8,85,101,1) 0%, rgba(89,89,122,1) 59%, rgba(8,85,101,1) 100%);
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    background: linear-gradient(0deg, #4b6cb7 0%, #182848 100%);
 
     //background-color: #b9c2c3;
 }
@@ -26,5 +26,10 @@ ul.nav-tabs {
         /*Fix annoying gap with navbar*/
         --bs-card-border-radius: 0;
 
+}
+
+#pageNav{
+    background-color: #182848;
+    /*padding-left: 100px;*/
 }
 

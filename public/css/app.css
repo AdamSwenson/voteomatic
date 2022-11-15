@@ -11449,10 +11449,15 @@ ul.nav-tabs {
 }
 
 .main-page {
-  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+  background: linear-gradient(0deg, #4b6cb7 0%, #182848 100%);
 }
 
 .router-tab-touching-card {
   /*Fix annoying gap with navbar*/
   --bs-card-border-radius: 0;
+}
+
+#pageNav {
+  background-color: #182848;
+  /*padding-left: 100px;*/
 }

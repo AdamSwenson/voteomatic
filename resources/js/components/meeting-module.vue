@@ -1,6 +1,6 @@
 <template>
 
-    <div class="meeting-module main-area">
+    <div class="meeting-module ">
 
         <message-area></message-area>
         <vote-count-alert></vote-count-alert>
