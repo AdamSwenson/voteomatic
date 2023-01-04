@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-lg-6 text-end">
-            <mode-toggle-switch></mode-toggle-switch>
+<!--            <mode-toggle-switch></mode-toggle-switch>-->
         </div>
 
     </div>

@@ -21,6 +21,8 @@
         <input type="hidden" id="routeRoot" data="{{ url('') }}"/>
         <input type="hidden" id="userName" data="{{ Auth::user()->name }}"/>
         <input type="hidden" id="env" data="{{ config('app.env') }}"/>
+        <input type="hidden" id="version" data="{{config('app.version')}}"/>
+
 
     </div>
 @endsection

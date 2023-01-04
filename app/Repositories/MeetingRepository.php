@@ -77,7 +77,7 @@ class MeetingRepository implements IMeetingRepository
      */
     public function createElectionForUser(User $user)
     {
-        $emptyMeetings = $this->getEmptyMeetingsForUser($user);
+        $emptyMeetings = $this->getEmptyElectionsForUser($user);
 
         if (sizeof($emptyMeetings) > 0) {
             return $emptyMeetings->first();
@@ -127,6 +127,7 @@ class MeetingRepository implements IMeetingRepository
 
         // dev what about empty string instead of null?
         $meetings = $user->meetings()
+            ->where('is_election', false)
             ->where('name', null)
             ->where('date', null)
             ->where('owner_id', $user->id)
@@ -144,4 +145,48 @@ class MeetingRepository implements IMeetingRepository
 
     }
 
+
+    /**
+     * If a user clicks create new meeting but doesn't fill in
+     * the name or do anything else, we will want to reuse that
+     * object when they try to create another one. That will prevent having
+     * to deal with a bunch of title-less meetings.
+     *
+     * This is handled here since there are potentially a bunch of criteria
+     * we want to apply to determine which meetings are empty.
+     *
+     * dev Do we want to check that no one else is associated with the meeting?
+     *
+     * dev This requires them to be both a member and owner. Why not just owner?
+     *
+     * dev Do we want to return the collection or just one? (There could be more than one if the name and date were deleted )
+     *
+     * @param User $user
+     */
+    public function getEmptyElectionsForUser(User $user)
+    {
+        $out = [];
+
+        //NB, if they created a meeting with votes and voters but deleted the name
+        //and owner id, those meetings will be returned.
+
+        // dev what about empty string instead of null?
+        $meetings = $user->meetings()
+            ->where('is_election', true)
+            ->where('name', null)
+            ->where('date', null)
+            ->where('owner_id', $user->id)
+            ->get();
+
+
+        foreach ($meetings as $meeting) {
+
+            if (sizeof($meeting->motions) === 0 && sizeof($meeting->users) <= 1) {
+                $out[] = $meeting;
+            }
+        }
+
+        return collect($out);
+
+    }
 }
