@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "doctrine/dbal": "^2.12",
         "fideloper/proxy": "^4.2",
         "franzose/closure-table": "^6.1",
