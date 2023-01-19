@@ -1,5 +1,5 @@
 <template>
-<div class="results-card card">
+<div class="results-card card router-tab-touching-card">
 
     <election-results-card v-if="isElection"></election-results-card>
 

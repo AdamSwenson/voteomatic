@@ -1,13 +1,28 @@
 <template>
 
-    <div class="meeting-module">
-
-        <router-tabs></router-tabs>
+    <div class="meeting-module ">
 
         <message-area></message-area>
         <vote-count-alert></vote-count-alert>
 
-        <router-view name="main"></router-view>
+        <div class="row">
+            <div class="col-xl-1 col-xxl-2"></div>
+
+<!--            <div class="col-lg-1 col-xl-2"></div>-->
+            <div class="col-xl-10 col-xxl-8">
+
+<!--            <div class="col-lg-10 col-xl-8">-->
+<!--            <div class="col-md-10 col-lg-8">-->
+                <router-tabs></router-tabs>
+                <router-view name="main"></router-view>
+            </div>
+
+            <div class="col-xl-1 col-xxl-2"></div>
+
+<!--            <div class="col-lg-1 col-xl-2"></div>-->
+
+<!--            <div class="col-md-1 col-lg-2"></div>-->
+        </div>
 
         <chair-indicator></chair-indicator>
 
@@ -103,7 +118,8 @@ export default {
 </script>
 
 <style scoped>
-.refresh-area {
-    margin-top: 2em;
-}
+
+/*.refresh-area {*/
+/*    margin-top: 2em;*/
+/*}*/
 </style>

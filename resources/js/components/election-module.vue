@@ -1,20 +1,23 @@
 <template>
 
-    <div class="election-module">
+    <div class="election-module main-area">
 
         <router-tabs></router-tabs>
 
         <message-area></message-area>
 
-<!--        <vote-count-alert></vote-count-alert>-->
+        <!--        <vote-count-alert></vote-count-alert>-->
+        <div class="row">
+            <div class="col-md-1 col-lg-2"></div>
 
-        <router-view name="main"></router-view>
+            <div class="col-md-10 col-lg-8">
+                <router-view name="main"></router-view>
 
-        <chair-indicator></chair-indicator>
+                <chair-indicator></chair-indicator>
+            </div>
 
-<!--        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>-->
-<!--        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>-->
-<!--        <motion-second-modal v-if="! isChair"></motion-second-modal>-->
+            <div class="col-md-1 col-lg-2"></div>
+        </div>
 
     </div>
 
@@ -47,7 +50,7 @@ export default {
         MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
     },
 
-    mixins: [ MeetingMixin, NavigationMixin, ChairMixin],
+    mixins: [MeetingMixin, NavigationMixin, ChairMixin],
 
     data: function () {
         return {
@@ -56,13 +59,9 @@ export default {
         }
     },
 
-    computed: {
-    },
+    computed: {},
 
-    methods : {
-
-
-    },
+    methods: {},
 
     mounted: function () {
         let me = this;
@@ -83,7 +82,6 @@ export default {
 
             window.console.log('voteomatic - election', 'isReady', 159, me.meeting);
         });
-
 
 
     }
