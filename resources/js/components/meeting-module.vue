@@ -1,11 +1,12 @@
 <template>
 
-    <div class="meeting-module ">
+    <div class="meeting-module main-area">
 
         <message-area></message-area>
         <vote-count-alert></vote-count-alert>
 
         <div class="row">
+
             <div class="col-xl-1 col-xxl-2"></div>
 
 <!--            <div class="col-lg-1 col-xl-2"></div>-->
@@ -15,16 +16,15 @@
 <!--            <div class="col-md-10 col-lg-8">-->
                 <router-tabs></router-tabs>
                 <router-view name="main"></router-view>
+
+                <chair-indicator></chair-indicator>
+
             </div>
 
             <div class="col-xl-1 col-xxl-2"></div>
 
-<!--            <div class="col-lg-1 col-xl-2"></div>-->
-
-<!--            <div class="col-md-1 col-lg-2"></div>-->
         </div>
 
-        <chair-indicator></chair-indicator>
 
         <motion-in-order-modal v-if="isChair"></motion-in-order-modal>
         <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>

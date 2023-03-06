@@ -2,21 +2,23 @@
 
     <div class="election-module main-area">
 
-        <router-tabs></router-tabs>
-
         <message-area></message-area>
 
-        <!--        <vote-count-alert></vote-count-alert>-->
         <div class="row">
-            <div class="col-md-1 col-lg-2"></div>
 
-            <div class="col-md-10 col-lg-8">
+            <div class="col-xl-1 col-xxl-2"></div>
+
+            <div class="col-xl-10 col-xxl-8">
+                <router-tabs></router-tabs>
+
                 <router-view name="main"></router-view>
 
                 <chair-indicator></chair-indicator>
             </div>
 
-            <div class="col-md-1 col-lg-2"></div>
+            <div class="col-xl-1 col-xxl-2"></div>
+
+<!--            <div class="col-md-1 col-lg-2"></div>-->
         </div>
 
     </div>

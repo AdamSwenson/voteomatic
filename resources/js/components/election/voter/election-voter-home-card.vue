@@ -1,21 +1,19 @@
 <template>
-    <div class="election-home-card card">
+    <div class="election-home-card card router-tab-touching-card">
 <!--        <div class="card-header">-->
 <!--            <h3 class="card-header">{{electionName}}</h3>-->
 <!--        </div>-->
 
         <div class="card-body">
             <div class="row">
+
                 <div class="col-md-3" v-if="showOfficeSelector">
                     <office-select-area></office-select-area>
                 </div>
+
                 <div class="col-md-9">
+
                     <component v-bind:is="shownCard"></component>
-<!--                    -->
-<!--                    <voting-complete-card v-if="isVotingComplete"></voting-complete-card>-->
-<!--                    <summary-submit-card v-else-if="showSummarySubmitCard"></summary-submit-card>-->
-<!--                    <election-card v-else-if="isOfficeSelected"></election-card>-->
-<!--                    <voting-instructions-card v-else></voting-instructions-card>-->
 
                     </div>
             </div>

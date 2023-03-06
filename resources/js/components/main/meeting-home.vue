@@ -1,6 +1,8 @@
 <template>
 
-    <div id="meeting-home-card" class="meeting-home card router-tab-touching-card">
+    <div id="meeting-home-card"
+         class="meeting-home card router-tab-touching-card"
+    >
             <div class="card-body">
 
                 <motions-card></motions-card>
