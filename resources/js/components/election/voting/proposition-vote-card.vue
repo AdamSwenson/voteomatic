@@ -19,32 +19,32 @@
 <!--            </div>-->
         </div>
 
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="card-title">Pro</h3>
-                <p class="card-text">The Executive Committee shall set the agenda for meetings of the Senate and meetings of the Faculty.
-                    They shall review all policy recommendations, monitor membership, and oversee activities of the Standing and Advisory Committees.
-                    They shall oversee and conduct the nomination process and elections for the Senate and the Faculty.
-                    They shall act for the Faculty, the Senate and the Standing Committees of the Senate on those matters requiring Faculty action or
-                    consultation during the intersession, special sessions or summer months.</p>
+<!--        <div class="card-body">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <h3 class="card-title">Pro</h3>-->
+<!--                <p class="card-text">The Executive Committee shall set the agenda for meetings of the Senate and meetings of the Faculty.-->
+<!--                    They shall review all policy recommendations, monitor membership, and oversee activities of the Standing and Advisory Committees.-->
+<!--                    They shall oversee and conduct the nomination process and elections for the Senate and the Faculty.-->
+<!--                    They shall act for the Faculty, the Senate and the Standing Committees of the Senate on those matters requiring Faculty action or-->
+<!--                    consultation during the intersession, special sessions or summer months.</p>-->
 
-                    <p class="card-text">Sixty percent or more of the faculty are Lecturers.  This Bylaw change will add a dedicated seat to the Executive Committee
-                        for a Lecturer. Voting yes on this Bylaw change will add the Lecturer’s voice to deliberations, recommendations and decisions rendered by the Executive Committee.</p>
+<!--                    <p class="card-text">Sixty percent or more of the faculty are Lecturers.  This Bylaw change will add a dedicated seat to the Executive Committee-->
+<!--                        for a Lecturer. Voting yes on this Bylaw change will add the Lecturer’s voice to deliberations, recommendations and decisions rendered by the Executive Committee.</p>-->
 
-                </div>
+<!--                </div>-->
 
-                <div class="col-md-6">
-                    <h3 class="card-title">Con</h3>
-                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee. Lecturers can and do serve on the Executive Committee; there is no restriction on how
-                        many elected seats lecturer senators may occupy.</p>
-                    <p class="card-text">For tenure track senators,
-                        the Executive Committee’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this
-                        Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work. This is pressure from which their tenure track colleagues are immune; pressure they may have
-                        been unaware of when they decided to run for Senate.</p>
-                </div>
-            </div>
-        </div>
+<!--                <div class="col-md-6">-->
+<!--                    <h3 class="card-title">Con</h3>-->
+<!--                    <p class="card-text">All senators, lecturer and tenure track, are currently eligible to seek election to the Executive Committee. Lecturers can and do serve on the Executive Committee; there is no restriction on how-->
+<!--                        many elected seats lecturer senators may occupy.</p>-->
+<!--                    <p class="card-text">For tenure track senators,-->
+<!--                        the Executive Committee’s heavy workload is part of their job’s service component. For lecturer senators, the massive time commitment is uncompensated but unpressured. With this-->
+<!--                        Bylaws change, the 9 lecturer senators would face pressure to stand for election and do uncompensated work. This is pressure from which their tenure track colleagues are immune; pressure they may have-->
+<!--                        been unaware of when they decided to run for Senate.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="card-body">
                     <required-vote :motion="motion"></required-vote>
