@@ -34,11 +34,13 @@ Fortunately, most modern learning management systems (e.g., Canvas, Moodle, et a
 ### Anonymity
 Here's more detail on the anonymity of recorded votes. 
 
-Votes are recorded using 2 tables. The `votes` table contains 3 data fields
+Votes are recorded using 2 tables. The `votes` table contains 4 data fields
 
-    motion_id : The, ahem, id of the motion being voted on
+    motion_id : The, ahem, id of the motion being voted on. In an election, this is the id of the office.
 
-    is_yay : If true, the vote was affirmative; if false, it was negative
+    is_yay : If true, the vote was affirmative; if false, it was negative.
+
+    candidate_id : In an election, the id of the candidate the vote is for.
 
     receipt : A random hash (string of numbers and letters) that is sent back to the voter so that they can verify their vote was recorded. It is not stored anywhere on the app; if the voter navigates away from the page where it appears, the receipt will be irretrivable. 
 
