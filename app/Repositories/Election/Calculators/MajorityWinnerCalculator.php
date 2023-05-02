@@ -43,6 +43,7 @@ class MajorityWinnerCalculator extends IResultsCalculator
      */
     public function isWinner(Candidate $candidate)
     {
+        $a = $candidate->getShareOfVotesCast();
         return $candidate->getShareOfVotesCast() > 0.5;
     }
 
@@ -67,7 +68,7 @@ class MajorityWinnerCalculator extends IResultsCalculator
     }
 
     /**
-     * Constructs the runoff list
+     * Populates winners and inRunoff arrays
      *
      * @return bool|void
      */
@@ -75,11 +76,15 @@ class MajorityWinnerCalculator extends IResultsCalculator
     {
         //check if top vote getter is clear winner; stop if they are
         if ($this->isWinner($this->results[0])) return true;
+
         $i = 0;
         foreach ($this->results as $candidate) {
-            //If we got here, we haven't reached a majority yet
+            //If we got here, we haven't reached a majority yet so we know
+            //that the top vote-getter is in a runoff. Thus results[0] gets pushed in
+            //on the first run. We continue to push in additional candidates until the loop ends
             $this->inRunoff->push($candidate);
 
+            //Check whether the candidates in the runoff list comprise a majority
             if ($this->isRunoffShareAMajority()) {
                 //we now need to check if subsequent candidates also have the
                 //same vote total.
@@ -89,6 +94,7 @@ class MajorityWinnerCalculator extends IResultsCalculator
                     if ($nextCandidate->totalVotesReceived === $candidate->totalVotesReceived) {
                         $this->inRunoff->push($nextCandidate);
                     } else {
+                        //break out of both loops
                         break 2;
                     }
                 }
@@ -100,7 +106,8 @@ class MajorityWinnerCalculator extends IResultsCalculator
 
     /**
      * Returns true if share of the votes from each
-     * candidate in the runoff list sums to greater than 0.5
+     * candidate that is currently in the runoff list
+     * sums to greater than 0.5
      */
     public function isRunoffShareAMajority()
     {

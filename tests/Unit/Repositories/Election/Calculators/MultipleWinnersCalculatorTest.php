@@ -431,6 +431,53 @@ class MultipleWinnersCalculatorTest extends TestCase
     }
 
 
+    /**
+     * @test
+     * Addresses VOT-254. That bug was marking all ties as runoff participants even
+     * when there were winners
+     */
+    public function vot254_isRunoffParticipantTrueWhenTieBelowTopDoesNotRequireRunoff()
+    {
+        //prep
+        //Going to do clean setup with actual 2023 EEC results
+        $this->max_winners = 3;
+        //Actual 2023 EEC results
+        $totals = [19, 17, 15, 9, 9, 8 ];
+        $expectedIsRunoffParticipant = [false, false, false, false, false, false];
+
+        $this->motion = Motion::factory()->electedOffice()->create(['max_winners' => $this->maxWinners]);
+
+        $candidates = Candidate::factory()->count(sizeof($totals))->create(['motion_id' => $this->motion->id]);
+        $this->assertEquals(sizeof($candidates), sizeof($totals), "checking test setup: candidates");
+        $this->assertEquals(sizeof($expectedIsRunoffParticipant), sizeof($totals), "checking test setup: runoff participants");
+
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MultipleWinnersCalculator($this->motion);
+
+        //check
+        $this->assertEquals($this->max_winners, sizeof($this->object->winners), "Correct number of winners in calculator's winners array");
+        $i = 0;
+        foreach($candidates as $candidate){
+            if($i < $this->max_winners){
+                $this->assertTrue($this->object->isWinner($candidate), "isWinner correctly identifies winners on candidate #" . $i);
+            }else{
+                $this->assertFalse($this->object->isWinner($candidate), "isWinner correctly identifies non-winners on candidate #" . $i);
+            }
+
+            $b = $this->object->isRunoffParticipant($candidate);
+            $this->assertEquals($expectedIsRunoffParticipant[$i], $this->object->isRunoffParticipant($candidate), "isRunoffParticipant returns expected value");
+
+            $i += 1;
+        }
+
+    }
 
 
 
