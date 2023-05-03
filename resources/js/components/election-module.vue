@@ -14,6 +14,7 @@
                 <router-view name="main"></router-view>
 
                 <chair-indicator></chair-indicator>
+
             </div>
 
             <div class="col-xl-1 col-xxl-2"></div>

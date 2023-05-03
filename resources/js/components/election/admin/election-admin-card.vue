@@ -4,7 +4,7 @@
 <!--        adding g-4 makes overflow vertically-->
             <div class="row row-cols-1 row-cols-md-2 ">
                 <!--        <div class="row ">-->
-                
+
             <div class="election-controls card col">
 
                 <div class="card-body">
@@ -116,7 +116,9 @@ export default {
         showHideButton: function () {
             if (!isReadyToRock(this.meeting)) return false;
             return this.meeting.isComplete && !this.isVotingAvailable && this.isResultsAvailable;
-        }
+        },
+
+
     },
 
     computed: {},
