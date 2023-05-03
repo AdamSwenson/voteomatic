@@ -1,5 +1,5 @@
 <template>
-    <div class="card office-setup">
+    <div class="office-setup card router-tab-touching-card">
         <div class="row  mt-2">
 
             <div class="col-lg-3">

@@ -1,15 +1,21 @@
 <template>
-    <div class="election-admin-card card">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <div class="card election-controls col">
+    <div class="election-admin-card card router-tab-touching-card">
+
+<!--        adding g-4 makes overflow vertically-->
+            <div class="row row-cols-1 row-cols-md-2 ">
+                <!--        <div class="row ">-->
+                
+            <div class="election-controls card col">
 
                 <div class="card-body">
                     <h4 class="card-title">Election phase</h4>
                     <election-phase-selector :meeting="meeting"></election-phase-selector>
                 </div>
-<div class="card-body">
-    <release-results-button></release-results-button>
-</div>
+
+                <div class="card-body">
+                    <release-results-button></release-results-button>
+                </div>
+
                 <div class="card-body">
 
                     <dl class="row">
@@ -72,8 +78,8 @@
 
             <election-status-card></election-status-card>
 
-
         </div>
+
     </div>
 </template>
 

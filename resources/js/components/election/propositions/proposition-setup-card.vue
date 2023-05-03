@@ -1,13 +1,12 @@
 <template>
 
-    <div class="proposition-setup-card card">
+    <div class="proposition-setup-card card router-tab-touching-card">
 
-        <div class="row   mt-2">
+        <div class="row mt-2">
 
             <div class="col-lg-3">
 
-                <proposition-list-card
-                ></proposition-list-card>
+                <proposition-list-card></proposition-list-card>
 <!--                v-on:edit-requested="setEditMode"-->
             </div>
 
