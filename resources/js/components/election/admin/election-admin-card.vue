@@ -1,6 +1,6 @@
 <template>
     <div class="election-admin-card card router-tab-touching-card">
-
+<div class="card-body">
 <!--        adding g-4 makes overflow vertically-->
             <div class="row row-cols-1 row-cols-md-2 ">
                 <!--        <div class="row ">-->
@@ -79,7 +79,7 @@
             <election-status-card></election-status-card>
 
         </div>
-
+</div>
     </div>
 </template>
 
