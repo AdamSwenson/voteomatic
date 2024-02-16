@@ -8,6 +8,7 @@ use App\Http\Controllers\Election\ElectionResultsController;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
+use App\Repositories\Election\IElectionAdminRepository;
 use App\Repositories\Election\IElectionResultsRepository;
 use Tests\TestCase;
 
@@ -30,6 +31,10 @@ class ElectionResultsControllerTest extends TestCase
 
         $this->election = Meeting::factory()->election()->create();
         $this->election->setOwner($this->owner);
+
+        //set election phase
+        $electionAdminRepo = app()->make(IElectionAdminRepository::class);
+        $this->election = $electionAdminRepo->releaseResults($this->election);
 
         $this->office = Motion::factory()->electedOffice()->create(
                 ['meeting_id' => $this->election->id,
@@ -71,6 +76,7 @@ class ElectionResultsControllerTest extends TestCase
         $response = $this->actingAs($this->regularUserMember)->get($this->url);
 
         //check
+        $this->assertEquals('results', $this->election->phase);
         $response->assertSuccessful();
         $response->assertJson($results);
     }

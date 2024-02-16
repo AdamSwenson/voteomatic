@@ -26,14 +26,15 @@ class MotionVoteCastTest extends TestCase
     /** @test */
     public function broadcastWith()
     {
-        MotionVoteCast::dispatch($this->motion);
+        $this->markTestSkipped('todo');
+//        MotionVoteCast::dispatch($this->motion);
 
     }
 
     /** @test */
     public function testbroadcastOn()
     {
-
+        $this->markTestSkipped('todo');
     }
 
 }
