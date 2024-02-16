@@ -47,8 +47,7 @@ class ElectionVoteControllerTest extends TestCase
         $this->election->setOwner($this->owner);
 
         //set election phase
-        $electionAdminRepo = app()->make(IElectionAdminRepository::class);
-        $this->election = $electionAdminRepo->startVoting($this->election);
+        $this->election->phase = 'voting';
 
 
         $this->office = Motion::factory()->electedOffice()->create(

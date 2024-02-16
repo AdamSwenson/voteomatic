@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class CheckElectionPhase
 {
 
-    public function checkAdmin($meeting){
+    public function checkAdmin($meeting)
+    {
         //Admin checks
         switch ($meeting->electionPhase) {
             case 'setup':
@@ -32,7 +33,8 @@ class CheckElectionPhase
         return true;
     }
 
-    public function checkRegUser($meeting){
+    public function checkRegUser($meeting)
+    {
         //Regular user checks
         switch ($meeting->electionPhase) {
             case 'setup':
@@ -65,7 +67,7 @@ class CheckElectionPhase
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse) $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      * @throws ElectionPhaseProhibition
      */
