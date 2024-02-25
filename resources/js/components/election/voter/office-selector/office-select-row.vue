@@ -101,7 +101,8 @@ export default {
         styling: {
             get: function () {
                 if (this.isSelected) {
-                    return ' bg-info '
+                    return ' active '
+                    // return ' bg-info '
                 }
 
             },

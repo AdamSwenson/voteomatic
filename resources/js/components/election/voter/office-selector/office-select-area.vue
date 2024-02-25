@@ -1,5 +1,6 @@
 <template>
-    <div class="card office-select-area" style="width: 18rem;">
+    <div class="card office-select-area" >
+<!--    <div class="card office-select-area" style="width: 18rem;">-->
 <!--        <h5 class="card-header">-->
 <!--            Office-->
 <!--        </h5>-->
