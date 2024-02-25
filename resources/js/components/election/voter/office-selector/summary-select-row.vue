@@ -7,6 +7,7 @@
     <a href="#"
        class="list-group-item list-group-item-action"
        v-bind:class="styling"
+       v-bind:aria-current="ariaStatus"
     v-on:click="handleSelect">
         <span v-bind:class="textStyling">
             <i class="bi-save" aria-hidden="true"></i>   Review and record selections
@@ -91,15 +92,34 @@ export default {
         //     return this.$store.getters.getActiveMotion;
         // },
 
+        ariaStatus : function (){
+            if (this.isSelected) {
+                return 'true'
+                // return ' bg-info '
+            }
+            return 'false'
+        },
+
         styling: {
             get: function () {
                 if (this.isSelected) {
-                    return ' bg-info '
+                    return ' active '
+                    // return ' bg-info '
                 }
 
             },
             default: ''
         },
+        //
+        // styling: {
+        //     get: function () {
+        //         if (this.isSelected) {
+        //             return ' bg-info '
+        //         }
+        //
+        //     },
+        //     default: ''
+        // },
 
         textStyling : function(){
             if(this.hasVoted) return 'text-muted';
