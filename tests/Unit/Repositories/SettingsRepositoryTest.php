@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Repositories;
+namespace Tests\Unit\Repositories;
 
 use App\Models\Meeting;
 use App\Models\SettingStore;
 use App\Models\User;
 use App\Repositories\SettingsRepository;
+use Tests\TestCase;
 
 //use PHPUnit\Framework\TestCase;
-use Tests\TestCase;
 
 class SettingsRepositoryTest extends TestCase
 {
