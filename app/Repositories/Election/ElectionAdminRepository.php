@@ -51,6 +51,7 @@ class ElectionAdminRepository implements IElectionAdminRepository
      */
     public function releaseResults(Meeting $meeting)
     {
+        //dev This is probably problematic since results and closed are 2 separate phases
         $meeting->releaseElectionResults();
         return $meeting;
     }

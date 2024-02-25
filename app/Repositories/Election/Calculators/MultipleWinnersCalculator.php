@@ -31,8 +31,9 @@ class MultipleWinnersCalculator extends IResultsCalculator
 
 
     /**
-     * Returns true if there's room. Do not pass a collection of 1
-     * @param $possibleAddition
+     * Returns true if there's room.
+     * Do not pass in a collection containing only 1
+     * @param $possibleAddition array | Candidate
      * @return bool
      */
     public function isRoomInWinners($possibleAddition)
@@ -45,12 +46,25 @@ class MultipleWinnersCalculator extends IResultsCalculator
         return ($winners + $add) <= $this->maxWinners;
     }
 
+    /**
+     * Populates winners and inRunoff arrays
+     * @return void
+     */
     protected function calculate()
     {
+        /*
+         * Cases
+         * (1) No ties at all.
+         * (2) Tie(s) within winner slots; not among non-winners
+         * (3) No tie(s) within winners; tie(s) within non-winners
+         * (4) Tie(s) within winner slots; tie(s) within non-winners
+         */
+
         $k = 0;
         //Using a while loop because need to control how much the
-        // index is increased on each run
+        // index is increased on each run.
         while ($k < sizeof($this->results)) {
+
             $candidate = $this->results[$k];
 
             //check if they are tied with anyone.
@@ -58,7 +72,10 @@ class MultipleWinnersCalculator extends IResultsCalculator
             //one we provided
             $toAdd = $this->getTies($candidate);
 
-            if (!$this->isRoomInWinners($toAdd)) {
+            if ( ! $this->isRoomInWinners($toAdd) ) { //checks whether all the slots are full
+
+                //todo Looks like the problem is that this does not check whether we've exceeded max winner count. It only checks if there's a tie
+
                 if (sizeof($toAdd) > 1) {
                     //If there is no room, we need a runoff if there's more than one
                     //person with that vote total
@@ -71,6 +88,14 @@ class MultipleWinnersCalculator extends IResultsCalculator
             //There is room, so they are winner(s)
             $this->winners = $this->winners->concat($toAdd);
 
+            //dev
+            if(sizeof($this->winners) === $this->maxWinners){
+                //if we've fully filled the winners array, we can stop
+                break;
+            }
+
+            //Increment by number just added. This ensures that we jump past all members
+            //of a tied rank and don't duplicate
             //If we've reached the end, we will find out on the next loop
             //so we increment by the number of items we just added.
             $k += sizeof($toAdd);

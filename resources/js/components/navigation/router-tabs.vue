@@ -1,11 +1,11 @@
 <template>
 
     <div class="router-tabs" role="navigation">
+
         <ul class=" nav nav-tabs ">
             <router-tab v-for="r in shownRoutes" :route="r" :key="r.name"></router-tab>
+        </ul>
 
-
-    </ul>
     </div>
 
 
@@ -84,7 +84,7 @@ export default {
             return showRoutes;
 
         },
-        settingsObject : function(){
+        settingsObject: function () {
             return this.$store.getters.getSettings;
         },
 
@@ -112,8 +112,8 @@ export default {
                         showRoutes.push(r);
                     }
 
-                } else if(r.name === 'ballot'){
-                    if(this.showMakeMotionTab){
+                } else if (r.name === 'ballot') {
+                    if (this.showMakeMotionTab) {
                         showRoutes.push(r);
                     }
                 }
@@ -137,7 +137,7 @@ export default {
         shownRoutes: function () {
             if (!isReadyToRock(this.meeting)) return [];
 
-            if (this.meeting.type === 'election'){
+            if (this.meeting.type === 'election') {
 // this.filterToElectionRoutes();
                 return this.electionTabs;
 
@@ -257,12 +257,12 @@ export default {
         }
         ,
 
-        showMakeMotionTab: function(){
-          if(this.isAdmin) return true;
+        showMakeMotionTab: function () {
+            if (this.isAdmin) return true;
 
-          if(! isReadyToRock(this.settingsObject)) return false;
+            if (!isReadyToRock(this.settingsObject)) return false;
 
-          return this.settingsObject.isSettingTrue('members_make_motions');
+            return this.settingsObject.isSettingTrue('members_make_motions');
 
         },
 
@@ -279,10 +279,10 @@ export default {
             return true;
         }
     },
-mounted() {
-    // this.filterToElectionRoutes();
+    mounted() {
+        // this.filterToElectionRoutes();
 
-},
+    },
 
 
     methods: {
@@ -316,8 +316,8 @@ mounted() {
             //if no setting is defined for adminOnly, passes
             if (!isReadyToRock(route.adminOnly)) return true;
             //If it's not admin only, check passes
-            if(! route.adminOnly) return true;
-            window.console.log( 'admin', route.adminOnly , this.isAdmin);
+            if (!route.adminOnly) return true;
+            window.console.log('admin', route.adminOnly, this.isAdmin);
             //If it is admin only we need to check that the user is admin
             if (route.adminOnly && this.isAdmin) return true;
 
@@ -327,22 +327,22 @@ mounted() {
         passesSettingChecks: function (route) {
             //no settings are defined for the route
             // if (!isReadyToRock(route.showIfSettings)) return true;
-            if(! isReadyToRock(this.settingsObject)) return false;
-if(! isReadyToRock(route.showIfSettings)) return true;
+            if (!isReadyToRock(this.settingsObject)) return false;
+            if (!isReadyToRock(route.showIfSettings)) return true;
             if (route.showIfSettings.length === 0) return true;
-       return this.settingsObject.isAnySettingTrue(route.showIfSettings);
-                //  _.forEach(route.showIfSettings, (s) => {
-                //     window.console.log(settingsObj[s]);
-                //     //dev or is is better to define by the condition being false?
-                //     if (settingsObj[s] === true) {
-                //     return true;}
-                //     else {
-                //         return true;
-                //     }
-                // });
+            return this.settingsObject.isAnySettingTrue(route.showIfSettings);
+            //  _.forEach(route.showIfSettings, (s) => {
+            //     window.console.log(settingsObj[s]);
+            //     //dev or is is better to define by the condition being false?
+            //     if (settingsObj[s] === true) {
+            //     return true;}
+            //     else {
+            //         return true;
+            //     }
+            // });
 
 
-    },
+        },
 
 
     }

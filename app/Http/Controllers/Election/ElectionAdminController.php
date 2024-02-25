@@ -8,11 +8,16 @@ use App\Repositories\Election\IElectionAdminRepository;
 use App\Repositories\IMeetingRepository;
 use Illuminate\Http\Request;
 
+/**
+ * @deprecated Probably unused and deprecated after VOT-177 (phase change handled by regular meeting controller update)
+
+ */
 class ElectionAdminController extends Controller
 {
 
 
     /**
+     *
      * @var IElectionAdminRepository|mixed
      */
     public $electionAdminRepo;
@@ -22,6 +27,11 @@ class ElectionAdminController extends Controller
         $this->electionAdminRepo = app()->make(IElectionAdminRepository::class);
         $this->middleware('auth');
     }
+
+    /**
+     * @param Meeting $meeting
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function startVoting(Meeting $meeting)
     {
         $election = $this->electionAdminRepo->startVoting($meeting);

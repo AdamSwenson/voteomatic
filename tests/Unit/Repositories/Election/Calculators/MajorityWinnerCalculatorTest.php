@@ -292,4 +292,58 @@ class MajorityWinnerCalculatorTest extends TestCase
 
     }
 
+
+
+    /**
+     * @test
+     * Addresses VOT-254 (that problem was seen in the multiple winners calculator
+     * but this checks to make sure it isn't present here too.
+     */
+    public function isRunoffParticipantWhenTieBelowTopDoesNotRequireRunoff()
+    {
+        //prep
+
+        $totals = [400, 20, 15, 15, 1 ];
+        $expectedIsRunoffParticipant = [false, false, false, false, false];
+
+        $candidates = [];
+        foreach ($this->otherCandidates as $candidate) {
+            $candidates[] = $candidate;
+        }
+        $this->assertEquals(sizeof($candidates), sizeof($totals));
+        for ($i = 0; $i < sizeof($totals); $i++) {
+            Vote::factory()->count($totals[$i])
+                ->create([
+                    'motion_id' => $this->motion->id,
+                    'candidate_id' => $candidates[$i]->id
+                ]);
+        }
+
+        $this->object = new MajorityWinnerCalculator($this->motion);
+
+        //check
+
+        //The way the ElectionResultsRepository will use this calculator is
+        //by simply looping over the candidates and then calling isWinner and isRunoffParticipant on
+        //each candidate. It doesn't use the calculator's winners or inRunoff directly.
+
+        //First check that these arrays haven't been erroneously populated. This
+        //step is necessary to draw future Adam's attention to something he may have changed
+        //and fucked up
+        $this->assertEquals(0, sizeof($this->object->winners), "Winners array only used by calculators when there are multiple winners");
+        $this->assertEquals(0, sizeof($this->object->inRunoff), "There should be no runoffs since the first candidate had a majority");
+
+        //Second, check the majority winner
+        $this->assertTrue($this->object->isWinner($candidates[0]), "Correctly identifies the sole majority winner");
+        $this->assertFalse($this->object->isRunoffParticipant($candidates[0]), "Majority winner is not identified as a runoff participant");
+
+        //Now check whether runoff participants are wrongly identified (the VOT-254 bug)
+        $i = 0;
+        foreach($candidates as $candidate){
+            $this->assertEquals($expectedIsRunoffParticipant[$i], $this->object->isRunoffParticipant($candidate), "Correctly identifies whether in runoff");
+            $i += 1;
+        }
+    }
+
+
 }

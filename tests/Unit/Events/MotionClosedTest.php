@@ -29,7 +29,7 @@ class MotionClosedTest extends TestCase
     /** @test */
     public function includesExpectedInBroadcast(){
 
-//        Event::fake();
+        Event::fake([MotionClosed::class]);
         $e = new EventDispatcher();
         $e->dispatchEvent(MotionClosed::class, $this->motion);
 

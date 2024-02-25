@@ -1,5 +1,5 @@
 <template>
-    <div class="meeting-setup-card card">
+    <div class="meeting-setup-card card ">
 
         <div class="non-chair" v-if="! isChair">
             <meeting-display-card></meeting-display-card>

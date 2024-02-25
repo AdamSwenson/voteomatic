@@ -22,6 +22,7 @@ class ElectionResultsRepositoryTest extends TestCase
     /** @test */
     public function testgetResultsForClient()
     {
+        $this->markTestSkipped();
 
     }
 

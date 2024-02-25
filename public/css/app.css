@@ -1186,7 +1186,7 @@ progress {
 .container-lg,
 .container-md,
 .container-sm {
-  --bs-gutter-x: 1.5rem;
+  --bs-gutter-x: 0;
   --bs-gutter-y: 0;
   width: 100%;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
@@ -5722,7 +5722,7 @@ textarea.form-control-lg {
   --bs-toast-zindex: 1090;
   --bs-toast-padding-x: 0.75rem;
   --bs-toast-padding-y: 0.5rem;
-  --bs-toast-spacing: 1.5rem;
+  --bs-toast-spacing: 0;
   --bs-toast-max-width: 350px;
   --bs-toast-font-size: 0.875rem;
   --bs-toast-color: ;
@@ -11377,4 +11377,22 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+/*.router-tabs {*/
+ul.nav-tabs {
+  background-color: #fff;
+}
+
+.main-page {
+  background: linear-gradient(0deg, #4b6cb7 0%, #182848 100%);
+}
+
+.router-tab-touching-card {
+  /*Fix annoying gap with navbar*/
+  --bs-card-border-radius: 0;
+}
+
+#pageNav {
+  background-color: #182848;
+  /*padding-left: 100px;*/
 }

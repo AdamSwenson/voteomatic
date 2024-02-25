@@ -4,6 +4,7 @@
 
     <a href="#"
        class="list-group-item list-group-item-action"
+       v-bind:aria-current="ariaStatus"
        v-bind:class="styling"
        v-on:click="handleSelect"
     ><i v-if="hasVoted" class="bi-check text-success"></i>
@@ -98,10 +99,19 @@ export default {
             return this.$store.getters.getActiveMotion;
         },
 
+        ariaStatus : function (){
+                if (this.isSelected) {
+                    return 'true'
+                    // return ' bg-info '
+                }
+                return 'false'
+        },
+
         styling: {
             get: function () {
                 if (this.isSelected) {
-                    return ' bg-info '
+                    return ' active '
+                    // return ' bg-info '
                 }
 
             },

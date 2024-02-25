@@ -9,16 +9,16 @@
 
     <div class="container-fluid">
 
-        <div class="row justify-content-center mt-1">
+{{--        <div class="row justify-content-center mt-1">--}}
 
-            <div class="col-md">
+{{--            <div class="col-md">--}}
 
                 <voteomatic></voteomatic>
 
             </div>
 
-        </div>
-    </div>
+{{--        </div>--}}
+{{--    </div>--}}
 
 
     {{ method_field('PUT') }}

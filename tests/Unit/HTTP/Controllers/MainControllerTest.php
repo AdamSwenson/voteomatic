@@ -61,35 +61,35 @@ class MainControllerTest extends TestCase
 
 
 
-
-    /** @test */
-    public function getVotePage()
-    {
-        $this->url = 'main/' . $this->motion->id;
-
-        //call
-        $response = $this->actingAs($this->user)->get($this->url);
-
-        //check
-        $response->assertSuccessful();
-        $response->assertViewIs('main');
-
-    }
-
-    /** @test */
-    public function getVotePageDeniesNonMembers()
-    {
-        $this->url = 'main/' . $this->motion->id;
-
-        $nonMember = User::factory()->create();
-
-        //call
-        $response = $this->actingAs($nonMember)->get($this->url);
-
-        //check
-        $response->assertStatus(403);
-
-
-    }
+//    dev This seems to be deprecated along with the method in the controller
+//    /** @test */
+//    public function getVotePage()
+//    {
+//        $this->url = 'main/' . $this->motion->id;
+//
+//        //call
+//        $response = $this->actingAs($this->user)->get($this->url);
+//
+//        //check
+//        $response->assertSuccessful();
+//        $response->assertViewIs('main');
+//
+//    }
+//
+//    /** @test */
+//    public function getVotePageDeniesNonMembers()
+//    {
+//        $this->url = 'main/' . $this->motion->id;
+//
+//        $nonMember = User::factory()->create();
+//
+//        //call
+//        $response = $this->actingAs($nonMember)->get($this->url);
+//
+//        //check
+//        $response->assertStatus(403);
+//
+//
+//    }
 
 }

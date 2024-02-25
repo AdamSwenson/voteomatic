@@ -1,10 +1,10 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm " style="background-color: darkblue;">
+    <nav id="pageNav" class="navbar navbar-expand-md navbar-dark shadow-sm " >
 
         <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
-        <div class="container-fluid">
+        <div class="container-fluid  ">
 
-            <span class="navbar-brand mb-0 h1">{{ meetingName }}</span>
+            <span class="navbar-brand  mb-0 ms-lg-5 ms-1 h1">{{ meetingName }}</span>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
@@ -120,5 +120,8 @@ export default {
 </script>
 
 <style scoped>
-
+/*#pageNav{*/
+/*    background-color: #0f6d81;*/
+/*    !*padding-left: 100px;*!*/
+/*}*/
 </style>

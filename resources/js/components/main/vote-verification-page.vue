@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card vote-verification">
+    <div class="card vote-verification router-tab-touching-card">
         <div class="card-header">
             <h4 card-title>Confirm that your vote was counted</h4>
         </div>

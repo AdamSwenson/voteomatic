@@ -14,6 +14,7 @@ use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\RecordedVoteRecord;
 use App\Models\User;
+use App\Repositories\Election\IElectionAdminRepository;
 use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 
@@ -44,6 +45,10 @@ class ElectionVoteControllerTest extends TestCase
 
         $this->election = Meeting::factory()->election()->create();
         $this->election->setOwner($this->owner);
+
+        //set election phase
+        $this->election->phase = 'voting';
+
 
         $this->office = Motion::factory()->electedOffice()->create(
             ['meeting_id' => $this->election->id]);

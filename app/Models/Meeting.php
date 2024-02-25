@@ -299,6 +299,8 @@ class Meeting extends Model
     {
         $this->phase = 'results';
 
+        //dev This is probably problematic since results and closed are 2 separate phases
+        // it is causing trouble with the tests but doesn't seem to actually be used.
         $this->closeVoting(); //just in case someone jumps straight to releasing
 
         //dev Remove after VOT-177

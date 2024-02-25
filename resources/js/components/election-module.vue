@@ -1,20 +1,26 @@
 <template>
 
-    <div class="election-module">
-
-        <router-tabs></router-tabs>
+    <div class="election-module main-area">
 
         <message-area></message-area>
 
-<!--        <vote-count-alert></vote-count-alert>-->
+        <div class="row">
 
-        <router-view name="main"></router-view>
+            <div class="col-xl-1 col-xxl-2"></div>
 
-        <chair-indicator></chair-indicator>
+            <div class="col-xl-10 col-xxl-8">
+                <router-tabs></router-tabs>
 
-<!--        <motion-in-order-modal v-if="isChair"></motion-in-order-modal>-->
-<!--        <chair-motion-second-modal v-if="isChair"></chair-motion-second-modal>-->
-<!--        <motion-second-modal v-if="! isChair"></motion-second-modal>-->
+                <router-view name="main"></router-view>
+
+                <chair-indicator></chair-indicator>
+
+            </div>
+
+            <div class="col-xl-1 col-xxl-2"></div>
+
+<!--            <div class="col-md-1 col-lg-2"></div>-->
+        </div>
 
     </div>
 
@@ -47,7 +53,7 @@ export default {
         MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
     },
 
-    mixins: [ MeetingMixin, NavigationMixin, ChairMixin],
+    mixins: [MeetingMixin, NavigationMixin, ChairMixin],
 
     data: function () {
         return {
@@ -56,13 +62,9 @@ export default {
         }
     },
 
-    computed: {
-    },
+    computed: {},
 
-    methods : {
-
-
-    },
+    methods: {},
 
     mounted: function () {
         let me = this;
@@ -83,7 +85,6 @@ export default {
 
             window.console.log('voteomatic - election', 'isReady', 159, me.meeting);
         });
-
 
 
     }
