@@ -27,16 +27,6 @@
             </div>
         </div>
     </div>
-    <!--    -->
-    <!--    <div class="card ">-->
-
-    <!--        <div class="card-body">-->
-
-
-    <!--        </div>-->
-
-    <!--    </div>-->
-    <!--&lt;!&ndash;        &ndash;&gt;<li class="list-group-item">Cras justo odio</li>-->
 
 </template>
 

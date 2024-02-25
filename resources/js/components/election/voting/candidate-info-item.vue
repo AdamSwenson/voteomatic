@@ -24,6 +24,7 @@ import {isReadyToRock} from "../../../utilities/readiness.utilities";
  *
  * dev Will also handle different formatting depending on item priority once that has been added
  *
+ * See VOT-252, VOT-141, VOT-252
  */
 export default {
     name: "candidate-info-item",
