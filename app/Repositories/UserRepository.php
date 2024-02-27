@@ -40,7 +40,7 @@ class UserRepository implements IUserRepository
             $user = User::where('user_id_hash', $userIdHash)->firstOrFail();
 
             //dev When we are ready to test on live server, this can be uncommented for VOT-179
-//            $user = $this->updateEmail($user, $request);
+            $user = $this->updateEmail($user, $request);
 
         } catch (ModelNotFoundException $e) {
             //if they are new, we create them in the db
