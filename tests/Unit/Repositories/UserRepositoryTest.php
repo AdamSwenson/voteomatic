@@ -111,6 +111,7 @@ $request->shouldReceive('has')->withArgs(['lis_person_contact_email_primary'])->
 
         $this->assertInstanceOf(User::class, $result, 'Returns user object');
         $this->assertEquals($user->email, $result->email);
+        $this->assertNotEquals($result->email, $request->lis_person_contact_email_primary, "did not use email from request");
 
     }
 
