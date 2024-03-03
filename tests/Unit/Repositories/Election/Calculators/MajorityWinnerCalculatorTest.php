@@ -71,6 +71,104 @@ class MajorityWinnerCalculatorTest extends TestCase
 
     }
 
+    // ================================= VOT-258
+    /** @test  */
+    public function VOT258_allParticipantsNeedRunoffAndAllButOneHasSameScore(){
+        //Problem seemed to occur when we had one write in and 2 votes for one candidate
+
+        //prep
+        $this->motion = Motion::factory()->electedOfficeSingleChoice()->create();
+
+        $this->winner = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->candidate2 = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->candidate3 = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->writeIn = Candidate::factory()->create(['motion_id' => $this->motion->id, 'is_write_in' => true]);
+
+        Vote::factory()->count(2)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->winner
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->candidate2
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->candidate3
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->writeIn
+            ]);
+
+        //call
+        $this->object = new MajorityWinnerCalculator($this->motion);
+
+        //check
+        $this->assertFalse($this->object->isWinner($this->winner), "Correctly identifies not winner ");
+        $this->assertFalse($this->object->isWinner($this->candidate2), "Correctly identifies not winner");
+        $this->assertFalse($this->object->isWinner($this->candidate3), "Correctly identifies not winner");
+        $this->assertFalse($this->object->isWinner($this->writeIn), "Correctly identifies write in not winner");
+
+        $this->assertTrue($this->object->isRunoffParticipant($this->winner), "Correctly identifies runoff ");
+        $this->assertTrue($this->object->isRunoffParticipant($this->candidate2), "Correctly identifies runoff");
+        $this->assertTrue($this->object->isRunoffParticipant($this->candidate3), "Correctly identifies runoff");
+        $this->assertTrue($this->object->isRunoffParticipant($this->writeIn), "Correctly identifies write in runoff");
+
+    }
+
+    /** @test
+     This was not the main issue in VOT-258 but checking just in case
+     */
+    public function VOT258_allParticipantsNeedRunoffAndAllHaveSameScore(){
+        //Problem seemed to occur when we had one write in and 2 votes for one candidate
+
+        //prep
+        $this->motion = Motion::factory()->electedOfficeSingleChoice()->create();
+
+        $this->winner = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->candidate2 = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->candidate3 = Candidate::factory()->create(['motion_id' => $this->motion->id]);
+        $this->writeIn = Candidate::factory()->create(['motion_id' => $this->motion->id, 'is_write_in' => true]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->winner
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->candidate2
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->candidate3
+            ]);
+
+        Vote::factory()->count(1)
+            ->create(['motion_id' => $this->motion->id,
+                'candidate_id' => $this->writeIn
+            ]);
+
+        //call
+        $this->object = new MajorityWinnerCalculator($this->motion);
+
+        //check
+        $this->assertFalse($this->object->isWinner($this->winner), "Correctly identifies not winner ");
+        $this->assertFalse($this->object->isWinner($this->candidate2), "Correctly identifies not winner");
+        $this->assertFalse($this->object->isWinner($this->candidate3), "Correctly identifies not winner");
+        $this->assertFalse($this->object->isWinner($this->writeIn), "Correctly identifies write in not winner");
+
+        $this->assertTrue($this->object->isRunoffParticipant($this->winner), "Correctly identifies runoff ");
+        $this->assertTrue($this->object->isRunoffParticipant($this->candidate2), "Correctly identifies runoff");
+        $this->assertTrue($this->object->isRunoffParticipant($this->candidate3), "Correctly identifies runoff");
+        $this->assertTrue($this->object->isRunoffParticipant($this->writeIn), "Correctly identifies write in runoff");
+
+    }
 
     // ================================== isWinner
 

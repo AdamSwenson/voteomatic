@@ -90,6 +90,11 @@ class MajorityWinnerCalculator extends IResultsCalculator
                 //same vote total.
                 while (++$i) {
                     //start with the next candidate
+                    //dev VOT-258 The problem is here
+                    // problem is that when all the non winners get added to the run off
+                    // there's nothing to stop the iteration. We need a check to stop it
+                    // when get bigger than number of results
+                    if($i >= sizeof($this->results)) break;
                     $nextCandidate = $this->results[$i];
                     if ($nextCandidate->totalVotesReceived === $candidate->totalVotesReceived) {
                         $this->inRunoff->push($nextCandidate);
