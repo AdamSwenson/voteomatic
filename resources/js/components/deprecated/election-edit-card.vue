@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import OfficeListCard from "../election/setup/office-list-card";
+import OfficeListCard from "../election/setup/offices/office-list-card";
 import MeetingEditCard from "./meeting-setup-card";
 export default {
     name: "election-edit-card",

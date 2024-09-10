@@ -1,13 +1,9 @@
 <template>
 
-    <div class="meeting-home">
-
-        <div class="card">
+    <div id="meeting-home-card"
+         class="meeting-home card router-tab-touching-card"
+    >
             <div class="card-body">
-
-<!--                <h4 class="card-title">{{ meetingName }}</h4>-->
-
-<!--                <h6 class="card-subtitle">{{meetingDate}}</h6>-->
 
                 <motions-card></motions-card>
 
@@ -15,7 +11,7 @@
         </div>
 
 
-    </div>
+<!--    </div>-->
 
 
 </template>
@@ -23,10 +19,12 @@
 <script>
 import MotionsCard from "../motions/motions-card";
 import MeetingMixin from '../../mixins/meetingMixin';
+// import RezzieViewHome from "../rezzie-view/pmode-home";
+// import TextStylers from "../rezzie-view/text-stylers/text-stylers";
 
 export default {
     name: "meeting-home",
-    components: {MotionsCard},
+    components: { MotionsCard},
     mixins: [MeetingMixin],
 
     computed: {
@@ -47,5 +45,8 @@ export default {
 </script>
 
 <style scoped>
-
+/*#meeting-home-card {*/
+/*    !*Fix annoying gap with navbar*!*/
+/*    --bs-card-border-radius: 0;*/
+/*}*/
 </style>

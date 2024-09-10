@@ -1,29 +1,37 @@
 <template>
+  <!--  <div class="btn-toolbar justify-content-between" r-->
+  <!--       role="toolbar"-->
+  <!--       aria-label="Controls for meeting"-->
+  <!--  >-->
+  <!--    <div class="btn-group"-->
+  <!--         role="group"-->
+  <!--         aria-label="Creation, editing, and deletion controls"-->
+  <!--    >-->
+  <!--      <create-meeting-button></create-meeting-button>-->
 
-    <div class="meeting-edit-controls row">
-        <div class="col ">
-            <create-meeting-button></create-meeting-button>
+  <!--      <meeting-edit-button></meeting-edit-button>-->
 
-            <meeting-edit-button></meeting-edit-button>
+  <!--      <delete-meeting-button></delete-meeting-button>-->
+  <!--      <delete-meeting-modal></delete-meeting-modal>-->
+  <!--    </div>-->
 
-<!--            <button class="btn btn-primary"-->
-<!--                v-on:click="handleClick"-->
-<!--        >Create new {{ eventType }}-->
-<!--        </button>-->
+  <!--    <mode-toggle-switch></mode-toggle-switch>-->
 
-<!--        <button class="btn btn-warning"-->
-<!--                v-on:click="handleEditButtonClick"-->
-<!--        >Edit current {{ eventType }}-->
-<!--        </button>-->
 
-        <delete-meeting-button></delete-meeting-button>
-        <delete-meeting-modal></delete-meeting-modal>
-        </div>
+  <div class="meeting-edit-controls row">
+    <div class="col ">
+      <create-meeting-button></create-meeting-button>
 
-    <div class="col text-right">
-        <mode-toggle-switch></mode-toggle-switch>
+      <meeting-edit-button></meeting-edit-button>
+
+      <delete-meeting-button></delete-meeting-button>
+      <delete-meeting-modal></delete-meeting-modal>
     </div>
+
+    <div class="col text-end">
+      <mode-toggle-switch></mode-toggle-switch>
     </div>
+  </div>
 
 </template>
 
@@ -42,38 +50,38 @@ import MeetingEditButton from "./controls/meeting-edit-button";
  * set of controls for elections if needed
  */
 export default {
-    name: "meeting-edit-controls",
-    components: {MeetingEditButton, CreateMeetingButton, ModeToggleSwitch, DeleteMeetingModal, DeleteMeetingButton},
-    props: [],
+  name: "meeting-edit-controls",
+  components: {MeetingEditButton, CreateMeetingButton, ModeToggleSwitch, DeleteMeetingModal, DeleteMeetingButton},
+  props: [],
 
-    mixins: [MeetingMixin, ModeMixin],
+  mixins: [MeetingMixin, ModeMixin],
 
 
-    data: function () {
-        return {}
+  data: function () {
+    return {}
+  },
+
+  asyncComputed: {},
+
+  computed: {},
+
+  methods: {
+    handleClick: function () {
+      let me = this;
+      let p = this.$store.dispatch('createMeeting');
+      p.then(function () {
+        this.setSetup();
+        // me.showFields = true;
+        // me.showArea = 'create';
+      })
     },
 
-    asyncComputed: {},
 
-    computed: {},
-
-    methods: {
-        handleClick: function () {
-            let me = this;
-            let p = this.$store.dispatch('createMeeting');
-            p.then(function () {
-                this.setSetup();
-                // me.showFields = true;
-                // me.showArea = 'create';
-            })
-        },
-
-
-        handleEditButtonClick: function () {
-            this.setSetup();
-            // this.$emit('showArea', 'edit');
-        }
+    handleEditButtonClick: function () {
+      this.setSetup();
+      // this.$emit('showArea', 'edit');
     }
+  }
 
 }
 </script>

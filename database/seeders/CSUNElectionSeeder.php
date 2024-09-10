@@ -12,36 +12,40 @@ class CSUNElectionSeeder extends Seeder
 
     const PROP_TEXT = <<<DOC
 
-
-<blockquote class="blockquote text-justify">
+<div class="propText">
+<!--<blockquote class="blockquote">-->
 <p class="card-text">That Article IV Section 1 of the Bylaws of the Faculty be revised to read (additions indicated by underlining):</p>
 
-<p class="ml-3 mr-3">There shall be constituted each year a twelve-member Executive Committee consisting of: the
+<p class="ms-3 me-3">There shall be constituted each year a twelve-member Executive Committee consisting of: the
 President of the Faculty, the Vice President of the Faculty, the Secretary of the
 Faculty, the senior representative of the CSU Academic Senate, the Provost and
 Vice President for Academic Affairs (non-voting), <u>one Lecturer elected by and
 from the Senate,</u> and six members of the faculty elected by and from the Senate.</p>
-<p  class="ml-3 mr-3">The Executive Committee shall have no more than two members from any one
+<p  class="ms-3 me-3">The Executive Committee shall have no more than two members from any one
 College except in the event that more than two ex officio members are from one
 College <u>and the two-college rule shall not apply to the elected Lecturer
 representative to the Senate Executive Committee</u>.</p>
-<p  class="ml-3 mr-3">The six members elected by the Senate shall be from Colleges that do not already
+<p  class="ms-3 me-3">The six members elected by the Senate shall be from Colleges that do not already
 have two representatives on the committee. The President of the Faculty shall
 serve as chair of the Executive Committee.</p>
-</blockquote>
-
+<!--</blockquote>-->
+</div>
 DOC;
 
     const PROP_SUPP = <<<DOC
-<p>[Info/link about senate exec]</p>
-<p>[Info/link about bylaws changes]</p>
-<!--<p>[Info/link to pro]</p>-->
-<!--<p>[Info/link to con]</p>-->
+<p>For information about the role of the Senate Executive Committee, please see
+<a href="https://www.csun.edu/faculty-senate/about-senate-executive-committee" target="_blank" rel="noopener noreferrer"
+>https://www.csun.edu/faculty-senate/about-senate-executive-committee</a>
+</p>
+<!--<p>For information about the process for changing the Bylaws, please see Article VII of the-->
+<!--<a href="http://www.csun.edu/sites/default/files/Bylaws.pdf" target="_blank" rel="noopener noreferrer">Bylaws of the Faculty</a></p>-->
+
 DOC;
 
 
 public static $electionProps =  [
-    'name' => "CSUN Faculty Election"
+    'name' => "CSUN Faculty Election",
+    'info->candidateFields' =>['link', 'department']
 ] ;
     public static $singleChoiceOffices = [
         [
@@ -69,7 +73,7 @@ public static $electionProps =  [
         [
             'content' => 'Senator-at-Large',
             'description' => "Twelve Senators shall be elected at-large by and from the Faculty. (III.1.2.1)",
-            'max_winners' => 12
+            'max_winners' => 6
         ],
     ];
 

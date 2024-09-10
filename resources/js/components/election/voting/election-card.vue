@@ -9,13 +9,13 @@
         <div class="card" v-else-if="isElection">
 
             <div class="card-header">
-                <h2 class="card-title">{{ officeName }}</h2>
+                <h1 class="card-title">{{ officeName }}</h1>
             </div>
 
             <max-winners-instruction></max-winners-instruction>
 
             <div class="card-body" v-if="showDescription">
-                <p class="card-text ml-4 mr-4">{{ motion.description }}</p>
+                <p class="card-text ms-4 me-4">{{ motion.description }}</p>
             </div>
 
             <overselection-warning></overselection-warning>
@@ -45,14 +45,20 @@
 
 
                     <overselection-warning></overselection-warning>
-
                 </div>
+
 
                 <!--            Enable after VOT-60 is complete-->
                 <div class="card-body">
-                    <write-in-controls></write-in-controls>
-
-                    <p class="text-muted">You will confirm and record your selections later.</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <write-in-controls></write-in-controls>
+                        </div>
+                        <!--                        <div class="col-4"></div>-->
+                        <div class="col-6 text-start">
+                            <p class="text-muted">You will confirm and record your selections later.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <navigation-footer></navigation-footer>
@@ -117,7 +123,10 @@ export default {
     asyncComputed: {
 
         hasUserVoted: function () {
-            return this.$store.getters.hasVotedOnCurrentMotion;
+            if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
+
+                return this.$store.getters.hasVotedOnCurrentMotion;
+            }
         },
 
         office: {
@@ -130,7 +139,10 @@ export default {
 
         writeInCandidates: {
             get: function () {
-                return this.$store.getters.getWriteInCandidatesForCurrentOffice;
+                if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
+
+                    return this.$store.getters.getWriteInCandidatesForCurrentOffice;
+                }
             },
             watch: ['candidates']
         },

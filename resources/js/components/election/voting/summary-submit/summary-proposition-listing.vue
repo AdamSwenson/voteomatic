@@ -1,8 +1,8 @@
 <template>
     <div class="summary-listing card-body">
         <h4>{{ propositionName }}</h4>
-
-        <div class="ml-3">
+        <div class="ms-3" >
+<!--        <div class="ms-3" v-if="! hasVoted">-->
             <ul>
                 <li
                     v-bind:class="styling"
@@ -14,7 +14,8 @@
                  v-if="isAbstention">
                 <p class="text-muted">You have abstained from voting on this issue. Abstentions are not 'No' votes.
                     Unlike 'No' votes, they do not
-                    count in the denominator when determining whether a proposal passes.</p>
+                    count in the denominator when determining whether a proposal passes. </p>
+                <p class="text-muted">You will be able to return and vote on this issue after recording your vote.</p>
                 <p class="text-muted">If this is not your intent, please go back and select 'Aye' or 'Nay' before
                     recording your selections.</p>
             </div>
@@ -40,12 +41,16 @@ export default {
 
     asyncComputed: {
         /**
-         * If there's no vote object, they either forgot to vote or are abstaining
+         * If there's no vote object, they either forgot to vote or are abstaining or
+         * already voted
          *
          * @returns {boolean}
          */
         isAbstention: function () {
-            return isReadyToRock(this.motion) && !isReadyToRock(this.voteObj)
+            return isReadyToRock(this.motion) && !isReadyToRock(this.voteObj) && ! this.hasVoted   },
+
+        hasVoted: function(){
+           return  isReadyToRock(this.motion) && this.$store.getters.hasVotedOnMotion(this.motion);
         },
 
         propositionName: function () {
@@ -62,6 +67,9 @@ export default {
         response: function () {
             //Nothing if the motion hasn't loaded
             if (!isReadyToRock(this.motion) || !isReadyToRock(this.isAbstention)) return '';
+
+            //Nothing if they have already voted
+            if(this.hasVoted) return '';
 
             //If there's no vote object, they either forgot to vote or
             //are abstaining

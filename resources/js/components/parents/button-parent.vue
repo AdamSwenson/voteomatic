@@ -7,7 +7,8 @@
         v-on:click="handleClick"
     >
         <span v-if="isWorking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span v-if="isWorking" class="sr-only">Working...</span> {{label}}</button>
+        <span v-if="isWorking" class="visually-hidden">Working...</span>
+        <i  v-if="hasIcon" class="bi " v-bind:class="icon"></i> {{label}}</button>
 
 </template>
 
@@ -28,6 +29,7 @@ export default {
             // label:
             // styling:
             //isWorking : false
+        //icon
         }
     },
 
@@ -38,6 +40,12 @@ export default {
     computed: {
         isWorking : function (){
             return false;
+        },
+        // icon : function(){
+        //     <i className="bi bi-pencil"></i>
+        // },
+        hasIcon: function(){
+            return isReadyToRock(this.icon);
         }
     },
 

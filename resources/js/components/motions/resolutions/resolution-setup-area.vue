@@ -3,9 +3,9 @@
     <div class="resolution-setup-area card">
 
         <div class="card-body">
-            <div class="row display-area text-center">
+            <div class="row display-area ">
                 <div class="col">
-                    <blockquote class="blockquote mb-0">
+                    <blockquote class="blockquote ml-3 mb-0">
 
                         <resolution-text-display
                             :motion="draftMotion"
@@ -14,36 +14,46 @@
                     </blockquote>
                 </div>
             </div>
+        </div>
 
-            <div class="row edit-area">
-                <div class="col">
-                    <!--                    <div class="form-group">-->
-
-                    <resolution-input :motion="draftMotion"></resolution-input>
-
-                    <!--                    </div>-->
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col">
-                    <button class="btn btn-primary"
-                            v-on:click="handleReset"
-                    >Clear entry
-                    </button>
+        <div class="card-body ">
+            <form>
+                <div class="mb-2">
+                    <resolution-title-input :motion="draftMotion"></resolution-title-input>
                 </div>
 
-                <div class="col">
-
-                    <propose-resolution-button></propose-resolution-button>
-
+                <div class="mb-2">
+                    <resolution-identifier-input :motion="draftMotion"></resolution-identifier-input>
                 </div>
-
-            </div>
+            </form>
 
         </div>
+
+        <div class="card-body">
+            <resolution-input :motion="draftMotion"></resolution-input>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary"
+                                v-on:click="handleReset"
+                        >Clear entry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <propose-resolution-button></propose-resolution-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <!--    </div>-->
 
 </template>
 
@@ -57,10 +67,15 @@ import motionObjectMixin from "../../../mixins/motionObjectMixin";
 import resolutionTextDisplay from "../text-display/resolution-text-display";
 import ProposeResolutionButton from "./propose-resolution-button";
 import ResolutionInput from "./resolution-input";
+import ResolutionTitleInput from "./resolution-title-input";
+import ResolutionIdentifierInput from "./resolution-identifier-input";
 
 export default {
     name: "resolution-setup-area",
-    components: {ResolutionInput, ProposeResolutionButton, resolutionTextDisplay},
+    components: {
+        ResolutionIdentifierInput,
+        ResolutionTitleInput, ResolutionInput, ProposeResolutionButton, resolutionTextDisplay
+    },
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],

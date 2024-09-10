@@ -20,20 +20,20 @@ class ElectionController extends Controller
      */
     public $meetingRepo;
 
-    public function dev()
-    {
-
-        $election = Meeting::find(self::DEV_ELECTION_ID);
-
-        $data = ['data' => [
-            'meeting' => $election,
-            'meeting_id' => $election->id
-        ]
-        ];
-
-
-        return view('dev.dev-election', $data);
-    }
+//    public function dev()
+//    {
+//
+//        $election = Meeting::find(self::DEV_ELECTION_ID);
+//
+//        $data = ['data' => [
+//            'meeting' => $election,
+//            'meeting_id' => $election->id
+//        ]
+//        ];
+//
+//
+//        return view('dev.dev-election', $data);
+//    }
 
 
     public function __construct()

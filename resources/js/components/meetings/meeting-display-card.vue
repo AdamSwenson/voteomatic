@@ -7,9 +7,9 @@
 
         <div class="card-body meeting-display">
 
-            <h5 class="card-title text-left">{{ meetingName }}</h5>
+            <h5 class="card-title text-start">{{ meetingName }}</h5>
 
-            <h5 class="card-subtitle text-left">{{ meetingDate }}</h5>
+            <h5 class="card-subtitle text-start">{{ meetingDate }}</h5>
 
             <meeting-url-display></meeting-url-display>
 
@@ -20,10 +20,9 @@
 
         </div>
 
-        <div class="card-footer">
-            <div class="card-text">NB, this page doesn't do anything useful unless
-                you have the the voteomatic configured as an app in your own canvas class.</div>
-        </div>
+<!--        <div class="card-footer">-->
+<!--            <div class="card-text">NB, ignore the url above if you do not have the voteomatic configured as an app in a canvas class.</div>-->
+<!--        </div>-->
 
     </div>
 

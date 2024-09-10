@@ -38,17 +38,22 @@ abstract class TestCase extends BaseTestCase
     public $office;
     public $owner;
 
-    /**
-     * @var string
-     */
-    public $url;
-
-    public $user;
 
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public $regularUserMember;
+
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public $user;
+
+    /**
+     * @var string
+     */
+    public $url;
 
 
     public function setUp():void

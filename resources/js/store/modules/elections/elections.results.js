@@ -11,9 +11,12 @@ const mutations = {
 
 
     addResults: (state, results) => {
-        state.electionResults.push(results);
-        // Vue.set(state.electionResults, motionId, results);
 
+        //dev Add filter to deal with VOT-128
+        let matches = state.electionResults.filter((r) => {
+            return r.candidateId === results.candidateId;
+        });
+        if(matches.length === 0 ) state.electionResults.push(results);
     },
 
 };
@@ -41,12 +44,7 @@ const actions = {
         }));
     },
 
-    /*
-    *    doThing({dispatch, commit, getters}, thingParam) {
-    *        return new Promise(((resolve, reject) => {
-    *        }));
-    *    },
-    */
+
 };
 
 /**

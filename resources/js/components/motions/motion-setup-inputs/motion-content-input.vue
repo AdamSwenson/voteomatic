@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label for="motion-content">It is moved that </label>
+        <label  class='form-label' for="motion-content">It is moved that </label>
         <textarea id="motion-content"
                   class="form-control"
                   rows="3"

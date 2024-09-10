@@ -35,11 +35,12 @@ const actions = {
                             //get motions which have already been handled
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
-                                dispatch('loadResultsForAllMeetingMotions').then(function () {
-                                });
+                                //These can happen in parallel
+                                dispatch('loadSettings', meeting.id).then(function (){});
 
-                                dispatch('loadMotionTypesAndTemplates').then(function () {
-                                });
+                                dispatch('loadResultsForAllMeetingMotions').then(function () {});
+
+                                dispatch('loadMotionTypesAndTemplates').then(function () {});
 
                             });
 

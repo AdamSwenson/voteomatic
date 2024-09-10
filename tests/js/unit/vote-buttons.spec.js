@@ -1,6 +1,7 @@
-import VoteButtons from  "../../../resources/js/components/vote-casting/vote-buttons.vue";
 
 import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
+import VoteButtons from  "../../../resources/js/components/vote-casting/vote-buttons.vue";
+
 import Vuex from 'vuex'
 import sinon from 'sinon';
 

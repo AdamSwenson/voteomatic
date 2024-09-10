@@ -1,18 +1,18 @@
 <template>
 
-    <div class="resolution-amendment-text-display"
-         v-html="taggedNewText"
-    ></div>
+<!--    <div class="resolution-amendment-text-display"-->
+<!--         v-html="taggedNewText"-->
+<!--    ></div>-->
 
 
 </template>
 
 <script>
 import HtmlDiff from 'htmldiff-js';
-import {checkChanges, getTaggedChangesOfHtml} from '../../../utilities/amendment.utilities';
+// import {checkChanges, getTaggedChangesOfHtml} from '../../../utilities/amendment.utilities';
 
 /**
- * Displays an html tagged string indicating where
+ * Displays an amendmentText tagged string indicating where
  * changes have been made between the original and the
  * amendment.
  *
@@ -33,7 +33,7 @@ export default {
             // a factory function
             default: function () {
                 return {
-                    altered: 'text-monospace',
+                    altered: 'font-monospace',
                     inserted: 'text-danger',
                     struck: 'struck',
                 }
@@ -49,8 +49,12 @@ export default {
 
     asyncComputed: {
 
-
         taggedNewText: function () {
+
+            //dev
+            // return this.amendmentText;
+
+
             if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
             if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
             let me = this;
@@ -72,7 +76,7 @@ export default {
 <style>
 
 /*.altered-text {*/
-/*    font-weight: bold;*/
+/*    fw-: bold;*/
 /*}*/
 
 /*.struck {*/

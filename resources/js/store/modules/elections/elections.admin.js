@@ -101,18 +101,68 @@ const actions = {
      * @param meeting
      * @returns {Promise<unknown>}
      */
-    releaseResults({dispatch, commit, getters}, meeting) {
+    releaseElectionResults({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             let meetingId = idify(meeting);
             let url = routes.election.admin.releaseResults(meetingId);
 
             return Vue.axios.post(url)
                 .then((response) => {
+                    //We will overwrite the original object because
+                    //there may be several things that change when the election
+                    //results are released and don't want to tightly couple.
+                    let e = new Election(response.data);
+
+                    _.forEach(_.keys(meeting), (prop) => {
+                        if (e[prop] !== meeting[prop]) {
+                            let p = new Payload();
+                            p.updateProp = prop;
+                            p.updateVal = e[prop];
+                            commit('setMeetingProp', p);
+                        }
+                    });
+
                     return resolve();
                 });
 
         }));
     },
+
+    /**
+     * After the election has closed, prevents anyone except the chair/admin
+     * from viewing  the election results
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
+    hideElectionResults({dispatch, commit, getters}, meeting) {
+        return new Promise(((resolve, reject) => {
+            let meetingId = idify(meeting);
+            let url = routes.election.admin.hideResults(meetingId);
+
+            return Vue.axios.post(url)
+                .then((response) => {
+                    //We will overwrite the original object because
+                    //there may be several things that change when the election
+                    //results are hidden and don't want to tightly couple.
+                    let e = new Election(response.data);
+
+                    _.forEach(_.keys(meeting), (prop) => {
+                        if (e[prop] !== meeting[prop]) {
+                            let p = new Payload();
+                            p.updateProp = prop;
+                            p.updateVal = e[prop];
+                            commit('setMeetingProp', p);
+                        }
+                    });
+                    return resolve();
+                });
+
+        }));
+    },
+
     /*
     *    doThing({dispatch, commit, getters}, thingParam) {
     *        return new Promise(((resolve, reject) => {

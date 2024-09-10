@@ -22,12 +22,12 @@ export default {
         return {
 
             majority: {
-                styling: 'badge-primary',
+                styling: 'bg-primary',
                 text: 'Majority',
                 tip: 'A majority means greater than 50% of all votes cast.'
             },
             twoThirds: {
-                styling: 'badge-warning',
+                styling: 'bg-warning',
                 text: 'Two-thirds',
                 tip: 'This requires greater than 2/3 of all votes cast.'
             }

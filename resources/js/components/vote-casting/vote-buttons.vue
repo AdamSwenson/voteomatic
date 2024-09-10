@@ -1,7 +1,7 @@
 <template>
     <div class="button-area">
         <div class="row">
-            <div class="col">
+            <div class="col-4 text-end">
 
                 <nay-button ></nay-button>
 
@@ -10,9 +10,9 @@
                 ></vote-confirmation-modal>
             </div>
 
-            <div class="col"></div>
+            <div class="col-4"></div>
 
-            <div class="col">
+            <div class="col-4 text-end">
                 <yay-button ></yay-button>
 
                 <vote-confirmation-modal type="yay"

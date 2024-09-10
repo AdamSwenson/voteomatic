@@ -1,13 +1,18 @@
 <template>
     <div class="summary-submit-card card">
         <div class="card-body instructions">
-            <p class="card-text">Please review your selections. When you are ready, please
-        click 'Record all selections' to save them to the server. </p>
+            <p class="card-text">Please review your selections.</p>
+            <p  class="card-text"> When you are ready, please
+        click 'Record all selections' to save your votes. </p>
 
-            <p class="card-text">Once your selections have been saved, they can no longer be changed.</p>
+            <p class="card-text">Once your selections have been saved, they cannot be changed.</p>
+
+            <p class="card-text">If you have not selected any candidates for an office,
+                you may return and finish voting. However, if you have selected some but not all of the maximum allowed number of candidates, you will not be able
+                to return and select additional candidates. </p>
 
             <p class="card-text">To change your selections, click the office name in the list to the left or
-            use the 'Previous office' button below</p>
+            use the 'Previous office' button below.</p>
 
         </div>
 
@@ -16,8 +21,10 @@
         <summary-proposition-listing :motion="m" v-for="m in propositions" :key="m.id"></summary-proposition-listing>
 
         <div class="card-body" >
+            <div class="d-grid gap-2">
             <record-all-selections-button></record-all-selections-button>
             <record-all-selections-modal></record-all-selections-modal>
+        </div>
         </div>
 
         <navigation-footer></navigation-footer>

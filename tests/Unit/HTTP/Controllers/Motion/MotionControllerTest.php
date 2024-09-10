@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Motion;
 use App\Http\Controllers\Motion\MotionController;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\SettingStore;
 use App\Models\User;
+use App\Repositories\SettingsRepository;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -26,6 +28,8 @@ class MotionControllerTest extends TestCase
      */
     public $url;
 
+    public $settings;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -43,6 +47,11 @@ class MotionControllerTest extends TestCase
         $this->meeting->push();
 
         $this->url = $this->urlBase . '/' . $this->motion->id;
+
+        $settingsRepo = new SettingsRepository();
+        $this->settings = $settingsRepo->createMeetingMaster($this->meeting);
+
+
 
     }
 
@@ -140,18 +149,37 @@ class MotionControllerTest extends TestCase
 
 
     /** @test */
-    public function storePreventsNonChair()
+    public function storePreventsNonChairWhenSettingDisallows()
     {
-
+        $this->settings->setSetting('members_make_motions', false);
+        $this->settings->save();
         $nonChair = User::factory()->regUser()->create();
 
         //call
+        $data = ['meetingId' => $this->meeting->id];
         $response = $this->actingAs($nonChair)
             ->withSession(['foo' => 'bar'])
-            ->post($this->urlBase);
+            ->post($this->urlBase, $data);
 
         //check
-        $response->assertStatus(403);
+        $response->assertStatus(503);
+    }
+
+    /** @test */
+    public function storeAllowsNonChairWhenSettingAllows()
+    {
+        $this->settings->setSetting('members_make_motions', true);
+        $this->settings->save();
+        $nonChair = User::factory()->regUser()->create();
+
+        //call
+        $data = ['meetingId' => $this->meeting->id];
+        $response = $this->actingAs($nonChair)
+            ->withSession(['foo' => 'bar'])
+            ->post($this->urlBase, $data);
+
+        //check
+        $response->assertSuccessful();
     }
 
 

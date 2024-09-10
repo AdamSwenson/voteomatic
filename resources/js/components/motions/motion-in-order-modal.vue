@@ -1,91 +1,57 @@
-<template>
-
-    <div class="modal fade"
-
-         v-bind:id="modalId"
-         tabindex="-1"
-         aria-hidden="true"
-         aria-labelledby="motionInOrderModalLabel"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="motionInOrderModalLabel"
-                    >It has been moved that</h5>
-                    <!--                    <button type="button"-->
-                    <!--                            class="close"-->
-                    <!--                            v-on:click="handleDismiss"-->
-                    <!--                            aria-label="Close">-->
-                    <!--                        <span aria-hidden="true">&times;</span>-->
-                    <!--                    </button>-->
-                </div>
-
-                <div class="modal-body">
-
-                    <p class="blockquote" v-html="motionText"></p>
-
-                    <p><required-vote-badge :motion="motion"></required-vote-badge>   <motion-type-badge :motion="motion"></motion-type-badge>    <debatable-badge :motion="motion"></debatable-badge></p>
-<!--                    <p><strong>Requires:</strong> {{motion.requires}}</p>-->
-<!--                    <p><strong>Type: </strong>{{motion.type}}</p>-->
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary"
-                            v-on:click="handleReject"
-                    >Reject
-                    </button>
-
-                    <button type="button"
-                            class="btn btn-primary"
-                            v-on:click="handleApprove"
-                    >Approve
-                    </button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-</template>
-
 <script>
 import chairMixin from "../../mixins/chairMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import RequiredVoteBadge from "./badges/required-vote-badge";
 import MotionTypeBadge from "./badges/motion-type-badge";
 import DebatableBadge from "./badges/debatable-badge";
+import JsControlledModalParent from "../parents/js-controlled-modal-parent";
 
 export default {
     name: "motion-in-order-modal",
     components: {DebatableBadge, MotionTypeBadge, RequiredVoteBadge},
     props: [],
 
+    extends : JsControlledModalParent,
+
     mixins: [chairMixin],
 
     data: function () {
-        return {}
+        return {
+            leftButtonStyling: "btn-secondary",
+            rightButtonStyling: "btn-primary",
+            modalId: 'motionInOrderModal',
+            headerText: "It has been moved that ",
+            rightButtonLabel: "Approve",
+            leftButtonLabel: "Reject"
+        }
     },
 
     asyncComputed: {
-        modalId : function(){
-            return 'motionInOrderModal';
-        },
+
 
         motion: function () {
             return this.$store.getters.nextMotionNeedingApproval;
         },
 
-        motionText: function () {
+        bodyText: function () {
             if (!isReadyToRock(this.motion)) return ''
-            return this.motion.content;
+            // return this.motion.content;
+            return `<p className="blockquote" >${this.motion.content}</p>`;
+
+            /*
+            dev would be nice to include this too, but would need to add the compiler parent
+            <p>-->
+<!--                        <required-vote-badge :motion="motion"></required-vote-badge>-->
+<!--                        <motion-type-badge :motion="motion"></motion-type-badge>-->
+<!--                        <debatable-badge :motion="motion"></debatable-badge>-->
+<!--                    </p>-->
+             */
         },
 
         showModal: function () {
-            if(this.isOrderAuthority && isReadyToRock(this.motion)){
-                $('#' + this.modalId).modal();
+            if (this.isOrderAuthority && isReadyToRock(this.motion)) {
+                this.openModal();
+                // $('#' + this.modalId).modal();
                 return true;
             }
 
@@ -98,16 +64,21 @@ export default {
 
     methods: {
 
+        handleLeftClick: function () {
+            this.handleReject();
+        },
+        handleRightClick: function () {
+            this.handleApprove();
+        },
+
         handleApprove: function () {
             this.$store.dispatch('markMotionInOrder', this.motion)
-            $('#' + this.modalId).modal('hide');
-
-
+            this.closeModal();
         },
+
         handleReject: function () {
             this.$store.dispatch('markMotionOutOfOrder', this.motion)
-            $('#' + this.modalId).modal('hide');
-
+            this.closeModal();
         }
     }
 

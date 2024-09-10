@@ -189,7 +189,11 @@ class CandidateRepository implements ICandidateRepository
             ->where('last_name', $last_name)->get();
 
         if(! is_null( $motion->meeting->info)) {
-            $candidateFields = $motion->meeting->info['candidateFields'];
+            //dev This fixes the issue in VOT-181. Add check for array key existing to deal with cases where no fields have been
+            // specified. NB, since info casts to an ArrayObject
+            // we cannot use array_key_exists
+            $candidateFields =  $motion->meeting->info->offsetExists('candidateFields')  ? $motion->meeting->info['candidateFields'] : null;
+
             if (!is_null($candidateFields) && sizeof($candidateFields) > 0 && sizeof($info) > 0) {
                 $dups = [];
                 //we need to check the info array. Laravel doesn't

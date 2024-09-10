@@ -125,6 +125,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    'version' => env('VERSION'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -245,5 +248,6 @@ return [
        // 'LTIFacade' => App\LTI\LTIFacade::class
 
     ],
+
 
 ];

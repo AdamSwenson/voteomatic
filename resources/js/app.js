@@ -57,7 +57,7 @@ import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
 
 import wysiwyg from "vue-wysiwyg";
-Vue.use(wysiwyg, {}); // config is optional. more below
+Vue.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
@@ -80,13 +80,14 @@ Vue.component('waitlist', require('./components/waitlist').default);
 Vue.component('home-page', require('./components/home-page').default);
 Vue.component('event-list-card', require('./components/common/event-list-card').default);
 
+Vue.component('pmode-page-navbar', require('./components/pmode/pmode-page-navbar').default);
 
 //todo DEV TOP LEVEL
 Vue.component('results', require('./components/main/motion-results-page').default);
 Vue.component('setup-page', require('./components/setup-page').default);
 Vue.component('amendment-page', require('./components/main/amendment-page').default);
 Vue.component('election-card', require('./components/election/voting/election-card').default);
-Vue.component('election-setup-card', require('./components/election/setup/election-setup-card').default);
+Vue.component('election-setup-card', require('./components/election/setup/election/election-setup-card').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

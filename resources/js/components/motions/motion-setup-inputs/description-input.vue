@@ -3,7 +3,7 @@
 
     <div class="form-group description-input">
 
-        <label for="description">Optional description or instructions</label>
+        <label  class='form-label' for="description">Optional description or instructions</label>
 
         <textarea id="description"
                   class="form-control"

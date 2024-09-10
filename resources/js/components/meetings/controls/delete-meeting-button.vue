@@ -15,6 +15,7 @@ export default {
     data: function () {
         return {
             label: 'Delete meeting',
+            icon : 'bi-x'
 
         }
     },

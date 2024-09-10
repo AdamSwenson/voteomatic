@@ -13,6 +13,7 @@ use App\Http\Controllers\Election\CandidatePoolController;
 use App\Http\Controllers\Election\ElectionVoteController;
 use App\Http\Controllers\Election\OfficeController;
 use App\Http\Controllers\Election\PersonController;
+use App\Http\Controllers\ForcedEventController;
 use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
@@ -24,10 +25,12 @@ use App\Http\Controllers\Motion\MotionOrderlinessController;
 use App\Http\Controllers\Motion\MotionSecondController;
 use App\Http\Controllers\Motion\MotionStackController;
 use App\Http\Controllers\Motion\MotionTemplateController;
+use App\Http\Controllers\PublicViewController;
 use App\Http\Controllers\ReceiptValidationController;
 use App\Http\Controllers\RecordVoteController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\Dev\SetupController;
+use App\Http\Controllers\SettingStoreController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\VoteHistoryController;
 use App\Http\Controllers\MainController;
@@ -141,9 +144,11 @@ Route::post('election/write-in/{motion}', [CandidateController::class, 'addWrite
 //Handles update and destroy
 Route::delete('election/candidate/{candidate}', [CandidateController::class, 'removeCandidate']);
 
+//dev Probably unused and deprecated after VOT-177 (phase change handled by regular meeting controller update)
 Route::post('election/admin/start/{meeting}', [ElectionAdminController::class, 'startVoting']);
 Route::post('election/admin/stop/{meeting}', [ElectionAdminController::class, 'stopVoting']);
 Route::post('election/admin/results/release/{meeting}', [ElectionAdminController::class, 'releaseResults']);
+Route::post('election/admin/results/hide/{meeting}', [ElectionAdminController::class, 'hideResults']);
 
 
 
@@ -151,6 +156,10 @@ Route::post('election/admin/results/release/{meeting}', [ElectionAdminController
 /* =============================
         Main application pages
    ============================= */
+
+//public access
+Route::get('public/{meeting}',[PublicViewController::class, 'publicHome']);
+
 //Internal landing page after non-lti login
 Route::get('/home', [HomeController::class, 'index'])
     ->name('home');
@@ -168,6 +177,8 @@ Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
 //Route::get('main/{motion}', [MainController::class, 'getVotePage'])
 //    ->name('main');
 
+
+Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
 
 /* =============================
         Meetings
@@ -194,6 +205,13 @@ Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates'
 Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
 Route::resource('motions', MotionController::class);
 
+
+/* =============================
+        Settings
+   ============================= */
+//Route::get('settings/{meeting}/master', [SettingStoreController::class, 'getMasterSettings']);
+Route::get('settings/{meeting}', [SettingStoreController::class, 'getUserSettings']);
+Route::resource('settingStores', SettingStoreController::class);
 
 /* =============================
         Individual votes and vote history controllers

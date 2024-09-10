@@ -19,10 +19,12 @@ import chairUtilities from "./modules/chairUtilities";
 import elections from "./modules/elections/elections";
 import meetings from './modules/meetings';
 import modes from "./modules/modes";
-import motions from './modules/motions';
+import motions from './modules/motions/motions';
 import messages from "./modules/messages";
+import pmode from "./modules/pmode/pmode";
 import provisionalMotions from "./modules/provisionalMotions";
 import navigation from "./modules/navigation";
+import settings from './modules/settings';
 import startup from "./modules/startup";
 import results from "./modules/results";
 import votes from "./modules/votes";
@@ -65,8 +67,10 @@ export default new Vuex.Store({
         modes,
         motions,
         navigation,
+        pmode,
         provisionalMotions,
         results,
+        settings,
         startup,
         votes
     }

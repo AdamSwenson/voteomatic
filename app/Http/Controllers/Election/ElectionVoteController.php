@@ -39,6 +39,7 @@ class ElectionVoteController extends Controller
     {
 
         $this->middleware('auth');
+        $this->middleware('check-election-phase');
 //        $this->middleware('vote-eligibility');
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');

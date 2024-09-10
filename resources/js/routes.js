@@ -35,19 +35,28 @@ module.exports = {
 
     },
 
+    events: {
+        forceReload: (meetingId) => {
+            return normalizedRouteRoot() + 'events/force/' + meetingId;
+        }
+    },
+
     election: {
 
-        admin : {
-            startVoting : (meetingId) => {
+        admin: {
+            startVoting: (meetingId) => {
                 return normalizedRouteRoot() + 'election/admin/start/' + meetingId;
             },
 
-            stopVoting : (meetingId) => {
+            stopVoting: (meetingId) => {
                 return normalizedRouteRoot() + 'election/admin/stop/' + meetingId;
             },
 
-            releaseResults : (meetingId) => {
+            releaseResults: (meetingId) => {
                 return normalizedRouteRoot() + 'election/admin/results/release/' + meetingId;
+            },
+            hideResults: (meetingId) => {
+                return normalizedRouteRoot() + 'election/admin/results/hide/' + meetingId;
             }
         },
 
@@ -160,7 +169,8 @@ module.exports = {
 
         getResults: (motionId) => {
             return normalizedRouteRoot() + 'results/' + motionId;
-        }
+        },
+
     },
 
     votes: {
@@ -278,6 +288,16 @@ module.exports = {
         },
 
 
+    },
+
+    settings: {
+        load: (meetingId) => {
+            return normalizedRouteRoot() + 'settings/' + meetingId;
+        },
+
+        resource: (settingId) => {
+            return normalizedRouteRoot() + 'settingStores/' + settingId;
+        }
     }
 
 }

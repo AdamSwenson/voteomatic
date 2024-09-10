@@ -13,12 +13,12 @@
                 <!--                 v-if="showArea === 'edit' || showArea === 'create'"-->
                 <!--            >-->
 
-                <label for="event-name">{{ eventTypeCapitalized }} name</label>
+                 <label class='form-label' for="event-name">{{ eventTypeCapitalized }} name</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="event-name" v-model="eventName">
                 </div>
 
-                <label for="event-date">{{ eventTypeCapitalized }} date <span
+                 <label class='form-label' for="event-date">{{ eventTypeCapitalized }} date <span
                     class="text-secondary">(optional)</span></label>
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" id="event-date" v-model="eventDate">

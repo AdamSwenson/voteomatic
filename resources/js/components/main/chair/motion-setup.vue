@@ -38,13 +38,17 @@
                 v-on:hide-editing-card="resetCard"
             ></main-motion-setup-area>
 
-            <amendment-setup-area v-else-if="showCard === 'amendment'"></amendment-setup-area>
+            <amendment-setup-area
+                v-else-if="showCard === 'amendment'"
+            ></amendment-setup-area>
 
             <main-motion-edit-area
                 v-else-if="showCard === 'edit' && isChair"
             ></main-motion-edit-area>
 
-            <resolution-setup-area v-else-if="showCard === 'resolution'"></resolution-setup-area>
+            <resolution-setup-area
+                v-else-if="showCard === 'resolution'"
+            ></resolution-setup-area>
 
         </div>
 
@@ -56,7 +60,7 @@
         <!--        <div class="closed-notice card-body" v-if="isMotionComplete">-->
         <!--            <h6 class="card-title">Voting has ended. The motion cannot be edited.</h6>-->
 
-        <!--            <div class="text-right">-->
+        <!--            <div class="text-end">-->
         <!--                <create-motion-button v-on:create-motion-clicked="handleNewButtonClick"></create-motion-button>-->
         <!--            </div>-->
 

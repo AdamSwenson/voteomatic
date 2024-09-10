@@ -9,14 +9,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confirmMotionModalLabel">
-                            Please confirm that this is the motion you wish to make. You will not be able to edit it after you click 'Make motion'</h5>
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
+                        <h5 class="modal-title" id="confirmMotionModalLabel">{{headerText}}</h5>
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+
                     </div>
 
                     <div class="modal-body">
@@ -26,22 +27,20 @@
                         <p v-if="isReady">
                             <required-vote-badge :motion="motion"></required-vote-badge>    <motion-type-badge :motion="motion"></motion-type-badge>
                         </p>
-<!--                        <p><strong>Requires:</strong> {{motion.requires}}</p>-->
-<!--                        <p>Type: {{motion.type}}</p>-->
-<!--&lt;!&ndash;                        <p>Description: {{motion.description}}</p>&ndash;&gt;-->
+
                     </div>
 
                     <div class="modal-footer">
                         <button type="button"
                                 class="btn btn-secondary"
-                                data-dismiss="modal"
+                                data-bs-dismiss="modal"
                         >Continue editing</button>
 
                         <button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal"
+                                data-bs-dismiss="modal"
                                 v-on:click="handleClick"
-                        >Make motion</button>
+                        >{{buttonLabel}}</button>
 
                     </div>
                 </div>
@@ -67,12 +66,34 @@ data : function(){
 },
 
 computed : {
+    // modalId : function(){},
+    // modalTitle : function(){},
+    //   handleClick : function(){},
+    //  buttonLabel : function(){},
     isReady: function(){
       return isReadyToRock(this.motion);
     },
     motionText: function(){
         if(isReadyToRock(this.motion)) return this.motion.content;
         return ''
+    },
+headerText : function(){
+    // if(this.motion.type === 'proposition') return "Please confirm that the proposition is correct";
+
+    return "Please confirm that this is the motion you wish to make. You will not be able to edit it after you click 'Make motion'";
+},
+    /**
+     * Allows to use for both regular meeting motions and election propositions
+     * dev: Turned out to not be used.
+     * @returns {string}
+     */
+    itemType: function(){
+        if(this.motion.type === 'proposition') return 'proposition';
+        return 'motion';
+    },
+    buttonLabel: function (){
+        // if(this.motion.type === 'proposition') return 'Save proposition';
+        return 'Make motion'
     }
 },
 methods: {

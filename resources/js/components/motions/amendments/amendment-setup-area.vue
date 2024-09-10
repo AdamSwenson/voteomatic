@@ -3,7 +3,7 @@
     <div class="amendment-setup-area card">
 
         <div class="card-body">
-            <div class="row display-area text-center">
+            <div class="row display-area ">
                 <div class="col">
                     <blockquote class="blockquote mb-0">
 
@@ -17,43 +17,52 @@
 
                 </div>
             </div>
+        </div>
 
-            <div class="row edit-area">
+
+        <div class="card-body edit-area">
+            <!--                <div class="col">-->
+            <div class="form-group">
+
+                <label class='form-label' for="editText">Edit amendment</label>
+
+                <wysiwyg v-model="text"
+                         v-if="isResolution"
+                ></wysiwyg>
+
+                <textarea
+                    v-else
+                    id="editText"
+                    class="form-control"
+                    v-model="text"
+                    cols="30"></textarea>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
                 <div class="col">
-                    <div class="form-group">
 
-                        <label for="editText">Edit amendment</label>
+                    <div class="d-grid gap-2">
 
-                        <wysiwyg v-model="text"
-                        v-if="isResolution"
-                        ></wysiwyg>
-
-                        <textarea
-                            v-else
-                            id="editText"
-                                  class="form-control"
-                                  v-model="text"
-                                  cols="30"></textarea>
+                        <button class="btn btn-primary"
+                                v-on:click="handleReset"
+                        >Reset to original
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
 
                 <div class="col">
-                    <button class="btn btn-primary"
-                            v-on:click="handleReset"
-                    >Reset to original
-                    </button>
-                </div>
+                    <div class="d-grid gap-2">
 
-                <div class="col">
-
-                    <propose-amendment-button
-                        v-on:propose-amendment="handleClick"
-                    ></propose-amendment-button>
+                        <propose-amendment-button
+                            v-on:propose-amendment="handleClick"
+                        ></propose-amendment-button>
+                    </div>
 
                 </div>
+
+                <!--                </div>&ndash;&gt;-->
 
             </div>
 
@@ -88,7 +97,7 @@ export default {
              * Classes to attach to a word for different purposes
              */
             tags: {
-                altered: 'text-monospace',
+                altered: 'font-monospace',
                 inserted: 'text-danger',
                 struck: 'struck',
             }
@@ -135,10 +144,18 @@ export default {
                 content: this.localText,
                 type: 'amendment',
                 is_resolution: this.motion.isResolution,
+                info: this.motion.info,
                 requires: 0.5
             };
+
             let me = this;
-            let p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            let p;
+            if (this.motion.isResolution) {
+                p = this.$store.dispatch('createResolutionAmendment', payload);
+            } else {
+                p = this.$store.dispatch('createSubsidiaryMotion', payload);
+            }
+
             p.then(() => {
                 me.$router.push('meeting-home');
             });
@@ -151,8 +168,6 @@ export default {
         handleReset: function () {
             this.localText = this.motion.content;
         }
-
-
     }
 
 }

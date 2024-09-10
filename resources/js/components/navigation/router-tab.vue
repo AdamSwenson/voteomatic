@@ -4,7 +4,7 @@
         v-bind:to="path"
         v-slot="{ href, route, navigate, isActive, isExactActive }"
     >
-        <li class="nav-item"
+        <li class="nav-item mt-1"
             :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
         >
             <a class="nav-link"

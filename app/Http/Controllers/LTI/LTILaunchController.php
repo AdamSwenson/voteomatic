@@ -65,57 +65,6 @@ class LTILaunchController extends Controller
 
 
     /**
-     * Receives the launch request
-     *
-     * @deprecated
-     *
-     * lti:create-tool-consumer
-     *  key: tacokey
-     *  name: taco
-     * secret: nom
-     * @param LTIRequest $request
-     * @return void
-     */
-    public function handleLaunchRequest(LTIRequest $request)
-    {
-        $j = $request->all();
-
-        //todo remove
-        Log::debug($request);
-
-        //Check if the activity is enabled and reject access if not
-        //todo Do this (later) or maybe add as middleware
-
-        //The LTIRequest object has already checked that the needed
-        //fields are populated.
-        try {
-
-            //We verify that the oath signature on the incoming post
-            //request is valid
-            $resourceLink = ResourceLink::where(['resource_link_id' => $request->resource_link_id])
-                ->firstOrFail();
-            //todo error handling if not found
-
-            $authenticator = AuthenticatorFactory::make($request);
-            $authenticator->authenticate($request, $resourceLink);
-
-            //Get an existing user or create a new person in the db
-            $this->handleUser($request);
-
-            //We redirect to the activity page
-            return redirect()->route('meetingHome', $resourceLink->meeting);
-
-        } catch (LTIAuthenticationException $e) {
-            Log::debug($e);
-
-            abort(403, 'Unauthorized action.');
-
-        }
-
-    }
-
-
-    /**
      * Receives the launch request from a link
      * which contains the meeting id.
      *
@@ -126,7 +75,7 @@ class LTILaunchController extends Controller
      * @param Meeting $meeting
      * @return void
      * @throws HttpException
-     * @throws NotFoundHttpException
+     * @throws NotFoundHttpException|\App\LTI\Exceptions\InvalidLTILogin
      */
     public function handleMeetingLaunchRequest(LTIRequest $request, Meeting $meeting)
     {
@@ -175,6 +124,9 @@ class LTILaunchController extends Controller
     }
 
 
+
+    // ====================================== ATTIC ======================================
+
     /**
      * Creates or looks up the user and logs them
      * in.
@@ -183,6 +135,7 @@ class LTILaunchController extends Controller
      *
      *  //todo refactor this whole process to fit the laravel authentication patterns and utilities
      * @param LTIRequest $request
+     * @deprecated Replaced with UserRepository
      */
     protected function handleUser(LTIRequest $request)
     {
@@ -313,6 +266,61 @@ class LTILaunchController extends Controller
 //        return response('j', 200);
 
     }
+
+
+    /**
+     * Receives the launch request
+     *
+     * @deprecated
+     *
+     * lti:create-tool-consumer
+     *  key: tacokey
+     *  name: taco
+     * secret: nom
+     *
+     * @deprecated
+     * @param LTIRequest $request
+     * @return void
+     */
+    public function handleLaunchRequest(LTIRequest $request)
+    {
+        $j = $request->all();
+
+        //todo remove
+        Log::debug($request);
+
+        //Check if the activity is enabled and reject access if not
+        //todo Do this (later) or maybe add as middleware
+
+        //The LTIRequest object has already checked that the needed
+        //fields are populated.
+        try {
+
+            //We verify that the oath signature on the incoming post
+            //request is valid
+            $resourceLink = ResourceLink::where(['resource_link_id' => $request->resource_link_id])
+                ->firstOrFail();
+            //todo error handling if not found
+
+            $authenticator = AuthenticatorFactory::make($request);
+            $authenticator->authenticate($request, $resourceLink);
+
+            //Get an existing user or create a new person in the db
+            $this->handleUser($request);
+
+            //We redirect to the activity page
+            return redirect()->route('meetingHome', $resourceLink->meeting);
+
+        } catch (LTIAuthenticationException $e) {
+            Log::debug($e);
+
+            abort(403, 'Unauthorized action.');
+
+        }
+
+    }
+
+
 
     /**
      * The library handles authentication in the old school way

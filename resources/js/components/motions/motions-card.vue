@@ -2,7 +2,7 @@
 
     <div class="card">
 
-        <div class="card-header">
+        <div class="card-header" v-if="meetingDate">
             {{ meetingDate }}
         </div>
 
@@ -47,7 +47,7 @@ import MotionMixin from '../../mixins/motionStoreMixin';
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 export default {
     name: "motions-card",
-    components: {EndVotingModal, MotionSelectArea, MotionSelectButton},
+    components: {EndVotingModal, MotionSelectArea, },
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
     asyncComputed: {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Assignment;
 use App\Models\Election\Candidate;
 use App\Models\Election\PoolMember;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,7 +25,13 @@ class Motion extends Model
 
         /** JSON field for storing stuff needed by different forms of motion */
         'info',
-        'info->propositionName',
+        'info->propositionName', //dev Unsure if this is used
+        'info->name',
+        //resolutions
+        'info->title',
+        'info->resolutionIdentifier',
+        'info->groupId',
+        'info->formattedContent',
 
         'is_complete',
         'is_current',
@@ -92,7 +99,8 @@ class Motion extends Model
 
 
     protected $casts = [
-        'info' => 'array',
+//        'info' => 'array',
+        'info' => AsArrayObject::class,
         'is_complete' => 'boolean',
         'is_current' => 'boolean',
         'is_in_order' => 'boolean',
@@ -241,7 +249,11 @@ class Motion extends Model
 
 
     /**
-     * Whether the motion has succeeded
+     * Whether the motion has succeeded.
+     * Will return true for a majority question (0.5) if the total
+     * is more than 50%
+     * Will return true for any other threshold if the total is greater than
+     * or equal to the threshold
      */
     public function getPassedAttribute()
     {

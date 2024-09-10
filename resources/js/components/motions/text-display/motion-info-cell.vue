@@ -5,6 +5,7 @@
     <motion-text-display
         :motionStyle="motionStyle"
         :motion="motion"
+        :truncate-resolutions="true"
     ></motion-text-display>
 
     <br/>
@@ -13,8 +14,8 @@
 
     <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
 
+<!--    <motion-status-badge v-if="showStatusBadge" :motion="isPassed"></motion-status-badge>-->
     <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-
 
     </div>
 </template>
@@ -58,10 +59,10 @@ export default {
         amendmentStyle: function () {
 
             if (this.isSecondOrder) {
-                return ' pl-5 ';
+                return ' ps-5 ';
             }
 
-            return ' pl-4 ';
+            return ' ps-4 ';
         },
 
         /**
@@ -91,7 +92,7 @@ export default {
                 style += ' text-muted ';
             }
             if (this.isSelected) {
-                style += ' lead font-weight-bold ';
+                style += ' lead fw--bold ';
             }
 
             //Amendments
@@ -114,10 +115,10 @@ export default {
         proceduralStyle: function () {
             switch (this.pendingMotionDegree) {
                 case 2:
-                    return ' pl-5 '
+                    return ' ps-5 '
                     break;
                 case  1:
-                    return ' pl-4 '
+                    return ' ps-4 '
                     break;
                 case 0:
                     return ' ';

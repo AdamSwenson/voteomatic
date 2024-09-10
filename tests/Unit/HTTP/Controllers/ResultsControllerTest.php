@@ -31,10 +31,10 @@ class ResultsControllerTest extends TestCase
      */
     public $nonMember;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
-$this->meeting = Meeting::factory()->create();
+        $this->meeting = Meeting::factory()->create();
         $this->motion = Motion::factory()->create(['meeting_id' => $this->meeting->id]);
         $this->path = '/results/' . $this->motion->id;
 
@@ -58,6 +58,7 @@ $this->meeting = Meeting::factory()->create();
         //check
         $response->assertStatus(200);
         $response->assertExactJson([
+            'motionId' => $this->motion->id,
             'passed' => $this->motion->passed,
             'totalVotes' => $this->motion->totalVotesCast
         ]); //checking exact to make sure counts not sent
@@ -91,9 +92,11 @@ $this->meeting = Meeting::factory()->create();
         $response->assertStatus(200)
             ->assertExactJson([
 //                'passed' => $this->motion->passed,
+
 //                'totalVotes' => $this->motion->totalVotesCast,
+                'motionId' => $this->motion->id,
                 'yayCount' => count($this->motion->affirmativeVotes),
-                'nayCount'=> count($this->motion->negativeVotes)
+                'nayCount' => count($this->motion->negativeVotes)
             ]); //checking exact to make sure counts not sent
 
     }
@@ -111,8 +114,6 @@ $this->meeting = Meeting::factory()->create();
         //check
         $response->assertStatus(403);
     }
-
-
 
 
 }

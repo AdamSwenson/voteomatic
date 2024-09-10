@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card vote-verification">
+    <div class="card vote-verification router-tab-touching-card">
         <div class="card-header">
             <h4 card-title>Confirm that your vote was counted</h4>
         </div>
@@ -50,7 +50,7 @@
                     <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
                     <p>Receipt : {{ receipt }}</p>
 
-                    <p class="text-right">
+                    <p class="text-end">
                         <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
                     </p>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="alert alert-danger" role="alert" v-if="showBad">
                     <h4 class="alert-heading">This is not a valid receipt</h4>
                     <p> Receipt : {{ receipt }} </p>
-                    <p class="text-right">
+                    <p class="text-end">
                     <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
                     </p>
                 </div>

@@ -11,14 +11,22 @@
 module.exports = {
 
 
-
     asyncComputed: {
 
 
-        isAmendment: function(){
-            if (!_.isUndefined(this.motion) && ! _.isNull(this.motion)) {
+        isAmendment: function () {
+            if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isAmendment();
             }
+        },
+
+        isSecondOrderAmendment: function () {
+            if (!this.isAmendment) return false;
+            let appliedTo = this.$store.getters.getMotionById(this.motion.applies_to);
+            if (!_.isUndefined(appliedTo) && !_.isNull(appliedTo)) {
+                return appliedTo.isAmendment();
+            }
+            return false;
         },
 
         /**
@@ -35,7 +43,7 @@ module.exports = {
         },
 
         isMotionReady: function () {
-            return ! _.isUndefined(this.motion) && ! _.isNull(this.motion);
+            return !_.isUndefined(this.motion) && !_.isNull(this.motion);
         },
 
 
@@ -44,8 +52,8 @@ module.exports = {
          * which will require special display options
          * @returns {boolean|boolean|*}
          */
-        isResolution: function(){
-            if(_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
+        isResolution: function () {
+            if (_.isUndefined(this.motion) || _.isNull(this.motion)) return false;
 
             return this.motion.isResolution;
         },
@@ -55,7 +63,7 @@ module.exports = {
          * (e.g., if it was altered by an amendment)
          * @returns {*}
          */
-        isSuperseded: function(){
+        isSuperseded: function () {
             if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
                 return this.motion.isSuperseded();
             }
@@ -67,7 +75,6 @@ module.exports = {
         //         return this.motion.isDebatable();
         //     }
         // },
-
 
 
     }

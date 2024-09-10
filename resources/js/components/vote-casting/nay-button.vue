@@ -1,13 +1,14 @@
 <template>
+    <div class="d-grid gap-2">
     <button type="button"
-            class="btn btn-danger btn-lg btn-block"
-            data-toggle="modal"
-            data-target="#nayConfirmationModal"
+            class="btn btn-danger "
+            data-bs-toggle="modal"
+            data-bs-target="#nayConfirmationModal"
             v-on:click="handleClick"
-    >Nay
+    ><span class="nayText">Nay</span>
     </button>
 
-
+    </div>
 </template>
 
 <script>
@@ -29,5 +30,7 @@ export default {
 </script>
 
 <style scoped>
-
+.nayText{
+    font-weight: bold;
+}
 </style>

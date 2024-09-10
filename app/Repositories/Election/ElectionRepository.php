@@ -60,7 +60,8 @@ class ElectionRepository implements IElectionRepository
             'max_winners' => $maxWinners,
             //Otherwise it will not be returned when we request the offices
             //via the motion controller
-            'seconded' => true
+            'seconded' => true,
+            'type' => 'election'
         ]);
 
         return $office;

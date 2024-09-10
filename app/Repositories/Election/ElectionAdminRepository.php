@@ -44,10 +44,28 @@ class ElectionAdminRepository implements IElectionAdminRepository
     }
 
 
+    /**
+     * Makes the election results available to all users
+     * @param Meeting $meeting
+     * @return Meeting
+     */
     public function releaseResults(Meeting $meeting)
     {
-
+        //dev This is probably problematic since results and closed are 2 separate phases
+        $meeting->releaseElectionResults();
+        return $meeting;
     }
 
+
+    /**
+     * Makes election results no longer visible to anyone except the election admin
+     * @param Meeting $meeting
+     * @return Meeting
+     */
+    public function hideResults(Meeting $meeting)
+    {
+        $meeting->hideElectionResults();
+        return $meeting;
+    }
 
 }

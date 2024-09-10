@@ -39,9 +39,9 @@ export default {
         },
 
         styling : function(){
-            if( this.clicked) return " btn-info motion-template-button";
+            if( this.clicked) return " btn-primary motion-template-button";
 
-            return " btn-outline-info motion-template-button";
+            return " btn-outline-primary motion-template-button";
         }
 
     },

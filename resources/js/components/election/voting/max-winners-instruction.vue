@@ -3,7 +3,8 @@
         <div v-show="showInstructions"
              class="alert alert-primary"
              role="alert"
-        >Please vote for up to {{ maxWinners }}
+        >
+            <h4 class="alert-heading">Please vote for up to {{ maxWinners }}</h4>
         </div>
     </div>
 </template>

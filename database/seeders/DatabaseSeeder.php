@@ -41,7 +41,11 @@ class DatabaseSeeder extends Seeder
             CSUNElectionSeeder::class,
             CSUNElectionSeederWithCandidates::class,
             CSUNStandingCommitteeSeeder::class,
-            CSUNStandingCommitteeWithCandidatesSeeder::class
+            CSUNStandingCommitteeWithCandidatesSeeder::class,
+
+
+            MasterSettingsSeeder::class
+
         ]);
 
         $meetings = Meeting::all();

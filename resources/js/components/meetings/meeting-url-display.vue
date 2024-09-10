@@ -1,8 +1,9 @@
 <template>
 
-    <div class="meeting-link text-left mt-4" v-if="isChair">
+    <div class="meeting-link text-start mt-4" v-if="isChair">
+<!--        <h3 class="card-title">LTI access link</h3>-->
         <h5 class="card-subtitle user-select-all">{{ meetingLink }}</h5>
-        <p class="text-muted ">Use this link in creating the Canvas assignment.</p>
+        <p class="text-muted ">Use this link in creating the assignment for Canvas access.<br/>Ignore this if the voteomatic is not configured as an app in a Canvas class.</p>
     </div>
 
 </template>

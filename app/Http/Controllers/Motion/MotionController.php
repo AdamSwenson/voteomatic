@@ -26,6 +26,11 @@ class MotionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        
+        //[Added in VOT-104] Checks the settings and determines whether
+        // the user is allowed to send a post request
+        $this->middleware('motion-make-eligibility');
+
         $this->motionRepo = app()->make(IMotionRepository::class);
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
 

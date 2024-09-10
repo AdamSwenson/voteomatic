@@ -7,7 +7,7 @@
             v-if="showSpinner"
             class="text-center">
             <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
 

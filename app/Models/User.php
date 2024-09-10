@@ -74,6 +74,14 @@ class User extends Authenticatable
         return $this->is_admin;
     }
 
+    /**
+     * Returns true if this user is a guest user who should not
+     * be allowed to do anything important
+     */
+    public function isPublicUser(){
+        return $this->email === config('auth.public_user_email');
+    }
+
     // ------------------ relationships
     /**
      * Any motions which the user is an administrator for
@@ -92,6 +100,10 @@ class User extends Authenticatable
 
     public function recordedVoteRecord(){
         return $this->hasMany(RecordedVoteRecord::class);
+    }
+
+    public function settings(){
+        return $this->hasMany(SettingStore::class);
     }
 
     public function votes(){

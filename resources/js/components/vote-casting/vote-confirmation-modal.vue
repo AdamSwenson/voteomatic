@@ -11,15 +11,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="voteModalLabel">Confirm your vote</h5>
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     <p class="text-dark">{{ modalText }}</p>
                     <p>Once you cast your vote, it cannot be changed.</p>
                     <p>Are you sure?</p>
@@ -28,13 +27,13 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary no"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                     >No
                     </button>
 
                     <button type="button"
                             class="btn btn-primary yes"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                             v-on:click="handleClick"
                     >Yes. Record my vote.
                     </button>
@@ -54,7 +53,7 @@ import Vote from "../../models/Vote";
 /**
  * Note, this will require that the delete-motion-button is
  * included elsewhere on the page. They are linked via  bootstrap
- * using the data-dismiss=modal attribute. They are not linked
+ * using the data-bs-dismiss=modal attribute. They are not linked
  * by vue or vuex events.
  */
 export default {

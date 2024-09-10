@@ -4,6 +4,7 @@ import Motion from "../../../models/Motion";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 import Payload from "../../../models/Payload";
 import Proposition from "../../../models/Proposition";
+import officeFileImporter from "./officeFileImporter";
 
 const state = {
     //things: []
@@ -36,6 +37,7 @@ const mutations = {
 
 
 const actions = {
+    ...officeFileImporter,
 
     /**
      * Create an election event in which votes will be
@@ -67,6 +69,10 @@ const actions = {
                     // window.console.log('election created id: ', meeting.id);
                     // resolve()
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
@@ -96,7 +102,8 @@ const actions = {
             description: '',
             //Otherwise the controller will not send the office
             //when we ask for all motions
-            seconded: true
+            seconded: true,
+            type : 'election'
         };
 
         return new Promise(((resolve, reject) => {
@@ -114,6 +121,10 @@ const actions = {
 
 
                 }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
@@ -178,8 +189,12 @@ const actions = {
      */
     initializeDraftProposition({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
-            let motion = new Proposition({});
+            let motion = new Proposition({
+                requires : 0.5
+            });
             commit('setDraftMotion', motion);
+            //Now we unset whatever motion was currently selected globally
+            commit('clearCurrentMotion');
 
             // //We set it as a resolution since that will allow html display
             // let p = Payload.factory({

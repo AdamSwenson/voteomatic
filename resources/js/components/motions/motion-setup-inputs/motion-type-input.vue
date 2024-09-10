@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label for="typeSelect">Motion type</label>
+        <label class='form-label' for="typeSelect">Motion type</label>
         <select
             id="typeSelect"
             class="form-control disabled"

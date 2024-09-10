@@ -1,29 +1,42 @@
-<template>
-    <button
-        v-bind:class="styling"
-        data-toggle="modal"
-        data-target="#deleteMotionModal"
-    >Delete Motion</button>
+<!--<template>-->
+<!--    <button-->
+<!--        v-bind:class="styling"-->
+<!--        data-bs-toggle="modal"-->
+<!--        data-bs-target="#deleteMotionModal"-->
+<!--    >{{label}}</button>-->
 
 
-</template>
+<!--</template>-->
 
 <script>
 
-import MotionMixin from "../../../mixins/motionStoreMixin";
-
+import MotionStoreMixin from "../../../mixins/motionStoreMixin";
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
+import ModalButtonParent from "../../parents/modal-button-parent";
 export default {
     name: "delete-motion-button",
 
     props: [],
 
-    mixins: [MotionMixin],
+    extends : ModalButtonParent,
+
+    mixins: [MotionStoreMixin],
 
     data: function () {
         return {
-            styling: "btn btn-danger "
+            styling: "btn btn-danger ",
+            modalId : 'deleteMotionModal',
+            ariaDisabled : false
 
         }
+    },
+    asyncComputed: {
+        label : function(){
+            if(isReadyToRock(this.motion) && this.motion.type === 'proposition') return  "Delete proposition";
+            return  "Delete motion";
+        },
+
+
     },
 
     computed: {},

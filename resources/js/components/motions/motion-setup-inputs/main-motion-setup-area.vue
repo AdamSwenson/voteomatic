@@ -5,8 +5,8 @@
         </div>
 
 
-        <div class="card-body v-else">
-            <div class="required">
+        <div class="card-body required">
+<!--            <div class="required">-->
                 <form>
 
                     <motion-content-input
@@ -22,10 +22,9 @@
 
                 </form>
 
-
             </div>
 
-            <div class="optional"
+            <div class="card-body optional"
                  v-if="isChair"
             >
                 <h4 class="card-subtitle text-center">Optional</h4>
@@ -43,30 +42,36 @@
                     ></description-input>
 
                 </form>
-            </div>
+<!--            </div>-->
+        </div>
 
+        <div class="card-body">
             <div class="row">
-                <div class="col text-center"
+                <div class="col text-start"
                      v-if="isChair"
                 >
-
-                    <delete-motion-button></delete-motion-button>
-
+                    <div class="d-grid gap-2">
+                        <delete-motion-button></delete-motion-button>
+                    </div>
                     <delete-motion-modal></delete-motion-modal>
                 </div>
 
                 <div class="col text-center">
-                    <clear-draft-motion-button
-                                               v-on:hide-editing-card="requestResetEditingCard"
-                    ></clear-draft-motion-button>
+                    <div class="d-grid gap-2">
+                        <clear-draft-motion-button
+                            v-on:hide-editing-card="requestResetEditingCard"
+                        ></clear-draft-motion-button>
+                    </div>
                 </div>
 
                 <div class="col text-center">
-                    <button class="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#confirmMotionModal"
-                    >Make motion
-                    </button>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmMotionModal"
+                        >Make motion
+                        </button>
+                    </div>
 
                     <create-motion-modal :motion="draftMotion"
                                          v-on:confirmed="handleDoneClick"
@@ -76,16 +81,16 @@
             </div>
 
         </div>
-
-<!--        <div class="card-footer make-button-area"-->
-<!--             v-if="isChair"-->
-<!--        >-->
-<!--            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not-->
-<!--                use-->
-<!--                it for formal amendments.</strong></p>-->
-
-<!--        </div>-->
     </div>
+    <!--        <div class="card-footer make-button-area"-->
+    <!--             v-if="isChair"-->
+    <!--        >-->
+    <!--            <p class="text-danger" v-if="! isMotionComplete">Use this to correct minor clerical errors. <strong>Do not-->
+    <!--                use-->
+    <!--                it for formal amendments.</strong></p>-->
+
+    <!--        </div>-->
+
 
 </template>
 

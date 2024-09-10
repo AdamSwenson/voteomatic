@@ -3,9 +3,12 @@
          v-bind:class="styling">
         <h4>{{ officeName }}</h4>
 
-        <div class="ml-3">
-            <p v-if="hasError"
-            >There was a problem with your selections for this office.</p>
+        <div class="ms-3">
+            <p class='h3' v-if="hasError">There was a problem with your selections for this office. Please fix it in order to record your votes</p>
+
+            <p v-else-if="hasUnderSelectionWarning">You have selected less than the maximum allowed number of candidates for this office.
+            That is allowed, but you will not be able to select additional candidates after recording your votes.</p>
+
             <ul>
                 <li v-for="c in selectedCandidates"
                     :key="c.id"
@@ -46,6 +49,11 @@ export default {
             return this.$store.getters.getSelectedCandidatesForMotion(this.motion)
         },
 
+        hasUnderSelectionWarning: function(){
+            if (!isReadyToRock(this.motion)) return false;
+return this.$store.getters.showUnderSelectionWarningForMotion(this.motion);
+        },
+
         hasError: function () {
             if (!isReadyToRock(this.motion)) return false;
 
@@ -54,12 +62,14 @@ export default {
 
         styling: function () {
             if (!isReadyToRock(this.motion)) return '';
-            if (this.hasError) return ' text-danger '
+            if (this.hasError) return ' error '; ' text-danger ';
+            if (this.hasUnderSelectionWarning) return ' warn ';
         },
 
         outlineStyling : function(){
             if (!isReadyToRock(this.motion)) return '';
-            if (this.hasError) return ' border-danger '
+            if (this.hasError) return ' border-danger ';
+            if (this.hasUnderSelectionWarning) return ' border-warning ';
 
         }
     },
@@ -72,5 +82,12 @@ export default {
 </script>
 
 <style scoped>
+.warn{
+color: #8a3c03;
+}
+
+.error {
+    color: #a72323;
+}
 
 </style>

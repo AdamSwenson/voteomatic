@@ -20,9 +20,10 @@ export default {
 
     asyncComputed: {
         styling: function(){
-            if(! isReadyToRock(this.meeting)) return ' btn-warning ';
-            if(!this.meeting.isVotingAvailable && this.meeting.isComplete) return 'btn-outline-warning';
-            return ' btn-warning ';
+            if(! isReadyToRock(this.meeting)) return ' btn-outline-warning ';
+
+            if(this.meeting.isComplete && !this.meeting.isVotingAvailable && !this.meeting.isResultsAvailable) return ' btn-warning ';
+ return 'btn-outline-warning';
         }
     },
 
@@ -32,7 +33,7 @@ export default {
 
 
         handleClick: function () {
-
+            this.$store.dispatch('releaseElectionResults', this.meeting);
         }
     }
 

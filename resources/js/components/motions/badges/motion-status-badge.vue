@@ -4,11 +4,11 @@
         <span class="result-badge">
             <span class="no-results" v-if="! showBadge"></span>
 
-             <span class="badge badge-success"
+             <span class="badge bg-success"
                    v-else-if="isPassed"
              >Passed</span>
 
-            <span class="badge badge-danger"
+            <span class="badge bg-danger"
                   v-else-if="! isPassed"
             >Failed</span>
 
@@ -31,6 +31,14 @@ export default {
     computed: {},
 
     asyncComputed: {
+        // isPassed: {
+        //     get: function () {
+        //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
+        //             return this.$store.getters.getMotionPassed(this.motion);
+        //         }
+        //     },
+        //     default: null
+        // },
 
         showBadge: function () {
             //If the thing hasn't been voted on yet, isPassed will be undefined

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="motion-results-page">
+    <div class="motion-results-page ">
 
         <div class="card results-display" v-if="isMotionComplete">
 

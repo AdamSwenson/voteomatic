@@ -1,5 +1,5 @@
 <template>
-    <div class="meeting-setup-card card">
+    <div class="meeting-setup-card card ">
 
         <div class="non-chair" v-if="! isChair">
             <meeting-display-card></meeting-display-card>
@@ -27,7 +27,7 @@
     <!--        <div class="card chair-controls">-->
     <!--            <div class="controls-area card-header">-->
 
-    <!--                <div class="card-text text-right">-->
+    <!--                <div class="card-text text-end">-->
     <!--                    <button class="btn btn-primary"-->
     <!--                            v-on:click="handleClick"-->
     <!--                    >Create new meeting-->
