@@ -36,7 +36,7 @@ class Motion extends Model
         'is_complete',
         'is_current',
         'is_in_order',
-        /** Whether it is mutli-line html text where formatting matters */
+        /** Whether it is mutli-line html text whe  re formatting matters */
         'is_resolution',
         /** Whether users are allowed at this time to cast votes on the motion */
         'is_voting_allowed',

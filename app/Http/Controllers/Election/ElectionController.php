@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
+use App\Repositories\Election\ElectionRepository;
+use App\Repositories\Election\IElectionRepository;
 use App\Repositories\IMeetingRepository;
 use Illuminate\Http\Request;
 
@@ -39,6 +41,7 @@ class ElectionController extends Controller
     public function __construct()
     {
         $this->meetingRepo = app()->make(IMeetingRepository::class);
+        $this->electionRepo = app()->make(IElectionRepository::class);
         $this->middleware('auth');
     }
 
@@ -53,6 +56,14 @@ class ElectionController extends Controller
         $this->setLoggedInUser();
         $this->authorize('viewIndex', Meeting::class);
         return Meeting::where('is_election', true)->get();
+    }
+
+    public function duplicate(Meeting $meeting){
+        $this->setLoggedInUser();
+        $this->authorize('createElection', Meeting::class);
+        $newElection = $this->electionRepo->duplicateElection($meeting);
+        return response()->json($newElection);
+
     }
 
     /**

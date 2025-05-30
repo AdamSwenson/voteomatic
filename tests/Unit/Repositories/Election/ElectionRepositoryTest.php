@@ -3,13 +3,18 @@
 namespace Tests\Repositories\Election;
 
 use App\Models\Election\Candidate;
+use App\Models\Election\Person;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
 use App\Models\Vote;
+use App\Repositories\Election\CandidateRepository;
 use App\Repositories\Election\ElectionRepository;
 
 //use PHPUnit\Framework\TestCase;
+use Database\Seeders\CSUNElectionSeeder;
 use Illuminate\Support\Collection;
+use Tests\helpers\FakeFullElectionMaker;
 use Tests\TestCase;
 
 class ElectionRepositoryTest extends TestCase
@@ -44,13 +49,64 @@ class ElectionRepositoryTest extends TestCase
         parent::setUp();
         $this->object = new ElectionRepository();
 
-        $this->motion = Motion::factory()->create();
-        $this->candidates = Candidate::factory()->count(5)->create(['motion_id' => $this->motion->id]);
+        $this->user = User::factory()->create();
+
+        $this->offices = Motion::factory()->electedOfficeSingleChoice()->count(5)->create();
+        $this->motion = Motion::factory()->electedOfficeSingleChoice()->create();
+
+        $this->candidates = Person::factory()->count(10)->create();
+        $this->propositons = Motion::factory()->proposition()->count(5)->create();
+
         $this->loserTotal = 2;
         $this->winnerTotal = 5;
         $this->winner = $this->candidates[0];
 
     }
+
+    /** @test  */
+    public function duplicateElection(){
+//        $original = FakeFullElectionMaker::make();
+        $candidateRepo = app()->make(CandidateRepository::class);
+
+        $original = Meeting::factory()->election()->create();
+        $original->addUserToMeeting($this->user);
+        $original->setOwner($this->user);
+        $voters = User::factory()->count(10)->create();
+        foreach($voters as $voter){
+            $original->addUserToMeeting($voter);
+        }
+
+        foreach($this->offices as $office){
+            $this->object->addOfficeToElection($original, $office);
+            foreach($this->candidates as $candidate){
+                $candidateRepo->addPersonToPool($office, $candidate);
+                $candidateRepo->addCandidateToBallot($office, $candidate);
+            }
+        }
+
+        //call
+        $result = $this->object->duplicateElection($original);
+
+        //check
+        //Basic properties of the election
+        $this->assertTrue($result->is_election);
+        $this->assertEquals($result->phase, 'setup');
+        $this->assertEquals($original->name . " COPY", $result->name);
+        $this->assertEquals($original->info, $result->info);
+
+        //Check that users have been copied
+        $this->assertTrue($result->isPartOfMeeting($this->user));
+        $this->assertTrue($result->isOwner($this->user));
+        foreach($voters as $voter){
+            $this->assertTrue($result->isPartOfMeeting($voter));
+        }
+
+        //Check that motions were copied
+        $this->assertEquals(sizeof($this->offices), sizeof($result->motions));
+
+
+    }
+
 //
 //    /** @test */
 //    public function addCandidate()

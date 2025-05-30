@@ -103,6 +103,7 @@ class MeetingRepositoryTest extends TestCase
 
     }
 
+
     /** @test */
     public function getEmptyMeetingsForUser()
     {
