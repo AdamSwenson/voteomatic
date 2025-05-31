@@ -20,6 +20,7 @@
 
         <input type="hidden" id="routeRoot" data="{{ url('') }}"/>
         <input type="hidden" id="userName" data="{{ Auth::user()->name }}"/>
+            <input type="hidden" id="isAdmin" data="{{Auth::user()->isAdministrator()}}"/>
         <input type="hidden" id="env" data="{{ config('app.env') }}"/>
         <input type="hidden" id="version" data="{{config('app.version')}}"/>
 
@@ -33,6 +34,7 @@
     <script type="text/javascript">
         window.routeRoot = document.getElementById('routeRoot').getAttribute('data');
         window.userName = document.getElementById('userName').getAttribute('data');
+        window.isAdmin = document.getElementById('isAdmin').getAttribute('data');
         window.env = document.getElementById('env').getAttribute('data');
     </script>
 @endsection
