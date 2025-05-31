@@ -99,8 +99,11 @@ class ElectionRepository implements IElectionRepository
         //dev what to do about lti?
         //Copy users
         foreach ($meeting->users as $user) {
-            $newElection->addUserToMeeting($user);
-            $newElection->save();
+            //createElectionForUser already associated the owner
+            if($user->id !== $meeting->getOwner()->id){
+                $newElection->addUserToMeeting($user);
+                $newElection->save();
+            }
         }
 
         //Copy offices and candidates

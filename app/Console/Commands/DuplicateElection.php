@@ -42,7 +42,9 @@ class DuplicateElection extends Command
         $meeting = Meeting::find($this->argument('meeting'));
 
         $er = new ElectionRepository();
-        $er->duplicateElection($meeting);
+        $newElection = $er->duplicateElection($meeting);
+        $this->line("Election $meeting->id $meeting->name duplicated");
+        $this->line("New election id: $newElection->id");
 
 //
 ////        try {
