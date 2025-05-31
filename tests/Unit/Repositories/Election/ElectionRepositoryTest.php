@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories\Election;
 
+use App\Jobs\DuplicateElection;
 use App\Models\Election\Candidate;
 use App\Models\Election\Person;
 use App\Models\Meeting;
@@ -31,7 +32,7 @@ class ElectionRepositoryTest extends TestCase
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    public $candidates;
+    public $people;
     /**
      * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
@@ -52,37 +53,53 @@ class ElectionRepositoryTest extends TestCase
         $this->user = User::factory()->create();
 
         $this->offices = Motion::factory()->electedOfficeSingleChoice()->count(5)->create();
+        $this->propositions = Motion::factory()->proposition()->count(5)->create();
+
         $this->motion = Motion::factory()->electedOfficeSingleChoice()->create();
 
-        $this->candidates = Person::factory()->count(10)->create();
-        $this->propositons = Motion::factory()->proposition()->count(5)->create();
+        $this->people = Person::factory()->count(10)->create();
 
         $this->loserTotal = 2;
         $this->winnerTotal = 5;
-        $this->winner = $this->candidates[0];
+        $this->winner = $this->people[0];
+        $this->voters = User::factory()->count(10)->create();
 
     }
 
-    /** @test  */
-    public function duplicateElection(){
-//        $original = FakeFullElectionMaker::make();
+    public function createFakeElection()
+    {
         $candidateRepo = app()->make(CandidateRepository::class);
 
         $original = Meeting::factory()->election()->create();
+        // add users
         $original->addUserToMeeting($this->user);
         $original->setOwner($this->user);
-        $voters = User::factory()->count(10)->create();
-        foreach($voters as $voter){
+        $original->save();
+        foreach ($this->voters as $voter) {
             $original->addUserToMeeting($voter);
         }
 
-        foreach($this->offices as $office){
-            $this->object->addOfficeToElection($original, $office);
-            foreach($this->candidates as $candidate){
+        //add offices
+        foreach ($this->offices as $office) {
+            $this->object->addOfficeToElection($original, $office->content, $office->description, $office->max_winners, $office->type);
+            foreach ($this->people as $candidate) {
                 $candidateRepo->addPersonToPool($office, $candidate);
                 $candidateRepo->addCandidateToBallot($office, $candidate);
             }
         }
+
+        //add propositions
+        foreach ($this->propositions as $propositon) {
+            $this->object->addOfficeToElection($original, $propositon->content, $propositon->description, $propositon->max_winners, $propositon->type);
+        }
+
+        return $original;
+    }
+
+    /** @test */
+    public function duplicateElection()
+    {
+        $original = $this->createFakeElection();
 
         //call
         $result = $this->object->duplicateElection($original);
@@ -97,14 +114,48 @@ class ElectionRepositoryTest extends TestCase
         //Check that users have been copied
         $this->assertTrue($result->isPartOfMeeting($this->user));
         $this->assertTrue($result->isOwner($this->user));
-        foreach($voters as $voter){
+        foreach ($this->voters as $voter) {
             $this->assertTrue($result->isPartOfMeeting($voter));
         }
 
         //Check that motions were copied
-        $this->assertEquals(sizeof($this->offices), sizeof($result->motions));
+        $this->assertEquals(sizeof($this->offices) + sizeof($this->propositions), sizeof($result->motions));
+        $offices = collect($this->offices);
+        $props = collect($this->propositions);
+        $both = $offices->merge($props);
+
+        foreach ($result->motions as $motion) {
+            $this->assertNotContains($motion->id, $offices->pluck('id')->all(), "Motion ids in result are different from original office ids");
+            $this->assertNotContains($motion->id, $props->pluck('id')->all(), "Motion ids in result are different from original proposition ids");
+            $this->assertContains($motion->content, $both->pluck('content')->all(), "Motion content is in original offices or props");
+        }
+
+        //Check the pools and candidates
+        foreach ($result->motions as $motion) {
+            if ($motion->type == 'election') {
+                $ogOffice = $offices->where('content', $motion->content)->first();
+                $r = $motion->poolMembers;
+                $this->assertEquals(sizeof($ogOffice->poolMembers), sizeof($motion->poolMembers), "Pool size the same");
+//               foreach($ogOffice->poolMembers as $member) {
+//
+//               }
 
 
+            }
+
+
+        }
+    }
+
+    /** @test */
+    public function duplicateMotionJob()
+    {
+        $meeting = $this->createFakeElection();
+        $preCount = Meeting::all()->count();
+
+        DuplicateElection::dispatch($meeting);
+        $postCount = Meeting::all()->count();
+        $this->assertEquals($preCount + 1, $postCount);
     }
 
 //
@@ -274,8 +325,9 @@ class ElectionRepositoryTest extends TestCase
 //
 //    }
 
-    /** @test  */
-    public function addOfficeToElection(){
+    /** @test */
+    public function addOfficeToElection()
+    {
         $election = Meeting::factory()->election()->create();
 
         $name = $this->faker->company;
@@ -296,7 +348,7 @@ class ElectionRepositoryTest extends TestCase
 
 
 
-        /* **************************** Utilities  **************************** */
+    /* **************************** Utilities  **************************** */
 
 
     /**
@@ -305,7 +357,7 @@ class ElectionRepositoryTest extends TestCase
     public function makeTiedElectionResults($numberTied = 2): void
     {
 
-        for ($i = 0; $i < sizeof($this->candidates); $i++) {
+        for ($i = 0; $i < sizeof($this->people); $i++) {
 
             if ($i < $numberTied) {
                 //We have a winner!
@@ -313,10 +365,10 @@ class ElectionRepositoryTest extends TestCase
                     ->count($this->winnerTotal)
                     ->create(
                         ['motion_id' => $this->motion->id,
-                            'candidate_id' => $this->candidates[$i]->id
+                            'candidate_id' => $this->people[$i]->id
                         ]);
 
-                $this->tiedCandidates[] = $this->candidates[$i];
+                $this->tiedCandidates[] = $this->people[$i];
             }
 
 
@@ -326,7 +378,7 @@ class ElectionRepositoryTest extends TestCase
                 ->count($loserTotal)
                 ->create(
                     ['motion_id' => $this->motion->id,
-                        'candidate_id' => $this->candidates[$i]->id
+                        'candidate_id' => $this->people[$i]->id
                     ]);
 
         }
@@ -339,17 +391,17 @@ class ElectionRepositoryTest extends TestCase
         Vote::factory()->count($this->winnerTotal)
             ->create(
                 ['motion_id' => $this->motion->id,
-                    'candidate_id' => $this->candidates[0]->id
+                    'candidate_id' => $this->people[0]->id
                 ]);
 
 
-        for ($i = 1; $i < sizeof($this->candidates); $i++) {
+        for ($i = 1; $i < sizeof($this->people); $i++) {
             $loserTotal = $this->faker->numberBetween(0, $this->winnerTotal - 1);
             Vote::factory()
                 ->count($loserTotal)
                 ->create(
                     ['motion_id' => $this->motion->id,
-                        'candidate_id' => $this->candidates[$i]->id
+                        'candidate_id' => $this->people[$i]->id
                     ]);
 
 //            for ($c = 0; $c < $this->loserTotal; $c++) {
