@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Meeting;
+use App\Repositories\Election\ElectionRepository;
 use App\Repositories\Election\IElectionRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -38,11 +39,9 @@ class DuplicateElection implements ShouldQueue
      */
     public function handle()
     {
-//dev This does not work at least when called from a command
         Log::info("Duplicating meeting id $this->meeting->id");
-//throw new \Exception($this->meeting);
         $electionRepo = app()->make(IElectionRepository::class);
-        $electionRepo->duplicateElection($this->meeting);
-        Log::info("xxx --- xxx");
+        $newElection = $electionRepo->duplicateElection($this->meeting);
+        return $newElection;
     }
 }

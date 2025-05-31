@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Meeting;
 use App\Repositories\Election\ElectionRepository;
+use App\Repositories\Election\IElectionRepository;
 use Illuminate\Console\Command;
 
 class DuplicateElection extends Command
@@ -34,30 +35,19 @@ class DuplicateElection extends Command
 
     /**
      * Execute the console command.
-     *
+     * NB, not using \App\Jobs\DuplicateElection::dispatch($meeting) because
+     * we wouldn't be able to display the new meeting id;
      * @return int
      */
     public function handle()
     {
         $meeting = Meeting::find($this->argument('meeting'));
 
-        $er = new ElectionRepository();
-        $newElection = $er->duplicateElection($meeting);
+        $electionRepo = app()->make(IElectionRepository::class);
+        $newElection = $electionRepo->duplicateElection($meeting);
         $this->line("Election $meeting->id $meeting->name duplicated");
         $this->line("New election id: $newElection->id");
 
-//
-////        try {
-//            $meeting = Meeting::find($this->argument('meeting'));
-//            $this->line($meeting);
-//
-//            \App\Jobs\DuplicateElection::dispatch($meeting);
-//
-//            $this->line("Meeting $meeting->id $meeting->name duplicated");
-//
-            return 0;
-//        } catch (\Exception $e) {
-//            $this->error($e->getMessage());
-//        }
+        return 0;
     }
 }
