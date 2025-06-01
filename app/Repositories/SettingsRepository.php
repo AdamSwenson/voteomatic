@@ -28,7 +28,7 @@ class SettingsRepository implements ISettingsRepository
             $userSettings = SettingStore::where('meeting_id', $meeting->id)
                 ->where('user_id', $user->id)
                 ->firstOrFail();
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             $userSettings = new SettingStore();
             $userSettings->user()->associate($user);
             $userSettings->meeting()->associate($meeting);
@@ -37,7 +37,7 @@ class SettingsRepository implements ISettingsRepository
 
         $meetingMaster = $meeting->getMasterSettingStore();
 
-        if (!is_null($meetingMaster) && ! is_null($meetingMaster->settings)) {
+        if (!is_null($meetingMaster) && !is_null($meetingMaster->settings)) {
 
             //overwrite any values
             foreach ($meetingMaster->settings as $k => $v) {
@@ -70,7 +70,8 @@ class SettingsRepository implements ISettingsRepository
         //Add null settings so that can use the keys
         //on client side
         $validSettings = $meeting->is_election ? SettingStore::VALID_ELECTION_SETTINGS : SettingStore::VALID_MEETING_SETTINGS;
-        foreach($validSettings as $setting){
+        foreach ($validSettings as $setting) {
+            //dev If the default value is false it will not store the setting in the db
             $defaultVal = SettingStore::SETTINGS_DISPLAY_PROPERTIES[$setting]['default'];
             $settings->setSetting($setting, $defaultVal);
         }
@@ -112,7 +113,6 @@ class SettingsRepository implements ISettingsRepository
 
     public function createSettingStore(Meeting $meeting, User $user, $request)
     {
-
         $settings = SettingStore::create($request->except('meetingId'));
         $settings->user()->associate($user);
         $settings->meeting()->associate($meeting);
@@ -120,6 +120,45 @@ class SettingsRepository implements ISettingsRepository
         $settings->save();
 
         return $settings;
+
+    }
+
+    /**
+     * When a meeting/election is duplicated, this copies all the settings from
+     * the original to the new meeting
+     *
+     * @param Meeting $originalMeeting
+     * @param Meeting $newMeeting
+     * @return void
+     */
+    public function duplicateSettingStores(Meeting $originalMeeting, Meeting $newMeeting)
+    {
+        $ogMaster = $originalMeeting->settingStore()->where('is_meeting_master', true)->first();
+        $newMaster = $newMeeting->settingStore()->where('is_meeting_master', true)->first();
+
+        //Make sure the new meeting has settings
+        if (is_null($newMaster)) {
+            $newMaster = $this->createMeetingMaster($newMeeting);
+        }
+
+        if (!is_null($ogMaster)) {
+            //Copy the master settings. If there wasn't master settings for the original
+            //the new meeting will just have the defaults created above.
+            $newMaster->settings = $ogMaster->settings;
+            $newMaster->is_universal = $ogMaster->is_universal;
+            $newMaster->applies_to_all_members = $ogMaster->applies_to_all_members;
+            $newMaster->save();
+        }
+
+        //Create settings stores for users
+        $ogUserSettings = $originalMeeting->settingStore()->where('is_meeting_master', null)->get();
+        foreach ($ogUserSettings as $ogUserSetting) {
+            $settings = SettingStore::create();
+            $settings->user()->associate($ogUserSetting->user);
+            $settings->meeting()->associate($newMeeting);
+            $settings->settings = $ogUserSetting->settings;
+            $settings->save();
+        }
 
     }
 

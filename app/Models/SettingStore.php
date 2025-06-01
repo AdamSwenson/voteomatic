@@ -10,6 +10,9 @@ class SettingStore extends Model
     use HasFactory;
 
     const VALID_ELECTION_SETTINGS = [
+        /** Whether candidates appear in random order or in stupid stupid stupid unfair alphabetical order */
+        'randomize_candidates',
+
         /** Whether members have the option of directly making nominations for offices */
         'members_make_nominations',
 
@@ -86,6 +89,13 @@ class SettingStore extends Model
             'displayDescription' => "Whether members have the option of making nominations directly",
             'default' => true,
         ],
+
+        'randomize_candidates' => [
+            'displayName' => "Randomize candidates",
+            'displayDescription' => "Whether candidates appear in random order on the ballot",
+            'default' => true,
+        ],
+
     ];
 
     /**
@@ -106,6 +116,7 @@ class SettingStore extends Model
 
         //Election specific
         'members_make_nominations',
+        'randomize_candidates'
     ];
 //
 //    /**
@@ -150,6 +161,7 @@ class SettingStore extends Model
 
         //Election specific
         'settings->members_make_nominations',
+        'settings->randomize_candidates',
     ];
 
     protected $casts = [

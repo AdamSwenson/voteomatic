@@ -35,13 +35,12 @@ class SettingsRepositoryTest extends TestCase
     /** @test */
     public function createMeetingMasterWhereNoPreexisting()
     {
-
         $result = $this->object->createMeetingMaster($this->meeting);
 
         //check
         $this->assertInstanceOf(SettingStore::class, $result);
         $this->assertTrue($result->is_meeting_master);
-        $this->assertEquals($this->meeting->id,  $result->meeting->id, "meeting properly associated with settings");
+        $this->assertEquals($this->meeting->id, $result->meeting->id, "meeting properly associated with settings");
     }
 
 
@@ -129,7 +128,8 @@ class SettingsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function getConsolidatedSettingsWhereUserSettingsExist(){
+    public function getConsolidatedSettingsWhereUserSettingsExist()
+    {
 
         $mm = SettingStore::factory()->meetingMaster()->create([
             'meeting_id' => $this->meeting->id,
@@ -153,12 +153,12 @@ class SettingsRepositoryTest extends TestCase
 
 //        $this->assertEquals($this->user->id, $result->user_id);
         $this->assertTrue(is_null($result->is_meeting_master) || $result->is_meeting_master === false, "meeting master props outside of settings not merged in");
-        foreach($mm->settings as $name => $v){
+        foreach ($mm->settings as $name => $v) {
             $this->assertEquals($v, $result->settings[$name], 'meeting master settings merged in');
         }
 
-        foreach($us->settings as $name => $v){
-            if(! in_array($name, $mm->getSettingNames())){
+        foreach ($us->settings as $name => $v) {
+            if (!in_array($name, $mm->getSettingNames())) {
                 $this->assertEquals($v, $result->settings[$name], 'non conflicting user settings untouched');
             }
         }
@@ -167,7 +167,8 @@ class SettingsRepositoryTest extends TestCase
 
 
     /** @test */
-    public function getConsolidatedSettingsWhereUserSettingsDoNotExist(){
+    public function getConsolidatedSettingsWhereUserSettingsDoNotExist()
+    {
         $mm = SettingStore::factory()->meetingMaster()->create([
             'meeting_id' => $this->meeting->id,
             'settings' => [
@@ -187,13 +188,16 @@ class SettingsRepositoryTest extends TestCase
 
 
     /** @test */
-    public function getConsolidatedSettingsWhereMeetingMasterSettingsAreNull(){
+    public function getConsolidatedSettingsWhereMeetingMasterSettingsAreNull()
+    {
         $mm = SettingStore::factory()->meetingMaster()->create([
             'meeting_id' => $this->meeting->id,
         ]);
 
+        //call
         $result = $this->object->getConsolidatedSettings($this->meeting, $this->user);
 
+        //check
         $this->assertInstanceOf(SettingStore::class, $result);
 
 //        $this->assertEquals($this->user->id, $result->user_id);
@@ -202,6 +206,52 @@ class SettingsRepositoryTest extends TestCase
         $this->assertEquals($mm->settings, $result->settings, 'meeting master settings merged');
     }
 
+    /** @test */
+    public function duplicateSettingStores()
+    {
+        $numUsers = 10;
+        $ogmm = SettingStore::factory()->meetingMaster()->create([
+            'meeting_id' => $this->meeting->id,
+        ]);
+
+        $users = User::factory()->count($numUsers)->create();
+        foreach ($users as $user) {
+            SettingStore::factory()->create([
+                'meeting_id' => $this->meeting->id,
+                'user_id' => $user->id,
+                'settings' => [
+                    'show_vote_counts' => false,
+                    'dog' => 'wag'
+                ]
+            ]);
+        }
+
+        $newMeeting = Meeting::factory()->create();
+
+        //call
+        $result = $this->object->duplicateSettingStores($this->meeting, $newMeeting);
+
+        //check
+        //check master copied
+        $newmm = $newMeeting->getMasterSettingStore();
+        $this->assertInstanceOf(SettingStore::class, $newmm);
+        $this->assertTrue($newmm->is_meeting_master);
+        foreach ($ogmm->settings as $name => $v) {
+            $this->assertEquals($v, $newmm->settings[$name], 'meeting master settings duplicated');
+        }
+
+        //check users copied
+        foreach($users as $user) {
+            $ogs = $this->meeting->settingStore()->where('user_id', $user->id)->first();
+            $news = $newMeeting->settingStore()->where('user_id', $user->id)->first();
+
+            $this->assertInstanceOf(SettingStore::class, $ogs);
+            $this->assertInstanceOf(SettingStore::class, $news);
+            $this->assertEquals($ogs->settings, $news->settings);
+        }
+
+
+    }
 
 
 }

@@ -6,7 +6,7 @@
             <h4 class="card-title">{{ title }}</h4>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" v-if="showAddButtons">
             <create-meeting-button v-if="isMeeting"></create-meeting-button>
             <create-election-button v-if="isElection"></create-election-button>
         </div>
@@ -93,6 +93,7 @@ export default {
         events: function () {
             let m = this.$store.getters.getStoredMeetings;
             if (!isReadyToRock(m)) return [];
+          return _.orderBy(m, 'id', 'desc');
             return m;
         },
 
@@ -115,6 +116,12 @@ export default {
             return _.filter(this.events, (event) => {
                 return event.type === 'meeting';
             });
+        },
+
+        showAddButtons: function(){
+            //dev this will probably need to be more sophisticated once
+            //we are no longer just distinguishing permissions between admin and non admin
+            return window.isAdmin === '1';
         },
 
         title: function () {
