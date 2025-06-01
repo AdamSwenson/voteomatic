@@ -323,6 +323,23 @@ class Meeting extends Model
         $this->save();
     }
 
+    /* =======================
+    Settings
+    ======================= */
+    /**
+     * Returns the master settings store.
+     * VOT-272: NOT SURE WHY DEPRECATED OR WHAT TO USE INSTEAD
+     * @deprecated
+     * @return mixed
+     */
+    public function getMasterSettingStore()
+    {
+        return SettingStore::where('meeting_id', $this->id)
+            ->where('is_meeting_master', true)
+            ->first();
+
+    }
+
 
     /* =======================
         Relationships
@@ -352,9 +369,14 @@ class Meeting extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * Returns all associated settings stores
+     * Changed to hasMany from hasOne in VOT-272
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function settingStore()
     {
-        return $this->hasOne(SettingStore::class);
+        return $this->hasMany(SettingStore::class);
     }
 
 
@@ -422,17 +444,6 @@ class Meeting extends Model
 //            ->first();
     }
 
-    /**
-     * @deprecated
-     * @return mixed
-     */
-    public function getMasterSettingStore()
-    {
-        return SettingStore::where('meeting_id', $this->id)
-            ->where('is_meeting_master', true)
-            ->first();
-
-    }
 
     /**
      * Creates an entry in the assignments table

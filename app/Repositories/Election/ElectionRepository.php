@@ -10,6 +10,8 @@ use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
 use App\Repositories\IMeetingRepository;
+use App\Repositories\ISettingsRepository;
+use App\Repositories\SettingsRepository;
 use Hamcrest\Description;
 use Illuminate\Support\Facades\Log;
 use Tests\helpers\FakeFullElectionMaker;
@@ -90,6 +92,7 @@ class ElectionRepository implements IElectionRepository
     {
         $meetingRepo = app()->make(IMeetingRepository::class);
         $candidateRepo = app()->make(CandidateRepository::class);
+        $settingsRepo = app()->make(ISettingsRepository::class);
 
         //Copy election
         $newElection = $meetingRepo->createElectionForUser($meeting->getOwner());
@@ -105,6 +108,9 @@ class ElectionRepository implements IElectionRepository
                 $newElection->save();
             }
         }
+
+        //Copy settings
+        $settingsRepo->duplicateSettingStores($meeting, $newElection);
 
         //Copy offices and candidates
         foreach ($meeting->motions as $motion) {
