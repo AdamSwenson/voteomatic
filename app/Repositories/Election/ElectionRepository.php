@@ -8,6 +8,11 @@ use App\Http\Requests\CandidateRequest;
 use App\Models\Election\Candidate;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
+use App\Repositories\IMeetingRepository;
+use Hamcrest\Description;
+use Illuminate\Support\Facades\Log;
+use Tests\helpers\FakeFullElectionMaker;
 
 /**
  * Class ElectionRepository
@@ -50,8 +55,15 @@ class ElectionRepository implements IElectionRepository
 //        return $candidate;
 //    }
 
-
-    public function addOfficeToElection(Meeting $election, $officeName = '', $description = '', $maxWinners=1)
+    /**
+     * @param Meeting $election
+     * @param $officeName Name of office which will be the content of the motion
+     * @param $description Description of office which will be the description
+     * @param $maxWinners
+     * @param $type Normally 'election' if an office. If proposition, 'proposition'
+     * @return mixed
+     */
+    public function addOfficeToElection(Meeting $election, $officeName = '', $description = '', $maxWinners = 1, $type = 'election')
     {
         $office = Motion::create([
             'content' => $officeName,
@@ -61,11 +73,55 @@ class ElectionRepository implements IElectionRepository
             //Otherwise it will not be returned when we request the offices
             //via the motion controller
             'seconded' => true,
-            'type' => 'election'
+            'type' => $type
         ]);
 
         return $office;
 
+    }
+
+    /**
+     * Creates a copy of the current election with all the same motions,
+     * users, and other information except for votes
+     * @param Meeting $meeting
+     * @return void
+     */
+    public function duplicateElection(Meeting $meeting)
+    {
+        $meetingRepo = app()->make(IMeetingRepository::class);
+        $candidateRepo = app()->make(CandidateRepository::class);
+
+        //Copy election
+        $newElection = $meetingRepo->createElectionForUser($meeting->getOwner());
+        $newElection->name = $meeting->name . " COPY";
+        $newElection->info = $meeting->info;
+
+        //dev what to do about lti?
+        //Copy users
+        foreach ($meeting->users as $user) {
+            //createElectionForUser already associated the owner
+            if($user->id !== $meeting->getOwner()->id){
+                $newElection->addUserToMeeting($user);
+                $newElection->save();
+            }
+        }
+
+        //Copy offices and candidates
+        foreach ($meeting->motions as $motion) {
+            $office = $this->addOfficeToElection($newElection, $motion->content, $motion->description, $motion->max_winners, $motion->type);
+
+            foreach ($motion->poolMembers as $member) {
+                $person = $member->person;
+                $newPerson = $person->replicate();
+                $newPerson->save();
+                $candidateRepo->addPersonToPool($office, $newPerson);
+                $candidateRepo->addCandidateToBallot($office, $newPerson);
+            }
+        }
+
+        $newElection->save();
+        Log::info("Created new election id $newElection->id from election id $meeting->id");
+        return $newElection;
     }
 
 
