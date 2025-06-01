@@ -71,6 +71,7 @@ class SettingsRepository implements ISettingsRepository
         //on client side
         $validSettings = $meeting->is_election ? SettingStore::VALID_ELECTION_SETTINGS : SettingStore::VALID_MEETING_SETTINGS;
         foreach($validSettings as $setting){
+            //dev If the default value is false it will not store the setting in the db
             $defaultVal = SettingStore::SETTINGS_DISPLAY_PROPERTIES[$setting]['default'];
             $settings->setSetting($setting, $defaultVal);
         }
