@@ -7,7 +7,7 @@
                 <button class="btn btn-info btn-block"
                         v-if="showPreviousButton"
                         v-on:click="handlePrevious"
-                ><i class="bi-chevron-double-left"></i>       Previous office
+                ><i class="bi-chevron-double-left"></i>       Previous
                 </button>
             </div>
 
@@ -18,7 +18,7 @@
                 <button class="btn btn-info btn-block"
                         v-if="showNextButton"
                         v-on:click="handleNext"
-                >Next office        <i class="bi-chevron-double-right"></i>
+                >Next       <i class="bi-chevron-double-right"></i>
                 </button>
             </div>
 

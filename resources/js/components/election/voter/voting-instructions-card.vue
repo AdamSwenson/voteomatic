@@ -11,14 +11,13 @@
             <!--            <p class="card-text">[todo video link]</p>-->
             <p class="card-text">Please click 'Start voting' below or on an office in the list to the left (above, if
                 you're on a
-                small device) to make your selections for each position.</p>
+                small device) to make your selection(s) for each position.</p>
 
             <p class="card-text">Your selections will not be recorded
                 until you review and submit them on the final page. If you refresh your browser before recording them,
                 the selections will be lost.</p>
 
-            <p class="card-text">To maintain anonymity, there is no record that associates you with the candidate(s) you selected.
-                Therefore, there is no way to change your vote after you submit your ballot. </p>
+            <p class="card-text">To maintain anonymity, there is no way to change your vote after you submit your ballot. </p>
 
 <!--            <p class="card-text">You may vote for some positions and return later to vote for others.-->
 <!--                However, since your vote is recorded anonymously, once you review and submit your choice for a-->

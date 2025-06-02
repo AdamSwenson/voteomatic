@@ -8,11 +8,10 @@
             <p class="card-text">Once your selections have been saved, they cannot be changed.</p>
 
             <p class="card-text">If you have not selected any candidates for an office,
-                you may return and finish voting. However, if you have selected some but not all of the maximum allowed number of candidates, you will not be able
+                you may return and finish voting. However, if you have selected less than the maximum allowed number of candidates, you will not be able
                 to return and select additional candidates. </p>
 
-            <p class="card-text">To change your selections, click the office name in the list to the left or
-            use the 'Previous office' button below.</p>
+            <p class="card-text">To change a selection, click the office name in the list to the left.</p>
 
         </div>
 
@@ -27,7 +26,7 @@
         </div>
         </div>
 
-        <navigation-footer></navigation-footer>
+<!--        <navigation-footer></navigation-footer>-->
 
     </div>
 </template>

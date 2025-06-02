@@ -14,7 +14,7 @@ export default {
             modalId: 'recordAllSelectionsModal',
             modalTitle: 'Record your votes',
             buttonLabel: 'Record',
-            modalText: "<p>Clicking 'Record' will send your selections to the server. You will <strong>not</strong> be able to change these votes.</p>" +
+            modalText: "<p>Clicking 'Record' will save your selections. You will <strong>not</strong> be able to change these votes.</p>" +
                 "<p>If you selected 0 candidates for a position, you may return to finish voting on that position until the election closes.</p>" +
                 "<p>However, if you selected 1 or more candidates but less than the maximum for a position, you will not be able to add more later.</p>" //+
                 // "<p>If you did not make a selection for the Bylaws change, you will be able vote on it later</p>",
