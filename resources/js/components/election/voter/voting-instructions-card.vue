@@ -17,11 +17,14 @@
                 until you review and submit them on the final page. If you refresh your browser before recording them,
                 the selections will be lost.</p>
 
-            <p class="card-text">You may vote for some position and return later to vote for others.
-                However, since your vote is recorded anonymously, once you review and submit your choices for an
-                position,
-                it cannot be altered. If you vote for less than the maximum number of candidates for an position, you
-                will <strong>not</strong> be able to vote for more after you submit your choices.</p>
+            <p class="card-text">To maintain anonymity, there is no record that associates you with the candidate(s) you selected.
+                Therefore, there is no way to change your vote after you submit your ballot. </p>
+
+<!--            <p class="card-text">You may vote for some positions and return later to vote for others.-->
+<!--                However, since your vote is recorded anonymously, once you review and submit your choice for a-->
+<!--                position,-->
+<!--                it cannot be altered. If you vote for less than the maximum number of candidates for an position, you-->
+<!--                will <strong>not</strong> be able to vote for more after you submit your choices.</p>-->
         </div>
         <div class="card-body">
             <p class="card-text">For information about the receipts you will receive after voting,
