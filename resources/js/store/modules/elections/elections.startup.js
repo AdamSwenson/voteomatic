@@ -103,15 +103,15 @@ const actions = {
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
                                 //dev This would be a good place to decide whether to send to
                                 // a has voted page
-                                dispatch('loadUnvotedOfficeCandidates').then(() => {
+
+                                //dev VOT-280 replaced the loading of unvoted candidates
+                                // May want to consider adding a check of settings to determine whether to
+                                // load only unvoted candidates. Not sure if there’s a security benefit
+                                dispatch('loadAllOfficeCandidates').then(() => {
                                     return resolve();
                                 });
-
-                                //
-                                // dispatch('loadResultsForAllMeetingMotions').then(function () {
-                                // });
-                                //
-                                // dispatch('loadMotionTypesAndTemplates').then(function () {
+                                // dispatch('loadUnvotedOfficeCandidates').then(() => {
+                                //     return resolve();
                                 // });
 
                             });

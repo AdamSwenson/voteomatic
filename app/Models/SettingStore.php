@@ -18,6 +18,9 @@ class SettingStore extends Model
 
         /** Whether to show vote counts in the results. If false, only shows winners  */
         'show_vote_counts',
+
+        /** Whether to return the content of ballots when a user enters a receipt */
+        'reveal_ballot_contents'
     ];
 
 
@@ -96,6 +99,12 @@ class SettingStore extends Model
             'default' => true,
         ],
 
+        'reveal_ballot_contents' => [
+            'displayName' => "Reveal ballot contents",
+            'displayDescription' => "Whether the user sees whom they voted for when they validate a receipt",
+            'default' => false,
+        ]
+
     ];
 
     /**
@@ -116,7 +125,8 @@ class SettingStore extends Model
 
         //Election specific
         'members_make_nominations',
-        'randomize_candidates'
+        'randomize_candidates',
+        'reveal_ballot_contents',
     ];
 //
 //    /**
@@ -162,6 +172,7 @@ class SettingStore extends Model
         //Election specific
         'settings->members_make_nominations',
         'settings->randomize_candidates',
+        'settings->reveal_ballot_contents',
     ];
 
     protected $casts = [
@@ -203,7 +214,6 @@ class SettingStore extends Model
      */
     public function setSetting($settingName, $value)
     {
-
         $this->update(["settings->$settingName" => $value]);
         $this->save();
     }
