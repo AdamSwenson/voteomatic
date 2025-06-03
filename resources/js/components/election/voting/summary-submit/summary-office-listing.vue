@@ -13,7 +13,7 @@
                 <li v-for="c in selectedCandidates"
                     :key="c.id"
                     v-bind:class="styling"
-                >{{ c.nameAndInfo }}
+                ><span v-html="c.nameAndInfo"></span>
                 </li>
             </ul>
 
