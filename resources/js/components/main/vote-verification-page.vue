@@ -6,7 +6,8 @@
         </div>
 
         <div class="card-body">
-            <h5 card-title> To check that your vote was counted, enter a receipt in the box and click the 'Verify vote' button.</h5>
+            <h5 card-title> To check that your vote was counted, enter a receipt in the box and click the 'Verify vote'
+                button.</h5>
             <div class="card-text">
 
                 <div class="input-group mb-3">
@@ -28,18 +29,20 @@
                     </div>
                 </div>
 
-                <p class="card-text">Feel free to enter fake receipts to demonstrate that this is actually checking your receipts</p>
+                <p class="card-text">Feel free to enter fake receipts to demonstrate that this is actually checking your
+                    receipts</p>
 
                 <p class="card-text">For more information about how the voteomatic keeps your vote
-                anonymous, please see <a href="https://github.com/AdamSwenson/voteomatic#anonymity">https://github.com/AdamSwenson/voteomatic#anonymity</a> </p>
+                    anonymous, please see <a href="https://github.com/AdamSwenson/voteomatic#anonymity">https://github.com/AdamSwenson/voteomatic#anonymity</a>
+                </p>
 
 
             </div>
-<!--        </div>-->
+            <!--        </div>-->
 
 
-        <!--            </div>-->
-<!--        <div class="card-body">-->
+            <!--            </div>-->
+            <!--        <div class="card-body">-->
             <div class="card-text">
                 <p v-if="verificationResult"></p>
 
@@ -47,7 +50,16 @@
                 <div class="alert alert-success" role="alert" v-if="showGood">
                     <h4 class="alert-heading">This receipt is valid</h4>
                     <h5 class="alert-heading">The database contains a record of this vote</h5>
-                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong></p>
+                    <div class="ms-5 mt-3" v-if="isElection && showVoteContent">
+                        <h4 class="h4">{{ officeName }}</h4>
+                        <ul>
+                            <li>{{ candidateName }}</li>
+                        </ul>
+                    </div>
+
+                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong>
+                    </p>
+
                     <p>Receipt : {{ receipt }}</p>
 
                     <p class="text-end">
@@ -59,7 +71,7 @@
                     <h4 class="alert-heading">This is not a valid receipt</h4>
                     <p> Receipt : {{ receipt }} </p>
                     <p class="text-end">
-                    <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
+                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
                     </p>
                 </div>
 
@@ -68,7 +80,7 @@
         </div>
 
         <div class="card-body" v-if="showReceipts">
-            <p  class="card-text">The receipts below are temporarily stored on your browser. If you refresh the page,
+            <p class="card-text">The receipts below are temporarily stored on your browser. If you refresh the page,
                 it will no longer be possible to retrieve your receipts since your user id is not
                 linked to them in the database. Use the buttons below to download a list of your
                 receipts for safekeeping</p>
@@ -95,13 +107,14 @@ import ReceiptListArea from "../vote-verification/receipt-list-area";
 import CopyButton from "../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../vote-verification/download-receipts-button";
 import ModeMixin from "../../mixins/modeMixin";
+import SettingsMixin from "../../mixins/settingsMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "vote-verification-page",
     components: {DownloadReceiptsButton, CopyButton, ReceiptListArea},
 
-    mixins : [ModeMixin],
+    mixins: [ModeMixin, SettingsMixin],
 
     data: function () {
         return {
@@ -109,18 +122,49 @@ export default {
             showGood: false,
             receipt: '',
             vote: null,
-            sampleReceipt : '3367011432d697b81096f820e608e0e43ad3a63055692974428b4320cc4d6721'
+            sampleReceipt: '3367011432d697b81096f820e608e0e43ad3a63055692974428b4320cc4d6721'
 
         }
     },
 
-    asyncComputed : {
+    asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
         },
 
-        showReceipts : function(){
-            return isReadyToRock(this.allVotes) && this.allVotes.length >0 ;
+        showReceipts: function () {
+            return isReadyToRock(this.allVotes) && this.allVotes.length > 0;
+        },
+
+        /**
+         * Whether to show how the user voted.
+         * Primarily for elections
+         */
+        showVoteContent: function () {
+            if (!isReadyToRock(this.settings)) return false;
+            return this.settings.settings.reveal_ballot_contents;
+        },
+
+        officeName: function () {
+            if (!this.showVoteContent) return ''
+            if (!isReadyToRock(this.vote)) return ''
+            let office = this.$store.getters.getMotionById(this.vote.motionId);
+            window.console.log('vote-verification-page', 'officeName', 152, office);
+            return office.content;
+        },
+
+        /**
+         * If showing the content of the vote, the name
+         * of the candidate who was selected
+         *
+         * @returns {*|string}
+         */
+        candidateName: function () {
+            if (!this.showVoteContent) return ''
+            if (!isReadyToRock(this.vote)) return ''
+            let candidate = this.$store.getters.getCandidateById(this.vote.candidateId);
+            // window.console.log('vote-verification-page', 'candidateName', 164, candidate[0].name);
+            return candidate[0].name;
         }
 
     },
@@ -165,13 +209,16 @@ export default {
                     .then(function (response) {
                         if (!_.isUndefined(response.data.id)) {
 
-                            if(me.isElection){
-                                me.vote = new Vote({candidateId : response.data.candidate_id});
+                            if (me.isElection) {
+                                me.vote = new Vote({
+                                    motionId: response.data.motion_id,
+                                    candidateId: response.data.candidate_id
+                                });
 
-                            }else{
+                            } else {
                                 //The is_yay prop being undefined will report the
                                 //receipt as invalid. The error will be caught below
-                                me.vote = new Vote({isYay : response.data.is_yay});
+                                me.vote = new Vote({isYay: response.data.is_yay});
                             }
 
                             me.showGood = true;

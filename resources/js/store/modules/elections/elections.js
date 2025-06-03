@@ -560,6 +560,11 @@ const getters = {
         });
     },
 
+    getCandidateById: (state) => (candidateId) => {
+        return state.candidates.filter((c) => {
+            return c.id === candidateId;
+        });
+    },
 
     /**
      * Returns true if all offices in the current election
