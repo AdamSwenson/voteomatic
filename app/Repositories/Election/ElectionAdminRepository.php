@@ -3,6 +3,9 @@
 namespace App\Repositories\Election;
 
 use App\Models\Meeting;
+use App\Models\SettingStore;
+use App\Repositories\ISettingsRepository;
+use App\Repositories\SettingsRepository;
 
 class ElectionAdminRepository implements IElectionAdminRepository
 {
@@ -65,6 +68,34 @@ class ElectionAdminRepository implements IElectionAdminRepository
     public function hideResults(Meeting $meeting)
     {
         $meeting->hideElectionResults();
+        return $meeting;
+    }
+
+    /**
+     * To maximally provide anonymity for elections, this prevents any votes from being cast
+     * and purges the records of who voted. It does not affect the Votes. Results can still be
+     * accessed.
+     * @param Meeting $meeting
+     * @return void
+     */
+    public function purgeAndPermanentlyLockElection(Meeting $meeting){
+        //Check that this is allowed for the election
+        $settings = $meeting->getMasterSettingStore();
+        if($settings->getSetting('permalock_election') !== true) return false;
+
+        $meeting->is_permalocked = true;
+
+
+        foreach($meeting->motions as $motion){
+            $motion = $motion;
+
+            foreach ($motion->recordedVoteRecord as $record) {
+                $record->delete();
+            }
+        }
+
+        $meeting->save();
+
         return $meeting;
     }
 

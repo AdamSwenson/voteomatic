@@ -20,7 +20,10 @@ class SettingStore extends Model
         'show_vote_counts',
 
         /** Whether to return the content of ballots when a user enters a receipt */
-        'reveal_ballot_contents'
+        'reveal_ballot_contents',
+
+        /** Whether the election can be permanently locked so no votes can happen */
+        'permalock_election'
     ];
 
 
@@ -103,6 +106,11 @@ class SettingStore extends Model
             'displayName' => "Reveal ballot contents",
             'displayDescription' => "Whether the user sees whom they voted for when they validate a receipt",
             'default' => false,
+        ],
+        'permalock_election' => [
+            'displayName' => "Permanently lock election",
+            'displayDescription' => "Permanently prevents voting from restarting and removes all records of who voted.",
+            'default' => false,
         ]
 
     ];
@@ -127,6 +135,7 @@ class SettingStore extends Model
         'members_make_nominations',
         'randomize_candidates',
         'reveal_ballot_contents',
+        'permalock_election',
     ];
 //
 //    /**
@@ -173,6 +182,7 @@ class SettingStore extends Model
         'settings->members_make_nominations',
         'settings->randomize_candidates',
         'settings->reveal_ballot_contents',
+        'settings->permalock_election',
     ];
 
     protected $casts = [
