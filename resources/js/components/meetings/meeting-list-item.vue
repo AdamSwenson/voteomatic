@@ -1,6 +1,6 @@
 <template>
 
-    <li class="list-group-item"
+    <li class="list-group-item mb-2"
         v-bind:class="borderStyle">
         <button
             v-if="showButton"
