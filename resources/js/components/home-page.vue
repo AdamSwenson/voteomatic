@@ -1,7 +1,7 @@
 <template>
 
-    <div class="home-page main-page">
-        <div class="card main-page">
+    <div class="home-page main-page ">
+        <div class="card main-page ms-5 me-5">
             <div class="card-header mt-3">
                 <h2 class="header-text text-center text-light">Welcome to the Voteomatic </h2>
                 <div class="text-end">
