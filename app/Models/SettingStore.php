@@ -108,8 +108,8 @@ class SettingStore extends Model
             'default' => false,
         ],
         'permalock_election' => [
-            'displayName' => "Permanently lock election",
-            'displayDescription' => "Permanently prevents voting from restarting and removes all records of who voted.",
+            'displayName' => "Allow election to be permanently locked",
+            'displayDescription' => "Enables the ability to permanently prevent voting from restarting and removes all records of who voted.",
             'default' => false,
         ]
 
