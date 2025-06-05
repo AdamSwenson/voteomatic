@@ -1,26 +1,32 @@
 <template>
 
-    <div class="home-page card">
-        <div class="card-header">
-            <h3 class="header-text">Welcome to the Voteomatic </h3>
-        <div class="text-end"><logout-button></logout-button></div>
-        </div>
-
-
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <event-list-card event-type="meeting"></event-list-card>
-                </div>
-
-                <div class="col">
-                    <event-list-card event-type="election"></event-list-card>
+    <div class="home-page main-page ">
+        <div class="card main-page ms-5 me-5">
+            <div class="card-header mt-3">
+                <h2 class="header-text text-center text-light">Welcome to the Voteomatic </h2>
+                <div class="text-end">
+                    <logout-button></logout-button>
                 </div>
             </div>
 
-        </div>
-    </div>
 
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col">
+                        <event-list-card event-type="meeting"></event-list-card>
+                    </div>
+
+                    <div class="col">
+                        <event-list-card event-type="election"></event-list-card>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <page-footer></page-footer>
+
+    </div>
 
 </template>
 
@@ -33,6 +39,7 @@ import EventListCard from "./common/event-list-card";
 import LogoutButton from "./navigation/logout-button";
 import CreateMeetingButton from "./meetings/controls/create-meeting-button";
 import CreateElectionButton from "./election/setup/election/create-election-button";
+import PageFooter from "./navigation/page-footer.vue";
 
 /**
  * This is the internal home page. Only will be accessed if logging in directly
@@ -40,7 +47,7 @@ import CreateElectionButton from "./election/setup/election/create-election-butt
  */
 export default {
     name: "home-page",
-    components: {CreateElectionButton, CreateMeetingButton, LogoutButton, EventListCard,},
+    components: {PageFooter, CreateElectionButton, CreateMeetingButton, LogoutButton, EventListCard,},
     props: [],
 
     mixins: [meetingMixin, urlMixin],

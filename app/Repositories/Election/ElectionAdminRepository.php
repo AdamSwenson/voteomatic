@@ -58,7 +58,7 @@ class ElectionAdminRepository implements IElectionAdminRepository
         $meeting->releaseElectionResults();
 
         //dev Added VOT-288
-        $this->purgeAndPermanentlyLockElection($meeting);
+//        $this->purgeAndPermanentlyLockElection($meeting);
 
         return $meeting;
     }
