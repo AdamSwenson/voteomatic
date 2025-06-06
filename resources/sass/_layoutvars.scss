@@ -1,3 +1,17 @@
+//dev Still haven't figured out gradient not filling whole
+// screen problem
+// https://stackoverflow.com/questions/5721904/make-body-fill-entire-screen
+//html {
+//    height: 100vh;
+//
+//}
+//body{
+//    min-height: 100vh;
+//}
+.spacer{
+    min-height: 100vh;
+}
+
 
 /*.router-tabs {*/
 ul.nav-tabs {
