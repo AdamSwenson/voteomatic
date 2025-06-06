@@ -9,6 +9,7 @@
         <meeting-module v-else></meeting-module>
 
         <page-footer></page-footer>
+        <div class="spacer"></div>
 
     </div>
 
