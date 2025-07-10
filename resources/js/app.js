@@ -3,11 +3,18 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import Vue from "vue";
-window.Vue = Vue;
-// window.Vue = require('vue');
+import { createApp } from 'vue'
+
 
 require('./bootstrap');
+
+// import Vue from "vue";
+// window.Vue = Vue;
+// window.Vue = require('vue');
+
+const app = createApp({
+    el: '#app',
+});
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ API ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -15,42 +22,39 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-//
-// window.axios.defaults.baseURL = routeRoot;
-//
-// // This wrapper bind axios to Vue or this if you're using single file component.
-Vue.use(VueAxios, axios)
+app.use(VueAxios, axios);
+app.provide('axios', app.config.globalProperties.axios)  // provide 'axios'
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-import VueRouter from 'vue-router'
-Vue.use( VueRouter );
+// import { createRouter, createWebHistory,  createWebHashHistory } from 'vue-router'
+//
+// // Define some routes
+// // Each route should map to a component. The "component" can
+// // either be an actual component constructor created via
+// // Vue.extend(), or just a component options object.
+// import  {meetingRoutes} from './routes.client.meeting';
+// import { electionRoutes } from './routes.client.election';
+//
+// let routes = _.concat(electionRoutes, meetingRoutes);
+//
+// //set base
+// const history =createWebHashHistory();
+//
+//
+// const router = createRouter( {
+//     routes, // short for routes: routes
+//     history,
+//     // base: window.routeRoot
+// } );
 
-
-// Define some routes
-// Each route should map to a component. The "component" can
-// either be an actual component constructor created via
-// Vue.extend(), or just a component options object.
-import  {meetingRoutes} from './routes.client.meeting';
-import { electionRoutes } from './routes.client.election';
-
-let routes = _.concat(electionRoutes, meetingRoutes);
-
-// let routes = window.startData.isElection ? electionRoutes : meetingRoutes;
-// window.console.log(routes);
-// // Create the router instance and pass the `routes` option
-export const router = new VueRouter( {
-    routes: routes, // short for routes: routes
-    base: window.routeRoot
-} );
-
-
+import router from "./router";
+app.use(router);
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STORE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-import Vuex from 'vuex'
-Vue.use(Vuex)
-import store from './store';
 
+import store from './store';
+app.use(store);
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import AsyncComputed from 'vue-async-computed'
@@ -95,8 +99,10 @@ Vue.component('election-setup-card', require('./components/election/setup/electi
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    store: store,
-    router : router
-});
+app.mount('#app');
+
+// const app = new Vue({
+//     el: '#app',
+//     store: store,
+//     router : router
+// });

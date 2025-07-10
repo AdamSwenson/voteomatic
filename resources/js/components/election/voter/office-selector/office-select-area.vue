@@ -8,19 +8,22 @@
         <div class="list-group list-group-flush">
             <instructions-row></instructions-row>
 
-            <office-select-row
-                v-if="showOffices"
-                :motion="m"
-                v-for="m in offices"
-                :key="m.id"
-            ></office-select-row>
+            <div v-if="showOffices">
+                <office-select-row
 
-            <proposition-select-row
-                v-if="showPropositions"
-                :motion="p"
-                v-for="p in propositions"
-                :key="p.id"
-            ></proposition-select-row>
+                    :motion="m"
+                    v-for="m in offices"
+                    :key="m.id"
+                ></office-select-row>
+            </div>
+
+            <div v-if="showPropositions">
+                <proposition-select-row
+                    :motion="p"
+                    v-for="p in propositions"
+                    :key="p.id"
+                ></proposition-select-row>
+            </div>
 
             <summary-select-row></summary-select-row>
 

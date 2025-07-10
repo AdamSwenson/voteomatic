@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ComponentCompilerParent from "../component-compiler-parent";
+// import ComponentCompilerParent from "../component-compiler-parent";
 
 export default {
     name: "text-styler-parent-regular",

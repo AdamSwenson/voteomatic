@@ -1,8 +1,8 @@
 <script>
 // Cool way to render Vue components from HTML Strings
 // https://medium.com/haiiro-io/compile-markdown-as-vue-template-on-nuxt-js-1c606c15731c
-import VueWithCompiler from "vue/dist/vue.esm";
-
+// import VueWithCompiler from "vue/dist/vue.esm";
+import VueWithCompiler from 'vue';
 export default {
     name: "component-compiler-parent",
 

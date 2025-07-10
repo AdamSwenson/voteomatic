@@ -2,10 +2,11 @@
  * Created by adam on 2020-07-13.
  */
 
+import { createStore  } from 'vuex'
 
 // import Vue from  'vue/dist/vue.js'
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+// import Vuex from 'vuex'
 
 //global stuff
 import * as actions from './actions'
@@ -29,7 +30,7 @@ import startup from "./modules/startup";
 import results from "./modules/results";
 import votes from "./modules/votes";
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 /**
  * This subscribes the api package which
@@ -42,9 +43,26 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
 
-export default new Vuex.Store({
+// export default new Vuex.Store({
+    export default createStore({
+// export default new Vuex.Store({
 
-    strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
+        strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
+
+        /**
+         * From instances and components where store has been
+         * injected, actions are called
+         * like so: store.dispatch( 'string-action-name' )
+         */
+        // actions,
+        // getters,
+        // mutations,
+        // state,
+
+        // plugins: [], //[ apiPlugin, websocketPlugin ],
+
+
+        // strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
     /**
      * From instances and components where store has been

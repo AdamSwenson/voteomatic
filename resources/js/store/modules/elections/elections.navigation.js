@@ -9,8 +9,8 @@ import PrematureAccessCard from "../../../components/election/unavailable/premat
 import ResultsCard from "../../../components/election/results/election-results-card";
 import ClosedCard from "../../../components/election/unavailable/election-closed-card";
 
-import {router} from "../../../app";
-
+// import {router} from "../../../app";
+import router from "../../../router";
 const state = {
 
     /** What card should be shown when go to /election-home */
