@@ -76,7 +76,8 @@ const mutations = {
         // window.console.log(updateProp, updateVal);
         let currentMotion = getById(state.candidates, id);
 
-        Vue.set(currentMotion, updateProp, updateVal);
+        currentMotion[updateProp] = updateVal;
+        // Vue.set(currentMotion, updateProp, updateVal);
 
     },
 

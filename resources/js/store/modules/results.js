@@ -94,7 +94,8 @@ const mutations = {
      * @param val
      */
     setMotionResultProp: (state, {object, updateProp, updateVal}) => {
-        Vue.set(object, updateProp, updateVal);
+        object[updateProp] = updateVal;
+        // Vue.set(object, updateProp, updateVal);
     },
 
     //

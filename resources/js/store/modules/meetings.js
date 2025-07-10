@@ -51,7 +51,8 @@ const mutations = {
     },
 
     setMeeting: (state, payload) => {
-        Vue.set(state, 'meeting', payload);
+        state.meeting = payload;
+        // Vue.set(state, 'meeting', payload);
     },
 
     /**
@@ -61,7 +62,8 @@ const mutations = {
      * @param val
      */
     setMeetingProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.meeting, updateProp, updateVal);
+        state.meeting[updateProp] = updateVal;
+        // Vue.set(state.meeting, updateProp, updateVal);
     }
 };
 

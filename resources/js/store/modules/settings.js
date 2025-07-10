@@ -12,7 +12,8 @@ const mutations = {
     },
 
     setSettingsProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.settings, updateProp, updateVal);
+        state.settings[updateProp] = updateVal;
+        // Vue.set(state.settings, updateProp, updateVal);
     }
 
     /*

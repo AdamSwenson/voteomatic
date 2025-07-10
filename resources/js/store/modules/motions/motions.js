@@ -119,7 +119,8 @@ const mutations = {
     },
 
     setDraftMotionProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.draftMotion, updateProp, updateVal);
+        state.draftMotion[updateProp] = updateVal;
+        // Vue.set(state.draftMotion, updateProp, updateVal);
     },
 
 
@@ -133,11 +134,13 @@ const mutations = {
      * @param motionObject
      */
     setMotion: (state, motionObject) => {
-        Vue.set(state, 'currentMotion', motionObject.id);
+        state.currentMotion = motionObject.id;
+        // Vue.set(state, 'currentMotion', motionObject.id);
     },
 
     setMotionTemplates: (state, templates) => {
-        Vue.set(state, 'standardMotionDefinitions', templates);
+        state.standardMotionDefinitions = templates;
+        // Vue.set(state, 'standardMotionDefinitions', templates);
     },
 
     /**
@@ -168,7 +171,8 @@ const mutations = {
         // window.console.log(updateProp, updateVal);
         let currentMotion = getById(state.motions, state.currentMotion);
 
-        Vue.set(currentMotion, updateProp, updateVal);
+        currentMotion[updateProp] = updateVal;
+        // Vue.set(currentMotion, updateProp, updateVal);
 
         // Vue.set(state.currentMotion, updateProp, updateVal);
     },

@@ -7,7 +7,8 @@ module.exports = {
 
     setAdmin : (state, {updateProp, updateVal}) => {
 
-        Vue.set(state, 'isAdmin', updateVal);
+        state.isAdmin = updateVal;
+        // Vue.set(state, 'isAdmin', updateVal);
     }
 
 }

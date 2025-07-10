@@ -12,15 +12,19 @@ const state = {
 
 const mutations = {
     setHomeNavTrigger: (state, value) => {
-    Vue.set(state, 'homeNavTrigger', value);
-        },
+    state.homeNavTrigger = value;
+        // Vue.set(state, 'homeNavTrigger', value);
+
+    },
 
     setResultsNavTrigger: (state, value) => {
-        Vue.set(state, 'resultsNavTrigger', value);
+        state.resultsNavTrigger = value;
+        // Vue.set(state, 'resultsNavTrigger', value);
     },
 
     setVoteNavTrigger: (state, value) => {
-        Vue.set(state, 'voteNavTrigger', value);
+        state.voteNavTrigger = value;
+        // Vue.set(state, 'voteNavTrigger', value);
     },
 
     /**
