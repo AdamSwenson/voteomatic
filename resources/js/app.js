@@ -58,10 +58,10 @@ app.use(store);
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OTHER VUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import AsyncComputed from 'vue-async-computed'
-Vue.use(AsyncComputed)
+app.use(AsyncComputed)
 
 import wysiwyg from "vue-wysiwyg";
-Vue.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
+app.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL REG ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /**
@@ -78,20 +78,20 @@ Vue.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more 
 
 
 // Top level components
-Vue.component('voteomatic', require('./components/voteomatic').default);
-Vue.component('page-navbar', require('./components/navigation/page-navbar').default);
-Vue.component('waitlist', require('./components/waitlist').default);
-Vue.component('home-page', require('./components/home-page').default);
-Vue.component('event-list-card', require('./components/common/event-list-card').default);
+app.component('voteomatic', require('./components/voteomatic').default);
+app.component('page-navbar', require('./components/navigation/page-navbar').default);
+app.component('waitlist', require('./components/waitlist').default);
+app.component('home-page', require('./components/home-page').default);
+app.component('event-list-card', require('./components/common/event-list-card').default);
 
-Vue.component('pmode-page-navbar', require('./components/pmode/pmode-page-navbar').default);
+app.component('pmode-page-navbar', require('./components/pmode/pmode-page-navbar').default);
 
 //todo DEV TOP LEVEL
-Vue.component('results', require('./components/main/motion-results-page').default);
-Vue.component('setup-page', require('./components/setup-page').default);
-Vue.component('amendment-page', require('./components/main/amendment-page').default);
-Vue.component('election-card', require('./components/election/voting/election-card').default);
-Vue.component('election-setup-card', require('./components/election/setup/election/election-setup-card').default);
+// app.component('results', require('./components/main/motion-results-page').default);
+// app.component('setup-page', require('./components/setup-page').default);
+// app.component('amendment-page', require('./components/main/amendment-page').default);
+// app.component('election-card', require('./components/election/voting/election-card').default);
+// app.component('election-setup-card', require('./components/election/setup/election/election-setup-card').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

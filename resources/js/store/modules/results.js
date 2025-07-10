@@ -135,7 +135,7 @@ const actions = {
 
             let url = routes.results.getCounts(motion.id);
 
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     let existing = getters.getMotionResultObject(motion);
                     if (isReadyToRock(existing)) {
@@ -180,7 +180,7 @@ const actions = {
 
             let url = routes.results.getResults(motion.id);
 
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     let existing = getters.getMotionResultObject(motion);
                     if (isReadyToRock(existing)) {

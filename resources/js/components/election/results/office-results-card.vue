@@ -58,7 +58,7 @@ export default {
             // let url = routes.election.getResults(motionId);
             //
             // return new Promise(((resolve, reject) => {
-            //     return Vue.axios.get(url).then((response) => {
+            //     return axios.get(url).then((response) => {
             //         return resolve(response.data);
             //     });
             // }));

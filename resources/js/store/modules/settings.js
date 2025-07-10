@@ -34,7 +34,7 @@ const actions = {
         let url = routes.settings.load(meetingId);
 
         return new Promise(((resolve, reject) => {
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     let settings = new Settings(response.data);
                     commit('setSettings', settings);
@@ -60,7 +60,7 @@ const actions = {
         let url = routes.settings.resource(settingsObj.id);
 
         return new Promise(((resolve, reject) => {
-            return Vue.axios.patch(url, settingsObj)
+            return axios.patch(url, settingsObj)
                 .then((response) => {
                     //todo consider rollback on error
                 });

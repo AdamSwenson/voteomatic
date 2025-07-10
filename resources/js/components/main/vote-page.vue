@@ -358,7 +358,7 @@ export default {
             //
             // return new Promise((resolve, reject) => {
             //     let me = this;
-            //     return Vue.axios.post(url, data)
+            //     return axios.post(url, data)
             //         .then((response) => {
             //             console.log(response.data);
             //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);

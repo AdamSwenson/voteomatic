@@ -200,7 +200,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.endVoting(motion.id);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //The server will return a response containing motions with the
                     //keys:
@@ -300,7 +300,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.setCurrentMotion(meetingId, motionId);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
 
@@ -370,7 +370,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.openVoting(motion.id);
-            return Vue.axios.post(url, motion)
+            return axios.post(url, motion)
                 .then((response) => {
                     let d = response.data;
                     resolve();
@@ -406,7 +406,7 @@ const actions = {
 
             //send to server
             let url = routes.motions.resource(motion.id);
-            return Vue.axios.post(url, {data: motion, _method: 'put'})
+            return axios.post(url, {data: motion, _method: 'put'})
                 .then((response) => {
                     let d = response.data;
                     resolve()

@@ -19,27 +19,27 @@ import electionVoterHomeCard from './components/election/voter/election-voter-ho
 import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
 
 import electionAdminCard from './components/election/admin/election-admin-card';
-Vue.component('ballot-setup-card', ballotSetupCard);
+// Vue.component('ballot-setup-card', ballotSetupCard);
 
-Vue.component('proposition-setup-card', propositionSetupCard);
+// Vue.component('proposition-setup-card', propositionSetupCard);
 
 // Vue.component('election-card', electionCard);
 // Vue.component('election-setup-card', electionSetupCard);
-Vue.component(('event-setup-card', eventSetupCard));
+// Vue.component(('event-setup-card', eventSetupCard));
 
-Vue.component('meeting-home', meetingHome);
+// Vue.component('meeting-home', meetingHome);
 
 // Vue.component('meeting-setup-page', meetingSetup);
 // Vue.component('motion-setup-page', motionSetup);
-Vue.component('results-card', resultsCard);
+// Vue.component('results-card', resultsCard);
 // Vue.component( 'vote-page', votePage );
-Vue.component('vote-card', voteCard);
-Vue.component('vote-verify', resultsCard);
+// Vue.component('vote-card', voteCard);
+// Vue.component('vote-verify', resultsCard);
 
 //dev
-Vue.component('election-voter-home-card', electionVoterHomeCard);
+// Vue.component('election-voter-home-card', electionVoterHomeCard);
 
-Vue.component('election-admin-card', electionAdminCard);
+// Vue.component('election-admin-card', electionAdminCard);
 
 
 export const electionRoutes = [

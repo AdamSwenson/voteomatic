@@ -90,7 +90,7 @@ const actions = {
 
             let me = this;
 
-            return Vue.axios.post(url, data)
+            return axios.post(url, data)
                 .then((response) => {
 
                     console.log(response.data);
@@ -176,7 +176,7 @@ const actions = {
             //
             // let me = this;
             //
-            // return Vue.axios.post(url, data)
+            // return axios.post(url, data)
             //     .then((response) => {
             //
             //         console.log(response.data);
@@ -249,7 +249,7 @@ const actions = {
             //
             // let me = this;
             //
-            // return Vue.axios.post(url, data)
+            // return axios.post(url, data)
             //     .then((response) => {
             //
             //         console.log(response.data);

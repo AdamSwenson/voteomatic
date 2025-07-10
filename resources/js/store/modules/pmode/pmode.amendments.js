@@ -275,7 +275,7 @@ const actions = {
             let url = routes.motions.resource();
 
             // window.console.log('sending', p);
-            Vue.axios.post(url, payload)
+            axios.post(url, payload)
                 .then((response) => {
 
                     //Create a resolution object. This will normally be handled
@@ -301,7 +301,7 @@ const actions = {
 
                         //send to server
                         let url = routes.motions.resource(rezAmend.id);
-                        Vue.axios.post(url, {data: rezAmend, _method: 'put'})
+                        axios.post(url, {data: rezAmend, _method: 'put'})
                             .then((response) => {
                                 // window.console.log(response);
                                 return resolve()

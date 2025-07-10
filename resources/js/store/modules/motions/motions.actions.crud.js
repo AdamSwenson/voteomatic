@@ -35,7 +35,7 @@ const actions = {
             let url = routes.motions.resource();
             let p = {'meetingId': meetingId};
             // window.console.log('sending', p);
-            return Vue.axios.post(url, p)
+            return axios.post(url, p)
                 .then((response) => {
                     //Set a message for the user telling them what's going to happen
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
@@ -82,7 +82,7 @@ const actions = {
             // let p = {'meetingId': meetingId};
             motion['meetingId'] = meeting.id;
             // window.console.log('sending', p);
-            return Vue.axios.post(url, motion)
+            return axios.post(url, motion)
                 .then((response) => {
                     //Set a message for the user telling them what's going to happen
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
@@ -120,7 +120,7 @@ const actions = {
             // let p = {'meetingId': meetingId};
             // window.console.log('sending', d);
 
-            return Vue.axios.post(url, d)
+            return axios.post(url, d)
                 .then((response) => {
                     let d = response.data;
 
@@ -162,7 +162,7 @@ const actions = {
             let url = routes.motions.resource();
             let p = {'meetingId': meetingId};
             // window.console.log('sending', p);
-            return Vue.axios.post(url, p)
+            return axios.post(url, p)
                 .then((response) => {
                     let d = response.data;
 
@@ -201,7 +201,7 @@ const actions = {
             let url = routes.motions.resource();
 
             // window.console.log('sending', p);
-            return Vue.axios.post(url, payload)
+            return axios.post(url, payload)
                 .then((response) => {
                     //Set a message for the user telling them what's going to happen
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
@@ -250,7 +250,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource(motion.id);
-            return Vue.axios.delete(url)
+            return axios.delete(url)
                 .then((response) => {
                     let d = response.data;
 
