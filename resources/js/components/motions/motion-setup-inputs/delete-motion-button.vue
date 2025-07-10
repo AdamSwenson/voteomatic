@@ -30,7 +30,10 @@ export default {
 
         }
     },
-    asyncComputed: {
+
+
+    computed: {
+    // asyncComputed: {
         label : function(){
             if(isReadyToRock(this.motion) && this.motion.type === 'proposition') return  "Delete proposition";
             return  "Delete motion";
@@ -39,7 +42,6 @@ export default {
 
     },
 
-    computed: {},
     methods: {
     //     handleClick: function () {
     //

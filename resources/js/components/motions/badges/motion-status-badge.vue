@@ -28,9 +28,9 @@ export default {
         return {}
     },
 
-    computed: {},
+    computed: {
 
-    asyncComputed: {
+    // asyncComputed: {
         // isPassed: {
         //     get: function () {
         //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {

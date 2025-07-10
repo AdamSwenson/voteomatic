@@ -37,7 +37,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         officeName: function () {
             if (!isReadyToRock(this.motion)) return '';
             return this.motion.content;
@@ -74,7 +76,6 @@ return this.$store.getters.showUnderSelectionWarningForMotion(this.motion);
         }
     },
 
-    computed: {},
 
     methods: {}
 

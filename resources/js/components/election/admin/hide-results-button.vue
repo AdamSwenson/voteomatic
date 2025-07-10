@@ -19,7 +19,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         styling: function(){
             if(! isReadyToRock(this.meeting)) return ' btn-outline-warning ';
 
@@ -30,7 +32,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
 

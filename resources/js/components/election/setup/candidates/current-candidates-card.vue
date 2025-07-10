@@ -49,7 +49,9 @@ export default {
     }
 },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         candidates: {
             get: function () {
                 if (!isReadyToRock(this.motion)) return [];
@@ -64,8 +66,6 @@ export default {
         },
 
     },
-
-    computed: {},
 
     methods: {
         handleSelection : function(){

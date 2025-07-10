@@ -118,7 +118,10 @@ export default {
 
         }
     },
-    asyncComputed: {
+
+
+    computed: {
+    // asyncComputed: {
 
         amendmentClass: function () {
 

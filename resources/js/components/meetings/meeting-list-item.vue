@@ -39,10 +39,6 @@ export default {
             return 'btn btn-outline-primary'
         },
 
-    }
-    ,
-
-    asyncComputed: {
 
         selectedMeeting: function () {
             return this.$store.getters.getActiveMeeting;
@@ -74,7 +70,7 @@ export default {
         },
 
         showButton: function () {
-            if(window.isAdmin === '1') return true;
+            if (window.isAdmin === '1') return true;
 
             if (this.meeting.type !== 'election') return true;
 

@@ -21,7 +21,9 @@ data : function(){
     return {}
 },
 
-asyncComputed : {
+
+    computed: {
+// asyncComputed : {
 
     show : function(){
         //will be null if hasn't been set

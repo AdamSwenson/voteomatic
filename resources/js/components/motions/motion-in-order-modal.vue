@@ -26,9 +26,10 @@ export default {
         }
     },
 
-    asyncComputed: {
+    // asyncComputed: {
 
 
+    computed: {
         motion: function () {
             return this.$store.getters.nextMotionNeedingApproval;
         },
@@ -60,7 +61,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
 

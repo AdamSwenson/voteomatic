@@ -6,18 +6,18 @@
         </div>
 
         <div class="card-body">
-             <label class='form-label' for="office-name">{{ subsidiaryTypeCapitalized }} name</label>
+            <label class='form-label' for="office-name">{{ subsidiaryTypeCapitalized }} name</label>
 
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="office-name" v-model="officeName">
             </div>
 
-             <label class='form-label' for="office-max-winners">Max winners</label>
+            <label class='form-label' for="office-max-winners">Max winners</label>
             <div class="input-group mb-3">
                 <input type="number" class="form-control" id="office-max-winners" v-model="maxWinners">
             </div>
 
-             <label class='form-label' for="office-description">Description / instructions</label>
+            <label class='form-label' for="office-description">Description / instructions</label>
             <div class="input-group mb-3">
                 <textarea class="form-control" id="office-description"
                           placeholder="Optional"
@@ -69,7 +69,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
         // officeName :
 
         candidates: {
@@ -104,9 +106,6 @@ export default {
 
         },
 
-    },
-
-    computed: {
 
         description: {
             get: function () {

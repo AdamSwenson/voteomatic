@@ -104,7 +104,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         originalText: function () {
             if (_.isUndefined(this.motion)) return ''
             return this.motion.content;
@@ -116,9 +118,9 @@ export default {
         //     return this.motion.isResolution;
         // },
 
-    },
-
-    computed: {
+    // },
+    //
+    // computed: {
         text: {
             get: function () {
                 if (this.localText === '') {

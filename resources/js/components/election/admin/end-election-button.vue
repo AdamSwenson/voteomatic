@@ -16,7 +16,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         styling: function(){
             if(! isReadyToRock(this.meeting)) return ' btn-danger ';
             if(!this.meeting.isVotingAvailable && this.meeting.isComplete) return 'btn-outline-danger';

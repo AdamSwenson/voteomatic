@@ -49,21 +49,22 @@ export default {
         }
     },
 
-    asyncComputed : {
-        showTab: function(){
-            if(this.name === 'vote'){
+
+    computed: {
+        // asyncComputed : {
+        showTab: function () {
+            if (this.name === 'vote') {
                 return this.isVotingAllowed && !this.isComplete;
             }
 
-            if(this.name === 'results'){
+            if (this.name === 'results') {
                 return this.isComplete;
             }
 
             return true;
-        }
-    },
 
-    computed: {
+        },
+
         name: function () {
             return this.route.name;
         },

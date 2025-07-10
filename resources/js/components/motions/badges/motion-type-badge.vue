@@ -41,8 +41,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+    // asyncComputed: {
 
+    computed: {
 
         styling: function () {
             //stupid async

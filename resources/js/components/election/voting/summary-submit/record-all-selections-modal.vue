@@ -21,7 +21,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         hasProblem: function () {
             return !this.$store.getters.isBallotErrorFree;
         },
@@ -56,7 +58,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
         handleClick: function () {

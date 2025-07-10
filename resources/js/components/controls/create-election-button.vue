@@ -15,7 +15,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed:{
+    // asyncComputed: {
         styling: function () {
             return 'btn-primary';
             // if(! isReadyToRock(this.meeting)) return ' btn-danger ';

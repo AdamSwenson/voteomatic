@@ -137,7 +137,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         /**
          * Either the currently selected motion object
          * or a draft motion object, depending on what mode

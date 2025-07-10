@@ -18,10 +18,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-
-
-    },
 
     computed: {},
 

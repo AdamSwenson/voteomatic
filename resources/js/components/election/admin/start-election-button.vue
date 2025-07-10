@@ -23,15 +23,15 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         styling: function(){
           if(! isReadyToRock(this.meeting)) return ' btn-success ';
           if(this.meeting.isVotingAvailable) return 'btn-outline-success';
         return ' btn-success ';
         }
     },
-
-    computed: {},
 
     methods: {
 

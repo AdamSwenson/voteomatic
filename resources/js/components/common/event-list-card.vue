@@ -65,8 +65,8 @@ export default {
             vm.loadEvents();
         })
     },
-
-    asyncComputed: {
+computed: {
+    // asyncComputed: {
         /**
          * Not going to determine this via the mode mixin
          * so that can have a list of meetings and a list of meetings in

@@ -50,7 +50,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         offices: function () {
             if (this.motions.length === 0) return []
@@ -77,8 +79,6 @@ export default {
             return this.meeting.isComplete && !this.meeting.isVotingAvailable;
         }
     },
-
-    computed: {},
 
     methods: {}
 

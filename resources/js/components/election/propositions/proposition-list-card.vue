@@ -44,13 +44,14 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         propositions : function(){
             return  this.$store.getters.getElectionPropositions;
         }
     },
 
-    computed: {},
 
     methods: {
         requestEdit : function(){

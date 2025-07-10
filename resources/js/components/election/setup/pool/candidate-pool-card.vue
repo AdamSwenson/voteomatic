@@ -71,7 +71,9 @@ export default {
 
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         candidatePool: {
             get: function () {
                 let me = this;
@@ -89,7 +91,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
 

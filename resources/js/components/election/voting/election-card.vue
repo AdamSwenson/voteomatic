@@ -122,7 +122,9 @@ export default {
     },
 
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         hasUserVoted: function () {
             if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
@@ -262,7 +264,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
         handleNext: function () {

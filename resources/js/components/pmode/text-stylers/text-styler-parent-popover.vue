@@ -59,7 +59,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         textSlotId: function () {
             // return 'insertFailed' + _.toString(this.amendmentId);
             return this.stylerName + _.toString(this.amendmentId);
@@ -87,8 +88,6 @@ export default {
     }
     ,
 
-    computed: {}
-    ,
 
     methods: {
 

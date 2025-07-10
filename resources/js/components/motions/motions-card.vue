@@ -50,7 +50,9 @@ export default {
     components: {EndVotingModal, MotionSelectArea, },
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         motions: function () {
             let m = this.$store.getters.getStoredMotions;
             if (_.isUndefined(m)) return [];

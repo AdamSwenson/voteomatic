@@ -47,7 +47,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         taggedNewText: function () {
 
@@ -68,7 +70,6 @@ export default {
 
     },
 
-    computed: {}
 
 }
 </script>

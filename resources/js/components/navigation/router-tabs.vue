@@ -51,7 +51,9 @@ export default {
         };
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         isAdmin: {
             get: function () {
                 return this.$store.getters.getIsAdmin;

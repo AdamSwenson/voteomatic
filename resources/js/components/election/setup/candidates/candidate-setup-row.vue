@@ -41,7 +41,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         label: function () {
             if (this.isPool) {
                 return this.selected ? 'Selected' : 'Nominate';

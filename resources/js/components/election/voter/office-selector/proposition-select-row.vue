@@ -33,7 +33,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         propName: function () {
             if (isReadyToRock(this.motion)) return this.motion.info.name;
 
@@ -135,7 +137,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
         handleSelect: function () {

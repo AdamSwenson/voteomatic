@@ -18,14 +18,16 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         draftMotion: function () {
             return this.$store.getters.getDraftMotion;
-        }
-    },
-
-    computed: {
+        },
+    // },
+    //
+    // computed: {
         /**
          * Controls whether the spinner is shown
          * @returns {boolean}

@@ -34,12 +34,9 @@ export default {
 
     props: ['motion'],
 
+
     computed: {
-
-
-    },
-
-    asyncComputed: {
+    // asyncComputed: {
         styling: function () {
             if (this.isDisabled) return this.classBase + ' btn-outline-primary disabled'
             if (this.isSelected) return this.classBase + ' btn-primary active';

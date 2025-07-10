@@ -58,14 +58,15 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         appVersion: function () {
             if (isReadyToRock(window.appVersion)) return 'Currently v.' + window.appVersion;
             return ''
         }
     },
 
-    computed: {},
 
     methods: {}
 

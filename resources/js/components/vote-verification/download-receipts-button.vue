@@ -17,14 +17,13 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
         filename: function () {
             return `${this.meetingDate} ${this.meetingName} vote receipts.txt`;
 
         },
     },
 
-    computed: {},
 
     methods: {
 handleClick: function(){

@@ -48,13 +48,14 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         offices: function () {
             return this.$store.getters.getElectionOffices;
         }
     },
 
-    computed: {},
 
     methods: {}
 

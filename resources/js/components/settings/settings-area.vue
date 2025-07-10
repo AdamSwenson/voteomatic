@@ -31,7 +31,8 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         objectKeys : function(){
           if(isReadyToRock(this.settingsObject)){
@@ -69,7 +70,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

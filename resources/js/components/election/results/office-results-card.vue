@@ -41,7 +41,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         results: function () {
             if (isReadyToRock(this.motion)) {
@@ -118,7 +120,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {},
 

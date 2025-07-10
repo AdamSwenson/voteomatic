@@ -20,7 +20,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         label : function(){
             if(isReadyToRock(this.draftMotion) && this.draftMotion.type === 'proposition') return  "Clear draft proposition";
             return  "Clear draft motion";
@@ -32,7 +34,6 @@ export default {
         },
     },
 
-    computed: {},
 
     methods: {
         handleClick : function(){

@@ -19,7 +19,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         modalId : function(){
             //prevent from opening modal
             if(this.hasProblem) return '';
@@ -41,8 +43,6 @@ export default {
 
     },
 
-    computed: {
-    },
 
     methods: {
         handleClick: function(){

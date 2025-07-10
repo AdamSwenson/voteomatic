@@ -39,7 +39,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         /**
          * If there's no vote object, they either forgot to vote or are abstaining or
          * already voted
@@ -87,7 +89,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

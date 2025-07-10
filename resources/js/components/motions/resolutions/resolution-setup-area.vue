@@ -84,14 +84,15 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         draftMotion: function () {
             return this.$store.getters.getDraftMotion;
         }
     },
 
-    computed: {},
 
     methods: {
 

@@ -70,7 +70,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         offices: function () {
 
             let m = this.$store.getters.getStoredMotions;
@@ -116,7 +118,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
         // handleNext : function(){

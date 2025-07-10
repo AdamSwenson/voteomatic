@@ -72,7 +72,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         modalText: function () {
             let type = this.motion.type === 'proposition' ? 'proposition' : 'motion';
             return `<p> You are about to permanently delete this ${type} and any votes associated with it.</p>

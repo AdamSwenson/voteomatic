@@ -20,7 +20,6 @@ export default {
         return {}
     },
 
-    asyncComputed: {},
 
     computed: {
         title: {

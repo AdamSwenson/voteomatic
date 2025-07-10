@@ -31,7 +31,6 @@ export default {
         }
     },
 
-    asyncComputed: {},
 
     computed: {
         containerStyling: function () {

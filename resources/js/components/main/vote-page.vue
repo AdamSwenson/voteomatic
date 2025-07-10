@@ -151,7 +151,9 @@ export default {
     },
 
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         cardTitle: {
             get: function () {
                 if (!this.isVotingAllowed) {
@@ -257,16 +259,13 @@ export default {
         showButtons: function () {
             if (!isReadyToRock(this.hasVoted)) return false;
             return !this.hasVoted;
-        }
+        },
 
         // vote : function(){
         //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
         // }
 
-    }
-    ,
 
-    computed: {
         // receipt: function () {
         //     if (isReadyToRock(this.vote)) {
         //         return this.vote.receipt;

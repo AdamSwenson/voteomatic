@@ -53,7 +53,8 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         // sp : function(){
         //     return this.default.slotProps;
         // },

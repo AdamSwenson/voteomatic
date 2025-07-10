@@ -35,8 +35,10 @@ export default {
         }
     },
 
-    asyncComputed: {
+    // asyncComputed: {
 
+
+    computed: {
         requirement: function () {
 
             if (this.isMotionReady) {

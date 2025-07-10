@@ -37,7 +37,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         // officeName: function(){
         //     return this.motion.content;
         // },
@@ -129,7 +131,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
         handleSelect: function(){
