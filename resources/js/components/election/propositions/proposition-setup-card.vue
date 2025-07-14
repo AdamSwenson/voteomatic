@@ -7,7 +7,7 @@
             <div class="col-lg-3">
 
                 <proposition-list-card></proposition-list-card>
-<!--                v-on:edit-requested="setEditMode"-->
+                <!--                v-on:edit-requested="setEditMode"-->
             </div>
 
             <div class="col-lg-9">
@@ -78,16 +78,16 @@
 
 
                         <!--                        <button-->
-<!--                            class="btn btn-primary"-->
-<!--                            data-bs-toggle="modal"-->
-<!--                            data-bs-target="#confirmMotionModal"-->
-<!--                        >Save proposition-->
-<!--                        </button>-->
+                        <!--                            class="btn btn-primary"-->
+                        <!--                            data-bs-toggle="modal"-->
+                        <!--                            data-bs-target="#confirmMotionModal"-->
+                        <!--                        >Save proposition-->
+                        <!--                        </button>-->
 
-<!--                        <create-motion-modal :motion="editedMotion"-->
-<!--                                             v-on:confirmed="handleDoneClick"-->
-<!--                        ></create-motion-modal>-->
-<!--                        -->
+                        <!--                        <create-motion-modal :motion="editedMotion"-->
+                        <!--                                             v-on:confirmed="handleDoneClick"-->
+                        <!--                        ></create-motion-modal>-->
+                        <!--                        -->
 
                     </div>
 
@@ -132,14 +132,12 @@ export default {
     mixins: [ChairMixin, MotionMixin, MeetingMixin],
 
     data: function () {
-        return {
-
-        }
+        return {}
     },
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         /**
          * Either the currently selected motion object
          * or a draft motion object, depending on what mode
@@ -149,8 +147,8 @@ export default {
             //If a draft proposition exists, that's the one we
             //want to be working on. If a regular motion also exists and
             //is set as current, we supersede it.
-            let draft =  this.$store.getters.getDraftMotion;
-            if(isReadyToRock(draft) && draft.type === 'proposition') return draft;
+            let draft = this.$store.getters.getDraftMotion;
+            if (isReadyToRock(draft) && draft.type === 'proposition') return draft;
 
             //Otherwise we use the current motion, assuming it is a proposition
             if (isReadyToRock(this.motion) && this.motion.type === 'proposition') return this.motion;
@@ -163,10 +161,10 @@ export default {
          * Whether we are in edit mode is determined by looking at
          * the edited motion
          * */
-        editMode: function(){
+        editMode: function () {
             //we are editing if there is a motion set and it has same id as the editedMotion
             return isReadyToRock(this.editedMotion) && isReadyToRock(this.motion, 'id') && this.editedMotion.id === this.motion.id;
-         //  return (isReadyToRock(this.motion) && this.motion.type === 'proposition')
+            //  return (isReadyToRock(this.motion) && this.motion.type === 'proposition')
         },
 
         showInputs: function () {
@@ -177,14 +175,11 @@ export default {
         title: function () {
             let defaultTitle = "Proposition setup";
 // let name = this.editedMotion.info.name;
-            if (!isReadyToRock(this.editedMotion) || !isReadyToRock(this.editedMotion.info) || !isReadyToRock(this.editedMotion.info.name) || this.editedMotion.info.name.length <1) return defaultTitle
+            if (!isReadyToRock(this.editedMotion) || !isReadyToRock(this.editedMotion.info) || !isReadyToRock(this.editedMotion.info.name) || this.editedMotion.info.name.length < 1) return defaultTitle
 
             return this.editedMotion.info.name;
+        },
 
-        }
-    },
-
-    computed: {
         //Needs to be computed so that can handle updates
 
         propName: {
@@ -206,7 +201,7 @@ export default {
                 }
 
             },
-            watch : ['editedMotion']
+            watch: ['editedMotion']
         },
 
     },
@@ -251,7 +246,6 @@ export default {
         // removeEditMode: function () {
         //     // this.editMode = false;
         // },
-
 
 
     },

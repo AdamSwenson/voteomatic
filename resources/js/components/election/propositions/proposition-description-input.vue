@@ -10,10 +10,11 @@
 <!--        ></textarea>-->
 
 <label for="motion-descrip" class='form-label' >Instructions, et cetera</label>
-        <wysiwyg v-model="description"
-                 id="motion-descrip"
+        <textarea name="motion-descrip" id="motion-descrip" v-model="description" cols="30" rows="10"></textarea>
 
-        />
+<!--        <wysiwyg v-model="description"-->
+<!--                 id="motion-descrip"-->
+<!--        />-->
 
 
     </div>

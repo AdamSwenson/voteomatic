@@ -4,7 +4,8 @@
 const Payload = require("../models/Payload");
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         settings: function () {
             let s = this.$store.getters.getSettings;
@@ -13,7 +14,6 @@ module.exports = {
 
     },
 
-    computed: {},
 
     methods: {
 

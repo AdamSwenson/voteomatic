@@ -81,5 +81,7 @@ export default {
 </script>
 
 <style scoped>
-
+.nav a {
+    text-decoration: none;
+}
 </style>

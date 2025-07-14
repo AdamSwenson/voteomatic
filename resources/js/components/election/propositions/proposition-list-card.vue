@@ -59,6 +59,7 @@ export default {
         },
 
         requestNewMode : function(){
+            window.console.log('proposition-list-card', 'requestNewMode', 62,);
             this.$emit('new-mode-requested')
         }
     }

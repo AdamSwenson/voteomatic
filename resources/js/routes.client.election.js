@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 //Panes (main container for edit tools)
 
 import store from "./store/index";

@@ -5,8 +5,8 @@
  */
 module.exports = {
 
-
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         // /**
         //  * Not actually used by a component.
         //  * This watches the navTrigger value. When

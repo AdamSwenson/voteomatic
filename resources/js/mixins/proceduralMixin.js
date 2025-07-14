@@ -1,6 +1,7 @@
 module.exports = {
 
-    asyncComputed : {
+    computed: {
+    // asyncComputed : {
 
         /**
          * If the motion is a subsidiary procedural one,

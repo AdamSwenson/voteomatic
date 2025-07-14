@@ -2,10 +2,10 @@
     <div class="proposition-content-input">
         <label for="motionContent" class='form-label'
         > What is to be voted upon</label>
+<!--        <textarea id="motionContent" name="motionContent" class="b" v-model="content"></textarea>-->
         <wysiwyg v-model="content"
                  id="motionContent"
                  name="motion-content"
-
         />
     </div>
 

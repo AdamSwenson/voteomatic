@@ -19,7 +19,7 @@ export default {
         return {
             modalId: 'import-pool-modal',
             modalTitle: 'Import pool from file',
-            // hideActionButton: true,
+            hideActionButton: false,
             buttonLabel: 'Done'
 
         }

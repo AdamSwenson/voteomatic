@@ -8,8 +8,8 @@
  */
 module.exports = {
 
-
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         motionResult : {
             get: function () {
                 if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {

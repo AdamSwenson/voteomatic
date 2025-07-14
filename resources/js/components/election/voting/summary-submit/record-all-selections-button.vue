@@ -14,7 +14,7 @@ export default {
     data: function () {
         return {
             // modalId : 'recordAllSelectionsModal',
-
+icon: false,
             label: 'Record all selections'
         }
     },

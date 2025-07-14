@@ -5,7 +5,8 @@ const {isReadyToRock} = require("../utilities/readiness.utilities");
  */
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
         },
@@ -69,7 +70,6 @@ module.exports = {
 
     },
 
-    computed: {},
 
     methods: {
 

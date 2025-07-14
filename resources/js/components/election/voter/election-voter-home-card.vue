@@ -1,8 +1,8 @@
 <template>
     <div class="election-home-card card router-tab-touching-card">
-<!--        <div class="card-header">-->
-<!--            <h3 class="card-header">{{electionName}}</h3>-->
-<!--        </div>-->
+        <!--        <div class="card-header">-->
+        <!--            <h3 class="card-header">{{electionName}}</h3>-->
+        <!--        </div>-->
 
         <div class="card-body">
             <div class="row">
@@ -15,7 +15,7 @@
 
                     <component v-bind:is="shownCard"></component>
 
-                    </div>
+                </div>
             </div>
         </div>
 
@@ -69,7 +69,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         electionName: function () {
             if (!isReadyToRock(this.meeting)) return ''
             return this.meeting.name;
@@ -79,13 +79,13 @@ export default {
          * Handles all the logic for determining
          * what card gets shown
          */
-        shownCard: function(){
+        shownCard: function () {
             return this.$store.getters.getShownHomeCard;
         },
 
-        showOfficeSelector : function(){
+        showOfficeSelector: function () {
             return isReadyToRock(this.meeting) && this.meeting.electionPhase === 'voting';
-            return ! this.isVotingComplete && isReadyToRock(this.meeting, 'isVotingAvailable');
+            return !this.isVotingComplete && isReadyToRock(this.meeting, 'isVotingAvailable');
         },
 
         // showableCards : function (){
@@ -96,8 +96,8 @@ export default {
          * Returns true if the election has closed or if the
          * user has voted
          */
-        isVotingComplete: function(){
-                return this.$store.getters.isCompleteCardShown || this.$store.getters.isElectionComplete;
+        isVotingComplete: function () {
+            return this.$store.getters.isCompleteCardShown || this.$store.getters.isElectionComplete;
 
         },
 
@@ -105,15 +105,14 @@ export default {
          * Whether there is currently a motion selected to be
          * voted upon
          */
-        isOfficeSelected: function(){
+        isOfficeSelected: function () {
             return isReadyToRock(this.motion);
         },
 
-        showSummarySubmitCard: function(){
+        showSummarySubmitCard: function () {
             return this.$store.getters.isSummarySubmitCardVisible;
         }
     },
-
 
 
     methods: {},

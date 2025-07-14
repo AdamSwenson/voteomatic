@@ -10,8 +10,8 @@
  */
 module.exports = {
 
-
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
 
         isAmendment: function () {
