@@ -3,6 +3,7 @@ import Election from "../../../../../../resources/js/models/Election";
 let _ = require('lodash');
 const sinon = require('sinon');
 
+
 describe('elections.navigation actions', () => {
 
     beforeEach(() => {
@@ -17,6 +18,7 @@ describe('elections.navigation actions', () => {
             };
 
             let meeting = new Election({ phase: 'setup'});
+
 
             er.actions.navigateToAppropriateLocationChair(f, meeting);
 

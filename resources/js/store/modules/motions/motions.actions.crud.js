@@ -79,9 +79,9 @@ const actions = {
 
             //send to server
             let url = routes.motions.resource();
-            // let p = {'meetingId': meetingId};
+            //dev This throws a console error for mutating outside of vuex.
+            // Briefly tried fixing but created other problems.
             motion['meetingId'] = meeting.id;
-            // window.console.log('sending', p);
             return axios.post(url, motion)
                 .then((response) => {
                     //Set a message for the user telling them what's going to happen

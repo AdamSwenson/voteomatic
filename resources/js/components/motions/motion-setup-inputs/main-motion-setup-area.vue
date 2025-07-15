@@ -149,7 +149,7 @@ export default {
             //creating and editing if we decide to keep the
             //editing function.
             let payload = event[0];
-            window.console.log(payload);
+            window.console.log('handle update', payload);
             this.$store.dispatch('updateDraftMotion', payload);
             //this.draftMotion[event.updateProp] = event.updateVal;
         },

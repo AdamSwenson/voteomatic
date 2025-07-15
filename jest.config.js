@@ -149,7 +149,10 @@ module.exports = {
 
     // Options that will be passed to the testEnvironment
     // testEnvironmentOptions: {},
-
+    //dev Added during VOT-298 based on https://stackoverflow.com/questions/72428323/jest-referenceerror-vue-is-not-defined
+    testEnvironmentOptions: {
+        customExportConditions: ["node", "node-addons"],
+    },
     // Adds a location field to test results
     // testLocationInResults: false,
 
@@ -185,7 +188,7 @@ module.exports = {
     transform: {
         "^.+\\.(js|jsx)$": "babel-jest",
         // process `*.vue` files with `vue-jest`
-        ".*\\.(vue)$": "vue-jest"
+        ".*\\.(vue)$": "@vue/vue3-jest"
     },
 
 //    An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

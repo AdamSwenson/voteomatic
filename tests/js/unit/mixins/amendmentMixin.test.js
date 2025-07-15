@@ -10,5 +10,8 @@ describe('amendmentMixin computed', () => {
     });
 
 
+    test('placeholder', () => {
 
-    });
+    })
+
+});

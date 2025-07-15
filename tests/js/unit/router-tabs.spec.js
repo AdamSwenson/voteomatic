@@ -1,13 +1,23 @@
 import sinon from 'sinon';
 
-import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
-import Vuex from 'vuex'
+// import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
+// import Vuex from 'vuex'
+
+import { createStore } from 'vuex';
+import { mount } from '@vue/test-utils';
+
 import Settings from "../../../resources/js/models/Settings";
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-
 // import RouterTabs from "../../../resources/js/components/navigation/router-tabs.vue";
+
+// const localVue = createLocalVue();
+// localVue.use(Vuex);
+
+const App = {
+    computed : {}
+};
+
+
+
 
 let isAdmin = true;
 
@@ -22,7 +32,7 @@ let getters = {
     }
 };
 
-let store = new Vuex.Store({
+let store = createStore({
     actions, getters
 });
 
@@ -31,6 +41,12 @@ describe('methods', () => {
 
     let wrapper;
     beforeEach(() => {
+
+        wrapper = mount(App, {
+            global: {
+                plugins: [store]
+            }
+        })
         // wrapper = shallowMount(RouterTabs, {
         //     store, localVue,
         //     propsData: {}

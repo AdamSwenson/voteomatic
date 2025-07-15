@@ -2,7 +2,7 @@
  * Created by adam on 2020-07-13.
  */
 
-import { createStore  } from 'vuex'
+import {createStore} from 'vuex'
 
 // import Vue from  'vue/dist/vue.js'
 // import Vue from 'vue'
@@ -43,26 +43,24 @@ import votes from "./modules/votes";
 
 const debug = process.env.NODE_ENV !== 'production';
 
-// export default new Vuex.Store({
-    export default createStore({
-// export default new Vuex.Store({
+export default createStore({
 
-        strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
+    strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
-        /**
-         * From instances and components where store has been
-         * injected, actions are called
-         * like so: store.dispatch( 'string-action-name' )
-         */
-        // actions,
-        // getters,
-        // mutations,
-        // state,
+    /**
+     * From instances and components where store has been
+     * injected, actions are called
+     * like so: store.dispatch( 'string-action-name' )
+     */
+    // actions,
+    // getters,
+    // mutations,
+    // state,
 
-        // plugins: [], //[ apiPlugin, websocketPlugin ],
+    // plugins: [], //[ apiPlugin, websocketPlugin ],
 
 
-        // strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
+    // strict: debug, //letting check determine whether to turn on or off. should be off for production to avoid performance hit
 
     /**
      * From instances and components where store has been

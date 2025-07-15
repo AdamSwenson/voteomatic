@@ -11,6 +11,7 @@ import ClosedCard from "../../../components/election/unavailable/election-closed
 
 // import {router} from "../../../app";
 import router from "../../../router";
+
 const state = {
 
     /** What card should be shown when go to /election-home */
