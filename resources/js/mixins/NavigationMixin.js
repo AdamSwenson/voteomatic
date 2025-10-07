@@ -45,6 +45,7 @@ module.exports = {
                     }
                     this.$store.commit('setHomeNavTrigger', false);
                 }
+                return this.$store.getters.getHomeNavTrigger;
             },
 
         },
@@ -58,13 +59,18 @@ module.exports = {
          */
         resultsNavTrigger: {
           get : function(){
-            if(this.$store.getters.getResultsNavTrigger === true){
+              // window.console.log('NavigationMixin', 'get', 62, this.$store.getters.getResultsNavTrigger);
+              if(this.$store.getters.getResultsNavTrigger === true){
                 if(this.$router.currentRoute.name !== 'results'){
                     this.$router.push('results');
                 }
                 this.$store.commit('setResultsNavTrigger', false);
             }
+              // window.console.log('NavigationMixin', 'get', 69, this.$store.getters.getResultsNavTrigger);
+
+              return  this.$store.getters.getResultsNavTrigger
           },
+
 
         },
 
@@ -85,6 +91,7 @@ module.exports = {
                     }
                     this.$store.commit('setVoteNavTrigger', false);
                 }
+                return  this.$store.getters.getVoteNavTrigger;
             },
 
         },

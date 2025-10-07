@@ -48,6 +48,7 @@
 <script>
 import ModalParent from "../../parents/modal-parent";
 import MotionStoreMixin from '../../../mixins/motionStoreMixin'
+import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
 /**
  * Note, this will require that the delete-motion-button is
@@ -76,6 +77,8 @@ export default {
     computed: {
     // asyncComputed: {
         modalText: function () {
+            if(!isReadyToRock(this.motion)) return '';
+
             let type = this.motion.type === 'proposition' ? 'proposition' : 'motion';
             return `<p> You are about to permanently delete this ${type} and any votes associated with it.</p>
                     <p>This cannot be undone</p>
@@ -83,6 +86,7 @@ export default {
         },
 
         modalTitle: function () {
+            if(!isReadyToRock(this.motion)) return 'Delete Motion';
             if (this.motion.type === 'proposition') return 'Delete Proposition';
             return 'Delete Motion'
         }

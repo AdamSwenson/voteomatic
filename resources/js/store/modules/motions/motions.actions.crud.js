@@ -79,10 +79,15 @@ const actions = {
 
             //send to server
             let url = routes.motions.resource();
-            //dev This throws a console error for mutating outside of vuex.
-            // Briefly tried fixing but created other problems.
-            motion['meetingId'] = meeting.id;
-            return axios.post(url, motion)
+
+            //dev Added in VOT-288.
+            // This is to avoid doing
+            //      motion['meetingId'] = meeting.id;
+            // which throws an error for mutating outside of vuex.
+            let m = {...motion};
+            m['meetingId'] = meeting.id;
+
+            return axios.post(url, m)
                 .then((response) => {
                     //Set a message for the user telling them what's going to happen
                     let statusMessage = Message.makeFromTemplate('pendingApproval');
@@ -115,12 +120,15 @@ const actions = {
 
             //send to server
             let url = routes.motions.resource();
-            let d = template;
-            d['meetingId'] = meeting.id;
-            // let p = {'meetingId': meetingId};
-            // window.console.log('sending', d);
 
-            return axios.post(url, d)
+            //dev Added in VOT-288.
+            // This is to avoid doing
+            //      template['meetingId'] = meeting.id;
+            // which throws an error for mutating outside of vuex.
+            let t = {...template};
+            t['meetingId'] = meeting.id;
+
+            return axios.post(url, t)
                 .then((response) => {
                     let d = response.data;
 
