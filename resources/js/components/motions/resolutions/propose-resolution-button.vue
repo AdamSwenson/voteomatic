@@ -15,6 +15,9 @@ export default {
             label: 'Move Resolution',
             styling: ' btn-danger',
             clicked: false,
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
+
         }
     },
 

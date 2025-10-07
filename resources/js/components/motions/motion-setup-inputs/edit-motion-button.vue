@@ -12,7 +12,9 @@ export default {
     data: function () {
         return {
             label: 'Edit pending motion',
-            styling: " btn-outline-danger"
+            styling: " btn-outline-danger me-2",
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
             }
     },
 

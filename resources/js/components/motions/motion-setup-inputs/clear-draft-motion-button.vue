@@ -16,7 +16,9 @@ export default {
     data: function () {
         return {
             // label : "Clear draft motion",
-            styling : " btn-warning "
+            styling : " btn-warning ",
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
         }
     },
 

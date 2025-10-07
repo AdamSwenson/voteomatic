@@ -9,7 +9,6 @@
         </div>
 
         <div class="card-header make-button-area">
-
             <amendment-button
                 v-on:new-amendment="handleAmendmentButtonClick"
             ></amendment-button>

@@ -15,7 +15,9 @@ export default {
     data: function () {
         return {
             label : "Create main motion",
-            styling : "  btn-outline-primary "
+            styling : "  btn-outline-primary me-2",
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
 
         }
     },
