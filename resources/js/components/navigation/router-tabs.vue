@@ -16,8 +16,8 @@
 
 }
 
-
 </style>
+
 <script>
 
 import {meetingRoutes} from '../../routes.client.meeting';
@@ -164,8 +164,7 @@ export default {
 
         showVerifyTab: function () {
             return this.$store.getters.getMotionIdsUserVotedUpon.length > 0;
-        }
-        ,
+        },
 
         showMakeMotionTab: function () {
             if (this.isAdmin) return true;
@@ -190,30 +189,13 @@ export default {
         }
     },
     mounted() {
-        // this.filterToElectionRoutes();
 
     },
 
 
     methods: {
 
-        filterToElectionRoutes: function () {
-            //
-            // window.console.log('before', this.$router.getRoutes());
-            //
-            // let me = this;
-            // _.forEach(this.routes, (r) => {
-            //     if (r.type === 'meeting') {
-            //         window.console.log('found', r);
-            //         let j = me.$router.addRoute(r);
-            //         j.removeRoute();
-            //     }
-            //     ;
-            // });
-            //
-            // window.console.log(this.$router.getRoutes());
 
-        },
 
         /**
          * Shortcut check of adminOnly

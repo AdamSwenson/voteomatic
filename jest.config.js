@@ -131,10 +131,13 @@ module.exports = {
     // runner: "jest-runner",
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    // setupFiles: [],
+    setupFiles: [
+        // '/Users/ars62917/Dropbox/voteomatic/tests/js/setup-jest.js'
+    ],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    // setupFilesAfterEnv: [],
+    setupFilesAfterEnv: [
+            '/Users/ars62917/Dropbox/voteomatic/tests/js/setup-jest.js'],
 
     // The number of seconds after which a test is considered as slow and reported as such in the results.
     // slowTestThreshold: 5,

@@ -13,56 +13,66 @@ import Election from "../../../resources/js/models/Election";
 // const localVue = createLocalVue();
 // localVue.use(Vuex);
 
-const App = {
-    computed: {}
-};
+// const App = {
+//     computed: {}
+// };
+//
+//
+// let isAdmin = true;
+//
+// let actions = {};
 
-
-let isAdmin = true;
-
-let actions = {};
-
-let getters = {
-    getIsAdmin: () => {
-        return isAdmin;
-    },
-    getSettings: () => {
-        return {};
-    }
-};
+// let getters = {
+//     getIsAdmin: () => {
+//         return isAdmin;
+//     },
+//     getSettings: () => {
+//         return {};
+//     }
+// };
 
 describe('router-tabs', () => {
     describe('electionTabs', () => {
-
+        let actions = {};
         let wrapper;
         let store;
         let meeting;
+
         beforeEach(() => {
-            meeting = new Election(1);
-            store = createStore({
-                actions, getters
-            });
-
-            wrapper = mount(RouterTabs, {
-                global: {
-                    plugins: [store]
-                },
-
-            });
+            // meeting = new Election(1);
+            // store = createStore({
+            //     actions, getters
+            // });
+            //
+            // wrapper = mount(RouterTabs, {
+            //     global: {
+            //         plugins: [store]
+            //     },
+            //
+            // });
 
         });
 
         test('shows expected routes - admin', () => {
+            meeting = new Election({id: 1, name :'test', date :'2034-03-22'});
+
             store = createStore({
-                actions,
+                //actions,
+                state : {
+                    meeting : meeting,
+                },
                 getters : {
+                    isElection: function(){
+                        return true;
+                    },
                     getIsAdmin :function(){
                         return true;
                     },
                     getMeeting: function () {
                         return meeting
                     },
-
+meeting: function(){return meeting},
+                    getActiveMeeting : function(){return meeting;}
                 }
             });
 
@@ -72,10 +82,14 @@ describe('router-tabs', () => {
                 },
 
             });
-
+// expect(wrapper.get('.router-tabs')).toContain('Home')
+expect(wrapper.vm.meeting.id).toBe(meeting.id);
+expect(wrapper.vm.meeting.type).toBe('election');
+            expect(wrapper.vm.shownRoutes).toBe(true);
+            // expect(wrapper.vm.shownRoutes.length).toBe(4)
             expect(true).toBe(true);
 
-            expect(wrapper.isElection).toBe(true);
+            // expect(wrapper.isElection).toBe(true);
 
         });
 
