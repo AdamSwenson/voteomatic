@@ -9,7 +9,6 @@ import PrematureAccessCard from "../../../components/election/unavailable/premat
 import ResultsCard from "../../../components/election/results/election-results-card";
 import ClosedCard from "../../../components/election/unavailable/election-closed-card";
 
-// import {router} from "../../../app";
 import router from "../../../router";
 
 const state = {
@@ -21,7 +20,6 @@ const state = {
 
 const mutations = {
 
-
     setShownCard: (state, cardName) => {
         state.shownHomeCard = cardName;
     },
@@ -29,23 +27,14 @@ const mutations = {
     showClosedCard: (state) => {
         state.shownHomeCard = 'closed';
     },
+
     showSummarySubmitCard: (state) => {
         state.shownHomeCard = 'summary'
-        // state.showSummarySubmitCard = true;
     },
-
-    // hideSummarySubmitCard: (state) => {
-    //     state.showSummarySubmitCard = false;
-    // },
 
     showInstructionsCard: (state) => {
         state.shownHomeCard = 'instructions';
-        // state.showInstructionsCard = true;
-    },
-
-    // hideInstructionsCard: (state) => {
-    //     state.showInstructionsCard = false;
-    // },
+      },
 
     showPropositionVoteCard: (state) => {
         state.shownHomeCard = 'proposition';
@@ -95,6 +84,13 @@ const actions = {
         }));
     },
 
+    /**
+     * Pushes the results tab to the router
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @returns {Promise<unknown>}
+     */
     forceNavigationToElectionResults({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
 
@@ -124,42 +120,6 @@ const actions = {
                     return resolve();
                 });
             }
-
-            // //Election access has not yet been enabled by
-            // //the chair
-            // if (!meeting.isVotingAvailable && !meeting.isComplete) {
-            //     commit('showPrematureCard');
-            //     return resolve();
-            // }
-            //
-            // //The election has ended
-            // if (! meeting.isVotingAvailable && meeting.isComplete) {
-            //     //Results are available
-            //     if(meeting.isResultsAvailable) {
-            //         commit('showResultsCard');
-            //         return dispatch('forceNavigationToElectionResults').then(() => {
-            //             return resolve();
-            //         });
-            //
-            //
-            //     }else{
-            //         //No results available
-            //         commit('showVotingCompleteCard');
-            //         return resolve();
-            //     }
-            //
-            // }
-            //
-            // //Voter has completed voting (The election could still be open for others)
-            // //todo Determine if there are no available motions (offices/props) to vote upon
-            // if(getters.isVotingComplete){
-            //     commit('showVotingCompleteCard');
-            // }
-            //
-            // //Voter can vote for stuff
-            // dispatch('forceNavigationToElectionHome').then(() => {
-            //     return resolve();
-            // });
 
         }));
     },
@@ -199,91 +159,8 @@ const actions = {
                 default:
             }
             dispatch('forceNavigationToElectionHome').then(() => {
-return resolve();
+                return resolve();
             });
-            //
-            //
-            //
-            // switch (meeting.electionPhase) {
-            //
-            //     case 'setup':
-            //         dispatch('forceNavigationToElectionHome').then(() => {
-            //
-            //         });
-            //         break;
-            //
-            //     case 'nominations':
-            //         dispatch('forceNavigationToElectionHome').then(() => {
-            //
-            //         });
-            //         break;
-            //
-            //     case 'voting':
-            //
-            //         //Voter has completed voting (The election could still be open for others)
-            //         //todo Determine if there are no available motions (offices/props) to vote upon
-            //         if (getters.isVotingComplete) {
-            //             commit('showVotingCompleteCard');
-            //         }else{
-            //             //Voter can vote for stuff
-            //             dispatch('forceNavigationToElectionHome').then(() => {
-            //
-            //             });
-            //         }
-            //
-            //         break;
-            //
-            //     case 'closed':
-            //         //No results available
-            //         commit('showVotingCompleteCard');
-            //         break;
-            //
-            //     case 'results':
-            //         commit('showResultsCard');
-            //         return dispatch('forceNavigationToElectionResults').then(() => {
-            //
-            //         });
-            //         break;
-            //
-            //     default:
-            // }
-            // return resolve();
-            // //
-            // // //Election access has not yet been enabled by
-            // // //the chair
-            // // if (!meeting.isVotingAvailable && !meeting.isComplete) {
-            // //     commit('showPrematureCard');
-            // //     return resolve();
-            // // }
-            // //
-            // // //The election has ended
-            // // if (!meeting.isVotingAvailable && meeting.isComplete) {
-            // //     //Results are available
-            // //     if (meeting.isResultsAvailable) {
-            // //         commit('showResultsCard');
-            // //         return dispatch('forceNavigationToElectionResults').then(() => {
-            // //             return resolve();
-            // //         });
-            // //
-            // //
-            // //     } else {
-            // //         //No results available
-            // //         commit('showVotingCompleteCard');
-            // //         return resolve();
-            // //     }
-            // //
-            // // }
-            // //
-            // // //Voter has completed voting (The election could still be open for others)
-            // // //todo Determine if there are no available motions (offices/props) to vote upon
-            // // if (getters.isVotingComplete) {
-            // //     commit('showVotingCompleteCard');
-            // // }
-            // //
-            // // //Voter can vote for stuff
-            // dispatch('forceNavigationToElectionHome').then(() => {
-            //     return resolve();
-            // });
 
         }));
     },
@@ -297,7 +174,7 @@ return resolve();
     navigateToAppropriateLocationRegularUser({dispatch, commit, getters}, meeting) {
         return new Promise(((resolve, reject) => {
             if (!isReadyToRock(meeting)) return reject();
-            window.console.log('election phase', meeting.phase );
+            window.console.log('election phase', meeting.phase);
 
             switch (meeting.phase) {
 
@@ -307,11 +184,9 @@ return resolve();
 
                 case 'nominations':
                     commit('showPrematureCard');
-
                     break;
 
                 case 'voting':
-
                     //Voter has completed voting (The election could still be open for others)
                     //todo Determine if there are no available motions (offices/props) to vote upon
                     if (getters.isVotingComplete) {
@@ -560,17 +435,16 @@ return resolve();
 const getters = {
     isInstructionsCardVisible: (state) => {
         return state.shownHomeCard === 'instructions';
-        // return state.showInstructionsCard;
     },
 
     isSummarySubmitCardVisible: (state) => {
         return state.shownHomeCard === 'summary';
-        // return state.showSummarySubmitCard;
     },
 
     isCompleteCardShown: (state) => {
         return state.shownHomeCard === 'complete';
     },
+
     /**
      * Returns the master dict of cards
      * which can be shown on the main election page
@@ -590,7 +464,6 @@ const getters = {
             'proposition': PropositionVoteCard,
             //User submits their selections
             'summary': SummarySubmitCard,
-
         }
     },
 

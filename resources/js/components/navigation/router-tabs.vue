@@ -23,7 +23,7 @@
 import {meetingRoutes} from '../../routes.client.meeting';
 import {electionRoutes} from '../../routes.client.election';
 import RouterTab from "./router-tab";
-import store from "../../store";
+// import store from "../../store";
 import MeetingMixin from "../../mixins/meetingMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 
@@ -60,10 +60,6 @@ export default {
             },
             default: false
         },
-        // },
-        //
-        //
-        // computed: {
 
         electionTabs: function () {
             let showRoutes = [];
@@ -86,6 +82,7 @@ export default {
             return showRoutes;
 
         },
+
         settingsObject: function () {
             return this.$store.getters.getSettings;
         },
@@ -108,7 +105,7 @@ export default {
                     }
                     //nothing happens if showResults isn't true
 
-                } else if (r.name === 'verify') { // || r.name === 'election-verify') {
+                } else if (r.name === 'verify') {
 
                     if (this.showVerifyTab) {
                         showRoutes.push(r);
@@ -145,106 +142,17 @@ export default {
 
             }
             return this.meetingTabs;
-            //
-            //
-            // let showRoutes = [];
-            // let me = this;
-            // _.forEach(this.routes, (r) => {
-            //
-            //
-            //     // if (r.type === 'election' || r.type === 'all') {
-            //     if (r.name === 'results' || r.name === 'election-results') {
-            //         if (this.showResultsTab) {
-            //             showRoutes.push(r);
-            //         }
-            //         //nothing happens if showResults isn't true
-            //
-            //     } else if (r.name === 'verify' || r.name === 'election-verify') {
-            //
-            //         if (this.showVerifyTab) {
-            //             showRoutes.push(r);
-            //         }
-            //
-            //     }
-            //     //So it's neither the results nor the verify tab
-            //     else {
-            //         if (r.adminOnly) {
-            //             if (me.isAdmin) {
-            //                 showRoutes.push(r);
-            //             }
-            //         } else {
-            //             //Everything else gets pushed in
-            //             showRoutes.push(r);
-            //         }
-            //         // }
-            //     }
-            //
-            // });
-            //
-            // return showRoutes;
-            // return routes
-        }
-        ,
 
-
-// electionRoutes
-// :
-//     function () {
-//         let showRoutes = [];
-//         let me = this;
-//         _.forEach(routes, (r) => {
-//             if (r.type === 'election' || r.type === 'all') {
-//                 if(r.name === 'election-results' && this.showResultsTab){
-//                     showRoutes.push(r);
-//                 }
-//                 else if(r.name === 'verify' && this.showVerifyTab){
-//                     showRoutes.push(r);
-//                 }
-//                 else {
-//                     if (r.adminOnly) {
-//                         if (me.isAdmin) {
-//                             showRoutes.push(r);
-//                         }
-//                     } else {
-//                         showRoutes.push(r);
-//                     }
-//                 }
-//             }
-//         });
-//
-//         return showRoutes;
-//         // return routes
-//     },
+        },
 
         routes: function () {
             if (this.isElection) return electionRoutes;
-
             return meetingRoutes;
+        },
 
-
-            //
-            // let showRoutes = [];
-            // let me = this;
-            // _.forEach(routes, (r) => {
-            //     if (r.type === 'meeting' || r.type === 'all') {
-            //         if (r.adminOnly) {
-            //             if (me.isAdmin) {
-            //                 showRoutes.push(r);
-            //             }
-            //         } else {
-            //             showRoutes.push(r);
-            //         }
-            //     }
-            // });
-            //
-            // return showRoutes;
-            // return routes
-        }
-        ,
         isElection: function () {
             return this.$store.getters.isElection;
-        }
-        ,
+        },
 
 // shownRoutes: function () {
 //     // window.console.log('isElection', this.$store.getters.isElection);

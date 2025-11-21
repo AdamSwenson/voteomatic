@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 //Panes (main container for edit tools)
 
-import store from "./store/index";
+// import store from "./store/index";
 
 import ballotSetupCard from "./components/main/ballot-setup-card";
 // import electionCard from "./components/election/election-card";
@@ -49,8 +49,9 @@ export const electionRoutes = [
         label: 'Home',
         components: {main: electionVoterHomeCard},
         get default() {
-            if (store.getters.isElection) return true;
-            return false;
+           return true;
+            // if (store.getters.isElection) return true;
+            // return false;
         },
         props: true,
         adminOnly: false,
