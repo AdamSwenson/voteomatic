@@ -412,6 +412,7 @@ const actions = {
             } else {
                 commit('showVotingCard');
             }
+
             // commit('hideSummarySubmitCard');
             // commit('hideInstructionsCard');
 

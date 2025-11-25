@@ -1,19 +1,20 @@
 <template>
 
-
-
-    <a href="#"
-       class="list-group-item list-group-item-action"
-       v-bind:aria-current="ariaStatus"
-       v-bind:class="styling"
-       v-on:click="handleSelect"
+    <!-- switched to button in VOT-288 to fix VOT-300 -->
+    <!--    <a href="#"-->
+    <button type="button"
+            class="list-group-item list-group-item-action"
+            v-bind:aria-current="ariaStatus"
+            v-bind:class="styling"
+            v-on:click="handleSelect"
+            data-test="office-select-row"
     ><i v-if="hasVoted" class="bi-check text-success"></i>
-        <span v-bind:class="textStyling">{{ officeName }}</span></a>
+        <span v-bind:class="textStyling">{{ officeName }}</span>
+    </button>
 
 </template>
 
 <script>
-import MotionMixin from "../../../../mixins/motionStoreMixin";
 import MeetingMixin from "../../../../mixins/meetingMixin";
 import motionObjectMixin from "../../../../mixins/motionObjectMixin";
 import {isReadyToRock} from "../../../../utilities/readiness.utilities";
@@ -36,7 +37,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         officeName: function () {
             return this.motion.content;
         },
@@ -47,7 +48,6 @@ export default {
         hasVoted: function () {
             if (!isReadyToRock(this.motion)) return false;
             return this.$store.getters.hasVotedOnMotion(this.motion);
-// return true;
         },
 
         /**
@@ -83,16 +83,6 @@ export default {
             return this.motion.id === this.selectedMotion.id
         },
 
-        //
-        // isSelected: {get:function() {
-        //         if (isReadyToRock(this.motion) && isReadyToRock(this.myMotion)) {
-        //             window.console.log('rrtr', this.motion, this.myMotion);
-        //             return this.motion === this.myMotion.id;
-        //         }
-        //         return false;
-        //     }
-        // },
-
         /**
          * The current globally active motion
          * @returns {any}
@@ -101,20 +91,25 @@ export default {
             return this.$store.getters.getActiveMotion;
         },
 
-        ariaStatus : function (){
-                if (this.isSelected) {
-                    return 'true'
-                    // return ' bg-info '
-                }
-                return 'false'
+        ariaStatus: function () {
+            if (this.isSelected) {
+                return 'true'
+                // return ' bg-info '
+            }
+            return 'false'
         },
 
         styling: {
             get: function () {
                 if (this.isSelected) {
                     return ' active '
-                    // return ' bg-info '
                 }
+
+                //dev VOT-300 Switching to button made the text-muted class
+                // not affect the rendered display. Adding the disabled class does
+                // work, but concerned that users may not understand why they can't
+                // click so leaving commented out for now
+                //if(this.hasVoted) { return 'disabled'}
 
             },
             default: ''

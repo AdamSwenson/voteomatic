@@ -1,16 +1,11 @@
 <template>
     <div class="card office-select-area">
-        <!--    <div class="card office-select-area" style="width: 18rem;">-->
-        <!--        <h5 class="card-header">-->
-        <!--            Office-->
-        <!--        </h5>-->
 
         <div class="list-group list-group-flush">
             <instructions-row></instructions-row>
 
             <div v-if="showOffices">
                 <office-select-row
-
                     :motion="m"
                     v-for="m in offices"
                     :key="m.id"
@@ -29,15 +24,6 @@
 
         </div>
     </div>
-
-    <!--        <ul class="list-group list-group-flush">-->
-    <!--            <office-select-row :motion="m" v-for="m in motions" :key="m.id"></office-select-row>-->
-    <!--        </ul>-->
-
-    <!--        <div class="card-footer">-->
-    <!--            <button class="btn btn-outline-info" v-on:click="handlePrevious">Previous</button>-->
-    <!--            <button class="btn btn-outline-info" v-on:click="handleNext">Next</button>-->
-    <!--        </div>-->
 
 
 </template>
