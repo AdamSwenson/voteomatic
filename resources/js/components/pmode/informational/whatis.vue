@@ -18,7 +18,7 @@
                     <h4>Why</h4>
                     <p>The ASCSU l-o-v-e-s amending amendments. That creates confusion about where we are and what's
                         in order. I've been using the app I created for my senate to keep my records as parliamentarian. This attempts
-                        to share those records with everyone in real time.
+                        to share those records with everyone in real time.</p>>
                         <p>Adapting it for this purpose has been tricky. Please
                         understand that this is a <i>very</i> early version.</p>
 
