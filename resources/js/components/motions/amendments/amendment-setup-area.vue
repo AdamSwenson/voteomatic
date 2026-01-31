@@ -26,9 +26,15 @@
 
                 <label class='form-label' for="editText">Edit amendment</label>
 
-                <wysiwyg v-model="text"
-                         v-if="isResolution"
-                ></wysiwyg>
+                <!--                dev while working on VOT-299-->
+<!--                <wysiwyg v-model="text"-->
+<!--                         v-if="isResolution"-->
+<!--                ></wysiwyg>-->
+
+                <resolution-content-wysiwyg :text="text"
+                                            v-if="isResolution"
+                                            v-on:updatetext="handleUpdate"
+                ></resolution-content-wysiwyg>
 
                 <textarea
                     v-else
@@ -80,10 +86,16 @@ import Payload from "../../../models/Payload";
 import AmendmentTextDisplay from "../text-display/amendment-text-display";
 import ProposeAmendmentButton from "../motion-setup-inputs/propose-amendment-button";
 import ResolutionAmendmentTextDisplay from "../text-display/resolution-amendment-text-display";
+import ResolutionContentWysiwyg from "../resolutions/resolution-content-wysiwyg.vue";
 
 export default {
     name: "amendment-setup-area",
-    components: {ResolutionAmendmentTextDisplay, ProposeAmendmentButton, AmendmentTextDisplay},
+    components: {
+        ResolutionContentWysiwyg,
+        ResolutionAmendmentTextDisplay,
+        ProposeAmendmentButton,
+        AmendmentTextDisplay
+    },
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
@@ -106,7 +118,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         originalText: function () {
             if (_.isUndefined(this.motion)) return ''
             return this.motion.content;
@@ -118,9 +130,9 @@ export default {
         //     return this.motion.isResolution;
         // },
 
-    // },
-    //
-    // computed: {
+        // },
+        //
+        // computed: {
         text: {
             get: function () {
                 if (this.localText === '') {
@@ -139,6 +151,10 @@ export default {
     },
 
     methods: {
+        handleUpdate: function (v) {
+            // window.console.log('amendment-setup-area', 'handleUpdate', 155, v);
+            this.text = v;
+        },
         handleClick: function () {
             let payload = {
                 meetingId: this.meeting.id,

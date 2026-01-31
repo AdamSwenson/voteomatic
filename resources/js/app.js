@@ -60,6 +60,7 @@ app.use(store);
 import AsyncComputed from 'vue-async-computed'
 app.use(AsyncComputed)
 
+//dev This is causing trouble for VOT-99
 import wysiwyg from "vue-wysiwyg";
 app.use(wysiwyg, {  forcePlainTextOnPaste: true,}); // config is optional. more below
 
