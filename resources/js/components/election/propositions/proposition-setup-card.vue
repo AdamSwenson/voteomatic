@@ -27,11 +27,19 @@
                     </div>
 
                     <div class="card-body">
-                        <proposition-content-input
+                        <proposition-content-input-new
+                            :content="editedMotion.content"
                             :motion="editedMotion"
                             :edit-mode="editMode"
                             v-on:update:content="editedMotion.content  = $event"
-                        ></proposition-content-input>
+
+                        ></proposition-content-input-new>
+<!--                        -->
+<!--                        <proposition-content-input-->
+<!--                            :motion="editedMotion"-->
+<!--                            :edit-mode="editMode"-->
+<!--                            v-on:update:content="editedMotion.content  = $event"-->
+<!--                        ></proposition-content-input>-->
                     </div>
 
                     <div class="card-body">
@@ -115,10 +123,12 @@ import CreateMotionModal from "../../motions/motion-setup-inputs/create-motion-m
 import VoteRequiredInputs from "../../motions/motion-setup-inputs/vote-required-inputs";
 import Payload from "../../../models/Payload";
 import PropositionListCard from "./proposition-list-card";
+import PropositionContentInputNew from "./proposition-content-input-new.vue";
 
 export default {
     name: "proposition-setup",
     components: {
+        PropositionContentInputNew,
         PropositionListCard,
         VoteRequiredInputs,
         CreateMotionModal,

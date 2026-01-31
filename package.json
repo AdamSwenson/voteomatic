@@ -45,7 +45,7 @@
         "vue-async-computed": "^4.0.1",
         "vue-axios": "^3.5.2",
         "vue-router": "^4.5.1",
-        "vue-wysiwyg": "^1.7.2",
+        "vuejs-medium-editor": "^3.1.0",
         "vuex": "^4.1.0"
     }
 }
