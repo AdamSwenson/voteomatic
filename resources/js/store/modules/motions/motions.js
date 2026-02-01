@@ -119,7 +119,8 @@ const mutations = {
     },
 
     setDraftMotionProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.draftMotion, updateProp, updateVal);
+        state.draftMotion[updateProp] = updateVal;
+        // Vue.set(state.draftMotion, updateProp, updateVal);
     },
 
 
@@ -133,11 +134,13 @@ const mutations = {
      * @param motionObject
      */
     setMotion: (state, motionObject) => {
-        Vue.set(state, 'currentMotion', motionObject.id);
+        state.currentMotion = motionObject.id;
+        // Vue.set(state, 'currentMotion', motionObject.id);
     },
 
     setMotionTemplates: (state, templates) => {
-        Vue.set(state, 'standardMotionDefinitions', templates);
+        state.standardMotionDefinitions = templates;
+        // Vue.set(state, 'standardMotionDefinitions', templates);
     },
 
     /**
@@ -168,7 +171,8 @@ const mutations = {
         // window.console.log(updateProp, updateVal);
         let currentMotion = getById(state.motions, state.currentMotion);
 
-        Vue.set(currentMotion, updateProp, updateVal);
+        currentMotion[updateProp] = updateVal;
+        // Vue.set(currentMotion, updateProp, updateVal);
 
         // Vue.set(state.currentMotion, updateProp, updateVal);
     },
@@ -196,7 +200,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.endVoting(motion.id);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //The server will return a response containing motions with the
                     //keys:
@@ -296,7 +300,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.setCurrentMotion(meetingId, motionId);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     let motion = getters.getMotionById(motionId);
 
@@ -366,7 +370,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.openVoting(motion.id);
-            return Vue.axios.post(url, motion)
+            return axios.post(url, motion)
                 .then((response) => {
                     let d = response.data;
                     resolve();
@@ -393,6 +397,8 @@ const actions = {
      */
     updateMotion({dispatch, commit, getters}, payload) {
         return new Promise(((resolve, reject) => {
+            window.console.log('updateMotion', payload);
+
             //make local change first
             //todo consider whether worth rolling back on failure
             commit('setMotionProp', payload)
@@ -402,7 +408,7 @@ const actions = {
 
             //send to server
             let url = routes.motions.resource(motion.id);
-            return Vue.axios.post(url, {data: motion, _method: 'put'})
+            return axios.post(url, {data: motion, _method: 'put'})
                 .then((response) => {
                     let d = response.data;
                     resolve()

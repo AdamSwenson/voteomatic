@@ -42,7 +42,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         show: function () {
             //This is utterly ridiculous. But I can't figure
             //out why vue won't remove this component when
@@ -82,7 +84,6 @@ export default {
     },
 
 
-    computed: {},
 
     watch: {
         alertId: function () {

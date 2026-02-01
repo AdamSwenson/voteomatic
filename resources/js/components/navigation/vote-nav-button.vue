@@ -23,9 +23,8 @@ export default {
         }
     },
 
-    computed: {},
+    computed: {
 
-    asyncComputed: {
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;
         },

@@ -1,6 +1,6 @@
 let _ = require('lodash');
 // const { Settings } = require("../../../resources/js/models/Settings");
-import Settings from "../../../resources/js/models/Settings";
+import Settings from "../../../../resources/js/models/Settings";
 
 describe("Settings", () => {
 //obj from server

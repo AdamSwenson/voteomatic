@@ -51,7 +51,8 @@ const mutations = {
     },
 
     setMeeting: (state, payload) => {
-        Vue.set(state, 'meeting', payload);
+        state.meeting = payload;
+        // Vue.set(state, 'meeting', payload);
     },
 
     /**
@@ -61,7 +62,8 @@ const mutations = {
      * @param val
      */
     setMeetingProp: (state, {updateProp, updateVal}) => {
-        Vue.set(state.meeting, updateProp, updateVal);
+        state.meeting[updateProp] = updateVal;
+        // Vue.set(state.meeting, updateProp, updateVal);
     }
 };
 
@@ -71,7 +73,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.meetings.resource();
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     let d = response.data;
 
@@ -103,7 +105,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.meetings.resource(meeting.id);
-            return Vue.axios.delete(url)
+            return axios.delete(url)
                 .then((response) => {
                     let d = response.data;
 
@@ -145,7 +147,7 @@ const actions = {
 
             //send to server
             let url = routes.meetings.resource(meetingId);
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     //Will create either a Meeting or an Election object
                     let meeting = EventObjectFactory.make(response.data);
@@ -198,7 +200,7 @@ const actions = {
 
             //send to server
             let url = routes.meetings.resource();
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
 
@@ -273,7 +275,7 @@ const actions = {
 
             //send to server
             let url = routes.meetings.resource(meeting.id);
-            return Vue.axios.post(url, {data: meeting, _method: 'put'})
+            return axios.post(url, {data: meeting, _method: 'put'})
                 .then((response) => {
                     let d = response.data;
                     resolve()

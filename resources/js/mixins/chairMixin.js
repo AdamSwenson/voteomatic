@@ -7,7 +7,8 @@
  */
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         isChair: function () {
             return this.$store.getters.getIsAdmin;

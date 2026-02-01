@@ -12,12 +12,11 @@ export default {
     data: function () {
         return {
             label: "Start Voting",
-
+icon: false,
             clicked : false,
         }
     },
 
-    asyncComputed: {},
 
     computed: {
         /**

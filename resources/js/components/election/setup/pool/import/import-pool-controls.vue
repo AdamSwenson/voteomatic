@@ -14,13 +14,14 @@
 import ImportPoolButton from "./import-pool-button";
 import ImportPoolModal from "./import-pool-modal";
 import FileImportControl from "./file-import-control";
+import ImportOfficesButton from "../../offices/import/import-offices-button.vue";
 
 /**
  * Holds the button and modal for importing from a file
  */
 export default {
     name: "import-pool-controls",
-    components: {FileImportControl, ImportPoolModal, ImportPoolButton},
+    components: {ImportOfficesButton, FileImportControl, ImportPoolModal, ImportPoolButton},
     props: [],
 
     mixins: [],
@@ -31,7 +32,6 @@ export default {
         }
     },
 
-    asyncComputed: {},
 
     computed: {},
 

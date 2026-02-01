@@ -3,7 +3,8 @@
  */
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         isInPublicPmode : function(){
             return this.$store.getters.isInPublicPmode;
         },

@@ -15,17 +15,17 @@
             </div>
 
 
-<!--            <div class="custom-control custom-switch">-->
-<!--                <input type="checkbox"-->
-<!--                       class="custom-control-input"-->
-<!--                       v-bind:id="controlId"-->
-<!--                       v-model="settingValue"-->
-<!--                >-->
-<!--                <label class="custom-control-label"-->
-<!--                       v-bind:for="controlId"-->
-<!--                >{{ displayName }}</label>-->
+            <!--            <div class="custom-control custom-switch">-->
+            <!--                <input type="checkbox"-->
+            <!--                       class="custom-control-input"-->
+            <!--                       v-bind:id="controlId"-->
+            <!--                       v-model="settingValue"-->
+            <!--                >-->
+            <!--                <label class="custom-control-label"-->
+            <!--                       v-bind:for="controlId"-->
+            <!--                >{{ displayName }}</label>-->
 
-<!--            </div>-->
+            <!--            </div>-->
             <div class="setting-description">
                 <small class="text-muted">{{ displayDescription }}</small>
             </div>
@@ -51,7 +51,7 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
         controlId: function () {
             return 'setting-area-' + this.name;
         },
@@ -71,9 +71,6 @@ export default {
         },
 
 
-    },
-
-    computed: {
         settingValue: {
             get: function () {
                 if (!isReadyToRock(this.settingsObj[this.name])) {

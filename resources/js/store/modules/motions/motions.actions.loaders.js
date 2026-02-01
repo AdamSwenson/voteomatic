@@ -27,7 +27,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.resource(motion.id);
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     let d = response.data;
                     let motion = MotionObjectFactory.make(d);
@@ -60,7 +60,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.castVotes.getVotedMotions(meetingId);
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
 
@@ -90,7 +90,7 @@ const actions = {
 
             //send to server
             let url = routes.motions.getAllMotionsForMeeting(idify(meeting));
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     //Need to do this so that we don't have to
                     //check motions for their meetings every time
@@ -123,12 +123,12 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.templates();
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     commit('setMotionTemplates', response.data);
 
                     let url2 = routes.motions.types();
-                    return Vue.axios.get(url2)
+                    return axios.get(url2)
                         .then((response) => {
                             //todo Figure out easiest way to use loaded types. If not easy, then ignore. The point is to make it easier to keep definitions on client and server in sync.
 

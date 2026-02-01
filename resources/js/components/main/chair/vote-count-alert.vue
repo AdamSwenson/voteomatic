@@ -50,7 +50,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         isVotingAllowed: function () {
             return isReadyToRock(this.motion) && this.motion.isVotingAllowed;
         },
@@ -73,7 +75,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

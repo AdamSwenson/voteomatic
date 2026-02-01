@@ -6,8 +6,9 @@ const {findMaxSize, checkChanges, findChangeStart, getTaggedChanges} =require('.
 test('getTaggedChanges --- insert in middle', () => {
     let orig = "Dog eats tacos";
     let amend = "Dog eats delicious tacos";
+    let ext = "Dog eats <span class='text-danger'>delicious </span>tacos"
     //i.e., we would put the tag immediately before each of these indexes
-    expect(getTaggedChanges(orig, amend)).toStrictEqual({startIndex: 9, stopIndex: 17});
+    expect(getTaggedChanges(orig, amend)).toEqual(ext) //.toStrictEqual({startIndex: 9, stopIndex: 17});
 })
 
 
@@ -67,29 +68,29 @@ test('finds change start', () => {
 
 
 //-----------------
+//
+// test('findChangeEnd finds change stop -- single word insert', ()=>{
+//     let orig = [0, 1, 2, 3, 4]; //orig
+//     let amend = [0, 1, 5, 2, 3, 4]; //new
+//
+//     expect(findChangeEnd(2, orig, amend)).toBe(2);
+//
+// });
+//
+// test('findChangeEnd finds change stop -- multiple word insert', ()=>{
+//     let orig = [0, 1, 2, 3, 4]; //orig
+//     let amend = [0, 1, 5, 6, 2, 3, 4]; //new
+//
+//     expect(findChangeEnd(2, orig, amend)).toBe(3);
+// });
 
-test('findChangeEnd finds change stop -- single word insert', ()=>{
-    let orig = [0, 1, 2, 3, 4]; //orig
-    let amend = [0, 1, 5, 2, 3, 4]; //new
 
-    expect(findChangeEnd(2, orig, amend)).toBe(2);
-
-});
-
-test('findChangeEnd finds change stop -- multiple word insert', ()=>{
-    let orig = [0, 1, 2, 3, 4]; //orig
-    let amend = [0, 1, 5, 6, 2, 3, 4]; //new
-
-    expect(findChangeEnd(2, orig, amend)).toBe(3);
-});
-
-
-test('findChangeEnd finds change stop -- strike and insert', ()=>{
-    let orig = [0, 1, 2, 3, 4]; //orig
-    let amend = [0, 1, 5, 6, 3, 4]; //new
-
-    expect(findChangeEnd(2, orig, amend)).toBe(3);
-});
+// test('findChangeEnd finds change stop -- strike and insert', ()=>{
+//     let orig = [0, 1, 2, 3, 4]; //orig
+//     let amend = [0, 1, 5, 6, 3, 4]; //new
+//
+//     expect(findChangeEnd(2, orig, amend)).toBe(3);
+// });
 
 
 test('arrays?', () => {

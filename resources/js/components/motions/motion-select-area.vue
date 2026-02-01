@@ -118,7 +118,10 @@ export default {
 
         }
     },
-    asyncComputed: {
+
+
+    computed: {
+    // asyncComputed: {
 
         amendmentClass: function () {
 
@@ -162,7 +165,7 @@ export default {
         //
         //                     let url = routes.results.getResults(me.motion.id);
         //
-        //                     return Vue.axios.get(url)
+        //                     return axios.get(url)
         //                         .then((response) => {
         //                             return resolve(response.data.passed);
         //                         });

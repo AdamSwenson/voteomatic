@@ -65,36 +65,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-        //
-        // content: {
-        //     get: function () {
-        //         if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-        //             return '';
-        //         }
-        //         return this.motion.content;
-        //     },
-        //     set(v) {
-        //         window.console.log('rezzie-input', v);
-        //         //If they cleared the draft and the window is st
-        //
-        //         let p = Payload.factory({
-        //                 'object': this.motion,
-        //                 'updateProp': 'content',
-        //                 'updateVal': v
-        //             }
-        //         );
-        //         //
-        //         // if(isReadyToRock(this.editMode) && this.editMode===true){
-        //         //     this.$emit('update:content', p.updateVal);
-        //         // }else{
-        //             this.$store.dispatch('updateDraftMotion', p);
-        //         // }
-        //
-        //     }
-        // },
-
-    },
 
     computed: {
 

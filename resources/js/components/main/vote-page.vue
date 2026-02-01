@@ -151,7 +151,9 @@ export default {
     },
 
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         cardTitle: {
             get: function () {
                 if (!this.isVotingAllowed) {
@@ -257,16 +259,13 @@ export default {
         showButtons: function () {
             if (!isReadyToRock(this.hasVoted)) return false;
             return !this.hasVoted;
-        }
+        },
 
         // vote : function(){
         //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
         // }
 
-    }
-    ,
 
-    computed: {
         // receipt: function () {
         //     if (isReadyToRock(this.vote)) {
         //         return this.vote.receipt;
@@ -358,7 +357,7 @@ export default {
             //
             // return new Promise((resolve, reject) => {
             //     let me = this;
-            //     return Vue.axios.post(url, data)
+            //     return axios.post(url, data)
             //         .then((response) => {
             //             console.log(response.data);
             //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);

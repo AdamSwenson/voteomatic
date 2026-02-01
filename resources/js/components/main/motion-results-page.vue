@@ -104,10 +104,9 @@ export default {
 
         routeName: function () {
             return this.$route.name;
-        }
-    },
+        },
 
-    asyncComputed: {
+    // asyncComputed: {
 
         passed: function () {
             if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ' ----- '

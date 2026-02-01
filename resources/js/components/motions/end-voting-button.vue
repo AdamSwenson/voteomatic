@@ -19,7 +19,9 @@ export default {
     name: "end-voting-button",
     props: ['motion'],
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         styling: function () {
             let style = "btn btn-danger btn-lg  ";

@@ -13,18 +13,18 @@ export default {
     data: function () {
         return {
             label : 'Download all receipts',
-            styling: ' btn-primary '
+            styling: ' btn-primary ',
+            icon: false
         }
     },
 
-    asyncComputed: {
+    computed: {
         filename: function () {
             return `${this.meetingDate} ${this.meetingName} vote receipts.txt`;
 
         },
     },
 
-    computed: {},
 
     methods: {
 handleClick: function(){

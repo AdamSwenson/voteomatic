@@ -39,7 +39,7 @@ const actions = {
             let meeting = getters.getActiveMeeting;
             let url = routes.events.forceReload(meeting.id);
 
-            return Vue.axios.post(url).then(() => {
+            return axios.post(url).then(() => {
                 return resolve();
             });
         }));

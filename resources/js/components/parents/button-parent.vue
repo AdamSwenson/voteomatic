@@ -33,9 +33,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-
-    },
 
     computed: {
         isWorking : function (){

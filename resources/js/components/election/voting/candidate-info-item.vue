@@ -37,7 +37,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
 
         info: function () {
@@ -73,7 +75,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

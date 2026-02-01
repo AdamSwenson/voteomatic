@@ -10,10 +10,10 @@
 <!--        ></textarea>-->
 
 <label for="motion-descrip" class='form-label' >Instructions, et cetera</label>
-        <wysiwyg v-model="description"
-                 id="motion-descrip"
-
-        />
+        <textarea name="motion-descrip" id="motion-descrip"
+                  v-model="description"
+                  class="form-control"
+                  cols="30" rows="10"></textarea>
 
 
     </div>
@@ -63,7 +63,9 @@ computed : {
             );
 
             if(isReadyToRock(this.editMode) && this.editMode===true){
-                this.$emit('update:description', p.updateVal);
+                this.$store.dispatch('updateMotion', p);
+
+                // this.$emit('update:description', p.updateVal);
             }else{
                 this.$store.dispatch('updateDraftMotion', p);
             }

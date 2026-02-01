@@ -44,13 +44,14 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         propositions : function(){
             return  this.$store.getters.getElectionPropositions;
         }
     },
 
-    computed: {},
 
     methods: {
         requestEdit : function(){
@@ -58,6 +59,7 @@ export default {
         },
 
         requestNewMode : function(){
+            window.console.log('proposition-list-card', 'requestNewMode', 62,);
             this.$emit('new-mode-requested')
         }
     }

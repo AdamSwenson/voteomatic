@@ -75,7 +75,7 @@ const actions = {
                 // window.console.log('offices', offices);
                 _.forEach(offices, (office) => {
 
-                    Vue.axios.post(url, office)
+                    axios.post(url, office)
                         .then((response) => {
                             let motion = new Office(response.data);
                           //  window.console.log('adding office to store', motion);
@@ -295,7 +295,7 @@ export {actions as default}
 //
 //             // return new Promise(((resolve, reject) => {
 //             window.console.log(url, s, idx);
-//             Vue.axios.post(url, s)
+//             axios.post(url, s)
 //                 .then((response) => {
 //                     let motion = new Office(response.data);
 //

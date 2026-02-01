@@ -50,7 +50,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         /**
          * What styling to pass to the motion-text display if
@@ -158,7 +160,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

@@ -65,7 +65,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         // motions: function () {
         //     return this.$store.getters.getMotions;
         // },
@@ -79,7 +81,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

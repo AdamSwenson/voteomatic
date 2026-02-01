@@ -9,18 +9,22 @@ export default {
 
     extends : ButtonParent,
 
-    props: [],
+    props: ['editMode'],
 
     mixins: [ MotionMixin, ],
 
     data: function () {
         return {
             // label : "Clear draft motion",
-            styling : " btn-warning "
+            styling : " btn-warning ",
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         label : function(){
             if(isReadyToRock(this.draftMotion) && this.draftMotion.type === 'proposition') return  "Clear draft proposition";
             return  "Clear draft motion";
@@ -32,7 +36,6 @@ export default {
         },
     },
 
-    computed: {},
 
     methods: {
         handleClick : function(){

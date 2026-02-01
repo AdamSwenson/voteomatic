@@ -40,7 +40,9 @@ export default {
             isReady: false
         }
     },
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         meetings: function () {
             let m = this.$store.getters.getStoredMeetings;
             if (_.isUndefined(m)) return [];

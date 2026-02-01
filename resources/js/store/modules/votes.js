@@ -89,7 +89,7 @@ const actions = {
                 vote: voteObject.voteServerString,
             };
 
-            return Vue.axios.post(url, data)
+            return axios.post(url, data)
                 .then((response) => {
                     console.log(response.data);
                     //NB, this is kosher since we haven't saved the object to state yet.
@@ -149,7 +149,7 @@ const actions = {
         //
         // return new Promise((resolve, reject) => {
         //     let me = this;
-        //     return Vue.axios.post(url, data)
+        //     return axios.post(url, data)
         //         .then((response) => {
         //             console.log(response.data);
         //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
@@ -211,7 +211,7 @@ const actions = {
     //
     //         let me = this;
     //
-    //         return Vue.axios.post(url, data)
+    //         return axios.post(url, data)
     //             .then((response) => {
     //
     //                 console.log(response.data);
@@ -260,7 +260,7 @@ const actions = {
     //         //
     //         // let me = this;
     //         //
-    //         // return Vue.axios.post(url, data)
+    //         // return axios.post(url, data)
     //         //     .then((response) => {
     //         //
     //         //         console.log(response.data);

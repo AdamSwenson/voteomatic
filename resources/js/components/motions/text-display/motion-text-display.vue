@@ -57,7 +57,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         displayComponent: function () {
             if (isReadyToRock(this.motion)) {
@@ -107,11 +109,8 @@ export default {
 
 
             }
-        }
+        },
 
-    },
-
-    computed: {
         styling: function () {
             if (isReadyToRock(this.motionStyle)) {
                 return this.motionStyle

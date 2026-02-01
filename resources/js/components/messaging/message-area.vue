@@ -23,7 +23,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         m : function(){
             return this.$store.getters.getMessages;
         },
@@ -33,8 +35,6 @@ export default {
             watch : ['m']
         }
     },
-
-    computed: {},
 
     methods: {
 

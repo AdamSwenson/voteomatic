@@ -63,9 +63,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-
-    },
 
     computed: {}
 

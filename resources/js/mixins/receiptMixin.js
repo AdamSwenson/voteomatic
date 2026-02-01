@@ -7,7 +7,8 @@
  */
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         /**
          * A vote object if one exists for the given motion
          * @returns {*}

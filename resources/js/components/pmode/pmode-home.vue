@@ -101,7 +101,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         motions: function () {
             return this.$store.getters.getResolutionsForPModeDisplay;
             // return _.reverse(this.$store.getters.getMotions);
@@ -120,7 +121,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {},
     mounted() {
