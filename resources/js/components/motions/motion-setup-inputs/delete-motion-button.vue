@@ -24,6 +24,7 @@ export default {
 
     data: function () {
         return {
+            icon : '',
             styling: "btn btn-danger ",
             modalId : 'deleteMotionModal',
             ariaDisabled : false

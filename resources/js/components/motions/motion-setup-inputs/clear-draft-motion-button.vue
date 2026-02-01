@@ -9,7 +9,7 @@ export default {
 
     extends : ButtonParent,
 
-    props: [],
+    props: ['editMode'],
 
     mixins: [ MotionMixin, ],
 

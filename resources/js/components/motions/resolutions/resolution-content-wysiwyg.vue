@@ -87,76 +87,9 @@ props : ['text'],
                 this._localText = v;
             }
         },
-        //
-        // content: {
-        //     get: function () {
-        //         if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-        //             return '';
-        //         }
-        //         return this.motion.content;
-        //     },
-        //     set(v) {
-        //         window.console.log('resolution-content-input-new', 'set', 68, v);
-        //         //If they cleared the draft and the window is st
-        //
-        //         let p = Payload.factory({
-        //                 'object': this.motion,
-        //                 'updateProp': 'content',
-        //                 'updateVal': v
-        //             }
-        //         );
-        //
-        //         if (isReadyToRock(this.editMode) && this.editMode === true) {
-        //             this.$emit('update:content', p.updateVal);
-        //         } else {
-        //             this.$store.dispatch('updateDraftMotion', p);
-        //         }
-        //
-        //         //
-        //         // if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-        //         //     //initialize first if no motion exists
-        //         //     let me = this;
-        //         //     this.$store.dispatch('createMotion', this.meeting.id).then(function () {
-        //         //         me.$store.dispatch('updateMotion', p);
-        //         //
-        //         //         me.$store.dispatch('updateMotion', p);
-        //         //     });
-        //
-        //         // } else {
-        //         //otherwise we can just update as normal
-        //         // this.$emit('update:content', p.updateVal);
-        //         // this.$store.dispatch('updateMotion', p);
-        //
-        //         // }
-        //     },
-        //     watch: ['motion']
-        // }
+
     },
     methods: {
-
-        // handleClick: function () {
-        //     let payload = {
-        //         meetingId: this.meeting.id,
-        //         applies_to: this.motion.id,
-        //         content: this.localText,
-        //         type: 'amendment',
-        //         is_resolution: this.motion.isResolution,
-        //         info: this.motion.info,
-        //         requires: 0.5
-        //     };
-        //
-        //     let me = this;
-        //     let p;
-        //     if (this.motion.isResolution) {
-        //         p = this.$store.dispatch('createResolutionAmendment', payload);
-        //     } else {
-        //         p = this.$store.dispatch('createSubsidiaryMotion', payload);
-        //     }
-        //
-        //     p.then(() => {
-        //         me.$router.push('meeting-home');
-        //     });
-        // },
 
         onChange: function (value) {
             // window.console.log('proposition-content-input-new', 'onChange', 135, value);

@@ -397,6 +397,8 @@ const actions = {
      */
     updateMotion({dispatch, commit, getters}, payload) {
         return new Promise(((resolve, reject) => {
+            window.console.log('updateMotion', payload);
+
             //make local change first
             //todo consider whether worth rolling back on failure
             commit('setMotionProp', payload)

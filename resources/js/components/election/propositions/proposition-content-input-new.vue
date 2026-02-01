@@ -10,7 +10,7 @@
                 :options="options"
 
                 :onChange="onChange"
-                :prefill="content"
+                :prefill="localText"
 
                 hideImage="true"
                 hideVideo="true"
@@ -30,12 +30,12 @@ import MotionMixin from "../../../mixins/motionStoreMixin";
 import Payload from "../../../models/Payload";
 import {isReadyToRock} from "../../../utilities/readiness.utilities";
 
-// import VueTrix from "vue-trix";
 
 import MediumEditor from 'vuejs-medium-editor'
 import 'medium-editor/dist/css/medium-editor.css'
 import 'vuejs-medium-editor/dist/themes/default.css'
 
+// import VueTrix from "vue-trix";
 // import {QuillEditor} from '@vueup/vue-quill'
 // import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // import '@vueup/vue-quill/dist/vue-quill.bubble.css';
@@ -54,7 +54,9 @@ export default {
 
     data: function () {
         return {
-            cnt: 'taco',
+            _localText: '',
+
+            currentMotion: null,
 
             options: {
                 placeholder: {
@@ -85,54 +87,43 @@ export default {
     },
 
     computed: {
-        content: {
+        /**
+         * This holds the content for the box locally.
+         * This is necessary because otherwise the cursor would jump
+         * to be beginning of the text with every update because it
+         * thought that we were getting a new motion object.
+         *
+         * The check of motion id is then necessary so that it will actually
+         * recognize changes of motion.
+         *
+         * Clearly this is not the correct way to do this, but it works for now
+         */
+        localText: {
             get: function () {
-                if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-                    return '';
+                if (_.isUndefined(this.motion.content)) return ''
+
+                //Checks to see if the motion id has changed and
+                //if so updates the text. Otherwise will not update when the curent
+                //motion changes
+                if (this._localText === '' || this.currentMotion !== this.motion.id) {
+                    this._localText = this.motion.content;
+                    this.currentMotion = this.motion.id;
                 }
-                return this.motion.content;
+
+                return this._localText;
             },
-            set(v) {
-                window.console.log('proposition-content-input-new', 'set', 68, v);
-                //If they cleared the draft and the window is st
 
-                let p = Payload.factory({
-                        'object': this.motion,
-                        'updateProp': 'content',
-                        'updateVal': v
-                    }
-                );
-
-                if (isReadyToRock(this.editMode) && this.editMode === true) {
-                    this.$emit('update:content', p.updateVal);
-                } else {
-                    this.$store.dispatch('updateDraftMotion', p);
-                }
-
-                //
-                // if (_.isUndefined(this.motion) || _.isNull(this.motion)) {
-                //     //initialize first if no motion exists
-                //     let me = this;
-                //     this.$store.dispatch('createMotion', this.meeting.id).then(function () {
-                //         me.$store.dispatch('updateMotion', p);
-                //
-                //         me.$store.dispatch('updateMotion', p);
-                //     });
-
-                // } else {
-                //otherwise we can just update as normal
-                // this.$emit('update:content', p.updateVal);
-                // this.$store.dispatch('updateMotion', p);
-
-                // }
+            set: function (v) {
+                this._localText = v;
             },
             watch: ['motion']
         }
     },
+
+
     methods: {
         onChange: function (value) {
             window.console.log('proposition-content-input-new', 'onChange', 135, value);
-
 
             let p = Payload.factory({
                     'object': this.motion,
@@ -143,15 +134,13 @@ export default {
 
             if (isReadyToRock(this.editMode) && this.editMode === true) {
                 window.console.log('proposition-content-input-new', 'onChange', 162, 'edit');
-                this.$emit('update:content', p.updateVal);
+                this.$emit('update:content', p);
             } else {
                 this.$store.dispatch('updateDraftMotion', p);
             }
 
         },
 
-        uploadCallBack: function (v) {
-        },
 
     }
 

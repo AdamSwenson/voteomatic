@@ -31,7 +31,7 @@
                             :content="editedMotion.content"
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:content="editedMotion.content  = $event"
+                            v-on:update:content="handleUpdate"
 
                         ></proposition-content-input-new>
 <!--                        -->
@@ -46,8 +46,9 @@
                         <proposition-description-input
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:description="editedMotion.description  = $event"
+
                         ></proposition-description-input>
+<!--                        v-on:update:description="editedMotion.description  = $event"-->
                     </div>
 
                     <div class="card-body">
@@ -55,8 +56,9 @@
                             v-if="isChair"
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:requires="editedMotion.requires  = $event"
+
                         ></vote-required-inputs>
+<!--                        v-on:update:requires="editedMotion.requires  = $event"-->
 
                     </div>
 
@@ -222,7 +224,7 @@ export default {
             //input component so can distinguish between
             //creating and editing if we decide to keep the
             //editing function.
-            let payload = event[0];
+            let payload = event;
             window.console.log(payload);
             if (this.editMode) {
                 this.$store.dispatch('updateMotion', payload);
