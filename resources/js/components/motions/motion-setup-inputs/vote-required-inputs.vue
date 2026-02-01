@@ -112,7 +112,8 @@ export default {
                 );
 
                 if(isReadyToRock(this.editMode) && this.editMode===true){
-                    this.$emit('update:content', p.updateVal);
+                    this.$store.dispatch('updateMotion', p);
+
                 }else{
                     this.$store.dispatch('updateDraftMotion', p);
                 }
