@@ -29,8 +29,8 @@ export default {
             twoThirds: {
                 styling: 'bg-warning',
                 text: 'Two-thirds',
-                tip: 'This requires greater than 2/3 of all votes cast.'
-            }
+                tip: 'This requires 2/3 or greater of all votes cast.'
+            },
 
         }
     },
@@ -50,6 +50,8 @@ export default {
                         return this.twoThirds;
                         break;
                 }
+
+                return this.createStylingForOther(this.motion.requires);
             }
         },
 
@@ -74,8 +76,22 @@ export default {
             default: ''
         }
 
-    }
+    },
 
+    methods: {
+        createStylingForOther: function (requiredVote) {
+            if (_.isNumber(requiredVote)) {
+                let pct = requiredVote * 100 + "%"
+                return {
+                    styling: 'bg-warning',
+                    text: '>' + pct,
+                    tip: 'This requires greater than ' + pct + ' of all votes cast.'
+                }
+
+
+            }
+        }
+    }
 }
 </script>
 

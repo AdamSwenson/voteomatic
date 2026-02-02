@@ -7,18 +7,9 @@
                  v-if="! isInPublicPmode"
             >
 
-<!--            <div class="col-sm "-->
-<!--                 v-if="isChair"-->
-<!--            >-->
-
                 <motion-select-button
                     :motion="motion"
                 ></motion-select-button>
-
-<!--                <motion-select-button-->
-<!--                    v-if="isChair  "-->
-<!--                    :motion="motion"-->
-<!--                ></motion-select-button>-->
 
             </div>
 
@@ -41,7 +32,6 @@
                 ></open-voting-button>
 
 
-                <!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
                 <end-voting-button
                     v-if="isChair && isSelected && ! isComplete && isVotingAllowed "
                     :motion="motion"
@@ -57,7 +47,9 @@
         </div>
         <div class="row" v-if="showReceipt">
             <div class="col">
-                <p><strong>Receipt: </strong> {{receipt}}  <info-tooltip :content="infoReceipt"></info-tooltip></p>
+                <p><strong>Receipt: </strong> {{ receipt }}
+                    <info-tooltip :content="infoReceipt"></info-tooltip>
+                </p>
             </div>
         </div>
     </li>
@@ -113,15 +105,15 @@ export default {
                 struck: 'struck',
 
             },
-            infoReceipt : "This receipt will only remain visible if you do not refresh the page in your browser. Since " +
-                    "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
+            infoReceipt: "This receipt will only remain visible if you do not refresh the page in your browser. Since " +
+                "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
 
         }
     },
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
 
         amendmentClass: function () {
 
@@ -143,7 +135,6 @@ export default {
         isComplete: function () {
             return this.motion.isComplete;
         },
-
 
 
         // /**
@@ -236,8 +227,8 @@ export default {
             return true
         },
 
-        showReceipt: function(){
-          return isReadyToRock(this.vote);
+        showReceipt: function () {
+            return isReadyToRock(this.vote);
         },
 
         styledResult: function () {

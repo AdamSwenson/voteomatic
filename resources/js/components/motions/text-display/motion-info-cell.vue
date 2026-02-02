@@ -1,21 +1,24 @@
 <template>
-<div class="motion-info-cell">
-    <motion-type-badge :motion="motion"></motion-type-badge>
+    <div class="motion-info-cell">
+        <motion-type-badge :motion="motion"></motion-type-badge>
 
-    <motion-text-display
-        :motionStyle="motionStyle"
-        :motion="motion"
-        :truncate-resolutions="true"
-    ></motion-text-display>
+        <motion-text-display
+            :motionStyle="motionStyle"
+            :motion="motion"
+            :truncate-resolutions="true"
+        ></motion-text-display>
 
-    <br/>
+        <br/>
 
-    <required-vote-badge v-if="showRequiredVoteBadge" :motion="motion"></required-vote-badge>
+        <required-vote-badge v-if="showRequiredVoteBadge" :motion="motion"></required-vote-badge>
 
-    <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
+        <span class="ms-2">
+            <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
+        </span>
 
-<!--    <motion-status-badge v-if="showStatusBadge" :motion="isPassed"></motion-status-badge>-->
-    <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+        <span class="ms-1">
+            <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+        </span>
 
     </div>
 </template>
@@ -52,7 +55,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
 
         /**
          * What styling to pass to the motion-text display if
@@ -98,13 +101,13 @@ export default {
             }
 
             //Amendments
-            if(this.isAmendment){
+            if (this.isAmendment) {
                 style += this.amendmentStyle;
             }
 
             //Procedural
-            if(this.isProcedural){
-               style += this.proceduralStyle;
+            if (this.isProcedural) {
+                style += this.proceduralStyle;
             }
 
             return style;
@@ -139,22 +142,22 @@ export default {
         },
 
 
-        showDebatableBadge: function(){
-            if(isReadyToRock(this.motion)) {
+        showDebatableBadge: function () {
+            if (isReadyToRock(this.motion)) {
                 return !this.isMotionComplete && !this.isSuperseded;
             }
         },
 
-        showRequiredVoteBadge : function(){
-            if(isReadyToRock(this.motion)){
+        showRequiredVoteBadge: function () {
+            if (isReadyToRock(this.motion)) {
                 //Don't show on already passed motions
-                return ! this.isMotionComplete && ! this.isSuperseded;
+                return !this.isMotionComplete && !this.isSuperseded;
             }
         },
 
 
-        showStatusBadge: function(){
-            if(isReadyToRock(this.motion)) {
+        showStatusBadge: function () {
+            if (isReadyToRock(this.motion)) {
                 return !this.isMotionComplete && !this.isSuperseded;
             }
         }

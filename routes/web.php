@@ -173,9 +173,6 @@ Route::get('/home/{meeting}', [MainController::class, 'meetingHome'])
 // see VOT-56. Began moving toward this in VOT-30
 Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
     ->name('main');
-//main page where votes get cast
-//Route::get('main/{motion}', [MainController::class, 'getVotePage'])
-//    ->name('main');
 
 
 Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
