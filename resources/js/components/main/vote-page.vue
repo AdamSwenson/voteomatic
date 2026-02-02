@@ -46,7 +46,7 @@
                     <span class="ms-1">
                         <debatable-badge v-if="isReady" :motion="motion"></debatable-badge>
                     </span>
-                    
+
                 </div>
                 <div class="col">
 
