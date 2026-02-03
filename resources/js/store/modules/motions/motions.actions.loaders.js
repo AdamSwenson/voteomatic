@@ -26,8 +26,10 @@ const actions = {
      */
     loadMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
+            let motionId = idify(motion);
+
             //send to server
-            let url = routes.motions.resource(motion.id);
+            let url = routes.motions.resource(motionId);
             return axios.get(url)
                 .then((response) => {
                     let d = response.data;
