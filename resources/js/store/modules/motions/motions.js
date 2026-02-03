@@ -347,13 +347,14 @@ const actions = {
                     //     dispatch('handlePublicPModeMotionClosedMessage')
                     // }else{
                     dispatch('handleMotionClosedMessage', e)
-
                     // }
-
+                })
+                .listen("VotingOnMotionAborted", (e) => {
+                    dispatch('handleMotionAbortedMessage', e);
                 })
                 .listen("RequestClientReloadMotion", (e) => {
-
-            });
+                    dispatch('handleReloadMotionRequest', e);
+                });
 
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
