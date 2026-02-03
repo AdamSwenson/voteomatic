@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Events\ForcePageReload;
 use App\Events\MotionSeconded;
 use App\Events\MotionNeedingApproval;
 use App\Events\NewCurrentMotionSet;
@@ -110,7 +111,7 @@ class MotionController extends Controller
                 $this->motionRepo->secondMotion($motion, $this->user);
                 $this->motionRepo->markInOrder($motion, $this->user);
                 //Tell the client to switch to this motion
-                if($this->isPusherCompatible($motion)){
+                if(MotionRepository::isPusherCompatible($motion)){
                     MotionSeconded::dispatch($motion);
                 }else{
                     RequestClientReloadMotion::dispatch($motion);
@@ -167,22 +168,21 @@ class MotionController extends Controller
 
     }
 
-    /**
-     * Check if we are about to send a payload which exceeds pusher's limits.
-     * If true, tells client to refresh. If not, returns true
-     * @param $motion
-     * @return true
-     */
-    public function isPusherCompatible($motion)
-    {
-        //
-        if(! MotionRepository::isPusherCompatible($motion)){
-            NotifyPageRefreshNeeded::dispatch($this->meeting);
-        }
-        return true;
-
-
-    }
+//    /**
+//     * Check if we are about to send a payload which exceeds pusher's limits.
+//     * If true, tells client to refresh. If not, returns true
+//     * @param $motion
+//     * @return true
+//     */
+//    public function isPusherCompatible($motion)
+//    {
+//        //
+//        if(! MotionRepository::isPusherCompatible($motion)){
+//            NotifyPageRefreshNeeded::dispatch($this->meeting);
+//            ForcePageReload::dispatch($motion->meeting);
+//        }
+//        return true;
+//    }
 
     /**
      * Display the specified resource.

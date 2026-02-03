@@ -17,7 +17,7 @@ use Illuminate\Queue\SerializesModels;
  */
 class RequestClientReloadMotion implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionIdOnlyTrait;
 
     protected $motion;
     protected $meeting;

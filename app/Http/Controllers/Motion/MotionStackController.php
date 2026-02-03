@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Events\ForcePageReload;
 use App\Events\MotionClosed;
 use App\Events\NewCurrentMotionSet;
+use App\Events\NotifyPageRefreshNeeded;
 use App\Events\VotingOnMotionAborted;
 use App\Events\VotingOnMotionOpened;
 use App\Http\Controllers\Controller;
@@ -13,6 +15,7 @@ use App\Models\RecordedVoteRecord;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
 use App\Repositories\IResolutionRepository;
+use App\Repositories\MotionRepository;
 use App\Repositories\Vote\IVoteManagementRepository;
 use Illuminate\Http\Request;
 
@@ -90,9 +93,17 @@ $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
             'superseding' => $superseding
         ];
 
-
         //Broadcast to non-chair members
         MotionClosed::dispatch($motion, $superseding);
+
+        //If this was a resolution or other big object,
+        //the MotionClosed will fail
+        // dev This should be replaced with actually having the client
+        // reload the motion, but that is for later.
+        if(! MotionRepository::isPusherCompatible($motion)){
+            ForcePageReload::dispatch($motion->meeting);
+//            NotifyPageRefreshNeeded::dispatch($motion->meeting);
+        }
 
         return response()->json($out);
 

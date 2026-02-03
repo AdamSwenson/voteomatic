@@ -61,6 +61,9 @@ const actions = {
         let meeting = getters.getActiveMeeting;
         let channel = `meeting.${meeting.id}`;
         Echo.private(channel)
+            .listen('ForcePageReload', (e) => {
+                dispatch('handleForcePageReload');
+            })
             .listen("GeneralNotification", (e) => {
                 dispatch('handlePusherGeneralNotification', e);
             })
@@ -87,9 +90,7 @@ const actions = {
                 //a new motion
                 dispatch('handleNewCurrentMotionSetMessage', e);
             })
-            .listen('VotingOnMotionOpened', (e) => {
-                dispatch('handleVotingOnMotionOpenedMessage', e);
-            })
+
             .listen('RequestClientReloadMotion', (e) => {
                 window.console.log('startup', 'Received RequestClientReloadMotion', 94, e);
                 dispatch('reloadMotion', e.motionId);
@@ -97,6 +98,9 @@ const actions = {
             .listen('RequestClientSetCurrentMotionById', (e) => {
                 window.console.log('startup', 'Received RequestClientSetCurrentMotionById', 94, e);
                 dispatch('handleSetCurrentMotionRequest', e);
+            })
+            .listen('VotingOnMotionOpened', (e) => {
+                dispatch('handleVotingOnMotionOpenedMessage', e);
             });
 
 
