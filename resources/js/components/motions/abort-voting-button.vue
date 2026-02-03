@@ -1,6 +1,3 @@
-
-
-
 <template>
 
     <!-- Button trigger modal -->
@@ -8,8 +5,8 @@
         <button type="button"
                 v-bind:class="styling"
                 data-bs-toggle="modal"
-                data-bs-target="#endVotingModal">
-            End voting
+                data-bs-target="#abortVotingModal">
+            Abort voting
         </button>
     </div>
 
@@ -19,15 +16,13 @@
 <script>
 
 export default {
-    name: "end-voting-button",
+    name: "abort-voting-button",
     props: ['motion'],
 
-
     computed: {
-        // asyncComputed: {
 
         styling: function () {
-            let style = "btn btn-danger btn-lg  ";
+            let style = "btn btn-primary btn-lg  ";
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return style;
 
             if (this.isComplete) {
@@ -47,7 +42,7 @@ export default {
 
     methods: {
         endVoting: function () {
-            this.$store.dispatch('endVotingOnMotion', this.motion);
+            this.$store.dispatch('abortVotingOnMotion', this.motion);
         }
 
     }
@@ -57,4 +52,3 @@ export default {
 <style scoped>
 
 </style>
-

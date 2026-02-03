@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Motion;
 
 use App\Events\MotionClosed;
 use App\Events\NewCurrentMotionSet;
+use App\Events\VotingOnMotionAborted;
 use App\Events\VotingOnMotionOpened;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\RecordedVoteRecord;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
 use App\Repositories\IResolutionRepository;
+use App\Repositories\Vote\IVoteManagementRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -43,7 +46,7 @@ class MotionStackController extends Controller
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->motionRepo = app()->make(IMotionRepository::class);
         $this->rezzieRepo = app()->make(IResolutionRepository::class);
-
+$this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
     }
 
 
@@ -159,6 +162,34 @@ class MotionStackController extends Controller
 
         //return the success message
         response()->json($motion);
+
+    }
+
+    /**
+     * If the voting needs to be ended before it is closed without reporting results,
+     * this aborts the vote. It deletes all cast votes and closes the voting.
+     * @param Motion $motion
+     * @return void
+     */
+    public function abortVotingOnMotion(Motion $motion)
+    {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('markComplete', $motion);
+
+        //The motion was probably the current one, but just in case
+        $meeting = $motion->meeting;
+        $motion = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+
+        $this->voteManagmentRepo->abortVotingOnMotion($motion);
+
+        //Send the push message to all clients
+        VotingOnMotionAborted::dispatch($motion);
+
+        //return the success message
+        response()->json($motion);
+
 
     }
 

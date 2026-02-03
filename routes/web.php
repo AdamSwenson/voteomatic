@@ -192,6 +192,8 @@ Route::post('motions/order/good/{motion}', [MotionOrderlinessController::class, 
 //Route::post('motions/meeting/{meeting}', [MotionController::class, 'createMotion']);
 Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
 Route::post('motions/open/{motion}', [MotionStackController::class, 'startVotingOnMotion']);
+Route::post('motions/abort/{motion}', [MotionStackController::class, 'abortVotingOnMotion']);
+
 
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);

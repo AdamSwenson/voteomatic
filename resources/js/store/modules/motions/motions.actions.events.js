@@ -12,6 +12,20 @@ const actions = {
     */
 
     /**
+     * When the client is notified by the server that voting on the current
+     * motion has been aborted, this does the notification and relevant state
+     * updates.
+     * @param dispatch
+     * @param state
+     * @param getters
+     * @param pusherEvent
+     */
+    handleMotionAbortedMessage({dispatch, state, getters}, pusherEvent) {
+        window.console.log('motions.actions.events', 'handleMotionAbortedMessage', 24, pusherEvent);
+        dispatch('handleForcePageReload');
+    },
+
+    /**
      * When the client is notified by the server that voting on the currently active
      * motion has been ended, this removes the option to try to vote and
      * initiates the loading of results.

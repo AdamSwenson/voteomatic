@@ -36,11 +36,14 @@ const actions = {
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
                                 //These can happen in parallel
-                                dispatch('loadSettings', meeting.id).then(function (){});
+                                dispatch('loadSettings', meeting.id).then(function () {
+                                });
 
-                                dispatch('loadResultsForAllMeetingMotions').then(function () {});
+                                dispatch('loadResultsForAllMeetingMotions').then(function () {
+                                });
 
-                                dispatch('loadMotionTypesAndTemplates').then(function () {});
+                                dispatch('loadMotionTypesAndTemplates').then(function () {
+                                });
 
                             });
 
@@ -87,6 +90,7 @@ const actions = {
             .listen('VotingOnMotionOpened', (e) => {
                 dispatch('handleVotingOnMotionOpenedMessage', e);
             });
+
 
         window.console.log('Meeting listeners initialized for ', channel);
 

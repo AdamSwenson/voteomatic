@@ -80,10 +80,12 @@ import InfoTooltip from "../messaging/info-tooltip";
 import MainMotionTextDisplay from "./text-display/motion-text-display";
 import MotionTextDisplay from "./text-display/motion-text-display";
 import MotionInfoCell from "./text-display/motion-info-cell";
+import AbortVotingButton from "./abort-voting-button.vue";
 
 export default {
     name: "motion-select-area",
     components: {
+        AbortVotingButton,
         MotionInfoCell,
         MotionTextDisplay,
         MainMotionTextDisplay,

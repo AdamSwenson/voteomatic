@@ -32,6 +32,8 @@ use App\Repositories\MotionStackRepository;
 use App\Repositories\ResolutionRepository;
 use App\Repositories\SettingsRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\Vote\IVoteManagementRepository;
+use App\Repositories\Vote\VoteManagementRepository;
 use App\Repositories\VoterEligibilityRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -81,6 +83,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(IVoterEligibilityRepository::class, VoterEligibilityRepository::class);
 
+        $this->app->bind(IVoteManagementRepository::class, VoteManagementRepository::class);
         //        $this->app->bind(IAssignmentRepository::class, AssignmentRepository::class);
 
 //        $this->app->bind(IReviewAssignmentRepository::class, ReviewAssignmentRepository::class);

@@ -186,7 +186,6 @@ const actions = {
     ...Loaders,
 
 
-
     /**
      * Used by the chair to close the vote and prevent further casting of
      * ballots
@@ -220,7 +219,6 @@ const actions = {
         }));
 
     },
-
 
 
     /**
@@ -347,11 +345,10 @@ const actions = {
                     // if(getters.isInPublicPmode === true){
                     //     dispatch('handlePublicPModeMotionClosedMessage')
                     // }else{
-                        dispatch('handleMotionClosedMessage', e);
+                    dispatch('handleMotionClosedMessage', e);
                     // }
 
                 })
-
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
         }));
@@ -370,6 +367,39 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.openVoting(motion.id);
+            return axios.post(url, motion)
+                .then((response) => {
+                    let d = response.data;
+                    let channel = `motions.${motion.id}`;
+                    Echo.private(channel)
+                        .listen("VotingOnMotionAborted", (e) => {
+                            dispatch('handleMotionAbortedMessage', e);
+                        });
+
+                    resolve();
+                    //we don't do anything here since the push message will trigger
+                    //everything
+                }).catch(function (error) {
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+    },
+
+    /**
+     * Used by chair to end voting before completion, delete all
+     * cast votes, and not display results
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion
+     */
+    abortVotingOnMotion({dispatch, commit, getters}, motion) {
+        return new Promise(((resolve, reject) => {
+            //send to server
+            let url = routes.motions.abortVoting(motion.id);
             return axios.post(url, motion)
                 .then((response) => {
                     let d = response.data;
@@ -420,7 +450,6 @@ const actions = {
                 });
         }));
     },
-
 
 
 };

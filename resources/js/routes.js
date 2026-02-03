@@ -44,6 +44,7 @@ module.exports = {
     election: {
 
         admin: {
+
             startVoting: (meetingId) => {
                 return normalizedRouteRoot() + 'election/admin/start/' + meetingId;
             },
@@ -240,6 +241,10 @@ module.exports = {
                 return base;
             }
             return base + motionId;
+        },
+
+        abortVoting: (motionId) => {
+            return normalizedRouteRoot() + 'motions/abort/' + motionId;
         },
 
         createMotion: (meetingId) => {

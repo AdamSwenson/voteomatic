@@ -15,8 +15,14 @@
             </div>
 
             <div class="col">
+                <p class="mb-2">
                 <end-voting-button :motion="motion"></end-voting-button>
                 <end-voting-modal></end-voting-modal>
+               </p>
+                <p class="mt-1">
+                    <abort-voting-button :motion="motion"></abort-voting-button>
+                    <abort-voting-modal></abort-voting-modal>
+                </p>
             </div>
 
         </div>
@@ -38,10 +44,12 @@ import ChairMixin from "../../../mixins/chairMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import EndVotingButton from "../../motions/end-voting-button";
 import EndVotingModal from "../../motions/end-voting-modal";
+import AbortVotingButton from "../../motions/abort-voting-button.vue";
+import AbortVotingModal from "../../motions/abort-voting-modal.vue";
 
 export default {
     name: "vote-count-alert",
-    components: {EndVotingModal, EndVotingButton},
+    components: {AbortVotingModal, AbortVotingButton, EndVotingModal, EndVotingButton},
     props: [],
 
     mixins: [ChairMixin, MotionMixin],
@@ -52,7 +60,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         isVotingAllowed: function () {
             return isReadyToRock(this.motion) && this.motion.isVotingAllowed;
         },
