@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Meeting;
 use App\Models\Motion;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -12,34 +11,27 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VotingOnMotionOpened implements ShouldBroadcast
+/**
+ * Requests that the provided motion be set as current. Sends only the motion id
+ */
+class RequestClientSetCurrentMotionById implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionIdOnlyTrait;
 
-    /**
-     * Keeping the models in protected properties
-     * prevents them from being sent to pusher.
-     * @var Motion
-     */
+
     protected $motion;
-
-    /**
-     * @var Meeting
-     */
     protected $meeting;
-
 
     /**
      * Create a new event instance.
      *
-     * @param Motion $motion
+     * @return void
      */
     public function __construct(Motion $motion)
     {
         $this->motion = $motion;
         $this->meeting = $motion->meeting;
     }
-
     /**
      * Get the channels the event should broadcast on.
      *
@@ -49,6 +41,4 @@ class VotingOnMotionOpened implements ShouldBroadcast
     {
         return new PrivateChannel($this->meetingChannelName());
     }
-
-
 }

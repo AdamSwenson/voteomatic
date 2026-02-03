@@ -13,9 +13,10 @@ const actions = {
     */
 
     /**
-     * Gets the motion from the server
+     * Gets the motion from the server. Does not set as current
      *
-     * //dev Does this actually work? Shouldn't it add to store too?
+     * //dev Seemed to not be used so repurposed in VOT-308
+     *
      *
      * @param dispatch
      * @param commit
@@ -31,16 +32,38 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     let motion = MotionObjectFactory.make(d);
-                    // let motion = new Motion(d);
-                    // let motion = new Motion(d.id, d.name, d.date);
-                    dispatch('setMotion', motion);
-                    resolve()
+                    commit('addMotionToStore', motion);
+                    return resolve(motion)
                 })
                 .catch(function (error) {
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
                     }
+                });
+        }));
+    },
+
+
+    /**
+     * Gets a fresh copy of the motion from the server.
+     * Does not set it as current, just updates it in store
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion Motion object or motion id
+     * @returns {Promise<unknown>}
+     */
+    reloadMotion({dispatch, commit, getters}, motion) {
+        let motionId = idify(motion);
+        return new Promise(((resolve, reject) => {
+            let url = routes.motions.resource(motionId);
+            return axios.get(url)
+                .then((response) => {
+                    let d = response.data;
+                    let motion = MotionObjectFactory.make(d);
+                    dispatch('replaceMotionInStore', motion);
+                    return resolve();
                 });
         }));
     },

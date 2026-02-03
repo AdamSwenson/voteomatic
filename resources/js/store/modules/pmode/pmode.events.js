@@ -25,6 +25,14 @@ const actions = {
     *    },
     */
 
+    /**
+     * Reloads the page when told by pusher
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param pusherEvent
+     * @returns {boolean}
+     */
     handleForcePageReload({dispatch, commit, getters}, pusherEvent) {
         // return new Promise(((resolve, reject) => {
             window.console.log('Caught forcePageReload ');

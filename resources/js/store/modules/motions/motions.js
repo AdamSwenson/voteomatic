@@ -114,6 +114,7 @@ const mutations = {
 
     },
 
+
     setDraftMotion: (state, motionObject) => {
         state.draftMotion = motionObject;
     },
@@ -162,7 +163,7 @@ const mutations = {
     },
 
     /**
-     * Updates a property on the motion object
+     * Updates a property on the current motion object
      * @param state
      * @param prop
      * @param val
@@ -345,10 +346,15 @@ const actions = {
                     // if(getters.isInPublicPmode === true){
                     //     dispatch('handlePublicPModeMotionClosedMessage')
                     // }else{
-                    dispatch('handleMotionClosedMessage', e);
+                    dispatch('handleMotionClosedMessage', e)
+
                     // }
 
                 })
+                .listen("RequestClientReloadMotion", (e) => {
+
+            });
+
             window.console.log('Websocket listener set for current motion on channel ', channel);
             return resolve();
         }));

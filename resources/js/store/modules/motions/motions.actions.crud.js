@@ -341,6 +341,23 @@ const actions = {
     },
 
     /**
+     * Deletes an existing motion and replaces it with a
+     * new copy.
+     * Used to update entire single motions after changes on server.
+     * @param state
+     * @param motionObject
+     */
+    replaceMotionInStore: ({dispatch, commit, getters}, motionObject) => {
+        return new Promise(((resolve, reject) => {
+            commit('deleteMotion', motionObject);
+            commit('addMotionToStore', motionObject);
+            resolve();
+        }))
+
+    },
+
+
+    /**
      * Updates properties of the draft motion the user
      * is working on. Does not tell the server anything.
      *
