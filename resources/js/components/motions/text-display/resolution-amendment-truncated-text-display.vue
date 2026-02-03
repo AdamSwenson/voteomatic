@@ -50,24 +50,27 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
 
         taggedNewText: function () {
 
             //dev
             // return this.amendmentText;
+            try {
 
+                if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
+                if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
+                let me = this;
 
-            if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
-            if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
-            let me = this;
+                let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
 
-            let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
-
-            diffHtml = pa.truncateTextAroundChanges(diffHtml);
-            return diffHtml;
-            // return diffHtml.innerHTML;
-
+                diffHtml = pa.truncateTextAroundChanges(diffHtml);
+                return diffHtml;
+                // return diffHtml.innerHTML;
+            } catch (err) {
+                window.console.log('resolution-amendment-truncated-text-display', 'taggedNewText', 71, err);
+            }
+            return ''
             // return getTaggedChangesOfHtml(this.originalText, this.amendmentText);
         }
 
