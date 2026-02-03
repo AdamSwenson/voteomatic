@@ -13,12 +13,15 @@ use Illuminate\Queue\SerializesModels;
 
 class VotingOnMotionAborted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionIdOnlyTrait;
+
 
     /**
-     * @var motionId
+     * Keeping the models in protected properties
+     * prevents them from being sent to pusher.
+     * @var Motion
      */
-    public $motionId;
+    protected $motion;
 
 
     /**
@@ -28,8 +31,7 @@ class VotingOnMotionAborted implements ShouldBroadcast
      */
     public function __construct(Motion $motion)
     {
-        $this->motionId = $motion->id;
-
+        $this->motion = $motion;
     }
 
     /**
@@ -39,6 +41,6 @@ class VotingOnMotionAborted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel($this->motionChannelNameFromId());
+        return new PrivateChannel($this->motionChannelName());
     }
 }

@@ -129,6 +129,34 @@ const actions = {
     },
 
     /**
+     * Semi-duplicative of handleNewCurrentMotionSetMessage, except that it
+     * receives just the motion id and ONLY sets an existing motion as current
+     * Added VOT-308.
+     *
+     * Expects a pusherEvent with the property:
+     *      motionId
+     *
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param pusherEvent
+     * @returns {Promise<unknown>}
+     */
+    handleSetCurrentMotionRequest({dispatch, commit, getters}, pusherEvent) {
+        return new Promise(((resolve, reject) => {
+            let motionId = pusherEvent.motionId;
+            let motion = getters.getMotionById(motionId);
+            //Make it the current motion and attach relevant listeners
+            return dispatch('setMotion', motion)
+                .then(() => {
+                    dispatch('forceNavigationToHome');
+                    return resolve(motion);
+                });
+
+        }));
+    },
+
+    /**
      * This will be run on everything when the motion closes. Thus this checks for:
      * - whether it was an amendment
      * - whether it passed
@@ -197,6 +225,12 @@ const actions = {
      */
     getMotionFromEvent({dispatch, commit, getters}, pusherEvent) {
         return new Promise(((resolve, reject) => {
+            //Determine whether we have received the full motion
+            //or just the id
+            if(_.has(pusherEvent, 'motionId')){
+                let motion = getters.getMotionById(pusherEvent.motionId);
+                return resolve(motion);
+            }
 
             //Get the existing object if possible so that we won't have
             //duplicates which different things could mutate.
@@ -205,6 +239,11 @@ const actions = {
 
             return resolve(MotionObjectFactory.make(pusherEvent.motion));
         }));
+    },
+
+    handleReloadMotionRequest({dispatch, commit, getters}, pusherEvent) {
+        //dev Eventually this should just reload the particular motion
+        dispatch('handleForcePageReload', pusherEvent);
     },
 
     /**

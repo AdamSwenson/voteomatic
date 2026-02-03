@@ -194,7 +194,6 @@ Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotion
 Route::post('motions/open/{motion}', [MotionStackController::class, 'startVotingOnMotion']);
 Route::post('motions/abort/{motion}', [MotionStackController::class, 'abortVotingOnMotion']);
 
-
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
 Route::post('motions/second/{motion}', [MotionSecondController::class, 'markMotionSeconded']);
@@ -202,6 +201,7 @@ Route::delete('motions/second/{motion}', [MotionSecondController::class, 'markNo
 
 Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates']);
 Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
+
 Route::resource('motions', MotionController::class);
 
 

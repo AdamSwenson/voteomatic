@@ -13,7 +13,7 @@ const actions = {
     */
 
     /**
-     * Gets the motion from the server
+     * Gets the motion from the server and sets as current
      *
      * //dev Does this actually work? Shouldn't it add to store too?
      *
@@ -41,6 +41,30 @@ const actions = {
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
                     }
+                });
+        }));
+    },
+
+
+    /**
+     * Gets a fresh copy of the motion from the server.
+     * Does not set it as current, just updates it in store
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion Motion object or motion id
+     * @returns {Promise<unknown>}
+     */
+    reloadMotion({dispatch, commit, getters}, motion) {
+        let motionId = idify(motion);
+        return new Promise(((resolve, reject) => {
+            let url = routes.motions.resource(motionId);
+            return axios.get(url)
+                .then((response) => {
+                    let d = response.data;
+                    let motion = MotionObjectFactory.make(d);
+                    dispatch('replaceMotionInStore', motion);
+                    return resolve();
                 });
         }));
     },
@@ -79,7 +103,8 @@ const actions = {
                     }
                 });
         }));
-    },
+    }
+    ,
 
     loadMotionsForMeeting({dispatch, commit, getters}, meeting) {
         //we need this to determine whether election or regular
@@ -116,7 +141,8 @@ const actions = {
                     }
                 });
         }));
-    },
+    }
+    ,
 
     loadMotionTypesAndTemplates({dispatch, commit, getters}) {
         window.console.log("Loading motion types and templates");
@@ -138,7 +164,8 @@ const actions = {
                         });
                 });
         }));
-    },
+    }
+    ,
 
 };
 

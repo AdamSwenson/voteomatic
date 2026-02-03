@@ -83,12 +83,20 @@ const actions = {
             })
             .listen('NewCurrentMotionSet', (e) => {
                 //In some cases the chair may select a motion from the
-                //home page. When that heppens we need to force everyone onto
+                //home page. When that happens we need to force everyone onto
                 //a new motion
                 dispatch('handleNewCurrentMotionSetMessage', e);
             })
             .listen('VotingOnMotionOpened', (e) => {
                 dispatch('handleVotingOnMotionOpenedMessage', e);
+            })
+            .listen('RequestClientReloadMotion', (e) => {
+                window.console.log('startup', 'Received RequestClientReloadMotion', 94, e);
+                dispatch('reloadMotion', e.motionId);
+            })
+            .listen('RequestClientSetCurrentMotionById', (e) => {
+                window.console.log('startup', 'Received RequestClientSetCurrentMotionById', 94, e);
+                dispatch('handleSetCurrentMotionRequest', e);
             });
 
 

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Motion;
 
 use App\Events\MotionSeconded;
 use App\Events\MotionNeedingApproval;
+use App\Events\NewCurrentMotionSet;
 use App\Events\NotifyPageRefreshNeeded;
+use App\Events\RequestClientReloadMotion;
+use App\Events\RequestClientSetCurrentMotionById;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MotionRequest;
 use App\Models\Meeting;
@@ -26,7 +29,7 @@ class MotionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
+
         //[Added in VOT-104] Checks the settings and determines whether
         // the user is allowed to send a post request
         $this->middleware('motion-make-eligibility');
@@ -107,10 +110,16 @@ class MotionController extends Controller
                 $this->motionRepo->secondMotion($motion, $this->user);
                 $this->motionRepo->markInOrder($motion, $this->user);
                 //Tell the client to switch to this motion
-                MotionSeconded::dispatch($motion);
+                if($this->isPusherCompatible($motion)){
+                    MotionSeconded::dispatch($motion);
+                }else{
+                    RequestClientReloadMotion::dispatch($motion);
+                    RequestClientSetCurrentMotionById::dispatch($motion);
+                }
+
                 //Update it as the current motion on server
                 $motion = $this->motionStackRepo->setAsCurrentMotion($this->meeting, $motion);
-//                return redirect()->action([MotionStackController::class, 'setAsCurrentMotion', ['meeting' => $this->meeting, 'motion'=> $motion]]);
+
             } else {
                 // A regular user created it so we will need to
                 //seek authorization and (later) a second
@@ -118,10 +127,10 @@ class MotionController extends Controller
             }
         }
 
-        //Check in case we've sent a payload which exceeds pusher's limits
-        if(! MotionRepository::isPusherCompatible($motion)){
-            NotifyPageRefreshNeeded::dispatch($this->meeting);
-        }
+//        //Check in case we've sent a payload which exceeds pusher's limits
+//        if(! MotionRepository::isPusherCompatible($motion)){
+//            NotifyPageRefreshNeeded::dispatch($this->meeting);
+//        }
 
         return response()->json($motion);
 
@@ -154,6 +163,23 @@ class MotionController extends Controller
 //            //are using the preexisting object
 //            $meeting = Meeting::find($request->meetingId);
 //            $meeting->motions()->save($motion);
+
+
+    }
+
+    /**
+     * Check if we are about to send a payload which exceeds pusher's limits.
+     * If true, tells client to refresh. If not, returns true
+     * @param $motion
+     * @return true
+     */
+    public function isPusherCompatible($motion)
+    {
+        //
+        if(! MotionRepository::isPusherCompatible($motion)){
+            NotifyPageRefreshNeeded::dispatch($this->meeting);
+        }
+        return true;
 
 
     }
