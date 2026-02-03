@@ -13,9 +13,10 @@ const actions = {
     */
 
     /**
-     * Gets the motion from the server and sets as current
+     * Gets the motion from the server. Does not set as current
      *
-     * //dev Does this actually work? Shouldn't it add to store too?
+     * //dev Seemed to not be used so repurposed in VOT-308
+     *
      *
      * @param dispatch
      * @param commit
@@ -31,10 +32,8 @@ const actions = {
                 .then((response) => {
                     let d = response.data;
                     let motion = MotionObjectFactory.make(d);
-                    // let motion = new Motion(d);
-                    // let motion = new Motion(d.id, d.name, d.date);
-                    dispatch('setMotion', motion);
-                    resolve()
+                    commit('addMotionToStore', motion);
+                    return resolve(motion)
                 })
                 .catch(function (error) {
                     // error handling
@@ -103,8 +102,7 @@ const actions = {
                     }
                 });
         }));
-    }
-    ,
+    },
 
     loadMotionsForMeeting({dispatch, commit, getters}, meeting) {
         //we need this to determine whether election or regular
@@ -141,8 +139,7 @@ const actions = {
                     }
                 });
         }));
-    }
-    ,
+    },
 
     loadMotionTypesAndTemplates({dispatch, commit, getters}) {
         window.console.log("Loading motion types and templates");
@@ -164,8 +161,7 @@ const actions = {
                         });
                 });
         }));
-    }
-    ,
+    },
 
 };
 

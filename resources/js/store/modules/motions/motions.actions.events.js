@@ -154,7 +154,7 @@ const actions = {
             //Doing this the dumb way for now and just checking if the motion exists, if not
             //calling reload (which should work because can use motionId) and then handling setting
             if (!isReadyToRock(motion)) {
-                return dispatch('reloadMotion', motionId).then(() => {
+                return dispatch('loadMotion', motionId).then((motion) => {
                     //Make it the current motion and attach relevant listeners
                     return dispatch('setMotion', motion)
                         .then(() => {
