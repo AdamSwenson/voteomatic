@@ -22,12 +22,12 @@ export default {
         return {
 
             majority: {
-                styling: 'bg-primary',
+                styling: 'bg-primary text-light',
                 text: 'Majority',
                 tip: 'A majority means greater than 50% of all votes cast.'
             },
             twoThirds: {
-                styling: 'bg-warning',
+                styling: 'bg-warning ',
                 text: 'Two-thirds',
                 tip: 'This requires 2/3 or greater of all votes cast.'
             },
@@ -83,7 +83,7 @@ export default {
             if (_.isNumber(requiredVote)) {
                 let pct = requiredVote * 100 + "%"
                 return {
-                    styling: 'bg-warning',
+                    styling: 'bg-warning ',
                     text: '>' + pct,
                     tip: 'This requires greater than ' + pct + ' of all votes cast.'
                 }

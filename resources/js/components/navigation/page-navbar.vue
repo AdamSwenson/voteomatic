@@ -1,5 +1,8 @@
 <template>
-    <nav id="pageNav" class="navbar navbar-expand-md navbar-dark shadow-sm " >
+    <nav id="pageNav"
+         class="navbar navbar-expand-md navbar-dark shadow-sm "
+    aria-label="Top level navigation bar. Only used for logging out or viewing other meetings and elections"
+    >
 
         <!--    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">-->
         <div class="container-fluid  ">

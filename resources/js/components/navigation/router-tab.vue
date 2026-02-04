@@ -3,34 +3,17 @@
         v-if="showTab"
         v-bind:to="path"
         v-slot="{ href, route, navigate, isActive, isExactActive }"
+        v-bind:aria-label="ariaLabel"
     >
         <li class="nav-item mt-1"
             :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
         >
+<!--            <nav v-bind:aria-label="label"></nav>-->
             <a class="nav-link"
                :class="[isActive && activeClass, isExactActive && activeClass]"
                :href="href" @click="navigate">{{ label }}</a>
         </li>
     </router-link>
-
-    <!--    <router-link-->
-    <!--        v-bind:to="path"-->
-    <!--        v-bind:key="r.name"-->
-    <!--        v-bind:style="styling"-->
-    <!--        v-bind:active-class="activeClass"-->
-
-    <!--    >-->
-    <!--        &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-    <!--        <a class="page-nav nav-link">-->
-    <!--                    <span class="icon is-small">-->
-    <!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                        </svg>&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
-    <!--                        </span>-->
-    <!--            <span>{{ r.label }}</span>-->
-    <!--        </a>-->
-    <!--    </router-link>-->
 
 </template>
 
@@ -51,6 +34,10 @@ export default {
 
 
     computed: {
+        ariaLabel: function () {
+        return `${this.label} Tab`;
+        },
+
         // asyncComputed : {
         showTab: function () {
             if (this.name === 'vote') {

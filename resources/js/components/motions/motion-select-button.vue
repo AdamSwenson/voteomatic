@@ -56,7 +56,7 @@ export default {
 
         tabIndex: function(){
           if(this.isDisabled) return '-1';
-          return 1;
+          return 0;
         },
 
         isDisabled: function () {

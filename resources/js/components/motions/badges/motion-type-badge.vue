@@ -22,18 +22,18 @@ export default {
         return {
 
             procedural: {
-                styling: 'bg-secondary',
+                styling: 'bg-secondary text-light',
                 text: 'Procedural'
             },
 
             amendment: {
-                styling: 'bg-warning',
+                styling: 'bg-warning ',
                 text: 'Amendment'
             },
 
 
             secondaryAmendment: {
-                styling: 'bg-warning',
+                styling: 'bg-warning ',
                 text: 'Amendment - secondary'
             }
 

@@ -1,7 +1,7 @@
 <template>
 
     <div class="router-tabs" role="navigation">
-
+        <nav aria-label="main page navigation tab bar"></nav>
         <ul class=" nav nav-tabs ">
             <router-tab v-for="r in shownRoutes" :route="r" :key="r.name"></router-tab>
         </ul>
@@ -194,7 +194,6 @@ export default {
 
 
     methods: {
-
 
 
         /**
