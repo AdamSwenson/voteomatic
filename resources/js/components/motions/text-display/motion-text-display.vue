@@ -115,6 +115,10 @@ export default {
             if (isReadyToRock(this.motionStyle)) {
                 return this.motionStyle
             }
+            //if no styling passed in from parent default to this
+            if(! this.isResolution){
+                return ''
+            }
         }
     },
 

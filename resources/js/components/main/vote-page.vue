@@ -7,23 +7,11 @@
 
         <div class="vote-area card-body">
 
-            <!--            <div class="text-center">-->
             <motion-text-display
                 v-if="isReady"
                 :motion="motion"
+                :motion-style="motionStyle"
             ></motion-text-display>
-            <!--                -->
-            <!--                <motion-content-->
-            <!--                    :motion="motion"-->
-            <!--                    :isReady="isReady"-->
-            <!--                    v-if="! isAmendment"-->
-            <!--                ></motion-content>-->
-
-            <!--                <amendment-text-display-->
-            <!--                    v-else-if="isReady && isAmendment"-->
-            <!--                ></amendment-text-display>-->
-
-            <!--            </div>-->
 
             <vote-receipt
                 :receipt="receipt"
@@ -84,31 +72,17 @@
             <p>Voting has ended on this motion. You may view the results in the results tab</p>
         </div>
 
-        <!--        </div>-->
-
-        <!--        <required-vote :motion="motion"></required-vote>-->
 
 
     </div>
 
-    <!--    &lt;!&ndash;            If not ready&ndash;&gt;-->
-    <!--    <div class="card-body loading-message"-->
-    <!--         v-else>-->
-    <!--        <p>Please wait while your ballot loads.....</p>-->
-    <!--    </div>-->
-
-    <!--    </div>-->
-    <!--    </div>-->
 </template>
 
 <script>
 
-import Vote from '../../models/Vote';
 import VoteButtons from "../vote-casting/vote-buttons";
 import RequiredVote from "../text-display/required-vote";
 import MotionContent from "../text-display/motion-content";
-// import MotionDescription from "./text-display/motion-description";
-import * as routes from "../../routes";
 import VoteReceipt from "../text-display/vote-receipt";
 import motionMixin from '../../mixins/motionStoreMixin';
 import receiptMixin from "../../mixins/receiptMixin";
@@ -157,6 +131,14 @@ export default {
 
 
     computed: {
+        motionStyle: function(){
+            if (! this.isResolution){
+                return 'border border-1 p-4 fs-3'
+            }
+
+
+        },
+
         // asyncComputed: {
         cardTitle: {
             get: function () {
@@ -265,26 +247,6 @@ export default {
             return !this.hasVoted;
         },
 
-        // vote : function(){
-        //     if(isReadyToRock(this.motion)) return this.$store.getters.getCastVoteForMotion(this.motion);
-        // }
-
-
-        // receipt: function () {
-        //     if (isReadyToRock(this.vote)) {
-        //         return this.vote.receipt;
-        //     }
-        // }
-        // ,
-
-        // content: function () {
-        //     return this.motion.content;
-        // },
-        //
-        // description: function () {
-        //     return this.motion.description;
-        // },
-
         instructions: function () {
             return "Some generic instructions...."
         }
@@ -316,81 +278,7 @@ export default {
             // this.recordVote(voteType);
         },
 
-        // /**
-        //  * Sends vote to server
-        //  *
-        //  * @param voteType
-        //  */
-        // recordVote: function (voteType) {
-        //     let me = this;
-        //
-        //     let vote = new Vote(
-        //         {
-        //             motionId: this.motion.id,
-        //
-        //             //NB, the setter will translate whatever we are passing into a boolean
-        //             isYay: voteType
-        //         });
-        //
-        //     this.$store.dispatch('castMotionVote', vote).then((v) => {
-        //         if (v.receipt.length > 0) {
-        //             //Successfully recorded
-        //             me.voteRecorded = true;
-        //             me.showButtons = false;
-        //         }
-        //     }).catch((error) => {
-        //         if (error.response) {
-        //             // The request was made and the server responded with a status code
-        //             // that falls out of the range of 2xx
-        //             console.log(error.response.data);
-        //             console.log(error.response.status);
-        //             if (error.response.status === 501) {
-        //                 me.voteRecorded = true;
-        //                 me.showButtons = false;
-        //             }
-        //         }
-        //
-        //     });
 
-        //
-        // let url = routes.votes.recordVote(this.motion.id);
-        // let data = {
-        //     motionId: this.motion.id,
-        //     vote: voteType,
-        // };
-        //
-        // return new Promise((resolve, reject) => {
-        //     let me = this;
-        //     return axios.post(url, data)
-        //         .then((response) => {
-        //             console.log(response.data);
-        //             me.vote = new Vote(response.data.isYay, response.data.receipt, response.data.id);
-        //             me.voteRecorded = true;
-        //             me.showButtons = false;
-        //             //todo once receives notification that vote has been recorded, should set voteRecorded to true so inputs can be disabled.
-        //
-        //             me.$store.commit('addVotedUponMotion', me.motion.id);
-        //             resolve();
-        //         })
-        //         .catch(function (error) {
-        //             // error handling
-        //             if (error.response) {
-        //                 // The request was made and the server responded with a status code
-        //                 // that falls out of the range of 2xx
-        //                 console.log(error.response.data);
-        //                 console.log(error.response.status);
-        //                 if (error.response.status === 501) {
-        //                     me.voteRecorded = true;
-        //                     me.showButtons = false;
-        //                 }
-        //
-        //             }
-        //             // reject();
-        //         });
-        //
-        // });
-
-        // }
     },
 
 }

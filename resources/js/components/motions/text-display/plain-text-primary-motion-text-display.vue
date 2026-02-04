@@ -1,6 +1,7 @@
 <template>
 
-    <div class="plain-text-primary-motion-text-display">
+    <div class="plain-text-primary-motion-text-display"
+    v-bind:class="styling">
         <span >   {{ motion.content }}   </span>
     </div>
 
@@ -19,7 +20,11 @@ export default {
     },
 
 
-    computed: {},
+    computed: {
+        styling: function () {
+            return '';
+        }
+    },
 
     methods: {}
 
