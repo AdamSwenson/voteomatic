@@ -31,8 +31,11 @@ class VoteManagementRepository implements IVoteManagementRepository
         if($motion->is_voting_allowed){
 
             //Turn off voting
+            //NB, cannot set is_complete because that will cause results
+            //to be shown
             $motion->is_voting_allowed = false;
             $motion->save();
+            $motion->refresh();
 
             //Delete all vote records
             Vote::where('motion_id', $motion->id)->delete();

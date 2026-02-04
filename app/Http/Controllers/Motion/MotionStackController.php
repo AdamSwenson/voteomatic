@@ -49,7 +49,7 @@ class MotionStackController extends Controller
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->motionRepo = app()->make(IMotionRepository::class);
         $this->rezzieRepo = app()->make(IResolutionRepository::class);
-$this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
+        $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
     }
 
 
@@ -77,9 +77,9 @@ $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
         //this will return false if not an amendment
         //otherwise it will return a new motion which has been amended with
         //the motion passed in
-        if($motion->is_resolution){
+        if ($motion->is_resolution) {
             $superseding = $this->rezzieRepo->handlePotentialAmendment($motion);
-        }else{
+        } else {
             $superseding = $this->motionRepo->handlePotentialAmendment($motion);
         }
 
@@ -100,7 +100,7 @@ $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
         //the MotionClosed will fail
         // dev This should be replaced with actually having the client
         // reload the motion, but that is for later.
-        if(! MotionRepository::isPusherCompatible($motion)){
+        if (!MotionRepository::isPusherCompatible($motion)) {
             ForcePageReload::dispatch($motion->meeting);
 //            NotifyPageRefreshNeeded::dispatch($motion->meeting);
         }
@@ -153,7 +153,8 @@ $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
      * and tells all listening clients to start voting
      * @param Motion $motion
      */
-    public function startVotingOnMotion(Motion $motion){
+    public function startVotingOnMotion(Motion $motion)
+    {
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
 

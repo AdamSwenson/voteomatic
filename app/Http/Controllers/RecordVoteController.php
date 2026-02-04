@@ -43,6 +43,7 @@ class RecordVoteController extends Controller
 //        $this->middleware('vote-eligibility');
         $this->middleware('previously-voted');
         $this->middleware('motion-closed');
+        $this->middleware('voting-allowed');
 
     }
 

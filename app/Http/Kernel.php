@@ -11,6 +11,7 @@ use App\Http\Middleware\CheckIfMaxElectionWinnersExceeded;
 use App\Http\Middleware\CheckIfMeetingExists;
 use App\Http\Middleware\CheckIfEligibleToMakeMotion;
 use App\Http\Middleware\CheckIfMotionClosed;
+use App\Http\Middleware\CheckIfVotingIsAllowed;
 use App\Http\Middleware\CheckVoterEligibility;
 use App\Http\Middleware\CheckWriteInDoesNotDuplicateOfficialCandidate;
 use App\Http\Middleware\ValidateWriteInName;
@@ -81,6 +82,7 @@ class Kernel extends HttpKernel
         'previously-voted' => CheckIfAlreadyVoted::class,
         'second-eligibility' => CheckIfEligibleToSecond::class,
         'meeting-exists' => CheckIfMeetingExists::class,
+        'voting-allowed' => CheckIfVotingIsAllowed::class,
 
         //election specific
         'excess-candidates-selected' => CheckIfMaxElectionWinnersExceeded::class,
