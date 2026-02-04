@@ -18,9 +18,15 @@
                                 <motion-text-display :motion="motion"></motion-text-display>
                             </blockquote>
 
+                            <span class="me-2">
                             <required-vote-badge :motion="motion"></required-vote-badge>
-                            <debatable-badge :motion="motion"></debatable-badge>
+                            </span>
+
+                            <span class="me-2">
+                                <debatable-badge :motion="motion"></debatable-badge>
+                            </span>
                             <motion-type-badge :motion="motion"></motion-type-badge>
+
                         </div>
 
                         <div class="col">
@@ -106,7 +112,7 @@ export default {
             return this.$route.name;
         },
 
-    // asyncComputed: {
+        // asyncComputed: {
 
         passed: function () {
             if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ' ----- '

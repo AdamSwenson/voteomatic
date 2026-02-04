@@ -4,6 +4,7 @@
     <button
         v-bind:class="styling"
         v-on:click="handleClick"
+        tabindex="0"
         >Vote</button>
     </div>
 

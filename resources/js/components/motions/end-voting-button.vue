@@ -1,11 +1,9 @@
-
-
-
 <template>
 
     <!-- Button trigger modal -->
     <div class="d-grid gap-2">
         <button type="button"
+                tabindex="0"
                 v-bind:class="styling"
                 data-bs-toggle="modal"
                 data-bs-target="#endVotingModal">

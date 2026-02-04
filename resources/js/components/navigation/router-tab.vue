@@ -11,7 +11,9 @@
 <!--            <nav v-bind:aria-label="label"></nav>-->
             <a class="nav-link"
                :class="[isActive && activeClass, isExactActive && activeClass]"
-               :href="href" @click="navigate">{{ label }}</a>
+
+               @click="navigate"
+            >{{ label }}</a>
         </li>
     </router-link>
 

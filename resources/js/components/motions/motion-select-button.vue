@@ -8,7 +8,6 @@
     <button
         v-bind:class="styling"
         v-bind:tabindex="tabIndex"
-        role="button"
         v-bind:aria-disabled="ariaDisabled"
         v-on:click="setMotion"
     >{{ buttonText }}

@@ -20,26 +20,29 @@
             </div>
 
             <div class="col-sm">
-
-                <vote-nav-button
-                    :motion="motion"
-                    v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
-                ></vote-nav-button>
+                <span class="mb-2">
+                    <vote-nav-button
+                        :motion="motion"
+                        v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
+                    ></vote-nav-button>
+                </span>
 
                 <open-voting-button
                     v-if="isChair && isSelected && ! isComplete && ! isVotingAllowed"
                     :motion="motion"
                 ></open-voting-button>
 
-
+                <span class="mb-2">
                 <end-voting-button
                     v-if="isChair && isSelected && ! isComplete && isVotingAllowed "
                     :motion="motion"
                 ></end-voting-button>
+                </span>
 
                 <results-nav-button
                     v-if="isSelected && isComplete && ! isInPublicPmode"
                     :motion="motion"
+
                 ></results-nav-button>
 
 
