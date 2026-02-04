@@ -6,16 +6,6 @@
             {{ meetingDate }}
         </div>
 
-        <!--        <div class="card-body">-->
-        <!--            <div class="card-text">-->
-        <!--                <ul class="list-group list-group-flush">-->
-
-        <!--                    <motion-select-area :motion="motion"></motion-select-area>-->
-
-        <!--                </ul>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
         <div class="card-body">
             <div class="card-text">
                 <ul class="list-group list-group-flush">
@@ -29,7 +19,6 @@
             </div>
 
             <end-voting-modal></end-voting-modal>
-<!--            <abort-voting-modal></abort-voting-modal>-->
         </div>
 
     </div>

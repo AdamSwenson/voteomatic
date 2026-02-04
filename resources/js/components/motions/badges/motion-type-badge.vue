@@ -27,13 +27,13 @@ export default {
             },
 
             amendment: {
-                styling: 'bg-warning ',
+                styling: 'bg-info text-light ',
                 text: 'Amendment'
             },
 
 
             secondaryAmendment: {
-                styling: 'bg-warning ',
+                styling: 'bg-info text-light ',
                 text: 'Amendment - secondary'
             }
 

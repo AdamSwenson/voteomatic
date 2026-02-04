@@ -1,8 +1,8 @@
 <template>
 
-    <li class="list-group-item "
+    <li class="motion-select-area list-group-item "
         v-bind:class="styling">
-        <div class="row">
+        <div class="row mt-2 mb-2">
             <div class="col-sm "
                  v-if="! isInPublicPmode"
             >
@@ -252,7 +252,8 @@ export default {
         styling: {
             get: function () {
                 if (this.isSelected) {
-                    return ' bg-info '
+                    return ' border border-info border-4 '
+                    // bg-info
                 }
 
             },

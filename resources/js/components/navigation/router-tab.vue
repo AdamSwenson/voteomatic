@@ -1,21 +1,22 @@
 <template>
+    <li class="nav-item mt-1">
     <router-link
+        class="nav-link "
+        v-bind:class="styling"
         v-if="showTab"
         v-bind:to="path"
-        v-slot="{ href, route, navigate, isActive, isExactActive }"
         v-bind:aria-label="ariaLabel"
-    >
-        <li class="nav-item mt-1"
-            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
-        >
-<!--            <nav v-bind:aria-label="label"></nav>-->
-            <a class="nav-link"
-               :class="[isActive && activeClass, isExactActive && activeClass]"
+    >{{label}}
+<!--        <li class="nav-item mt-1"-->
+<!--            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"-->
+<!--        >-->
+<!--            <a class="nav-link"-->
+<!--               :class="[isActive && activeClass, isExactActive && activeClass]"-->
 
-               @click="navigate"
-            >{{ label }}</a>
-        </li>
+<!--            >{{ label }}</a>-->
+<!--        </li>-->
     </router-link>
+    </li>
 
 </template>
 
@@ -30,7 +31,7 @@ export default {
 
     data: function () {
         return {
-            activeClass: 'active',
+            activeClass: 'active ',
         }
     },
 
@@ -64,13 +65,10 @@ export default {
             return this.route.path;
         },
         styling: function () {
+            if(this.$router.currentRoute.value.name === this.name) return this.activeClass;
+
         },
-    }
+    },
+
 }
 </script>
-
-<style scoped>
-.nav a {
-    text-decoration: none;
-}
-</style>
