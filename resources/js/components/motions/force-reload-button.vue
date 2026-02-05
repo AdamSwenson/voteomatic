@@ -13,7 +13,7 @@ export default {
     data: function () {
         return {
             label: 'Force all users to reload',
-            icon: ''
+            icon: 'bi-cloud-lightning'
         }
     },
 
