@@ -37,7 +37,10 @@ export default {
                     return this.baseStyle + '  btn-warning '
                 }
 
-                return this.baseStyle + ' btn-outline-warning ';
+                return this.baseStyle + '  btn-warning '
+
+                //This got too light after removed the background
+                // return this.baseStyle + ' btn-outline-warning ';
 
             },
             default: '' //this.baseStyle

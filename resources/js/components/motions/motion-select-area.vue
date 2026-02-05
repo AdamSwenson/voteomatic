@@ -29,7 +29,6 @@
                 </div>
 
                 <div class="d-grid gap-2 ">
-
                     <open-voting-button
                         v-if="isChair && isSelected && ! isComplete && ! isVotingAllowed"
                         :motion="motion"
@@ -44,7 +43,6 @@
                 </div>
 
                 <div class="d-grid gap-2 mb-2">
-
                     <results-nav-button
                         v-if="isSelected && isComplete && ! isInPublicPmode"
                         :motion="motion"
