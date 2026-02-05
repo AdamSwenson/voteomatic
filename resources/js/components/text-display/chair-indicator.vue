@@ -1,20 +1,32 @@
 <template>
 
-    <div class="row chair-indicator"
+    <div class="chair-indicator"
          v-if="isChair"
     >
-        <div class="col">
-            <div class="alert alert-primary text-center" role="alert">
-                Chair
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-primary text-center fs-4" role="alert">
+                    Chair
+                </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col text-end">
+                <force-page-reload-button></force-page-reload-button>
+            </div>
+        </div>
+
     </div>
 
 </template>
 
 <script>
+import ForcePageReloadButton from "../pmode/controls/force-page-reload-button.vue";
+
 export default {
     name: "chair-indicator",
+    components: {ForcePageReloadButton},
 
     props: [],
 

@@ -1,3 +1,4 @@
+const Promise = require("lodash/_Promise");
 /**
  * Ensure that the base url ends with a '/'
  * as expected by all the route methods
@@ -195,6 +196,11 @@ module.exports = {
     },
 
     meetings: {
+        chair: {
+            forceUsersToReload: (meetingId) => {
+            return normalizedRouteRoot() + 'chair/reload/' + meetingId;
+            }
+        },
 
         main: (meetingId) => {
             return normalizedRouteRoot() + 'main/' + meetingId;

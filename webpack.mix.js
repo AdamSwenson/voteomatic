@@ -11,30 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-// dev For VOT-288
-// mix.webpackConfig({
-//         resolve: {
-//             alias: {
-//                 vue: '@vue/compat'
-//             }
-//         },
-//         module: {
-//             rules: [
-//                 {
-//                     test: /\.vue$/,
-//                     loader: 'vue-loader',
-//                     options: {
-//                         compilerOptions: {
-//                             compatConfig: {
-//                                 // MODE: 2
-//                                 MODE: 3
-//                             }
-//                         }
-//                     }
-//                 }
-//             ]
-//         }
-// });
 
 // //dev Attempting to remove console log statements from production. Doesn't seem to work though.
 // if (mix.inProduction()) {

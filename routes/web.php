@@ -18,6 +18,7 @@ use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
 use App\Http\Controllers\LTI\LTILaunchController;
+use App\Http\Controllers\Meeting\MeetingChairController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
@@ -91,6 +92,11 @@ Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingL
 
 //unused
 //Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
+
+/* =============================
+        Meeting chair tools
+   ============================= */
+Route::post('/chair/reload/{meeting}', [MeetingChairController::class, 'forceUsersToReload']);
 
 
 /* =============================

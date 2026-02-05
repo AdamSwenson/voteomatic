@@ -1,6 +1,9 @@
 <template>
     <div class="motion-info-cell">
+
+        <p>
         <motion-type-badge :motion="motion"></motion-type-badge>
+        </p>
 
         <motion-text-display
             :motionStyle="motionStyle"

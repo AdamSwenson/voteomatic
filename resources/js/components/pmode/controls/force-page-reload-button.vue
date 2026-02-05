@@ -13,7 +13,7 @@ export default {
     data: function () {
         return {
             label: 'Force page reloads',
-            styling: ' btn-danger '
+            styling: ' btn-danger text-light'
         }
     },
 
