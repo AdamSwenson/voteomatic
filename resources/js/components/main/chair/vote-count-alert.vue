@@ -15,14 +15,15 @@
             </div>
 
             <div class="col">
-                <p class="mb-2">
-                <end-voting-button :motion="motion"></end-voting-button>
-                <end-voting-modal></end-voting-modal>
-               </p>
-                <p class="mt-1">
+                <div class="d-grid gap-2 mb-2">
+
+                    <end-voting-button :motion="motion"></end-voting-button>
+                    <end-voting-modal></end-voting-modal>
+                </div>
+                <div class="d-grid gap-2 mb-2">
                     <abort-voting-button :motion="motion"></abort-voting-button>
                     <abort-voting-modal></abort-voting-modal>
-                </p>
+                </div>
             </div>
 
         </div>

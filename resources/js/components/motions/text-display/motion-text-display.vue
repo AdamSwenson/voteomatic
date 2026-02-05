@@ -83,31 +83,6 @@ export default {
                     return PlainTextPrimaryMotionTextDisplay;
                 }
 
-                //
-                //
-                //
-                // switch (this.motion) {
-                //     case this.isResolution && ! this.isAmendment:
-                //         //Motion is primary resolution
-                //         return ResolutionTextDisplay;
-                //         break;
-                //
-                //     case this.isResolution && this.isAmendment:
-                //         //Motion is an amendment to a resolution
-                //         return ResolutionAmendmentTextDisplay;
-                //         break;
-                //
-                //     case this.isAmendment:
-                //         //Motion is an amendment to a non-resolution motion
-                //         return RegularAmendmentTextDisplay;
-                //         break;
-                //
-                //     default:
-                //         return PlainTextPrimaryMotionTextDisplay;
-                //
-                // }
-
-
             }
         },
 

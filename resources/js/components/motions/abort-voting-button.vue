@@ -22,7 +22,7 @@ export default {
     computed: {
 
         styling: function () {
-            let style = "btn btn-primary btn-lg  ";
+            let style = "btn btn-primary btn-lg text-light ";
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return style;
 
             if (this.isComplete) {
