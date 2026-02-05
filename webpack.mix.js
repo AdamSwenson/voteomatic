@@ -36,6 +36,23 @@ const mix = require('laravel-mix');
 //         }
 // });
 
+// //dev Attempting to remove console log statements from production. Doesn't seem to work though.
+// if (mix.inProduction()) {
+//     mix.options({
+//         terser: {
+//             terserOptions: {
+//                 compress: {
+//                     drop_console: true
+//                 }
+//             }
+//         }
+//     });
+//
+//     mix.js('resources/js/app.js', 'public/js').vue().sourceMaps();
+//
+//     // mix.version();
+// }
 
 mix.js('resources/js/app.js', 'public/js').vue().sourceMaps();
+
 mix.sass('resources/sass/app.scss', 'public/css');

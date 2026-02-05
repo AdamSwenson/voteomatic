@@ -1,18 +1,21 @@
 <template>
 
     <!-- Modal -->
-    <div class="modal fade"
+    <div class="view-full-text-modal modal fade"
          v-bind:id="modalId"
          tabindex="-1"
          v-bind:aria-labelledby="ariaLabel"
-         aria-hidden="true"
+
     >
+<!--        aria-hidden="true"-->
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-bind:id="ariaLabel">{{ title }}</h5>
+                    <h5 class="modal-title"
+                        v-bind:id="ariaLabel"
+                    >{{ title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+<!--                        <span aria-hidden="true">&times;</span>-->
                     </button>
                 </div>
                 <div class="modal-body">
@@ -28,8 +31,7 @@
                     <button type="button"
                             class="btn btn-primary"
                             data-bs-dismiss="modal"
-                    >Close
-                    </button>
+                    >Close</button>
                 </div>
             </div>
         </div>
