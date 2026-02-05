@@ -52,7 +52,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         candidateName: function () {
             if (isReadyToRock(this.candidate)) return this.candidate.name;
 
@@ -89,7 +91,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

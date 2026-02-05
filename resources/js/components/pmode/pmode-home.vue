@@ -71,7 +71,7 @@ import MotionMixin from "../../mixins/motionStoreMixin";
 import MeetingMixin from "../../mixins/meetingMixin";
 import motionObjectMixin from "../../mixins/motionObjectMixin";
 import RezzieDisplay from "./rezzie-display";
-import TextStylers from "./text-stylers/text-stylers";
+// import TextStylers from "./text-stylers/text-stylers";
 import MotionsCard from "../motions/motions-card";
 import MotionSelectArea from "../motions/motion-select-area";
 import PmodeLegend from "./informational/pmode-legend";
@@ -80,7 +80,15 @@ import SafariRegexWarning from "./informational/safari-regex-warning";
 
 export default {
     name: "pmode-home",
-    components: {SafariRegexWarning, Whatis, PmodeLegend, MotionSelectArea, MotionsCard, TextStylers, RezzieDisplay},
+    components: {
+        SafariRegexWarning,
+        Whatis,
+        PmodeLegend,
+        MotionSelectArea,
+        MotionsCard,
+        // TextStylers,
+        RezzieDisplay
+    },
     props: [],
 
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
@@ -93,7 +101,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         motions: function () {
             return this.$store.getters.getResolutionsForPModeDisplay;
             // return _.reverse(this.$store.getters.getMotions);
@@ -112,7 +121,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {},
     mounted() {

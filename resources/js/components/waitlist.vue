@@ -91,7 +91,7 @@ export default {
             };
 
             let url = routes.auth.waitlist();
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     window.console.log(response.status);
                     me.isSuccess = true;

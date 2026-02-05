@@ -1,16 +1,14 @@
 <template>
 
-<!--    <li class="list-group-item office-select-row"-->
-<!--        v-bind:class="styling"-->
-<!--    >{{officeName}}</li>-->
-
-    <a href="#"
-       class="list-group-item list-group-item-action"
-       v-bind:class="styling"
-       v-bind:aria-current="ariaStatus"
-    v-on:click="handleSelect">
-        <i class="bi-book" aria-hidden="true"></i>   <span v-bind:class="textStyling">Instructions</span>
-    </a>
+    <!-- switched to button in VOT-288 to fix VOT-300 -->
+    <!--    <a href="#"-->
+    <button type="button"
+            class="list-group-item list-group-item-action"
+            v-bind:class="styling"
+            v-bind:aria-current="ariaStatus"
+            v-on:click="handleSelect">
+        <i class="bi-book" aria-hidden="true"></i> <span v-bind:class="textStyling">Instructions</span>
+    </button>
 
 </template>
 
@@ -36,7 +34,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         // officeName: function(){
         //     return this.motion.content;
         // },
@@ -130,7 +130,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
         handleSelect: function(){

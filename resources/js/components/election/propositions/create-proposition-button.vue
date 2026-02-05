@@ -29,6 +29,7 @@ export default {
 
             let p = this.$store.dispatch('initializeDraftProposition');
             let me = this;
+            window.console.log('create-proposition-button', 'initializeMotion', 32,);
             p.then(() => {
                 //Unset
                 me.$emit('create-motion-clicked');

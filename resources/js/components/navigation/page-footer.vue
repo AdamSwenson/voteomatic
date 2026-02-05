@@ -3,7 +3,7 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col-lg-3 mb-3">
-                    <ul class="list-unstyled small">
+                    <ul class="list-unstyled small text-light">
 
                         <!--                    <ul class="list-unstyled small text-muted">-->
                         <li class="mb-2">Designed and built by Adam Swenson</li>
@@ -22,7 +22,7 @@
                             <a href="https://github.com/AdamSwenson/voteomatic#the-voteomatic"
                                target="_blank"
                                rel="noopener noreferrer"
-                               class="link-dark"
+                               class="link-light"
                             >Documentation</a>
                         </li>
 
@@ -30,7 +30,7 @@
                             <a href="https://github.com/AdamSwenson/voteomatic/issues"
                                target="_blank"
                                rel="noopener noreferrer"
-                               class="link-dark"
+                               class="link-light"
                             >Feedback</a>
                         </li>
                     </ul>
@@ -58,14 +58,15 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         appVersion: function () {
             if (isReadyToRock(window.appVersion)) return 'Currently v.' + window.appVersion;
             return ''
         }
     },
 
-    computed: {},
 
     methods: {}
 

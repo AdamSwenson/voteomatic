@@ -146,32 +146,36 @@ const getTrailingWords = (text, numWords = 3) => {
 const truncateTextAroundChanges = (text, numWords = 3) => {
     const changedTextIncludingTagsRegex = new RegExp("<ins(.*?)</ins>|<del(.*?)</del>", 'g');
 
-    //First we get the altered section including its tags
-    let alteredContent = text.match(changedTextIncludingTagsRegex);
-
     let out = '';
-    _.forEach(alteredContent, (ic) => {
-        // good: /(?:\/)([^#]+)(?=#*)/
-        // bad: /(?<=\/)([^#]+)(?=#*)/
-        //https://stackoverflow.com/questions/51568821/works-in-chrome-but-breaks-in-safari-invalid-regular-expression-invalid-group
 
-        // let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+    try {
+        //First we get the altered section including its tags
+        let alteredContent = text.match(changedTextIncludingTagsRegex);
+
+        _.forEach(alteredContent, (ic) => {
+            // good: /(?:\/)([^#]+)(?=#*)/
+            // bad: /(?<=\/)([^#]+)(?=#*)/
+            //https://stackoverflow.com/questions/51568821/works-in-chrome-but-breaks-in-safari-invalid-regular-expression-invalid-group
+
+            // let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
 //'(?:\<text-thing).*$',
-        let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
-        // let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
+            let leadingRx = new RegExp('.+?(?=' + ic + ')', 'g');
+            // let trailingRegex = new RegExp('(?<=' + ic + ').*$', 'g');
 
-        let l = text.match(leadingRx);
-        // let t = text.match(trailingRegex);
-        // let trailingRx = = new RegExp('.+?(?=' + ic + ')', 'g');
-        // let insertLeadingRegex = new RegExp(//, 'g');
-        let leading = getLeadingWords(l[0], numWords);
+            let l = text.match(leadingRx);
+            // let t = text.match(trailingRegex);
+            // let trailingRx = = new RegExp('.+?(?=' + ic + ')', 'g');
+            // let insertLeadingRegex = new RegExp(//, 'g');
+            let leading = getLeadingWords(l[0], numWords);
 
-        // let trailing = getTrailingWords(t[0], numWords)
+            // let trailing = getTrailingWords(t[0], numWords)
 
-        // out += `...${leading} ${ic} ${trailing}...`;
-        out += `...${leading} ${ic} ...`;
-    });
-
+            // out += `...${leading} ${ic} ${trailing}...`;
+            out += `...${leading} ${ic} ...`;
+        });
+    }catch (e) {
+        window.console.log('pmode.amendments', 'truncateTextAroundChanges', 176, e);
+    }
     return out;
 };
 
@@ -275,7 +279,7 @@ const actions = {
             let url = routes.motions.resource();
 
             // window.console.log('sending', p);
-            Vue.axios.post(url, payload)
+            axios.post(url, payload)
                 .then((response) => {
 
                     //Create a resolution object. This will normally be handled
@@ -301,7 +305,7 @@ const actions = {
 
                         //send to server
                         let url = routes.motions.resource(rezAmend.id);
-                        Vue.axios.post(url, {data: rezAmend, _method: 'put'})
+                        axios.post(url, {data: rezAmend, _method: 'put'})
                             .then((response) => {
                                 // window.console.log(response);
                                 return resolve()

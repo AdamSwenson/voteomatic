@@ -13,7 +13,9 @@ export default {
     data: function () {
         return {
             label: 'Create amendment',
-            styling: ' btn-outline-primary amendment-button'
+            styling: ' btn-outline-primary amendment-button me-2',
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
         }
     },
 

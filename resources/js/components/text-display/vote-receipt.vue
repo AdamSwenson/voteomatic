@@ -13,7 +13,7 @@
             impossible to retrieve.</p>
 
         <p>
-            <copy-receipts-button></copy-receipts-button>
+            <span class="me-2"><copy-receipts-button></copy-receipts-button></span>
             <download-receipts-button></download-receipts-button>
         </p>
 

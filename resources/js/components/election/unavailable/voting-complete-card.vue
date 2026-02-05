@@ -44,13 +44,14 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         showReceipts : function(){
             return this.$store.getters.getUsersCastVotes.length > 0;
         }
     },
 
-    computed: {},
 
     methods: {
 

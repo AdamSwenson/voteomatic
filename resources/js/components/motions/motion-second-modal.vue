@@ -75,7 +75,9 @@ export default {
     },
 
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         /**
          * Controls whether the modal displays
          * @returns {boolean}
@@ -112,7 +114,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
         handleDismiss: function () {

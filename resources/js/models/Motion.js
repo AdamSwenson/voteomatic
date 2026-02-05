@@ -42,9 +42,11 @@ export default class Motion extends IModel {
         this.isComplete = is_complete;
         /** Whether members may vote on it at the current time*/
         this.is_voting_allowed = is_voting_allowed;
+
         /** Only used in elections */
         this.max_winners = max_winners;
         this.requires = _.toNumber(requires);
+
         this.seconded = seconded;
         this.superseded_by = superseded_by;
         /** If the motion is an amendment, this will

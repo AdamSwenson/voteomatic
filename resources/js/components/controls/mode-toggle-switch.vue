@@ -74,7 +74,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         meetingLabelStyle: function () {
             if (this.isMeeting) return this.activeStyle
             return this.inactiveStyle;
@@ -99,7 +100,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

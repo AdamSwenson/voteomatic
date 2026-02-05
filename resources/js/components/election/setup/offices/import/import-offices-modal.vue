@@ -14,7 +14,7 @@ export default {
         return {
             modalId: 'import-offices-modal',
             modalTitle: 'Import office from file',
-            // hideActionButton: true,
+            hideActionButton: false,
             buttonLabel: 'Done'
 
         }

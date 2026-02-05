@@ -1,6 +1,6 @@
 let _ = require('lodash');
 
-import Candidate from "../../../resources/js/models/Candidate";
+import Candidate from "../../../../resources/js/models/Candidate";
 
 test('get candidate info fields', () => {
 

@@ -35,7 +35,9 @@ export default {
     mixins: [],
 
     data: function () {
-        return {}
+        return {
+
+        }
     },
 
     computed: {

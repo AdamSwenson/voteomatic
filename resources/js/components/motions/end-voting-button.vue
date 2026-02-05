@@ -1,14 +1,13 @@
 <template>
 
-        <!-- Button trigger modal -->
-    <div class="d-grid gap-2">
+    <!-- Button trigger modal -->
         <button type="button"
+                tabindex="0"
                 v-bind:class="styling"
                 data-bs-toggle="modal"
                 data-bs-target="#endVotingModal">
             End voting
         </button>
-    </div>
 
 
 </template>
@@ -19,10 +18,12 @@ export default {
     name: "end-voting-button",
     props: ['motion'],
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
 
         styling: function () {
-            let style = "btn btn-danger btn-lg  ";
+            let style = "btn btn-danger btn-lg text-light ";
             if (_.isUndefined(this.motion) || _.isNull(this.motion)) return style;
 
             if (this.isComplete) {
@@ -52,3 +53,4 @@ export default {
 <style scoped>
 
 </style>
+

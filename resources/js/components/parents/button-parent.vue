@@ -5,6 +5,7 @@
         type="button"
         v-bind:class="styling"
         v-on:click="handleClick"
+        tabindex="0"
     >
         <span v-if="isWorking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         <span v-if="isWorking" class="visually-hidden">Working...</span>
@@ -33,9 +34,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-
-    },
 
     computed: {
         isWorking : function (){

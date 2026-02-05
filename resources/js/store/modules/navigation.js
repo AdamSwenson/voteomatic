@@ -1,3 +1,5 @@
+import router from "../../router";
+
 const state = {
     /** When set to true, a watcher will open the home tab */
     homeNavTrigger: false,
@@ -12,15 +14,19 @@ const state = {
 
 const mutations = {
     setHomeNavTrigger: (state, value) => {
-    Vue.set(state, 'homeNavTrigger', value);
-        },
+        state.homeNavTrigger = value;
+        // Vue.set(state, 'homeNavTrigger', value);
+
+    },
 
     setResultsNavTrigger: (state, value) => {
-        Vue.set(state, 'resultsNavTrigger', value);
+        state.resultsNavTrigger = value;
+        // Vue.set(state, 'resultsNavTrigger', value);
     },
 
     setVoteNavTrigger: (state, value) => {
-        Vue.set(state, 'voteNavTrigger', value);
+        state.voteNavTrigger = value;
+        // Vue.set(state, 'voteNavTrigger', value);
     },
 
     /**
@@ -40,33 +46,42 @@ const actions = {
     forceNavigationToHome({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             //If we are in the public viewing mode we shouldn't force to tabs
-            if(getters.isInPublicPmode === true) return resolve();
+            if (getters.isInPublicPmode === true) return resolve();
 
-            commit('resetNavTriggers');
-            commit('setHomeNavTrigger', true);
-            resolve();
+            if (router.currentRoute.name !== 'results') {
+                commit('resetNavTriggers');
+                // commit('setHomeNavTrigger', true);
+                router.push('meeting-home');
+
+            }
+
+            return resolve();
         }));
     },
 
     forceNavigationToResults({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             //If we are in the public viewing mode we shouldn't force to tabs
-            if(getters.isInPublicPmode === true) return resolve();
+            if (getters.isInPublicPmode === true) return resolve();
+
+            router.push('results');
 
             commit('resetNavTriggers');
-            commit('setResultsNavTrigger', true);
-            resolve();
+            // commit('setResultsNavTrigger', true);
+            return resolve();
         }));
     },
 
     forceNavigationToVote({dispatch, commit, getters}) {
         return new Promise(((resolve, reject) => {
             //If we are in the public viewing mode we shouldn't force to tabs
-            if(getters.isInPublicPmode === true) return resolve();
+            if (getters.isInPublicPmode === true) return resolve();
+            router.push('vote');
 
             commit('resetNavTriggers');
-            commit('setVoteNavTrigger', true);
-            resolve();
+            // commit('setVoteNavTrigger', true);
+
+            return resolve();
         }));
     },
 
@@ -80,7 +95,7 @@ const actions = {
      * @param url
      */
     forceNavigationToUrl({dispatch, commit, getters}, url) {
-        window.open(url, );
+        window.open(url,);
     },
 
 };

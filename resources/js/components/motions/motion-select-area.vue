@@ -1,24 +1,15 @@
 <template>
 
-    <li class="list-group-item "
+    <li class="motion-select-area list-group-item "
         v-bind:class="styling">
-        <div class="row">
+        <div class="row mt-2 mb-2">
             <div class="col-sm "
                  v-if="! isInPublicPmode"
             >
 
-<!--            <div class="col-sm "-->
-<!--                 v-if="isChair"-->
-<!--            >-->
-
                 <motion-select-button
                     :motion="motion"
                 ></motion-select-button>
-
-<!--                <motion-select-button-->
-<!--                    v-if="isChair  "-->
-<!--                    :motion="motion"-->
-<!--                ></motion-select-button>-->
 
             </div>
 
@@ -29,35 +20,49 @@
             </div>
 
             <div class="col-sm">
+                <div class="d-grid gap-2 mb-2">
 
-                <vote-nav-button
-                    :motion="motion"
-                    v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
-                ></vote-nav-button>
+                    <vote-nav-button
+                        :motion="motion"
+                        v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
+                    ></vote-nav-button>
+                </div>
 
-                <open-voting-button
-                    v-if="isChair && isSelected && ! isComplete && ! isVotingAllowed"
-                    :motion="motion"
-                ></open-voting-button>
+                <div class="d-grid gap-2 ">
+                    <open-voting-button
+                        v-if="isChair && isSelected && ! isComplete && ! isVotingAllowed"
+                        :motion="motion"
+                    ></open-voting-button>
+                </div>
 
+                <div class="d-grid gap-2 ">
+                    <end-voting-button
+                        v-if="isChair && isSelected && ! isComplete && isVotingAllowed "
+                        :motion="motion"
+                    ></end-voting-button>
+                </div>
 
-                <!--                v-if="isSelected && ! isComplete && ! hasVotedOnCurrentMotion"-->
-                <end-voting-button
-                    v-if="isChair && isSelected && ! isComplete && isVotingAllowed "
-                    :motion="motion"
-                ></end-voting-button>
+                <div class="d-grid gap-2 mb-2">
+                    <results-nav-button
+                        v-if="isSelected && isComplete && ! isInPublicPmode"
+                        :motion="motion"
 
-                <results-nav-button
-                    v-if="isSelected && isComplete && ! isInPublicPmode"
-                    :motion="motion"
-                ></results-nav-button>
+                    ></results-nav-button>
+                </div>
 
+                <div class="d-grid gap-2 ">
+
+                    <view-full-text-button v-if="isResolution" :motion="motion"></view-full-text-button>
+                    <view-full-text-modal v-if="isResolution" :motion="motion"></view-full-text-modal>
+                </div>
 
             </div>
         </div>
         <div class="row" v-if="showReceipt">
             <div class="col">
-                <p><strong>Receipt: </strong> {{receipt}}  <info-tooltip :content="infoReceipt"></info-tooltip></p>
+                <p><strong>Receipt: </strong> {{ receipt }}
+                    <info-tooltip :content="infoReceipt"></info-tooltip>
+                </p>
             </div>
         </div>
     </li>
@@ -88,10 +93,19 @@ import InfoTooltip from "../messaging/info-tooltip";
 import MainMotionTextDisplay from "./text-display/motion-text-display";
 import MotionTextDisplay from "./text-display/motion-text-display";
 import MotionInfoCell from "./text-display/motion-info-cell";
+import AbortVotingButton from "./abort-voting-button.vue";
+import VoteCard from "../main/vote-card.vue";
+import ViewFullTextButton from "./view-full-text/view-full-text-button.vue";
+import ViewFullTextModal from "./view-full-text/view-full-text-modal.vue";
+import motionObjectMixin from "../../mixins/motionObjectMixin";
 
 export default {
     name: "motion-select-area",
     components: {
+        ViewFullTextModal,
+        ViewFullTextButton,
+        VoteCard,
+        AbortVotingButton,
         MotionInfoCell,
         MotionTextDisplay,
         MainMotionTextDisplay,
@@ -105,7 +119,7 @@ export default {
         ResultsNavButton, VoteNavButton, MotionStatusBadge, MotionSelectButton, EndVotingButton
     },
     props: ['motion'],
-    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, PublicPModeMixin, receiptMixin],
+    mixins: [ChairMixin, AmendmentMixin, ProceduralMixin, MotionResultsMixin, PublicPModeMixin, receiptMixin, motionObjectMixin],
     data: function () {
         return {
             amendmentTags: {
@@ -113,12 +127,15 @@ export default {
                 struck: 'struck',
 
             },
-            infoReceipt : "This receipt will only remain visible if you do not refresh the page in your browser. Since " +
-                    "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
+            infoReceipt: "This receipt will only remain visible if you do not refresh the page in your browser. Since " +
+                "there is nothing tying it to your user id, it will be impossible to retrieve after you leave this page."
 
         }
     },
-    asyncComputed: {
+
+
+    computed: {
+        // asyncComputed: {
 
         amendmentClass: function () {
 
@@ -141,37 +158,6 @@ export default {
             return this.motion.isComplete;
         },
 
-
-
-        // /**
-        //  * Whether the motion has passed (after voting has been closed)
-        //  */
-        // isPassed: {
-        //     get: function () {
-        //         //must return undefined until actually loaded
-        //         //otherwise the badge will be sad
-        //         if (!_.isUndefined(this.motion) && !_.isNull(this.motion)) {
-        //
-        //             let me = this;
-        //             if (this.motion.isComplete) {
-        //                 // return this.$store.dispatch('getResults', {motion: this.motion, setfalse)
-        //                 //     .then(({passed, totalVotes}) => {
-        //                 //         return passed;
-        //                 //     });
-        //                 return new Promise(((resolve, reject) => {
-        //
-        //                     let url = routes.results.getResults(me.motion.id);
-        //
-        //                     return Vue.axios.get(url)
-        //                         .then((response) => {
-        //                             return resolve(response.data.passed);
-        //                         });
-        //                 }));
-        //             }
-        //         }
-        //
-        //     },
-        // },
 
         /**
          * Whether the motion that has been handed to this
@@ -233,8 +219,8 @@ export default {
             return true
         },
 
-        showReceipt: function(){
-          return isReadyToRock(this.vote);
+        showReceipt: function () {
+            return isReadyToRock(this.vote);
         },
 
         styledResult: function () {
@@ -253,7 +239,8 @@ export default {
         styling: {
             get: function () {
                 if (this.isSelected) {
-                    return ' bg-info '
+                    return ' border border-info border-4 '
+                    // bg-info
                 }
 
             },

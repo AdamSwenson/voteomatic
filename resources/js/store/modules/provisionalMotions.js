@@ -132,7 +132,7 @@ const actions = {
     markMotionInOrder({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.inOrder(motion.id);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     commit('removeMotionPendingApproval', motion);
                     resolve();
@@ -159,7 +159,7 @@ const actions = {
     markMotionOutOfOrder({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.outOfOrder(motion.id);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     commit('removeMotionPendingApproval', motion);
                     resolve();
@@ -185,7 +185,7 @@ const actions = {
     markNoSecondObtained({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
             let url = routes.motions.secondMotion(motion.id);
-            Vue.axios.delete(url).then((response) => {
+            axios.delete(url).then((response) => {
                 dispatch('resetMotionPendingSecond').then(() => {
                     resolve();
                 }).catch(function (error) {
@@ -226,7 +226,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.secondMotion(motion.id);
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     dispatch('resetMotionPendingSecond').then(() => {
                         return resolve();

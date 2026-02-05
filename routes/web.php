@@ -18,6 +18,7 @@ use App\Http\Controllers\Guest\PublicIndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LTI\LTIConfigController;
 use App\Http\Controllers\LTI\LTILaunchController;
+use App\Http\Controllers\Meeting\MeetingChairController;
 use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Meeting\RosterController;
 use App\Http\Controllers\Motion\MotionController;
@@ -91,6 +92,11 @@ Route::post('/lti-entry/{meeting}', [LTILaunchController::class, 'handleMeetingL
 
 //unused
 //Route::get('/lti/config', [LTIConfigController::class, 'lticonfig']);
+
+/* =============================
+        Meeting chair tools
+   ============================= */
+Route::post('/chair/reload/{meeting}', [MeetingChairController::class, 'forceUsersToReload']);
 
 
 /* =============================
@@ -173,9 +179,6 @@ Route::get('/home/{meeting}', [MainController::class, 'meetingHome'])
 // see VOT-56. Began moving toward this in VOT-30
 Route::get('main/{meeting}', [MainController::class, 'meetingHome'])
     ->name('main');
-//main page where votes get cast
-//Route::get('main/{motion}', [MainController::class, 'getVotePage'])
-//    ->name('main');
 
 
 Route::post('events/force/{meeting}', [ForcedEventController::class, 'forcePageReload']);
@@ -195,6 +198,7 @@ Route::post('motions/order/good/{motion}', [MotionOrderlinessController::class, 
 //Route::post('motions/meeting/{meeting}', [MotionController::class, 'createMotion']);
 Route::post('motions/close/{motion}', [MotionStackController::class, 'markMotionComplete']);
 Route::post('motions/open/{motion}', [MotionStackController::class, 'startVotingOnMotion']);
+Route::post('motions/abort/{motion}', [MotionStackController::class, 'abortVotingOnMotion']);
 
 Route::post('motions/stack/{meeting}/{motion}', [MotionStackController::class, 'setAsCurrentMotion']);
 Route::get('motions/stack/{meeting}', [MotionStackController::class, 'getCurrentMotion']);
@@ -203,6 +207,7 @@ Route::delete('motions/second/{motion}', [MotionSecondController::class, 'markNo
 
 Route::get('motions/templates', [MotionTemplateController::class, 'getTemplates']);
 Route::get('motions/types', [MotionTemplateController::class, 'getMotionTypes']);
+
 Route::resource('motions', MotionController::class);
 
 

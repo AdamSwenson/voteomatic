@@ -13,11 +13,11 @@ export default {
     data: function () {
         return {
             label: 'Force page reloads',
-            styling: ' btn-danger '
+            styling: ' btn-danger text-light',
+            icon : ' bi-lightning'
         }
     },
 
-    asyncComputed: {},
 
     computed: {},
 

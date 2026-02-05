@@ -1,22 +1,25 @@
 <template>
     <!--Can't use a button because vue is a pain with attributes like disabled-->
-    <a href="#"
-       v-bind:class="styling"
-       v-bind:tabindex="tabIndex"
-       role="button"
-       v-bind:aria-disabled="ariaDisabled"
-       v-on:click="setMotion"
-    >{{ buttonText }}</a>
-    <!--    <button-->
-    <!--        v-bind:class="styling"-->
-    <!--            v-on:click="setMotion"-->
-    <!--    >{{buttonText}}</button>-->
+    <!--    VOT-288/301: Switched back to button because the link was
+    causing the tab to close. The disabled attribute seems to work now with
+    the new vue -->
+    <!--    <a href="#"-->
+
+    <button
+        v-bind:class="styling"
+        v-bind:tabindex="tabIndex"
+        v-bind:aria-disabled="ariaDisabled"
+        v-on:click="setMotion"
+    >{{ buttonText }}
+    </button>
+    <!--    </a>-->
 
 </template>
 
 <script>
 
 import MotionObjectMixin from '../../mixins/motionObjectMixin';
+import NavigationMixin from '../../mixins/NavigationMixin';
 import MeetingMixin from '../../mixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
 import Payload from "../../models/Payload";
@@ -25,7 +28,7 @@ import ChairMixin from "../../mixins/chairMixin";
 export default {
     name: "motion-select-button",
     components: {EndVotingButton},
-    mixins: [MeetingMixin, MotionObjectMixin, ChairMixin, ],
+    mixins: [MeetingMixin, MotionObjectMixin, ChairMixin, NavigationMixin ],
     data: function () {
         return {
             classBase: 'btn btn-lg btn-block '
@@ -34,12 +37,9 @@ export default {
 
     props: ['motion'],
 
+
     computed: {
-
-
-    },
-
-    asyncComputed: {
+    // asyncComputed: {
         styling: function () {
             if (this.isDisabled) return this.classBase + ' btn-outline-primary disabled'
             if (this.isSelected) return this.classBase + ' btn-primary active';
@@ -55,7 +55,7 @@ export default {
 
         tabIndex: function(){
           if(this.isDisabled) return '-1';
-          return 1;
+          return 0;
         },
 
         isDisabled: function () {
@@ -112,7 +112,9 @@ export default {
          * motions and view results
          */
         setMotionLocal : function(){
-            this.$store.commit('setMotion', this.motion)
+            this.$store.commit('setMotion', this.motion);
+            // this.$store.dispatch('forceNavigationToHome');
+            // window.console.log('motion-select-button', 'setMotionLocal', 115,);
         }
 
 

@@ -49,7 +49,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         isVotingAvailable: function () {
             if (!isReadyToRock(this.meeting)) return '-';
             return this.meeting.isVotingAvailable ? 'Yes' : 'No';
@@ -76,8 +78,6 @@ export default {
         }
 
     },
-
-    computed: {},
 
     methods: {}
 

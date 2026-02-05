@@ -22,7 +22,9 @@ data : function(){
     return {}
 },
 
-asyncComputed : {
+
+    computed: {
+// asyncComputed : {
     maxWinners : function(){
         return this.$store.getters.getMaxWinners;
     },
@@ -57,8 +59,6 @@ asyncComputed : {
         return this.$store.getters.showOverSelectionWarningForActiveMotion;
     }
 },
-
-computed : {},
 
 methods : {
     focusAlert : function(){

@@ -27,7 +27,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             let url = routes.election.resource.people();
 
-            return Vue.axios.post(url, poolMember)
+            return axios.post(url, poolMember)
                 .then((response) => {
                     let person = new PoolMember(response.data);
 
@@ -77,7 +77,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     let candidate = new Candidate(response.data);
                     commit('addCandidateToStore', candidate);
@@ -140,7 +140,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //we receive a pool member object with the correct motion id
                     let member = new PoolMember(response.data);
@@ -176,7 +176,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             // window.console.log(url);
 
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     commit('clearPool');
                     _.forEach(response.data, (d) => {
@@ -215,7 +215,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     // commit('clearCandidates');
                     _.forEach(response.data, (d) => {

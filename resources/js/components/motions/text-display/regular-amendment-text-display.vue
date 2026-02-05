@@ -78,7 +78,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         //
         // maxIdx: function () {
         //     if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
@@ -164,8 +166,6 @@ export default {
         //     return out;
         // }
     },
-
-    computed: {}
 
 }
 </script>

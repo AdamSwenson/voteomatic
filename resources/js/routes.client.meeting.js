@@ -1,15 +1,12 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 //Panes (main container for edit tools)
 
-import store from "./store/index";
+// import store from "./store/index";
 
 import ballotSetupCard from "./components/main/ballot-setup-card";
-// import electionCard from "./components/election/election-card";
-// import electionSetupCard from "./components/election/setup/election-setup-card";
-//import votePage from './components/main/vote-page'
+
 import resultsCard from './components/main/results-card'
-// import motionSetup from './components/main/chair/motion-setup'
-// import meetingSetup from './components/main/chair/meeting-setup'
+
 import voteVerify from './components/main/vote-verification-page'
 import meetingHome from './components/main/meeting-home'
 import eventSetupCard from "./components/main/chair/event-setup-card";
@@ -22,33 +19,8 @@ import electionAdminCard from './components/election/admin/election-admin-card';
 
 import pModeHome from "./components/pmode/pmode-home";
 
-Vue.component('pmode-home', pModeHome);
-
-Vue.component('ballot-setup-card', ballotSetupCard);
-
-Vue.component('proposition-setup-card', propositionSetupCard);
-
-// Vue.component('election-card', electionCard);
-// Vue.component('election-setup-card', electionSetupCard);
-Vue.component(('event-setup-card', eventSetupCard));
-
-Vue.component('meeting-home', meetingHome);
-
-// Vue.component('meeting-setup-page', meetingSetup);
-// Vue.component('motion-setup-page', motionSetup);
-Vue.component('results-card', resultsCard);
-// Vue.component( 'vote-page', votePage );
-Vue.component('vote-card', voteCard);
-Vue.component('vote-verify', resultsCard);
-
-//dev
-Vue.component('election-voter-home-card', electionVoterHomeCard);
-
-Vue.component('election-admin-card', electionAdminCard);
-
 
 export const meetingRoutes = [
-
 
     {
         name: 'home',
@@ -63,7 +35,7 @@ export const meetingRoutes = [
             return {main: meetingHome};
         },
         get default() {
-            if (store.getters.isElection) return false;
+            // if (store.getters.isElection) return false;
             return true;
         },
         props: true,
@@ -114,32 +86,6 @@ export const meetingRoutes = [
         showIfSettings: []
     },
 
-    // {
-    //     name: 'election-results',
-    //     path: '/election-results',
-    //     icon: "fa fa-comments-o",
-    //     label: "Results",
-    //     components: {main: resultsCard},
-    //     props: true,
-    //     adminOnly: false,
-    //     type: 'election'
-    // },
-
-    // {
-    //     name: 'setup-offices',
-    //     path: '/setup-offices',
-    //     icon: "fa fa-bar-chart",
-    //     label : "Setup offices",
-    //     // get label() {
-    //     //     if (store.getters.isElection) return "Setup offices";
-    //     //     return "Make motion";
-    //     // },
-    //     components: {main: ballotSetupCard},
-    //     props: true,
-    //     adminOnly: true,
-    //     type : 'election'
-    // },
-
     {
         name: 'ballot',
         path: '/ballot',
@@ -162,37 +108,11 @@ export const meetingRoutes = [
         showIfSettings: ['members_make_motions']
     },
 
-    // {
-    //     name: 'setup-props',
-    //     path: '/setup-props',
-    //     icon: "fa fa-bar-chart",
-    //     label: 'Setup propositions',
-    //     components: {main: propositionSetupCard},
-    //     props: true,
-    //     // adminOnly: true,
-    //     adminOnly: true,
-    //     type : 'election'
-    // },
-
-    // {
-    //     name: 'verify',
-    //     path: '/verify',
-    //     icon: "fa fa-check",
-    //     label: "Verify votes",
-    //     components: {main: voteVerify},
-    //     props: true,
-    //     adminOnly: false,
-    //
-    //     //Will show if any of the settings defined here are true
-    //     showIfSettings: []
-    // },
-
 
     {
         name: 'setup',
         path: '/setup',
         get label() {
-            // if (store.getters.isElection) return "Setup election";
             return "Setup meeting";
         },
         components: {main: eventSetupCard},

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Meeting;
 use App\Models\Motion;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -13,13 +14,20 @@ use Illuminate\Queue\SerializesModels;
 
 class VotingOnMotionOpened implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionOnlyTrait;
+    use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait, SendWithMotionIdOnlyTrait;
+
     /**
+     * Keeping the models in protected properties
+     * prevents them from being sent to pusher.
      * @var Motion
      */
-    public $motion;
+    protected $motion;
 
-    public $meeting;
+    /**
+     * @var Meeting
+     */
+    protected $meeting;
+
 
     /**
      * Create a new event instance.
@@ -41,8 +49,6 @@ class VotingOnMotionOpened implements ShouldBroadcast
     {
         return new PrivateChannel($this->meetingChannelName());
     }
-
-
 
 
 }

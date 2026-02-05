@@ -28,7 +28,8 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         motion: function () {
             return this.$store.getters.getMotionById(this.voteObject.motionId);
@@ -66,7 +67,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

@@ -38,7 +38,7 @@ const actions = {
             let meetingId = idify(meeting);
             let url = routes.election.admin.startVoting(meetingId);
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //We will overwrite the original object because
                     //there may be several things that change when the election
@@ -73,7 +73,7 @@ const actions = {
             let meetingId = idify(meeting);
             let url = routes.election.admin.stopVoting(meetingId);
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //We will overwrite the original object because
                     //there may be several things that change when the election
@@ -106,7 +106,7 @@ const actions = {
             let meetingId = idify(meeting);
             let url = routes.election.admin.releaseResults(meetingId);
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //We will overwrite the original object because
                     //there may be several things that change when the election
@@ -142,7 +142,7 @@ const actions = {
             let meetingId = idify(meeting);
             let url = routes.election.admin.hideResults(meetingId);
 
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
                     //We will overwrite the original object because
                     //there may be several things that change when the election

@@ -51,7 +51,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             // let data = {name : name, date : date};
             let url = routes.election.resource.election()
-            return Vue.axios.post(url)
+            return axios.post(url)
                 .then((response) => {
 
                     // dev Added in VOT-125 to deal with problem of still being on original meeting
@@ -108,7 +108,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, data)
+            return axios.post(url, data)
                 .then((response) => {
                     let motion = new Motion(response.data);
 
@@ -162,7 +162,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.delete(url)
+            return axios.delete(url)
                 .then((response) => {
 
                     commit('removeCandidate', candidate);

@@ -22,7 +22,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         showOverSelectionWarning: function () {
             return this.$store.getters.showOverSelectionWarningForActiveMotion;
@@ -38,7 +40,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
         handleClick: function () {

@@ -24,7 +24,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         maxWinners: {
             get: function () {
                 if (isReadyToRock(this.motion)) return this.motion.max_winners;
@@ -39,7 +41,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

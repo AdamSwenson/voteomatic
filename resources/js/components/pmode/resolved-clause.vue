@@ -17,11 +17,10 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         styling: function(){}
     },
-
-    computed: {},
 
     methods: {}
 

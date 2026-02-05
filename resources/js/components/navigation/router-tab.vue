@@ -1,36 +1,22 @@
 <template>
+    <li class="nav-item mt-1">
     <router-link
+        class="nav-link "
+        v-bind:class="styling"
         v-if="showTab"
         v-bind:to="path"
-        v-slot="{ href, route, navigate, isActive, isExactActive }"
-    >
-        <li class="nav-item mt-1"
-            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
-        >
-            <a class="nav-link"
-               :class="[isActive && activeClass, isExactActive && activeClass]"
-               :href="href" @click="navigate">{{ label }}</a>
-        </li>
+        v-bind:aria-label="ariaLabel"
+    >{{label}}
+<!--        <li class="nav-item mt-1"-->
+<!--            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"-->
+<!--        >-->
+<!--            <a class="nav-link"-->
+<!--               :class="[isActive && activeClass, isExactActive && activeClass]"-->
+
+<!--            >{{ label }}</a>-->
+<!--        </li>-->
     </router-link>
-
-    <!--    <router-link-->
-    <!--        v-bind:to="path"-->
-    <!--        v-bind:key="r.name"-->
-    <!--        v-bind:style="styling"-->
-    <!--        v-bind:active-class="activeClass"-->
-
-    <!--    >-->
-    <!--        &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-    <!--        <a class="page-nav nav-link">-->
-    <!--                    <span class="icon is-small">-->
-    <!--&lt;!&ndash;                        <svg v-bind:class="r.icon" aria-hidden="true">&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                              <use xlink:href="bootstrap-icons.svg#{{r.icon}}"/>&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                        </svg>&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                        <i v-bind:class="r.icon" aria-hidden="true"></i>&ndash;&gt;-->
-    <!--                        </span>-->
-    <!--            <span>{{ r.label }}</span>-->
-    <!--        </a>-->
-    <!--    </router-link>-->
+    </li>
 
 </template>
 
@@ -45,25 +31,30 @@ export default {
 
     data: function () {
         return {
-            activeClass: 'active',
+            activeClass: 'active ',
         }
     },
 
-    asyncComputed : {
-        showTab: function(){
-            if(this.name === 'vote'){
+
+    computed: {
+        ariaLabel: function () {
+        return `${this.label} Tab`;
+        },
+
+        // asyncComputed : {
+        showTab: function () {
+            if (this.name === 'vote') {
                 return this.isVotingAllowed && !this.isComplete;
             }
 
-            if(this.name === 'results'){
+            if (this.name === 'results') {
                 return this.isComplete;
             }
 
             return true;
-        }
-    },
 
-    computed: {
+        },
+
         name: function () {
             return this.route.name;
         },
@@ -74,11 +65,10 @@ export default {
             return this.route.path;
         },
         styling: function () {
+            if(this.$router.currentRoute.value.name === this.name) return this.activeClass;
+
         },
-    }
+    },
+
 }
 </script>
-
-<style scoped>
-
-</style>

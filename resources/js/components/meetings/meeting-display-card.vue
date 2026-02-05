@@ -49,7 +49,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         /**
          * The link that the user will enter into
@@ -88,7 +90,6 @@ export default {
     },
 
 
-    computed: {},
     methods: {}
 
 }

@@ -76,9 +76,9 @@ export default {
 
         }
     },
+computed: {
 
-
-    asyncComputed: {
+    // asyncComputed: {
         showFields: function () {
             return true;
         },
@@ -97,7 +97,7 @@ export default {
             }
             return t + this.eventType;
         },
-    },
+    // },
     //
     //     /**
     //      * The link that the user will enter into
@@ -113,7 +113,7 @@ export default {
     // },
 
 
-    computed: {
+    // computed: {
 
 
         eventDate: {

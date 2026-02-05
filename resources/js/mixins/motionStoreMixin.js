@@ -23,9 +23,8 @@ module.exports = {
 
             }
         },
-    },
 
-    asyncComputed: {
+        // asyncComputed: {
 
         /**
          * If true, voting has ended on the motion.
@@ -56,7 +55,6 @@ module.exports = {
             },
             default: false
         },
-
 
 
         // selectedMotion: function () {

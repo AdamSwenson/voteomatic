@@ -27,7 +27,7 @@ const actions = {
         let url = routes.election.getResults(motionId);
 
         return new Promise(((resolve, reject) => {
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
                         let r = new CandidateResult(d);

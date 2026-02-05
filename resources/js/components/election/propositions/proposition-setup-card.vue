@@ -7,7 +7,7 @@
             <div class="col-lg-3">
 
                 <proposition-list-card></proposition-list-card>
-<!--                v-on:edit-requested="setEditMode"-->
+                <!--                v-on:edit-requested="setEditMode"-->
             </div>
 
             <div class="col-lg-9">
@@ -27,19 +27,28 @@
                     </div>
 
                     <div class="card-body">
-                        <proposition-content-input
+                        <proposition-content-input-new
+                            :content="editedMotion.content"
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:content="editedMotion.content  = $event"
-                        ></proposition-content-input>
+                            v-on:update:content="handleUpdate"
+
+                        ></proposition-content-input-new>
+<!--                        -->
+<!--                        <proposition-content-input-->
+<!--                            :motion="editedMotion"-->
+<!--                            :edit-mode="editMode"-->
+<!--                            v-on:update:content="editedMotion.content  = $event"-->
+<!--                        ></proposition-content-input>-->
                     </div>
 
                     <div class="card-body">
                         <proposition-description-input
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:description="editedMotion.description  = $event"
+
                         ></proposition-description-input>
+<!--                        v-on:update:description="editedMotion.description  = $event"-->
                     </div>
 
                     <div class="card-body">
@@ -47,8 +56,9 @@
                             v-if="isChair"
                             :motion="editedMotion"
                             :edit-mode="editMode"
-                            v-on:update:requires="editedMotion.requires  = $event"
+
                         ></vote-required-inputs>
+<!--                        v-on:update:requires="editedMotion.requires  = $event"-->
 
                     </div>
 
@@ -78,16 +88,16 @@
 
 
                         <!--                        <button-->
-<!--                            class="btn btn-primary"-->
-<!--                            data-bs-toggle="modal"-->
-<!--                            data-bs-target="#confirmMotionModal"-->
-<!--                        >Save proposition-->
-<!--                        </button>-->
+                        <!--                            class="btn btn-primary"-->
+                        <!--                            data-bs-toggle="modal"-->
+                        <!--                            data-bs-target="#confirmMotionModal"-->
+                        <!--                        >Save proposition-->
+                        <!--                        </button>-->
 
-<!--                        <create-motion-modal :motion="editedMotion"-->
-<!--                                             v-on:confirmed="handleDoneClick"-->
-<!--                        ></create-motion-modal>-->
-<!--                        -->
+                        <!--                        <create-motion-modal :motion="editedMotion"-->
+                        <!--                                             v-on:confirmed="handleDoneClick"-->
+                        <!--                        ></create-motion-modal>-->
+                        <!--                        -->
 
                     </div>
 
@@ -115,10 +125,12 @@ import CreateMotionModal from "../../motions/motion-setup-inputs/create-motion-m
 import VoteRequiredInputs from "../../motions/motion-setup-inputs/vote-required-inputs";
 import Payload from "../../../models/Payload";
 import PropositionListCard from "./proposition-list-card";
+import PropositionContentInputNew from "./proposition-content-input-new.vue";
 
 export default {
     name: "proposition-setup",
     components: {
+        PropositionContentInputNew,
         PropositionListCard,
         VoteRequiredInputs,
         CreateMotionModal,
@@ -132,12 +144,12 @@ export default {
     mixins: [ChairMixin, MotionMixin, MeetingMixin],
 
     data: function () {
-        return {
-
-        }
+        return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
         /**
          * Either the currently selected motion object
          * or a draft motion object, depending on what mode
@@ -147,8 +159,8 @@ export default {
             //If a draft proposition exists, that's the one we
             //want to be working on. If a regular motion also exists and
             //is set as current, we supersede it.
-            let draft =  this.$store.getters.getDraftMotion;
-            if(isReadyToRock(draft) && draft.type === 'proposition') return draft;
+            let draft = this.$store.getters.getDraftMotion;
+            if (isReadyToRock(draft) && draft.type === 'proposition') return draft;
 
             //Otherwise we use the current motion, assuming it is a proposition
             if (isReadyToRock(this.motion) && this.motion.type === 'proposition') return this.motion;
@@ -161,10 +173,10 @@ export default {
          * Whether we are in edit mode is determined by looking at
          * the edited motion
          * */
-        editMode: function(){
+        editMode: function () {
             //we are editing if there is a motion set and it has same id as the editedMotion
             return isReadyToRock(this.editedMotion) && isReadyToRock(this.motion, 'id') && this.editedMotion.id === this.motion.id;
-         //  return (isReadyToRock(this.motion) && this.motion.type === 'proposition')
+            //  return (isReadyToRock(this.motion) && this.motion.type === 'proposition')
         },
 
         showInputs: function () {
@@ -175,14 +187,11 @@ export default {
         title: function () {
             let defaultTitle = "Proposition setup";
 // let name = this.editedMotion.info.name;
-            if (!isReadyToRock(this.editedMotion) || !isReadyToRock(this.editedMotion.info) || !isReadyToRock(this.editedMotion.info.name) || this.editedMotion.info.name.length <1) return defaultTitle
+            if (!isReadyToRock(this.editedMotion) || !isReadyToRock(this.editedMotion.info) || !isReadyToRock(this.editedMotion.info.name) || this.editedMotion.info.name.length < 1) return defaultTitle
 
             return this.editedMotion.info.name;
+        },
 
-        }
-    },
-
-    computed: {
         //Needs to be computed so that can handle updates
 
         propName: {
@@ -204,7 +213,7 @@ export default {
                 }
 
             },
-            watch : ['editedMotion']
+            watch: ['editedMotion']
         },
 
     },
@@ -215,7 +224,7 @@ export default {
             //input component so can distinguish between
             //creating and editing if we decide to keep the
             //editing function.
-            let payload = event[0];
+            let payload = event;
             window.console.log(payload);
             if (this.editMode) {
                 this.$store.dispatch('updateMotion', payload);
@@ -249,7 +258,6 @@ export default {
         // removeEditMode: function () {
         //     // this.editMode = false;
         // },
-
 
 
     },

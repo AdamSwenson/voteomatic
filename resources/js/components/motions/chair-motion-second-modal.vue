@@ -23,7 +23,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         /**
          * Controls whether the modal displays
@@ -61,7 +63,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
 

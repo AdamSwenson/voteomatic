@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Motion;
 
+use App\Events\ForcePageReload;
 use App\Events\MotionClosed;
 use App\Events\NewCurrentMotionSet;
+use App\Events\NotifyPageRefreshNeeded;
+use App\Events\VotingOnMotionAborted;
 use App\Events\VotingOnMotionOpened;
 use App\Http\Controllers\Controller;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\RecordedVoteRecord;
 use App\Repositories\IMotionRepository;
 use App\Repositories\IMotionStackRepository;
 use App\Repositories\IResolutionRepository;
+use App\Repositories\MotionRepository;
+use App\Repositories\Vote\IVoteManagementRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -43,7 +49,7 @@ class MotionStackController extends Controller
         $this->motionStackRepo = app()->make(IMotionStackRepository::class);
         $this->motionRepo = app()->make(IMotionRepository::class);
         $this->rezzieRepo = app()->make(IResolutionRepository::class);
-
+        $this->voteManagmentRepo = app()->make(IVoteManagementRepository::class);
     }
 
 
@@ -71,9 +77,9 @@ class MotionStackController extends Controller
         //this will return false if not an amendment
         //otherwise it will return a new motion which has been amended with
         //the motion passed in
-        if($motion->is_resolution){
+        if ($motion->is_resolution) {
             $superseding = $this->rezzieRepo->handlePotentialAmendment($motion);
-        }else{
+        } else {
             $superseding = $this->motionRepo->handlePotentialAmendment($motion);
         }
 
@@ -87,9 +93,17 @@ class MotionStackController extends Controller
             'superseding' => $superseding
         ];
 
-
         //Broadcast to non-chair members
         MotionClosed::dispatch($motion, $superseding);
+
+        //If this was a resolution or other big object,
+        //the MotionClosed will fail
+        // dev This should be replaced with actually having the client
+        // reload the motion, but that is for later.
+        if (!MotionRepository::isPusherCompatible($motion)) {
+            ForcePageReload::dispatch($motion->meeting);
+//            NotifyPageRefreshNeeded::dispatch($motion->meeting);
+        }
 
         return response()->json($out);
 
@@ -139,7 +153,8 @@ class MotionStackController extends Controller
      * and tells all listening clients to start voting
      * @param Motion $motion
      */
-    public function startVotingOnMotion(Motion $motion){
+    public function startVotingOnMotion(Motion $motion)
+    {
         //Don't understand why this can't be in the constructor. But it can't
         $this->setLoggedInUser();
 
@@ -159,6 +174,34 @@ class MotionStackController extends Controller
 
         //return the success message
         response()->json($motion);
+
+    }
+
+    /**
+     * If the voting needs to be ended before it is closed without reporting results,
+     * this aborts the vote. It deletes all cast votes and closes the voting.
+     * @param Motion $motion
+     * @return void
+     */
+    public function abortVotingOnMotion(Motion $motion)
+    {
+        //Don't understand why this can't be in the constructor. But it can't
+        $this->setLoggedInUser();
+
+        $this->authorize('markComplete', $motion);
+
+        //The motion was probably the current one, but just in case
+        $meeting = $motion->meeting;
+        $motion = $this->motionStackRepo->setAsCurrentMotion($meeting, $motion);
+
+        $this->voteManagmentRepo->abortVotingOnMotion($motion);
+
+        //Send the push message to all clients
+        VotingOnMotionAborted::dispatch($motion);
+
+        //return the success message
+        response()->json($motion);
+
 
     }
 

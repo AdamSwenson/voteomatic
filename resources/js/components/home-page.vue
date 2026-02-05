@@ -56,17 +56,17 @@ export default {
         return {}
     },
 
-    asyncComputed: {
-
-        // meetings: function(){
-        //     let m = this.$store.getters.getStoredMeetings;
-        //     if(isReadyToRock(m)){
-        //         return m;
-        //     }
-        //     return [];
-        // }
-
-    },
+    // asyncComputed: {
+    //
+    //     // meetings: function(){
+    //     //     let m = this.$store.getters.getStoredMeetings;
+    //     //     if(isReadyToRock(m)){
+    //     //         return m;
+    //     //     }
+    //     //     return [];
+    //     // }
+    //
+    // },
 
     watch: {
 

@@ -43,7 +43,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         /**
          * We hide it on the first in
          * the stack
@@ -64,7 +66,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
         handleNext: function () {

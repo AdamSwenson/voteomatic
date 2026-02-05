@@ -76,7 +76,8 @@ const mutations = {
         // window.console.log(updateProp, updateVal);
         let currentMotion = getById(state.candidates, id);
 
-        Vue.set(currentMotion, updateProp, updateVal);
+        currentMotion[updateProp] = updateVal;
+        // Vue.set(currentMotion, updateProp, updateVal);
 
     },
 
@@ -110,7 +111,7 @@ const actions = {
 
         return new Promise(((resolve, reject) => {
 
-            return Vue.axios.post(url, data)
+            return axios.post(url, data)
                 .then((response) => {
                     let candidate = new Candidate(response.data);
                     commit('addCandidateToStore', candidate);
@@ -143,7 +144,7 @@ const actions = {
     //     return new Promise(((resolve, reject) => {
     //         // let data = {name : name, date : date};
     //         let url = routes.election.resource.election()
-    //         return Vue.axios.post(url)
+    //         return axios.post(url)
     //             .then((response) => {
     //
     //                 // dev Added in VOT-125 to deal with problem of still being on original meeting
@@ -195,7 +196,7 @@ const actions = {
     //
     //     return new Promise(((resolve, reject) => {
     //
-    //         return Vue.axios.post(url, data)
+    //         return axios.post(url, data)
     //             .then((response) => {
     //                 let motion = new Motion(response.data);
     //
@@ -235,7 +236,7 @@ const actions = {
     //     let url = routes.election.getResults(motionId);
     //
     //     return new Promise(((resolve, reject) => {
-    //         return Vue.axios.get(url)
+    //         return axios.get(url)
     //             .then((response) => {
     //                 _.forEach(response.data, (d) => {
     //                     let r = new CandidateResult(d);
@@ -391,7 +392,7 @@ const actions = {
     //
     //     return new Promise(((resolve, reject) => {
     //
-    //         return Vue.axios.delete(url)
+    //         return axios.delete(url)
     //             .then((response) => {
     //
     //                 commit('removeCandidate', candidate);
@@ -452,7 +453,7 @@ const actions = {
     //     data[payload.updateProp] = payload.updateVal;
     //
     //     return new Promise(((resolve, reject) => {
-    //             return Vue.axios.patch(url, data).then((response) => {
+    //             return axios.patch(url, data).then((response) => {
     //                 commit('setCandidateProp', payload);
     //                 resolve();
     //             });

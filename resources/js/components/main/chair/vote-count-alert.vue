@@ -15,8 +15,15 @@
             </div>
 
             <div class="col">
-                <end-voting-button :motion="motion"></end-voting-button>
-                <end-voting-modal></end-voting-modal>
+                <div class="d-grid gap-2 mb-2">
+
+                    <end-voting-button :motion="motion"></end-voting-button>
+                    <end-voting-modal></end-voting-modal>
+                </div>
+                <div class="d-grid gap-2 mb-2">
+                    <abort-voting-button :motion="motion"></abort-voting-button>
+                    <abort-voting-modal></abort-voting-modal>
+                </div>
             </div>
 
         </div>
@@ -38,10 +45,12 @@ import ChairMixin from "../../../mixins/chairMixin";
 import MotionMixin from "../../../mixins/motionStoreMixin";
 import EndVotingButton from "../../motions/end-voting-button";
 import EndVotingModal from "../../motions/end-voting-modal";
+import AbortVotingButton from "../../motions/abort-voting-button.vue";
+import AbortVotingModal from "../../motions/abort-voting-modal.vue";
 
 export default {
     name: "vote-count-alert",
-    components: {EndVotingModal, EndVotingButton},
+    components: {AbortVotingModal, AbortVotingButton, EndVotingModal, EndVotingButton},
     props: [],
 
     mixins: [ChairMixin, MotionMixin],
@@ -50,7 +59,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
         isVotingAllowed: function () {
             return isReadyToRock(this.motion) && this.motion.isVotingAllowed;
         },
@@ -73,7 +84,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

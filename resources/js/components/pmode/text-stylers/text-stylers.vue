@@ -134,16 +134,14 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
         currentId : function(){
             if(isReadyToRock(this.motion)){
                 return this.motion.id;
             }
 
-        }
-    },
+        },
 
-    computed: {
         ithere: function () {
             return "<p>Nice dog <insert-pending text=', who is very good,'></insert-pending> is called Carlos";
         }

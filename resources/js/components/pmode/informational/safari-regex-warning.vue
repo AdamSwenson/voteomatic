@@ -19,7 +19,6 @@ export default {
         return {}
     },
 
-    asyncComputed: {},
 
     computed: {
         showAlert: function(){

@@ -1,5 +1,5 @@
-import er from '../../../resources/js/store/modules/elections/elections.results';
-import CandidateResult from "../../../resources/js/models/CandidateResult";
+import er from '../../../../../../resources/js/store/modules/elections/elections.results';
+import CandidateResult from "../../../../../../resources/js/models/CandidateResult";
 let _ = require('lodash');
 
 describe('elections.results mutations', () => {

@@ -134,7 +134,6 @@ export default {
     },
 
 
-    asyncComputed: {},
 
 
     computed: {},

@@ -15,17 +15,22 @@ export default {
             label: 'Move Resolution',
             styling: ' btn-danger',
             clicked: false,
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
+
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         draftMotion: function () {
             return this.$store.getters.getDraftMotion;
-        }
-    },
-
-    computed: {
+        },
+    // },
+    //
+    // computed: {
         /**
          * Controls whether the spinner is shown
          * @returns {boolean}

@@ -127,7 +127,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
         },
@@ -165,11 +167,8 @@ export default {
             let candidate = this.$store.getters.getCandidateById(this.vote.candidateId);
             // window.console.log('vote-verification-page', 'candidateName', 164, candidate[0].name);
             return candidate[0].name;
-        }
+        },
 
-    },
-
-    computed: {
 
         verificationResult: function () {
             return false;

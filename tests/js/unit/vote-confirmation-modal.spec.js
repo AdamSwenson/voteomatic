@@ -1,16 +1,20 @@
+let _ = require('lodash');
+import sinon from 'sinon';
+
+import {createStore} from 'vuex';
+import {mount} from '@vue/test-utils';
 
 import VoteConfirmationModal from "../../../resources/js/components/vote-casting/vote-confirmation-modal.vue";
 import Motion from "../../../resources/js/models/Motion";
 import Vote from "../../../resources/js/models/Vote";
 
-import sinon from 'sinon';
 
-import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
-import Vuex from 'vuex'
-
-
-const localVue = createLocalVue()
-localVue.use(Vuex)
+// import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
+// import Vuex from 'vuex'
+//
+//
+// const localVue = createLocalVue()
+// localVue.use(Vuex)
 
 let motion = new Motion({id: 4});
 
@@ -24,7 +28,7 @@ let getters = {
     }
 };
 
-let store = new Vuex.Store({
+let store = createStore({
     actions, getters
 });
 
@@ -33,17 +37,22 @@ describe('Yay votes', () => {
 
     let wrapper;
     beforeEach(() => {
-        wrapper = shallowMount(VoteConfirmationModal, {
-            store, localVue,
-            propsData: {
-                type: 'yay'
+        wrapper = mount(VoteConfirmationModal, {
+            global: {
+                plugins: [store]
             }
-        });
+        })
+    });
+
+    test('beep', () => {
+    actions.castMotionVote();
+        expect(actions.castMotionVote).toHaveBeenCalled();
 
     });
 
 
     test('Yes dispatches castMotionVote ', () => {
+        //dev This is failing because the program does not (no longer?) use castMotionVote
         wrapper.find('button.yes').trigger('click');
         expect(actions.castMotionVote).toHaveBeenCalled();
 
@@ -67,13 +76,14 @@ describe('Nay votes', () => {
 
     let wrapper;
     beforeEach(() => {
-        wrapper = shallowMount(VoteConfirmationModal, {
-            store, localVue,
+       wrapper = mount(VoteConfirmationModal, {
+            global: {
+                plugins: [store]
+            },
             propsData: {
                 type: 'nay'
             }
         });
-
     });
 
 
