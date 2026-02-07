@@ -22,7 +22,7 @@ class MotionTemplateRepository
     static public $templates = [
         [
             'name' => 'Adjourn',
-            'content' => "That the meeting be adjourned.",
+            'content' => "Shall the meeting be adjourned.",
             'description' => "Meeting comes to an end. This is amendable with respect
              to when the next meeting will be, if specified",
             'requires' => 0.5,
@@ -30,11 +30,27 @@ class MotionTemplateRepository
             'amendable' => true
         ],
 
+        [
+            'name' => 'Appeal',
+            'content' => "Shall the ruling of the Chair be sustained",
+            'description' => "A nay vote overturns the ruling of the Chair. A yay vote sustains the ruling of the Chair. ",
+            'requires' => 0.5,
+            'type' => 'procedural-main',
+            'amendable' => false,
+            'debatable' => [
+                'motion' => true,
+                'underlyingMotion' => false
+            ],
+            'reconsiderable' => [
+                'affirmative' => true,
+                'negative' => true,
+            ]
+
+        ],
 
         [
-            'name' =>
-                'Committee of the Whole',
-            'content' => "That the body convene as a committee of the whole with this body's Chair as its Chair ",
+            'name' => 'Committee of the Whole',
+            'content' => "Shall the body convene as a committee of the whole with this body's Chair as its Chair ",
             'description' => "The formal deliberative process is suspended. The body
                  may work informally on an issue. No votes taken while in the committee of the whole
                 are binding on the main body but they may be used to advise the main body on what to do.
@@ -48,17 +64,54 @@ class MotionTemplateRepository
 
         [
             'name' => 'Previous Question (Call the Question)',
-            'content' => "That the pending question be called for",
+            'content' => "Shall the pending question be called for",
             'description' => "If this motion is approved, all debate ends on the pending motion and the body moves immediately to a vote on the pending motion.
                 If this motion fails, debate continues on the pending motion",
             'requires' => 0.66,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false
+            'debatable' => [
+                'motion' => false,
+                'underlyingMotion' => false
+            ]
         ],
+
+        [
+            'name' => 'Postpone definitely',
+            'content' => "Shall the pending motion be postponed to the specified time",
+            'description' => "We stop work on the main motion and any subsidiary motions (e.g., amendments) and
+            come back to it at the specified time. The specified time can be amended. Debate is only
+            allowed on the wisdom of postponement, not the motion itself",
+            'requires' => 0.5,
+            'type' => 'procedural-subsidiary',
+            'amendable' => true,
+            'debatable' => [
+                'motion' => true,
+                'underlyingMotion' => false
+            ]
+        ],
+
+        [
+            'name' => 'Postpone indefinitely',
+            'content' => "Shall the pending motion be postponed indefinitely",
+            'description' => "This kills the motion without voting directly on it. Debate on this motion can
+            include debate on the motion being postponed.",
+            'requires' => 0.5,
+            'type' => 'procedural-subsidiary',
+            'amendable' => false,
+            'debatable' => [
+                'motion' => true,
+                'underlyingMotion' => true
+            ],
+            'reconsiderable' => [
+                'affirmative' => true,
+                'negative' => false,
+            ]
+        ],
+
         [
             'name' => 'Place on the Table',
-            'content' => "That the pending motion be placed on the table",
+            'content' => "Shall the pending motion be placed on the table",
             'description' => "All action on the motion is paused so the body can attend to
                 other business. There is no scheduled time to resume action. Action
                 will resume upon a majority vote to Take from the Table. That motion may
@@ -66,24 +119,35 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false,
+            'debatable' => [
+                'motion' => false,
+                'underlyingMotion' => false
+            ],
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => true,
+            ]
         ],
+
 
         [
             'name' => 'Take from the Table',
-            'content' => "That the specified motion be taken from the table.",
+            'content' => "Shall the specified motion be taken from the table.",
             'description' => "If this motion passes, the tabled motion is resumed. The state of the motion is exactly
              the same as when it was tabled. This motion may be made whenever no main motion is pending",
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false,
+            'debatable' => [
+                'motion' => false,
+                'underlyingMotion' => true
+            ],
         ],
 
 
         [
             'name' => 'Recess',
-            'content' => "That the body recess.",
+            'content' => "Shall the body recess.",
             'description' => "We take a break. This can be qualified to say how long. The how long part is amendable.",
             'requires' => 0.5,
             'type' => 'procedural-main',
@@ -92,7 +156,7 @@ class MotionTemplateRepository
 
         [
             'name' => 'Reconsider',
-            'content' => "That the body reconsider the motion that ",
+            'content' => "Shall the body reconsider the motion that ",
             'description' => "Whether to reopen a decision that has already been voted upon. This can only be made by a member who voted with the prevailing side.",
             'requires' => 0.5,
             'type' => 'procedural-main',
@@ -105,7 +169,7 @@ class MotionTemplateRepository
     static public $introTemplates = [
         //Going to use this for VOT-306 and CSUN specific motions
         ['name' => 'Request Roll Call Vote (CSUN-specific)',
-            'content' => "That the vote on the pending question(s) be taken via roll call. The vote of each senator will be recorded in the minutes.",
+            'content' => "Shall the vote on the specified question(s) be taken via roll call. The vote of each senator will be recorded in the minutes.",
             'requires' => 0.2,
             'amendable' => true,
             'debatable' => false,

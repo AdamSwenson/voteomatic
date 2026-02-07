@@ -1,7 +1,10 @@
 <template>
 
     <!-- Modal -->
-    <div class="modal fade" id="endVotingModal" tabindex="-1" aria-labelledby="endVotingModalLabel"
+    <div class="modal fade"
+         id="endVotingModal"
+         tabindex="-1"
+         aria-labelledby="endVotingModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -53,7 +56,9 @@ export default {
         return {}
     },
 
-    computed: {},
+    computed: {
+
+    },
 
     methods: {
         endVoting: function () {

@@ -1,7 +1,7 @@
 <template>
     <div class="d-grid gap-2">
     <button type="button"
-            class="btn btn-danger "
+            class="btn btn-danger text-light fs-2"
             data-bs-toggle="modal"
             data-bs-target="#nayConfirmationModal"
             v-on:click="handleClick"
