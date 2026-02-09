@@ -9,7 +9,7 @@
              >Passed</span>
 
             <span class="badge bg-danger text-light"
-                  v-else-if="! isPassed"
+                  v-else-if="isPassed === false"
             >Failed</span>
 
         </span>
