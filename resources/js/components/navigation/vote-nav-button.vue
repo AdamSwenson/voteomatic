@@ -11,12 +11,14 @@
 </template>
 
 <script>
+import navigationButtonMixin from "../../mixins/navigationButtonMixin";
+
 export default {
     name: "vote-nav-button",
 
     props: ['motion'],
 
-    mixins: [],
+    mixins: [navigationButtonMixin],
 
     data: function () {
         return {
@@ -27,17 +29,18 @@ export default {
     computed: {
 
         hasVotedOnCurrentMotion: function () {
-            return this.$store.getters.hasVotedOnCurrentMotion;
+            return this.$store.getters.hasVotedOnMotion(this.motion);
+            // return this.$store.getters.hasVotedOnCurrentMotion;
         },
 
 
         styling: {
             get: function () {
-                if (! this.hasVotedOnCurrentMotion) {
-                    return this.baseStyle + '  btn-warning '
+                if ( this.hasVotedOnCurrentMotion) {
+                    return this.baseStyle + '  btn-outline-success '
                 }
 
-                return this.baseStyle + '  btn-warning '
+                return this.baseStyle + '  btn-success '
 
                 //This got too light after removed the background
                 // return this.baseStyle + ' btn-outline-warning ';
@@ -49,6 +52,7 @@ export default {
 
     methods: {
         handleClick: function () {
+            this.setMotionLocal();
             this.$router.push('vote');
         }
 

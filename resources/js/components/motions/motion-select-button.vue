@@ -24,11 +24,15 @@ import MeetingMixin from '../../mixins/meetingMixin';
 import EndVotingButton from "./end-voting-button";
 import Payload from "../../models/Payload";
 import ChairMixin from "../../mixins/chairMixin";
+import navigationButtonMixin from "../../mixins/navigationButtonMixin";
 
 export default {
     name: "motion-select-button",
+
     components: {EndVotingButton},
-    mixins: [MeetingMixin, MotionObjectMixin, ChairMixin, NavigationMixin ],
+
+    mixins: [MeetingMixin, MotionObjectMixin, ChairMixin, NavigationMixin, navigationButtonMixin],
+
     data: function () {
         return {
             classBase: 'btn btn-lg btn-block '
@@ -39,7 +43,7 @@ export default {
 
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
         styling: function () {
             if (this.isDisabled) return this.classBase + ' btn-outline-primary disabled'
             if (this.isSelected) return this.classBase + ' btn-primary active';
@@ -48,14 +52,14 @@ export default {
             // return 'btn btn-outline-primary btn-lg  btn-block'
         },
 
-        ariaDisabled: function(){
-            if(this.isDisabled) return true;
+        ariaDisabled: function () {
+            if (this.isDisabled) return true;
             return false;
         },
 
-        tabIndex: function(){
-          if(this.isDisabled) return '-1';
-          return 0;
+        tabIndex: function () {
+            if (this.isDisabled) return '-1';
+            return 0;
         },
 
         isDisabled: function () {
@@ -83,15 +87,13 @@ export default {
             return this.motion.id === this.selectedMotion.id
         }
 
-
-    }
-    ,
+    },
 
     methods: {
         setMotion: function () {
-            if(this.isChair) {
+            if (this.isChair) {
                 this.setMotionChair();
-            }else{
+            } else {
                 this.setMotionLocal()
             }
         },
@@ -100,7 +102,7 @@ export default {
          * Sets the motion as current on the server and pushes
          * to all users
          */
-        setMotionChair : function(){
+        setMotionChair: function () {
             let pl = Payload.factory({'motionId': this.motion.id, 'meetingId': this.meeting.id});
             this.$store.dispatch('setCurrentMotion', pl)
         },
@@ -111,7 +113,7 @@ export default {
          * on server. Used by regular user to select past
          * motions and view results
          */
-        setMotionLocal : function(){
+        setMotionLocal: function () {
             this.$store.commit('setMotion', this.motion);
             // this.$store.dispatch('forceNavigationToHome');
             // window.console.log('motion-select-button', 'setMotionLocal', 115,);

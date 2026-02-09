@@ -33,18 +33,19 @@ class MotionTemplateRepository
         [
             'name' => 'Appeal',
             'content' => "Shall the ruling of the Chair be sustained",
-            'description' => "A nay vote overturns the ruling of the Chair. A yay vote sustains the ruling of the Chair. ",
+            'description' => "A nay vote overturns the ruling of the Chair. An aye vote sustains the ruling of the Chair. ",
             'requires' => 0.5,
             'type' => 'procedural-main',
             'amendable' => false,
-            'debatable' => [
-                'motion' => true,
-                'underlyingMotion' => false
-            ],
-            'reconsiderable' => [
-                'affirmative' => true,
-                'negative' => true,
-            ]
+            'debatable' => true
+//            'debatable' => [
+//                'motion' => true,
+//                'underlyingMotion' => false
+//            ],
+//            'reconsiderable' => [
+//                'affirmative' => true,
+//                'negative' => true,
+//            ]
 
         ],
 
@@ -70,10 +71,12 @@ class MotionTemplateRepository
             'requires' => 0.66,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => [
-                'motion' => false,
-                'underlyingMotion' => false
-            ]
+            'debatable' => false
+
+//            'debatable' => [
+//                'motion' => false,
+//                'underlyingMotion' => false
+//            ]
         ],
 
         [
@@ -85,10 +88,12 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => true,
-            'debatable' => [
-                'motion' => true,
-                'underlyingMotion' => false
-            ]
+            'debatable' => true
+//
+//            'debatable' => [
+//                'motion' => true,
+//                'underlyingMotion' => false
+//            ]
         ],
 
         [
@@ -99,14 +104,16 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => [
-                'motion' => true,
-                'underlyingMotion' => true
-            ],
-            'reconsiderable' => [
-                'affirmative' => true,
-                'negative' => false,
-            ]
+            'debatable' => true
+//
+//            'debatable' => [
+//                'motion' => true,
+//                'underlyingMotion' => true
+//            ],
+//            'reconsiderable' => [
+//                'affirmative' => true,
+//                'negative' => false,
+//            ]
         ],
 
         [
@@ -119,14 +126,16 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => [
-                'motion' => false,
-                'underlyingMotion' => false
-            ],
-            'reconsiderable' => [
-                'affirmative' => false,
-                'negative' => true,
-            ]
+            'debatable' => false
+//
+//            'debatable' => [
+//                'motion' => false,
+//                'underlyingMotion' => false
+//            ],
+//            'reconsiderable' => [
+//                'affirmative' => false,
+//                'negative' => true,
+//            ]
         ],
 
 
@@ -138,10 +147,12 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => [
-                'motion' => false,
-                'underlyingMotion' => true
-            ],
+            'debatable' => false
+//
+//            'debatable' => [
+//                'motion' => false,
+//                'underlyingMotion' => false
+//            ],
         ],
 
 
