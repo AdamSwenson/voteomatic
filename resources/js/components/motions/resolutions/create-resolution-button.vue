@@ -13,7 +13,9 @@ export default {
     data: function () {
         return {
             label : "Create resolution",
-            styling : "  btn-outline-primary "
+            styling : "  btn-outline-primary ",
+            //dev added in VOT-288 to get rid of warning that icon not defined during render
+            icon: ''
 
         }
     },

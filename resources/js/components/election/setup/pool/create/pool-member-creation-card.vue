@@ -74,7 +74,6 @@ export default {
         }
     },
 
-    asyncComputed: {},
 
     computed: {
         buttonLabel: function () {

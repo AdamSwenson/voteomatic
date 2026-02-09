@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\ElectionPermalockException;
 use App\Models\Assignment;
 use App\Models\Motion;
 use App\Models\ResourceLink;
@@ -98,7 +99,10 @@ class Meeting extends Model
         'info->candidateFields',
 
         //dev deprecated after VOT-177
-        'info->is_results_available'
+        'info->is_results_available',
+
+        /** Whether the election can be reopened for voting */
+        'is_permalocked'
     ];
 
     protected $casts = [
@@ -257,6 +261,16 @@ class Meeting extends Model
      */
     public function openVoting()
     {
+        //Added VOT-286
+        $settings = $this->getMasterSettingStore();
+        if(! is_null($settings)){
+            //check whether the meeting could be
+            if($settings->getSetting('permalock_election') === true && $this->is_permalocked === true){
+                throw new ElectionPermalockException();
+            }
+        }
+
+
         $this->phase = 'voting';
 
         //dev Remove after VOT-177
@@ -323,6 +337,23 @@ class Meeting extends Model
         $this->save();
     }
 
+    /* =======================
+    Settings
+    ======================= */
+    /**
+     * Returns the master settings store.
+     * VOT-272: NOT SURE WHY DEPRECATED OR WHAT TO USE INSTEAD
+     * @deprecated
+     * @return mixed
+     */
+    public function getMasterSettingStore()
+    {
+        return SettingStore::where('meeting_id', $this->id)
+            ->where('is_meeting_master', true)
+            ->first();
+
+    }
+
 
     /* =======================
         Relationships
@@ -352,9 +383,14 @@ class Meeting extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * Returns all associated settings stores
+     * Changed to hasMany from hasOne in VOT-272
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function settingStore()
     {
-        return $this->hasOne(SettingStore::class);
+        return $this->hasMany(SettingStore::class);
     }
 
 
@@ -422,17 +458,6 @@ class Meeting extends Model
 //            ->first();
     }
 
-    /**
-     * @deprecated
-     * @return mixed
-     */
-    public function getMasterSettingStore()
-    {
-        return SettingStore::where('meeting_id', $this->id)
-            ->where('is_meeting_master', true)
-            ->first();
-
-    }
 
     /**
      * Creates an entry in the assignments table

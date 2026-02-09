@@ -108,7 +108,8 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         showReleaseButton: function () {
             if (!isReadyToRock(this.meeting)) return false;
             return this.meeting.isComplete && !this.isVotingAvailable && !this.isResultsAvailable;
@@ -121,7 +122,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {}
 

@@ -24,13 +24,17 @@ export default {
 
     data: function () {
         return {
+            icon : '',
             styling: "btn btn-danger ",
             modalId : 'deleteMotionModal',
             ariaDisabled : false
 
         }
     },
-    asyncComputed: {
+
+
+    computed: {
+    // asyncComputed: {
         label : function(){
             if(isReadyToRock(this.motion) && this.motion.type === 'proposition') return  "Delete proposition";
             return  "Delete motion";
@@ -39,7 +43,6 @@ export default {
 
     },
 
-    computed: {},
     methods: {
     //     handleClick: function () {
     //

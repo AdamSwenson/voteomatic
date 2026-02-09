@@ -6,16 +6,6 @@
             {{ meetingDate }}
         </div>
 
-<!--        <div class="card-body">-->
-<!--            <div class="card-text">-->
-<!--                <ul class="list-group list-group-flush">-->
-
-<!--                    <motion-select-area :motion="motion"></motion-select-area>-->
-
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-
         <div class="card-body">
             <div class="card-text">
                 <ul class="list-group list-group-flush">
@@ -29,7 +19,6 @@
             </div>
 
             <end-voting-modal></end-voting-modal>
-
         </div>
 
     </div>
@@ -45,12 +34,17 @@ import MeetingMixin from '../../mixins/meetingMixin';
 import MotionMixin from '../../mixins/motionStoreMixin';
 
 import motionObjectMixin from "../../mixins/motionObjectMixin";
+import AbortVotingButton from "./abort-voting-button.vue";
+import AbortVotingModal from "./abort-voting-modal.vue";
+
 export default {
     name: "motions-card",
-    components: {EndVotingModal, MotionSelectArea, },
+    components: {AbortVotingModal, AbortVotingButton, EndVotingModal, MotionSelectArea,},
     mixins: [MotionMixin, MeetingMixin, motionObjectMixin],
 
-    asyncComputed: {
+
+    computed: {
+        // asyncComputed: {
         motions: function () {
             let m = this.$store.getters.getStoredMotions;
             if (_.isUndefined(m)) return [];

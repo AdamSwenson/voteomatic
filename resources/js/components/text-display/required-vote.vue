@@ -23,6 +23,8 @@ name: "required-vote",
                     return "two-thirds";
                     break;
             }
+
+            return this.motion.requires * 100 + "%";
         }
     }
 }

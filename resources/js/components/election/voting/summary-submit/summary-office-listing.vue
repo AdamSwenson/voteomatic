@@ -13,7 +13,7 @@
                 <li v-for="c in selectedCandidates"
                     :key="c.id"
                     v-bind:class="styling"
-                >{{ c.nameAndInfo }}
+                ><span v-html="c.nameAndInfo"></span>
                 </li>
             </ul>
 
@@ -37,7 +37,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         officeName: function () {
             if (!isReadyToRock(this.motion)) return '';
             return this.motion.content;
@@ -74,7 +76,6 @@ return this.$store.getters.showUnderSelectionWarningForMotion(this.motion);
         }
     },
 
-    computed: {},
 
     methods: {}
 

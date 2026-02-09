@@ -14,14 +14,11 @@ export default {
     data: function () {
         return {
             label: 'Copy all receipts to clipboard',
-            styling: ' btn-primary '
+            styling: ' btn-primary text-light',
+            icon: false
         }
     },
 
-    asyncComputed: {
-
-
-    },
 
     computed: {},
 

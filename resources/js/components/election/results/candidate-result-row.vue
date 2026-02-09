@@ -41,7 +41,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         badgeShown: function () {
             if (this.isWinner) return WinnerBadge;
             if (this.isRunoff) return RunoffBadge;
@@ -122,7 +124,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 

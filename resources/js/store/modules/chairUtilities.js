@@ -1,5 +1,7 @@
 import Motion from "../../models/Motion";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import * as routes from "../../routes";
+import {idify} from "../../utilities/object.utilities";
 
 const state = {
     currentVotesCast: null,
@@ -45,7 +47,7 @@ const actions = {
                     commit('setCurrentVotesCast', count);
                 }
                 let members = getters.getMemberCount;
-                if (! isReadyToRock(members) || pusherEvent.totalMembers > members) {
+                if (!isReadyToRock(members) || pusherEvent.totalMembers > members) {
                     //We probably will only hit this the first time we get a vote
                     //though it is possible someone joins and votes right away
                     commit('setNumberOfMembers', pusherEvent.totalMembers)
@@ -70,6 +72,32 @@ const actions = {
             //people present
         }));
     },
+
+    /**
+     * Sends request to server to use pusher to force all connected users
+     * to reload the page
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param meeting
+     * @returns {Promise<unknown>}
+     */
+    forceUsersToReload({dispatch, commit, getters}, meeting) {
+        let meetingId = idify(meeting);
+        return new Promise(((resolve, reject) => {
+
+            let url = routes.meetings.chair.forceUsersToReload(meetingId);
+            return axios.post(url, {}).then((response) => {
+                return resolve();
+            }).catch(function (error) {
+                // error handling
+                if (error.response) {
+                    dispatch('showServerProvidedMessage', error.response.data);
+                }
+            });
+
+        }))
+    }
 
     // loadMemberCount({dispatch, commit, getters}, meeting) {
     //     return new Promise(((resolve, reject) => {

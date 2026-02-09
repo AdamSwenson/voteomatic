@@ -6,22 +6,24 @@ import ModeMixin from "../../../../../mixins/modeMixin";
 import MotionMixin from "../../../../../mixins/motionStoreMixin";
 import ChairMixin from "../../../../../mixins/chairMixin";
 import motionObjectMixin from "../../../../../mixins/motionObjectMixin";
+
 export default {
     name: "delete-office-modal",
-    extends : DeleteModalParent,
+    extends: DeleteModalParent,
     props: [],
 
-    data: function(){
-return {
-    eventType: 'office',
-    subsidiaryType: 'candidate lists'
-}; },
+    data: function () {
+        return {
+            eventType: 'office',
+            subsidiaryType: 'candidate lists'
+        };
+    },
 
     mixins: [MeetingMixin, ModeMixin, MotionMixin, ChairMixin, motionObjectMixin],
 
     computed: {
 
-        modalId : function(){
+        modalId: function () {
             return "deleteOfficeModal"
         },
 

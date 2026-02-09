@@ -76,7 +76,9 @@ export default {
     // },
 
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         electionName: function () {
             if (!isReadyToRock(this.meeting)) return "Election setup"
             return this.meeting.name;
@@ -112,7 +114,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {},
 

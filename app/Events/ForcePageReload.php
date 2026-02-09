@@ -16,7 +16,7 @@ class ForcePageReload implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels, ChannelDefinitionTrait;
 
-    public mixed $meeting;
+    protected $meeting;
 
     /**
      * Create a new event instance.

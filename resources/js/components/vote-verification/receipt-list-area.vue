@@ -33,7 +33,8 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
@@ -48,7 +49,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
 

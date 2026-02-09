@@ -20,7 +20,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         content : function(){
             return this.office.content;
         },
@@ -45,9 +47,6 @@ export default {
         }
     },
 
-    computed: {
-
-    },
 
     methods: {
         handleClick : function(){

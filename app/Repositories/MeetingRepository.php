@@ -21,6 +21,7 @@ class MeetingRepository implements IMeetingRepository
     {
 
         $this->ltiRepo = app()->make(ILTIRepository::class);
+        $this->settingsRepo = app()->make(ISettingsRepository::class);
     }
 
 
@@ -93,6 +94,9 @@ class MeetingRepository implements IMeetingRepository
         //dev To remove after VOT-177
         //Prevent users from voting by default
         $meeting->is_voting_available = false;
+
+        //Added in VOT-272
+        $this->settingsRepo->createMeetingMaster($meeting);
 
         $meeting->save();
         return $meeting;

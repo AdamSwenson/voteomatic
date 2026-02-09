@@ -1,7 +1,9 @@
 <script>
 // Cool way to render Vue components from HTML Strings
 // https://medium.com/haiiro-io/compile-markdown-as-vue-template-on-nuxt-js-1c606c15731c
-import VueWithCompiler from "vue/dist/vue.esm";
+// import VueWithCompiler from "vue/dist/vue.esm";
+// import VueWithCompiler from 'vue';
+import {compile} from "vue";
 
 export default {
     name: "component-compiler-parent",
@@ -32,7 +34,9 @@ export default {
     methods: {
         updateRender() {
             let html = '<div class="rezzie">' + this.html + '</div>';
-            const compiled = VueWithCompiler.compile(html);
+            const compiled = compile(html);
+
+            // const compiled = VueWithCompiler.compile(html);
             this.templateRender = compiled.render;
             this.$options.staticRenderFns = [];
             for (const staticRenderFunction of compiled.staticRenderFns) {

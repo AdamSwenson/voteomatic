@@ -58,7 +58,7 @@ import MeetingMixin from "../../../mixins/meetingMixin";
 import MotionStoreMixin from "../../../mixins/motionStoreMixin";
 import * as routes from "../../../routes";
 import CandidateResultRow from "./candidate-result-row";
-import PropositionResultRow from "./proposition-result-row";
+// import PropositionResultRow from "./proposition-result-row";
 import RequiredVoteBadge from "../../motions/badges/required-vote-badge";
 import RequiredVote from "../../text-display/required-vote";
 import PropositionDefeatedBadge from "./proposition-defeated-badge";
@@ -71,7 +71,8 @@ export default {
     name: "proposition-results-card",
     components: {
         PropositionApprovedBadge,
-        PropositionDefeatedBadge, RequiredVote, RequiredVoteBadge, PropositionResultRow
+        PropositionDefeatedBadge, RequiredVote, RequiredVoteBadge,
+        // PropositionResultRow
     },
     props: ['motion'],
 
@@ -82,7 +83,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         results: function () {
             if (isReadyToRock(this.motion)) {
@@ -197,7 +200,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {},
 

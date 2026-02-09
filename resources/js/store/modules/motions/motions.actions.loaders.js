@@ -13,9 +13,10 @@ const actions = {
     */
 
     /**
-     * Gets the motion from the server
+     * Gets the motion from the server. Does not set as current
      *
-     * //dev Does this actually work? Shouldn't it add to store too?
+     * //dev Seemed to not be used so repurposed in VOT-308
+     *
      *
      * @param dispatch
      * @param commit
@@ -25,22 +26,46 @@ const actions = {
      */
     loadMotion({dispatch, commit, getters}, motion) {
         return new Promise(((resolve, reject) => {
+            let motionId = idify(motion);
+
             //send to server
-            let url = routes.motions.resource(motion.id);
-            return Vue.axios.get(url)
+            let url = routes.motions.resource(motionId);
+            return axios.get(url)
                 .then((response) => {
                     let d = response.data;
                     let motion = MotionObjectFactory.make(d);
-                    // let motion = new Motion(d);
-                    // let motion = new Motion(d.id, d.name, d.date);
-                    dispatch('setMotion', motion);
-                    resolve()
+                    commit('addMotionToStore', motion);
+                    return resolve(motion)
                 })
                 .catch(function (error) {
                     // error handling
                     if (error.response) {
                         dispatch('showServerProvidedMessage', error.response.data);
                     }
+                });
+        }));
+    },
+
+
+    /**
+     * Gets a fresh copy of the motion from the server.
+     * Does not set it as current, just updates it in store
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param motion Motion object or motion id
+     * @returns {Promise<unknown>}
+     */
+    reloadMotion({dispatch, commit, getters}, motion) {
+        let motionId = idify(motion);
+        return new Promise(((resolve, reject) => {
+            let url = routes.motions.resource(motionId);
+            return axios.get(url)
+                .then((response) => {
+                    let d = response.data;
+                    let motion = MotionObjectFactory.make(d);
+                    dispatch('replaceMotionInStore', motion);
+                    return resolve();
                 });
         }));
     },
@@ -60,7 +85,7 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.castVotes.getVotedMotions(meetingId);
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     _.forEach(response.data, (d) => {
 
@@ -90,7 +115,7 @@ const actions = {
 
             //send to server
             let url = routes.motions.getAllMotionsForMeeting(idify(meeting));
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     //Need to do this so that we don't have to
                     //check motions for their meetings every time
@@ -123,12 +148,12 @@ const actions = {
         return new Promise(((resolve, reject) => {
             //send to server
             let url = routes.motions.templates();
-            return Vue.axios.get(url)
+            return axios.get(url)
                 .then((response) => {
                     commit('setMotionTemplates', response.data);
 
                     let url2 = routes.motions.types();
-                    return Vue.axios.get(url2)
+                    return axios.get(url2)
                         .then((response) => {
                             //todo Figure out easiest way to use loaded types. If not easy, then ignore. The point is to make it easier to keep definitions on client and server in sync.
 

@@ -15,8 +15,8 @@
 
                 <voteomatic></voteomatic>
 
-            </div>
 
+            </div>
 {{--        </div>--}}
 {{--    </div>--}}
 

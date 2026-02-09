@@ -1,7 +1,7 @@
 let _ = require('lodash');
 // const {PoolMember} = require("../../../resources/js/models/PoolMember");
 
-import PoolMember from "../../../resources/js/models/PoolMember";
+import PoolMember from "../../../../resources/js/models/PoolMember";
 
 test('get candidate info fields', () => {
 

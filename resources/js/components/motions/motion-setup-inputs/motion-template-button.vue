@@ -20,7 +20,8 @@ export default {
 
     data: function () {
         return {
-           clicked : false
+           clicked : false,
+            icon: ''
         }
     },
 

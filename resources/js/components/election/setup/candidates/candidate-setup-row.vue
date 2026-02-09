@@ -1,8 +1,7 @@
 <template>
-    <!--    <li class="list-group-item"-->
-    <!--        v-if="showRow"-->
-    <!--    >-->
-    <a href="#" class="list-group-item list-group-item-action" v-if="showRow">
+
+<!--    Removed the href to keep from closing tab when clicked -->
+    <a  class="list-group-item list-group-item-action" v-if="showRow">
         <div class="personRow">
             <p>
                 <button class="btn "
@@ -41,7 +40,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         label: function () {
             if (this.isPool) {
                 return this.selected ? 'Selected' : 'Nominate';

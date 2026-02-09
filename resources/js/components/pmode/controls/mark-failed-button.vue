@@ -17,7 +17,6 @@ extends: buttonParent,
         }
     },
 
-    asyncComputed: {},
 
     computed: {},
 

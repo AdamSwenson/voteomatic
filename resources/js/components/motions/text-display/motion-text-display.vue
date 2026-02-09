@@ -57,7 +57,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         displayComponent: function () {
             if (isReadyToRock(this.motion)) {
@@ -81,40 +83,16 @@ export default {
                     return PlainTextPrimaryMotionTextDisplay;
                 }
 
-                //
-                //
-                //
-                // switch (this.motion) {
-                //     case this.isResolution && ! this.isAmendment:
-                //         //Motion is primary resolution
-                //         return ResolutionTextDisplay;
-                //         break;
-                //
-                //     case this.isResolution && this.isAmendment:
-                //         //Motion is an amendment to a resolution
-                //         return ResolutionAmendmentTextDisplay;
-                //         break;
-                //
-                //     case this.isAmendment:
-                //         //Motion is an amendment to a non-resolution motion
-                //         return RegularAmendmentTextDisplay;
-                //         break;
-                //
-                //     default:
-                //         return PlainTextPrimaryMotionTextDisplay;
-                //
-                // }
-
-
             }
-        }
+        },
 
-    },
-
-    computed: {
         styling: function () {
             if (isReadyToRock(this.motionStyle)) {
                 return this.motionStyle
+            }
+            //if no styling passed in from parent default to this
+            if(! this.isResolution){
+                return ''
             }
         }
     },

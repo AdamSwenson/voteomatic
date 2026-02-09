@@ -36,13 +36,14 @@
                                    :candidate="candidate"
                     ></candidate-row>
 
-                    <!--                Enable after VOT-60 is complete-->
-                    <candidate-row v-if="writeInCandidates.length > 0"
-                                   v-for="candidate in writeInCandidates"
-                                   :candidate="candidate"
-                                   :key="candidate.id"
-                    ></candidate-row>
-
+                    <div v-if="writeInCandidates.length > 0">
+                        <!--                Enable after VOT-60 is complete-->
+                        <candidate-row
+                            v-for="candidate in writeInCandidates"
+                            :candidate="candidate"
+                            :key="candidate.id"
+                        ></candidate-row>
+                    </div>
 
                     <overselection-warning></overselection-warning>
                 </div>
@@ -105,7 +106,8 @@ export default {
 
     data: function () {
         return {
-            randomizeCandidates: true
+            //Moved to use settings in VOT-272
+            // randomizeCandidates: true
         }
     },
 
@@ -120,7 +122,8 @@ export default {
     },
 
 
-    asyncComputed: {
+    computed: {
+        // asyncComputed: {
 
         hasUserVoted: function () {
             if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
@@ -156,6 +159,11 @@ export default {
                     let c = me.$store.getters.getCandidatesForOffice(me.motion);
                     if (me.randomizeCandidates) {
                         c = _.shuffle(c);
+                    } else {
+                        //VOT-272 Assuming that alphabetical is the opposite of random
+                        c = _.sortBy(c, [function (o) {
+                            return o.last_name;
+                        }]);
                     }
 
                     return c;
@@ -228,6 +236,20 @@ export default {
         },
 
         /**
+         * Whether to randomize the candidates as they are displayed.
+         * Returns true by default for backwards compatibility
+         * @version Added in VOT-272
+         * @returns {*|boolean}
+         */
+        randomizeCandidates: function () {
+            let setting = this.$store.getters.getSettings;
+            window.console.log('election-card', 'randomizeCandidates', 233, setting.settings.randomize_candidates);
+            return isReadyToRock(setting.settings.randomize_candidates) ? setting.settings.randomize_candidates : true;
+
+        },
+
+
+        /**
          * We make it look disabled when on the first in
          * the stack
          */
@@ -241,7 +263,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {
         handleNext: function () {

@@ -14,12 +14,14 @@ export default {
     data: function () {
         return {
             // modalId : 'recordAllSelectionsModal',
-
+icon: false,
             label: 'Record all selections'
         }
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         modalId : function(){
             //prevent from opening modal
             if(this.hasProblem) return '';
@@ -41,8 +43,6 @@ export default {
 
     },
 
-    computed: {
-    },
 
     methods: {
         handleClick: function(){

@@ -85,7 +85,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         /**
          * Hide the editing fields if no office is selected since
          * otherwise that seems confusing
@@ -96,7 +98,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {},
 

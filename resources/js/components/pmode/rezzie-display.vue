@@ -107,7 +107,8 @@ export default {
         //     }
     },
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         amendmentText: function () {
             if (isReadyToRock(this.motion)) return this.motion.formattedContent;
             return '';
@@ -195,9 +196,6 @@ export default {
         },
 
 
-    },
-
-    computed: {
         /**
          * id of body
          * @returns {string}

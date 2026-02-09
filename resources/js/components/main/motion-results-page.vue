@@ -13,20 +13,28 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col-lg-6 mb-4">
                             <blockquote>
-                                <motion-text-display :motion="motion"></motion-text-display>
+                                <motion-text-display :motion="motion" :motion-style="motionStyle"></motion-text-display>
                             </blockquote>
 
+                            <p class="text-lg-start text-sm-end ">
+
+                            <span class="me-2">
                             <required-vote-badge :motion="motion"></required-vote-badge>
-                            <debatable-badge :motion="motion"></debatable-badge>
+                            </span>
+
+                            <span class="me-2">
+                                <debatable-badge :motion="motion"></debatable-badge>
+                            </span>
                             <motion-type-badge :motion="motion"></motion-type-badge>
+                            </p>
                         </div>
 
-                        <div class="col">
-                            <div class="card-text">
+                        <div class="col-lg-6">
+                            <div class="card-text fw-bolder">
                                 <dl class="row">
-                                    <dt class="col-sm-3">Yays</dt>
+                                    <dt class="col-sm-3 ">Yays</dt>
                                     <dd class="col-sm-9">{{ yayCount }}</dd>
                                 </dl>
 
@@ -101,55 +109,31 @@ export default {
 
     computed: {
 
-
         routeName: function () {
             return this.$route.name;
-        }
-    },
-
-    asyncComputed: {
+        },
 
         passed: function () {
             if (_.isUndefined(this.isPassed) || _.isNull(this.isPassed)) return ' ----- '
 
             return this.isPassed ? 'PASSED' : 'FAILED';
 
-            // let results = this.$store.getters.getPassed;
-            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ' ----- '
-            //
-            // return this.results ? 'PASSED' : 'FAILED';
-
         },
 
-
-        // yayCount: function () {
-        //     return this.$store.getters.getYayCount
-        // },
-        //
-        // nayCount: function () {
-        //     return this.$store.getters.getNayCount
-        // },
-        //
-        // results : function(){
-        //     return this.$store.getters.getPassed;
-        // },
 
         resultStyle: function () {
             //nb results will be a boolean
             if (!isReadyToRock(this.isPassed)) return '';
             if (this.isPassed) return "bg-success"
             return "bg-danger";
-
-            // if (_.isUndefined(this.results) || _.isNull(this.results)) return ''
-            //
-            // if (this.results) return "bg-success"
-            //
-            // return "bg-danger";
         },
 
-        // totalVotes: function () {
-        //     return this.$store.getters.getTotalVoteCount;
-        // }
+        motionStyle: function(){
+            if (! this.isResolution){
+                return 'border border-1 p-4 fs-3'
+            }
+
+        },
     },
 
     methods: {

@@ -8,8 +8,8 @@
  */
 module.exports = {
 
-
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
 
         motionPendingSecond: {
             get: function () {

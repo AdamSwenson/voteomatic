@@ -34,7 +34,8 @@ props : [],
     return {}
 },
 
-asyncComputed : {
+    computed: {
+// asyncComputed : {
     title: function(){
         if(this.isElection) return "Voters";
         if(this.isMeeting) return "Members";
@@ -45,7 +46,6 @@ asyncComputed : {
     }
 },
 
-computed : {},
 
 methods : {}
 

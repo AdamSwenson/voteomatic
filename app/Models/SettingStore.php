@@ -10,11 +10,20 @@ class SettingStore extends Model
     use HasFactory;
 
     const VALID_ELECTION_SETTINGS = [
+        /** Whether candidates appear in random order or in stupid stupid stupid unfair alphabetical order */
+        'randomize_candidates',
+
         /** Whether members have the option of directly making nominations for offices */
         'members_make_nominations',
 
         /** Whether to show vote counts in the results. If false, only shows winners  */
         'show_vote_counts',
+
+        /** Whether to return the content of ballots when a user enters a receipt */
+        'reveal_ballot_contents',
+
+        /** Whether the election can be permanently locked so no votes can happen */
+        'permalock_election'
     ];
 
 
@@ -86,6 +95,24 @@ class SettingStore extends Model
             'displayDescription' => "Whether members have the option of making nominations directly",
             'default' => true,
         ],
+
+        'randomize_candidates' => [
+            'displayName' => "Randomize candidates",
+            'displayDescription' => "Whether candidates appear in random order on the ballot",
+            'default' => true,
+        ],
+
+        'reveal_ballot_contents' => [
+            'displayName' => "Reveal ballot contents",
+            'displayDescription' => "Whether the user sees whom they voted for when they validate a receipt",
+            'default' => false,
+        ],
+        'permalock_election' => [
+            'displayName' => "Allow election to be permanently locked",
+            'displayDescription' => "Enables the ability to permanently prevent voting from restarting and removes all records of who voted.",
+            'default' => false,
+        ]
+
     ];
 
     /**
@@ -106,6 +133,9 @@ class SettingStore extends Model
 
         //Election specific
         'members_make_nominations',
+        'randomize_candidates',
+        'reveal_ballot_contents',
+        'permalock_election',
     ];
 //
 //    /**
@@ -150,6 +180,9 @@ class SettingStore extends Model
 
         //Election specific
         'settings->members_make_nominations',
+        'settings->randomize_candidates',
+        'settings->reveal_ballot_contents',
+        'settings->permalock_election',
     ];
 
     protected $casts = [
@@ -191,7 +224,6 @@ class SettingStore extends Model
      */
     public function setSetting($settingName, $value)
     {
-
         $this->update(["settings->$settingName" => $value]);
         $this->save();
     }

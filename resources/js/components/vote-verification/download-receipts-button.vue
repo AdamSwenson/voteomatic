@@ -12,24 +12,24 @@ export default {
 
     data: function () {
         return {
-            label : 'Download all receipts',
-            styling: ' btn-primary '
+            label: 'Download all receipts',
+            styling: ' btn-primary text-light',
+            icon: false
         }
     },
 
-    asyncComputed: {
+    computed: {
         filename: function () {
             return `${this.meetingDate} ${this.meetingName} vote receipts.txt`;
 
         },
     },
 
-    computed: {},
 
     methods: {
-handleClick: function(){
-    this.downloadFile();
-},
+        handleClick: function () {
+            this.downloadFile();
+        },
         downloadFile: function () {
             let element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.text));

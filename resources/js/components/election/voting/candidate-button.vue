@@ -23,7 +23,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         label: function(){
             return  this.selected ? 'Selected'  : 'Select';
         },
@@ -59,7 +61,6 @@ export default {
         },
     },
 
-    computed: {},
 
     methods: {
 

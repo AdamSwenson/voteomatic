@@ -22,18 +22,18 @@ export default {
         return {
 
             procedural: {
-                styling: 'bg-secondary',
+                styling: 'bg-secondary text-light',
                 text: 'Procedural'
             },
 
             amendment: {
-                styling: 'bg-warning',
+                styling: 'bg-info text-light ',
                 text: 'Amendment'
             },
 
 
             secondaryAmendment: {
-                styling: 'bg-warning',
+                styling: 'bg-info text-light ',
                 text: 'Amendment - secondary'
             }
 
@@ -41,8 +41,9 @@ export default {
         }
     },
 
-    asyncComputed: {
+    // asyncComputed: {
 
+    computed: {
 
         styling: function () {
             //stupid async

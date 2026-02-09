@@ -4,6 +4,7 @@
     <button
         v-bind:class="styling"
         v-on:click="handleClick"
+        tabindex="0"
         >Vote</button>
     </div>
 
@@ -23,9 +24,8 @@ export default {
         }
     },
 
-    computed: {},
+    computed: {
 
-    asyncComputed: {
         hasVotedOnCurrentMotion: function () {
             return this.$store.getters.hasVotedOnCurrentMotion;
         },
@@ -37,7 +37,10 @@ export default {
                     return this.baseStyle + '  btn-warning '
                 }
 
-                return this.baseStyle + ' btn-outline-warning ';
+                return this.baseStyle + '  btn-warning '
+
+                //This got too light after removed the background
+                // return this.baseStyle + ' btn-outline-warning ';
 
             },
             default: '' //this.baseStyle

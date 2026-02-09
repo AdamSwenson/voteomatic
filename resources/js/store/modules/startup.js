@@ -36,11 +36,14 @@ const actions = {
                             dispatch('loadMotionsUserHasVotedUpon', meeting.id).then(function () {
 
                                 //These can happen in parallel
-                                dispatch('loadSettings', meeting.id).then(function (){});
+                                dispatch('loadSettings', meeting.id).then(function () {
+                                });
 
-                                dispatch('loadResultsForAllMeetingMotions').then(function () {});
+                                dispatch('loadResultsForAllMeetingMotions').then(function () {
+                                });
 
-                                dispatch('loadMotionTypesAndTemplates').then(function () {});
+                                dispatch('loadMotionTypesAndTemplates').then(function () {
+                                });
 
                             });
 
@@ -58,6 +61,9 @@ const actions = {
         let meeting = getters.getActiveMeeting;
         let channel = `meeting.${meeting.id}`;
         Echo.private(channel)
+            .listen('ForcePageReload', (e) => {
+                dispatch('handleForcePageReload');
+            })
             .listen("GeneralNotification", (e) => {
                 dispatch('handlePusherGeneralNotification', e);
             })
@@ -80,13 +86,23 @@ const actions = {
             })
             .listen('NewCurrentMotionSet', (e) => {
                 //In some cases the chair may select a motion from the
-                //home page. When that heppens we need to force everyone onto
+                //home page. When that happens we need to force everyone onto
                 //a new motion
                 dispatch('handleNewCurrentMotionSetMessage', e);
+            })
+
+            .listen('RequestClientReloadMotion', (e) => {
+                window.console.log('startup', 'Received RequestClientReloadMotion', 94, e);
+                dispatch('reloadMotion', e.motionId);
+            })
+            .listen('RequestClientSetCurrentMotionById', (e) => {
+                window.console.log('startup', 'Received RequestClientSetCurrentMotionById', 94, e);
+                dispatch('handleSetCurrentMotionRequest', e);
             })
             .listen('VotingOnMotionOpened', (e) => {
                 dispatch('handleVotingOnMotionOpenedMessage', e);
             });
+
 
         window.console.log('Meeting listeners initialized for ', channel);
 

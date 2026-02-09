@@ -41,7 +41,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
 
         results: function () {
             if (isReadyToRock(this.motion)) {
@@ -58,7 +60,7 @@ export default {
             // let url = routes.election.getResults(motionId);
             //
             // return new Promise(((resolve, reject) => {
-            //     return Vue.axios.get(url).then((response) => {
+            //     return axios.get(url).then((response) => {
             //         return resolve(response.data);
             //     });
             // }));
@@ -118,7 +120,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {},
 

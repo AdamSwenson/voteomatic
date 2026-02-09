@@ -91,32 +91,32 @@ class MotionTemplateRepository
         ],
 
         [
-            'name' => 'Reconsider (with notice)',
+            'name' => 'Reconsider',
             'content' => "That the body reconsider the motion that ",
-            'description' => "",
+            'description' => "Whether to reopen a decision that has already been voted upon. This can only be made by a member who voted with the prevailing side.",
             'requires' => 0.5,
             'type' => 'procedural-main',
             'amendable' => false
         ],
 
-        [
-            'name' => 'Reconsider (without notice)',
-            'content' => "That the body reconsider the motion that ",
-            'description' => "",
-            'requires' => 0.66,
-            'type' => 'procedural-main',
-            'amendable' => false
-        ]
     ];
 
 
     static public $introTemplates = [
-
-        ['name' => 'z1 RolePlayMain',
-            'content' => "That tacos be declared the official food of the CSUN Faculty.",
-            'requires' => 0.5,
-            'amendable' => true
+        //Going to use this for VOT-306 and CSUN specific motions
+        ['name' => 'Request Roll Call Vote (CSUN-specific)',
+            'content' => "That the vote on the pending question(s) be taken via roll call. The vote of each senator will be recorded in the minutes.",
+            'requires' => 0.2,
+            'amendable' => true,
+            'debatable' => false,
         ],
+
+
+//        ['name' => 'z1 RolePlayMain',
+//            'content' => "That tacos be declared the official food of the CSUN Faculty.",
+//            'requires' => 0.5,
+//            'amendable' => true
+//        ],
 //        ['name' => 'z2 RolePlayAmendment1',
 //            'content' => "That burritos be declared the official food of the CSUN Faculty.",
 //            'requires' => 0.5,
@@ -127,12 +127,12 @@ class MotionTemplateRepository
 //            'requires' => .5,
 //            'amendable' => false],
 
-
-        ['name' => 'z4 RolePlayBadAmendment',
-            'content' => "That burritos, hamburgers, and French fries be declared the official food of the CSUN Faculty.",
-            'requires' => 0.5,
-            'amendable' => true],
-
+//
+//        ['name' => 'z4 RolePlayBadAmendment',
+//            'content' => "That burritos, hamburgers, and French fries be declared the official food of the CSUN Faculty.",
+//            'requires' => 0.5,
+//            'amendable' => true],
+//
 
     ];
 

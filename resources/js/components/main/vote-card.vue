@@ -29,7 +29,6 @@ components : {VotePage, ElectionCard},
         return {}
     },
 
-    asyncComputed: {},
 
     computed: {},
 

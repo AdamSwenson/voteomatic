@@ -64,13 +64,15 @@ export default {
         }
     },
 
-    asyncComputed: {
-        currentFields: function () {
-            return _.concat(this.universalFields, this.meeting.candidateFields);
-        }
-    },
 
     computed: {
+    // asyncComputed: {
+        currentFields: function () {
+            return _.concat(this.universalFields, this.meeting.candidateFields);
+        },
+    // },
+
+    // computed: {
         buttonLabel: function () {
             if (this.showFields) {
                 return 'Done';

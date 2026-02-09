@@ -2,9 +2,11 @@
 
 namespace Tests\Unit\Models;
 
+use App\Exceptions\ElectionPermalockException;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\User;
+use App\Repositories\SettingsRepository;
 use Tests\TestCase;
 
 class MeetingTest extends TestCase
@@ -22,7 +24,8 @@ class MeetingTest extends TestCase
     }
 
     /** @test */
-    public function isMeetingOwner(){
+    public function isMeetingOwner()
+    {
         //prep
         $owner = User::factory()->create();
         $nonOwner = User::factory()->create();
@@ -128,6 +131,34 @@ class MeetingTest extends TestCase
 
         $this->assertEquals($user->id, $this->obj->owner_id, "Sets owner");
 
+    }
+
+
+    // Election ===================
+
+    /** @test */
+    public function openVotingFailsIfPermalocked()
+    {
+        $settingsRepo = new SettingsRepository();
+        $settingsRepo->createMeetingMaster($this->obj);
+
+        $this->obj->getMasterSettingStore()->setSetting('permalock_election', true);
+        $this->obj->is_permalocked = true;
+        $this->obj->save();
+
+        //call
+        $this->expectException(ElectionPermalockException::class);
+        $this->obj->openVoting();
+
+    }
+
+    /** @test */
+    public function openVotingWorksIfNoSettingStore()
+    {
+        //call
+        $this->obj->openVoting();
+
+        $this->assertEquals($this->obj->phase, 'voting');
     }
 
 

@@ -40,7 +40,8 @@
 
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+    // asyncComputed: {
         /**
          * In most cases will return this.motion.content.
          *

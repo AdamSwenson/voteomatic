@@ -57,10 +57,11 @@ export default {
         VoteCountAlert,
         MessageArea,
         ChairMotionSecondModal,
-        MotionInOrderModal, MotionSecondModal, ChairIndicator, RefreshButton, RouterTabs, VotePage
+        MotionInOrderModal, MotionSecondModal,
+        ChairIndicator, RefreshButton, RouterTabs, VotePage
     },
 
-    mixins: [MeetingMixin, NavigationMixin, ChairMixin],
+    mixins: [MeetingMixin,  ChairMixin, ],// NavigationMixin,],
 
     data: function () {
         return {

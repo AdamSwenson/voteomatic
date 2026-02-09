@@ -27,14 +27,15 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         content : function(){
             if(isReadyToRock(this.motion)) return this.motion.content;
             return '';
         }
     },
 
-    computed: {},
 
     methods: {}
 

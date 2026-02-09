@@ -116,7 +116,8 @@ export default {
         }
     },
 
-    asyncComputed: {
+
+    computed: {
 
         cardTitle: {
             get: function () {
@@ -188,7 +189,6 @@ export default {
 
     },
 
-    computed: {},
 
     methods: {
 

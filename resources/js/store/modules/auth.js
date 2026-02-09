@@ -27,7 +27,7 @@ const actions = {
     logout({dispatch, commit, getters},) {
         return new Promise(((resolve, reject) => {
             let url = routes.auth.logout();
-            return Vue.axios.post(url,)
+            return axios.post(url,)
                 .then((response) => {
                     let url2 = normalizedRouteRoot();
                     window.open(url2, '_self');

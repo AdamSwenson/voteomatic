@@ -49,11 +49,13 @@ export default {
     props: [
 
         'motion',
+
         /** When the display is used during the setup process
          * we need to override the usual way of getting altered and original text
          * that is defined in the mixin. That is what these do*/
         'amendmentTextForSetup', 'originalTextForSetup',
-    'truncateResolutions'],
+
+        'truncateResolutions'],
 
 
 
@@ -63,9 +65,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-
-    },
 
     computed: {}
 

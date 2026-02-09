@@ -1,6 +1,7 @@
 module.exports = {
 
-    asyncComputed: {
+    computed: {
+        // asyncComputed: {
 
         mode: function () {
             return this.$store.getters.getMode;
@@ -41,12 +42,10 @@ module.exports = {
 
         subsidiaryTypeCapitalized: function () {
             return _.capitalize(this.subsidiaryType);
-        }
 
-    },
+        },
 
 
-    computed: {
         showArea: {
             get: function () {
                 return this.$store.getters.showArea;
@@ -60,7 +59,7 @@ module.exports = {
         setMeeting: function () {
             this.$store.dispatch('setMeetingMode').then(() => {
                 // this.$store.dispatch('loadAllEvents').then(() => {
-                    window.console.log('meeting mode set');
+                window.console.log('meeting mode set');
                 // });
             });
         },
@@ -68,8 +67,8 @@ module.exports = {
         setElection: function () {
             this.$store.dispatch('setElectionMode').then(() => {
                 // let election = this.$store.getters.getActiveMeeting;
-                    // .then(() => {
-                    window.console.log('election mode set ', this.eventType);
+                // .then(() => {
+                window.console.log('election mode set ', this.eventType);
                 // });
             });
         },

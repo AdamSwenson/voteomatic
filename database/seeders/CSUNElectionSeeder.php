@@ -88,6 +88,7 @@ public static $electionProps =  [
             'is_resolution' => true,
         ]
     ];
+    public $election;
 
     /**
      * Run the database seeds.
@@ -98,10 +99,10 @@ public static $electionProps =  [
     {
         $this->faker = Factory::create();
 
-        $election = Meeting::factory()->election()->create(self::$electionProps);
+        $this->election = Meeting::factory()->election()->create(self::$electionProps);
 
         foreach(self::$singleChoiceOffices as $office){
-            $office['meeting_id'] = $election->id;
+            $office['meeting_id'] = $this->election->id;
             Motion::factory()
                 ->electedOfficeSingleChoice()
                 ->create($office);
@@ -109,17 +110,17 @@ public static $electionProps =  [
 
 
         foreach(self::$multiwinnerOffices as $office){
-            $office['meeting_id'] = $election->id;
+            $office['meeting_id'] = $this->election->id;
             Motion::factory()
                 ->electedOffice()
                 ->create($office);
         }
 
         foreach (self::$propositions as $p){
-            $p['meeting_id'] = $election->id;
+            $p['meeting_id'] = $this->election->id;
             Motion::factory()->proposition()->create($p);
         }
 
-        $this->command->line("\n Fake CSUN election (no candidates): {$election->id}");
+        $this->command->line("\n Fake CSUN election (no candidates): {$this->election->id}");
     }
 }

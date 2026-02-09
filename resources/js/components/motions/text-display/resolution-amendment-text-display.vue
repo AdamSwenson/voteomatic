@@ -1,8 +1,8 @@
 <template>
 
-<!--    <div class="resolution-amendment-text-display"-->
-<!--         v-html="taggedNewText"-->
-<!--    ></div>-->
+    <div class="resolution-amendment-text-display"
+         v-html="taggedNewText"
+    ></div>
 
 
 </template>
@@ -47,28 +47,26 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
 
         taggedNewText: function () {
+            try {
 
-            //dev
-            // return this.amendmentText;
+                if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
+                if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
+                let me = this;
 
-
-            if (_.isUndefined(this.originalText) || _.isNull(this.originalText)) return ''
-            if (_.isUndefined(this.amendmentText) || _.isNull(this.amendmentText)) return ''
-            let me = this;
-
-            let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
-            return diffHtml;
-            // return diffHtml.innerHTML;
-
-            // return getTaggedChangesOfHtml(this.originalText, this.amendmentText);
+                let diffHtml = HtmlDiff.execute(this.originalText, this.amendmentText);
+                return diffHtml;
+                // return diffHtml.innerHTML;
+            } catch (err) {
+                window.console.log('resolution-amendment-text-display Error', 'taggedNewText', 68, err);
+            }
         }
 
     },
 
-    computed: {}
 
 }
 </script>

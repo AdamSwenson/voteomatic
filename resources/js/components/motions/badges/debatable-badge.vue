@@ -1,7 +1,7 @@
 <template>
                     <span
                         v-if="show"
-                        class="badge bg-warning"
+                        class="badge bg-warning "
                     >{{ labelText }}</span>
 
 </template>
@@ -21,7 +21,9 @@ data : function(){
     return {}
 },
 
-asyncComputed : {
+
+    computed: {
+// asyncComputed : {
 
     show : function(){
         //will be null if hasn't been set

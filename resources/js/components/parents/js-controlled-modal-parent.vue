@@ -77,10 +77,6 @@ export default {
         }
     },
 
-    asyncComputed: {
-        bodyText: function () {
-        },
-    },
 
     mounted() {
         //dev Not sure why but saving this on data and trying to call show() and hide() on that object causes never closing modals
@@ -88,7 +84,8 @@ export default {
     },
 
     computed: {
-
+        bodyText: function () {
+        },
         modalLabelId: function () {
             return this.modalId + 'Label';
         },

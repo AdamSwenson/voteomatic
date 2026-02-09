@@ -27,7 +27,9 @@ export default {
         return {}
     },
 
-    asyncComputed: {
+
+    computed: {
+    // asyncComputed: {
         content : function(){
             let out = '';
             if(! isReadyToRock(this.motion)) return out;
@@ -42,7 +44,6 @@ export default {
         }
     },
 
-    computed: {},
 
     methods: {}
 
