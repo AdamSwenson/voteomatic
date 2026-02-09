@@ -3,28 +3,30 @@
     <li class="motion-select-area list-group-item "
         v-bind:class="styling">
         <div class="row mt-2 mb-2">
-            <div class="col-sm "
-                 v-if="! isInPublicPmode"
-            >
 
+
+            <div class="col-md-2 "
+                 v-if="isChair && ! isInPublicPmode"
+            >
                 <motion-select-button
                     :motion="motion"
                 ></motion-select-button>
 
             </div>
 
-            <div class="col ">
+            <div class="col-md ">
 
                 <motion-info-cell :motion="motion"></motion-info-cell>
 
             </div>
 
-            <div class="col-sm">
+            <div class="col-md-2">
                 <div class="d-grid gap-2 mb-2">
+<!--                    v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"-->
 
                     <vote-nav-button
                         :motion="motion"
-                        v-if="isSelected && ! isComplete && isVotingAllowed && !isInPublicPmode"
+                        v-if=" ! isComplete && isVotingAllowed && !isInPublicPmode"
                     ></vote-nav-button>
                 </div>
 
@@ -43,8 +45,10 @@
                 </div>
 
                 <div class="d-grid gap-2 mb-2">
+                    <!--                    v-if="isSelected && isComplete && ! isInPublicPmode"-->
+
                     <results-nav-button
-                        v-if="isSelected && isComplete && ! isInPublicPmode"
+                        v-if=" isComplete && ! isInPublicPmode"
                         :motion="motion"
 
                     ></results-nav-button>

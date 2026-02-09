@@ -1,9 +1,6 @@
 <template>
     <div class="motion-info-cell">
 
-        <p>
-        <motion-type-badge :motion="motion"></motion-type-badge>
-        </p>
 
         <motion-text-display
             :motionStyle="motionStyle"
@@ -13,16 +10,26 @@
 
         <br/>
 
-        <required-vote-badge v-if="showRequiredVoteBadge" :motion="motion"></required-vote-badge>
+        <p>
 
-        <span class="ms-2">
-            <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
-        </span>
+            <span class="me-3">
+                <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+            </span>
 
-        <span class="ms-1">
-            <motion-status-badge :is-passed="isPassed"></motion-status-badge>
-        </span>
+            <span class="ms-1">
+                <motion-type-badge :motion="motion"></motion-type-badge>
+            </span>
 
+            <span class="ms-2">
+                <required-vote-badge v-if="showRequiredVoteBadge" :motion="motion"></required-vote-badge>
+            </span>
+
+            <span class="ms-2">
+                <debatable-badge v-if="showDebatableBadge" :motion="motion"></debatable-badge>
+            </span>
+
+
+        </p>
     </div>
 </template>
 

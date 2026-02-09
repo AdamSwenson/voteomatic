@@ -60,7 +60,7 @@
                 class="text-center"
                 v-else
             >
-                <p>You have already voted</p>
+                <p>You have voted</p>
             </div>
         </div>
 

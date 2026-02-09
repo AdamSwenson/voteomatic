@@ -32,7 +32,7 @@
                     </button>
 
                     <button type="button"
-                            class="btn btn-primary yes"
+                            class="btn btn-primary text-light yes"
                             data-bs-dismiss="modal"
                             v-on:click="handleClick"
                     >Yes. Record my vote.

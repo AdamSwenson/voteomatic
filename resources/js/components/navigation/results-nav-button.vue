@@ -9,12 +9,14 @@
 </template>
 
 <script>
+import navigationButtonMixin from '../../mixins/navigationButtonMixin';
+
 export default {
     name: "results-nav-button",
 
     props: ['motion'],
 
-    mixins: [],
+    mixins: [navigationButtonMixin],
 
     data: function () {
         return {}
@@ -23,7 +25,10 @@ export default {
     computed: {},
 
     methods: {
+
+
         handleClick: function () {
+            this.setMotionLocal();
             this.$router.push('results');
         }
 
