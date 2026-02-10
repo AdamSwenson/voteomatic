@@ -72,7 +72,7 @@ export default {
 
 
     computed: {
-       
+
         dummyMotion: function () {
             if (isReadyToRock(this.template)) {
                 return MotionObjectFactory.make(this.template);

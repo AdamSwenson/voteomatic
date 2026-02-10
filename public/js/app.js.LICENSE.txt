@@ -76,6 +76,18 @@ Description: Vue.js file upload component, Multi-file upload, Upload directory, 
  */
 
 /**
+* @vue/compiler-core v3.5.17
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/compiler-dom v3.5.17
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
 * @vue/runtime-core v3.5.17
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
