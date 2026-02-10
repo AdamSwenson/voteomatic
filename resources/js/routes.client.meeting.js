@@ -12,6 +12,8 @@ import meetingHome from './components/main/meeting-home'
 import eventSetupCard from "./components/main/chair/event-setup-card";
 import voteCard from "./components/main/vote-card";
 
+import motionInfoCard from "./components/motions/motion-info/motion-info-card";
+
 import electionVoterHomeCard from './components/election/voter/election-voter-home-card';
 import propositionSetupCard from "./components/election/propositions/proposition-setup-card";
 
@@ -106,6 +108,22 @@ export const meetingRoutes = [
 
         //Will show if the setting defined here is true
         showIfSettings: ['members_make_motions']
+    },
+
+    {
+        name: 'motion-info',
+        path: '/motion-info',
+        icon: "fa fa-bar-chart",
+        get label() {
+            return "Motion info";
+        },
+        components: {main: motionInfoCard},
+        props: true,
+        adminOnly: false,
+        type: 'meeting',
+
+        //Will show if the setting defined here is true
+        // showIfSettings: ['members_make_motions']
     },
 
 
