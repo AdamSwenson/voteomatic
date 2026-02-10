@@ -13,7 +13,9 @@
         <p>
 
             <span class="me-3">
-                <motion-status-badge :is-passed="isPassed"></motion-status-badge>
+                <motion-status-badge :is-passed="isPassed"
+                                     v-if="isMotionComplete"
+                ></motion-status-badge>
             </span>
 
             <span class="ms-1">

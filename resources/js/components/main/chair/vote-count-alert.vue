@@ -21,8 +21,10 @@
                     <end-voting-modal></end-voting-modal>
                 </div>
                 <div class="d-grid gap-2 mb-2">
-                    <!--                    NB, the modal will need to have been included on any page where this alert is used-->
+                    <!--                    NB, moved the modal back to being included here because of problems when on different card-->
                     <abort-voting-button :motion="motion"></abort-voting-button>
+                    <abort-voting-modal></abort-voting-modal>
+
                 </div>
             </div>
 

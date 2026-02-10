@@ -51,6 +51,10 @@
 
         </div>
 
+<!--        <div class="card-body">-->
+<!--            <motion-info-area></motion-info-area>-->
+<!--        </div>-->
+
 
         <!--        <div class="card-header">-->
         <!--            <h4 class="card-title">{{ title }}</h4>-->
@@ -143,11 +147,13 @@ import MainMotionEditArea from "../../motions/motion-setup-inputs/main-motion-ed
 import EditMotionButton from "../../motions/motion-setup-inputs/edit-motion-button";
 import CreateResolutionButton from "../../motions/resolutions/create-resolution-button";
 import ResolutionSetupArea from "../../motions/resolutions/resolution-setup-area";
+// import MotionInfoArea from "../../motions/motion-info/motion-info-area.vue";
 
 
 export default {
     name: "motion-setup",
     components: {
+        // MotionInfoArea,
         ResolutionSetupArea,
         CreateResolutionButton,
         EditMotionButton,

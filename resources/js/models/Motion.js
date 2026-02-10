@@ -10,7 +10,9 @@ export default class Motion extends IModel {
      * @param params
      */
     constructor({
-                    id = null, content = null, description = null,
+                    id = null,
+                    content = null,
+                    description = null,
                     requires = 0.5,
                     type = null,
                     info = null,
