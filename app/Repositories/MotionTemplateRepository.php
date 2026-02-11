@@ -185,7 +185,7 @@ class MotionTemplateRepository
 
         [
             'name' => 'Reconsider',
-            'content' => "Shall the body reconsider the motion that ",
+            'content' => "Shall the body reconsider the specified motion ",
             'description' => "Whether to reopen a decision that has already been voted upon.
             This can only be made by a member who voted with the prevailing side.
             The motion is debatable only if the motion being reconsidered is debatable",

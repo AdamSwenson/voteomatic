@@ -1,14 +1,14 @@
 <template>
 
     <!-- Modal -->
-    <div class="view-full-text-modal modal fade"
+    <div class="view-full-text-modal modal fade modal-xl"
          v-bind:id="modalId"
          tabindex="-1"
          v-bind:aria-labelledby="ariaLabel"
 
     >
 <!--        aria-hidden="true"-->
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable ">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"
@@ -27,12 +27,12 @@
 
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-primary"
-                            data-bs-dismiss="modal"
-                    >Close</button>
-                </div>
+<!--                <div class="modal-footer d-none d-sm-block">-->
+<!--                    <button type="button"-->
+<!--                            class="btn btn-primary"-->
+<!--                            data-bs-dismiss="modal"-->
+<!--                    >Close</button>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
