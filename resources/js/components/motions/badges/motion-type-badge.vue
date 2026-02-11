@@ -21,6 +21,11 @@ export default {
     data: function () {
         return {
 
+            privileged: {
+                styling: 'bg-warning text-light',
+                text: 'Privileged'
+            },
+
             procedural: {
                 styling: 'bg-secondary text-light',
                 text: 'Procedural'

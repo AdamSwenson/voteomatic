@@ -14,6 +14,7 @@ export default {
     name: "motion-template-button",
     components: {},
     extends : ButtonParent,
+
     props: ["template"],
 
     mixins: [MeetingMixin, MotionMixin, motionObjectMixin, RoutingMixin],

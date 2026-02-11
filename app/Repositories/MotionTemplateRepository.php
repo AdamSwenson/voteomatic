@@ -23,29 +23,34 @@ class MotionTemplateRepository
         [
             'name' => 'Adjourn',
             'content' => "Shall the meeting be adjourned.",
-            'description' => "Meeting comes to an end. This is amendable with respect
-             to when the next meeting will be, if specified",
+            'description' => "Immediately ends the meeting.",
             'requires' => 0.5,
-            'type' => 'procedural-main',
-            'amendable' => true
+            'type' => 'privileged',
+            'amendable' => false,
+            'debatable' => false,
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => true,
+            ]
         ],
 
         [
             'name' => 'Appeal',
             'content' => "Shall the ruling of the Chair be sustained",
-            'description' => "A nay vote overturns the ruling of the Chair. An aye vote sustains the ruling of the Chair. ",
+            'description' => "A nay vote overturns the ruling of the Chair. An aye vote sustains the ruling of the Chair.
+            Debate on this motion must be on the Chair's ruling. Debate cannot involve the wisdom of the underlying motion.",
             'requires' => 0.5,
             'type' => 'procedural-main',
             'amendable' => false,
-            'debatable' => true
+            'debatable' => true,
 //            'debatable' => [
 //                'motion' => true,
 //                'underlyingMotion' => false
 //            ],
-//            'reconsiderable' => [
-//                'affirmative' => true,
-//                'negative' => true,
-//            ]
+            'reconsiderable' => [
+                'affirmative' => true,
+                'negative' => true,
+            ]
 
         ],
 
@@ -59,8 +64,8 @@ class MotionTemplateRepository
                 of the whole should vote to Rise and Report",
             'requires' => 0.5,
             'type' => 'procedural-main',
-            'amendable' => true
-
+            'amendable' => true,
+            'debatable' => true,
         ],
 
         [
@@ -71,7 +76,11 @@ class MotionTemplateRepository
             'requires' => 0.66,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false
+            'debatable' => false,
+            'reconsiderable' => [
+                'affirmative' => true,
+                'negative' => false,
+            ]
 
 //            'debatable' => [
 //                'motion' => false,
@@ -126,16 +135,16 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false
+            'debatable' => false,
 //
 //            'debatable' => [
 //                'motion' => false,
 //                'underlyingMotion' => false
 //            ],
-//            'reconsiderable' => [
-//                'affirmative' => false,
-//                'negative' => true,
-//            ]
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => true,
+            ]
         ],
 
 
@@ -147,7 +156,11 @@ class MotionTemplateRepository
             'requires' => 0.5,
             'type' => 'procedural-subsidiary',
             'amendable' => false,
-            'debatable' => false
+            'debatable' => false,
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => false,
+            ]
 //
 //            'debatable' => [
 //                'motion' => false,
@@ -162,18 +175,42 @@ class MotionTemplateRepository
             'description' => "We take a break. This can be qualified to say how long. The how long part is amendable.",
             'requires' => 0.5,
             'type' => 'procedural-main',
-            'amendable' => true
+            'amendable' => true,
+            'debatable' => true,
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => false,
+            ]
         ],
 
         [
             'name' => 'Reconsider',
             'content' => "Shall the body reconsider the motion that ",
-            'description' => "Whether to reopen a decision that has already been voted upon. This can only be made by a member who voted with the prevailing side.",
+            'description' => "Whether to reopen a decision that has already been voted upon.
+            This can only be made by a member who voted with the prevailing side.
+            The motion is debatable only if the motion being reconsidered is debatable",
             'requires' => 0.5,
             'type' => 'procedural-main',
-            'amendable' => false
+            'amendable' => false,
+            'reconsiderable' => [
+                'affirmative' => false,
+                'negative' => false,
+            ],
+
+        [
+            'name' => 'Refer',
+            'content' => "Shall the pending item be referred to the specified group.",
+            'description' => "Usually used to task a committee to work on the item that was
+             under discussion, sometimes with additional instructions as to what do, whether / when
+             to bring the item back, et cetera. Can also be used to ask a specified group of members to work
+             on something and bring it back during the same meeting.",
+            'requires' => 0.5,
+            'type' => 'procedural-main',
+            'amendable' => true,
+            'debatable' => true
         ],
 
+    ]
     ];
 
 
@@ -181,8 +218,10 @@ class MotionTemplateRepository
         //Going to use this for VOT-306 and CSUN specific motions
         ['name' => 'Request Roll Call Vote (CSUN-specific)',
             'content' => "Shall the vote on the specified question(s) be taken via roll call. The vote of each senator will be recorded in the minutes.",
+            'description' => "If approved, the vote on the specified question(s) will taken by roll call. That is, the Secretary will call each
+             member's name and ask for their vote. The votes will be recorded in the minutes.",
             'requires' => 0.2,
-            'amendable' => true,
+            'amendable' => false,
             'debatable' => false,
         ],
 
