@@ -18,6 +18,8 @@
         "@vue/vue3-jest": "^28.1.0",
         "babel-jest": "^28.1.0",
         "bootstrap": "^5.1.0",
+        "browser-sync": "^3.0.4",
+        "browser-sync-webpack-plugin": "^2.4.0",
         "cross-env": "^7.0.3",
         "jest": "^28.1.0",
         "jest-environment-jsdom": "^28.1.0",
@@ -36,6 +38,7 @@
         "vue-loader": "^16.0.0"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.8",
         "@vue/compat": "^3.1.0",
         "axios": "^0.21.1",
         "bootstrap-icons": "^1.5.0",
