@@ -15,6 +15,7 @@ export default {
             label: 'Propose Amendment',
             styling: ' btn-danger',
             clicked : false,
+            icon: ''
         }
     },
 
