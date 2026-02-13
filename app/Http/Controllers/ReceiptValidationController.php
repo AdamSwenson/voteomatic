@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VoteValidationRequest;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,10 @@ class ReceiptValidationController extends Controller
 
 
 
-    public function validateReceipt(Request $request)
+    public function validateReceipt(VoteValidationRequest $request)
     {
+
         $vote = Vote::where('receipt', $request->receipt)->firstOrFail();
-//        $vote = Vote::where('receipt', $request->receipt)->firstOrFail();
 
         return response()->json($vote);
 

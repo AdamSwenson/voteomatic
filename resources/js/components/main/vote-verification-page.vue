@@ -139,6 +139,11 @@ export default {
             return this.$store.getters.getUsersCastVotes;
         },
 
+        /**
+         * Only show the button if they have entered a
+         * receipt in the box
+         * @returns {boolean}
+         */
         enableButton: function () {
             return this.receipt.length > 0;
         },
@@ -213,7 +218,16 @@ export default {
                 let url = routes.receipts.validateReceipt();
                 let payload = {receipt: receipt};
 
-                this.$http.post(url, payload)
+                this.$http.post(url, payload, {
+                    validateStatus: function (status) {
+                        if (status === 422) {
+                            window.console.log('vote-verification-page', 'validateStatus', 218, status);
+                            me.$store.dispatch('showServerProvidedMessage', {'message': "Please enter your receipt in the box below"})
+                            return false;
+                        }
+                        return true;
+                    }
+                })
                     .then(function (response) {
                         if (!_.isUndefined(response.data.id)) {
 
@@ -235,8 +249,8 @@ export default {
                             me.showBad = true;
                         }
                     }).catch(function (error) {
-                    window.console.log(error);
                     me.showBad = true;
+
                 });
             });
 
