@@ -15,14 +15,17 @@
                            id="receipt-entry"
                            v-model="receipt"
                            class="form-control"
-                           v-bind:placeholder="sampleReceipt"
+                           v-bind:placeholder="placeholder"
                            aria-label="Verification input"
-                           aria-describedby="button-addon2">
+                           aria-describedby="button-addon2"
+                    >
                     <div class="input-group-append">
                         <button
                             class="btn btn-primary"
                             type="button"
                             id="button-addon2"
+                            v-if="enableButton"
+                            aria-label="Submit the receipt for verification"
                             v-on:click="handleClick"
                         >Verify vote
                         </button>
@@ -122,7 +125,9 @@ export default {
             showGood: false,
             receipt: '',
             vote: null,
-            sampleReceipt: '3367011432d697b81096f820e608e0e43ad3a63055692974428b4320cc4d6721'
+            placeholder: "Enter your receipt here",
+
+            // sampleReceipt: '3367011432d697b81096f820e608e0e43ad3a63055692974428b4320cc4d6721'
 
         }
     },
@@ -132,6 +137,10 @@ export default {
         // asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
+        },
+
+        enableButton: function () {
+            return this.receipt.length > 0;
         },
 
         showReceipts: function () {

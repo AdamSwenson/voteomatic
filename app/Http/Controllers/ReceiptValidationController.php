@@ -17,8 +17,8 @@ class ReceiptValidationController extends Controller
 
     public function validateReceipt(Request $request)
     {
-//        dd($request->receipt);
         $vote = Vote::where('receipt', $request->receipt)->firstOrFail();
+//        $vote = Vote::where('receipt', $request->receipt)->firstOrFail();
 
         return response()->json($vote);
 
