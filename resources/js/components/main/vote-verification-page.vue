@@ -41,42 +41,59 @@
 
 
             </div>
-            <!--        </div>-->
 
-
-            <!--            </div>-->
-            <!--        <div class="card-body">-->
             <div class="card-text">
-                <p v-if="verificationResult"></p>
+                <!--                <p v-if="verificationResult"></p>-->
 
+                <valid-election-receipt-alert v-if="isElection && showGood"
+                                              :receipt="receipt"
+                                              :show-vote-content="showVoteContent"
+                                              :office-name="officeName"
+                                              :candidate-name="candidateName"
+                                              v-on:closeAlert="handleCloseAlert"
+                ></valid-election-receipt-alert>
 
-                <div class="alert alert-success" role="alert" v-if="showGood">
-                    <h4 class="alert-heading">This receipt is valid</h4>
-                    <h5 class="alert-heading">The database contains a record of this vote</h5>
-                    <div class="ms-5 mt-3" v-if="isElection && showVoteContent">
-                        <h4 class="h4">{{ officeName }}</h4>
-                        <ul>
-                            <li>{{ candidateName }}</li>
-                        </ul>
-                    </div>
+                <valid-motion-receipt-alert v-if="! isElection && showGood"
+                                            :receipt="receipt"
+                                            :vote-display="voteDisplay"
+                                            v-on:closeAlert="handleCloseAlert"
+                ></valid-motion-receipt-alert>
 
-                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong>
-                    </p>
+                <invalid-receipt-alert v-if="showBad"
+                                       :receipt="receipt"
+                                       v-on:closeAlert="handleCloseAlert"
+                ></invalid-receipt-alert>
 
-                    <p>Receipt : {{ receipt }}</p>
+                <!--                <div class="alert alert-success" role="alert" v-if="showGood">-->
+                <!--                    <h4 class="alert-heading">This receipt is valid</h4>-->
+                <!--                    <h5 class="alert-heading">The database contains a record of this vote</h5>-->
+                <!--                    <div class="ms-5 mt-3" v-if="isElection && showVoteContent">-->
+                <!--                        <h4 class="h4">{{ officeName }}</h4>-->
+                <!--                        <ul>-->
+                <!--                            <li>{{ candidateName }}</li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
 
-                    <p class="text-end">
-                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
-                    </p>
-                </div>
+                <!--                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong>-->
+                <!--                    </p>-->
 
-                <div class="alert alert-danger" role="alert" v-if="showBad">
-                    <h4 class="alert-heading">This is not a valid receipt</h4>
-                    <p> Receipt : {{ receipt }} </p>
-                    <p class="text-end">
-                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>
-                    </p>
-                </div>
+                <!--                    <p>Receipt : <span class="user-select-all">{{ receipt }}</span></p>-->
+
+                <!--                    <p class="text-end">-->
+                <!--                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>-->
+                <!--                    </p>-->
+                <!--                </div>-->
+
+                <!--                <div class="alert alert-danger" role="alert" v-if="showBad">-->
+                <!--                    <h4 class="alert-heading">This is not a valid receipt</h4>-->
+                <!--                    <p>The database does not contain a record of this vote.</p> -->
+                <!--                    <p>If you voted before voting was restarted,-->
+                <!--                    the receipt for that vote will be invalid because all records were removed.</p>-->
+                <!--                    <p> Receipt : {{ receipt }} </p>-->
+                <!--                    <p class="text-end">-->
+                <!--                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>-->
+                <!--                    </p>-->
+                <!--                </div>-->
 
             </div>
 
@@ -93,7 +110,7 @@
         </div>
 
         <div class="card-footer" v-if="showReceipts">
-            <copy-button></copy-button>
+            <span class="me-3"><copy-button></copy-button></span>
             <download-receipts-button></download-receipts-button>
 
         </div>
@@ -112,10 +129,16 @@ import DownloadReceiptsButton from "../vote-verification/download-receipts-butto
 import ModeMixin from "../../mixins/modeMixin";
 import SettingsMixin from "../../mixins/settingsMixin";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
+import InvalidReceiptAlert from "../vote-verification/invalid-receipt-alert.vue";
+import ValidElectionReceiptAlert from "../vote-verification/valid-election-receipt-alert.vue";
+import ValidMotionReceiptAlert from "../vote-verification/valid-motion-receipt-alert.vue";
 
 export default {
     name: "vote-verification-page",
-    components: {DownloadReceiptsButton, CopyButton, ReceiptListArea},
+    components: {
+        ValidMotionReceiptAlert,
+        ValidElectionReceiptAlert, InvalidReceiptAlert, DownloadReceiptsButton, CopyButton, ReceiptListArea
+    },
 
     mixins: [ModeMixin, SettingsMixin],
 
@@ -127,13 +150,27 @@ export default {
             vote: null,
             placeholder: "Enter your receipt here",
 
-            // sampleReceipt: '3367011432d697b81096f820e608e0e43ad3a63055692974428b4320cc4d6721'
-
         }
     },
 
+    watch: {
+        receipt(v) {
+            window.console.log('vote-verification-page', 'watch', 166, v);
+            this.closeAlerts();
+        }
+    },
 
     computed: {
+        //     receipt : {
+        //         get: function () {
+        //             return this._receipt;
+        //         },
+        //         set: function (value) {
+        //             this._receipt = value;
+        //         },
+        //
+        //     },
+
         // asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
@@ -184,11 +221,11 @@ export default {
         },
 
 
-        verificationResult: function () {
-            return false;
-
-            //return "Vote for {{voteType}} was received {{timestamp}}"
-        },
+        // verificationResult: function () {
+        //     return false;
+        //
+        //     //return "Vote for {{voteType}} was received {{timestamp}}"
+        // },
 
         voteDisplay: function () {
             if (_.isNull(this.vote) || _.isUndefined(this.vote)) return ''
@@ -199,21 +236,43 @@ export default {
     },
 
     methods: {
-        closeAlert: function () {
-            this.showBad = false;
-            this.showGood = false;
+        /**
+         * Hides all validation alerts and
+         * resets the receipt and vote fields.
+         */
+        resetAll: function () {
+            this.receipt = '';
+            this.vote = null;
         },
 
-        handleValid: function () {
-            this.showGood = true;
+        /**
+         * Hides any showing alerts.
+         * This is separate from resetting because
+         * we need to close alerts without changing the
+         * receipt / vote in some cases. E.g., when the text
+         * in the input box has changed.
+         */
+        closeAlerts: function () {
+            this.showGood = false;
+            this.showBad = false;
         },
-        handleNotValid: function () {
-            this.showBad = true;
+
+
+        handleCloseAlert: function () {
+            this.closeAlerts();
+            this.resetAll();
         },
+
+        // handleValid: function () {
+        //     this.showGood = true;
+        // },
+        // handleNotValid: function () {
+        //     this.showBad = true;
+        // },
 
         verifyReceipt: function (receipt) {
             let me = this;
-            this.closeAlert();
+            this.closeAlerts();
             return new Promise((resolve, reject) => {
                 let url = routes.receipts.validateReceipt();
                 let payload = {receipt: receipt};
@@ -233,6 +292,7 @@ export default {
 
                             if (me.isElection) {
                                 me.vote = new Vote({
+                                    receipt: response.data.receipt,
                                     motionId: response.data.motion_id,
                                     candidateId: response.data.candidate_id
                                 });
@@ -240,8 +300,19 @@ export default {
                             } else {
                                 //The is_yay prop being undefined will report the
                                 //receipt as invalid. The error will be caught below
-                                me.vote = new Vote({isYay: response.data.is_yay});
+                                me.vote = new Vote({
+                                    receipt: response.data.receipt,
+                                    motionId: response.data.motion_id,
+                                    isYay: response.data.is_yay
+                                });
                             }
+
+                            //store validated vote centrally, only if
+                            //the motion is from this event
+                            //(otherwise will have receipts listed with no associated motion)
+                            // if(me.$store.getters.hasVotedOnMotion(me.motionId)){
+                            me.$store.commit('addCastVote', me.vote);
+                            // }
 
                             me.showGood = true;
 
@@ -259,7 +330,6 @@ export default {
         handleClick: function () {
             this.verifyReceipt(this.receipt);
 
-            // alert('something will happen');
         }
     }
 

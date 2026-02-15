@@ -14,8 +14,12 @@ class ReceiptValidationController extends Controller
     }
 
 
-
-
+    /**
+     * Return a vote object if the receipt is in the database.
+     * Return an error if model not found
+     * @param VoteValidationRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function validateReceipt(VoteValidationRequest $request)
     {
 

@@ -1,18 +1,17 @@
 <template>
 
     <div class="receipt-list-area"
-    v-if="showArea">
-<!--        <h3>{{// meetingName}}</h3>-->
-<!--        <p>{{meetingDate}}</p>-->
-        <div ul="list-group">
+         v-if="showArea">
 
-        <receipt-list-item
-            v-for="vote in allVotes"
-            :vote-object="vote"
-            :key="vote.id"
-        ></receipt-list-item>
+        <ul class="list-group">
 
-        </div>
+            <receipt-list-item
+                v-for="vote in allVotes"
+                :vote-object="vote"
+                :key="vote.id"
+            ></receipt-list-item>
+
+        </ul>
     </div>
 
 </template>
@@ -34,27 +33,22 @@ export default {
     },
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
 
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
         },
 
 
-        showArea : function(){
-            return isReadyToRock(this.allVotes) && this.allVotes.length >0 ;
+        showArea: function () {
+            return isReadyToRock(this.allVotes) && this.allVotes.length > 0;
         }
-
 
 
     },
 
 
-    methods: {
-
-
-
-    }
+    methods: {}
 
 }
 </script>

@@ -1,15 +1,14 @@
 <template>
-    <!--    <a href="#"-->
-    <li class="list-group-item "
-    >
-        <p class="motion-text ">{{ motionText }}</p>
+    <li class="list-group-item ">
+
+        <h5 class="motion-text h5">{{ motionText }}</h5>
+
         <ul v-if="isElection">
             <li class="candidates" v-for="c in candidates" :id="c.id">{{ c.nameAndInfo }}</li>
         </ul>
 
         <p class="receipt user-select-all">{{ receipt }}</p>
     </li>
-    <!--    </a>-->
 
 </template>
 
@@ -29,7 +28,7 @@ export default {
     },
 
     computed: {
-    // asyncComputed: {
+        // asyncComputed: {
 
         motion: function () {
             return this.$store.getters.getMotionById(this.voteObject.motionId);
