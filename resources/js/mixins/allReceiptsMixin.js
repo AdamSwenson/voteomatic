@@ -12,7 +12,9 @@ module.exports = {
         },
 
         heading: function () {
-            return `${this.meetingName}\n${this.meetingDate}\n\n`;
+            let date = isReadyToRock(this.meetingDate) ? `${this.meetingDate} \n` : '';
+
+            return `${date}${this.meetingName}\n\n`;
         },
 
         currentTime: function () {
@@ -57,7 +59,21 @@ module.exports = {
             _.forEach(this.allVotes, (vote) => {
                 let motion = me.$store.getters.getMotionById(vote.motionId);
 
-                let e = `\n${motion.displayName}\n${vote.receipt}\n`;
+                let e = `\n${motion.displayName}\n${vote.receipt}\n\n`;
+
+                //Resolutions and amendments are going to be too complicated, so
+                //they will just get a generic name
+                if(motion.isResolution) {
+                    if (motion.isAmendment()) {
+                        e = `Resolution - ${motion.type}`;
+                    } else if (isReadyToRock(motion.info, 'title')) {
+                        e = motion.info.title
+                    }
+                    else{
+                        e = 'Resolution'
+                    }
+                    e += `\n${vote.receipt}\n\n`;
+                }
 
                 t += e;
             });

@@ -161,17 +161,7 @@ export default {
     },
 
     computed: {
-        //     receipt : {
-        //         get: function () {
-        //             return this._receipt;
-        //         },
-        //         set: function (value) {
-        //             this._receipt = value;
-        //         },
-        //
-        //     },
 
-        // asyncComputed: {
         allVotes: function () {
             return this.$store.getters.getUsersCastVotes;
         },
