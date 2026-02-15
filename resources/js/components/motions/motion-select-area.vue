@@ -65,19 +65,12 @@
 
 <!--        <div class="row" v-if="showReceipt">-->
             <dl class="row" v-if="showReceipt">
-                <dt class="col-sm-2">Receipt <info-tooltip :content="infoReceipt"></info-tooltip></dt>
-                <dd class="col-sm-10 user-select-all">{{receipt}}</dd>
+                <dt class="col-sm-2">Receipt</dt>
+                <dd class="col-sm-10 "><span class="user-select-all me-3">{{receipt}}</span> <info-tooltip :content="infoReceipt"></info-tooltip></dd>
                 <dt class="col-sm-2" v-if="showVoteContent">Your vote</dt>
                 <dd class="col-sm-10" v-if="showVoteContent">{{voteContent}}</dd>
-
             </dl>
-<!--                <div class="col">-->
-<!--                <p>-->
-<!--                    <strong>Receipt: </strong> {{ receipt }}     <info-tooltip :content="infoReceipt"></info-tooltip>-->
-<!--                </p>-->
-<!--                <p v-if="showVoteContent">:  {{voteContent}}</p>-->
-<!--            </div>-->
-<!--        </div>-->
+
     </li>
 </template>
 
