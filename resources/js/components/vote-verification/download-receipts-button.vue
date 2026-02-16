@@ -2,6 +2,7 @@
 import MeetingMixin from '../../mixins/meetingMixin';
 import AllReceiptsMixin from '../../mixins/allReceiptsMixin';
 import ButtonParent from "../parents/button-parent";
+import {isReadyToRock} from "../../utilities/readiness.utilities";
 
 export default {
     name: "download-receipts-button",
@@ -20,7 +21,8 @@ export default {
 
     computed: {
         filename: function () {
-            return `${this.meetingDate} ${this.meetingName} vote receipts.txt`;
+            let date = isReadyToRock(this.meetingDate) ? `${this.meetingDate} ` : '';
+            return `${date}${this.meetingName} vote receipts.txt`;
 
         },
     },
@@ -30,6 +32,7 @@ export default {
         handleClick: function () {
             this.downloadFile();
         },
+
         downloadFile: function () {
             let element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.text));

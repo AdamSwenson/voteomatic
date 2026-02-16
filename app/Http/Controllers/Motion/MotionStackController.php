@@ -98,6 +98,7 @@ class MotionStackController extends Controller
 
         //If this was a resolution or other big object,
         //the MotionClosed will fail
+        // dev This is the cause of VOT-322
         // dev This should be replaced with actually having the client
         // reload the motion, but that is for later.
         if (!MotionRepository::isPusherCompatible($motion)) {

@@ -1,6 +1,5 @@
 <template>
-    <a href="#"
-       data-bs-placement="top"
+    <a data-bs-placement="top"
        data-bs-toggle="tooltip"
        v-bind:title="content"
     ><i class="bi-info-circle" role="img" aria-label="Info"></i></a>

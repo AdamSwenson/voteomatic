@@ -558,7 +558,9 @@ const getters = {
 
 
     hasVotedOnMotion: (state) => (motion) => {
-        return state.motionIdsUserHasVotedUpon.indexOf(motion.id) > -1
+        //VOT-329 added this could cause problems
+        let motionId = idify(motion);
+        return state.motionIdsUserHasVotedUpon.indexOf(motionId) > -1
 
         // return state.motionIdsUserHasVotedUpon.indexOf(state.currentMotion.id) > -1
     },
