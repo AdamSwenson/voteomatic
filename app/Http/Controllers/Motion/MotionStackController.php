@@ -6,6 +6,7 @@ use App\Events\ForcePageReload;
 use App\Events\MotionClosed;
 use App\Events\NewCurrentMotionSet;
 use App\Events\NotifyPageRefreshNeeded;
+use App\Events\RequestClientReloadMotion;
 use App\Events\VotingOnMotionAborted;
 use App\Events\VotingOnMotionOpened;
 use App\Http\Controllers\Controller;
@@ -103,6 +104,8 @@ class MotionStackController extends Controller
         // reload the motion, but that is for later.
         if (!MotionRepository::isPusherCompatible($motion)) {
             ForcePageReload::dispatch($motion->meeting);
+            //VOT-322 This won't be enough because need to trigger handleMotionClosedMessage
+//            RequestClientReloadMotion::dispatch($motion);
 //            NotifyPageRefreshNeeded::dispatch($motion->meeting);
         }
 

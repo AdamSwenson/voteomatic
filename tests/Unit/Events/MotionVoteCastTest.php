@@ -23,7 +23,7 @@ $this->meeting = Meeting::factory()->create();
     /** @test */
     public function totalMembersCorrect(){
         //This added to fix of VOT-332
-        
+
         $numUsers = 5;
         $numDuplicates = 3;
 
@@ -48,18 +48,5 @@ $this->meeting = Meeting::factory()->create();
     }
 
 
-    /** @test */
-    public function broadcastWith()
-    {
-        $this->markTestSkipped('todo');
-//        MotionVoteCast::dispatch($this->motion);
-
-    }
-
-    /** @test */
-    public function testbroadcastOn()
-    {
-        $this->markTestSkipped('todo');
-    }
-
+ 
 }
