@@ -18,6 +18,21 @@ const mutations = {
     *    }
     */
 
+    setReceiptValid (state) {
+        state.showReceiptValid = true;
+        state.showReceiptInvalid = false;
+    },
+
+    setReceiptInvalid (state) {
+        state.showReceiptInvalid = true;
+        state.showReceiptValid = false;
+    },
+
+    resetValidityAlerts (state) {
+        state.showReceiptValid = false;
+        state.showReceiptInvalid = false;
+    }
+
 
 };
 
@@ -73,47 +88,51 @@ const actions = {
 
 
     requestValidation({dispatch, commit, getters}, receipt) {
-//
-//     return new Promise((resolve, reject) => {
-//         let url = routes.receipts.validateReceipt();
-//         let payload = {receipt: receipt};
-//
-//         return axios.post(url, payload,
-//             {
-//             validateStatus: function (status) {
-//                 if (status === 422) {
-//                     window.console.log('vote-verification-page', 'validateStatus', 218, status);
-//                     dispatch('showServerProvidedMessage', {'message': "Please enter your receipt in the box below"})
-//                     return false;
-//                 }
-//                 return true;
-//             }
-//         })
-//             .then(function (response) {
-//                 if (!_.isUndefined(response.data.id)) {
-//
-//                     if (! me.isElection) {
-//                         me.vote = new Vote({
-//                             motionId: response.data.motion_id,
-//                             candidateId: response.data.candidate_id
-//                         });
-//
-//                     } else {
-//                         //The is_yay prop being undefined will report the
-//                         //receipt as invalid. The error will be caught below
-//                         me.vote = new Vote({isYay: response.data.is_yay});
-//                     }
-//
-//                     me.showGood = true;
-//
-//                 } else {
-//                     me.showBad = true;
-//                 }
-//             }).catch(function (error) {
-//             me.showBad = true;
-//
-//         });
-//     });
+
+    return new Promise((resolve, reject) => {
+        let url = routes.receipts.validateReceipt();
+        let payload = {receipt: receipt};
+
+        return axios.post(url, payload,
+            {
+            validateStatus: function (status) {
+                if (status === 422) {
+                    window.console.log('vote-verification-page', 'validateStatus', 218, status);
+                    dispatch('showServerProvidedMessage', {'message': "Please enter your receipt in the box below"})
+                    return false;
+                }
+                return true;
+            }
+        })
+            .then(function (response) {
+                if (!_.isUndefined(response.data.id)) {
+
+                    if (! me.isElection) {
+                        me.vote = new Vote({
+                            motionId: response.data.motion_id,
+                            candidateId: response.data.candidate_id
+                        });
+
+                    } else {
+                        //The is_yay prop being undefined will report the
+                        //receipt as invalid. The error will be caught below
+                        me.vote = new Vote({isYay: response.data.is_yay});
+                    }
+
+                    me.showGood = true;
+                    commit('setReceiptValid');
+
+
+                } else {
+                    commit('setReceiptInvalid');
+
+
+                }
+            }).catch(function (error) {
+            commit('setReceiptInvalid');
+
+        });
+    });
 }
 };
 
@@ -128,7 +147,17 @@ const actions = {
  *
  *    getThing: (state, getters) => {}
  */
-const getters = {};
+const getters = {
+
+    getShowReceiptValid : (state) => {
+        return state.showReceiptValid;
+    },
+
+    getShowReceiptInvalid: (state) => {
+        return state.showReceiptInvalid;
+    }
+
+};
 
 export default {
     actions,

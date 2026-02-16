@@ -48,5 +48,5 @@ $this->meeting = Meeting::factory()->create();
     }
 
 
- 
+
 }

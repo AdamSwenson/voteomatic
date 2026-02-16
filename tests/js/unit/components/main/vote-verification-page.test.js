@@ -1,5 +1,10 @@
 import {createStore} from 'vuex';
-import {mount} from '@vue/test-utils';
+import {mount, flushPromises} from '@vue/test-utils';
+
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter'
+// import {VueAxios} from 'vue-axios';
+
 //
 // import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
 // import Vuex from 'vuex'
@@ -31,10 +36,12 @@ describe('vote-verification-page.test', () => {
     let store;
     let $http;
     let actionSpy;
+    let mock;
 
 
     beforeEach(() => {
         actionSpy = sinon.spy();
+        // jest.spyOn(axios, 'post') //.mockResolvedValue({'status' : 404})
 
         store = createStore({
             getters: {
@@ -46,17 +53,22 @@ describe('vote-verification-page.test', () => {
 
 
         });
-        $http = {
-            post: actionSpy
-        };
+        mock = new MockAdapter(axios);
+
+        mock.onPost().reply(200, {receipt: faker.sha1, motionId : faker.number, isYay : 0});
+
+        // $http = {
+        //     post: actionSpy
+        // };
 
         wrapper = mount(VoteVerificationPage, {
             global: {
-                plugins: [store, $http],
+                plugins: [store, mock],
             },
             propsData: {}
 
         });
+
 
     });
 
@@ -79,12 +91,26 @@ describe('vote-verification-page.test', () => {
 
 
     test('submits receipt', async () => {
+        // jest.spyOn(mock, 'post');//.mockResolvedValue({'status' : 404})
+
         let receipt = faker.sha1;
         await wrapper.find('[data-test="receiptEntry"]').setValue(receipt);
         expect(wrapper.find('[data-test="verificationSubmit"]').exists()).toBe(true);
 
         await wrapper.get('[data-test="verificationSubmit"]').trigger('click');
-        expect(actionSpy.calledOnce).toBe(true);
+        expect(wrapper.receipt).toBe(receipt);
+
+        // Wait until the DOM updates.
+        await flushPromises()
+
+        expect(wrapper.html()).toContain("The vote associated with this receipt is: Nay");
+
+        // expect(axios.post()).toHaveBeenCalled();
+
+        // Following lines tell Jest to mock any call to `axios.get`
+// and to return `mockPostList` instead
+
+        // expect(actionSpy.calledOnce).toBe(true);
 
     });
 
