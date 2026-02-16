@@ -12,21 +12,23 @@
 
                 <div class="input-group mb-3">
                     <input type="text"
-                           id="receipt-entry"
+                           id="receiptEntry"
                            v-model="receipt"
                            class="form-control"
                            v-bind:placeholder="placeholder"
                            aria-label="Verification input"
-                           aria-describedby="button-addon2"
+                           aria-describedby="verificationSubmit"
+                           data-test="receiptEntry"
                     >
                     <div class="input-group-append">
                         <button
                             class="btn btn-primary"
                             type="button"
-                            id="button-addon2"
+                            id="verificationSubmit"
                             v-if="enableButton"
                             aria-label="Submit the receipt for verification"
                             v-on:click="handleClick"
+                            data-test="verificationSubmit"
                         >Verify vote
                         </button>
                     </div>
@@ -63,37 +65,6 @@
                                        :receipt="receipt"
                                        v-on:closeAlert="handleCloseAlert"
                 ></invalid-receipt-alert>
-
-                <!--                <div class="alert alert-success" role="alert" v-if="showGood">-->
-                <!--                    <h4 class="alert-heading">This receipt is valid</h4>-->
-                <!--                    <h5 class="alert-heading">The database contains a record of this vote</h5>-->
-                <!--                    <div class="ms-5 mt-3" v-if="isElection && showVoteContent">-->
-                <!--                        <h4 class="h4">{{ officeName }}</h4>-->
-                <!--                        <ul>-->
-                <!--                            <li>{{ candidateName }}</li>-->
-                <!--                        </ul>-->
-                <!--                    </div>-->
-
-                <!--                    <p v-if="! isElection ">The vote associated with this receipt is: <strong>{{ voteDisplay }}</strong>-->
-                <!--                    </p>-->
-
-                <!--                    <p>Receipt : <span class="user-select-all">{{ receipt }}</span></p>-->
-
-                <!--                    <p class="text-end">-->
-                <!--                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>-->
-                <!--                    </p>-->
-                <!--                </div>-->
-
-                <!--                <div class="alert alert-danger" role="alert" v-if="showBad">-->
-                <!--                    <h4 class="alert-heading">This is not a valid receipt</h4>-->
-                <!--                    <p>The database does not contain a record of this vote.</p> -->
-                <!--                    <p>If you voted before voting was restarted,-->
-                <!--                    the receipt for that vote will be invalid because all records were removed.</p>-->
-                <!--                    <p> Receipt : {{ receipt }} </p>-->
-                <!--                    <p class="text-end">-->
-                <!--                        <button type="button" class="btn btn-info" v-on:click="closeAlert">Close</button>-->
-                <!--                    </p>-->
-                <!--                </div>-->
 
             </div>
 
