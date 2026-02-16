@@ -5,6 +5,7 @@
  *
  * @type {{vote: ((function(): (*|undefined))|*)}}
  */
+const {isReadyToRock} = require("../utilities/readiness.utilities");
 module.exports = {
 
     computed: {
@@ -21,6 +22,20 @@ module.exports = {
             if (!_.isNull(this.vote) && !_.isUndefined(this.vote)) return this.vote.receipt;
             return '';
         },
+
+        /**
+         * Returns a string yay or nay representing how the user
+         * voted if that is stored on the object.
+         * Returns null otherwise
+         * @returns {string}
+         */
+        voteContent: function () {
+            if(isReadyToRock(this.vote)) return this.vote.voteDisplayEnglish();
+        },
+
+        showVoteContent: function () {
+            return isReadyToRock(this.voteContent);
+        }
 
     }
 };
