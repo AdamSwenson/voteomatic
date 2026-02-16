@@ -56,7 +56,7 @@ class MotionVoteCast implements ShouldBroadcast
         $this->meeting_id = $this->meeting->id;
 
         $this->count = $motion->totalVotesCast;
-        $this->totalMembers = collect($this->meeting->users)->count();
+        $this->totalMembers = collect($this->meeting->users)->unique()->count();
     }
 
     public function broadcastWith()
