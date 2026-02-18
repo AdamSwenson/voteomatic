@@ -5,7 +5,7 @@
             data-bs-toggle="modal"
             data-bs-target="#yayConfirmationModal"
             v-on:click="handleClick"
-    >Aye</button>
+    >Yay</button>
     </div>
 </template>
 
