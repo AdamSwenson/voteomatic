@@ -37,7 +37,10 @@ export default {
         styling: {
             get: function () {
                 if ( this.hasVotedOnCurrentMotion) {
-                    return this.baseStyle + '  btn-outline-success '
+                    // return this.baseStyle + '  btn-outline-success '
+
+                    return this.baseStyle + '  btn-success '
+
                 }
 
                 return this.baseStyle + '  btn-success '
