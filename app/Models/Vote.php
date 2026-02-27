@@ -25,10 +25,14 @@ class Vote extends Model
      *
      * @return string
      */
-    static public function makeReceiptHash(){
-        //todo This isn't the best way to handle
-        $time = microtime(true);
-        return  bcrypt($time);
+    static public function makeReceiptHash()
+    {
+        $seed = random_bytes(120);
+        return bcrypt($seed);
+//
+//        //todo This isn't the best way to handle
+//        $time = microtime(true);
+//        return  bcrypt($time);
     }
 
     public function is_abstention()
@@ -43,7 +47,7 @@ class Vote extends Model
      */
     public function addReceiptHash()
     {
-$receipt = self::makeReceiptHash();
+        $receipt = self::makeReceiptHash();
         $this->attributes['receipt'] = $receipt;
 //    $this->save();
 
