@@ -27,12 +27,13 @@ class Vote extends Model
      */
     static public function makeReceiptHash()
     {
-        $seed = random_bytes(120);
-        return bcrypt($seed);
+        //Will be fixed in VOT-336
+//        $seed = random_bytes(120);
+//        return bcrypt($seed);
 //
-//        //todo This isn't the best way to handle
-//        $time = microtime(true);
-//        return  bcrypt($time);
+        //todo This isn't the best way to handle
+        $time = microtime(true);
+        return  bcrypt($time);
     }
 
     public function is_abstention()
