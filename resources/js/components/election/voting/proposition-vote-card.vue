@@ -1,5 +1,6 @@
 <template>
     <div class="card vote-page">
+        <a ref="propcard" v-bind:id="focusId"></a>
 
         <div class="card-header">
             <h1 class="card-title">{{ cardTitle }}</h1>
@@ -101,6 +102,7 @@ import MotionTextDisplay from "../../motions/text-display/motion-text-display";
 import RequiredVote from "../../text-display/required-vote";
 import RequiredVoteBadge from "../../motions/badges/required-vote-badge";
 import NavigationFooter from "../voter/navigation/navigation-footer";
+import {nextTick} from "vue";
 
 export default {
     name: "proposition-vote-card",
@@ -116,8 +118,28 @@ export default {
         }
     },
 
+    watch: {
+        motion: {
+            handler(motion) {
+                let me = this;
+//                window.console.log('election-card', 'get', 214,);
+                nextTick(() => {
+                    let el = document.getElementById(me.focusId);
+                    el.scrollIntoView()
+                });
+
+            },
+            immediate: true,
+        }
+    },
+
 
     computed: {
+
+        focusId: function () {
+            return 'propFocus';
+        },
+
 
         cardTitle: {
             get: function () {

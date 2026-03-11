@@ -1,5 +1,11 @@
 <template>
     <div class="summary-submit-card card">
+        <a ref="subcard" v-bind:id="focusId"></a>
+
+        <div class="card-header">
+            <h1 class="card-title">Review and submit votes</h1>
+        </div>
+
         <div class="card-body instructions">
             <p class="card-text">Please review your selections.</p>
             <p  class="card-text"> When you are ready, please
@@ -42,6 +48,7 @@ import ReceiptListArea from "../../vote-verification/receipt-list-area";
 import NavigationFooter from "./navigation/navigation-footer";
 import SummaryOfficeListing from "../voting/summary-submit/summary-office-listing";
 import SummaryPropositionListing from "../voting/summary-submit/summary-proposition-listing";
+import {nextTick} from "vue";
 
 /**
  * This is where the votes will be reviewed and submitted
@@ -65,12 +72,26 @@ export default {
         return {}
     },
 
+    watch: {
+        motion: {
+            handler(motion) {
+                let me = this;
+//                window.console.log('election-card', 'get', 214,);
+                nextTick(() => {
+                    let el = document.getElementById(me.focusId);
+                    el.scrollIntoView()
+                });
+
+            },
+            immediate: true,
+        }
+    },
+
 
     computed: {
-    // asyncComputed: {
-        // motions: function () {
-        //     return this.$store.getters.getMotions;
-        // },
+        focusId: function () {
+            return 'subFocus';
+        },
 
         offices: function(){
             return this.$store.getters.getElectionOffices;
@@ -82,7 +103,11 @@ export default {
     },
 
 
-    methods: {}
+    methods: {},
+
+    mounted() {
+        window.console.log('summary-submit-card', 'mounted', 88,);
+    }
 
 }
 </script>

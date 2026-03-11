@@ -21,4 +21,11 @@ export default createRouter( {
     routes, // short for routes: routes
     history,
     // base: window.routeRoot
+
+    //Added VOT-335
+    //NB, this only affects clicking the main tabs at the top so doesn't resolve VOT-335
+    scrollBehavior(to, from, savedPosition) {
+        // always scroll to top
+        return { top: 0, behavior: 'smooth' }
+    },
 } );

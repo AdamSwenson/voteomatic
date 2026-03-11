@@ -1,5 +1,7 @@
 <template>
-    <div class="election-card">
+    <div class="election-card" >
+        <a ref="electioncard" v-bind:id="focusId"></a>
+
         <div class="election-complete-card card" v-if="isComplete">
             <div class="card-body">
                 <p class="card-text">Thank you for voting!</p>
@@ -8,7 +10,7 @@
 
         <div class="card" v-else-if="isElection">
 
-            <div class="card-header">
+            <div class="card-header"  >
                 <h1 class="card-title">{{ officeName }}</h1>
             </div>
 
@@ -91,6 +93,8 @@ import WriteInControls from "../write-in/write-in-controls";
 import ElectionResultsCard from "../results/election-results-card";
 import ModeMixin from "../../../mixins/modeMixin";
 import NavigationFooter from "../voter/navigation/navigation-footer";
+import {nextTick} from "vue";
+import { ref } from 'vue';
 
 export default {
     name: "election-card",
@@ -121,9 +125,27 @@ export default {
         })
     },
 
+    watch: {
+        motion: {
+            handler(motion) {
+                let me = this;
+//                window.console.log('election-card', 'get', 214,);
+                nextTick(() => {
+                    let el = document.getElementById(me.focusId);
+                    el.scrollIntoView()
+                });
+
+            },
+            immediate: true,
+        }
+    },
+
 
     computed: {
         // asyncComputed: {
+        focusId: function () {
+         return 'cardFocus';
+        },
 
         hasUserVoted: function () {
             if (isReadyToRock(this.meeting) && isReadyToRock(this.motion)) {
@@ -199,6 +221,14 @@ export default {
 
             default: []
 
+        },
+
+        viewFocus: {
+            get: function () {
+                this.$refs.electioncard.scrollIntoView({});
+                window.console.log('election-card', 'get', 214,);
+                },
+            watch: ['motion']
         },
 
         // instructions: {
@@ -277,6 +307,8 @@ export default {
 
     mounted() {
         let me = this;
+
+        window.console.log('election-card', 'mounted', 281,);
 
         // me.$store.dispatch('loadElectionCandidates', me.motion.id).then(() => {
         //

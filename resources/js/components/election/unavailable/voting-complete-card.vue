@@ -1,5 +1,7 @@
 <template>
     <div class="election-complete-card card" >
+        <a v-bind:id="focusId"></a>
+
         <div class="card-header">
             <h3 class="card-title">Thank you for voting!</h3>
         </div>
@@ -33,6 +35,7 @@ import ReceiptListArea from "../../vote-verification/receipt-list-area";
 import CopyReceiptsButton from "../../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../../vote-verification/download-receipts-button";
 import AllReceiptsMixin from "../../../mixins/allReceiptsMixin";
+import {nextTick} from "vue";
 export default {
     name: "voting-complete-card",
     components: {DownloadReceiptsButton, CopyReceiptsButton, ReceiptListArea, ReceiptListItem},
@@ -41,9 +44,24 @@ export default {
     mixins: [AllReceiptsMixin,],
 
     data: function () {
-        return {}
+        return {
+            focusId: 'completeFocus'
+        }
     },
 
+    // watch: {
+    //     motion: {
+    //         handler(motion) {
+    //             let me = this;
+    //             nextTick(() => {
+    //                 let el = document.getElementById(me.focusId);
+    //                 el.scrollIntoView()
+    //             });
+    //
+    //         },
+    //         immediate: true,
+    //     }
+    // },
 
     computed: {
     // asyncComputed: {
@@ -62,6 +80,16 @@ export default {
         handleNavigationToVote : function(){
             this.$router.push('election-home');
         }
+    },
+
+    mounted() {
+        let me = this;
+        nextTick(() => {
+            let el = document.getElementById(me.focusId);
+            el.scrollIntoView()
+            window.console.log('voting-complete-card', 'mount', 90,);
+        });
+
     }
 
 }
