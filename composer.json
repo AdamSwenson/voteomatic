@@ -20,7 +20,8 @@
         "laravel/legacy-factories": "^1.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "pusher/pusher-php-server": "^7.0"
+        "pusher/pusher-php-server": "^7.0",
+        "valorin/random": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

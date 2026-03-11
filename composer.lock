@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b38db8e69520211ee62c338857ebfb2",
+    "content-hash": "36001e4298e2662221fca3cb60fadef2",
     "packages": [
+        {
+            "name": "arokettu/random-polyfill",
+            "version": "1.99.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arokettu/php-random-polyfill.git",
+                "reference": "c17671cc6ee4a466c2a5a2bc051672d4927dd230"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arokettu/php-random-polyfill/zipball/c17671cc6ee4a466c2a5a2bc051672d4927dd230",
+                "reference": "c17671cc6ee4a466c2a5a2bc051672d4927dd230",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 8.2"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Anton Smirnov",
+                    "email": "sandfox@sandfox.me",
+                    "homepage": "https://sandfox.me/",
+                    "role": "developer"
+                }
+            ],
+            "description": "Random Extension Polyfill for PHP",
+            "homepage": "https://sandfox.dev/php/random-polyfill.html",
+            "keywords": [
+                "polyfill",
+                "random"
+            ],
+            "support": {
+                "chat": "https://gitter.im/arokettu/community",
+                "docs": "https://php-random-polyfill.readthedocs.io/",
+                "issues": "https://gitlab.com/sandfox/php-random-polyfill/-/issues",
+                "source": "https://gitlab.com/sandfox/php-random-polyfill"
+            },
+            "time": "2022-09-01T22:23:28+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.3.0",
@@ -6128,6 +6172,62 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.3.0"
             },
             "time": "2024-12-21T16:25:41+00:00"
+        },
+        {
+            "name": "valorin/random",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/valorin/random.git",
+                "reference": "32cd34f8b196209c2c29a20645cbabbb405807b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/valorin/random/zipball/32cd34f8b196209c2c29a20645cbabbb405807b9",
+                "reference": "32cd34f8b196209c2c29a20645cbabbb405807b9",
+                "shasum": ""
+            },
+            "require": {
+                "arokettu/random-polyfill": "^1.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "illuminate/support": "^5.0 || ^10.0 || ^11.0 || ^12.0",
+                "phpunit/phpunit": "^7.0 || ^9.6 || ^10.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Valorin\\Random\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Rees-Carter",
+                    "email": "stephen@rees-carter.net",
+                    "homepage": "https://stephenreescarter.net/"
+                }
+            ],
+            "description": "Random is a simple helper package designed to make it easy to generate a range of different cryptographically secure random values.",
+            "homepage": "https://github.com/valorin/random",
+            "keywords": [
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/valorin/random/issues",
+                "source": "https://github.com/valorin/random"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/valorin",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-18T00:59:34+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
