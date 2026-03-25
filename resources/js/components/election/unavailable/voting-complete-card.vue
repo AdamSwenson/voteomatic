@@ -22,7 +22,7 @@
         </div>
 
         <div class="card-footer" v-if="showReceipts">
-            <copy-receipts-button></copy-receipts-button>
+            <span class="me-3"><copy-receipts-button></copy-receipts-button></span>
             <download-receipts-button></download-receipts-button>
         </div>
 
@@ -36,9 +36,10 @@ import CopyReceiptsButton from "../../vote-verification/copy-receipts-button";
 import DownloadReceiptsButton from "../../vote-verification/download-receipts-button";
 import AllReceiptsMixin from "../../../mixins/allReceiptsMixin";
 import {nextTick} from "vue";
+import CopyButton from "../../vote-verification/copy-receipts-button.vue";
 export default {
     name: "voting-complete-card",
-    components: {DownloadReceiptsButton, CopyReceiptsButton, ReceiptListArea, ReceiptListItem},
+    components: {CopyButton, DownloadReceiptsButton, CopyReceiptsButton, ReceiptListArea, ReceiptListItem},
     props: [],
 
     mixins: [AllReceiptsMixin,],
