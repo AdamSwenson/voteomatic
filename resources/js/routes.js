@@ -101,6 +101,10 @@ module.exports = {
 
         },
 
+        duplicate: (meetingId) => {
+            return normalizedRouteRoot() + 'election/setup/duplicate/' + meetingId;
+            },
+
         addToPool: (motionId, personId) => {
             return normalizedRouteRoot() + 'election/pool/' + motionId + '/' + personId;
         },

@@ -51,23 +51,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::post('taco', [LTIDemoController::class, 'launchChairDemo'])
-//    ->withoutMiddleware([ VerifyCsrfToken::class]);
-
-/* =============================
-        todo DEV ROUTES TO BE REMOVED IN PRODUCTION
-   ============================= */
-//Route::get('/dev/testlog', [EntryController::class, 'logreturn']);
-//Route::get('/dev/test-results/{motion}', [ResultsController::class, 'devView']);
-////can't test with dev/ since that messes up route root for resource urls
-//Route::get('/dev-test-setup', [SetupController::class, 'devView']);
-//Route::get('/entry/{motion}', [EntryController::class, 'handleLogin']);
-//Route::get('/entry-test', [EntryController::class, 'loginTest']);
-////Route::post('/entry-test', '\App\Http\Controllers\EntryController@loginTest');
-//Route::get('/dev/amendment/{motion}', [DevController::class, 'amendment']);
-//Route::get('/dev/tree/{meeting}', [DevController::class, 'tree']);
-
-//Route::get('dev/meeting/{meeting}', [DevController::class, 'showMeeting']);
 
 /* =============================
         Login, LTI authentication, and other admin
@@ -116,22 +99,23 @@ Route::post('web/member-demo', [WebDemoController::class, 'launchMemberDemo'])
 /* =============================
         Election
    ============================= */
-//Route::post('election/{motion}/candidates/{candidate}', [CandidateController::class, 'update']);
-//Route::post('election/{motion}/candidates', [CandidateController::class, 'store']);
 
+//End user voting/results
 Route::get('election/{motion}/candidates', [CandidateController::class, 'getOfficialCandidatesForOffice']);
 Route::get('election/{motion}/results', [ElectionResultsController::class, 'getResults']);
-//Route::resource('election/candidate/{motion}', CandidateController::class);
-//Route::resource('election/{meeting}', )
 Route::post('election/vote/{motion}', [ElectionVoteController::class, 'recordVote']);
+
+//CRUD Election
+Route::resource('elections', ElectionController::class)->parameters([
+    'elections' => 'meeting'
+]);
+Route::post('election/setup/duplicate/{meeting}', [ElectionController::class, 'duplicate']);
 
 //setup office/position
 Route::post('election/setup/{meeting}/office', [OfficeController::class, 'store']);
 
 Route::post('election/setup/office/{motion}', [OfficeController::class, 'store']);
-Route::resource('elections', ElectionController::class)->parameters([
-    'elections' => 'meeting'
-]);
+
 Route::resource('offices', OfficeController::class)->parameters([
     'offices' => 'motion'
 ]);
@@ -253,10 +237,6 @@ Route::post('/waitlist', [WaitlistController::class, 'addToWaitlist']);
 /* =============================
         Resource and other service controllers
    ============================= */
-
-//Route::get('meetings/{meeting}', [MeetingController::class, 'show']);
-//Route::post('meetings/{meeting}', [MeetingController::class, 'update']);
-//Route::get('meetings', [MeetingController::class, 'store']);
 
 
 

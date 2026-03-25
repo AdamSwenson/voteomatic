@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Console\Commands;
+namespace Tests\Unit\Console\Commands;
 
-use App\Console\Commands\AddEmailUser;
 use App\Models\Meeting;
 use App\Models\User;
+use Tests\TestCase;
 
 //use PHPUnit\Framework\TestCase;
-use Tests\TestCase;
 
 class AddEmailUserTest extends TestCase
 {

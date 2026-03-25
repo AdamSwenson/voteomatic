@@ -14,28 +14,13 @@ class ElectionController extends Controller
 
 //    const DEV_ELECTION_ID = 85;
 
-
     //with votes
     const DEV_ELECTION_ID = 86;
+
     /**
      * @var IMeetingRepository|mixed
      */
     public $meetingRepo;
-
-//    public function dev()
-//    {
-//
-//        $election = Meeting::find(self::DEV_ELECTION_ID);
-//
-//        $data = ['data' => [
-//            'meeting' => $election,
-//            'meeting_id' => $election->id
-//        ]
-//        ];
-//
-//
-//        return view('dev.dev-election', $data);
-//    }
 
 
     public function __construct()
@@ -63,7 +48,6 @@ class ElectionController extends Controller
         $this->authorize('createElection', Meeting::class);
         $newElection = $this->electionRepo->duplicateElection($meeting);
         return response()->json($newElection);
-
     }
 
     /**

@@ -1,23 +1,22 @@
 <template>
 
     <div class="election-setup-controls row">
-<!--        <div class="col-lg-2 text-start">-->
-<!--            <create-office-button></create-office-button>-->
-<!--        </div>-->
 
-        <div class="col-lg-6 ">
+        <div class="col ">
             <create-election-button></create-election-button>
+            <span class="me-3"></span>
+
+            <duplicate-election-button></duplicate-election-button>
+            <span class="me-3"></span>
 
             <edit-election-button></edit-election-button>
+            <span class="me-3"></span>
 
             <delete-election-button></delete-election-button>
             <delete-election-modal></delete-election-modal>
 
         </div>
 
-        <div class="col-lg-6 text-end">
-<!--            <mode-toggle-switch></mode-toggle-switch>-->
-        </div>
 
     </div>
 
@@ -36,6 +35,7 @@ import DeleteElectionButton from "./delete-election-button";
 import EditElectionButton from "./edit-election-button";
 import CreateMeetingButton from "../../../meetings/controls/create-meeting-button";
 import ModeToggleSwitch from "../../../controls/mode-toggle-switch";
+import DuplicateElectionButton from "./duplicate-election-button.vue";
 
 /**
  * These are abstracted out so can swap in a different
@@ -44,6 +44,7 @@ import ModeToggleSwitch from "../../../controls/mode-toggle-switch";
 export default {
     name: "election-setup-controls",
     components: {
+        DuplicateElectionButton,
         ModeToggleSwitch,
         CreateMeetingButton,
         EditElectionButton,
@@ -64,23 +65,6 @@ export default {
     computed: {},
 
     methods: {
-//         handleClick: function () {
-//             let me = this;
-//             let p = this.$store.dispatch('createMeeting');
-//             p.then(function () {
-//                 me.showFields = true;
-//                 me.showArea = 'create';
-//             })
-//         },
-//
-//
-//         handleEditButtonClick: function () {
-// this.setElection();
-// this.showArea = 'edit';
-//
-//             this.$emit('showArea', 'edit');
-//
-//         }
     }
 
 }

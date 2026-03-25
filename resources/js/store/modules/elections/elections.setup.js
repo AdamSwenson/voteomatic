@@ -82,6 +82,40 @@ const actions = {
     },
 
     /**
+     * Requests that the provided election be duplicated. Opens the
+     * newly created election
+     * @param dispatch
+     * @param commit
+     * @param getters
+     * @param election
+     * @returns {Promise<unknown>}
+     */
+    duplicateElection: function ({dispatch, commit, getters}, election) {
+        return new Promise(((resolve, reject) => {
+            // let data = {name : name, date : date};
+            let url = routes.election.duplicate(election.id)
+            return axios.post(url)
+                .then((response) => {
+
+                    //  NB, this opens the new meeting in a new window. Not sure how annoying that will be.
+                    let url = routes.meetings.main(response.data.id);
+                    dispatch('forceNavigationToUrl', url);
+
+                }).catch(function (error) {
+                    //NB, this will catch all errors, including ones not having to do
+                    //with the server request. If things are going weird with no obvious error
+                    //displays, this may be why. (Guess why the console log call is here...)
+                    window.console.log(error);
+                    // error handling
+                    if (error.response) {
+                        dispatch('showServerProvidedMessage', error.response.data);
+                    }
+                });
+        }));
+    },
+
+
+    /**
      * Creates a new elected office within the election.
      *
      * @param dispatch

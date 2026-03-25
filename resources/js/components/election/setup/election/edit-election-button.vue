@@ -27,11 +27,6 @@ export default {
 
         handleClick: function () {
             this.setShowArea('edit');
-            // this.setElection();
-            // this.showArea = 'edit';
-
-            // this.$emit('showArea', 'edit');
-
         }
     }
 
