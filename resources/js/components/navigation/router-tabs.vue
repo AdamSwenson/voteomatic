@@ -1,19 +1,42 @@
 <template>
 
-    <div class="router-tabs" role="navigation" aria-label="main page navigation tab bar">
-        <ul class=" nav nav-tabs ">
+    <nav class="router-tabs" aria-label="Main meeting navigation">
+        <ul class="nav nav-tabs router-tabs-list">
             <router-tab v-for="r in shownRoutes" :route="r" :key="r.name"></router-tab>
         </ul>
-
-    </div>
+    </nav>
 
 
 </template>
 
 <style lang="scss">
-$nav-tabs-link-active-border-color: black;
+.router-tabs {
+    background: #fff;
+    border-bottom: 1px solid #cbd5e1;
+}
 
+.router-tabs-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 .75rem;
+    scrollbar-width: thin;
+}
 
+@media (max-width: 767.98px) {
+    .router-tabs {
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        box-shadow: 0 .2rem .5rem rgba(15,23,42,.08);
+    }
+
+    .router-tabs-list {
+        gap: .25rem;
+        padding: .4rem .5rem;
+        border-bottom: 0;
+    }
+}
 </style>
 
 <script>
