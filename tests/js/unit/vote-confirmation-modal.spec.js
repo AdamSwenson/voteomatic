@@ -1,6 +1,3 @@
-let _ = require('lodash');
-import sinon from 'sinon';
-
 import {createStore} from 'vuex';
 import {mount} from '@vue/test-utils';
 
@@ -8,100 +5,57 @@ import VoteConfirmationModal from "../../../resources/js/components/vote-casting
 import Motion from "../../../resources/js/models/Motion";
 import Vote from "../../../resources/js/models/Vote";
 
+const motion = new Motion({id: 4});
 
-// import {mount, shallowMount, createLocalVue} from '@vue/test-utils'
-// import Vuex from 'vuex'
-//
-//
-// const localVue = createLocalVue()
-// localVue.use(Vuex)
+function mountModal(type) {
+    const castMotionVote = jest.fn(() => Promise.resolve({receipt: 'saved-receipt'}));
+    const store = createStore({
+        actions: {castMotionVote},
+        getters: {getActiveMotion: () => motion}
+    });
 
-let motion = new Motion({id: 4});
-
-let actions = {
-    castMotionVote: jest.fn(),
-};
-
-let getters = {
-    getActiveMotion: () => {
-        return motion;
-    }
-};
-
-let store = createStore({
-    actions, getters
-});
-
-
-describe('Yay votes', () => {
-
-    let wrapper;
-    beforeEach(() => {
-        wrapper = mount(VoteConfirmationModal, {
-            global: {
-                plugins: [store]
-            }
+    return {
+        castMotionVote,
+        wrapper: mount(VoteConfirmationModal, {
+            props: {type},
+            global: {plugins: [store]}
         })
+    };
+}
+
+describe.each([
+    ['yay', 'Aye', true, 'btn-success', 'vote-confirmation--aye'],
+    ['nay', 'Nay', false, 'btn-danger', 'vote-confirmation--nay']
+])('vote confirmation for %s', (type, label, isYay, buttonClass, modalClass) => {
+    test('uses an explicit, color-matched irreversible confirmation', () => {
+        const {wrapper} = mountModal(type);
+
+        expect(wrapper.get('.modal-title').text()).toBe(`Confirm your ${label} vote`);
+        expect(wrapper.get('button.yes').text()).toBe(`Record ${label} vote`);
+        expect(wrapper.get('button.yes').classes()).toContain(buttonClass);
+        expect(wrapper.get('.modal-content').classes()).toContain(modalClass);
+        expect(wrapper.text()).toContain('cannot be changed');
+        expect(wrapper.get('.modal').attributes('aria-labelledby')).toBe(`${type}ConfirmationModalLabel`);
     });
 
-    test('beep', () => {
-    actions.castMotionVote();
-        expect(actions.castMotionVote).toHaveBeenCalled();
+    test('records the selected vote and emits the matching event', async () => {
+        const {wrapper, castMotionVote} = mountModal(type);
 
+        await wrapper.get('button.yes').trigger('click');
+
+        expect(castMotionVote).toHaveBeenCalledTimes(1);
+        const vote = castMotionVote.mock.calls[0][1];
+        expect(vote).toBeInstanceOf(Vote);
+        expect(vote.isYay).toBe(isYay);
+        expect(vote.motionId).toBe(motion.id);
+        expect(wrapper.emitted(`${type}-clicked`)).toHaveLength(1);
     });
 
+    test('does not record a vote when dismissed', async () => {
+        const {wrapper, castMotionVote} = mountModal(type);
 
-    test('Yes dispatches castMotionVote ', () => {
-        //dev This is failing because the program does not (no longer?) use castMotionVote
-        wrapper.find('button.yes').trigger('click');
-        expect(actions.castMotionVote).toHaveBeenCalled();
+        await wrapper.get('button.no').trigger('click');
 
-        //second arg of first call is the payload
-        let arg = actions.castMotionVote.mock.calls[0][1];
-        expect(arg).toBeInstanceOf(Vote);
-        expect(arg._isYay).toEqual(true);
-        expect(arg.motionId).toEqual(motion.id);
+        expect(castMotionVote).not.toHaveBeenCalled();
     });
-
-    test('No does not dispatch castMotionVote ', () => {
-        wrapper.find('button.no').trigger('click');
-        expect(actions.castMotionVote).not.toHaveBeenCalled();
-    });
-
-
-});
-
-
-describe('Nay votes', () => {
-
-    let wrapper;
-    beforeEach(() => {
-       wrapper = mount(VoteConfirmationModal, {
-            global: {
-                plugins: [store]
-            },
-            propsData: {
-                type: 'nay'
-            }
-        });
-    });
-
-
-    test('Yes dispatches castMotionVote ', () => {
-        wrapper.find('button.yes').trigger('click');
-        expect(actions.castMotionVote).toHaveBeenCalled();
-
-        //second arg of first call is the payload
-        let arg = actions.castMotionVote.mock.calls[0][1];
-        expect(arg).toBeInstanceOf(Vote);
-        expect(arg._isYay).toEqual(false);
-        expect(arg.motionId).toEqual(motion.id);
-    });
-
-    test('No does not dispatch castMotionVote ', () => {
-        wrapper.find('button.no').trigger('click');
-        expect(actions.castMotionVote).not.toHaveBeenCalled();
-    });
-
-
 });
