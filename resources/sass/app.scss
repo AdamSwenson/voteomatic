@@ -8,8 +8,8 @@
 
 //$min-contrast-ratio : 7;
 
-//container extends to edges of screen
-$container-padding-x : 0;
+// Keep interactive content comfortably away from the viewport edge.
+$container-padding-x : 1rem;
 
 // Bootstrap
 //@import '../css/bootstrap.min.css';
