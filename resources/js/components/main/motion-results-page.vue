@@ -7,7 +7,13 @@
             <div class="card">
 
                 <div class="card-body" v-bind:class="resultStyle">
-                    <h1 class="card-title ">The motion {{ passed }}</h1>
+                    <motion-results-summary
+                        :is-passed="isPassed"
+                        :yay-count="yayCount"
+                        :nay-count="nayCount"
+                        :total-votes="totalVotes"
+                        :required-vote="motion.requires"
+                    ></motion-results-summary>
                 </div>
 
                 <div class="card-body">
@@ -95,10 +101,11 @@ import DebatableBadge from "../motions/badges/debatable-badge";
 import MotionTypeBadge from "../motions/badges/motion-type-badge";
 import {isReadyToRock} from "../../utilities/readiness.utilities";
 import MotionTextDisplay from "../motions/text-display/motion-text-display";
+import MotionResultsSummary from "./motion-results-summary";
 
 export default {
     name: "motion-results-page",
-    components: {MotionTextDisplay, MotionTypeBadge, DebatableBadge, RequiredVoteBadge},
+    components: {MotionResultsSummary, MotionTextDisplay, MotionTypeBadge, DebatableBadge, RequiredVoteBadge},
     mixins: [motionMixin, motionObjectMixin, MotionResultsMixin],
 
     data: function () {
