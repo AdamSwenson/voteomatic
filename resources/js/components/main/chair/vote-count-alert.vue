@@ -1,16 +1,18 @@
 <template>
-    <div class="alert alert-dismissible fade show alert-primary"
+    <section class="alert alert-dismissible fade show alert-primary"
          v-if="show"
          id="vote-count-alert"
          role="alert"
     >
-        <div class="row">
+        <h2 class="h5 mb-3">Voting is open</h2>
+
+        <div class="row align-items-center">
             <div class="col">
-                <p>
-                    <strong>Votes cast:</strong> {{ votesCast }}
+                <p class="mb-1" aria-live="polite">
+                    <strong>{{ votesCast }} of {{ memberCount }} members have voted</strong>
                 </p>
 
-                <p><strong>Outstanding: </strong> {{ votesOutstanding }}</p>
+                <p class="mb-0">{{ votesOutstanding }} vote<span v-if="votesOutstanding !== 1">s</span> remaining</p>
 
             </div>
 
@@ -38,7 +40,7 @@
         >
             <span class="visually-hidden" aria-hidden="true">&times;</span>
         </button>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -79,6 +81,12 @@ export default {
         },
 
         votesOutstanding: function () {
+            let cnt = this.$store.getters.getMemberCount;
+            if (isReadyToRock(cnt) && isReadyToRock(this.votesCast)) return Math.max(cnt - this.votesCast, 0);
+            return '-';
+        },
+
+        memberCount: function () {
             let cnt = this.$store.getters.getMemberCount;
             if (isReadyToRock(cnt)) return cnt;
             return '-';
