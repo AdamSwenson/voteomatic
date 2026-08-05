@@ -12,6 +12,12 @@
     min-height: 100vh;
 }
 
+// Preserve a clear, consistent focus indicator for keyboard users.
+:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 3px;
+}
+
 
 /*.router-tabs {*/
 ul.nav-tabs {
@@ -47,4 +53,3 @@ ul.nav-tabs {
     background-color: #182848;
     /*padding-left: 100px;*/
 }
-
