@@ -1,6 +1,14 @@
 <template>
     <div class="card office-select-area">
 
+        <div class="card-body border-bottom py-3" aria-live="polite">
+            <p class="text-uppercase small fw-bold mb-1">Your ballot progress</p>
+            <p class="mb-2"><strong>{{ completedCount }} of {{ motions.length }}</strong> contests completed</p>
+            <div class="progress" role="progressbar" :aria-valuenow="completedCount" aria-valuemin="0" :aria-valuemax="motions.length" aria-label="Ballot completion">
+                <div class="progress-bar" :style="{width: completionPercentage + '%'}"></div>
+            </div>
+        </div>
+
         <div class="list-group list-group-flush">
             <instructions-row></instructions-row>
 
@@ -101,6 +109,15 @@ export default {
 
             return m;
         },
+
+        completedCount: function () {
+            return this.motions.filter((motion) => this.$store.getters.hasVotedOnMotion(motion)).length;
+        },
+
+        completionPercentage: function () {
+            if (this.motions.length === 0) return 0;
+            return Math.round((this.completedCount / this.motions.length) * 100);
+        }
 
     },
 
