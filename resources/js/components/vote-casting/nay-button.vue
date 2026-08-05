@@ -1,11 +1,12 @@
 <template>
     <div class="d-grid gap-2">
     <button type="button"
-            class="btn btn-danger text-light fs-2"
+            class="btn btn-danger text-light vote-choice"
             data-bs-toggle="modal"
             data-bs-target="#nayConfirmationModal"
             v-on:click="handleClick"
-    ><span class="nayText">Nay</span>
+            aria-label="Vote Nay, against the motion"
+    ><span class="nayText">Nay</span><span class="vote-choice-detail">— against</span>
     </button>
 
     </div>
@@ -33,4 +34,5 @@ export default {
 .nayText{
     font-weight: bold;
 }
+.vote-choice-detail { display: block; font-size: .55em; font-weight: 500; }
 </style>

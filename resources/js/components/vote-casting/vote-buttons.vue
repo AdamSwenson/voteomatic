@@ -1,7 +1,7 @@
 <template>
     <div class="button-area">
-        <div class="row">
-            <div class="col-4 text-end">
+        <div class="row g-3">
+            <div class="col-12 col-sm-6">
 
                 <nay-button ></nay-button>
 
@@ -10,9 +10,7 @@
                 ></vote-confirmation-modal>
             </div>
 
-            <div class="col-4"></div>
-
-            <div class="col-4 text-end">
+            <div class="col-12 col-sm-6">
                 <yay-button ></yay-button>
 
                 <vote-confirmation-modal type="yay"
@@ -64,5 +62,9 @@ export default {
 </script>
 
 <style scoped>
-
+.button-area :deep(.vote-choice) {
+    min-height: 5.25rem;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+}
 </style>
