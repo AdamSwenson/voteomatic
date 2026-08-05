@@ -4,13 +4,13 @@
     <div class="modal fade"
          v-bind:id="modalId"
          tabindex="-1"
-         aria-labelledby="voteModalLabel"
+         :aria-labelledby="modalLabelId"
          aria-hidden="true"
     >
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" :class="modalClass">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="voteModalLabel">Confirm your vote</h5>
+                    <h5 class="modal-title" :id="modalLabelId">Confirm your {{ voteLabel }} vote</h5>
                       <button
                         type="button"
                         class="btn-close"
@@ -20,8 +20,7 @@
 
                 <div class="modal-body text-start">
                     <p class="text-dark">{{ modalText }}</p>
-                    <p>Once you cast your vote, it cannot be changed.</p>
-                    <p>Are you sure?</p>
+                    <p class="mb-0">Once you record this vote, it cannot be changed.</p>
                 </div>
 
                 <div class="modal-footer">
@@ -32,10 +31,11 @@
                     </button>
 
                     <button type="button"
-                            class="btn btn-primary text-light yes"
+                            class="btn text-light yes"
+                            :class="confirmButtonClass"
                             data-bs-dismiss="modal"
                             v-on:click="handleClick"
-                    >Yes. Record my vote.
+                    >Record {{ voteLabel }} vote
                     </button>
 
                 </div>
@@ -76,6 +76,22 @@ export default {
          */
         modalId: function () {
             return this.type + 'ConfirmationModal';
+        },
+
+        modalLabelId: function () {
+            return this.modalId + 'Label';
+        },
+
+        voteLabel: function () {
+            return this.type === 'yay' ? 'Aye' : 'Nay';
+        },
+
+        modalClass: function () {
+            return this.type === 'yay' ? 'vote-confirmation--aye' : 'vote-confirmation--nay';
+        },
+
+        confirmButtonClass: function () {
+            return this.type === 'yay' ? 'btn-success' : 'btn-danger';
         },
 
         modalText: function () {
@@ -171,6 +187,6 @@ export default {
 </script>
 
 <style scoped>
-
+.vote-confirmation--aye .modal-header { border-top: .35rem solid #198754; }
+.vote-confirmation--nay .modal-header { border-top: .35rem solid #dc3545; }
 </style>
-
