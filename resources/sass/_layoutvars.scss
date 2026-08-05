@@ -21,9 +21,17 @@ ul.nav-tabs {
 
 //Topmost level on any of the modes
 .main-area{
+    padding-inline: 1rem;
+
     .card {
         //background-color: #00efb2;
         $card-border-radius: 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .main-area {
+        padding-inline: 2rem;
     }
 }
 
@@ -47,4 +55,3 @@ ul.nav-tabs {
     background-color: #182848;
     /*padding-left: 100px;*/
 }
-
